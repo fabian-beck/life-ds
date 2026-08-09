@@ -22,6 +22,7 @@
     metaStoryStyle,
     metaStoryStyleVars,
   } from "../utils/metaStoryStyles.js";
+  import { resolveSectionOrder } from "../utils/metaStorySections.js";
   import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
   import personStylesData from "../../data/person_styles.json";
 
@@ -212,17 +213,25 @@
   // interactive component.
   $: sectionBodies = metaStoryData?.section_bodies || {};
 
+  // The three component sections in the order the story asks for. Which one
+  // opens the page is a composition decision (`section_order`, written by the
+  // story composer), because a story can turn on its chronology, on its
+  // circle, or on its geography; stories composed before that keep the
+  // historical sequence.
+  $: sectionOrder = resolveSectionOrder(metaStoryData);
+
   // Every picture in the story, in reading order, so the lightbox can page
   // through them. Mirrors the conditions the template renders the figures
   // under, so an image never appears in the gallery without being on the page.
   $: galleryImages = collectStoryImages(
     metaStoryData,
+    sectionOrder,
     openingBlocks,
     descriptionBlocks,
     conclusionBlocks
   );
 
-  function collectStoryImages(data, opening, description, conclusion) {
+  function collectStoryImages(data, order, opening, description, conclusion) {
     if (!data) return [];
     const images = [];
     const addBody = (blocks) => {
@@ -235,9 +244,7 @@
 
     addBody(opening);
     addBody(description);
-    if (data.chapters?.length) addBody(bodies.timeline);
-    if (data.social_network?.links?.length) addBody(bodies.network);
-    if (data.geo_map?.clusters?.length) addBody(bodies.map);
+    order.forEach((section) => addBody(bodies[section]));
     addBody(conclusion);
     return images;
   }
@@ -819,114 +826,114 @@
       />
     </header>
 
-    <!-- Chapters section - scroll proxy container for horizontal scroll lock -->
-    {#if metaStoryData.chapters?.length}
-      <section class="chapters-section">
-        <h2>{sectionHeadings.timeline || $_("meta_story.chapters_heading")}</h2>
-        <MetaStoryBody
-          blocks={sectionBodies.timeline}
-          {...proseContext}
-          onEnlarge={openEnlargedImage}
-        />
+    <!-- The three component sections, in the order the story composed for
+         them: chronology, circle and geography each answer a different
+         question, and which one opens the page belongs to the story. -->
+    {#each sectionOrder as section (section)}
+      {#if section === "timeline"}
+        <!-- Chapters section - scroll proxy container for horizontal scroll lock -->
+        <section class="chapters-section">
+          <h2>
+            {sectionHeadings.timeline || $_("meta_story.chapters_heading")}
+          </h2>
+          <MetaStoryBody
+            blocks={sectionBodies.timeline}
+            {...proseContext}
+            onEnlarge={openEnlargedImage}
+          />
 
-        <div
-          class="scroll-proxy-container"
-          bind:this={scrollProxyContainer}
-          style="height: {proxyHeight +
-            (typeof window !== 'undefined' ? window.innerHeight : 800)}px;"
-        >
           <div
-            class="timeline-sticky-wrapper"
-            style="top: {stickyHeaderHeight}px;"
+            class="scroll-proxy-container"
+            bind:this={scrollProxyContainer}
+            style="height: {proxyHeight +
+              (typeof window !== 'undefined' ? window.innerHeight : 800)}px;"
           >
             <div
-              class="timeline-horizontal-container"
-              bind:this={timelineContainer}
+              class="timeline-sticky-wrapper"
+              style="top: {stickyHeaderHeight}px;"
             >
-              <MetaStoryTimeline
-                bind:this={metaTimelineComponent}
-                metaStoryId={metaStoryData.meta_story.id}
-                {currentLanguage}
-                chapters={metaStoryData.chapters}
-                {personsRegistry}
-                subtopics={metaStoryData.subtopics}
-                {scrollProgress}
-                isSticky={isScrollLockActive}
-                {stickyHeaderHeight}
-              />
+              <div
+                class="timeline-horizontal-container"
+                bind:this={timelineContainer}
+              >
+                <MetaStoryTimeline
+                  bind:this={metaTimelineComponent}
+                  metaStoryId={metaStoryData.meta_story.id}
+                  {currentLanguage}
+                  chapters={metaStoryData.chapters}
+                  {personsRegistry}
+                  subtopics={metaStoryData.subtopics}
+                  {scrollProgress}
+                  isSticky={isScrollLockActive}
+                  {stickyHeaderHeight}
+                />
+              </div>
+
+              <!-- Timeline navigation buttons - only show when in scroll lock zone -->
+              {#if metaTimelineComponent && isScrollLockActive && (canNavigatePrev || canNavigateNext)}
+                <button
+                  type="button"
+                  class="timeline-nav-btn prev"
+                  on:click={handlePrevYear}
+                  disabled={!canNavigatePrev}
+                  aria-label={$_("meta_story.prev_year")}
+                >
+                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d={mdiChevronLeft} />
+                  </svg>
+                </button>
+
+                <button
+                  type="button"
+                  class="timeline-nav-btn next"
+                  on:click={handleNextYear}
+                  disabled={!canNavigateNext}
+                  aria-label={$_("meta_story.next_year")}
+                >
+                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d={mdiChevronRight} />
+                  </svg>
+                </button>
+              {/if}
             </div>
-
-            <!-- Timeline navigation buttons - only show when in scroll lock zone -->
-            {#if metaTimelineComponent && isScrollLockActive && (canNavigatePrev || canNavigateNext)}
-              <button
-                type="button"
-                class="timeline-nav-btn prev"
-                on:click={handlePrevYear}
-                disabled={!canNavigatePrev}
-                aria-label={$_("meta_story.prev_year")}
-              >
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d={mdiChevronLeft} />
-                </svg>
-              </button>
-
-              <button
-                type="button"
-                class="timeline-nav-btn next"
-                on:click={handleNextYear}
-                disabled={!canNavigateNext}
-                aria-label={$_("meta_story.next_year")}
-              >
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d={mdiChevronRight} />
-                </svg>
-              </button>
-            {/if}
           </div>
-        </div>
-      </section>
-    {/if}
-
-    <!-- Social network section - follows the timeline -->
-    {#if metaStoryData.social_network?.links?.length}
-      <section class="network-section">
-        <h2>{sectionHeadings.network || $_("meta_story.network_heading")}</h2>
-        <MetaStoryBody
-          blocks={sectionBodies.network}
-          {...proseContext}
-          onEnlarge={openEnlargedImage}
-        />
-        {#await import("./MetaStoryNetwork.svelte") then { default: MetaStoryNetwork }}
-          <MetaStoryNetwork
-            network={metaStoryData.social_network}
-            metaStoryId={metaStoryData.meta_story.id}
-            {personAliases}
-            {currentLanguage}
+        </section>
+      {:else if section === "network"}
+        <section class="network-section">
+          <h2>{sectionHeadings.network || $_("meta_story.network_heading")}</h2>
+          <MetaStoryBody
+            blocks={sectionBodies.network}
+            {...proseContext}
+            onEnlarge={openEnlargedImage}
           />
-        {/await}
-      </section>
-    {/if}
-
-    <!-- Map section - the story's places, usually the last stop before the
-         conclusion -->
-    {#if metaStoryData.geo_map?.clusters?.length}
-      <section class="map-section">
-        <h2>{sectionHeadings.map || $_("meta_story.map_heading")}</h2>
-        <MetaStoryBody
-          blocks={sectionBodies.map}
-          {...proseContext}
-          onEnlarge={openEnlargedImage}
-        />
-        {#await import("./MetaStoryMap.svelte") then { default: MetaStoryMap }}
-          <MetaStoryMap
-            geoMap={metaStoryData.geo_map}
-            metaStoryId={metaStoryData.meta_story.id}
-            {personAliases}
-            {currentLanguage}
+          {#await import("./MetaStoryNetwork.svelte") then { default: MetaStoryNetwork }}
+            <MetaStoryNetwork
+              network={metaStoryData.social_network}
+              metaStoryId={metaStoryData.meta_story.id}
+              {personAliases}
+              {currentLanguage}
+            />
+          {/await}
+        </section>
+      {:else}
+        <section class="map-section">
+          <h2>{sectionHeadings.map || $_("meta_story.map_heading")}</h2>
+          <MetaStoryBody
+            blocks={sectionBodies.map}
+            {...proseContext}
+            onEnlarge={openEnlargedImage}
           />
-        {/await}
-      </section>
-    {/if}
+          {#await import("./MetaStoryMap.svelte") then { default: MetaStoryMap }}
+            <MetaStoryMap
+              geoMap={metaStoryData.geo_map}
+              metaStoryId={metaStoryData.meta_story.id}
+              {personAliases}
+              {currentLanguage}
+            />
+          {/await}
+        </section>
+      {/if}
+    {/each}
 
     <!-- Conclusion section -->
     {#if conclusionBlocks.length}

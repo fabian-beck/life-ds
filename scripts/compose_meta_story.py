@@ -56,6 +56,9 @@ Everything it returns is applied deterministically and defensively:
 - Quote blocks are verified **verbatim against the source material** (the
   story brief plus the Wikipedia excerpts, whitespace/punctuation
   normalized); a quote that does not appear in the material is dropped.
+- The composed section order names only sections the story has; unknown names
+  are dropped and forgotten ones appended in default order, so the page can
+  never lose a component to a careless list.
 - Composed circles may only contain existing main people, each person joins
   at most one circle, circles need at least two members, and if the composed
   organization covers less than half of the connected cast it is rejected in
@@ -82,6 +85,19 @@ only the section bodies were, so the opening could carry an image but not a
 quote and the description could carry neither, for no reason a reader could
 perceive. One shape means one renderer, one translation path, and one set of
 guarantees.
+
+THE ORDER OF THE COMPONENTS
+---------------------------
+
+Timeline, then graph, then map was the order the *data model* is built in, and
+every story got it. But the three components answer different questions — when,
+who with whom, where — and which one a story turns on differs: a cast that
+exists because they all passed through one city is introduced by that city, and
+a circle that met before any of its work happened is introduced by the circle.
+So ``section_order`` is part of the composition, decided in the same call that
+writes the bodies for those positions. The page renders whatever order the data
+carries (``resolve_section_order``), and a story without one keeps the
+historical sequence.
 
 Standalone usage (recompose an existing meta story):
 
@@ -139,13 +155,58 @@ EVENT_DESCRIPTION_CHARS = 320
 # a short placeholder when no cached article is found for anybody).
 MIN_WIKIPEDIA_CHARS = 200
 
-# The prose regions, in reading order. One name per region, used by the
-# schema, the page map, the application path and the diagnostics alike.
-PROSE_REGIONS = ("opening", "description", "timeline", "network", "map", "conclusion")
-
-# Section bodies are stored per component section; the opening, description
-# and closing are stored top-level.
+# The prose regions are the opening, the description, one body per component
+# section, and the closing. Their reading order is not a constant, because the
+# component sections are ordered by the composer — ``reading_order()`` builds
+# it. Section bodies are stored per component section; the opening,
+# description and closing are stored top-level. This tuple's order is also the
+# fallback section order for a story whose composer never named one.
 BODY_SECTIONS = ("timeline", "network", "map")
+
+
+# ============================================================================
+# SECTION ORDER
+#
+# Which of the three component sections a story has, and in which order the
+# reader meets them. The sequence used to be the data model's own — timeline,
+# then graph, then map — which is one story shape imposed on every story; a
+# cast whose lives are held together by a place or by a circle is introduced
+# by whichever component carries that, and the sequence is the composer's to
+# set. The conditions below mirror the UI's render conditions exactly, so a
+# section the reader never sees is never named in the order.
+# ============================================================================
+
+
+def available_sections(dataset: Dict[str, Any]) -> List[str]:
+    """The component sections this story actually renders, in default order."""
+    present = {
+        "timeline": bool(dataset.get("chapters")),
+        "network": bool((dataset.get("social_network") or {}).get("links")),
+        "map": bool((dataset.get("geo_map") or {}).get("clusters")),
+    }
+    return [section for section in BODY_SECTIONS if present[section]]
+
+
+def normalize_section_order(order: Any, available: List[str]) -> List[str]:
+    """Clean an authored order against the sections the story has.
+
+    Unknown and duplicate names drop out, and any section the order forgot is
+    appended in default order — so the result always names every section the
+    reader will meet, exactly once, whatever arrived.
+    """
+    named = [
+        section
+        for section in dict.fromkeys(order if isinstance(order, list) else [])
+        if section in available
+    ]
+    return named + [section for section in available if section not in named]
+
+
+def resolve_section_order(dataset: Dict[str, Any]) -> List[str]:
+    """The story's current section order, normalized against its sections."""
+    return normalize_section_order(
+        dataset.get("section_order"), available_sections(dataset)
+    )
 
 
 # ============================================================================
@@ -234,6 +295,11 @@ class CompositionResult(BaseModel):
         description="2-4 sentences naming this story's arc, for your own use. "
         "Never displayed."
     )
+    section_order: List[Literal["timeline", "network", "map"]] = Field(
+        description="The component sections in the order the reader meets "
+        "them. Name every section the story has (see the page), once each, "
+        "in the order that tells this story best."
+    )
     title: str = Field(description="2-5 words")
     tagline: str = Field(description="3-10 words")
     opening: List[StoryBlock] = Field(description="The story's opening prose")
@@ -271,10 +337,21 @@ class CompositionResult(BaseModel):
     )
 
     def blocks(self, region: str) -> List[StoryBlock]:
-        """The block list for a region name from ``PROSE_REGIONS``."""
+        """The block list for one prose region (see ``reading_order``)."""
         if region in BODY_SECTIONS:
             return getattr(self, f"{region}_body") or []
         return cast(List[StoryBlock], getattr(self, region) or [])
+
+    def sections(self, available: List[str]) -> List[str]:
+        """The composed section order, cleaned against the story's sections."""
+        return normalize_section_order(self.section_order, available)
+
+    def reading_order(self, available: Optional[List[str]] = None) -> List[str]:
+        """Every prose region in the order the reader meets it."""
+        sections = self.sections(
+            list(BODY_SECTIONS) if available is None else available
+        )
+        return ["opening", "description", *sections, "conclusion"]
 
 
 # ============================================================================
@@ -517,6 +594,133 @@ def build_page(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
             EVENT_DESCRIPTION_CHARS,
         )
 
+    def timeline_lines() -> List[str]:
+        lines = [
+            "  heading          >>> YOURS  (section_headings.timeline)",
+            "  timeline_body    >>> YOURS",
+            "",
+            "  then THE TIMELINE, which gives the reader the sequence itself: what",
+            "  happened, dated, era by era. It scrolls sideways and the reader meets",
+            "  one era at a time, seeing that chapter's headline and lead-in alone",
+            "  with its events. These texts are on the page and are yours:",
+            "",
+        ]
+        for chapter in dataset.get("chapters") or []:
+            lines.append(
+                f"  CHAPTER [{chapter.get('id', '')}] "
+                f"{chapter.get('date_start', '')}–{chapter.get('date_end', '')}"
+                "   >>> headline + lead_in YOURS"
+            )
+            lines.append(f"      draft headline: {chapter.get('title', '')}")
+            if chapter.get("lead_in"):
+                lines.append(f"      draft lead-in: {chapter['lead_in']}")
+            for event in chapter.get("person_events") or []:
+                lines.append(
+                    f"      · {event.get('event_date', '')} — "
+                    f"{person_name(event.get('person_id', ''))}: "
+                    f"{event.get('event_title', '')}"
+                )
+                if event.get("theme_connection"):
+                    lines.append(
+                        f"          printed under this event: "
+                        f"{event['theme_connection']}"
+                    )
+                description = event_description(
+                    event.get("person_id", ""), event.get("event_index")
+                )
+                if description:
+                    lines.append(f"          [not on the page] source: {description}")
+            lines.append("")
+        return lines
+
+    def network_lines() -> List[str]:
+        network = dataset.get("social_network") or {}
+        node_name = {
+            n.get("id"): n.get("name", n.get("id")) for n in network.get("nodes") or []
+        }
+        lines = [
+            "  heading          >>> YOURS  (section_headings.network)",
+            "  network_body     >>> YOURS",
+            "",
+            "  then THE GRAPH, which gives the reader who was connected to whom.",
+            "  The cast appears as a graph and the circles arrive one card at a",
+            "  time. You decide the circles (member_ids) and write their cards:",
+            "",
+        ]
+        for circle in _current_circles(dataset):
+            members = ", ".join(person_name(pid) for pid in circle["members"])
+            lines.append(f"  CIRCLE  members: {members}   >>> YOURS to reorganize")
+            if circle["title"] or circle["text"]:
+                lines.append(
+                    f'      draft card: "{circle["title"]}" — {circle["text"]}'
+                )
+        lines += [
+            "",
+            "  [not on the page] the graph's ties — the source your circle cards",
+            "  are built from; the reader sees the graph, never these lines:",
+        ]
+        for link in network.get("links") or []:
+            s, t = link.get("source", ""), link.get("target", "")
+            bridge = " (bridge)" if link.get("kind") != "main" else ""
+            lines.append(
+                f"      {s} <-> {t} ({node_name.get(s, s)} <-> "
+                f"{node_name.get(t, t)}){bridge} "
+                f"[{link.get('relationship_type', '')}, "
+                f"{link.get('strength', '')}]: "
+                f"{link.get('relationship_description', '')}"
+            )
+        lines.append("")
+        return lines
+
+    def map_lines() -> List[str]:
+        geo_map = dataset.get("geo_map") or {}
+        stop_drafts = {
+            s.get("key"): s
+            for s in (geo_map.get("narration") or {}).get("stops") or []
+            if s.get("key")
+        }
+        lines = [
+            "  heading          >>> YOURS  (section_headings.map)",
+            "  map_body         >>> YOURS",
+            "",
+            "  then THE MAP, which gives the reader where it happened. The map",
+            "  pins full screen while the stop cards arrive in the order you set.",
+            "  You keep, order and discard the stops and write their cards:",
+            "",
+        ]
+        for cluster in geo_map.get("clusters") or []:
+            years = (
+                f"{cluster.get('year_start', '')}–{cluster.get('year_end', '')}"
+                if cluster.get("year_start") is not None
+                else ""
+            )
+            lines.append(
+                f"  STOP [{cluster.get('key', '')}] {cluster.get('label', '')} "
+                f"({years}; geographic weight {cluster.get('score', 0):.1f})"
+                "   >>> YOURS"
+            )
+            draft = stop_drafts.get(cluster.get("key"))
+            if draft:
+                lines.append(
+                    f'      draft card: "{draft.get("title", "")}" — '
+                    f"{draft.get('text', '')}"
+                )
+            for event in cluster.get("events") or []:
+                lines.append(
+                    f"      [not on the page] {event.get('event_date', '')} — "
+                    f"{event.get('person_name', '')}: "
+                    f"{event.get('event_title', '')} @ {event.get('place', '')}"
+                )
+        lines.append("")
+        return lines
+
+    section_lines = {
+        "timeline": timeline_lines,
+        "network": network_lines,
+        "map": map_lines,
+    }
+    order = resolve_section_order(dataset)
+
     rule = "─" * 68
     parts = [
         "THE PAGE, IN THE ORDER THE READER MEETS IT",
@@ -532,6 +736,16 @@ def build_page(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
         "are yours to keep, rewrite or replace. Lines marked [not on the page]",
         "are source material the reader never sees.",
         "",
+        "The sections below are printed in the order the data model happens to",
+        "build them, which is no argument about this story. Their order on the",
+        "page is `section_order`, and it is yours to decide. Each answers a",
+        "different question — the timeline WHEN, the graph WHO WITH WHOM, the",
+        "map WHERE — and a story turns on one of them: ask which question this",
+        "cast exists to answer, open with that section, and let the others build",
+        "on what it establishes. The chronology leads when the sequence itself is",
+        "the argument, not because it is printed first here. Then write each",
+        "section body for the position you gave it.",
+        "",
         rule,
         "HEADER",
         rule,
@@ -542,129 +756,16 @@ def build_page(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
         "  opening          >>> YOURS",
         "  description      >>> YOURS",
         "",
-        rule,
-        "SECTION 1",
-        rule,
-        "  heading          >>> YOURS  (section_headings.timeline)",
-        "  timeline_body    >>> YOURS",
-        "",
-        "  then THE TIMELINE, which gives the reader the sequence itself: what",
-        "  happened, dated, era by era. It scrolls sideways and the reader meets",
-        "  one era at a time, seeing that chapter's headline and lead-in alone",
-        "  with its events. These texts are on the page and are yours:",
-        "",
     ]
 
-    for chapter in dataset.get("chapters") or []:
-        parts.append(
-            f"  CHAPTER [{chapter.get('id', '')}] "
-            f"{chapter.get('date_start', '')}–{chapter.get('date_end', '')}"
-            "   >>> headline + lead_in YOURS"
-        )
-        parts.append(f"      draft headline: {chapter.get('title', '')}")
-        if chapter.get("lead_in"):
-            parts.append(f"      draft lead-in: {chapter['lead_in']}")
-        for event in chapter.get("person_events") or []:
-            parts.append(
-                f"      · {event.get('event_date', '')} — "
-                f"{person_name(event.get('person_id', ''))}: "
-                f"{event.get('event_title', '')}"
-            )
-            if event.get("theme_connection"):
-                parts.append(
-                    f"          printed under this event: {event['theme_connection']}"
-                )
-            description = event_description(
-                event.get("person_id", ""), event.get("event_index")
-            )
-            if description:
-                parts.append(f"          [not on the page] source: {description}")
-        parts.append("")
-
-    network = dataset.get("social_network") or {}
-    if network.get("links"):
-        node_name = {
-            n.get("id"): n.get("name", n.get("id")) for n in network.get("nodes") or []
-        }
+    for position, section in enumerate(order, start=1):
         parts += [
             rule,
-            "SECTION 2",
+            f"SECTION {position} of {len(order)} — {section}   "
+            ">>> the position is YOURS (section_order)",
             rule,
-            "  heading          >>> YOURS  (section_headings.network)",
-            "  network_body     >>> YOURS",
-            "",
-            "  then THE GRAPH, which gives the reader who was connected to whom.",
-            "  The cast appears as a graph and the circles arrive one card at a",
-            "  time. You decide the circles (member_ids) and write their cards:",
-            "",
+            *section_lines[section](),
         ]
-        for circle in _current_circles(dataset):
-            members = ", ".join(person_name(pid) for pid in circle["members"])
-            parts.append(f"  CIRCLE  members: {members}   >>> YOURS to reorganize")
-            if circle["title"] or circle["text"]:
-                parts.append(
-                    f'      draft card: "{circle["title"]}" — {circle["text"]}'
-                )
-        parts += [
-            "",
-            "  [not on the page] the graph's ties — the source your circle cards",
-            "  are built from; the reader sees the graph, never these lines:",
-        ]
-        for link in network.get("links") or []:
-            s, t = link.get("source", ""), link.get("target", "")
-            bridge = " (bridge)" if link.get("kind") != "main" else ""
-            parts.append(
-                f"      {s} <-> {t} ({node_name.get(s, s)} <-> "
-                f"{node_name.get(t, t)}){bridge} "
-                f"[{link.get('relationship_type', '')}, "
-                f"{link.get('strength', '')}]: "
-                f"{link.get('relationship_description', '')}"
-            )
-        parts.append("")
-
-    geo_map = dataset.get("geo_map")
-    if isinstance(geo_map, dict) and geo_map.get("clusters"):
-        stop_drafts = {
-            s.get("key"): s
-            for s in (geo_map.get("narration") or {}).get("stops") or []
-            if s.get("key")
-        }
-        parts += [
-            rule,
-            "SECTION 3",
-            rule,
-            "  heading          >>> YOURS  (section_headings.map)",
-            "  map_body         >>> YOURS",
-            "",
-            "  then THE MAP, which gives the reader where it happened. The map",
-            "  pins full screen while the stop cards arrive in the order you set.",
-            "  You keep, order and discard the stops and write their cards:",
-            "",
-        ]
-        for cluster in geo_map["clusters"]:
-            years = (
-                f"{cluster.get('year_start', '')}–{cluster.get('year_end', '')}"
-                if cluster.get("year_start") is not None
-                else ""
-            )
-            parts.append(
-                f"  STOP [{cluster.get('key', '')}] {cluster.get('label', '')} "
-                f"({years}; geographic weight {cluster.get('score', 0):.1f})"
-                "   >>> YOURS"
-            )
-            draft = stop_drafts.get(cluster.get("key"))
-            if draft:
-                parts.append(
-                    f'      draft card: "{draft.get("title", "")}" — '
-                    f"{draft.get('text', '')}"
-                )
-            for event in cluster.get("events") or []:
-                parts.append(
-                    f"      [not on the page] {event.get('event_date', '')} — "
-                    f"{event.get('person_name', '')}: "
-                    f"{event.get('event_title', '')} @ {event.get('place', '')}"
-                )
-        parts.append("")
 
     parts += [
         rule,
@@ -791,7 +892,7 @@ subject of a sentence."""
                 "  Prose blocks: "
                 + ", ".join(
                     f"{region}: {len(result.blocks(region))}"
-                    for region in PROSE_REGIONS
+                    for region in result.reading_order(available_sections(dataset))
                 )
             )
         return result
@@ -848,7 +949,7 @@ def _content_words(text: str) -> set:
 def collect_prose_slots(composed: CompositionResult) -> List[tuple]:
     """The composed prose as ``(slot_id, text)``, in reading order."""
     slots: List[tuple] = []
-    for region in PROSE_REGIONS:
+    for region in composed.reading_order():
         for index, block in enumerate(composed.blocks(region)):
             if block.type == "paragraph" and (block.text or "").strip():
                 slots.append((f"{region}:{index}", (block.text or "").strip()))
@@ -1026,6 +1127,43 @@ def _render_blocks(
                 entry["attribution"] = attribution
             out.append(entry)
     return out
+
+
+def _apply_section_order(
+    dataset: Dict[str, Any],
+    composed: CompositionResult,
+    verbose: bool = False,
+) -> List[str]:
+    """Store the order the reader meets the component sections in.
+
+    The stored order always names exactly the sections the story renders:
+    sections it does not have are ignored, and any the composer forgot are
+    appended in default order, so the page can never lose a component to a
+    careless list.
+    """
+    available = available_sections(dataset)
+    for section in dict.fromkeys(composed.section_order):
+        if section not in available:
+            print(
+                f"Warning: composed section order names '{section}', which this "
+                "story has no section for, ignored"
+            )
+    order = normalize_section_order(composed.section_order, available)
+    forgotten = [
+        section for section in order if section not in set(composed.section_order)
+    ]
+    if forgotten:
+        print(
+            "Warning: composed section order left out "
+            f"{', '.join(forgotten)}, appended in default order"
+        )
+    if order:
+        dataset["section_order"] = order
+    else:
+        dataset.pop("section_order", None)
+    if verbose:
+        print(f"  Section order: {' → '.join(order)}")
+    return order
 
 
 def _apply_network_circles(
@@ -1238,16 +1376,17 @@ def apply_composition(
     if composed.tagline.strip():
         meta["tagline"] = composed.tagline.strip()
 
-    has_map = bool((dataset.get("geo_map") or {}).get("clusters"))
+    order = _apply_section_order(dataset, composed, verbose=verbose)
     corpus = _normalize_quote(material)
     dropped = {"quotes": 0}
 
+    # Rendered in reading order, so the shared image budget is spent on the
+    # pictures the reader reaches first rather than on the data model's order.
     rendered = {
         region: _render_blocks(
             composed.blocks(region), region, resolve_image, corpus, dropped
         )
-        for region in PROSE_REGIONS
-        if has_map or region != "map"
+        for region in composed.reading_order(order)
     }
     # Always replace rather than merge: an empty region is a legitimate result,
     # so leaving the previous composition's paragraphs in place would silently
@@ -1257,20 +1396,21 @@ def apply_composition(
             dataset[region] = rendered[region]
         else:
             dataset.pop(region, None)
-    bodies = {
-        section: rendered[section] for section in BODY_SECTIONS if rendered.get(section)
-    }
+    bodies = {section: rendered[section] for section in order if rendered.get(section)}
     if bodies:
         dataset["section_bodies"] = bodies
     else:
         dataset.pop("section_bodies", None)
 
+    heading_texts = {
+        "timeline": composed.section_headings.timeline,
+        "network": composed.section_headings.network,
+        "map": composed.section_headings.map or "",
+    }
     headings = {
         slot: text.strip()
         for slot, text in (
-            ("timeline", composed.section_headings.timeline),
-            ("network", composed.section_headings.network),
-            ("map", composed.section_headings.map or "" if has_map else ""),
+            *((section, heading_texts[section]) for section in order),
             ("conclusion", composed.section_headings.conclusion),
         )
         if text and text.strip()
@@ -1573,6 +1713,8 @@ def compose_and_save(
 
     meta = composed.get("meta_story", {})
     print(f"  Title: {meta.get('title', '')} — {meta.get('tagline', '')}")
+    if composed.get("section_order"):
+        print(f"  Sections: {' → '.join(composed['section_order'])}")
 
     if dry_run:
         print(f"  Dry run: not writing {path.name}")

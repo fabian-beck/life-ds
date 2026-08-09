@@ -25,6 +25,7 @@ life-ds/
 │   └── utils/
 │       ├── storyHelpers.js   # Dates, images, event/person helpers
 │       ├── metaStoryStyles.js # Resolves a meta story's style to CSS variables
+│       ├── metaStorySections.js # Resolves the composed order of a meta story's sections
 │       └── personNames.js    # Finds person names in prose (highlighting)
 ├── data/
 │   ├── persons.json         # Master person registry
