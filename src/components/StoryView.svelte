@@ -2195,12 +2195,6 @@
       gap: 0.25rem;
     }
 
-    /* Disable auto-centering in landscape mobile - keep content at top */
-    .slide > .content {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-
     .slides-wrapper.map-enabled
       .slide:not(.overview):not(.chapter):not(.conclusion) {
       --slide-bottom-total: 12rem;
@@ -2355,11 +2349,14 @@
     flex-shrink: 0;
     align-self: center;
     width: min(54rem, 100%);
-    /* The event and the invitation under it are centered in the fold as one
-       block, exactly as the event alone is centered on a slide with no depth
-       below it: the free space is split between the margin above the event and
-       the one below the invitation, so nothing opens up between them. */
-    margin: auto auto 0;
+    /* Top-anchored, exactly as the event sits on a slide with no depth below
+       it. An auto top margin used to center the event-plus-invitation block in
+       the fold, which read fine on its own — but the neighboring slides pin
+       their text to the top, so a short deep slide dropped its headline as
+       much as a hundred pixels below where the last slide had it, and swiping
+       through the story made the text jump down and back up. The free space
+       stays below the invitation, where the reserve absorbs it. */
+    margin: 0 auto;
   }
 
   .slide-fold > .slide-reserve {
@@ -2473,12 +2470,6 @@
     .depth-affordance {
       padding: 0.3rem 0.6rem 0.35rem;
     }
-  }
-
-  /* Center content vertically when there's space, but never clip at top */
-  .slide > .content {
-    margin-top: auto;
-    margin-bottom: auto;
   }
 
   /* The content keeps its natural height: when a slide has to scroll it is the
