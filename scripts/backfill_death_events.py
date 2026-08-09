@@ -28,11 +28,8 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import re
 from typing import Any, Dict, Optional, cast
-
-from openai import OpenAI
 
 from config import (
     BULK_MODEL,
@@ -42,6 +39,7 @@ from config import (
     enable_utf8_console,
 )
 from generate_person_events import DeathClassification, find_death_event_index
+from utils.model_calls import MissingApiKey, get_client
 from utils.datasets import event_files, person_ids
 from utils.json_io import read_json, write_json
 
@@ -86,13 +84,14 @@ def extract_death_facts(
     person_name: str, event: Dict[str, Any], model: str
 ) -> Optional[DeathClassification]:
     """One small call per person; a failure costs the cause, not the run."""
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
+    try:
+        client = get_client()
+    except MissingApiKey:
         print("    ⚠ OPENAI_API_KEY is not set — classifying without a cause")
         return None
 
     try:
-        response = OpenAI(api_key=api_key).responses.parse(
+        response = client.responses.parse(
             model=model,
             reasoning=cast(Any, {"effort": LOW_REASONING_EFFORT}),
             input=[

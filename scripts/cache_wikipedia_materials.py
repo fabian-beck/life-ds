@@ -11,6 +11,7 @@ from openai import OpenAI
 from pydantic import BaseModel, Field
 
 from config import BULK_MODEL, LOW_REASONING_EFFORT
+from utils.text import slugify
 from utils.wikipedia_cache import (
     cache_exists,
     ensure_cache,
@@ -18,7 +19,6 @@ from utils.wikipedia_cache import (
     get_cache_dir,
     get_cached_wikipedia_page,
     is_url,
-    slugify,
     wikipedia_headers,
     _fetch_wikipedia_page_direct,
 )

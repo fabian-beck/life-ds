@@ -16,6 +16,7 @@ from openai import APIStatusError, OpenAI
 from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from utils.text import slugify
 from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
     get_cache_dir,
@@ -172,12 +173,6 @@ class EgoNetwork(BaseModel):
     category_summaries: List[CategorySummary] = Field(
         description="Brief summaries for each relationship category present in the network, starting with family"
     )
-
-
-def slugify(value: str) -> str:
-    """Convert a string into a URL-friendly slug."""
-    slug = re.sub(r"[^a-z0-9]+", "_", value.strip().lower())
-    return slug.strip("_") or "person"
 
 
 def wikipedia_headers() -> Dict[str, str]:

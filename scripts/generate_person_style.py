@@ -15,6 +15,7 @@ from xml.etree import ElementTree as ET
 from openai import APIStatusError, OpenAI
 
 from config import BULK_MODEL, BULK_REASONING_EFFORT, enable_utf8_console
+from utils.text import slugify
 
 enable_utf8_console()
 
@@ -39,11 +40,6 @@ BODY_FONT_CHOICES = [
     "DM Sans",
     "Manrope",
 ]
-
-
-def slugify(value: str) -> str:
-    slug = re.sub(r"[^a-z0-9]+", "_", value.strip().lower())
-    return slug.strip("_") or "person"
 
 
 def is_hex_color(value: Any) -> TypeGuard[str]:

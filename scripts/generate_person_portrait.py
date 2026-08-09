@@ -19,6 +19,8 @@ from bs4 import BeautifulSoup
 from openai import APIStatusError, OpenAI
 from PIL import Image, ImageOps
 
+from utils.text import slugify
+
 # Set UTF-8 encoding for Windows console with unbuffered output
 if sys.platform == "win32":
     import io
@@ -73,12 +75,6 @@ MANDATORY_PORTRAIT_FRAMING = """MANDATORY PORTRAIT FRAMING:
 - Never shrink the person to preserve the original composition; likeness takes priority over scene preservation
 - Keep the complete head, hair, chin, and shoulders comfortably inside the frame
 """
-
-
-def slugify(value: str) -> str:
-    """Convert a string into a URL-friendly slug."""
-    slug = re.sub(r"[^a-z0-9]+", "_", value.strip().lower())
-    return slug.strip("_") or "person"
 
 
 def get_wikimedia_thumbnail_url(

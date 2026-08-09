@@ -33,7 +33,7 @@ from typing import (
 from urllib.parse import quote
 
 import requests
-from openai import APIStatusError, OpenAI
+from openai import APIStatusError
 from pydantic import BaseModel, Field
 
 from config import (
@@ -48,12 +48,21 @@ from icon_categories import (
     format_icon_categories_for_prompt,
     normalize_icon,
 )
-from utils.model_calls import parse_structured
+from utils.model_calls import get_client, parse_structured
+from utils.json_io import write_json
+from utils.text import slugify
 from utils.wikipedia_cache import (
+    MEDIAWIKI_API,
+    WIKIPEDIA_SUMMARY_API,
+    _fetch_wikipedia_page_from_api,
+    _fetch_wikipedia_summary_from_api,
+    _strip_html_tags,
+    ensure_cache,
+    extract_wikipedia_title,
+    get_cache_dir,
     get_cached_wikipedia_page,
     get_cached_wikipedia_summary,
-    ensure_cache,
-    get_cache_dir,
+    wikipedia_headers,
 )
 
 enable_utf8_console()
@@ -122,11 +131,6 @@ DATASET_NAME = "Life Data Stories"
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 REGISTER_PATH = DATA_DIR / "persons.json"
 PEOPLE_DIR = DATA_DIR / "people"
-MEDIAWIKI_API = "https://en.wikipedia.org/w/api.php"
-WIKIPEDIA_SUMMARY_API = "https://en.wikipedia.org/api/rest_v1/page/summary/"
-DEFAULT_USER_AGENT = (
-    "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
-)
 GEOCODER_ENDPOINT = os.getenv(
     "LIFE_DS_GEOCODER_ENDPOINT",
     "https://nominatim.openstreetmap.org/search",
@@ -933,14 +937,6 @@ def _normalize_location_text(value: str) -> str:
     return re.sub(r"\s+", " ", value).strip(",; ")
 
 
-def _strip_html_tags(value: str) -> str:
-    clean = re.sub(r"<[^>]+>", "", value)
-    clean = clean.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&")
-    clean = clean.replace("&quot;", '"').replace("&#39;", "'").replace("&nbsp;", " ")
-    clean = " ".join(clean.split())
-    return clean.strip()
-
-
 def _clean_candidate_name(value: Optional[str]) -> Optional[str]:
     if not value or not isinstance(value, str):
         return None
@@ -1092,16 +1088,6 @@ def event_sort_key(event: Dict[str, Any]) -> str:
     if precision == "month":
         return f"{date_value}-28"
     return str(date_value)
-
-
-def slugify(value: str) -> str:
-    slug = re.sub(r"[^a-z0-9]+", "_", value.strip().lower())
-    return slug.strip("_") or "person"
-
-
-def wikipedia_headers() -> Dict[str, str]:
-    user_agent = os.getenv("WIKIPEDIA_USER_AGENT", DEFAULT_USER_AGENT)
-    return {"User-Agent": user_agent}
 
 
 def geocoder_headers() -> Dict[str, str]:
@@ -1324,75 +1310,10 @@ def _upper_bound_date(value: Optional[str], precision: str) -> Optional[date]:
 # ============================================================================
 
 
-def extract_wikipedia_title(url_or_subject: str) -> Optional[Tuple[str, str]]:
-    """Extract Wikipedia article title and language code from a URL."""
-    from urllib.parse import urlparse, unquote
-
-    url_or_subject = url_or_subject.strip()
-
-    if not (
-        url_or_subject.startswith("http://") or url_or_subject.startswith("https://")
-    ):
-        return None
-
-    try:
-        parsed = urlparse(url_or_subject)
-
-        if not parsed.netloc or "wikipedia.org" not in parsed.netloc:
-            return None
-
-        domain_parts = parsed.netloc.split(".")
-        if (
-            len(domain_parts) >= 2
-            and domain_parts[-2] == "wikipedia"
-            and domain_parts[-1] == "org"
-        ):
-            lang_code = domain_parts[0]
-        else:
-            lang_code = "en"
-
-        path_parts = parsed.path.split("/")
-        if len(path_parts) >= 3 and path_parts[1] == "wiki":
-            title = "/".join(path_parts[2:])
-            title = unquote(title)
-            title = title.replace("_", " ")
-            return (title, lang_code)
-
-        return None
-    except Exception:
-        return None
-
-
 def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, Any]:
     language = lang or _wikipedia_lang or "en"
     api_url = f"https://{language}.wikipedia.org/w/api.php"
-
-    params = {
-        "action": "query",
-        "format": "json",
-        "prop": "extracts|pageimages|info|images",
-        "explaintext": 1,
-        "redirects": 1,
-        "inprop": "url",
-        "piprop": "original",
-        "titles": title,
-        "imlimit": 100,
-    }
-    response = requests.get(
-        api_url,
-        params=params,
-        timeout=30,
-        headers=wikipedia_headers(),
-    )
-    response.raise_for_status()
-    data = response.json()
-    pages = data.get("query", {}).get("pages", {})
-    if not pages:
-        raise ValueError(f"No Wikipedia page found for '{title}'.")
-    page = next(iter(pages.values()))
-    if "missing" in page:
-        raise ValueError(f"Wikipedia page for '{title}' is missing.")
-    return cast(Dict[str, Any], page)
+    return _fetch_wikipedia_page_from_api(title, api_url)
 
 
 def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
@@ -1489,11 +1410,7 @@ def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
 
 def fetch_wikipedia_summary(title: str) -> Dict[str, Any]:
     """Fetch Wikipedia summary from REST API."""
-    url = WIKIPEDIA_SUMMARY_API + quote(title.replace(" ", "_"))
-    response = requests.get(url, timeout=30, headers=wikipedia_headers())
-    if response.status_code != 200:
-        return {}
-    return cast(Dict[str, Any], response.json())
+    return _fetch_wikipedia_summary_from_api(title, WIKIPEDIA_SUMMARY_API)
 
 
 # ============================================================================
@@ -2178,12 +2095,11 @@ def generate_image_search_strings(
         "Always anchor generic terms to the person's name or specific named entities.\n"
     )
 
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
+    if not os.getenv("OPENAI_API_KEY"):
         # Fallback: generate basic search strings
         return [f"{person_name}", f"{person_name} portrait"]
 
-    client = OpenAI(api_key=api_key)
+    client = get_client()
 
     try:
         response = client.responses.parse(
@@ -2353,11 +2269,10 @@ def match_images_to_events(
     prompt += "  • Good: 'The Olympiastadion Munich roof structure'\n"
     prompt += "  • Bad: 'Aerial view showing the curved tensile membrane' (you can't see this)\n"
 
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
+    if not os.getenv("OPENAI_API_KEY"):
         return {}, None
 
-    client = OpenAI(api_key=api_key)
+    client = get_client()
 
     try:
         response = client.responses.parse(
@@ -2685,11 +2600,7 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
     Returns:
         LifePlan with person metadata and event skeletons
     """
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
-
-    client = OpenAI(api_key=api_key)
+    client = get_client()
 
     system = (
         "You are a meticulous historian creating biographical timeline outlines. "
@@ -3450,10 +3361,6 @@ def research_event_details(
             background_avoidance=background_avoidance,
         )
 
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
-
     system = (
         "You are a research assistant specializing in biographical event details. "
         "Provide specific, factual information for the given event. "
@@ -3465,7 +3372,7 @@ def research_event_details(
     )
 
     details = parse_structured(
-        OpenAI(api_key=api_key),
+        get_client(),
         model=model,
         reasoning_effort=PHASE2_REASONING_EFFORT,
         input=[
@@ -3675,11 +3582,7 @@ def call_openai_chapter_generation(
     Returns:
         ChapterGenerationOutput with list of chapters including involved_people and location
     """
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
-
-    client = OpenAI(api_key=api_key)
+    client = get_client()
 
     system = (
         "You are a skilled biographer crafting a compelling narrative from life events. "
@@ -4007,17 +3910,7 @@ def research_images_for_all_events(
         event_dict = event.model_dump()
 
         if idx in assignments:
-            img = assignments[idx]
-            event_dict["images"] = [
-                {
-                    "url": img["url"],
-                    "caption": img["caption"],
-                    "source": img["source"],
-                    "creator": img.get("creator"),
-                    "license": img.get("license"),
-                    "licenseUrl": img.get("licenseUrl"),
-                }
-            ]
+            event_dict["images"] = [image_assignment_block(assignments[idx])]
             safe_title = event.title.encode("ascii", "replace").decode("ascii")
             print(f"    ✓ Event {idx}: {safe_title}")
         else:
@@ -4448,9 +4341,7 @@ def write_dataset(payload: Dict[str, Any], person_id: str) -> Path:
     person_dir = PEOPLE_DIR / person_id
     person_dir.mkdir(parents=True, exist_ok=True)
     output_path = person_dir / "life_events.json"
-    output_path.write_text(
-        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
+    write_json(output_path, payload)
     return output_path
 
 
@@ -4533,9 +4424,7 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
 
     people.sort(key=lambda item: item.get("name", ""))
     REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
-    REGISTER_PATH.write_text(
-        json.dumps(register, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
+    write_json(REGISTER_PATH, register)
 
 
 # ============================================================================
@@ -4634,10 +4523,7 @@ def generate_person_events(
                 cache_dir = get_cache_dir(identifier)
                 related_path = cache_dir / "related_articles.json"
                 cache_dir.mkdir(parents=True, exist_ok=True)
-                related_path.write_text(
-                    json.dumps(related_articles, indent=2, ensure_ascii=False) + "\n",
-                    encoding="utf-8",
-                )
+                write_json(related_path, related_articles)
                 print(f"[Step 3/10] Cached {len(related_articles)} related articles")
         except Exception as e:
             print(f"[Step 3/10] Warning: Failed to fetch related articles ({e})")
@@ -4739,80 +4625,14 @@ def generate_person_events(
     # Build final payload
     person_data = life_plan.person.model_dump()
 
-    # Check if there's already a generated portrait in the registry OR on disk
-    existing_generated_portrait = None
-    try:
-        # First check registry
-        if REGISTER_PATH.exists():
-            registry = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
-            people = registry.get("people", [])
-            for person in people:
-                if person.get("id") == identifier:
-                    existing_portrait = person.get("portrait", {})
-                    # Check if it's a generated portrait (local path starting with /portraits/)
-                    if existing_portrait and isinstance(
-                        existing_portrait.get("image"), str
-                    ):
-                        if existing_portrait["image"].startswith("/portraits/"):
-                            existing_generated_portrait = existing_portrait
-                            print(
-                                f"  Found existing generated portrait in registry: {existing_portrait['image']}"
-                            )
-                    break
-
-        # If not in registry, check if portrait files exist on disk
-        if not existing_generated_portrait:
-            portraits_dir = Path(__file__).resolve().parents[1] / "public" / "portraits"
-            thumbnail_path = portraits_dir / f"{identifier}_thumbnail.webp"
-            if thumbnail_path.exists():
-                # Found generated portrait files - reconstruct portrait data
-                existing_generated_portrait = {
-                    "image": f"/portraits/{identifier}_thumbnail.webp",
-                    "thumbnail": f"/portraits/{identifier}_thumbnail.webp",
-                    "medium": f"/portraits/{identifier}_medium.webp",
-                    "full": f"/portraits/{identifier}_full.webp",
-                    "caption": "Stylized portrait based on historical photograph",
-                    "creator": "AI generated artwork",
-                }
-                print(
-                    f"  Found existing generated portrait files on disk: {thumbnail_path.name}"
-                )
-    except Exception as e:
-        print(f"  Warning: Could not check for existing portrait: {e}")
-
-    # Apply AI-selected portrait if available, but preserve generated portraits
-    if portrait:
-        if existing_generated_portrait:
-            # Preserve generated portrait but update originalImage field
-            portrait_data = existing_generated_portrait.copy()
-            portrait_data["originalImage"] = portrait["url"]
-            # Update source to point to the Wikimedia Commons page
-            if "source" not in portrait_data or not portrait_data["source"].startswith(
-                "http"
-            ):
-                portrait_data["source"] = portrait["source"]
-            print(
-                f"  Preserving generated portrait, updating originalImage to: {portrait['url']}"
-            )
-        else:
-            # No generated portrait, use AI-selected Wikimedia portrait
-            portrait_data = {
-                "image": portrait["url"],
-                "source": portrait["source"],
-            }
-            if portrait.get("caption"):
-                portrait_data["caption"] = portrait["caption"]
-            if portrait.get("creator"):
-                portrait_data["creator"] = portrait["creator"]
-            if portrait.get("license"):
-                portrait_data["license"] = portrait["license"]
-            if portrait.get("licenseUrl"):
-                portrait_data["licenseUrl"] = portrait["licenseUrl"]
-        person_data["portrait"] = portrait_data
-    elif existing_generated_portrait:
-        # No AI portrait but we have a generated one - keep it
-        person_data["portrait"] = existing_generated_portrait
-        print("  No AI portrait found, keeping existing generated portrait")
+    # Apply the AI-selected portrait, but never displace a generated one.
+    portrait_block = resolve_portrait(
+        portrait, find_existing_generated_portrait(identifier)
+    )
+    if portrait_block:
+        person_data["portrait"] = portrait_block
+    else:
+        person_data.pop("portrait", None)
 
     payload: Dict[str, Any] = {
         "dataset": life_plan.dataset,
@@ -4928,6 +4748,102 @@ def parse_args(argv: Any) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+def find_existing_generated_portrait(
+    person_id: str, *, indent: str = "  "
+) -> Optional[Dict[str, Any]]:
+    """A previously generated portrait for this person, or None.
+
+    The registry is checked first; when it does not carry one, the portrait
+    files on disk still count — a regeneration must not lose a portrait that
+    only the files remember.
+    """
+    try:
+        if REGISTER_PATH.exists():
+            registry = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
+            for person in registry.get("people", []):
+                if person.get("id") != person_id:
+                    continue
+                existing = person.get("portrait", {})
+                if (
+                    existing
+                    and isinstance(existing.get("image"), str)
+                    and existing["image"].startswith("/portraits/")
+                ):
+                    print(
+                        f"{indent}Found existing generated portrait in registry: "
+                        f"{existing['image']}"
+                    )
+                    return cast(Dict[str, Any], existing)
+                break
+
+        portraits_dir = Path(__file__).resolve().parents[1] / "public" / "portraits"
+        thumbnail_path = portraits_dir / f"{person_id}_thumbnail.webp"
+        if thumbnail_path.exists():
+            print(
+                f"{indent}Found existing generated portrait files on disk: "
+                f"{thumbnail_path.name}"
+            )
+            return {
+                "image": f"/portraits/{person_id}_thumbnail.webp",
+                "thumbnail": f"/portraits/{person_id}_thumbnail.webp",
+                "medium": f"/portraits/{person_id}_medium.webp",
+                "full": f"/portraits/{person_id}_full.webp",
+                "caption": "Stylized portrait based on historical photograph",
+                "creator": "AI generated artwork",
+            }
+    except Exception as e:
+        print(f"{indent}Warning: Could not check for existing portrait: {e}")
+    return None
+
+
+def resolve_portrait(
+    ai_portrait: Optional[Dict[str, Any]],
+    existing_generated: Optional[Dict[str, Any]],
+    *,
+    indent: str = "  ",
+) -> Optional[Dict[str, Any]]:
+    """The portrait block to store, or None when there is nothing to show.
+
+    A generated portrait always wins over the AI-selected Wikimedia one; the
+    latter then only refreshes the originalImage reference and, where missing,
+    the source link.
+    """
+    if ai_portrait:
+        if existing_generated:
+            portrait_data = existing_generated.copy()
+            portrait_data["originalImage"] = ai_portrait["url"]
+            if "source" not in portrait_data or not portrait_data["source"].startswith(
+                "http"
+            ):
+                portrait_data["source"] = ai_portrait["source"]
+            print(
+                f"{indent}Preserving generated portrait, updating originalImage to: "
+                f"{ai_portrait['url']}"
+            )
+            return portrait_data
+        portrait_data = {
+            "image": ai_portrait["url"],
+            "source": ai_portrait["source"],
+        }
+        for key in ("caption", "creator", "license", "licenseUrl"):
+            if ai_portrait.get(key):
+                portrait_data[key] = ai_portrait[key]
+        return portrait_data
+    if existing_generated:
+        print(f"{indent}No AI portrait found, keeping existing generated portrait")
+        return existing_generated
+    return None
+
+
+def image_assignment_block(img: Dict[str, Any]) -> Dict[str, Any]:
+    """One stored image entry, keeping only the attribution fields that exist."""
+    block = {"url": img["url"], "caption": img["caption"], "source": img["source"]}
+    for key in ("creator", "license", "licenseUrl"):
+        if img.get(key):
+            block[key] = img[key]
+    return block
+
+
 def regenerate_images_only(subject: str) -> Tuple[Path, str]:
     """
     Re-run only Phase 3 (image search and assignment) using existing life_events.json.
@@ -5040,79 +4956,13 @@ def regenerate_images_only(subject: str) -> Tuple[Path, str]:
     # Apply portrait to person data
     print("[Step 3/4] Updating events with new image assignments...")
 
-    # Check if there's already a generated portrait in the registry OR on disk
-    existing_generated_portrait = None
-    try:
-        # First check registry
-        if REGISTER_PATH.exists():
-            registry = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
-            people = registry.get("people", [])
-            for person in people:
-                if person.get("id") == person_id:
-                    existing_portrait = person.get("portrait", {})
-                    # Check if it's a generated portrait (local path starting with /portraits/)
-                    if existing_portrait and isinstance(
-                        existing_portrait.get("image"), str
-                    ):
-                        if existing_portrait["image"].startswith("/portraits/"):
-                            existing_generated_portrait = existing_portrait
-                            print(
-                                f"    Found existing generated portrait in registry: {existing_portrait['image']}"
-                            )
-                    break
-
-        # If not in registry, check if portrait files exist on disk
-        if not existing_generated_portrait:
-            portraits_dir = Path(__file__).resolve().parents[1] / "public" / "portraits"
-            thumbnail_path = portraits_dir / f"{person_id}_thumbnail.webp"
-            if thumbnail_path.exists():
-                # Found generated portrait files - reconstruct portrait data
-                existing_generated_portrait = {
-                    "image": f"/portraits/{person_id}_thumbnail.webp",
-                    "thumbnail": f"/portraits/{person_id}_thumbnail.webp",
-                    "medium": f"/portraits/{person_id}_medium.webp",
-                    "full": f"/portraits/{person_id}_full.webp",
-                    "caption": "Stylized portrait based on historical photograph",
-                    "creator": "AI generated artwork",
-                }
-                print(
-                    f"    Found existing generated portrait files on disk: {thumbnail_path.name}"
-                )
-    except Exception as e:
-        print(f"    Warning: Could not check for existing portrait: {e}")
-
-    if portrait:
-        if existing_generated_portrait:
-            # Preserve generated portrait but update originalImage field
-            portrait_data = existing_generated_portrait.copy()
-            portrait_data["originalImage"] = portrait["url"]
-            # Update source to point to the Wikimedia Commons page
-            if "source" not in portrait_data or not portrait_data["source"].startswith(
-                "http"
-            ):
-                portrait_data["source"] = portrait["source"]
-            print(
-                f"    Preserving generated portrait, updating originalImage to: {portrait['url']}"
-            )
-        else:
-            # No generated portrait, use AI-selected Wikimedia portrait
-            portrait_data = {
-                "image": portrait["url"],
-                "source": portrait["source"],
-            }
-            if portrait.get("caption"):
-                portrait_data["caption"] = portrait["caption"]
-            if portrait.get("creator"):
-                portrait_data["creator"] = portrait["creator"]
-            if portrait.get("license"):
-                portrait_data["license"] = portrait["license"]
-            if portrait.get("licenseUrl"):
-                portrait_data["licenseUrl"] = portrait["licenseUrl"]
-        payload["person"]["portrait"] = portrait_data
-    elif existing_generated_portrait:
-        # No AI portrait but we have a generated one - keep it
-        payload["person"]["portrait"] = existing_generated_portrait
-        print("    No AI portrait found, keeping existing generated portrait")
+    portrait_block = resolve_portrait(
+        portrait,
+        find_existing_generated_portrait(person_id, indent="    "),
+        indent="    ",
+    )
+    if portrait_block:
+        payload["person"]["portrait"] = portrait_block
     else:
         # AI found no suitable portrait and no generated portrait exists
         payload["person"].pop("portrait", None)
@@ -5121,19 +4971,7 @@ def regenerate_images_only(subject: str) -> Tuple[Path, str]:
     # Apply assignments to events
     for idx, event in enumerate(events):
         if idx in assignments:
-            img = assignments[idx]
-            image_data = {
-                "url": img["url"],
-                "caption": img["caption"],
-                "source": img["source"],
-            }
-            if img.get("creator"):
-                image_data["creator"] = img["creator"]
-            if img.get("license"):
-                image_data["license"] = img["license"]
-            if img.get("licenseUrl"):
-                image_data["licenseUrl"] = img["licenseUrl"]
-            event["images"] = [image_data]
+            event["images"] = [image_assignment_block(assignments[idx])]
             safe_title = (
                 event.get("title", "").encode("ascii", "replace").decode("ascii")
             )
@@ -5146,9 +4984,7 @@ def regenerate_images_only(subject: str) -> Tuple[Path, str]:
 
     # Write updated file
     print("[Step 4/4] Writing updated dataset...")
-    events_path.write_text(
-        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
+    write_json(events_path, payload)
 
     images_assigned = sum(1 for e in events if e.get("images"))
     print(f"\nDone! Assigned images to {images_assigned} / {len(events)} events")

@@ -27,7 +27,6 @@ Meta-stories group multiple people around thematic topics with temporal chapters
 import argparse
 import json
 import os
-import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -50,6 +49,7 @@ from meta_story_map_narration import generate_geo_map
 from meta_story_network import build_social_network, derive_clusters
 from meta_story_network_review import review_social_network
 from utils.json_io import read_json, write_json
+from utils.text import slugify as canonical_slugify
 from utils.model_calls import parse_structured
 
 enable_utf8_console()
@@ -340,12 +340,7 @@ class NetworkNarrationResult(BaseModel):
 
 def slugify(title: str) -> str:
     """Convert meta-story title to slug (story_id)."""
-    # Remove parenthetical content and special chars
-    title = title.split("(")[0].strip()
-    slug = re.sub(r"[^a-z0-9]+", "_", title.lower())
-    while "__" in slug:
-        slug = slug.replace("__", "_")
-    return slug.strip("_")
+    return canonical_slugify(title, drop_parenthetical=True, empty="")
 
 
 def load_persons_registry() -> Dict[str, Any]:

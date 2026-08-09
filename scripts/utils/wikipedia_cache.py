@@ -33,12 +33,6 @@ DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 PEOPLE_DIR = DATA_DIR / "people"
 
 
-def slugify(value: str) -> str:
-    """Convert a string into a URL-friendly slug."""
-    slug = re.sub(r"[^a-z0-9]+", "_", value.strip().lower())
-    return slug.strip("_") or "person"
-
-
 def wikipedia_headers() -> Dict[str, str]:
     """Return headers for Wikipedia API requests."""
     user_agent = os.getenv("WIKIPEDIA_USER_AGENT", DEFAULT_USER_AGENT)

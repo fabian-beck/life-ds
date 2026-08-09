@@ -49,6 +49,7 @@ from config import (
     enable_utf8_console,
 )
 from utils.model_calls import parse_structured
+from utils.text import slugify as canonical_slugify
 from utils.wikipedia_cache import (
     extract_wikipedia_title,
     fetch_language_links,
@@ -1403,15 +1404,8 @@ def format_glossary_for_prompt(glossary: Dict[str, str]) -> str:
 
 
 def slugify(name: str) -> str:
-    """Convert a person name to a slug (person_id)."""
-    # Remove parenthetical content
-    name = name.split("(")[0].strip()
-    # Convert to lowercase and replace spaces/special chars with underscores
-    slug = name.lower().replace(" ", "_").replace(".", "_").replace("-", "_")
-    # Remove consecutive underscores
-    while "__" in slug:
-        slug = slug.replace("__", "_")
-    return slug.strip("_")
+    """Convert a person name to the canonical person_id slug."""
+    return canonical_slugify(name, drop_parenthetical=True)
 
 
 def find_person_by_name_or_id(name_or_id: str) -> Optional[Dict[str, Any]]:

@@ -31,6 +31,7 @@ must align with, in the phase that knows what they mean.
 
 from __future__ import annotations
 
+import os
 import time
 from typing import Any, Dict, List, Optional, Sequence, Type, TypeVar, cast
 
@@ -47,6 +48,30 @@ RETRYABLE_STATUS = frozenset({408, 409, 429, 500, 502, 503, 504})
 DEFAULT_ATTEMPTS = 3
 BACKOFF_SECONDS = 2.0
 """Delay before attempt N+1, multiplied by N — 2 s, then 4 s."""
+
+_shared_client: Optional[OpenAI] = None
+
+
+class MissingApiKey(RuntimeError):
+    """OPENAI_API_KEY is not set, so no model can be called."""
+
+
+def get_client() -> OpenAI:
+    """The one OpenAI client the process shares.
+
+    Every ``OpenAI(...)`` construction opens its own HTTP connection pool, so
+    a script that builds a client per phase — or per call, inside a loop —
+    pays a fresh TLS handshake for requests that could have reused a
+    connection. Subclassing RuntimeError keeps the callers that guarded the
+    old per-site constructions with ``except RuntimeError`` working unchanged.
+    """
+    global _shared_client
+    if _shared_client is None:
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            raise MissingApiKey("OPENAI_API_KEY is not set.")
+        _shared_client = OpenAI(api_key=api_key)
+    return _shared_client
 
 
 def is_retryable(error: Exception) -> bool:
