@@ -42,8 +42,14 @@ jobs:
       - name: Build
         run: npm run build
 
+      # `enablement: true` creates the Pages site (build type "workflow") on
+      # first use instead of failing with "Get Pages site: Not Found" — every
+      # run of this workflow had died on that step because the repository's
+      # Pages site was never provisioned.
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Upload the built site
         uses: actions/upload-pages-artifact@v3
