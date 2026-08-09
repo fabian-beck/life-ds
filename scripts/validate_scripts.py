@@ -61,6 +61,21 @@ def script_of(char: str) -> str:
     return "other"
 
 
+def control_characters(text: str) -> List[str]:
+    """Control characters that have no business in prose or names.
+
+    Frank Lloyd Wright's wife shipped as "Lazovi\\x0107" — the ć's escape
+    sequence half-lost, leaving a control byte and stray digits the slide
+    renders as garbage. Newlines and tabs are structure; everything else in
+    Cc is corruption.
+    """
+    return [
+        f"U+{ord(c):04X}"
+        for c in text
+        if unicodedata.category(c) == "Cc" and c not in "\n\r\t"
+    ]
+
+
 def mixed_script_words(text: str) -> List[str]:
     """The words whose letters come from more than one writing system."""
     corrupt: List[str] = []
@@ -118,6 +133,12 @@ def main(argv: Optional[List[str]] = None) -> int:
                 print(
                     f"ERROR: {path.relative_to(DATA_DIR.parent)}{field}: "
                     f'"{word}" mixes Latin with {", ".join(scripts)}'
+                )
+                findings += 1
+            for control in control_characters(text):
+                print(
+                    f"ERROR: {path.relative_to(DATA_DIR.parent)}{field}: "
+                    f"control character {control}"
                 )
                 findings += 1
 

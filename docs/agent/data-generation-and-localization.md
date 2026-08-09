@@ -158,6 +158,15 @@ python scripts/validate_life_spans.py max_planck
 
 The cached articles write life spans in parentheses ("Karl (1888–1916)"), and the generator read them yet still shipped "killed at Verdun in 1917" — a wrong year attached to a *different* person, which neither the chronological check nor `validate_event_dates.py` can see. This collects every such span from the person's `_cache` and holds two things to them: a network connection must not end after that person's death or start before their birth, and a prose sentence that says a named person died must name a year the sources give as that person's death year. Family names resolve through bare first names the way the articles write relatives; everyone else matches on the full name only. A person without a cache produces no findings, so run it right after generating, while the cache that fed the prompts is still on disk; a finding that is right despite the sources belongs in the script's `ACCEPTED` list with the reason.
 
+**Check that events spell people the way the network spells them** (no API key, no model):
+
+```bash
+python scripts/validate_involved_names.py            # exit 1 on any finding
+python scripts/validate_involved_names.py max_planck
+```
+
+The story matches `involved_people` against `ego_network.json` by name to draw the person chips, without folding diacritics or ß/ss — so "Marga von Hößlin Planck" against "Marga von Hösslin" silently lost its chip, and nothing reported it because a failed match is also the correct outcome for people who are not in the network. This flags the near miss: a pair that folds to one person (diacritics collapsed, particles dropped, token subsets allowed) and that the interface's scoring — ported from `storyHelpers.js`, keep the two in sync — nonetheless rejects. Its first corpus run surfaced seven shipped misses, from "Leó Szilárd"/"Leo Szilard" to a control-character corruption of "Lazović". The fix is to spell both sides identically; a pair that is genuinely two people belongs in the script's `ACCEPTED` list with the reason.
+
 **Check the words for mixed writing systems** (no API key, no model):
 
 ```bash

@@ -14,7 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from validate_scripts import mixed_script_words  # noqa: E402
+from validate_scripts import control_characters, mixed_script_words  # noqa: E402
 
 
 class MixedScriptTests(unittest.TestCase):
@@ -52,6 +52,14 @@ class MixedScriptTests(unittest.TestCase):
         self.assertEqual(
             mixed_script_words("Die Zwillingstöchter starben im Kindbett."), []
         )
+
+
+class ControlCharacterTests(unittest.TestCase):
+    def test_the_wright_corruption_is_found(self) -> None:
+        self.assertEqual(control_characters("Olgivanna Lazovi\x0107"), ["U+0001"])
+
+    def test_structural_whitespace_passes(self) -> None:
+        self.assertEqual(control_characters("line one\nline two\ttabbed"), [])
 
 
 if __name__ == "__main__":
