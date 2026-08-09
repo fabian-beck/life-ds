@@ -2111,9 +2111,7 @@ def search_openverse(query: str, limit: int = 10) -> List[Dict[str, Any]]:
                 "width": item.get("width") or 0,
                 "height": item.get("height") or 0,
                 "size": item.get("filesize") or 0,
-                "mime": (
-                    f"image/{item['filetype']}" if item.get("filetype") else ""
-                ),
+                "mime": (f"image/{item['filetype']}" if item.get("filetype") else ""),
             }
         )
 
