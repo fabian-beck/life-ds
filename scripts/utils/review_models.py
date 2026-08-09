@@ -76,6 +76,14 @@ class EventChanges(BaseModel):
     event_index: int
     new_title: Optional[str] = None
     new_description: Optional[str] = None
+    new_date_end: Optional[str] = Field(
+        None,
+        description=(
+            "Corrected end date for an event that spans a period (YYYY, "
+            "YYYY-MM, or YYYY-MM-DD), only when the event's own description "
+            "proves the span. The event's anchor date is not editable."
+        ),
+    )
     new_annotations: Optional[Dict[str, Annotation]] = None
     new_involved_people: Optional[List[str]] = None
     new_locations: Optional[List[LocationObject]] = None

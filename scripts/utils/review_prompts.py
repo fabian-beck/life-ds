@@ -176,7 +176,7 @@ REVIEW GUIDELINES:
 **Metadata**:
 - **Involved People**: Add missing people mentioned in event description who played a key role
 - **Locations**: Fill in missing location data if the event clearly happened somewhere specific. Give `name_historic` as the place was called at the time and `name_modern` as it is called today and would be searched for (omit `name_modern` when the two are the same), and mark exactly one location `primary`. Do not supply coordinates — the geocoder resolves the names you give.
-- **Dates**: Add more precise dates if available in Wikipedia (e.g., upgrade "1936" to "1936-11-28")
+- **Dates**: The event's anchor date is not editable. When an event spans a period and its own description proves a later end (losses running to 1919 while the metadata ends in 1917), set `new_date_end` (YYYY, YYYY-MM, or YYYY-MM-DD); its precision is read off the value you give
 - **Icons**: Verify event_type_icon matches event semantics, change if more appropriate icon exists
 - Ensure historical accuracy for all metadata
 

@@ -486,6 +486,37 @@ def review_person_data(
         print(
             f"  Style: {style_applied} changes would be applied, {style_skipped} skipped"
         )
+        # Name each proposed change: a dry run whose output is three counts
+        # cannot be reviewed, and reviewing is the mode's whole point.
+        for change in combined_review.events_changes.events:
+            fields = ", ".join(
+                f"{name.removeprefix('new_')}={value!r}"
+                for name, value in change.model_dump(exclude_none=True).items()
+                if name.startswith("new_")
+            )
+            if fields:
+                print(
+                    f"  event {change.event_index} "
+                    f"[confidence {change.confidence}]: {fields}"
+                )
+        for chapter_change in combined_review.events_changes.chapters:
+            if chapter_change.new_headline:
+                print(
+                    f"  chapter {chapter_change.chapter_id} "
+                    f"[confidence {chapter_change.confidence}]: "
+                    f"headline={chapter_change.new_headline!r}"
+                )
+        for connection in combined_review.network_changes.connections:
+            fields = ", ".join(
+                f"{name.removeprefix('new_')}={value!r}"
+                for name, value in connection.model_dump(exclude_none=True).items()
+                if name.startswith("new_")
+            )
+            if fields:
+                print(
+                    f"  network {connection.person_name!r} "
+                    f"[confidence {connection.confidence}]: {fields}"
+                )
         print("\n* Dry run complete. No files modified.")
         return True
 
