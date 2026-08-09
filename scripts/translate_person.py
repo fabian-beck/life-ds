@@ -1453,7 +1453,19 @@ def load_json_file(file_path: Path) -> Optional[Dict[str, Any]]:
 
 
 def save_json_file(data: Dict[str, Any], file_path: Path, indent: int = 2) -> bool:
-    """Save data to a JSON file (LF newlines, UTF-8, same style as generation)."""
+    """Save data to a JSON file (LF newlines, UTF-8, same style as generation).
+
+    Every document is scanned for words that mix writing systems on the way
+    out — the translator has returned "Zwillინგstöchter" and "лекtionierte"
+    before, and the defect is invisible in a diff of correct-looking JSON.
+    The save still succeeds; the warning names the words so the operator can
+    fix or re-translate them while the run is still on screen.
+    """
+    from validate_scripts import mixed_script_words, strings_in
+
+    for field, text in strings_in(data):
+        for word in mixed_script_words(text):
+            print(f'  ⚠ mixed-script word in {file_path.name}{field}: "{word}"')
     try:
         file_path.parent.mkdir(parents=True, exist_ok=True)
         with open(file_path, "w", encoding="utf-8", newline="") as f:
