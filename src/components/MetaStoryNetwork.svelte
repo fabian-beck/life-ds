@@ -17,6 +17,7 @@
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { relationshipTypeLabel } from "../utils/relationshipLabels.js";
   import { queryParams, personStoryHref } from "../stores/queryParams.js";
+  import { createScrollSteps } from "../utils/scrollSteps.js";
   import personStylesData from "../../data/person_styles.json";
 
   // The `social_network` block from a meta story: { nodes: [...], links: [...] }
@@ -366,39 +367,8 @@
 
   // A step activates while its card crosses the lower third of the viewport,
   // so the highlight is readable before the card covers the graph, and stays
-  // active until the next card takes over. The observer only says WHEN to look
-  // (a card crossed the band); the active step is recomputed from the cards'
-  // actual positions, so jump-scrolls (scrollbar drags) can't leave a stale
-  // highlight behind.
-  const BAND_BOTTOM = 0.75; // matches the observer's -25% bottom rootMargin
-  const stepEls = [];
-  let stepObserver = null;
-
-  function recomputeActiveStep() {
-    const bandBottom = window.innerHeight * BAND_BOTTOM;
-    let current = null;
-    for (let i = 0; i < stepEls.length; i++) {
-      const el = stepEls[i];
-      if (el && el.getBoundingClientRect().top < bandBottom) current = i;
-    }
-    activeStep = current;
-  }
-
-  function observeStep(node, index) {
-    if (!stepObserver && typeof IntersectionObserver !== "undefined") {
-      stepObserver = new IntersectionObserver(recomputeActiveStep, {
-        rootMargin: "-55% 0px -25% 0px",
-      });
-    }
-    stepEls[index] = node;
-    stepObserver?.observe(node);
-    return {
-      destroy() {
-        stepObserver?.unobserve(node);
-        if (stepEls[index] === node) stepEls[index] = null;
-      },
-    };
-  }
+  // active until the next card takes over.
+  const steps = createScrollSteps((step) => (activeStep = step));
 
   // "Ada Lovelace, Charles Babbage and Konrad Zuse" — localized list joining.
   function formatNameList(names, lang) {
@@ -598,7 +568,7 @@
   onDestroy(() => {
     if (rafId) cancelAnimationFrame(rafId);
     if (simulation) simulation.stop();
-    stepObserver?.disconnect();
+    steps.disconnect();
   });
 
   async function handleResize() {
@@ -820,9 +790,9 @@
     <!-- Narration: cards scroll up over the pinned graph, each highlighting
          and explaining one circle of connected people. -->
     {#if clusters.length}
-      <ol class="mnet-steps">
+      <ol class="ms-steps">
         {#each clusters as cluster, i (cluster.key)}
-          <li class="step" use:observeStep={i}>
+          <li class="step" use:steps.observe={i}>
             <div
               class="step-card ms-frame"
               class:current={activeStep === i}
@@ -1085,121 +1055,12 @@
     }
   }
 
-  /* --- Narration cards ---------------------------------------------------- */
-  .mnet-steps {
-    position: relative;
-    z-index: 2;
-    list-style: none;
-    margin: 0;
-    padding: 12vh 0 16vh;
-    /* Let the pointer reach the graph between cards; cards opt back in. */
-    pointer-events: none;
-  }
-
-  .step {
-    display: flex;
-    justify-content: center;
-    margin: 0 0 55vh;
-  }
-
-  .step:last-child {
-    margin-bottom: 0;
-  }
-
-  /* Card scrolling over the graph. Default to a near-opaque panel so the text
-     stays readable on browsers/devices where backdrop-filter doesn't render
-     (notably some Android browsers) — otherwise the sharp graph shows straight
-     through and fights the copy. Where backdrop-filter IS supported, the rule
-     below drops the scrim to a translucent frosted glass. */
-  .step-card {
-    pointer-events: auto;
-    width: min(30rem, 100%);
-    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.88);
-    border: var(--ms-frame-border-width, 1px)
-      var(--ms-frame-border-style, solid)
-      color-mix(
-        in srgb,
-        var(--ms-accent, #38bdf8) 22%,
-        rgba(148, 163, 184, 0.22)
-      );
-    border-radius: var(--ms-frame-radius, 16px);
-    padding: 1.1rem 1.3rem 1.2rem;
-    box-shadow: 0 14px 34px rgba(2, 6, 23, 0.45);
-    transition: border-color 0.25s ease;
-  }
-
-  /* Unprefixed only — never hand-write `-webkit-backdrop-filter` next to the
-     standard property. The production build minifies with LightningCSS,
-     which folds such a pair into one logical declaration where the LAST one
-     wins: the built CSS then carried ONLY the -webkit- alias, which Chrome
-     ignores, so the deployed cards never blurred — while the dev server
-     serves the source unminified, which is why desktop checks against
-     `npm run dev` kept looking fine. From the bare standard property the
-     minifier itself re-emits the -webkit- fallback (and widens this
-     @supports probe) for the browsers that need it. */
-  @supports (backdrop-filter: blur(20px)) {
-    .step-card {
-      background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.45);
-      backdrop-filter: blur(20px) saturate(1.3);
-    }
-  }
-
-  .step-card.current {
-    border-color: color-mix(
-      in srgb,
-      var(--ms-accent, #38bdf8) 55%,
-      transparent
-    );
-  }
-
-  /* Every heading in a styled story opens with the story's mark — the article's
-     subheads do it, and so do the cards that narrate its components, so a card
-     scrolling over the graph or the map belongs to the same document as the
-     prose above it. Rendered only when the story has a glyph; without one the
-     title keeps its plain setting. */
-  .step-card.marked .step-title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .step-card.marked .step-title::before {
-    content: "";
-    flex: 0 0 auto;
-    width: 0.85em;
-    height: 0.85em;
-    background-image: var(--ms-glyph, none);
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-
-  .step-title {
-    margin: 0;
-    font-family: var(--heading-font, "Space Grotesk", sans-serif);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #e2e8f0;
-    line-height: 1.35;
-  }
-
-  .step-body {
-    margin: 0.5rem 0 0;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: #cbd5e1;
-  }
-
-  /* Person names emphasized inside the narration, mirroring the story slides'
-     .person-mention. Main people glow in their own story color; bridging
-     (secondary) people get a neutral emphasis. */
-  .person-mention {
-    font-weight: 700;
-    color: #f1f5f9;
-    text-shadow: 0 0 6px var(--mention-color, rgba(56, 189, 248, 0.35));
-  }
-
-  .person-mention-secondary {
+  /* Shared narration-card styling lives in meta-frames.css (.ms-steps);
+     only the network's own rules below. Bridging (secondary) people get a
+     neutral emphasis instead of the story-color glow. */
+  /* Doubled class so this reliably beats the shared .ms-steps .person-mention
+     glow regardless of stylesheet order. */
+  .person-mention.person-mention-secondary {
     color: #e2e8f0;
     text-shadow: none;
   }
@@ -1266,11 +1127,6 @@
     .mnet-sticky {
       width: 100vw;
       margin-left: calc(-50vw + 50%);
-    }
-
-    .step-card {
-      width: min(28rem, 100%);
-      padding: 0.95rem 1.05rem 1.05rem;
     }
   }
 </style>

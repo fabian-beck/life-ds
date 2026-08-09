@@ -167,3 +167,122 @@
   border: 1px solid color-mix(in srgb, var(--ms-accent) 16%, transparent);
   border-radius: calc(16px + 5px);
 }
+
+/* --- Scrollytelling narration cards -----------------------------------------
+   The map and the network sections both scroll a column of narration cards
+   over a sticky stage, and the cards are the same panel in both: the classes
+   below are the shared half, kept here for the same reason as the frames —
+   a copy per component would drift (and had). Components keep what is theirs:
+   the map's kicker/place lines, the network's secondary mentions. The rules
+   are scoped under .ms-steps so the generic names (.step-card, .step-title,
+   .person-mention) cannot leak into other components. */
+
+.ms-steps {
+  position: relative;
+  z-index: 2;
+  list-style: none;
+  margin: 0;
+  padding: 12vh 0 16vh;
+
+  /* Let the pointer reach the stage between cards; cards opt back in. */
+  pointer-events: none;
+}
+
+.ms-steps .step {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 55vh;
+}
+
+.ms-steps .step:last-child {
+  margin-bottom: 0;
+}
+
+/* Card over the stage. Near-opaque by default so the copy stays legible where
+   backdrop-filter doesn't render (notably some Android browsers); the
+   @supports rule below drops it to translucent frosted glass where the blur
+   is available. */
+.ms-steps .step-card {
+  pointer-events: auto;
+  width: min(30rem, 100%);
+  background: rgb(var(--ms-page-bg-rgb, 15, 23, 42), 0.88);
+  border: var(--ms-frame-border-width, 1px) var(--ms-frame-border-style, solid)
+    color-mix(in srgb, var(--ms-accent, #38bdf8) 22%, rgb(148 163 184 / 22%));
+  border-radius: var(--ms-frame-radius, 16px);
+  padding: 1.1rem 1.3rem 1.2rem;
+  box-shadow: 0 14px 34px rgb(2 6 23 / 45%);
+  transition: border-color 0.25s ease;
+}
+
+/* Unprefixed only — never hand-write `-webkit-backdrop-filter` next to the
+   standard property. The production build minifies with LightningCSS, which
+   folds such a pair into one logical declaration where the LAST one wins: the
+   built CSS then carried ONLY the -webkit- alias, which Chrome ignores, so
+   the deployed cards never blurred — while the dev server serves the source
+   unminified, which is why desktop checks against `npm run dev` kept looking
+   fine. From the bare standard property the minifier itself re-emits the
+   -webkit- fallback (and widens this @supports probe) for the browsers that
+   need it. */
+@supports (backdrop-filter: blur(20px)) {
+  .ms-steps .step-card {
+    background: rgb(var(--ms-page-bg-rgb, 15, 23, 42), 0.45);
+    backdrop-filter: blur(20px) saturate(1.3);
+  }
+}
+
+.ms-steps .step-card.current {
+  border-color: color-mix(in srgb, var(--ms-accent, #38bdf8) 55%, transparent);
+}
+
+/* Every heading in a styled story opens with the story's mark — the article's
+   subheads do it, and so do the cards that narrate its components, so a card
+   scrolling over the graph or the map belongs to the same document as the
+   prose above it. Rendered only when the story has a glyph; without one the
+   title keeps its plain setting. */
+.ms-steps .step-card.marked .step-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ms-steps .step-card.marked .step-title::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 0.85em;
+  height: 0.85em;
+  background-image: var(--ms-glyph, none);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.ms-steps .step-title {
+  margin: 0;
+  font-family: var(--heading-font, "Space Grotesk", sans-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  line-height: 1.35;
+}
+
+.ms-steps .step-body {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
+
+/* Person names emphasized inside the narration, mirroring the story slides'
+   .person-mention. */
+.ms-steps .person-mention {
+  font-weight: 700;
+  color: #f1f5f9;
+  text-shadow: 0 0 6px var(--mention-color, rgb(56 189 248 / 35%));
+}
+
+@media (width <= 640px) {
+  .ms-steps .step-card {
+    width: min(28rem, 100%);
+    padding: 0.95rem 1.05rem 1.05rem;
+  }
+}

@@ -7,6 +7,7 @@
   import { segmentPersonMentions } from "../utils/personNames.js";
   import { metaStoryStyle } from "../utils/metaStoryStyles.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
+  import { createScrollSteps } from "../utils/scrollSteps.js";
   import { queryParams, personStoryHref } from "../stores/queryParams.js";
   import personStylesData from "../../data/person_styles.json";
   import {
@@ -105,39 +106,8 @@
   }
 
   // --- Scroll narration steps ----------------------------------------------
-  // Same observer pattern as MetaStoryNetwork: the observer only says WHEN to
-  // look; the active step is recomputed from card geometry so jump-scrolls
-  // can't leave a stale state behind.
-  const BAND_BOTTOM = 0.75;
-  const stepEls = [];
-  let stepObserver = null;
   let activeStep = null;
-
-  function recomputeActiveStep() {
-    const bandBottom = window.innerHeight * BAND_BOTTOM;
-    let current = null;
-    for (let i = 0; i < stepEls.length; i++) {
-      const el = stepEls[i];
-      if (el && el.getBoundingClientRect().top < bandBottom) current = i;
-    }
-    activeStep = current;
-  }
-
-  function observeStep(node, index) {
-    if (!stepObserver && typeof IntersectionObserver !== "undefined") {
-      stepObserver = new IntersectionObserver(recomputeActiveStep, {
-        rootMargin: "-55% 0px -25% 0px",
-      });
-    }
-    stepEls[index] = node;
-    stepObserver?.observe(node);
-    return {
-      destroy() {
-        stepObserver?.unobserve(node);
-        if (stepEls[index] === node) stepEls[index] = null;
-      },
-    };
-  }
+  const steps = createScrollSteps((step) => (activeStep = step));
 
   // --- Map -----------------------------------------------------------------
   let mapContainer;
@@ -315,7 +285,7 @@
       releasePmtilesProtocol();
       protocolAcquired = false;
     }
-    stepObserver?.disconnect();
+    steps.disconnect();
   });
 </script>
 
@@ -341,9 +311,9 @@
 
     <!-- Narration: cards scroll up over the pinned map, each zooming to and
          explaining one geographic stop of the story. -->
-    <ol class="mmap-steps">
+    <ol class="ms-steps">
       {#each clusters as cluster, i (cluster.key)}
-        <li class="step" use:observeStep={i}>
+        <li class="step" use:steps.observe={i}>
           <div
             class="step-card ms-frame"
             class:current={activeStep === i}
@@ -527,70 +497,8 @@
     box-shadow: none;
   }
 
-  /* --- Narration cards (mirroring the network section) -------------------- */
-  .mmap-steps {
-    position: relative;
-    z-index: 2;
-    list-style: none;
-    margin: 0;
-    padding: 12vh 0 16vh;
-    pointer-events: none;
-  }
-
-  .step {
-    display: flex;
-    justify-content: center;
-    margin: 0 0 55vh;
-  }
-
-  .step:last-child {
-    margin-bottom: 0;
-  }
-
-  /* Card over the map. Near-opaque by default so the copy stays legible over
-     the basemap where backdrop-filter doesn't render; the @supports rule below
-     drops it to translucent frosted glass where the blur is available. */
-  .step-card {
-    pointer-events: auto;
-    width: min(30rem, 100%);
-    background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.88);
-    border: var(--ms-frame-border-width, 1px)
-      var(--ms-frame-border-style, solid)
-      color-mix(
-        in srgb,
-        var(--ms-accent, #38bdf8) 22%,
-        rgba(148, 163, 184, 0.22)
-      );
-    border-radius: var(--ms-frame-radius, 16px);
-    padding: 1.1rem 1.3rem 1.2rem;
-    box-shadow: 0 14px 34px rgba(2, 6, 23, 0.45);
-    transition: border-color 0.25s ease;
-  }
-
-  /* Unprefixed only — never hand-write `-webkit-backdrop-filter` next to the
-     standard property. The production build minifies with LightningCSS,
-     which folds such a pair into one logical declaration where the LAST one
-     wins: the built CSS then carried ONLY the -webkit- alias, which Chrome
-     ignores, so the deployed cards never blurred — while the dev server
-     serves the source unminified, which is why desktop checks against
-     `npm run dev` kept looking fine. From the bare standard property the
-     minifier itself re-emits the -webkit- fallback (and widens this
-     @supports probe) for the browsers that need it. */
-  @supports (backdrop-filter: blur(20px)) {
-    .step-card {
-      background: rgba(var(--ms-page-bg-rgb, 15, 23, 42), 0.45);
-      backdrop-filter: blur(20px) saturate(1.3);
-    }
-  }
-
-  .step-card.current {
-    border-color: color-mix(
-      in srgb,
-      var(--ms-accent, #38bdf8) 55%,
-      transparent
-    );
-  }
-
+  /* Shared narration-card styling lives in meta-frames.css (.ms-steps);
+     only the map's own lines below. */
   .step-kicker {
     margin: 0 0 0.3rem;
     font-size: 0.72rem;
@@ -604,50 +512,6 @@
     color: #94a3b8;
     text-transform: none;
     letter-spacing: 0.02em;
-  }
-
-  /* Every heading in a styled story opens with the story's mark — the article's
-     subheads do it, and so do the cards that narrate its components, so a card
-     scrolling over the graph or the map belongs to the same document as the
-     prose above it. Rendered only when the story has a glyph; without one the
-     title keeps its plain setting. */
-  .step-card.marked .step-title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .step-card.marked .step-title::before {
-    content: "";
-    flex: 0 0 auto;
-    width: 0.85em;
-    height: 0.85em;
-    background-image: var(--ms-glyph, none);
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-
-  .step-title {
-    margin: 0;
-    font-family: var(--heading-font, "Space Grotesk", sans-serif);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #e2e8f0;
-    line-height: 1.35;
-  }
-
-  .step-body {
-    margin: 0.5rem 0 0;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: #cbd5e1;
-  }
-
-  .person-mention {
-    font-weight: 700;
-    color: #f1f5f9;
-    text-shadow: 0 0 6px var(--mention-color, rgba(56, 189, 248, 0.35));
   }
 
   .event-list {
@@ -720,12 +584,5 @@
     margin: 0.5rem 0 0;
     font-size: 0.78rem;
     color: #94a3b8;
-  }
-
-  @media (max-width: 640px) {
-    .step-card {
-      width: min(28rem, 100%);
-      padding: 0.95rem 1.05rem 1.05rem;
-    }
   }
 </style>
