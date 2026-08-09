@@ -20,6 +20,7 @@ from generate_person_portrait import (
     generate_portrait,
     is_direct_image_url,
 )
+from generate_chapter_illustrations import generate_chapter_illustrations
 from review_person import review_person_data
 
 STEP_OK = "ok"
@@ -139,6 +140,16 @@ def parse_args(argv: Any) -> argparse.Namespace:
         help="Creator or credited source of the reference portrait.",
     )
     parser.add_argument(
+        "--skip-chapter-art",
+        action="store_true",
+        help="Skip the abstract illustrations for the chapter slides.",
+    )
+    parser.add_argument(
+        "--chapter-art-model",
+        default="gpt-image-2",
+        help="OpenAI model for the chapter illustrations (default: gpt-image-2).",
+    )
+    parser.add_argument(
         "--skip-db",
         action="store_true",
         help="Skip fetching Deutsche Biographie data as additional source.",
@@ -193,7 +204,7 @@ def main(argv: Any = None) -> int:
 
     # Step 1: Generate life events dataset
     if run_dataset:
-        banner("STEP 1/6: Generating life events dataset")
+        banner("STEP 1/7: Generating life events dataset")
         try:
             dataset_path, person_id = generate_dataset(
                 subject_for_fetch,
@@ -213,7 +224,7 @@ def main(argv: Any = None) -> int:
 
     # Step 2: Generate interface style
     if run_style:
-        banner("STEP 2/6: Generating interface style")
+        banner("STEP 2/7: Generating interface style")
         try:
             style_result = generate_style(
                 subject_for_fetch,
@@ -231,7 +242,7 @@ def main(argv: Any = None) -> int:
 
     # Step 3: Generate ego network
     if run_network:
-        banner("STEP 3/6: Generating ego network")
+        banner("STEP 3/7: Generating ego network")
         try:
             network_path = generate_person_network(
                 subject_for_fetch,
@@ -250,7 +261,7 @@ def main(argv: Any = None) -> int:
 
     # Step 4: Generate portrait (if not skipped)
     if not args.skip_portrait:
-        banner("STEP 4/6: Generating stylized portrait")
+        banner("STEP 4/7: Generating stylized portrait")
         try:
             from pathlib import Path
 
@@ -306,10 +317,41 @@ def main(argv: Any = None) -> int:
         print("\n⊘ Skipping portrait generation (--skip-portrait flag)")
         run_log.record("Portrait", STEP_SKIPPED, "--skip-portrait")
 
-    # Step 5: Review (if not skipped)
+    # Step 5: Chapter illustrations (if not skipped). After the style, whose
+    # colors they are drawn in, and after the dataset, whose chapters they
+    # illustrate — a person with neither simply has nothing to draw.
+    if not args.skip_chapter_art:
+        banner("STEP 5/7: Generating chapter illustrations")
+        try:
+            if not person_id:
+                raise ValueError(
+                    "No person ID resolved — run the dataset step or pass "
+                    "--url so the illustrations can be filed under a person ID"
+                )
+            art_result = generate_chapter_illustrations(
+                person_id,
+                model=args.chapter_art_model,
+                concept_model=args.model or DATASET_MODEL,
+            )
+            if art_result["success"]:
+                print(f"\n✓ {art_result['message']}")
+                run_log.record("Chapter illustrations", STEP_OK)
+            else:
+                print(f"\n✗ Chapter illustrations failed: {art_result['message']}")
+                run_log.record(
+                    "Chapter illustrations", STEP_FAILED, art_result["message"]
+                )
+        except Exception as error:
+            print(f"\n✗ Chapter illustrations failed: {error}")
+            run_log.record("Chapter illustrations", STEP_FAILED, str(error))
+    else:
+        print("\n⊘ Skipping chapter illustrations (--skip-chapter-art flag)")
+        run_log.record("Chapter illustrations", STEP_SKIPPED, "--skip-chapter-art")
+
+    # Step 6: Review (if not skipped)
     if not args.skip_review:
         print("\n" + "=" * 60)
-        print("STEP 5/6: REVIEWING GENERATED DATA")
+        print("STEP 6/7: REVIEWING GENERATED DATA")
         print("=" * 60)
         print("Running quality review and polish...")
         print("(Only high-confidence changes will be applied)")
@@ -348,7 +390,7 @@ def main(argv: Any = None) -> int:
         print("\n⊘ Skipping translation step (no person_id resolved)")
         run_log.record("Translation", STEP_SKIPPED, "no person ID resolved")
     else:
-        banner("STEP 6/6: Translating generated data")
+        banner("STEP 7/7: Translating generated data")
         try:
             import os
 

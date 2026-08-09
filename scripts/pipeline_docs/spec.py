@@ -64,8 +64,8 @@ LANES: Dict[str, Dict[str, str]] = {
         "entry": "scripts/generate_person.py",
         "blurb": (
             "One biography, from a Wikipedia article to a scroll-snapped story: "
-            "life events, ego network, interface style, portrait, review, "
-            "translation."
+            "life events, ego network, interface style, portrait, chapter art, "
+            "review, translation."
         ),
     },
     META: {
@@ -209,6 +209,15 @@ GROUPS: List[Group] = [
         ),
     ),
     Group(
+        "chapter_art",
+        "Chapter art",
+        ["p_chapter_concepts", "p_chapter_art"],
+        note=(
+            "Decide what each chapter looks like as an abstract image, then "
+            "draw it in the collection's own style."
+        ),
+    ),
+    Group(
         "interface_style",
         "Interface style",
         ["p_style", "p_review_style"],
@@ -317,6 +326,14 @@ ARTIFACTS: List[Artifact] = [
         "public/portraits/{id}.webp",
         "asset",
         "Style-transferred from a licensed reference image.",
+        concept="imagery",
+    ),
+    Artifact(
+        "chapter_art",
+        "Chapter illustrations",
+        "public/chapter_art/{id}/{chapter}.webp",
+        "asset",
+        "One abstract, style-transferred image per chapter of a life.",
         concept="imagery",
     ),
     Artifact(
@@ -669,6 +686,48 @@ STEPS: List[Step] = [
         outputs=["portrait", "persons", "life_events"],
         skip_flag="--skip-portrait",
         model_note="Image model; only allowlisted models keep facial likeness.",
+    ),
+    Step(
+        "p_chapter_concepts",
+        "Write chapter art concepts",
+        PERSON,
+        AI,
+        "generate_chapter_illustrations.py",
+        "write_chapter_concepts",
+        summary=(
+            "Turns each chapter of the life into an abstract visual concept — a "
+            "metaphor with concrete forms in it, never a person or a place. All "
+            "chapters are read in one call so the metaphors differ from one "
+            "another."
+        ),
+        depends_on=[Dep("p_write", "chapters and the events in each")],
+        prompts=["CONCEPT_SYSTEM_PROMPT", "build_concept_prompt"],
+        inputs=["life_events"],
+        skip_flag="--skip-chapter-art",
+    ),
+    Step(
+        "p_chapter_art",
+        "Generate chapter illustrations",
+        PERSON,
+        IMAGE,
+        "generate_chapter_illustrations.py",
+        "request_illustration",
+        summary=(
+            "Draws each concept in the same master style the portraits are "
+            "transferred toward, so a chapter slide is lit like the rest of the "
+            "story. The content comes from the prompt rather than a second "
+            "reference image — there is nothing to be faithful to."
+        ),
+        depends_on=[
+            Dep("p_chapter_concepts", "one visual concept per chapter"),
+            Dep("p_style", "primary and secondary color"),
+        ],
+        prompts=["IMAGE_PROMPT", "request_illustration"],
+        inputs=["life_events", "person_styles"],
+        outputs=["chapter_art", "life_events"],
+        calls_per_run="one per chapter",
+        skip_flag="--skip-chapter-art",
+        model_note="Image model, prompted without a content reference image.",
     ),
     Step(
         "p_review",

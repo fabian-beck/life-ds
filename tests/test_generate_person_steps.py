@@ -33,6 +33,15 @@ def _run(argv=ARGV, **overrides):
         "generate_dataset": lambda *a, **k: ("data/people/ada_lovelace", "ada_lovelace"),
         "generate_style": lambda *a, **k: {"id": "ada_lovelace"},
         "generate_person_network": lambda *a, **k: "network.json",
+        # Every step that reaches the network has to be stubbed here, or the
+        # suite runs it for real: the chapter illustrations were left out once
+        # and the test drew a whole set of them against the live API.
+        "generate_chapter_illustrations": lambda *a, **k: {
+            "id": "ada_lovelace",
+            "success": True,
+            "generated": [],
+            "message": "stubbed",
+        },
     }
     stubs.update(overrides)
     with patch.multiple(pipeline, **{k: v for k, v in stubs.items()}):

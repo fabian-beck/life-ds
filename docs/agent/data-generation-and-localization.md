@@ -216,6 +216,29 @@ This uses OpenAI image generation to transform the existing Wikimedia Commons po
 
 This ensures the generated portraits appear consistently on both the landing page (which reads from `persons.json`) and the story overview slide (which reads from `life_events.json`).
 
+**Generate chapter illustrations** (optional):
+
+```bash
+python scripts/generate_chapter_illustrations.py "Alan Turing"
+```
+
+Each chapter of a story gets one abstract image, printed translucently above its headline. It is style transfer of the same kind as the portrait — the master style at `public/master_style_portrait.png` is the only reference image passed — but the *content* comes from the prompt rather than from a second picture, because there is no photograph of what a chapter is about. Two calls stand behind that:
+
+1. A text call reads the whole chapter list at once, with each chapter's events, and writes one visual concept per chapter: an abstract, metaphorical image described in concrete visual nouns. Its rules are negative and strict — no people, no faces, no recognizable buildings or landmarks, no text — because a model shown a biography draws the biography, and a chapter slide must not make a second claim about what happened. The chapters are shown together so the metaphors differ from one another.
+2. One image call per chapter draws that concept in the person's own primary and secondary color, on a pure black ground, as a centered emblem with a wide margin. The margin matters: the interface dissolves the edges with a radial mask, and a form that crowds the frame leaves a visible square.
+
+The result is stored under the chapter as `illustration` in `data/people/{person_id}/life_events.json`, synced to every translated copy (a path and a concept are not prose), and the WebP files are written to `public/chapter_art/{person_id}/`. The concept is stored with it so the picture can be redrawn without paying for the text call again. No PNG master is kept — a corpus-wide set of them would outweigh every other asset in the repository.
+
+**Options**:
+
+- `--force`: Redraw chapters that already have an illustration
+- `--chapter ID`: Only this chapter (repeatable)
+- `--concepts-only`: Write and print the concepts without generating images — the cheap way to tune the prompt
+- `--dry-run`: Print the concept prompt without calling the API
+- `--model MODEL` / `--concept-model MODEL`: the image and the text model
+
+Inside the full workflow the step runs after the portrait and is skipped with `--skip-chapter-art`. A person whose dataset has no chapters is reported as having nothing to illustrate rather than as a failure.
+
 ### Two-Phase Event Generation
 
 The life events generation uses a **two-phase AI approach** for improved accuracy and richer metadata:

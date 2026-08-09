@@ -1082,3 +1082,45 @@ test("the chapter pill carries one title at a time", async ({ page }) => {
   expect(titles.size).toBeGreaterThan(2);
   expect(await page.evaluate(() => window.__mostTitlesAtOnce)).toBe(1);
 });
+
+/* A chapter slide carries an abstract illustration of what the chapter is
+   about, printed the way the portrait is: translucent, edges dissolved, no
+   caption. It is decoration and must stay out of the reading order — an alt
+   text here would announce a metaphor to a screen reader as if it were a
+   picture of something that happened. Which chapters have one is data, so the
+   test asks the dataset rather than assuming. */
+test("a chapter slide prints its illustration as decoration", async ({
+  page,
+}) => {
+  viewportDoesNotDecideThis();
+  const illustrated = (turingEvents.chapters ?? []).find(
+    (chapter) => chapter.illustration?.medium
+  );
+  test.skip(!illustrated, "no chapter of this life has an illustration yet");
+
+  await page.goto("en#/en/story/alan_turing?slide=1");
+  const slide = page.locator("section.slide.chapter").first();
+  const illustration = slide.locator(".chapter-illustration");
+
+  await expect(illustration).toBeVisible();
+  await expect(illustration).toHaveAttribute("aria-hidden", "true");
+  await expect(illustration).toHaveAttribute("alt", "");
+  await expect(illustration).toHaveJSProperty("naturalWidth", 512);
+
+  // Translucent, so the story's own background reads through it.
+  const opacity = await illustration.evaluate((element) =>
+    Number(getComputedStyle(element).opacity)
+  );
+  expect(opacity).toBeGreaterThan(0);
+  expect(opacity).toBeLessThan(1);
+
+  // The headline is what the slide is for; the picture stays above it. Their
+  // boxes are allowed to touch — the illustration's faded edge is pulled up
+  // under the headline on purpose — but the headline is never printed over it.
+  const [picture, headline] = await Promise.all([
+    illustration.boundingBox(),
+    slide.locator(".chapter-headline").boundingBox(),
+  ]);
+  expect(picture.y).toBeLessThan(headline.y);
+  expect(picture.y + picture.height).toBeLessThan(headline.y + headline.height);
+});

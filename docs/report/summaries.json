@@ -240,6 +240,34 @@
         "why_this_design": "This is an additive repair path rather than a full event regeneration, preserving the original event record for review while filling the later-added depth layer. Reusing the Phase 2 prompt prevents the two research specifications from drifting, while a separate image-only path permits picture-critic tuning without rewriting otherwise acceptable prose."
       }
     },
+    "p_chapter_art": {
+      "fingerprint": "23f28280f7e6556f",
+      "summary": {
+        "constraints": [
+          "Generates exactly \"1\" image in the configured square size, with one centered emblematic form.",
+          "Forbids people, faces, silhouettes, body parts, buildings, landmarks, maps, flags, and all text-like marks.",
+          "Requires pure black \"#000000\" to reach all four edges, with generous empty margins; frames, borders, vignettes, cartouches, and decorative surrounds are forbidden.",
+          "Limits luminous strokes to pure white \"#FFFFFF\" plus the injected primary and secondary colors; output must use glowing, long-exposure-like light strokes rather than photorealism or flat vector rendering."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Creates one square abstract chapter emblem from the injected concept and two palette colors. It supplies a single master-style image as an edit input, instructing the generator to transfer only that image’s light-painting treatment, then returns decoded image bytes from inline Base64 data or downloads them from a returned URL.",
+        "why_this_design": "The reference image is deliberately treated as a rendering-style source rather than a content source, preventing chapter art from inheriting portrait imagery while keeping illumination and line treatment consistent across the story. Broad exception handling and per-request failure returns ensure that one unavailable or malformed illustration does not terminate the full chapter run."
+      }
+    },
+    "p_chapter_concepts": {
+      "fingerprint": "9057dd64a8ffcba0",
+      "summary": {
+        "constraints": [
+          "Produces exactly one concept per supplied chapter, keyed by the chapter ID exactly and returned in chapter order.",
+          "Each concept is \"25-45 words,\" one or two sentences, and written as an image description with a centered focal idea floating in darkness.",
+          "Forbids people or body parts, character-like imagery, recognizable places or institutional/national identifiers, and all readable text or symbolic writing.",
+          "Forbids documentary-like historical scenes, machines, or inventions; requires concrete abstract metaphors and distinct forms, motion, and motifs across chapters."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Creates one 25–45-word abstract opening-image description for each biographical chapter, using the subject’s roles, tagline, truncated summary, and chapter headlines, dates, places, and event summaries as thematic context. It returns a mapping from validated chapter IDs to normalized concept text; unusable or unknown-ID entries are discarded.",
+        "why_this_design": "All chapters are submitted together so the concepts can be deliberately differentiated rather than reusing a visual motif across a life. If structured output cannot be parsed, the function returns an empty mapping, preserving existing chapters instead of attaching arbitrary art direction."
+      }
+    },
     "p_chapters": {
       "fingerprint": "1d1b6a07f99cd4dd",
       "summary": {

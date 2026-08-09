@@ -141,6 +141,20 @@ Markup wins where both could apply, and a name that is already emphasized as a p
 
 **Chapter Structure**:
 - `headline`: Catchy, story-like title (2-5 words, varied lengths) - ONE unified concept, NOT a list. Vivid and evocative like a book chapter. Avoid commas, "and", or punctuation that creates lists.
+- `illustration` (optional): the chapter's abstract opening image, written by `scripts/generate_chapter_illustrations.py`:
+
+  ```json
+  "illustration": {
+    "image": "/chapter_art/alan_turing/split_sunrise_medium.webp",
+    "medium": "/chapter_art/alan_turing/split_sunrise_medium.webp",
+    "full": "/chapter_art/alan_turing/split_sunrise_full.webp",
+    "concept": "A pale gold disc hovers at the center of deep blue darkness, cleanly divided by a narrow vertical seam…",
+    "creator": "AI generated artwork",
+    "generated_on": "2026-08-09"
+  }
+  ```
+
+  It depicts nothing that happened: no people, no places, no text, only a metaphor for what the chapter is about. That is why it carries no caption and no alt text — `ChapterSlide.svelte` prints it translucent above the headline and hides it from assistive technology, which also means none of these fields are translated. Every language copy carries the same paths and the same `concept`, the way portrait metadata does; `concept` is kept so the picture can be redrawn without a second text call.
 - Each chapter should have thematic coherence - events share a common thread or life phase
 - Aim for 3-6 chapters total that flow together to create narrative momentum
 - `conclusion`: Crisp statement (1-2 sentences) capturing the person's legacy or life essence

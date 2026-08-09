@@ -7,6 +7,7 @@
     getChapterPeople,
     formatSingleDate,
     extractYear,
+    getThumbnailUrl,
   } from "../utils/storyHelpers.js";
 
   export let chapter = {};
@@ -64,6 +65,11 @@
     return "";
   })();
 
+  // The chapter's abstract illustration, when one has been generated. It is
+  // decoration and carries no caption, so it is hidden from assistive
+  // technology rather than given an alt text describing a metaphor.
+  $: illustration = chapter?.illustration?.medium ? chapter.illustration : null;
+
   // Match involved people against ego network using shared fuzzy matching
   $: involvedPeople = getChapterPeople(chapter, egoNetwork).map((person) => ({
     ...person,
@@ -84,12 +90,25 @@
 
 <div
   class="content chapter-content"
+  class:with-illustration={illustration}
   on:click={handleClickOutside}
   on:keydown={(e) =>
     e.key === "Escape" && visiblePersonInfo && (visiblePersonInfo = null)}
   role="presentation"
 >
   <div class="chapter-box">
+    {#if illustration}
+      <img
+        class="chapter-illustration"
+        src={getThumbnailUrl(illustration, 400)}
+        srcset={`${getThumbnailUrl(illustration, 400)} 1x, ${getThumbnailUrl(illustration, 800)} 2x`}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+      />
+    {/if}
+
     <h2 class="chapter-headline">{chapter.headline || ""}</h2>
 
     {#if dateLabel || ageLabel || chapter.location}
@@ -173,6 +192,51 @@
     align-items: center;
     gap: 1rem;
     padding: 2rem;
+  }
+
+  /* The illustration is atmosphere, not an exhibit: it carries the chapter's
+     theme as an abstract emblem and has to read as part of the background the
+     headline sits on. So it is printed the way the portrait is — its own black
+     ground kept, its edges dissolved into the slide by a radial mask — and then
+     taken down in opacity until the story's background pattern shows through
+     it. Anything more solid turns the slide into a picture with a caption. */
+  .chapter-illustration {
+    width: min(20rem, 58vw);
+    max-height: min(30dvh, 18rem);
+    aspect-ratio: 1;
+    object-fit: contain;
+    margin-bottom: -0.75rem;
+    opacity: 0.72;
+    pointer-events: none;
+
+    /* The fade has to be complete before the mask circle reaches the edge of a
+       square image — at `farthest-corner` sizing that edge is at 70.7%, and a
+       fade still running there leaves the black ground showing as four faint
+       straight lines where the story's background pattern stops. */
+    mask-image: radial-gradient(
+      circle at center,
+      rgba(0, 0, 0, 1) 25%,
+      rgba(0, 0, 0, 0.85) 42%,
+      rgba(0, 0, 0, 0.4) 57%,
+      rgba(0, 0, 0, 0) 68%
+    );
+    -webkit-mask-image: radial-gradient(
+      circle at center,
+      rgba(0, 0, 0, 1) 25%,
+      rgba(0, 0, 0, 0.85) 42%,
+      rgba(0, 0, 0, 0.4) 57%,
+      rgba(0, 0, 0, 0) 68%
+    );
+  }
+
+  /* An illustration is a third of a screen on its own, so the slide stops
+     reserving the empty run-up it keeps when the headline is all there is. */
+  .chapter-content.with-illustration {
+    padding-top: clamp(0rem, 2vh, 3rem);
+  }
+
+  .chapter-content.with-illustration .chapter-box {
+    gap: 0.5rem;
   }
 
   .chapter-headline {
