@@ -1,0 +1,351 @@
+{
+  "dataset": "Wikipedia ego network: Max Planck",
+  "created_on": "2026-08-09",
+  "ego": {
+    "name": "Max Planck",
+    "birth_year": 1858,
+    "death_year": 1947,
+    "primary_roles": [
+      "Theoretischer Physiker",
+      "Hochschullehrer",
+      "Wissenschaftlicher Organisator"
+    ],
+    "summary": "Max Planck war ein deutscher theoretischer Physiker. Seine Arbeiten zur Schwarzkörperstrahlung führten zur Einführung der Energiequanten und legten den Grundstein für die Quantenphysik. Als Professor in Kiel und Berlin erhielt er den Nobelpreis für Physik des Jahres 1918 und wurde zu einer prägenden Persönlichkeit des deutschen Wissenschaftslebens.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Max_Planck"
+  },
+  "connections": [
+    {
+      "person_name": "Wilhelm von Planck",
+      "relationship_type": "family/father",
+      "relationship_description": "Plancks Vater war Professor für Rechtswissenschaften. Seine Berufung nach München im Jahr 1867 führte die Familie von Kiel in ein größeres akademisches Umfeld.",
+      "start_year": 1858,
+      "end_year": 1900,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Familienleben in Kiel",
+        "Umzug nach München",
+        "Akademischer Haushalt und Universitätskultur"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck"
+      ],
+      "notes": "Wilhelms Berufung auf den Münchner Lehrstuhl für Zivilprozessrecht im Jahr 1867 führte die Familie von Kiel in ein größeres akademisches Umfeld."
+    },
+    {
+      "person_name": "Emma Planck",
+      "relationship_type": "family/mother",
+      "relationship_description": "Plancks Mutter Emma Patzig blieb ihm zeitlebens eng verbunden und bewegte sich auch nach dem Tod Wilhelm von Plancks weiterhin in den akademischen Kreisen Münchens.",
+      "start_year": 1858,
+      "end_year": 1914,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familienleben in Kiel und München",
+        "Beziehung zwischen Mutter und Sohn",
+        "Akademische und gesellschaftliche Kreise Münchens"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck"
+      ],
+      "notes": "Dieser Eintrag bezieht sich auf Plancks Mutter Emma Patzig, die am 4. August 1914 starb. Er muss von seiner Tochter Emma Planck unterschieden werden, die 1919 im Kindbett starb."
+    },
+    {
+      "person_name": "Hermann Müller",
+      "relationship_type": "academic/schoolteacher",
+      "relationship_description": "Plancks Mathematiklehrer am Maximiliansgymnasium, der ihn mit der Astronomie, der Mechanik und der Energieerhaltung als grundlegendem Naturgesetz vertraut machte.",
+      "start_year": 1867,
+      "end_year": 1874,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Mathematikunterricht am Maximiliansgymnasium",
+        "Studium von Astronomie und Mechanik",
+        "Frühe Beschäftigung mit der Energieerhaltung"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck"
+      ],
+      "notes": "Planck beschrieb Müllers Darstellung der Energieerhaltung später als tief prägend."
+    },
+    {
+      "person_name": "Philipp von Jolly",
+      "relationship_type": "academic/mentor",
+      "relationship_description": "Plancks wichtigster Physikprofessor in München, der ihn in experimenteller Physik ausbildete und ihn über die Aussichten einer Laufbahn in der Physik beriet.",
+      "start_year": 1874,
+      "end_year": 1879,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Physikstudium an der Universität München",
+        "Experimentelle Untersuchung der Wasserstoffdiffusion durch erhitztes Platin",
+        "Doktorprüfung"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck",
+        "https://de.wikipedia.org/wiki/Philipp_von_Jolly"
+      ],
+      "notes": "Jolly warnte Planck berühmt-berüchtigt davor, die Physik sei nahezu abgeschlossen; später prüfte er jedoch dessen Doktorarbeit."
+    },
+    {
+      "person_name": "Rudolf Clausius",
+      "relationship_type": "academic/intellectual mentor",
+      "relationship_description": "Clausius war zwar nicht Plancks offizieller Lehrer, doch seine Schriften über Thermodynamik und Entropie wurden zum entscheidenden intellektuellen Einfluss auf Plancks frühes Forschungsprogramm.",
+      "start_year": 1877,
+      "end_year": 1888,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Eigenständiges Studium der Thermodynamik",
+        "Forschung zu Entropie und zweitem Hauptsatz",
+        "Doktor- und Habilitationsarbeit"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck"
+      ],
+      "notes": "Plancks anhaltende Beschäftigung mit Clausius prägte ihn stärker als die Berliner Vorlesungen."
+    },
+    {
+      "person_name": "Gustav Kirchhoff",
+      "relationship_type": "academic/lecturer and professional predecessor",
+      "relationship_description": "Planck besuchte als Student die Berliner Vorlesungen von Gustav Robert Kirchhoff und trat 1889 dessen Nachfolge auf dem Berliner Lehrstuhl an, der mit der Strahlungsforschung verbunden war.",
+      "start_year": 1877,
+      "end_year": 1887,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Vorlesungen an der Friedrich-Wilhelms-Universität",
+        "Berliner Lehrstuhl für theoretische Physik und Tradition der Strahlungsforschung"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck"
+      ],
+      "notes": "Planck fand Kirchhoffs Vorlesungen sorgfältig vorbereitet, aber trocken; Kirchhoff starb 1887."
+    },
+    {
+      "person_name": "Hermann von Helmholtz",
+      "relationship_type": "academic/lecturer and professional advisor",
+      "relationship_description": "Planck besuchte in Berlin die Vorlesungen von Hermann von Helmholtz und suchte später seinen Rat, bevor er eine Professur an der Forstakademie in Aschaffenburg ablehnte.",
+      "start_year": 1877,
+      "end_year": 1894,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Berliner Physikvorlesungen",
+        "Beratung über das Angebot aus Aschaffenburg",
+        "Berliner Wissenschaftskreise"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck",
+        "https://de.wikipedia.org/wiki/Hermann_von_Helmholtz"
+      ],
+      "notes": "Planck bewunderte Helmholtz’ Ansehen, war von dessen Vorlesungen jedoch enttäuscht."
+    },
+    {
+      "person_name": "Ludwig Boltzmann",
+      "relationship_type": "professional/intellectual counterpart",
+      "relationship_description": "Boltzmann war zunächst Plancks wichtigster intellektueller Gegenspieler in der Frage der statistischen Deutung der Entropie. Doch Boltzmanns statistischer Zusammenhang zwischen Entropie und mikroskopischen Zuständen wurde zu einem zentralen Bestandteil von Plancks Herleitung der Strahlungsformel von 1900.",
+      "start_year": 1879,
+      "end_year": 1906,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Auseinandersetzung über Entropie und den zweiten Hauptsatz der Thermodynamik",
+        "Statistische Behandlung der Schwarzkörperstrahlung",
+        "Entwicklung der Grundlagen der Quantentheorie"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck",
+        "https://de.wikipedia.org/wiki/Ludwig_Boltzmann"
+      ],
+      "notes": "Planck widersetzte sich anfangs Boltzmanns probabilistischem Ansatz, übernahm dessen Methoden jedoch später bei der Aufstellung seines Strahlungsgesetzes."
+    },
+    {
+      "person_name": "Marie Merck",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Plancks langjährige Freundin, Verlobte und erste Ehefrau; ihre Ehe begann, als er sich in Kiel eine eigenständige berufliche und private Existenz aufbaute.",
+      "start_year": 1886,
+      "end_year": 1909,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Ehe und Haushalt in Kiel und Berlin",
+        "Erziehung von vier Kindern",
+        "Familienleben während Plancks Berliner Professur"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck"
+      ],
+      "notes": "Sie heirateten am 31. März 1887; Marie starb 1909."
+    },
+    {
+      "person_name": "Karl Planck",
+      "relationship_type": "family/child",
+      "relationship_description": "Plancks ältestes Kind mit Marie Merck. Sein Tod als Soldat der deutschen Armee war einer der verheerenden Kriegsverluste der Familie.",
+      "start_year": 1888,
+      "end_year": 1916,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Berliner Familienleben",
+        "Beziehung zwischen Vater und Sohn",
+        "Familienerfahrungen während des Ersten Weltkriegs"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck"
+      ],
+      "notes": "Karl fiel 1916 im Ersten Weltkrieg."
+    },
+    {
+      "person_name": "Grete Planck",
+      "relationship_type": "family/child",
+      "relationship_description": "Eine von Plancks Zwillings­töchtern; ihr Tod im Kindbett im Jahr 1917 war Teil einer Folge schwerer familiärer Verluste.",
+      "start_year": 1889,
+      "end_year": 1917,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Berliner Familienleben",
+        "Beziehung zwischen Vater und Tochter",
+        "Betreuung durch die Großfamilie nach ihrem Tod"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck"
+      ],
+      "notes": "Gretes Tochter wurde anschließend innerhalb der Großfamilie betreut."
+    },
+    {
+      "person_name": "Erwin Planck",
+      "relationship_type": "family/child",
+      "relationship_description": "Plancks jüngerer Sohn, der Beamter wurde und sich am konservativen Widerstand gegen Hitler beteiligte. Nach seiner Verhaftung wandte sich Planck persönlich, jedoch erfolglos, an Adolf Hitler, um sein Leben zu retten.",
+      "start_year": 1893,
+      "end_year": 1945,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Berliner Familienleben",
+        "Familienbeziehung während Erwins politischer Laufbahn",
+        "Rettungsbemühungen nach dem Attentat vom 20. Juli"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck",
+        "https://en.wikipedia.org/wiki/Erwin_Planck"
+      ],
+      "notes": "Erwin wurde im Januar 1945 im Gefängnis Plötzensee hingerichtet."
+    },
+    {
+      "person_name": "Heinrich Rubens",
+      "relationship_type": "professional/scientific collaborator",
+      "relationship_description": "Rubens lieferte die entscheidenden Messungen der Schwarzkörperstrahlung im langwelligen Bereich, die Planck 1900 zur Aufstellung und Überprüfung seines Strahlungsgesetzes verwendete.",
+      "start_year": 1900,
+      "end_year": 1922,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Austausch über Infrarotmessungen der Schwarzkörperstrahlung",
+        "Überprüfung der Planckschen Strahlungsformel",
+        "Forschungskreis der Deutschen Physikalischen Gesellschaft"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck",
+        "https://en.wikipedia.org/wiki/Heinrich_Rubens"
+      ],
+      "notes": "Rubens und seine Frau besprachen am 7. Oktober 1900 beim Abendessen mit Planck neue Daten; bald darauf bestätigte Rubens Plancks Formel experimentell."
+    },
+    {
+      "person_name": "Albert Einstein",
+      "relationship_type": "professional/colleague and recruit",
+      "relationship_description": "Planck unterstützte Einstein schon früh und half ihm 1913 gemeinsam mit Walther Nernst, von Zürich nach Berlin zu wechseln. Später gehörten beide den Berliner wissenschaftlichen Institutionen und musikalischen Kreisen an.",
+      "start_year": 1905,
+      "end_year": 1947,
+      "strength": "strong",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Förderung der modernen theoretischen Physik",
+        "Berufung Einsteins nach Berlin und an die Preußische Akademie",
+        "Berliner Physikerkreis",
+        "Kammermusikalische Zusammenkünfte"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "notes": "Einsteins Arbeiten von 1905 führten den von Planck eingeführten Quantenbegriff weiter, während Planck Einstein in Berlin eine institutionelle Basis verschaffte."
+    },
+    {
+      "person_name": "Walther Nernst",
+      "relationship_type": "professional/scientific organizer",
+      "relationship_description": "Nernst setzte sich gemeinsam mit Planck dafür ein, Einstein nach Berlin zu holen, und arbeitete mit ihm am Aufbau des institutionellen Umfelds der deutschen Physik des 20. Jahrhunderts.",
+      "start_year": 1905,
+      "end_year": 1941,
+      "strength": "moderate",
+      "interaction_frequency": "monthly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Berliner wissenschaftliche Institutionen",
+        "Berufung Albert Einsteins 1913",
+        "Planung des Kaiser-Wilhelm-Instituts für Physik",
+        "Deutsche Physik und Wissenschaftsverwaltung"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Max_Planck",
+        "https://de.wikipedia.org/wiki/Walther_Nernst"
+      ],
+      "notes": "Nernst und Planck traten 1913 in Zürich gemeinsam mit dem Berliner Angebot an Einstein heran."
+    },
+    {
+      "person_name": "Marga von Hößlin",
+      "relationship_type": "family/spouse",
+      "relationship_description": "Plancks zweite Ehefrau, die er nach dem Tod von Marie Merck heiratete; gemeinsam hatten sie einen Sohn, Hermann.",
+      "start_year": 1911,
+      "end_year": 1947,
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Zweite Ehe und gemeinsamer Haushalt",
+        "Erziehung ihres Sohnes Hermann",
+        "Familienleben in Plancks letzten Jahrzehnten"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "notes": "Den verfügbaren Angaben zufolge begann die Ehe 1911."
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Plancks Familie gab ihm sowohl das akademische Umfeld als auch die privaten Verpflichtungen mit, die seine wissenschaftliche Laufbahn begleiteten. Seine Eltern prägten ein gebildetes protestantisches Bürgertum, in dem sein frühes Vertrauen in die Gelehrsamkeit wachsen konnte, während seine Ehen und Kinder seine Jahre in Kiel und Berlin bestimmten. Der Tod seiner ersten Frau und dreier Kinder, gefolgt von Erwins Hinrichtung 1945, verschärfte den Gegensatz zwischen Plancks öffentlichem Ansehen und seinen privaten Verlusten in besonderem Maße."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Plancks Ausbildung war weniger von inspirierenden Universitätsvorlesungen als von prägenden Ideen und eigenständigem Studium bestimmt. In München machte Hermann Müller die Energieerhaltung für ihn zu einem überzeugenden geistigen Grundsatz, während Philipp von Jolly ihm eine gründliche experimentelle und institutionelle Ausbildung vermittelte. Die entscheidende wissenschaftliche Wendung nahm Plancks intensive Lektüre von Clausius’ Arbeiten über Entropie und den zweiten Hauptsatz. Diese Haltung trug er von seiner Dissertation bis in jene theoretischen Arbeiten weiter, die schließlich zur Quantenphysik führten."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Plancks berufliches Umfeld verband begriffliche Physik, präzise Experimente und den Aufbau wissenschaftlicher Institutionen. Aus seiner frühen Auseinandersetzung mit Boltzmann erwuchs später eine fruchtbare Nutzung statistischer Überlegungen, während Rubens’ Infrarotmessungen die Aufstellung des Strahlungsgesetzes von 1900 ermöglichten. In Berlin half Planck, eine neue Gemeinschaft theoretischer Physiker zu festigen: Er unterstützte Einstein und holte ihn 1913 gemeinsam mit Nernst in die Stadt. Damit stärkte er das Netzwerk, aus dem sich Quantentheorie und moderne Physik entwickelten."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "01a2bf6eb26a71fc",
+    "translated_on": "2026-08-09T14:54:41.492231+00:00",
+    "translator": "openai:gpt-5.6-luna"
+  }
+}

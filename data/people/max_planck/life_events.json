@@ -1,0 +1,817 @@
+{
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-08-09",
+  "person": {
+    "name": "Max_Planck",
+    "birth_date": "1858-04-23",
+    "death_date": "1947-10-04",
+    "primary_roles": [
+      "physicist",
+      "professor"
+    ],
+    "tagline": "Founder of Quantum Physics",
+    "summary": "Max Planck was a German theoretical physicist whose work on black-body radiation introduced energy quanta and transformed modern physics. He taught in Kiel and Berlin, received the 1918 Nobel Prize in Physics, and led major German scientific institutions through periods of war and political upheaval.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Max_Planck",
+    "portrait": {
+      "image": "/portraits/max_planck_thumbnail.webp",
+      "thumbnail": "/portraits/max_planck_thumbnail.webp",
+      "medium": "/portraits/max_planck_medium.webp",
+      "full": "/portraits/max_planck_full.webp",
+      "source": "https://de.wikipedia.org/wiki/Max_Planck",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Max_Planck_by_Hugo_Erfurth_1938cr_-_restoration1.jpg?utm_source=de.wikipedia.org&utm_campaign=api&utm_content=original",
+      "referenceUsed": true
+    }
+  },
+  "chapters": [
+    {
+      "id": "foundations_of_a_physicist",
+      "headline": "Foundations of a Physicist",
+      "date_start": "1858-04-23",
+      "date_start_precision": "day",
+      "date_end": "1880-06-14",
+      "date_end_precision": "day",
+      "age_start": 0,
+      "age_end": 22,
+      "involved_people": [
+        "Johann Julius Wilhelm Planck",
+        "Emma Planck",
+        "Philipp von Jolly",
+        "Gustav Kirchhoff",
+        "Hermann von Helmholtz",
+        "Rudolf Clausius"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "the_berlin_ascent",
+      "headline": "The Berlin Ascent",
+      "date_start": "1881",
+      "date_start_precision": "year",
+      "date_end": "1889",
+      "date_end_precision": "year",
+      "age_start": 22,
+      "age_end": 31,
+      "involved_people": [
+        "Marie Merck",
+        "Gustav Kirchhoff"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "quantum_revolution",
+      "headline": "Quantum Revolution",
+      "date_start": "1890",
+      "date_start_precision": "year",
+      "date_end": "1908",
+      "date_end_precision": "year",
+      "age_start": 31,
+      "age_end": 50,
+      "involved_people": [
+        "Heinrich Rubens"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "grief_beneath_laurels",
+      "headline": "Grief Beneath Laurels",
+      "date_start": "1909-10-17",
+      "date_start_precision": "day",
+      "date_end": "1919",
+      "date_end_precision": "year",
+      "age_start": 51,
+      "age_end": 61,
+      "involved_people": [
+        "Marie Merck",
+        "Karl Planck",
+        "Grete Planck",
+        "Emma Planck",
+        "Ludwig Fulda",
+        "Hermann Sudermann",
+        "Georg Reicke",
+        "Gustaf V"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "science_under_tyranny",
+      "headline": "Institutions Under Tyranny",
+      "date_start": "1920",
+      "date_start_precision": "year",
+      "date_end": "1944",
+      "date_end_precision": "year",
+      "age_start": 61,
+      "age_end": 86,
+      "involved_people": [
+        "Adolf von Harnack",
+        "Adolf Hitler"
+      ],
+      "location": "Germany"
+    },
+    {
+      "id": "after_the_ruins",
+      "headline": "After the Ruins",
+      "date_start": "1945",
+      "date_start_precision": "year",
+      "date_end": "1947-10-04",
+      "date_end_precision": "day",
+      "age_start": 86,
+      "age_end": 89,
+      "involved_people": [
+        "Erwin Planck",
+        "Adolf Hitler",
+        "Marga von Hösslin",
+        "Hermann Planck"
+      ],
+      "location": "Germany"
+    }
+  ],
+  "conclusion": "By quantizing energy, Max Planck opened the path to quantum physics. His later life joined extraordinary scientific authority to devastating family losses and constrained efforts to defend German research under dictatorship.",
+  "events": [
+    {
+      "date": "1858-04-23",
+      "date_precision": "day",
+      "age": 0,
+      "title": "Born Into a Learned Kiel Household",
+      "description": "Born into a large, academically rooted household in Kiel, Planck entered a family shaped by university law, scholarship, civil service, and Protestant clerical traditions.",
+      "locations": [
+        {
+          "name_historic": "Kiel",
+          "name_modern": "Kiel, Germany",
+          "centroid": [
+            10.1228,
+            54.3233
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Johann Julius Wilhelm Planck (Wilhelm von Planck)",
+        "Emma Planck (née Patzig)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "foundations_of_a_physicist",
+      "background": "In the late 1850s, Kiel was a small Baltic port and university town in the Duchy of Holstein, a territory ruled by the Danish crown but tied to the German Confederation. The city had recently emerged from the First Schleswig War, a conflict over the constitutional and national status of Schleswig and Holstein. The 1852 London Protocol had temporarily stabilized the dispute, but its settlement left the region politically unsettled. Questions of constitutions, sovereignty, and the relationship between Denmark and the German states were therefore more than abstract subjects for a university legal faculty.\n\nChristian-Albrechts-Universität zu Kiel, founded in 1665, gave the city an intellectual importance out of proportion to its size. Its faculties of theology, law, medicine, and philosophy trained clergy, jurists, administrators, physicians, and teachers for the northern German lands. Professors were public figures as well as lecturers: they published, advised governments, and participated in the constitutional arguments of the day. A household connected to that world would have had access to books, educated visitors, and a strong expectation that learning was a serious public vocation rather than merely private accomplishment.\n\nThe most distinctive inheritance in this setting was a long tradition of Protestant scholarship. On the paternal side, the family included successive university theologians, notably Gottlieb Jakob Planck, a Göttingen professor whose work addressed the history of Protestant theology. Such a lineage did not point naturally toward experimental science; it reflected the older German ideal of Bildung, in which classical learning, moral seriousness, music, religion, and public service belonged together. The maternal connections to civil servants and clergy reinforced the same educated middle-class culture from another direction.\n\nThis environment offered stability and unusually close contact with academic life from the beginning. It also placed intellectual discipline alongside the civic responsibilities associated with law and administration. The family’s later relocation to Munich would put these habits into a larger cultural setting, but the Kiel household supplied the first framework: scholarship was familiar, professional learning was expected, and serious study was treated as part of family identity rather than an exceptional departure.",
+      "weight": 0.25,
+      "event_class": {
+        "type": "birth",
+        "father": "Wilhelm von Planck",
+        "mother": "Emma Planck, née Patzig",
+        "birth_name": "Marx Karl Ernst Ludwig Planck",
+        "characterization": "academic family"
+      }
+    },
+    {
+      "date": "1867",
+      "date_precision": "year",
+      "age": 9,
+      "title": "Moves to Munich’s Academic World",
+      "description": "Following his father's appointment to a chair in civil procedure, nine-year-old Planck joined his family and began attending the Maximiliansgymnasium.",
+      "locations": [
+        {
+          "name_historic": "Kiel",
+          "name_modern": "Kiel, Germany",
+          "centroid": [
+            10.1228,
+            54.3233
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.582,
+            48.1351
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Johann Julius Wilhelm Planck",
+        "Emma Patzig"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "foundations_of_a_physicist",
+      "background": "Munich was the capital of the Kingdom of Bavaria and, by the 1860s, a major center of higher education and the arts. The University of Munich had been transferred from Landshut to the Bavarian capital in 1826, and its law faculty was among the institutions that drew scholars to the city. For a household headed by a university jurist, the city offered both professional standing and a dense cultivated environment: concert life, churches, schools, and learned institutions were close at hand. Planck’s family also had a long academic tradition; his father’s own appointment belonged to a line of theologians and legal scholars among the Plancks.\n\nThe Maximiliansgymnasium was a humanistic secondary school, where classical languages and disciplined general education stood alongside mathematics and the sciences. Its important figure for Planck was Hermann Müller, a mathematics teacher who took an interest in him. Müller taught astronomy and mechanics, but the point that stayed with his pupil was more exacting than a collection of facts: the conservation of energy was presented as an absolute law of nature. At a time when physics instruction could still be heavily descriptive, this gave the student an early example of a principle applying across apparently different phenomena.\n\nMusic was an equally serious part of the young Planck’s intellectual world. He had received musical instruction from an early age, played piano, organ, and cello, and composed. At the gymnasium he sang in the school choir and continued to develop as a capable musician. He later recalled that he had come close to choosing music as a profession. This matters because the educational atmosphere was not narrowly vocational: his early habits of concentration and form developed across both scientific and musical study rather than in a specialized laboratory setting.\n\nThe school years culminated in the Abitur in 1874, which opened the way to university study. Their enduring importance lay less in an early commitment to a particular research problem than in the combination of rigorous classroom training, a teacher’s personal encouragement, and an intellectual setting in which science could be treated as part of a broad humanistic education.",
+      "weight": 0.3,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Kiel, Holstein",
+        "to_location": "Munich, Bavaria",
+        "characterization": "father's appointment"
+      }
+    },
+    {
+      "date": "1874",
+      "date_precision": "year",
+      "date_end": "1879",
+      "date_end_precision": "year",
+      "age": 16,
+      "title": "Chooses Physics Over Music",
+      "description": "After completing secondary school, Planck chose physics over possible studies in music or classical philology. He studied mathematics and natural science in Munich, spent a year in Berlin attending lectures by Gustav Kirchhoff and Hermann von Helmholtz, and pursued thermodynamics largely through his own reading of Rudolf Clausius.",
+      "locations": [
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.582,
+            48.1351
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Philipp von Jolly",
+        "Gustav Kirchhoff",
+        "Hermann von Helmholtz",
+        "Rudolf Clausius"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "foundations_of_a_physicist",
+      "background": "German university physics in the 1870s was an imposing but unsettled field. Experimental precision, especially in electricity, optics, and heat, had made major advances, while the mathematical meaning of heat and irreversibility was still disputed. Munich offered Planck a rigorous classical education in mathematics and the natural sciences. His professor Philipp von Jolly, a respected experimental physicist, reportedly cautioned the young student that physics was close to completion and that only a few gaps remained to be filled. It was a conventional judgment of the period, rather than a prediction that fundamental questions had disappeared.\n\nThe academic contrast between Munich and Berlin mattered. Berlin possessed two of Germany's most celebrated scientists: Gustav Kirchhoff, whose work helped establish spectrum analysis and the laws of thermal radiation, and Hermann von Helmholtz, an unusually wide-ranging investigator of physiology, acoustics, optics, and electrodynamics. Yet Planck later recalled that neither lecturer inspired him. He found their presentations highly prepared and technically faultless but lacking the immediacy that made a subject intellectually compelling. The experience helped form a pattern in which he relied less on lecture-room influence than on close, independent work with difficult texts.\n\nClausius's treatment of the second law of thermodynamics became the decisive intellectual encounter. The second law concerns the direction of physical processes: heat can flow from a hotter body to a cooler one without further intervention, but the reverse process does not occur spontaneously. Clausius had introduced entropy as a quantity that expresses this one-way character of natural change. Planck was drawn to the law's apparent universality and sought to give it an exact foundation. At this stage he was skeptical of approaches, associated especially with Ludwig Boltzmann, that explained thermodynamic behavior through the statistics of countless molecular motions. He initially preferred to regard the second law as an absolute principle rather than a probabilistic regularity.\n\nThis early commitment gave his subsequent student research an unusually focused direction. Instead of treating physics as a collection of solved techniques, he concentrated on a conceptual difficulty that many established scientists considered obscure or exhausted. His first original work would examine entropy and the second law, beginning a long engagement with radiation and thermal equilibrium. The choice also placed him at an intellectual distance from fashionable laboratory-centered research, while supplying the theoretical vocabulary that would remain central to his later career.",
+      "weight": 0.55
+    },
+    {
+      "date": "1879-06-28",
+      "date_precision": "day",
+      "date_end": "1880-06-14",
+      "date_end_precision": "day",
+      "age": 21,
+      "title": "Earned Doctorate and Habilitation",
+      "description": "Planck received his doctorate from the University of Munich after defending a dissertation on the second law of thermodynamics. In 1880, he completed his [[habilitation|habilitation]] on equilibrium states of isotropic bodies and began teaching as an unpaid [[Privatdozent|Privatdozent]] while living with his parents.",
+      "locations": [
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.582,
+            48.1351
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "foundations_of_a_physicist",
+      "annotations": {
+        "habilitation": {
+          "explanation": "A postdoctoral qualification in the German university system that established the right to teach independently at a university.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Habilitation"
+        },
+        "Privatdozent": {
+          "explanation": "An independently qualified university lecturer who traditionally received no regular salary and depended on student fees.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
+        }
+      },
+      "background": "In the late 1870s, thermodynamics was one of the few parts of physics in which broad, law-like principles seemed securely established. Rudolf Clausius had developed the concept of entropy to express the direction of irreversible physical processes, while Ludwig Boltzmann was pursuing a statistical interpretation rooted in the behavior of vast numbers of molecules. At the University of Munich, however, theoretical physics did not yet hold the institutional standing it would later acquire. Planck had studied with the experimental physicist Philipp von Jolly, who warned him that physics was close to completion, with only a few details remaining to be filled in.\n\nPlanck nevertheless chose the second law as the subject on which to build a scholarly career. Before preparing the doctoral work, he spent a year at the University of Berlin, attending lectures by Hermann von Helmholtz and Gustav Kirchhoff. He found those lectures less inspiring than expected and returned to Munich. His independent reading of Clausius was more decisive: it focused his attention on the problem of irreversibility—the fact that heat flows spontaneously from warmer to cooler bodies, not in reverse, despite the time-reversible equations of mechanics.\n\nThe early work treated the second law as an exact and universal principle, rather than as a merely probable consequence of molecular motion. This position set Planck apart from Boltzmann's statistical approach. The dissertation made little immediate impression on the physics community, a discouraging result for a young scholar working on a foundational question. His subsequent qualifying treatise, Gleichgewichtszustände isotroper Körper in verschiedenen Temperaturen (“Equilibrium States of Isotropic Bodies at Different Temperatures”), continued the same thermodynamic line and dealt with the conditions governing bodies whose physical properties are the same in every direction.\n\nThe unpaid lectureship exposed a basic feature of the German academic ladder: scholarly certification did not guarantee an income or a position. Remaining in his parents' household made it possible for Planck to continue research and offer courses despite that insecurity. These years fixed the intellectual habits that marked his later work: careful attention to general laws, mathematical argument, and a reluctance to treat physical principles as provisional. They also gave him the formal academic standing required to compete for a university chair.",
+      "weight": 0.5
+    },
+    {
+      "date": "1885",
+      "date_precision": "year",
+      "age": 27,
+      "title": "Accepted Kiel Professorship",
+      "description": "After five years as a [[Privatdozent|Privatdozent]] in Munich, Planck accepted the offer, gaining an independent academic post and a dependable salary.",
+      "locations": [
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.582,
+            48.1351
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Kiel",
+          "name_modern": "Kiel, Germany",
+          "centroid": [
+            10.1228,
+            54.3233
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "the_berlin_ascent",
+      "annotations": {
+        "Privatdozent": {
+          "explanation": "In the German university system, a Privatdozent had permission to lecture independently after habilitation but normally received no university salary.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
+        }
+      },
+      "background": "German academic careers in the 1880s were precarious for young scholars. A habilitation permitted a scholar to lecture at a university, but it did not ordinarily bring a salaried faculty position; lecturers depended largely on fees paid by students. Theoretical physics also had not yet acquired the institutional prominence it would later hold in German universities, where experimental physics and laboratory-based work generally commanded more resources and status. Planck’s earlier work on the second law of thermodynamics and entropy had attracted little notice, despite his conviction that thermodynamics rested on fundamental principles.\n\nThe University of Kiel was a comparatively small institution in the Prussian university system, but its offer placed Planck in a formal teaching role devoted to theoretical physics. Its northern setting also had a personal resonance: he had been born in Kiel, though his family had left the city during his childhood. The move replaced the uncertain economy of private lecturing with a university career in which teaching and sustained research could proceed together. At this stage, Planck’s intellectual concerns centered on the irreversible processes described by thermodynamics, particularly the meaning of entropy and the status of the second law.\n\nA revealing product of these concerns came from a University of Göttingen prize competition announced in 1887 on the nature of energy. Planck entered an essay that treated the principle of conservation of energy as a central law of physics rather than merely a convenient rule derived from mechanics. His essay won the prize and was published as Das Prinzip der Erhaltung der Energie (“The Principle of the Conservation of Energy”). The episode shows the unusually broad, foundational character of his work: rather than pursuing a fashionable experimental problem, he was trying to clarify what physical laws meant and how securely they could be established.\n\nThe Kiel years therefore supplied a period of institutional stability and scholarly consolidation. The prize essay strengthened his reputation beyond the small circle of students and colleagues at the university, while his lectures developed his command of theoretical physics as a field. This work on thermodynamics and energy provided the conceptual ground from which his later investigations of heat radiation would emerge. By the end of the decade, the standing earned through this combination of teaching and research made him a credible candidate for a more prominent university appointment.",
+      "weight": 0.6,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Munich, Bavaria",
+        "to_location": "Kiel, Holstein",
+        "characterization": "academic appointment"
+      }
+    },
+    {
+      "date": "1887-03-31",
+      "date_precision": "day",
+      "age": 28,
+      "title": "Married Marie Merck",
+      "description": "On 31 March 1887, Planck married Marie Merck in Kiel, beginning a household alongside his new academic career.",
+      "locations": [
+        {
+          "name_historic": "Kiel",
+          "name_modern": "Kiel, Germany",
+          "centroid": [
+            10.1228,
+            54.3233
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Marie Merck"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "the_berlin_ascent",
+      "background": "Kiel was then a modest but consequential opening for a young theorist. The University of Kiel had appointed Planck an associate professor of theoretical physics in 1885, after several years in Munich in which his work on thermodynamics had attracted little wider notice. The position gave him an independent academic footing, but not the prominence or institutional resources of Berlin or Munich. He was still building a reputation through lectures and articles while living in a northern port city far from the larger centers of German physics.\n\nHis professional interests at this point centered on the foundations of thermodynamics, especially the second law and entropy. Planck approached those questions through a conviction that physical laws should have strict, universal validity; he was skeptical of explanations that treated atoms as indispensable physical realities. This was not yet the research setting of the radiation problem that would later make his name. Rather, it was a period of methodical work on problems whose importance he believed in even when his contemporaries paid limited attention.\n\nThe new household began in a sublet apartment in Kiel, an arrangement that reflected the practical circumstances of a junior professor rather than the secure, prosperous family life later associated with Planck. Teaching became increasingly absorbing for him. Kiel offered smaller classes and close contact with students, but it also left him conscious of the limited prospects for a theoretical physicist at a comparatively small university. His family responsibilities and professional routine therefore developed together: the daily demands of lectures, writing, and maintaining a home were not separate from the period in which he sought a more permanent academic position.\n\nThat opportunity arrived two years later, when the University of Berlin called Planck to succeed Gustav Kirchhoff. The move placed him at Germany’s foremost university and gave him access to the scientific networks that would shape his subsequent work. The Kiel years nevertheless mattered as the setting in which a newly independent professor established the disciplined domestic and scholarly routine that accompanied the next stage of his career.",
+      "weight": 0.55,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Marie Merck",
+        "duration": "until her death in 1909",
+        "children": 4,
+        "characterization": "family partnership"
+      }
+    },
+    {
+      "date": "1889",
+      "date_precision": "year",
+      "age": 31,
+      "title": "Joined Berlin Faculty",
+      "description": "Four years after accepting a professorship at Kiel, Planck moved to Berlin to succeed Gustav Kirchhoff. The appointment brought his young family into the demanding academic life of the German capital.",
+      "locations": [
+        {
+          "name_historic": "Kiel",
+          "name_modern": "Kiel, Germany",
+          "centroid": [
+            10.1228,
+            54.3233
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/In_diesem_hause_lehrte_Max_Planck_der_entdecker_des_elementaren_wirkungsquantums_h_von_1889_1928.jpg/960px-In_diesem_hause_lehrte_Max_Planck_der_entdecker_des_elementaren_wirkungsquantums_h_von_1889_1928.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Bronze plaque marking Max Planck’s Berlin teaching years",
+          "source": "https://commons.wikimedia.org/wiki/File:In_diesem_hause_lehrte_Max_Planck_der_entdecker_des_elementaren_wirkungsquantums_h_von_1889_1928.jpg",
+          "creator": "Spudgun67",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "the_berlin_ascent",
+      "background": "The vacancy carried unusual weight because Gustav Kirchhoff had helped establish the study of radiation and spectra as a major branch of nineteenth-century physics. Berlin’s university was also embedded in a dense network of scientific institutions: the Prussian Academy of Sciences brought leading scholars into regular contact, the German Physical Society provided a forum for current research, and the Physikalisch-Technische Reichsanstalt, founded in 1887, linked exact measurement with state-supported research. In this setting, a university chair was not merely a teaching post; it offered access to the most influential professional circles in German science.\n\nThe intellectual climate was demanding for a theorist. Experimental physics had enormous prestige in Germany, while mathematical theory was still defining its institutional place. Hermann von Helmholtz remained a commanding figure in Berlin science, and August Kundt directed the university’s Physics Institute. The senior generation had made Berlin a center for optics, electrodynamics, physiology, and precision experimentation. Planck entered this environment with a reputation built chiefly on work in thermodynamics, a field that many physicists regarded as settled in its basic principles but that remained divided over the meaning of entropy and the role of atoms.\n\nThe second law of thermodynamics became the issue on which he marked out an independent position. Ludwig Boltzmann had developed a statistical interpretation of entropy, relating it to the probable microscopic arrangements of matter. Planck initially resisted that approach. He sought instead to treat the increase of entropy as an exact, irreversible law of nature, rather than a consequence of probability. This was not a minor philosophical difference: it shaped what counted as an acceptable physical explanation and made him cautious about arguments based on atoms, which were still disputed by some physicists. His 1897 textbook, Vorlesungen über Thermodynamik, presented the subject with exceptional clarity and helped establish him as an authoritative teacher of the field.\n\nThe Berlin appointment gave this work a durable institutional base. The chair brought regular students, a larger scholarly audience, and membership in a community where theoretical ideas could be confronted with increasingly refined laboratory results. It also put Planck in contact with the experimental culture that would make questions about thermal radiation difficult to ignore. His growing attention to that problem emerged from this intersection of thermodynamic principles, laboratory measurement, and Berlin’s scientific institutions, setting the immediate professional conditions for the work that soon followed.",
+      "weight": 0.75,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Kiel, Holstein",
+        "to_location": "Berlin, Prussia",
+        "characterization": "academic appointment"
+      }
+    },
+    {
+      "date": "1900-12-14",
+      "date_precision": "day",
+      "age": 42,
+      "title": "Proposed Energy Quanta",
+      "description": "Planck presented his radiation law to the German Physical Society after seeking a formula that matched measurements of [[black-body radiation|black-body radiation]]. He derived the result by treating energy exchange as occurring in discrete units proportional to frequency, introducing the constant later denoted h.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Heinrich Rubens"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck",
+        "https://en.wikipedia.org/wiki/Planck%27s_law",
+        "https://en.wikipedia.org/wiki/Heinrich_Rubens"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Planck_law_radiation.PNG/960px-Planck_law_radiation.PNG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Diagram of Planck’s law of radiation",
+          "source": "https://commons.wikimedia.org/wiki/File:Planck_law_radiation.PNG",
+          "creator": "Thomas-sk (talk) 19:02, 24 July 2009 (UTC)",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "quantum_revolution",
+      "annotations": {
+        "black-body radiation": {
+          "explanation": "Thermal electromagnetic radiation emitted by an ideal object that absorbs all incoming radiation; its spectrum depends only on temperature.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Black-body_radiation"
+        }
+      },
+      "background": "At the turn of the twentieth century, heat radiation was an unusually urgent testing ground for physics. Experimentalists could heat a cavity with a small opening and measure the light emerging from it, producing a reproducible spectrum independent of the cavity material. Wilhelm Wien’s radiation law described the short-wavelength, high-frequency part of that spectrum well, but it failed under conditions that were becoming accessible through improved infrared measurements. A satisfactory theory had to account for the energy emitted across the entire range of wavelengths, not merely fit one portion of it.\n\nHeinrich Rubens, working with Ferdinand Kurlbaum at the Physikalisch-Technische Reichsanstalt, had pushed measurement far into the infrared using Reststrahlen, a technique that used repeated reflection from crystals to isolate long wavelengths. Their results showed that, at fixed long wavelengths, radiant energy increased approximately in direct proportion to temperature. This contradicted Wien’s formula. On October 7, Rubens and his wife dined with Planck and described fresh measurements at a wavelength of 51 micrometers. That evening, Planck found an interpolation formula that joined Wien’s successful high-frequency limit to the long-wavelength behavior reported by Rubens. He sent the formula to Rubens on a postcard the next day; Rubens soon confirmed that it agreed with his measurements.\n\nThe remaining problem was to give this successful formula a physical derivation. Planck modeled matter in the cavity walls as many resonators of a given frequency. Rather than allowing each resonator any continuously variable energy, he counted the possible ways a total energy could be divided among them when it came only in equal “energy elements.” The size of each element was set as hν, with ν the frequency. Combining this combinatorial count with Ludwig Boltzmann’s relation between entropy and the number of microscopic arrangements produced the entropy required for the new spectrum. In this account, the discontinuity initially concerned the resonators’ emission and absorption of energy, not an assertion that light itself consisted of particles.\n\nThe resulting law gave a spectrum that behaved correctly at both high and low frequencies and supplied numerical values for two new constants, h and k, the latter now called the Boltzmann constant. Planck initially treated the energy elements as a formal device rather than a literal break with classical physics, and acceptance was gradual. The discrete-energy assumption nevertheless became the starting point for later quantum work, including Einstein’s application of the idea to light in 1905. Rubens later emphasized that the decisive experimental anomaly had made the theoretical breakthrough possible, while Planck credited Rubens’s intervention as essential to the law’s formulation.",
+      "weight": 1.0
+    },
+    {
+      "date": "1909-10-17",
+      "date_precision": "day",
+      "date_end": "1919",
+      "date_end_precision": "year",
+      "age": 51,
+      "title": "Endured Family Losses",
+      "description": "Planck's wife, Marie, died in 1909. During the First World War, his eldest son Karl was killed at Verdun in 1916, and his twin daughters, Grete and Emma, died in childbirth in 1917 and 1919, respectively.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Verdun",
+          "name_modern": "Verdun, France",
+          "centroid": [
+            5.388,
+            49.159
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Marie Merck",
+        "Karl Planck",
+        "Grete Planck",
+        "Emma Planck"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "grief_beneath_laurels",
+      "background": "The losses unfolded against the setting of a prosperous Berlin academic household that had been built over two decades. Marie Merck, whom Planck had married in 1887, came from the well-connected Merck family. Their four children—Karl, the twins Grete and Emma, and Erwin—grew up while their father held a chair at Berlin’s Friedrich Wilhelm University and was a central figure in German physics. The family lived in the affluent Grunewald villa district, a setting sharply at odds with the private instability that followed Marie’s prolonged illness; biographical accounts identify tuberculosis as the probable cause.\n\nThe household did not remain without an adult partner for long. In 1911 Planck married Marga von Hösslin, and they had a son, Hermann. That remarriage brought a new family arrangement, but it did not insulate the household from the pressures that came with Germany’s entry into World War I. Like many educated German families, the Plancks were drawn into a conflict whose early patriotic expectations gave way to mass casualties and privation. Karl, the eldest child, served in the German Army. Verdun, where he was killed, became one of the war’s defining battles: German and French forces fought there through most of 1916, and the wider Verdun sector remained an active and dangerous front afterward.\n\nThe deaths of the daughters were linked to childbirth, a period in which maternal mortality remained a serious danger even in urban, medically advanced Germany. Grete’s death left behind an infant daughter. Emma subsequently married Grete’s widower, Armin von Arnim, and died after giving birth as well; the surviving child was then raised within the extended family. The sequence made the losses more than a wartime bereavement: it altered the care of the next generation and repeatedly disrupted the household’s family ties.\n\nThese events preceded the still more severe political and personal ordeals of Planck’s later life. They also help explain why accounts of him stress a reserve and stoicism that existed alongside a strong attachment to family. His public position in Berlin’s scientific world continued, but the period established a painful division between the institutional prestige of his career and the repeated losses borne in his private life.",
+      "weight": 0.8
+    },
+    {
+      "date": "1914-10-04",
+      "date_precision": "day",
+      "age": 56,
+      "title": "Signed Wartime Manifesto",
+      "description": "In the first months of World War I, Planck added his name to the [[Manifesto of the Ninety-Three|Manifesto of the Ninety-Three]], a public declaration defending Germany's conduct and war policy. The statement was issued with the names of prominent German scholars, artists, and intellectuals.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Ludwig Fulda",
+        "Hermann Sudermann",
+        "Georg Reicke"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Manifesto_of_the_Ninety-Three",
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Manifesto_dos_93.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "caption": "Document of the Manifesto of the Ninety-Three",
+          "source": "https://commons.wikimedia.org/wiki/File:Manifesto_dos_93.gif",
+          "creator": "Myle14015",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "grief_beneath_laurels",
+      "annotations": {
+        "Manifesto of the Ninety-Three": {
+          "explanation": "A wartime proclamation, also titled “To the Civilized World,” that publicly defended German policy and rejected reports of German abuses at the war's outset.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Manifesto_of_the_Ninety-Three"
+        }
+      },
+      "background": "The declaration emerged from the intense national mobilization that followed Germany's entry into the war in August 1914. Germany's invasion of neutral Belgium and reports of violence against civilians, including the destruction at Louvain, had rapidly damaged the country's standing abroad. German public figures regarded much of the foreign press coverage, especially in Britain, as hostile propaganda. The appeal was directed not only at governments but at the international community of scholars, writers, artists, and university teachers, whose prewar connections had been unusually extensive.\n\nPublished under the original title “To the Civilized World” (An die Kulturwelt!), the text adopted the voice of representatives of German science and art. It made a sequence of categorical denials: that Germany had caused the war, that it had wrongfully violated Belgian neutrality, that German troops had injured civilians without military necessity, and that German warfare disregarded international law. It also portrayed German militarism as inseparable from German culture and argued that the country's military strength protected that culture. The playwright Ludwig Fulda, fellow playwright Hermann Sudermann, and the academic Georg Reicke were among those responsible for preparing the declaration.\n\nThe document's most consequential feature was its claim to speak for German intellectual life as a whole. Its prominent names were meant to give moral authority to the official German account and to persuade intellectuals in Entente countries to pressure their own governments. It was issued in ten languages, a sign that its intended audience lay far beyond Germany. Rather than winning that audience, however, it provoked strong condemnation in European and American newspapers and academic circles. The association of celebrated scholars and artists with the declaration made it a particularly visible symbol of wartime nationalism.\n\nDissent existed even among German intellectuals. The astronomer Wilhelm Julius Foerster later regretted his association with the appeal and, with the physiologist Georg Friedrich Nicolai, prepared the Manifesto to the Europeans, which urged educated people in all countries to work toward a peace that would not create future wars. Only Otto Buek and Albert Einstein joined them, and their counter-manifesto was not published at the time. A 1921 New York Times report found that, of 76 surviving signatories of the earlier declaration, 60 expressed some degree of regret; several said they had not fully seen what they were endorsing. The episode became an enduring example of how quickly international scholarly ideals could yield to wartime solidarity.",
+      "weight": 0.35
+    },
+    {
+      "date": "1919",
+      "date_precision": "year",
+      "age": 61,
+      "title": "Received Nobel Prize",
+      "description": "Planck received the Nobel Prize in Physics for 1918 in recognition of his discovery of [[energy quanta|energy quanta]]. The award ceremony took place in Stockholm after the prize had been delayed by the war and its aftermath.",
+      "locations": [
+        {
+          "name_historic": "Stockholm",
+          "name_modern": "Stockholm, Sweden",
+          "centroid": [
+            18.0686,
+            59.3293
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Gustaf V"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck",
+        "https://en.wikipedia.org/wiki/Nobel_Prize_in_Physics"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Max_Planck_Nobel_1918.jpg/960px-Max_Planck_Nobel_1918.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Max Planck Nobel Prize portrait",
+          "source": "https://commons.wikimedia.org/wiki/File:Max_Planck_Nobel_1918.jpg",
+          "creator": "AB Lagrelius & Westphal. The American Institute of Physics also credits the photo [2] to AB Lagrelius & Westphal, which is the Swedish company used by the Nobel Foundation for most photos of its book series Les Prix Nobel.",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-medal",
+      "chapter": "grief_beneath_laurels",
+      "annotations": {
+        "energy quanta": {
+          "explanation": "Discrete packets of energy, rather than a continuously divisible flow; this idea became a foundational principle of quantum physics.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Quantum"
+        }
+      },
+      "background": "The Nobel institutions had been disrupted by World War I, and the normal annual rhythm of deliberation and presentation had broken down. Several prizes assigned to 1918 were therefore held over and decided in the following year. The delay mattered especially for a German scientist: the postwar settlement had sharply strained international scholarly relations, and German researchers faced exclusion from many scientific exchanges. The Nobel Foundation nevertheless treated the award as belonging to the 1918 cycle, rather than converting it into a new 1919 prize.\n\nThe Nobel Prize in Physics was awarded by the Royal Swedish Academy of Sciences under Alfred Nobel’s requirement that the work bring the “greatest benefit to humankind.” Its citation was notably specific. Rather than praising a broad career in theoretical physics, it singled out the discovery of energy quanta. That precision reflected the fact that the idea had moved well beyond a difficult problem in heat radiation. By the end of the 1910s, it had become central to attempts to explain atoms and light, even though physicists still disagreed about what quanta physically represented.\n\nThe background to the committee’s choice was a profound challenge to classical physics. Measurements of the radiation emitted by heated bodies could not be reconciled across all wavelengths with the existing laws of thermodynamics and electromagnetism. A formula tied to the constant later denoted by h had matched the observed distribution, but its assumption that energy exchange occurred in discrete units initially appeared radical. Albert Einstein’s work on the photoelectric effect and Niels Bohr’s atomic model helped turn that assumption into an active research program. The Nobel citation recognized the conceptual opening that made such later work possible, rather than claiming that all of quantum mechanics had already been completed.\n\nThe honor gave public institutional weight to a theory that was still being debated and developed. It also marked an early point in a sequence of Nobel recognitions associated with the new physics: Einstein received the 1921 Physics Prize, and Bohr received the 1922 prize. For the Swedish academy, the decision established energy quantization as an achievement of exceptional scientific importance. For physicists, it signaled that the break with continuous classical descriptions was no longer merely a speculative alternative, but a central fact of modern theory.",
+      "weight": 0.9
+    },
+    {
+      "date": "1930",
+      "date_precision": "year",
+      "age": 72,
+      "title": "Led Kaiser Wilhelm Society",
+      "description": "Planck became president of the [[Kaiser Wilhelm Society|Kaiser Wilhelm Society]], Germany's principal network of nonuniversity research institutes. He succeeded Adolf von Harnack and assumed responsibility for the organization during a period of severe economic and political strain.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Adolf von Harnack"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck",
+        "https://en.wikipedia.org/wiki/Kaiser_Wilhelm_Society"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Max-Planck-Gesellschaft_-_panoramio.jpg/960px-Max-Planck-Gesellschaft_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Entrance to Max Planck Society headquarters",
+          "source": "https://commons.wikimedia.org/wiki/File:Max-Planck-Gesellschaft_-_panoramio.jpg",
+          "creator": "Tobi Merk",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "science_under_tyranny",
+      "annotations": {
+        "Kaiser Wilhelm Society": {
+          "explanation": "A German organization founded in 1911 to establish and support independent, specialized research institutes; it became the Max Planck Society after World War II.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Kaiser_Wilhelm_Society"
+        }
+      },
+      "background": "The Kaiser Wilhelm Society had been created in 1911 to give German research a form of institutional support that universities could not easily provide. Universities centered on teaching, chairs, and students; the society established specialized institutes with their own directors, laboratories, staffs, and governing boards. Its institutes brought together work in physics, chemistry, biology, medicine, and the humanities, while drawing funds from the state, private donors, foundations, and industry. Berlin-Dahlem became the organization’s principal scientific district.\n\nAdolf von Harnack, a Protestant theologian and historian, had guided the society from its founding. His long tenure helped secure political patronage and private backing for a model in which distinguished directors enjoyed considerable autonomy. Among the best-known institutes were the Kaiser Wilhelm Institute for Physical Chemistry and Electrochemistry, directed by Fritz Haber, the Kaiser Wilhelm Institute for Chemistry, and the Kaiser Wilhelm Institute for Physics, whose first director was Albert Einstein. The network’s strength lay in that concentration of personnel and equipment outside the normal university system, but its reliance on outside funding also made it vulnerable to a national fiscal crisis.\n\nThe setting in 1930 was particularly unforgiving. Germany was still dealing with the consequences of postwar reparations, currency disruption earlier in the Weimar period, and international isolation from parts of the scientific world. The global economic crash that began in 1929 sharply reduced public revenues and charitable resources. Research institutes faced not merely abstract budget debates but the practical problem of maintaining laboratories, technical staff, libraries, and costly scientific apparatus when money became scarce. In Dahlem, the recently opened Harnack House—conceived as a meeting place and guest house for visiting scholars—represented the international and cooperative ambitions of the society just as those ambitions were becoming harder to sustain.\n\nThe organization retained its central place in German science, but its institutional independence would soon be tested more severely than its finances. Political intervention after the collapse of the Weimar Republic affected personnel, research priorities, and the freedom of scholars, especially those targeted on racial or political grounds. The presidency therefore became an administrative and moral burden as well as an honor. The Kaiser Wilhelm Society survived the war, though several of its institutes and its reputation were marked by the regime’s demands; in 1948, its successor organization was established as the Max Planck Society.",
+      "weight": 0.7
+    },
+    {
+      "date": "1933",
+      "date_precision": "year",
+      "age": 75,
+      "title": "Appealed to Hitler",
+      "description": "After the Nazi government began dismissing Jewish scholars, Planck met Adolf Hitler to appeal for the retention of Jewish scientists in German academic life. Hitler rejected his arguments and responded with an antisemitic outburst; Planck also assisted colleagues facing persecution.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Adolf Hitler"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "event_type_icon": "mdi-forum",
+      "chapter": "science_under_tyranny",
+      "background": "The new regime moved quickly to bring universities, academies, and research institutes into line with its racial program. The Law for the Restoration of the Professional Civil Service, promulgated on April 7, 1933, authorized the removal of civil servants deemed politically unreliable or “non-Aryan.” Because professors at state universities commonly held civil-service status, the measure struck directly at German academic life. Initial exemptions existed for veterans of the First World War and for some officials appointed before August 1914, but these offered only temporary and uneven protection.\n\nThe Kaiser Wilhelm Society, which Planck had chaired since 1930, stood outside the ordinary university system but could not escape political pressure. Its institutes had been built around internationally connected researchers, including Jewish scientists and scholars of Jewish background, and their loss threatened laboratories that depended on rare technical expertise and personal scientific networks. Planck belonged to an older German academic establishment that placed the autonomy of scholarship above party doctrine. His approach was private persuasion rather than public confrontation, a strategy that reflected both his temperament and his hope that established institutions might preserve some room for professional standards.\n\nThe case of chemist Fritz Haber showed the limits of the legal exemptions. Haber, director of the Kaiser Wilhelm Institute for Physical Chemistry and Electrochemistry, had converted from Judaism to Lutheranism, served Germany during the First World War, and would therefore have been personally exempt under the law’s early provisions. Yet Nazi policy required the dismissal of members of his staff who were Jewish. Rather than administer their removal, Haber resigned in April 1933. He left Germany soon afterward and died in Basel in 1934, before taking up a planned position in Palestine. His departure was especially painful for German science: Haber was a Nobel laureate whose institute had trained researchers from across Europe and the United States.\n\nPlanck’s efforts could not reverse the transformation of German scholarly life. Dismissals, forced resignations, and emigration steadily deprived Germany of leading physicists, chemists, mathematicians, and physicians; Albert Einstein, James Franck, Lise Meitner, and many others were affected by the regime in different ways and at different times. Planck remained at the head of the Kaiser Wilhelm Society until 1937, attempting to protect its work through institutional continuity. The episode exposed the failure of an influential scientific elder’s personal standing to restrain a dictatorship committed to racial exclusion, while also marking Planck’s attempt to use the limited authority he retained on behalf of threatened colleagues.",
+      "weight": 0.7
+    },
+    {
+      "date": "1945-01-23",
+      "date_precision": "day",
+      "age": 86,
+      "title": "Lost Son Erwin",
+      "description": "After his son Erwin was condemned by the [[People's Court|People's Court]], Max Planck personally appealed to Hitler for clemency. The plea was ignored, and Erwin was hanged at Plötzensee Prison in Berlin for his connections to resistance circles involved in the failed July 1944 plot against Hitler.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Erwin Planck",
+        "Adolf Hitler"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Erwin_Planck",
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/65535/52517193061_ae922fccf8_b.jpg",
+          "caption": "Plötzensee Prison Memorial",
+          "source": "https://www.flickr.com/photos/16801915@N06/52517193061",
+          "creator": "Reading Tom",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "after_the_ruins",
+      "annotations": {
+        "People's Court": {
+          "explanation": "The Nazi regime's special political court, notorious for rapid show trials and death sentences against alleged opponents of the state.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/People%27s_Court_(Germany)"
+        }
+      },
+      "background": "Erwin Planck had entered public life through the military and the Reich Chancellery rather than through his father’s academic world. During the First World War he served in the German Army and, after returning from French captivity in 1917, worked on the General Staff. There he formed a lasting friendship with Kurt von Schleicher. When Schleicher moved into the Reichswehr Ministry’s political department after the war, he made Erwin his assistant; Erwin subsequently served as a liaison officer at the Reich Chancellery and later as a senior government official.\n\nHis ties to Schleicher placed him near the collapsing center-right governments of the Weimar Republic. He became a deputy minister under Franz von Papen in 1932 and retained that position during Schleicher’s brief chancellorship. After Hitler took power, Erwin temporarily retired and spent about a year in East Asia. Schleicher and his wife were murdered by the SS during the Night of the Long Knives in June 1934. Erwin unsuccessfully sought an explanation for the killing and held inconclusive discussions with General Werner von Fritsch about opposition to the regime.\n\nBy the late 1930s, Erwin had moved into business as an executive with the Otto Wolff industrial group, eventually directing its Berlin office. Yet he remained connected to conservative opponents of Hitler. In August 1939 he joined Johannes Popitz and Hjalmar Schacht in asking General Georg Thomas to prevent the impending invasion of Poland. Thomas agreed to warn Wilhelm Keitel that an attack would trigger a wider war Germany could not sustain because of supply problems. Keitel dismissed the concern, claiming that Hitler did not intend such a war. In 1940, Erwin, Popitz, Ulrich von Hassell, and Ludwig Beck drafted a provisional constitution for a post-Nazi Germany, expecting that a military reversal in the West might create an opening to overthrow the dictatorship.\n\nThe failure of the July 20 attempt unleashed a broad repression that reached well beyond those immediately involved in the bomb plot. Erwin was arrested three days afterward and taken to the Reich Security Main Office, the Gestapo’s central apparatus. The People’s Court convicted him in October in proceedings designed to punish political enemies rather than provide an independent hearing. For Max Planck, already bereaved by the deaths of other children and living through the destruction of Germany, the case fused the Nazi state’s assault on political dissent with an intimate family catastrophe. Erwin’s death became one of the most painful final losses of Planck’s life.",
+      "weight": 0.85
+    },
+    {
+      "date": "1945",
+      "date_precision": "year",
+      "age": 87,
+      "title": "Settled in Göttingen",
+      "description": "After Allied bombing destroyed his home and the war ended, the 87-year-old Planck began his last chapter amid Germany’s severe material and political dislocation.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Germany",
+          "centroid": [
+            9.935,
+            51.533
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Marga von Hösslin",
+        "Hermann Planck"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/G%C3%B6ttinger_Gedenktafel%2C_Planck%2C_Max%2C_1%2C_Merkelstra%C3%9Fe_12%2C_Oststadt%2C_G%C3%B6ttingen%2C_Landkreis_G%C3%B6ttingen.jpg/960px-G%C3%B6ttinger_Gedenktafel%2C_Planck%2C_Max%2C_1%2C_Merkelstra%C3%9Fe_12%2C_Oststadt%2C_G%C3%B6ttingen%2C_Landkreis_G%C3%B6ttingen.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Göttingen memorial plaque for Max Planck",
+          "source": "https://commons.wikimedia.org/wiki/File:Göttinger_Gedenktafel,_Planck,_Max,_1,_Merkelstraße_12,_Oststadt,_Göttingen,_Landkreis_Göttingen.jpg",
+          "creator": "GeorgDerReisende",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "after_the_ruins",
+      "background": "Germany’s military defeat brought neither an immediate return to ordinary civilian life nor a quick recovery for its intellectual institutions. Cities had been damaged, rail and postal links were unreliable, and food, fuel, and housing were scarce. Allied occupation authorities also had to decide the future of German universities and research organizations that had operated under the Nazi state. For elderly scholars, the basic difficulties of finding secure accommodation and maintaining contact with colleagues were inseparable from the larger uncertainty over whether German science could regain an international place.\n\nPlanck’s household had been reduced to his second wife, Marga von Hößlin Planck, whom he had married in 1911, and their son Hermann. The family’s circumstances were marked by a sequence of wartime losses that had left little of the security associated with his earlier Berlin life. Most devastatingly, his son Erwin, who had been connected with the conservative resistance to Hitler, was executed at Plötzensee in January 1945. This personal catastrophe occurred during the final collapse of the regime and only months before the family had to make decisions about a new home.\n\nGöttingen offered an important, if limited, setting for recovery. Its Georg August University had long been one of Germany’s major centers for mathematics and the natural sciences, associated with figures such as Carl Friedrich Gauss, David Hilbert, and Max Born. Located in the British occupation zone after the war, the city became a gathering point for displaced academics and for efforts to reconstruct research outside the ruins and political compromises of Berlin. The immediate postwar environment remained austere: rationing continued, displaced people competed for rooms and supplies, and denazification shaped appointments and public life. Yet the university community gave surviving scholars a network that was difficult to recreate elsewhere.\n\nThe institutional question was especially close to Planck’s life story. He had served as president of the Kaiser Wilhelm Society from 1930 to 1937, and its institutes had been central to German research before and during the war. After 1945, the organization could not simply resume under its former name and structure. Otto Hahn became its final president in 1946, while plans developed in the British zone for a successor organization. After Planck’s death, the Max Planck Society was formally established in 1948, taking his name as an emblem of renewed science detached from the Nazi era. Thus the final setting of his life also became a starting point for the postwar reorganization of German research.",
+      "weight": 0.4,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Berlin, Germany",
+        "to_location": "Göttingen, Germany",
+        "characterization": "wartime displacement"
+      }
+    },
+    {
+      "date": "1947-10-04",
+      "date_precision": "day",
+      "age": 89,
+      "title": "Death in Göttingen",
+      "description": "Max Planck died in Göttingen on 4 October 1947, aged 89.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Germany",
+          "centroid": [
+            9.935,
+            51.533
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Grave_of_Max_Planck_at_Stadtfriedhof_G%C3%B6ttingen_2017_01.jpg/960px-Grave_of_Max_Planck_at_Stadtfriedhof_G%C3%B6ttingen_2017_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Grave and tombstone of Max Planck",
+          "source": "https://commons.wikimedia.org/wiki/File:Grave_of_Max_Planck_at_Stadtfriedhof_Göttingen_2017_01.jpg",
+          "creator": "Julian Herzog (Website)",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-cross",
+      "chapter": "after_the_ruins",
+      "background": "Germany’s scientific institutions were still in a precarious condition in the immediate postwar years. Laboratories had been bombed, equipment and libraries dispersed, and the former Kaiser Wilhelm Society’s network of research institutes had been fragmented by the collapse of the Nazi state and the division of Germany into occupation zones. Göttingen, in the British zone, became an important temporary center for scholars and scientific organizations displaced from Berlin and other devastated cities. The university town offered a setting in which parts of German academic life could begin again, but under close Allied scrutiny and with little material security.\n\nThe Kaiser Wilhelm Society faced a particularly complicated problem. Its institutes had produced distinguished work in physics, chemistry, biology, and medicine, yet they had operated under a regime whose crimes left German science morally and politically compromised in the eyes of the world. Rebuilding research therefore meant more than reopening laboratories. It required finding lawful institutional structures in the western occupation zones, restoring contacts with foreign colleagues, and separating the future of German scholarship from the organization’s association with the Third Reich. Otto Hahn, the chemist and Nobel laureate, became president of the surviving Kaiser Wilhelm Society organization in 1946 and took on much of this task.\n\nOne telling feature of the transition was the decision over the society’s name. The old title referred to the imperial founder, Kaiser Wilhelm II, and could not readily serve a democratic, post-dictatorship scientific organization. In 1948, the Max Planck Society was established in Göttingen as the successor to the Kaiser Wilhelm Society in the western zones. The choice of name joined institutional continuity to a public statement about the kind of science its organizers hoped to represent: internationally connected fundamental research rather than political ideology. It also reflected Planck’s earlier role as president of the Kaiser Wilhelm Society, a position from which he had tried to preserve German research institutions amid mounting Nazi pressure.\n\nThe renaming did not instantly solve the practical problems facing research. Many institutes had to be reconstituted, relocated, or supplied anew, and the society initially existed only in West Germany while institutes in the Soviet zone developed under different arrangements. Still, the new organization provided a durable framework for non-university research. Its headquarters remained in Göttingen until 1954, when it moved to Munich, while the name chosen in 1948 became one of the principal institutional memorials to Planck in postwar German science.",
+      "weight": 0.3,
+      "event_class": {
+        "type": "death",
+        "characterization": "postwar years",
+        "place_of_rest": "Göttingen City Cemetery"
+      }
+    }
+  ]
+}
