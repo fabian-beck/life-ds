@@ -47,6 +47,7 @@ PEOPLE_DIR = REPO_ROOT / "data" / "people"
 ACCEPTED: Dict[Tuple[str, str], str] = {
     ("alvar_aalto", "1935"): "The 1927 competition the completed library came out of.",
     ("antoni_gaud", "1886"): "The 1878 exhibition where Gaudí and Güell met.",
+    ("max_planck", "1919"): "The reserved 1918 prize, awarded to Planck in 1919.",
 }
 
 ANNOTATION = re.compile(r"\[\[([^\]|]+)\|([^\]]+)\]\]|\[\[([^\]]+)\]\]")

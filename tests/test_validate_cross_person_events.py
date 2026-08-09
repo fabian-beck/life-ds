@@ -30,7 +30,11 @@ def event(date, precision, place, people, title="x", **extra):
 
 
 def contradictions(people):
-    return [c for c in cross.find_candidates(people) if c.contradicts]
+    return [
+        c
+        for c in cross.find_candidates(people)
+        if c.contradicts and c.key not in cross.ACCEPTED
+    ]
 
 
 class PeriodTests(unittest.TestCase):

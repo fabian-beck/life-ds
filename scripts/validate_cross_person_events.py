@@ -42,7 +42,16 @@ PEOPLE_DIR = REPO_ROOT / "data" / "people"
 # with the reason. Empty today: every pair the corpus holds that meets one half
 # of the shape survives the other half, mostly because an event that spans a
 # range is dated as a range and overlaps its neighbour honestly.
-ACCEPTED: Dict[Tuple[str, str, str, str], str] = {}
+ACCEPTED: Dict[Tuple[str, str, str, str], str] = {
+    ("claus_schenk_graf_von_stauffenberg", "1944-07-01", "max_planck", "1945-01-23"): (
+        "Stauffenberg's staff appointment and Erwin Planck's execution are"
+        " separate occasions; they share Berlin and Hitler through the plot."
+    ),
+    ("claus_schenk_graf_von_stauffenberg", "1944-07-20", "max_planck", "1945-01-23"): (
+        "The assassination attempt and Erwin Planck's execution for his part"
+        " in it are separate occasions months apart."
+    ),
+}
 
 WITHIN_YEARS = 1
 

@@ -2077,3 +2077,7 @@ def main():
     else:
         print(f"\n✗ Translation incomplete for {person_name}")
         sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
