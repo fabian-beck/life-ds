@@ -31,7 +31,6 @@ from __future__ import annotations
 
 import argparse
 import html
-import json
 import re
 import sys
 import time
@@ -41,8 +40,9 @@ from urllib.parse import unquote, urlsplit
 
 import requests
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-PEOPLE_DIR = REPO_ROOT / "data" / "people"
+from config import PEOPLE_DIR, REPO_ROOT
+from utils.json_io import read_json, write_json
+
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 USER_AGENT = "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
 BATCH_SIZE = 50
@@ -170,7 +170,7 @@ def survey(person_ids: List[str]) -> Tuple[int, int, int]:
         english = person_dir / "life_events.json"
         if not english.exists():
             continue
-        data = json.loads(english.read_text(encoding="utf-8"))
+        data = read_json(english)
         for image in images_in(data):
             total += 1
             if image.get("creator") or image.get("license"):
@@ -178,12 +178,6 @@ def survey(person_ids: List[str]) -> Tuple[int, int, int]:
             if commons_title(image.get("source")):
                 commons += 1
     return total, attributed, commons
-
-
-def _save(path: Path, data: Dict[str, Any]) -> None:
-    with open(path, "w", encoding="utf-8", newline="") as handle:
-        json.dump(data, handle, indent=2, ensure_ascii=False)
-        handle.write("\n")
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -217,7 +211,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         english = person_dir / "life_events.json"
         if not english.exists():
             continue
-        data = json.loads(english.read_text(encoding="utf-8"))
+        data = read_json(english)
         for image in images_in(data):
             if not args.force and (image.get("creator") or image.get("license")):
                 continue
@@ -241,7 +235,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     written_images = 0
     for person_dir in person_dirs(args.person_ids):
         for path in document_paths(person_dir):
-            data = json.loads(path.read_text(encoding="utf-8"))
+            data = read_json(path)
             changed = 0
             for image in images_in(data):
                 if not args.force and (image.get("creator") or image.get("license")):
@@ -263,7 +257,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                     f"  would write {changed} field(s) to {path.relative_to(REPO_ROOT)}"
                 )
             else:
-                _save(path, data)
+                write_json(path, data)
                 print(f"  wrote {changed} field(s) to {path.relative_to(REPO_ROOT)}")
 
     verb = "would update" if args.dry_run else "updated"

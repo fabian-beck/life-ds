@@ -16,6 +16,8 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+from utils.json_io import write_json
+
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 META_STORIES_DIR = DATA_DIR / "meta_stories"
 
@@ -117,12 +119,6 @@ def _load(path: Path) -> Optional[Dict[str, Any]]:
         return None
 
 
-def _save(path: Path, value: Dict[str, Any]) -> None:
-    path.write_text(
-        json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
-
-
 def _translation_fingerprint(detail: Dict[str, Any]) -> str:
     """Match the canonical fingerprint used by check_meta_story_translation()."""
     from translate_person import compute_fingerprint, extract_meta_story_translatables
@@ -144,7 +140,7 @@ def _touch_registry(data_dir: Path, story_ids: set, language: str = "") -> None:
             entry["lastUpdated"] = now
             changed = True
     if changed:
-        _save(path, registry)
+        write_json(path, registry)
 
 
 def _update_detail(
@@ -248,7 +244,7 @@ def sync_meta_story_events(
             english_detail, person_id, mapping, new_events, new_events
         )
         if updated or removed:
-            _save(path, english_detail)
+            write_json(path, english_detail)
             changed_story_ids.add(path.stem)
             report["files"] += 1
             report["updated"] += updated
@@ -289,7 +285,7 @@ def sync_meta_story_events(
                         ] = fingerprint
                         fingerprint_changed = True
             if updated or removed or fingerprint_changed:
-                _save(path, localized_detail)
+                write_json(path, localized_detail)
                 localized_changes.add(story_id)
                 changed_story_ids.add(story_id)
                 report["files"] += 1

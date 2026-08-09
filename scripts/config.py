@@ -3,6 +3,18 @@
 
 import os
 import sys
+from pathlib import Path
+
+# Repository layout. Every script derives its paths from here so the layout is
+# declared once rather than re-spelled per file.
+REPO_ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = REPO_ROOT / "data"
+PEOPLE_DIR = DATA_DIR / "people"
+META_STORIES_DIR = DATA_DIR / "meta_stories"
+REGISTER_PATH = DATA_DIR / "persons.json"
+META_STORIES_REGISTER = DATA_DIR / "meta_stories.json"
+PUBLIC_DIR = REPO_ROOT / "public"
+PORTRAITS_DIR = PUBLIC_DIR / "portraits"
 
 # OpenAI API configuration
 DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6-terra")

@@ -49,6 +49,7 @@ from config import (
 from meta_story_map_narration import generate_geo_map
 from meta_story_network import build_social_network, derive_clusters
 from meta_story_network_review import review_social_network
+from utils.json_io import read_json, write_json
 from utils.model_calls import parse_structured
 
 enable_utf8_console()
@@ -1688,8 +1689,7 @@ def save_meta_story(
     try:
         META_STORIES_DIR.mkdir(parents=True, exist_ok=True)
 
-        with open(output_path, "w", encoding="utf-8") as f:
-            json.dump(dataset, f, indent=2, ensure_ascii=False)
+        write_json(output_path, dataset)
 
         if verbose:
             print(f"Saved meta-story: {output_path}")
@@ -1708,8 +1708,7 @@ def update_meta_stories_registry(
 
     # Load existing registry
     if registry_path.exists():
-        with open(registry_path, "r", encoding="utf-8") as f:
-            registry = json.load(f)
+        registry = read_json(registry_path)
     else:
         registry = {"meta_stories": []}
 
@@ -1741,8 +1740,7 @@ def update_meta_stories_registry(
 
     # Save registry
     try:
-        with open(registry_path, "w", encoding="utf-8") as f:
-            json.dump(registry, f, indent=2, ensure_ascii=False)
+        write_json(registry_path, registry)
 
         if verbose:
             action = "Updated" if found else "Added"

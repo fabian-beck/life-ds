@@ -20,27 +20,16 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Any, Dict, List, cast
+from typing import Any, Dict, List
 
 from config import enable_utf8_console
+from utils.json_io import read_json, write_json
 from meta_story_network import DATA_DIR, build_social_network, derive_clusters
 
 enable_utf8_console()
 
 META_STORIES_DIR = DATA_DIR / "meta_stories"
 REGISTER_PATH = DATA_DIR / "persons.json"
-
-
-def _load(path: Path) -> Dict[str, Any]:
-    with open(path, "r", encoding="utf-8") as f:
-        return cast(Dict[str, Any], json.load(f))
-
-
-def _save(path: Path, data: Dict[str, Any]) -> None:
-    # Match the generator's formatting (indent=2, unicode preserved, no CRLF).
-    with open(path, "w", encoding="utf-8", newline="") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-        f.write("\n")
 
 
 def _story_files(story_id: str) -> List[Path]:
@@ -68,7 +57,7 @@ def backfill(story_ids: List[str], registry: Dict[str, Any], dry_run: bool) -> N
             print(f"  ⚠ Skipping unknown story: {story_id}")
             continue
 
-        english = _load(english_path)
+        english = read_json(english_path)
         person_ids = english.get("meta_story", {}).get("person_ids", [])
         network = build_social_network(person_ids, registry)
 
@@ -93,7 +82,7 @@ def backfill(story_ids: List[str], registry: Dict[str, Any], dry_run: bool) -> N
             return circle.get("key") in valid_keys
 
         for path in _story_files(story_id):
-            data = _load(path)
+            data = read_json(path)
             # Carry over each file's own narration (English or translated),
             # dropping circles whose cluster no longer exists. Regenerate
             # narration with the meta story pipeline when circles changed.
@@ -119,7 +108,7 @@ def backfill(story_ids: List[str], registry: Dict[str, Any], dry_run: bool) -> N
             if dry_run:
                 print(f"    [dry-run] would update {path.relative_to(DATA_DIR)}")
             else:
-                _save(path, data)
+                write_json(path, data)
                 print(f"    ✓ {path.relative_to(DATA_DIR)}")
 
 
@@ -139,7 +128,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    registry = _load(REGISTER_PATH)
+    registry = read_json(REGISTER_PATH)
     story_ids = args.story_ids or _story_ids()
     backfill(story_ids, registry, args.dry_run)
     return 0

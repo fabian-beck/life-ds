@@ -30,15 +30,12 @@ Usage:
 
 from __future__ import annotations
 
-import argparse
-import json
 import re
 import sys
-from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-PEOPLE_DIR = REPO_ROOT / "data" / "people"
+from config import PEOPLE_DIR  # noqa: F401  (re-exported for the tests)
+from utils.validation import run_dataset_check
 
 # German function words that no English title has a reason to contain. Matched
 # lowercase only, so "Das" opening a German work title and the acronym "MIT"
@@ -192,39 +189,8 @@ def check_person(person_id: str, data: Dict[str, Any]) -> List[TitleFinding]:
     return findings
 
 
-def _paths_for(person_ids: List[str]) -> List[Path]:
-    if person_ids:
-        return [PEOPLE_DIR / person_id / "life_events.json" for person_id in person_ids]
-    return sorted(PEOPLE_DIR.glob("*/life_events.json"))
-
-
 def main(argv: Optional[List[str]] = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "person_ids", nargs="*", help="Specific person ids to check (default: all)"
-    )
-    parser.add_argument("--verbose", action="store_true")
-    args = parser.parse_args(argv)
-
-    findings: List[TitleFinding] = []
-    checked = 0
-    for path in _paths_for(args.person_ids):
-        if not path.exists():
-            print(f"warning: {path} not found", file=sys.stderr)
-            continue
-        person_id = path.parent.name
-        data = json.loads(path.read_text(encoding="utf-8"))
-        person_findings = check_person(person_id, data)
-        checked += 1
-        if args.verbose and not person_findings:
-            print(f"{person_id}: OK")
-        findings.extend(person_findings)
-
-    for finding in findings:
-        print(f"ERROR: {finding}")
-
-    print(f"\nChecked {checked} person dataset(s), {len(findings)} finding(s).")
-    return 1 if findings else 0
+    return run_dataset_check(check_person, description=__doc__, argv=argv)
 
 
 if __name__ == "__main__":

@@ -30,18 +30,20 @@ import argparse
 import json
 import os
 import re
-from pathlib import Path
-from typing import Any, Dict, List, Optional, cast
+from typing import Any, Dict, Optional, cast
 
 from openai import OpenAI
 
-from config import BULK_MODEL, LOW_REASONING_EFFORT, enable_utf8_console
-from generate_person_events import (
+from config import (
+    BULK_MODEL,
     DATA_DIR,
+    LOW_REASONING_EFFORT,
     PEOPLE_DIR,
-    DeathClassification,
-    find_death_event_index,
+    enable_utf8_console,
 )
+from generate_person_events import DeathClassification, find_death_event_index
+from utils.datasets import event_files, person_ids
+from utils.json_io import read_json, write_json
 
 enable_utf8_console()
 
@@ -53,38 +55,6 @@ EXTRACTION_SYSTEM = (
     "You extract facts that a given text states. You never add facts from your own "
     "knowledge, and you leave a field empty rather than guess at it."
 )
-
-
-def _load(path: Path) -> Dict[str, Any]:
-    with open(path, "r", encoding="utf-8") as f:
-        return cast(Dict[str, Any], json.load(f))
-
-
-def _save(path: Path, data: Dict[str, Any]) -> None:
-    # Match the generator's formatting (indent=2, unicode preserved, no CRLF).
-    with open(path, "w", encoding="utf-8", newline="") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-        f.write("\n")
-
-
-def _person_ids() -> List[str]:
-    return sorted(
-        p.name for p in PEOPLE_DIR.iterdir() if (p / "life_events.json").exists()
-    )
-
-
-def _event_files(person_id: str) -> List[Path]:
-    """The English life events file plus every translated copy."""
-    files = []
-    english = PEOPLE_DIR / person_id / "life_events.json"
-    if english.exists():
-        files.append(english)
-    for lang_dir in sorted((PEOPLE_DIR / person_id).iterdir()):
-        if lang_dir.is_dir() and not lang_dir.name.startswith("_"):
-            translated = lang_dir / "life_events.json"
-            if translated.exists():
-                files.append(translated)
-    return files
 
 
 def build_extraction_prompt(person_name: str, event: Dict[str, Any]) -> str:
@@ -171,7 +141,7 @@ def backfill_person(
         print(f"  ⚠ Skipping unknown person: {person_id}")
         return False
 
-    english = _load(english_path)
+    english = read_json(english_path)
     events = english.get("events") or []
     person = english.get("person") or {}
     index = find_death_event_index(events, person.get("death_date"))
@@ -195,8 +165,8 @@ def backfill_person(
     )
 
     changed = False
-    for path in _event_files(person_id):
-        data = _load(path)
+    for path in event_files(person_id):
+        data = read_json(path)
         file_events = data.get("events") or []
         if len(file_events) != len(events):
             print(
@@ -226,7 +196,7 @@ def backfill_person(
         if dry_run:
             print(f"    [dry-run] would update {path.relative_to(DATA_DIR)}")
         else:
-            _save(path, data)
+            write_json(path, data)
             print(f"    ✓ {path.relative_to(DATA_DIR)}")
 
     return changed
@@ -258,12 +228,12 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    person_ids = args.person_ids or _person_ids()
+    ids = args.person_ids or person_ids()
     updated = sum(
         backfill_person(person_id, args.model, args.skip_cause, args.dry_run)
-        for person_id in person_ids
+        for person_id in ids
     )
-    print(f"\n{updated} of {len(person_ids)} person(s) changed")
+    print(f"\n{updated} of {len(ids)} person(s) changed")
     return 0
 
 

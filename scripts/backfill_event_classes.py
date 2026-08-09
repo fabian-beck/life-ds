@@ -25,24 +25,28 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import re
-from pathlib import Path
 from typing import Any, Dict, List, Optional, cast
 
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, enable_utf8_console
+from config import (
+    DEFAULT_MODEL,
+    DEFAULT_REASONING_EFFORT,
+    PEOPLE_DIR,
+    enable_utf8_console,
+)
 from generate_person_events import (
     EVENT_CLASS_CONFIG,
-    PEOPLE_DIR,
     InventionClassification,
     MarriagePartnershipClassification,
     MigrationClassification,
     PublicationClassification,
 )
+from utils.datasets import person_ids
+from utils.json_io import read_json, write_json
 from utils.model_calls import parse_structured
 
 enable_utf8_console()
@@ -74,23 +78,6 @@ class ClassifiedEvent(BaseModel):
 class Classifications(BaseModel):
     events: List[ClassifiedEvent] = Field(
         description="Only the events that clearly match one of the four kinds"
-    )
-
-
-def _load(path: Path) -> Dict[str, Any]:
-    with open(path, "r", encoding="utf-8") as f:
-        return cast(Dict[str, Any], json.load(f))
-
-
-def _save(path: Path, data: Dict[str, Any]) -> None:
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-
-
-def _person_ids() -> List[str]:
-    return sorted(
-        p.name for p in PEOPLE_DIR.iterdir() if (p / "life_events.json").exists()
     )
 
 
@@ -154,7 +141,7 @@ def backfill_person(
     dry_run: bool = False,
 ) -> int:
     path = PEOPLE_DIR / person_id / "life_events.json"
-    data = _load(path)
+    data = read_json(path)
     events = data.get("events") or []
 
     pending = [
@@ -203,7 +190,7 @@ def backfill_person(
         applied += 1
 
     if applied:
-        _save(path, data)
+        write_json(path, data)
         print(f"  {person_id}: classified {applied} event(s)")
     else:
         print(f"  {person_id}: nothing matched")
@@ -231,7 +218,7 @@ def main() -> int:
         client = OpenAI(api_key=api_key)
 
     total = 0
-    for person_id in args.person_ids or _person_ids():
+    for person_id in args.person_ids or person_ids():
         if not (PEOPLE_DIR / person_id / "life_events.json").exists():
             print(f"  {person_id}: no dataset, skipping")
             continue

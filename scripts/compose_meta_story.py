@@ -108,6 +108,7 @@ from config import (
     enable_utf8_console,
 )
 from meta_story_map import MIN_MAP_CLUSTERS
+from utils.json_io import write_json
 from meta_story_network import derive_clusters
 from meta_story_network_review import build_wikipedia_context
 
@@ -1595,8 +1596,7 @@ def compose_and_save(
             )
         return True
 
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(composed, f, indent=2, ensure_ascii=False)
+    write_json(path, composed)
     print(f"  Saved {path}")
 
     # Keep the registry entry (title/tagline/person_count) in sync. Imported

@@ -39,7 +39,13 @@ from urllib.parse import unquote
 from openai import OpenAI
 from pydantic import BaseModel, Field, ValidationError
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, enable_utf8_console
+from config import (
+    DEFAULT_MODEL,
+    DEFAULT_REASONING_EFFORT,
+    enable_utf8_console,
+)
+from utils.datasets import person_ids
+from utils.json_io import read_json, write_json
 from generate_person_events import (
     CLASSIFICATION_MODELS,
     filter_images_by_quality,
@@ -112,23 +118,6 @@ SYSTEM = (
     "what surrounded it. It must add to that description rather than restate "
     "it. All output must be in American English only."
 )
-
-
-def _load(path: Path) -> Dict[str, Any]:
-    with open(path, "r", encoding="utf-8") as f:
-        return cast(Dict[str, Any], json.load(f))
-
-
-def _save(path: Path, data: Dict[str, Any]) -> None:
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-
-
-def _person_ids() -> List[str]:
-    return sorted(
-        p.name for p in PEOPLE_DIR.iterdir() if (p / "life_events.json").exists()
-    )
 
 
 def _related_articles(person_id: str) -> List[Dict[str, Any]]:
@@ -334,7 +323,7 @@ def backfill_person(
     seeing whether the critic improved.
     """
     path = PEOPLE_DIR / person_id / "life_events.json"
-    data = _load(path)
+    data = read_json(path)
     events = data.get("events") or []
     person = data.get("person") or {}
     person_name = person.get("name") or person_id
@@ -416,7 +405,7 @@ def backfill_person(
         written += 1
 
     if written:
-        _save(path, data)
+        write_json(path, data)
         print(f"  {person_id}: wrote {written} passage(s) to {path.name}")
         _propagate_sources(person_id, events)
     return written
@@ -719,7 +708,7 @@ def _propagate_sources(person_id: str, events: List[Dict[str, Any]]) -> None:
         target = lang_dir / "life_events.json"
         if not target.exists():
             continue
-        payload = _load(target)
+        payload = read_json(target)
         target_events = payload.get("events") or []
         if len(target_events) != len(events):
             print(f"    [!] {lang_dir.name}: different event count, sources not synced")
@@ -730,7 +719,7 @@ def _propagate_sources(person_id: str, events: List[Dict[str, Any]]) -> None:
                 target_event["sources"] = list(event["sources"])
                 changed = True
         if changed:
-            _save(target, payload)
+            write_json(target, payload)
             print(f"    sources synced to {lang_dir.name}")
 
 
@@ -766,7 +755,7 @@ def main() -> int:
     if args.selection:
         selection = json.loads(args.selection.read_text(encoding="utf-8"))
 
-    person_ids = args.person_ids or (sorted(selection) if selection else _person_ids())
+    ids = args.person_ids or (sorted(selection) if selection else person_ids())
 
     client = None
     if not args.dry_run:
@@ -777,7 +766,7 @@ def main() -> int:
         client = OpenAI(api_key=api_key)
 
     total = 0
-    for person_id in person_ids:
+    for person_id in ids:
         if not (PEOPLE_DIR / person_id / "life_events.json").exists():
             print(f"  {person_id}: no dataset, skipping")
             continue

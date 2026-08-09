@@ -25,16 +25,20 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import json
 import os
-from pathlib import Path
-from typing import Any, Dict, List, Optional, cast
+from typing import Any, Dict, List, Optional
 
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
-from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT, enable_utf8_console
-from generate_person_events import PEOPLE_DIR
+from config import (
+    DEFAULT_MODEL,
+    DEFAULT_REASONING_EFFORT,
+    PEOPLE_DIR,
+    enable_utf8_console,
+)
+from utils.datasets import event_files, person_ids
+from utils.json_io import read_json, write_json
 from utils.model_calls import parse_structured
 
 enable_utf8_console()
@@ -78,42 +82,6 @@ class Weights(BaseModel):
     weights: List[EventWeight] = Field(description="One entry per event, in order")
 
 
-def _load(path: Path) -> Dict[str, Any]:
-    with open(path, "r", encoding="utf-8") as f:
-        return cast(Dict[str, Any], json.load(f))
-
-
-def _save(path: Path, data: Dict[str, Any]) -> None:
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-
-
-def _person_ids() -> List[str]:
-    return sorted(
-        p.name for p in PEOPLE_DIR.iterdir() if (p / "life_events.json").exists()
-    )
-
-
-def _event_files(person_id: str) -> List[Path]:
-    """The English life events file plus every translated copy.
-
-    A weight is a number, not prose, so it is written to all of them: it decides
-    which events open a depth layer, and a German reader arriving at different
-    events than an English one would be reading a differently edited story.
-    """
-    files = []
-    english = PEOPLE_DIR / person_id / "life_events.json"
-    if english.exists():
-        files.append(english)
-    for lang_dir in sorted((PEOPLE_DIR / person_id).iterdir()):
-        if lang_dir.is_dir() and not lang_dir.name.startswith("_"):
-            translated = lang_dir / "life_events.json"
-            if translated.exists():
-                files.append(translated)
-    return files
-
-
 def build_prompt(person_name: str, events: List[Dict[str, Any]]) -> str:
     lines = [
         f"Weigh the events of the life of {person_name}.",
@@ -144,7 +112,7 @@ def backfill_person(
     dry_run: bool = False,
 ) -> int:
     path = PEOPLE_DIR / person_id / "life_events.json"
-    data = _load(path)
+    data = read_json(path)
     events = data.get("events") or []
     if not events:
         return 0
@@ -190,8 +158,8 @@ def backfill_person(
         round(min(max(by_index[index], 0.0), 1.0), 2) for index in range(len(events))
     ]
 
-    for target in _event_files(person_id):
-        payload = data if target == path else _load(target)
+    for target in event_files(person_id):
+        payload = data if target == path else read_json(target)
         target_events = payload.get("events") or []
         if len(target_events) != len(events):
             print(
@@ -200,7 +168,7 @@ def backfill_person(
             continue
         for event, weight in zip(target_events, weights):
             event["weight"] = weight
-        _save(target, payload)
+        write_json(target, payload)
 
     spread = sorted(weights)
     print(
@@ -234,7 +202,7 @@ def main() -> int:
         client = OpenAI(api_key=api_key)
 
     total = 0
-    for person_id in args.person_ids or _person_ids():
+    for person_id in args.person_ids or person_ids():
         if not (PEOPLE_DIR / person_id / "life_events.json").exists():
             print(f"  {person_id}: no dataset, skipping")
             continue

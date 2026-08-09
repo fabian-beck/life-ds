@@ -24,16 +24,12 @@ Usage:
     python scripts/validate_event_chapters.py --verbose
 """
 
-import argparse
-import json
 import sys
 from datetime import datetime, timedelta
 from itertools import groupby
-from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data"
-PEOPLE_DIR = DATA_DIR / "people"
+from utils.validation import run_dataset_check
 
 
 class ValidationError:
@@ -149,39 +145,7 @@ def validate_person(person_id: str, data: Dict[str, Any]) -> List[ValidationErro
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "person_ids", nargs="*", help="Specific person ids to check (default: all)"
-    )
-    parser.add_argument("--verbose", action="store_true")
-    args = parser.parse_args()
-
-    if args.person_ids:
-        paths = [
-            PEOPLE_DIR / person_id / "life_events.json" for person_id in args.person_ids
-        ]
-    else:
-        paths = sorted(PEOPLE_DIR.glob("*/life_events.json"))
-
-    all_errors: List[ValidationError] = []
-    checked = 0
-    for path in paths:
-        if not path.exists():
-            print(f"warning: {path} not found", file=sys.stderr)
-            continue
-        person_id = path.parent.name
-        data = json.loads(path.read_text(encoding="utf-8"))
-        errors = validate_person(person_id, data)
-        checked += 1
-        if args.verbose and not errors:
-            print(f"{person_id}: OK")
-        all_errors.extend(errors)
-
-    for error in all_errors:
-        print(f"ERROR: {error}")
-
-    print(f"\nChecked {checked} person dataset(s), {len(all_errors)} error(s) found.")
-    return 1 if all_errors else 0
+    return run_dataset_check(validate_person, description=__doc__)
 
 
 if __name__ == "__main__":
