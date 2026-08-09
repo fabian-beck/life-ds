@@ -4,8 +4,9 @@ name: Checks
 # remembered to run it, and the drift that produced was already visible in the
 # tree. These run on every push and every pull request instead.
 #
-# Deployment is deliberately not here: publishing stays on demand in
-# deploy-pages.yml, and a green run of this workflow does not release anything.
+# Deployment is deliberately not here, and there is no deployment workflow
+# beside it: the site is published by Netlify from the `deploy` branch, so a
+# green run of this workflow releases nothing. See README "Deployment".
 on:
   push:
   pull_request:

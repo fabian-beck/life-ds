@@ -28,21 +28,19 @@ Web sessions run in a fresh container that has the repository cloned and nothing
 
 ### Deployment
 
-Hosted on **GitHub Pages** as a project page under `https://<owner>.github.io/life-ds/`, published **on demand only**—pushing or merging to `main` does not publish. `.github/workflows/deploy-pages.yml` has a single `workflow_dispatch` trigger; a maintainer runs it from the Actions tab. Pages' repository source must be set to "GitHub Actions".
+Published by **Netlify** from the `deploy` branch, which Netlify watches and builds on every update. Pushing or merging to `main` does not publish; advancing `deploy` does, and that push is the only step (`git push origin origin/main:deploy`). There is no deployment workflow in `.github/workflows`—`checks.yml` validates and releases nothing—and no manual upload. Do not deploy unless the user asks for it.
 
-Because the site lives in a subdirectory, `vite.config.js` sets `base: "/life-ds/"` in dev and build alike, and the build writes a `404.html` copy of `index.html` so path-style entry URLs survive on a host without rewrite rules.
+`netlify.toml` holds the build and is read from the branch being built, so a change to it takes effect once it reaches `deploy`. It builds with `VITE_BASE_PATH=/` because Netlify serves the site from the domain root, while `vite.config.js` defaults to `base: "/life-ds/"` for the dev server and the interface tests. The build writes a `404.html` copy of `index.html` (`notFoundFallbackPlugin`) so path-style entry URLs survive on a host without rewrite rules.
 
 `technicalReportPlugin` publishes the generated technical report alongside the app: the build copies `docs/report/index.html` to `dist/report/index.html`, and the dev server answers `/life-ds/report/` with the same file ahead of the SPA fallback. The landing page and the AI-generated modal link there through `assetUrl("/report/")`, and `tests/interface.spec.js` follows that link.
 
-**Consequence for application code**: every site-absolute path that becomes a URL—portrait paths from the generated data, assets in `public/`—must go through `assetUrl()` in `src/utils/assetUrl.js`. A raw `"/portraits/…"` string in markup works at a domain root and 404s on Pages. The data files and the Python generators keep writing site-absolute paths; the prefixing happens at render time only.
+**Consequence for application code**: every site-absolute path that becomes a URL—portrait paths from the generated data, assets in `public/`—must go through `assetUrl()` in `src/utils/assetUrl.js`. A raw `"/portraits/…"` string in markup works on the published site and 404s in dev and in the interface tests. The data files and the Python generators keep writing site-absolute paths; the prefixing happens at render time only.
 
-`VITE_BASE_PATH=/` builds for a host that serves from the domain root.
-
-`socialCardPlugin` substitutes `%SITE_URL%` in `index.html`, which the link-preview tags there use for `og:url`, `og:image`, and the canonical link. An unfurler resolves those against nothing, so they have to be absolute; `VITE_SITE_URL` overrides the default `https://fabian-beck.github.io/life-ds/` when publishing elsewhere. Because a static host serves one document for every route and no unfurler runs the router, the tags describe the site rather than the story behind the hash—per-story cards would need one static file per story, emitted at build time.
+`socialCardPlugin` substitutes `%SITE_URL%` in `index.html`, which the link-preview tags there use for `og:url`, `og:image`, and the canonical link. An unfurler resolves those against nothing, so they have to be absolute; set `VITE_SITE_URL` in the Netlify site's environment variables to the public address, which the built-in default in `vite.config.js` does not know. Because a static host serves one document for every route and no unfurler runs the router, the tags describe the site rather than the story behind the hash—per-story cards would need one static file per story, emitted at build time.
 
 The card image is `public/preview.png`, taken from the running application by `npm run preview:card` rather than drawn by hand, so it can be retaken when the landing page changes.
 
-See README "Deployment" for the setup steps and the platform limits.
+See README "Deployment" for the publishing steps and the notes that go with them.
 
 ### Adding a New Person
 

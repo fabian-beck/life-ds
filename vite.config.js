@@ -7,14 +7,14 @@ import * as mdiExports from "@mdi/js";
 /**
  * Deployment base path.
  *
- * GitHub Pages serves this repository as a project page under
- * https://<owner>.github.io/life-ds/, so every asset URL has to carry that
- * prefix. It is applied in dev as well, not only in the build: the interface
- * tests run against the dev server, and a base path that only exists in
- * production is a base path nothing ever exercises.
+ * The dev server and the interface tests serve the application from
+ * /life-ds/, so every asset URL has to carry that prefix, and the code that
+ * builds those URLs is exercised by every local run rather than only by a
+ * production build.
  *
- * Set `VITE_BASE_PATH=/` to build for a host that serves the site from the
- * domain root (a custom domain, or a different static host).
+ * The published site is served from the domain root instead, so the Netlify
+ * build sets `VITE_BASE_PATH=/` (see netlify.toml). Any other host that serves
+ * from a root or from a subdirectory is the same one variable.
  *
  * Code that turns a site-absolute path into a URL must go through
  * `src/utils/assetUrl.js`, which reads this value back as
@@ -26,8 +26,10 @@ const basePath = process.env.VITE_BASE_PATH ?? "/life-ds/";
  * Absolute address of the deployed site.
  *
  * The link-preview tags in index.html need it: an unfurler resolves `og:image`
- * against nothing, so a site-absolute path there is a broken picture. Set
- * `VITE_SITE_URL` when publishing anywhere other than the project page.
+ * against nothing, so a site-absolute path there is a broken picture. The
+ * public address belongs to the deployment rather than to this repository, so
+ * the published build reads it from `VITE_SITE_URL` in the Netlify site's
+ * environment variables; the fallback below is only a placeholder.
  */
 const siteUrl = (
   process.env.VITE_SITE_URL ?? `https://fabian-beck.github.io${basePath}`
@@ -53,21 +55,21 @@ function socialCardPlugin() {
 }
 
 /**
- * Vite plugin: github-pages-404
+ * Vite plugin: not-found-fallback
  *
- * GitHub Pages serves static files only — it has no rewrite rules. Shared
- * deep links are hash-based (`/life-ds/#/en/story/ada_lovelace`) and never
- * reach the server, but path-style entry URLs such as `/life-ds/en` — which
- * the dev server answers through its SPA fallback, and which the interface
- * tests use — would return the Pages 404 page.
+ * The site is published to a static host with no rewrite rules. Shared deep
+ * links are hash-based (`/#/en/story/ada_lovelace`) and never reach the
+ * server, but path-style entry URLs such as `/en` — which the dev server
+ * answers through its SPA fallback, and which the interface tests use — would
+ * return the host's 404 page.
  *
- * Publishing index.html as 404.html makes Pages serve the application for
+ * Publishing index.html as 404.html makes the host serve the application for
  * those paths too, at the cost of a 404 status code that no visitor sees.
  */
-function githubPages404Plugin() {
+function notFoundFallbackPlugin() {
   let outDir;
   return {
-    name: "github-pages-404",
+    name: "not-found-fallback",
     apply: "build",
     configResolved(config) {
       outDir = config.build.outDir;
@@ -223,6 +225,6 @@ export default defineConfig({
     svelte(),
     socialCardPlugin(),
     technicalReportPlugin(),
-    githubPages404Plugin(),
+    notFoundFallbackPlugin(),
   ],
 });

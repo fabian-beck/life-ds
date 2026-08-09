@@ -3,10 +3,10 @@
  *
  * Generated data stores portrait paths as site-absolute strings such as
  * `/portraits/ada_lovelace_medium.webp`, and `public/` assets are referenced
- * the same way. Served from a domain root those paths are correct as-is, but a
- * GitHub Pages project page serves the app from a subdirectory
- * (`import.meta.env.BASE_URL === "/life-ds/"`), where they would resolve
- * against the domain root and 404.
+ * the same way. Served from a domain root — the way the published site is —
+ * those paths are correct as-is, but the dev server and the interface tests
+ * serve the app from a subdirectory (`import.meta.env.BASE_URL ===
+ * "/life-ds/"`), where they would resolve against the domain root and 404.
  *
  * Prefixing here — at the point where a path becomes a URL — keeps the
  * deployment layout out of the data files and out of the Python generators
