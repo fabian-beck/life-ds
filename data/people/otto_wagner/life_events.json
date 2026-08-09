@@ -1,17 +1,17 @@
 {
-  "dataset": "biographical_timeline",
-  "created_on": "2026-01-09",
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-08-09",
   "person": {
     "name": "Otto_Wagner",
     "birth_date": "1841-07-13",
     "death_date": "1918-04-11",
     "primary_roles": [
       "architect",
-      "designer",
-      "urban planner"
+      "urban planner",
+      "designer"
     ],
-    "tagline": "Architect of Viennese modernity",
-    "summary": "Otto Koloman Wagner was an Austrian architect, designer, and urban planner whose work in Vienna moved from historicism toward Secession-era modern design. As a leading teacher and prolific practitioner, he shaped major public infrastructure and landmark buildings while also developing influential ideas about modern architecture and the modern city.",
+    "tagline": "Vienna's Architect of Modernity",
+    "summary": "Otto Wagner was an Austrian architect, designer, architectural theorist, and urban planner whose work reshaped Vienna at the turn of the twentieth century. Moving from historicism through the Vienna Secession toward a restrained modern architecture, he designed major transit, civic, residential, and religious buildings while teaching a generation of architects.",
     "wikipedia": "https://de.wikipedia.org/wiki/Otto_Wagner",
     "portrait": {
       "image": "/portraits/otto_wagner_thumbnail.webp",
@@ -21,114 +21,105 @@
       "source": "https://de.wikipedia.org/wiki/Otto_Wagner",
       "caption": "Stylized portrait based on historical photograph",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Otto_Wagner_%281841%E2%80%931918%29.jpg"
+      "originalImage": "https://images.rawpixel.com/editor_1024/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA2L3dpZW45NjAyNV8xLWltYWdlLmpwZw.jpg"
     }
   },
   "chapters": [
     {
-      "id": "viennese_beginnings",
-      "headline": "Viennese Beginnings",
+      "id": "foundations_of_a_vision",
+      "headline": "Foundations of a Vision",
       "date_start": "1841-07-13",
       "date_start_precision": "day",
-      "date_end": "1859",
+      "date_end": "1864",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 18,
+      "age_end": 23,
       "involved_people": [
         "Rudolf Simeon Wagner",
-        "Susanne Wagner (née Huber)"
-      ],
-      "location": "Austria"
-    },
-    {
-      "id": "training_for_the_city",
-      "headline": "Training for the City",
-      "date_start": "1860",
-      "date_start_precision": "year",
-      "date_end": "1863",
-      "date_end_precision": "year",
-      "age_start": 18,
-      "age_end": 22,
-      "involved_people": [
+        "Susanne Wagner",
         "August Sicard von Sicardsburg",
         "Eduard van der Nüll",
-        "Ludwig von Förster"
+        "Ludwig von Förster",
+        "Heinrich Förster",
+        "Emil von Förster",
+        "Theophil von Hansen"
       ],
       "location": "Central Europe"
     },
     {
-      "id": "respectability_under_strain",
-      "headline": "Respectability Under Strain",
-      "date_start": "1864",
+      "id": "historicist_promise",
+      "headline": "Historicist Promise",
+      "date_start": "1867",
       "date_start_precision": "year",
-      "date_end": "1882",
+      "date_end": "1892",
       "date_end_precision": "year",
-      "age_start": 22,
-      "age_end": 41,
+      "age_start": 26,
+      "age_end": 51,
       "involved_people": [
         "Josefine Domhart",
-        "Susanne Wagner",
-        "Margarete Wagner",
-        "Sophia Paupie"
+        "Louise Stiffel"
       ],
-      "location": "Austria-Hungary"
+      "location": "Central Europe"
     },
     {
-      "id": "inventing_modern_vienna",
-      "headline": "Inventing Modern Vienna",
-      "date_start": "1884",
+      "id": "remaking_imperial_vienna",
+      "headline": "Remaking Imperial Vienna",
+      "date_start": "1893",
       "date_start_precision": "year",
-      "date_end": "1913",
+      "date_end": "1901",
       "date_end_precision": "year",
-      "age_start": 43,
-      "age_end": 72,
+      "age_start": 52,
+      "age_end": 60,
       "involved_people": [
-        "Louise Wagner",
-        "Marcel Kammerer"
+        "Heinrich Goldemund",
+        "Koloman Moser"
       ],
-      "location": "Austria-Hungary"
+      "location": "Vienna, Austria"
     },
     {
-      "id": "last_silence",
-      "headline": "Last Silence",
-      "date_start": "1915-10-26",
-      "date_start_precision": "day",
+      "id": "civic_modernism_takes_form",
+      "headline": "Civic Modernism Takes Form",
+      "date_start": "1902",
+      "date_start_precision": "year",
+      "date_end": "1912",
+      "date_end_precision": "year",
+      "age_start": 61,
+      "age_end": 71,
+      "involved_people": null,
+      "location": "Vienna, Austria"
+    },
+    {
+      "id": "the_final_villa",
+      "headline": "The Final Villa",
+      "date_start": "1912",
+      "date_start_precision": "year",
       "date_end": "1918-04-11",
       "date_end_precision": "day",
-      "age_start": 74,
+      "age_start": 71,
       "age_end": 76,
       "involved_people": [
-        "Louise Wagner"
+        "Louise Stiffel"
       ],
-      "location": "Austria"
+      "location": "Vienna, Austria"
     }
   ],
-  "conclusion": "Otto Wagner turned architecture into an argument for modern life—where function, materials, and the city’s pulse mattered as much as beauty. His Vienna endures as proof that a single mind can redraw how an era builds, moves, and imagines itself.",
+  "conclusion": "Otto Wagner transformed architecture from historical imitation into an instrument for modern urban life. Through Vienna’s transit system, public institutions, and radical clarity of form, he helped define the path to twentieth-century modernism.",
   "events": [
     {
       "date": "1841-07-13",
       "date_precision": "day",
       "age": 0,
-      "title": "Birth near Vienna",
-      "description": "Otto Koloman Wagner was born in [[Penzing|Penzing]] near Vienna to an affluent bourgeois family. His father, Rudolf Simeon Wagner, worked as a court notary, and his mother, Susanne (née Huber), managed the household’s socially ambitious family life.",
+      "title": "Birth Near Vienna",
+      "description": "He was born in Penzing, then a suburb of Vienna, into a prosperous upper-middle-class household supported by his father’s work as a royal Hungarian court notary.",
       "locations": [
         {
           "name_historic": "Penzing",
-          "name_modern": "Penzing (Vienna), Austria",
-          "centroid": [
-            16.2698368,
-            48.2065531
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.2906,
+            48.1889
           ],
-          "primary": false
+          "primary": true
         }
       ],
       "involved_people": [
@@ -139,84 +130,14 @@
         "https://en.wikipedia.org/wiki/Otto_Wagner"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "viennese_beginnings",
-      "annotations": {
-        "Penzing": {
-          "explanation": "A former independent village west of Vienna that was later incorporated into the city and is now Vienna’s 14th district (Penzing).",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Penzing_(Vienna)"
-        }
-      },
+      "chapter": "foundations_of_a_vision",
+      "background": "In 1841, Penzing stood at Vienna’s western edge but was still a separate Lower Austrian community rather than part of the imperial capital. Vienna itself remained largely constrained by its old fortifications and the Linienwall, the outer defensive and customs barrier that marked the boundary between the city and many of its suburbs. The removal of the city walls and construction of the Ringstrasse would not be ordered until 1857. Thus the setting combined a nearby metropolis—the administrative and cultural center of the Habsburg monarchy—with a suburb that retained a more distinct local character.\n\nThe family’s connection to the Hungarian royal legal administration belonged to the multinational structure of the Austrian Empire. The Kingdom of Hungary had its own historic institutions within the Habsburg lands, while court and legal offices depended on trained officials who could prepare and authenticate formal business. Such work placed a household within the educated professional stratum of the imperial bureaucracy, rather than among Vienna’s hereditary aristocracy or its industrial working population. It also meant that the family’s world was tied to the law, official procedure, and the capital’s governmental networks.\n\nA formative disruption followed early: Wagner’s father died in 1846, when the boy was five. His mother subsequently assumed the central role in directing his upbringing and is described as having had a strong influence on his development. The family nevertheless maintained an educational path that took him first to Vienna’s Akademisches Gymnasium from 1850 to 1852 and then to the Benedictine school at Kremsmünster Abbey in Upper Austria from 1852 to 1855. These were institutions associated with a demanding classical education, and the move to Kremsmünster placed him for several years outside the immediate orbit of Vienna.\n\nThe contrast between a suburban childhood, an official family background, and schooling divided between the capital and an old abbey formed the immediate setting before his specialized architectural training began. Meanwhile, Vienna was approaching the upheavals of 1848 and the later transformation of its physical fabric into a grand imperial metropolis. Penzing, too, would eventually be absorbed into Vienna in the municipal expansion of 1890–92, making the birthplace that had once stood outside the city part of the modern capital.",
+      "weight": 0.3,
       "event_class": {
         "type": "birth",
-        "mother": "Susanne Wagner",
-        "father": "Rudolf Simeon Wagner"
-      }
-    },
-    {
-      "date": "1846",
-      "date_precision": "year",
-      "date_note": "His father died when Wagner was about five years old",
-      "age": 5,
-      "title": "Father dies young",
-      "description": "In 1846, Otto Wagner’s father died after a lung illness, leaving the family to adjust to reduced financial security and greater dependence on his mother.",
-      "locations": [],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Otto_Wagner"
-      ],
-      "event_type_icon": "mdi-cross",
-      "chapter": "viennese_beginnings"
-    },
-    {
-      "date": "1850",
-      "date_precision": "year",
-      "date_end": "1859",
-      "date_end_precision": "year",
-      "age": 8,
-      "title": "Completes early schooling",
-      "description": "Around 1850, Wagner continued his education in Vienna and in Upper Austria, including attendance at the Benedictine [[Stiftsgymnasium|Stiftsgymnasium]] in Kremsmünster. He later studied at Vienna’s Polytechnic Institute and completed the [[Matura|Matura]], building a strong foundation in mathematics, physics, and technical drawing.",
-      "locations": [
-        {
-          "name_historic": "Vienna",
-          "name_modern": "Vienna, Austria",
-          "centroid": [
-            16.3725042,
-            48.2083537
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Kremsmünster",
-          "name_modern": "Kremsmünster, Austria",
-          "centroid": [
-            14.128766,
-            48.0533652
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Upper Austria",
-          "name_modern": "Upper Austria, Austria",
-          "centroid": [
-            14.0,
-            48.25
-          ],
-          "primary": false
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Otto_Wagner"
-      ],
-      "event_type_icon": "mdi-school",
-      "chapter": "viennese_beginnings",
-      "annotations": {
-        "Stiftsgymnasium": {
-          "explanation": "A type of academically oriented secondary school (Gymnasium) attached to a monastery; in Kremsmünster it was run by the Benedictine abbey.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Kremsm%C3%BCnster_Abbey"
-        },
-        "Matura": {
-          "explanation": "The Austrian secondary-school leaving examination that qualifies students for university-level study, comparable to the German Abitur.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Matura"
-        }
+        "father": "Rudolf Simeon Wagner",
+        "mother": "Susanne Wagner, née Huber",
+        "characterization": "upper-middle-class household"
       }
     },
     {
@@ -224,27 +145,27 @@
       "date_precision": "year",
       "date_end": "1862",
       "date_end_precision": "year",
-      "age": 18,
-      "title": "Architectural training in Berlin",
-      "description": "Around 1860, Wagner studied architecture at the Royal Building Academy in Berlin before continuing at the Academy of Fine Arts in Vienna, where he trained under August Sicard von Sicardsburg and Eduard van der Nüll. Alongside his academic coursework, he also undertook practical masonry training with a Viennese master builder.",
+      "age": 19,
+      "title": "Studied Architecture",
+      "description": "Wagner studied at the Royal Building Academy in Berlin in 1860 and 1861, then attended the Academy of Fine Arts Vienna in 1861 and 1862. At Vienna he studied under August Sicard von Sicardsburg and Eduard van der Nüll while also completing practical masonry training.",
       "locations": [
         {
           "name_historic": "Berlin",
           "name_modern": "Berlin, Germany",
           "centroid": [
-            13.3951309,
-            52.5173885
+            13.405,
+            52.52
           ],
-          "primary": true
+          "primary": false
         },
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
-          "primary": false
+          "primary": true
         }
       ],
       "involved_people": [
@@ -252,152 +173,149 @@
         "Eduard van der Nüll"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Otto_Wagner",
-        "https://en.wikipedia.org/wiki/August_Sicard_von_Sicardsburg",
-        "https://en.wikipedia.org/wiki/Eduard_van_der_N%C3%BCll"
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Akademie_der_bildenden_Kuenste_DSC_2400w.jpg/960px-Akademie_der_bildenden_Kuenste_DSC_2400w.jpg",
-          "caption": "Academy of Fine Arts Vienna, Schillerplatz",
-          "source": "https://commons.wikimedia.org/wiki/File:Akademie_der_bildenden_Kuenste_DSC_2400w.jpg",
-          "creator": "P e z i",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Otto_Wagner_002.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "caption": "Academy of Fine Arts Vienna, bird’s-eye view",
+          "source": "https://commons.wikimedia.org/wiki/File:Otto_Wagner_002.jpg",
+          "creator": "Otto Wagner",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "training_for_the_city"
+      "chapter": "foundations_of_a_vision",
+      "background": "Architecture in the German-speaking states was being remade by institutions as much as by individual designers. Berlin’s Royal Building Academy stood in the tradition of Karl Friedrich Schinkel, who had designed its famous brick building and made public architecture, engineering, and construction part of a unified professional education. In Vienna, the imperial government’s 1857 decision to demolish the old city walls opened an immense tract for the Ringstrasse, turning the capital into an unusually concentrated field of architectural patronage, competition, and debate.\n\nThe Vienna academy’s architectural instruction was closely connected to the prominent partnership of August Sicard von Sicardsburg and Eduard van der Nüll. They had been professors there since 1843 and represented late-Romantic historicism, an approach that drew on earlier architectural styles for contemporary civic and imperial buildings. Their partnership divided strengths: Sicardsburg was generally associated with technical and organizational matters, while van der Nüll was associated with aesthetic and decorative design. That division made their work a particularly useful model for someone learning both design and the practical realities of building.\n\nA decisive contemporary commission showed the scale of the professional world surrounding this instruction. Sicardsburg and van der Nüll won the 1861 competition for Vienna’s new Court Opera, the first monumental building planned for the Ringstrasse. Construction began that year and continued until 1869. The project required the architects to translate historicist ambitions into a public building serving an expanding imperial capital. Their earlier work together had included the Vienna Arsenal, while the opera commission placed them at the center of the most visible redevelopment project in the city.\n\nThis educational route therefore joined formal academic study to hands-on knowledge of construction at a moment when Vienna was creating its new representative center. It also situated Wagner among architects whose work was defined by historic styles and large public commissions, rather than by the stripped-down architectural language for which he would later become known. The combination of academy instruction and building-trade experience provided a practical basis for his immediate move into professional architectural work.",
+      "weight": 0.55
     },
     {
       "date": "1862",
       "date_precision": "year",
-      "date_end": "1863",
+      "date_end": "1864",
       "date_end_precision": "year",
       "age": 21,
-      "title": "Joins Förster’s atelier",
-      "description": "In 1862, at age 21, Otto Wagner entered the atelier of Ludwig von Förster in [[Vienna’s historicist milieu|Vienna’s historicist milieu]], working within a circle of established designers. In 1863 he gained notice by winning first prize in a design competition for a Kursalon planned for Vienna’s new Stadtpark, although his proposal was not the one executed.",
+      "title": "Entered Förster's Atelier",
+      "description": "At age 21, Wagner joined Ludwig von Förster's Vienna atelier, a historicist practice connected with Theophil von Hansen and Förster's sons Heinrich and Emil.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Ludwig von Förster"
+        "Ludwig von Förster",
+        "Heinrich Förster",
+        "Emil von Förster",
+        "Theophil von Hansen"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Otto_Wagner",
         "https://de.wikipedia.org/wiki/Ludwig_von_F%C3%B6rster"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "training_for_the_city",
-      "annotations": {
-        "Vienna’s historicist milieu": {
-          "explanation": "The mid-19th-century architectural scene in Vienna dominated by Historicism—revival styles (e.g., Neo-Renaissance, Neo-Gothic) promoted by leading architects and institutions before later modernist shifts.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Historicism_(art)"
-        }
-      }
+      "chapter": "foundations_of_a_vision",
+      "background": "Vienna's building world was being transformed by the removal of its old fortifications and the creation of the Ringstrasse. The imperial decision to clear the walls had come in 1857, and demolition began the following year. The enormous new boulevard and its surrounding building plots created an unprecedented market for architects, contractors, and speculative developers. Ludwig von Förster was already deeply engaged with the expansion of the city: he had submitted a plan in the Ringstrasse competition and shared first place with two other architects. His practice therefore operated at the center of the capital's most consequential construction boom.\n\nFörster's career combined architectural practice, publishing, and building enterprise. He had established a lithographic workshop in 1828 and founded the Allgemeine Bauzeitung in 1836, a major architectural journal. After becoming an independent architect in 1839, he also pursued industrial and commercial ventures, including a zinc foundry, a zinc mine in Bohemia, and railway-related construction. This mixture of design, publication, and business gave his office an unusually broad view of how buildings were proposed, illustrated, financed, and carried out. The atelier was not merely a drafting room but part of a professional network linking designers, suppliers, clients, and the city’s expanding real-estate economy.\n\nThe office's work demonstrated the language that dominated Vienna's public and private architecture at the time: historical styles selected to convey status and cultural association. Förster collaborated with Theophil von Hansen from 1846. Hansen, who had spent years studying ancient Greek and Hellenistic architecture in Athens, became a leading exponent of a severe Renaissance-inflected historicism in Vienna. Their work ranged across major civic and private projects. Förster's own designs included the Arsenal, the Elisabeth Bridge, and the Leopoldstädter Tempel, while the firm was completing or developing prominent Ringstrasse-era commissions such as Palais Hoyos and Palais Todesco. Such projects demanded not only façades but coordinated interiors, materials, and urban presence.\n\nThe office's internal continuity was soon tested. Ludwig von Förster, weakened by lung disease, received hereditary knighthood on June 14, 1863, and died two days later in Bad Gleichenberg. His sons were architects as well: Emil had entered his father's atelier in 1860 and later returned from a study trip to Italy to work in Vienna, while Heinrich joined him in continuing the Allgemeine Bauzeitung. The practice's milieu supplied an early model of architecture as a profession embedded in publishing, family succession, and the transformation of imperial Vienna. It also placed a young draftsman near the architects and commissions that defined the city’s historicist phase.",
+      "weight": 0.5
     },
     {
-      "date": "1864",
+      "date": "1867",
       "date_precision": "year",
-      "date_end": "1873",
-      "date_end_precision": "year",
-      "age": 22,
-      "title": "Builds early major commissions",
-      "description": "Working independently in the [[Historicism (art)|historicist]] style, Otto Wagner carried out early architectural commissions in [[Vienna|Vienna]], including the Harmonietheater and a coordinated ensemble of nearby housing. In the same period, he also sought commissions and entered major design competitions beyond Vienna, including plans connected to [[Budapest|Budapest]], which helped broaden his professional visibility.",
+      "age": 26,
+      "title": "Married Josefine Domhart",
+      "description": "At his mother’s urging, Wagner married in Vienna.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Budapest",
-          "name_modern": "Budapest, Hungary",
-          "centroid": [
-            19.1460941,
-            47.4813896
-          ],
-          "primary": false
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Otto_Wagner"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Otto_Wagner_Ensemble_Harmoniegasse_Harmonietheater.jpg/960px-Otto_Wagner_Ensemble_Harmoniegasse_Harmonietheater.jpg",
-          "caption": "Ehem. Harmonietheater (later Orpheum), Vienna",
-          "source": "https://commons.wikimedia.org/wiki/File:Otto_Wagner_Ensemble_Harmoniegasse_Harmonietheater.jpg",
-          "creator": "Thomas Ledl",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-drawing",
-      "chapter": "respectability_under_strain",
-      "annotations": {
-        "Historicism (art)": {
-          "explanation": "A 19th-century architectural approach that revived and combined earlier historical styles (such as Gothic, Renaissance, or Baroque) rather than pursuing a new formal language.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Historicism_(art)"
-        }
-      }
-    },
-    {
-      "date": "1867",
-      "date_precision": "year",
-      "date_end": "1882",
-      "date_end_precision": "year",
-      "age": 26,
-      "title": "First marriage and family rupture",
-      "description": "In 1867, under pressure from his mother, Wagner married and began a family life that later broke down after her death in 1880, when the couple divorced amid personal upheaval; in 1882, he legally recognized his family situation by adopting two sons from his long-term relationship with Sophia Paupie.",
-      "locations": [],
       "involved_people": [
-        "Josefine Domhart",
-        "Susanna Wagner",
-        "Margarete Wagner",
-        "Sophia Paupie"
+        "Josefine Domhart"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Otto_Wagner"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "respectability_under_strain",
+      "chapter": "historicist_promise",
+      "background": "Vienna in the 1860s was being remade on a scale that gave young architects unusual opportunities. Emperor Franz Joseph’s 1857 decision to remove the old fortifications opened the way for the Ringstrasse, the broad boulevard and building zone that would encircle the inner city. The project created demand for apartments, palaces, hotels, cultural institutions, and government buildings. Its prevailing architectural language was historicism: architects borrowed and adapted Gothic, Renaissance, Baroque, and classical forms to lend modern institutions the authority of the past.\n\nWagner had entered this professional environment after a deliberately broad training. He attended the Vienna Polytechnic Institute, studied at Berlin’s Royal Building Academy, and completed his architectural education at the Academy of Fine Arts in Vienna. There he encountered the teaching associated with August Sicard von Sicardsburg and Eduard van der Nüll, architects then responsible for the new Court Opera. He also worked in Ludwig von Förster’s atelier. Förster was not merely a designer of major Vienna buildings; as founder of the Allgemeine Bauzeitung, he stood at the intersection of architectural practice, publication, construction, and the debate over the city’s expansion. That setting supplied an early model of architecture as both a profession and a public cultural force.\n\nThe Ringstrasse’s building boom also had a distinctly social character. New private clients wanted residences that signaled prosperity and respectability, while the imperial government and civic institutions sought monumental façades for a capital of the Habsburg monarchy. These commissions rewarded reliable handling of established styles and the management of substantial building work more than stylistic rebellion. Wagner’s early work consequently belonged to the historicist world, before the functional and formally reduced approach for which he later became known. His entry into adult domestic life unfolded amid this competitive, status-conscious professional culture rather than outside it.\n\nThe family pressure behind the union is revealing of the expectations placed on a young, professionally established man in bourgeois Vienna. A household, financial stability, and a public reputation were closely connected, especially for someone beginning to build an independent clientele. The experience anchored Wagner in the conventional social order that his mature architectural arguments would later challenge. His subsequent career would move beyond the historicist formulas dominant in the capital during these formative years, but the institutions, training, and expanding city of the 1860s provided the setting from which that later departure emerged.",
+      "weight": 0.3,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
         "partner": "Josefine Domhart",
-        "duration": "divorced 1880",
-        "children": 2,
-        "characterization": "strained"
+        "duration": "until divorce",
+        "children": 2
       }
+    },
+    {
+      "date": "1871",
+      "date_precision": "year",
+      "date_end": "1872",
+      "date_end_precision": "year",
+      "age": 30,
+      "title": "Designed Rumbach Street Synagogue",
+      "description": "Wagner received the commission to design the Rumbach Street Synagogue in Pest. The project gave him a prominent early public commission beyond Vienna and was carried out in an eclectic [[Historicism|historicist style]].",
+      "locations": [
+        {
+          "name_historic": "Pest",
+          "name_modern": "Budapest, Hungary",
+          "centroid": [
+            19.0402,
+            47.4979
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Rumbach_Street_Synagogue"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Rumbach_St_Synagogue_Pest_Hungary.jpg/960px-Rumbach_St_Synagogue_Pest_Hungary.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Rumbach Street Synagogue, Pest, Budapest",
+          "source": "https://commons.wikimedia.org/wiki/File:Rumbach_St_Synagogue_Pest_Hungary.jpg",
+          "creator": "Emmanuel Dyan",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+        }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "historicist_promise",
+      "annotations": {
+        "Historicism": {
+          "explanation": "A 19th-century architectural approach that deliberately revived and combined forms associated with earlier periods and cultures.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Historicism_(art)"
+        }
+      },
+      "background": "The commission emerged during a decisive period for Jewish communal life in Hungary. Following the Austro-Hungarian Compromise of 1867, Hungary granted Jews full civil and political equality. At the same time, the Hungarian Jewish Congress of 1868–69 exposed major disagreements over religious practice and communal administration. Its aftermath divided congregations broadly among Orthodox, Neolog, and Status Quo Ante affiliations. The Rumbach congregation belonged to the last of these: it sought to preserve its pre-congress position rather than align fully with either of the rival camps.\n\nPest was expanding rapidly into a commercial and civic center, with a large Jewish population concentrated in what is now Budapest’s Jewish Quarter. Its synagogue landscape became an unusually visible map of those communal distinctions. The monumental Dohány Street Synagogue, completed in 1859, represented the established Neolog community, while the Orthodox community later built the Kazinczy Street Synagogue. Rumbach Street occupied a position between them geographically as well as institutionally. Its construction was completed in 1872, shortly before Pest, Buda, and Óbuda were united as Budapest in 1873.\n\nThe building’s most distinctive feature is its centralized octagonal prayer hall. Rather than treating the interior as a long, church-like nave, the design draws worshippers’ attention toward the center beneath a dome-like roof structure. Its exterior combines brickwork, pointed arches, striped details, and ornamental motifs associated with Moorish Revival architecture. These choices were part of a wider 19th-century European practice in synagogue design: architects often used forms understood as Islamic or medieval Spanish to distinguish Jewish religious buildings from Christian churches while still giving them an imposing public character. The ornate geometric decoration and colored interior surfaces make the structure a particularly vivid example of that approach.\n\nThe congregation was devastated by the Holocaust, and the building’s religious use did not recover after World War II. It closed in 1959 and for decades served largely as storage space, deteriorating despite its architectural significance. A long restoration, completed in 2021, returned the synagogue to public use as a religious, cultural, and community venue. The survival and rehabilitation of the building have made it an important record of both the diversity of prewar Hungarian Jewish life and an early phase in the architect’s career.",
+      "weight": 0.6
     },
     {
       "date": "1884",
       "date_precision": "year",
-      "date_end": "1889",
-      "date_end_precision": "year",
       "age": 43,
-      "title": "Marries Louise Stiffel in Budapest",
-      "description": "Wagner married Louise (Aloisa Josefa Anna) Stiffel in Budapest, and joined the Unitarian Church to do it: as a divorced Catholic he could not remarry in Austria, while the Unitarian church was recognized on the Hungarian side of the monarchy. The wedding took him across the monarchy for a day, not for good—he remained a Vienna architect throughout—and he returned to Catholicism after his first wife died in 1889.",
+      "title": "Married Louise Stiffel",
+      "description": "In Budapest in 1884, Wagner began a new household following the death of his first wife.",
       "locations": [
         {
           "name_historic": "Budapest",
           "name_modern": "Budapest, Hungary",
           "centroid": [
-            19.1460941,
-            47.4813896
+            19.0402,
+            47.4979
           ],
           "primary": true
         }
@@ -409,91 +327,66 @@
         "https://en.wikipedia.org/wiki/Otto_Wagner"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "inventing_modern_vienna",
+      "chapter": "historicist_promise",
+      "background": "The family connection joined two principal cities of the Habsburg Monarchy at a time when both were being remade. The Austro-Hungarian Compromise of 1867 had created a dual monarchy: Vienna remained the seat of the Austrian half, while Budapest became the capital of the Hungarian half. Budapest itself had only recently taken its modern administrative form, with the 1873 union of Buda, Pest, and Óbuda. Its population, commerce, and building activity expanded quickly in the following decades, making it a city of growing importance within the empire rather than merely a provincial destination from Vienna.\n\nVienna, meanwhile, was still being shaped by the immense Ringstrasse redevelopment begun after the imperial order to demolish the old fortifications in 1857. New museums, theaters, government buildings, apartment blocks, and private palaces gave architects extensive work but also entrenched the prestige of historical revival styles. Wagner had been professionally formed within this world. His architectural training included Vienna, Berlin, and the atelier of Ludwig von Förster, a major participant in Vienna's nineteenth-century building boom. By the 1880s, he was established enough to work independently in the competitive market for residences and civic commissions.\n\nThe domestic circumstances preceding this period mattered. Wagner's first wife, Josefine Domhart, had died in 1880, leaving him responsible for a family while he continued his practice. Such a household was not separate from an architect's working life. Nineteenth-century offices commonly depended on personal networks, travel within the monarchy, and the management of commissions across its constituent lands. The relationship with Budapest therefore belonged to a wider imperial world in which professional and family ties could readily cross the constitutional boundary between Austria and Hungary.\n\nThe new family household provided continuity during a decade before Wagner became publicly associated with the architectural and urban debates that would transform Vienna. His later work broke increasingly with the historicist conventions dominant during his training, but in the mid-1880s that direction was not yet settled. The marriage is consequently best placed in the interval between an earlier career grounded in conventional nineteenth-century practice and the more experimental public role he would assume in the following decade. It also left a private family line that continued through the final decades of his life.",
+      "weight": 0.45,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
         "partner": "Louise Stiffel",
-        "duration": "until Wagner's death in 1918",
-        "characterization": "close and lasting"
-      }
-    },
-    {
-      "date": "1886",
-      "date_precision": "year",
-      "date_end": "1913",
-      "date_end_precision": "year",
-      "date_note": "This span covers the building of Villa Wagner I (1886–1888), the sale of the first villa (1911), and construction of Villa Wagner II (1912–1913)",
-      "age": 45,
-      "title": "Builds his two villas",
-      "description": "In 1886, Wagner built a substantial family villa on Vienna’s western edge, later known as Villa Wagner I, as a private home reflecting his social and professional position. After selling it in 1911, he built the neighboring Villa Wagner II in a [[Vienna Secession|late Secession]] style, intending it as a residence for his wife; the move marked a shift in his household and living arrangements.",
-      "locations": [
-        {
-          "name_historic": "Vienna",
-          "name_modern": "Vienna, Austria",
-          "centroid": [
-            16.3725042,
-            48.2083537
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Louise Wagner"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Otto_Wagner"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Penzing_%28Wien%29_-_Otto-Wagner-Villa%2C_H%C3%BCttelbergstra%C3%9Fe_26_%281%29.JPG/960px-Penzing_%28Wien%29_-_Otto-Wagner-Villa%2C_H%C3%BCttelbergstra%C3%9Fe_26_%281%29.JPG",
-          "caption": "Otto-Wagner-Villa, Hüttelbergstraße 26, Penzing",
-          "source": "https://commons.wikimedia.org/wiki/File:Penzing_(Wien)_-_Otto-Wagner-Villa,_Hüttelbergstraße_26_(1).JPG",
-          "creator": "C.Stadler/Bwag",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-office-building",
-      "chapter": "inventing_modern_vienna",
-      "annotations": {
-        "Vienna Secession": {
-          "explanation": "An Austrian Art Nouveau movement centered in Vienna (founded 1897) that promoted modern design and broke with historicist academic art; Wagner became one of its leading architectural figures.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna_Secession"
-        }
+        "duration": "until her death",
+        "children": 3
       }
     },
     {
       "date": "1893",
       "date_precision": "year",
-      "date_end": "1894",
-      "date_end_precision": "year",
       "age": 52,
-      "title": "Wins Vienna planning contest",
-      "description": "In 1893, Wagner won first prize in a competition for a general regulatory plan for Vienna, proposing a metropolitan-scale framework for the city’s future expansion. The following year, he was appointed full professor and head of the Special School of Architecture at the Academy of Fine Arts in Vienna, and the Austrian government engaged him as artistic adviser for the unified architectural design of Vienna’s [[Stadtbahn|Stadtbahn]] infrastructure.",
+      "title": "Won Vienna Planning Competition",
+      "description": "Wagner won first prize in the competition for a general regulatory plan for Vienna. His proposal treated the expanding capital as a unified modern metropolis, with large-scale circulation and urban development planned for substantial population growth.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Otto_Wagner",
-        "https://en.wikipedia.org/wiki/Vienna_Stadtbahn"
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
       ],
       "event_type_icon": "mdi-trophy",
-      "chapter": "inventing_modern_vienna",
-      "annotations": {
-        "Stadtbahn": {
-          "explanation": "A metropolitan rail system built in Vienna in the late 19th century (today largely integrated into the Vienna U-Bahn and S-Bahn), for which Wagner designed many stations and related structures.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna_Stadtbahn"
+      "chapter": "remaking_imperial_vienna",
+      "background": "By the early 1890s, Vienna’s nineteenth-century expansion had made its earlier planning framework inadequate. The old fortifications had been replaced by the Ringstrasse, which carried state and cultural monuments around the historic center, but the city’s rapid growth was extending far beyond that boulevard. A major incorporation of surrounding communities in 1890–92 enlarged municipal Vienna substantially. The capital of the Habsburg Empire was approaching a population of 1.4 million, and planners faced traffic, housing, sanitation, and public-services problems across a city that had grown through formerly separate suburbs.\n\nThe competition was therefore concerned with more than beautifying individual streets. A general regulatory plan was intended to establish the long-term order of streets, building districts, open spaces, and public improvements. Wagner approached the task with an unusually metropolitan scale. Rather than treating the new districts as a loose periphery to the old core, his design conceived the whole enlarged city as an interconnected system. Its transportation logic was especially significant: broad ring routes and radial connections were meant to organize movement between the center and outer districts, while the Danube was treated as an element of Vienna’s future urban structure rather than merely an edge of the built city.\n\nThe plan’s projected population of four million shows the scale at which Wagner thought the capital should be planned. This was not a forecast that Vienna would immediately reach that number, but a design premise that required reserving capacity for future streets and development. The approach marked a break with the prevailing practice of assigning architectural character through historical styles and monumental isolated buildings. Wagner argued, in effect, that the technical needs of a modern city—circulation, density, and coordinated infrastructure—had to determine its form. His regulatory proposal made urban planning a central architectural question.\n\nThe city did not implement Wagner’s scheme as a complete program. Its importance lay instead in the clarity with which it expressed an alternative to piecemeal expansion and in the professional authority it gave him as a planner of metropolitan systems. The same concern with coordinated circulation and civic infrastructure soon informed his work on Vienna’s municipal railway. The competition proposal remains a key early statement of Wagner’s conviction that architecture and city planning should answer the practical conditions of contemporary urban life, rather than reproduce inherited forms.",
+      "weight": 0.8
+    },
+    {
+      "date": "1894",
+      "date_precision": "year",
+      "age": 53,
+      "title": "Appointed Academy Professor",
+      "description": "Wagner became a full professor and head of the special architecture class at the Academy of Fine Arts Vienna. The post placed him in direct contact with a new generation of architects and gave him a formal platform for his architectural ideas.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3738,
+            48.2082
+          ],
+          "primary": true
         }
-      }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "remaking_imperial_vienna",
+      "background": "For much of the nineteenth century, Vienna’s leading architectural education had trained students in historicism: the disciplined reuse of Renaissance, Baroque, Gothic, and classical forms. The Academy’s special schools were advanced studios in which a professor’s personal method carried considerable weight. The architecture class Wagner inherited had been led from 1884 by Carl von Hasenauer, an architect associated with the elaborate historicist monuments of the Ringstrasse. Hasenauer’s death in January 1894 ended his tenure and created a consequential opening at an institution that helped determine the profession’s standards in the imperial capital.\n\nThe change came while Vienna was confronting distinctly modern planning and building problems. Its population, traffic, new technical systems, and expanding metropolitan scale were pressing architects beyond the repertory developed for ceremonial palaces and boulevards. Wagner was not an outsider to the Academy tradition; he had been educated in the same Viennese world and had worked in offices shaped by historicist practice. But he increasingly argued that an architect should begin with purpose, construction, materials, and the needs of contemporary life rather than apply inherited ornament as a default. The advanced class supplied a setting in which these propositions could be tested through design criticism and student projects rather than left solely to professional commissions.\n\nThe most tangible effect of this teaching environment was the close overlap it created between instruction and practice. Students could encounter an established architect’s working method at the Academy and, in some cases, move into his office. Jože Plečnik studied under Wagner and remained in Wagner’s office until 1900; Josef Hoffmann also studied with him after beginning under Hasenauer. Both men developed highly individual careers rather than becoming imitators. Plečnik retained a strong commitment to historical forms, while Hoffmann became a central designer of Viennese Secessionism and the Wiener Werkstätte. Their divergent paths demonstrate that Wagner’s studio was not simply a school for reproducing one visual style.\n\nWagner’s classroom authority also strengthened the reach of his architectural argument as it took printed form in Moderne Architektur in 1896. His challenge to routine historicism became a major reference point for the younger Viennese architects associated with the Secession and related reform movements. He continued teaching at the Academy until 1912, giving the special class nearly two decades of influence. The result was a durable network of pupils and collaborators who carried debates about function, structural honesty, ornament, and urban modernity from Vienna into Central Europe and beyond.",
+      "weight": 0.8
     },
     {
       "date": "1894",
@@ -501,18 +394,21 @@
       "date_end": "1901",
       "date_end_precision": "year",
       "age": 53,
-      "title": "Designs Vienna Stadtbahn",
-      "description": "In 1894 in Vienna, Wagner was appointed artistic adviser for the [[Vienna Stadtbahn|Vienna Stadtbahn]], overseeing a unified architectural approach for stations, bridges, and associated structures while working under state commissions and engineering constraints. He coordinated closely with administrators and engineers to maintain a consistent design language across the network.",
+      "title": "Designed Vienna City Railway",
+      "description": "In 1894, Vienna’s authorities appointed Wagner artistic adviser to the Vienna City Railway, entrusting him with designs for its stations, bridges, and related structures as construction began.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
+      ],
+      "involved_people": [
+        "Heinrich Goldemund"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Otto_Wagner",
@@ -520,7 +416,7 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Otto_Wagner_Pavillon_-_Karlsplatz.jpg/960px-Otto_Wagner_Pavillon_-_Karlsplatz.jpg",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Otto_Wagner_Pavillon_-_Karlsplatz.jpg/960px-Otto_Wagner_Pavillon_-_Karlsplatz.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
           "caption": "Karlsplatz Stadtbahn Station, Vienna",
           "source": "https://commons.wikimedia.org/wiki/File:Otto_Wagner_Pavillon_-_Karlsplatz.jpg",
           "creator": "Pudelek",
@@ -529,27 +425,23 @@
         }
       ],
       "event_type_icon": "mdi-drawing",
-      "chapter": "inventing_modern_vienna",
-      "annotations": {
-        "Vienna Stadtbahn": {
-          "explanation": "A metropolitan railway system built in Vienna in the late 19th century (initially steam-operated), for which Wagner designed many of the system’s characteristic station buildings and related infrastructure.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna_Stadtbahn"
-        }
-      }
+      "chapter": "remaking_imperial_vienna",
+      "background": "Vienna was confronting the transport consequences of rapid late-nineteenth-century growth. The imperial capital’s older railroads ended at separate terminal stations, while new residential districts and industrial areas spread far beyond the Ringstrasse. In 1892, the Austrian government created the Commission for Transport Facilities in Vienna to build an urban railway system that could move passengers across the city while also serving strategic military requirements. Its planned routes followed the Wien River, the Danube Canal, and the Gürtel boulevard, with a suburban line crossing the city’s western outskirts.\n\nThe undertaking was primarily a civil-engineering project. Heinrich Goldemund directed construction for the commission, which had to fit embankments, viaducts, cuttings, tunnels, and bridges into a dense and varied urban landscape. The system eventually comprised five routes and 36 stations. Wagner’s contribution extended beyond isolated station façades: he developed architectural standards for entrances, platforms, railings, lighting, signs, and the visible portions of bridges and retaining walls. This gave infrastructure built by different contractors and along radically different routes a recognizable common identity.\n\nThe paired pavilions at Karlsplatz became the most concentrated expression of that approach. Their compact, symmetrical forms were organized around practical access to the platforms, but their surfaces were treated as public architecture rather than mere railway equipment. White marble panels, green-painted metalwork, and gold ornament made the structures conspicuous amid the square’s monumental surroundings. The design joined industrial materials and prefabricated elements to carefully controlled decoration, demonstrating Wagner’s belief that modern construction could produce an architecture suited to contemporary urban life. Other stations were more standardized, yet they repeated related visual motifs and materials so that riders could recognize the railway as a single system.\n\nThe lines opened in stages between 1898 and 1901, initially operating as a steam railway. High costs, delays, and the limits of steam operation constrained the system, and parts of it later passed through periods of reduced use and reconstruction. Nevertheless, major sections of the former Stadtbahn became the basis for Vienna’s modern U-Bahn network, notably the U4 and U6 lines. Several of Wagner’s stations and the Karlsplatz pavilions survived or were restored, making the project an unusually visible record of the point at which transit design became a central architectural problem for the modern city.",
+      "weight": 0.95
     },
     {
       "date": "1896",
       "date_precision": "year",
       "age": 55,
-      "title": "Publishes Moderne Architektur",
-      "description": "In 1896, in Vienna, Wagner issued the book in the midst of his growing public profile as a designer and teacher, giving students and colleagues a single text to consult alongside his lectures and built work.",
+      "title": "Published Moderne Architektur",
+      "description": "In Vienna, Wagner issued the volume as a public intervention in the city’s architectural debate, drawing on his recent teaching and urban-planning responsibilities.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
@@ -558,164 +450,231 @@
         "https://en.wikipedia.org/wiki/Otto_Wagner"
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "inventing_modern_vienna",
+      "chapter": "remaking_imperial_vienna",
+      "background": "Late nineteenth-century Vienna was one of Europe’s great construction sites. The demolition of the old fortifications and the creation of the Ringstrasse had produced a capital lined with museums, theaters, ministries, apartment blocks, and palaces. Much of this building culture relied on historic styles, selected according to a building’s social role: Renaissance for commerce and civic grandeur, Gothic for religious associations, and Baroque for imperial display. Wagner had been trained within that world and had practiced successfully in it, but the scale and speed of the expanding metropolis made inherited stylistic formulas increasingly difficult for him to accept as an adequate answer.\n\nThe institutional setting gave his views an unusually prominent platform. In 1894 Wagner became professor of architecture at the Academy of Fine Arts in Vienna, succeeding Karl von Hasenauer. He was also becoming closely involved with the practical problems of Vienna’s growth, including transport and city planning. Those roles put him in contact with a younger architectural generation while requiring him to address the city not as a collection of isolated monuments but as an interconnected system of streets, public works, housing, and movement. His argument emerged from that professional environment rather than from a detached literary circle.\n\nA central phrase associated with Wagner’s position was that “something impractical cannot be beautiful.” It was a deliberately direct challenge to the assumption that architectural beauty could be obtained by applying historical ornament to a modern building. For Wagner, an architect had to begin with the purpose of the work, the needs of its users, and the actual conditions of contemporary construction. The point was not a simple rejection of all tradition or decoration. Instead, he maintained that artistic form had to grow from present-day life and from the materials and techniques available to architects. This made the book a polemical statement within Vienna’s continuing dispute between historicist convention and newer design approaches.\n\nThe text became a key formulation of Wagner’s architectural theory and was revised and reissued in later editions, allowing him to sharpen its position as his practice changed. Its influence was amplified through his Academy teaching: architects including Josef Hoffmann, Jože Plečnik, Jan Kotěra, and Max Fabiani studied under Wagner or worked in his office. The book is therefore remembered not merely as a statement of personal preference, but as a formative document for the Viennese turn toward modern architecture and for the architects who carried elements of that turn into Central Europe.",
+      "weight": 0.9,
       "event_class": {
         "type": "publication",
         "title": "Moderne Architektur",
         "publication_type": "book",
-        "significance": "programmatic",
-        "impact": "It articulated a contemporary architectural approach in direct dialogue with late-19th-century urban and technical change."
+        "significance": "architectural manifesto",
+        "impact": "The book articulated Wagner's program for an architecture responsive to modern urban society and construction."
       }
     },
     {
       "date": "1897",
       "date_precision": "year",
-      "date_end": "1899",
-      "date_end_precision": "year",
       "age": 56,
-      "title": "Joins Vienna Secession",
-      "description": "In 1897, Wagner joined the [[Vienna Secession|Vienna Secession]] as one of its prominent architectural figures, aligning with artists and architects promoting a modern approach to art and design. Around the same time, he represented the Vienna Academy at the International Architects’ Congress in Brussels, and he continued work on major residential and commercial projects along Vienna’s Wienzeile near the Naschmarkt, presenting their street fronts as part of a consciously modern urban image.",
+      "title": "Joined Vienna Secession",
+      "description": "The Vienna Secession was founded in Vienna in 1897 by artists seeking an alternative to established academic exhibition culture. Although Otto Wagner became closely associated with the group’s architectural program, his membership is generally dated to 1899 rather than its founding year.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Brussels",
-          "name_modern": "Brussels, Belgium",
-          "centroid": [
-            4.352493,
-            50.8467372
-          ],
-          "primary": false
         }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Otto_Wagner",
         "https://en.wikipedia.org/wiki/Vienna_Secession"
       ],
-      "images": [
+      "event_type_icon": "mdi-account-group",
+      "chapter": "remaking_imperial_vienna",
+      "background": "Vienna’s official art world was dominated by the Künstlerhaus, whose juries and exhibitions represented an established academic culture. In 1897, a group of painters, sculptors, architects, and designers broke away to form the Association of Austrian Artists, soon known as the Vienna Secession. Gustav Klimt was its first president, and the founders included Joseph Maria Olbrich, Koloman Moser, and Carl Moll. Their purpose was not a single shared visual style but greater freedom to show contemporary work, including foreign art that the Künstlerhaus had largely excluded.\n\nThe new association treated architecture, painting, graphic design, furniture, and the applied arts as related parts of modern artistic life. Its exhibitions were intended as environments rather than as conventional displays of isolated pictures. This broad program mattered in a city where large public architecture and the historicist language of the Ringstrasse still carried institutional prestige. It also created a setting in which architectural questions—materials, construction, ornament, urban life, and the relation between function and form—could be debated alongside painting and design.\n\nThe group quickly made its ambitions visible through two durable instruments. In 1898 it began publishing Ver Sacrum, a lavishly designed periodical whose title means “Sacred Spring.” The magazine provided a venue for criticism, graphic experimentation, poetry, and reproductions of new work, making the Secession’s ideas available beyond exhibition visitors. That same year, Olbrich’s Secession Building opened as the association’s dedicated exhibition hall. Its stark white geometric masses and conspicuous gilded dome of laurel leaves sharply distinguished it from the surrounding historicist cityscape. Above the entrance appeared the movement’s motto: “To every age its art, to art its freedom.”\n\nWagner’s eventual membership, usually dated 1899, therefore followed the group’s formative break rather than taking place at its founding. The date is worth distinguishing because later accounts often fold him into the original 1897 circle. His connection nevertheless placed an already prominent architect within a network that promoted the unity of artistic media and public confrontation with current European art. The Secession’s exhibitions and publications gave its members a prominent platform, while its building became one of Vienna’s clearest architectural symbols of the new movement.",
+      "weight": 0.7
+    },
+    {
+      "date": "1898",
+      "date_precision": "year",
+      "date_end": "1899",
+      "date_end_precision": "year",
+      "age": 57,
+      "title": "Built Wienzeile Houses",
+      "description": "Wagner built three residential and commercial buildings on Vienna's Linke Wienzeile near the Naschmarkt. Their facades used elaborate [[Vienna Secession|Secessionist]] decoration, including ornamental work associated with Koloman Moser.",
+      "locations": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Secession_Building_Vienna.jpg/960px-Secession_Building_Vienna.jpg",
-          "caption": "Secession Building, Vienna",
-          "source": "https://commons.wikimedia.org/wiki/File:Secession_Building_Vienna.jpg",
-          "creator": "Conny Duck",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3575,
+            48.1985
+          ],
+          "primary": true
         }
       ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "inventing_modern_vienna",
+      "involved_people": [
+        "Koloman Moser"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Majolica_House"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Linke_Wienzeile_40%2C_Majolikahaus_Otto_Wagner_1.JPG/960px-Linke_Wienzeile_40%2C_Majolikahaus_Otto_Wagner_1.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Majolikahaus on Linke Wienzeile, Vienna",
+          "source": "https://commons.wikimedia.org/wiki/File:Linke_Wienzeile_40,_Majolikahaus_Otto_Wagner_1.JPG",
+          "creator": "böhringer friedrich",
+          "license": "CC BY-SA 3.0 at",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/at/deed.en"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "remaking_imperial_vienna",
       "annotations": {
         "Vienna Secession": {
-          "explanation": "An Austrian modernist association founded in 1897 by artists who broke with the conservative Künstlerhaus to promote new art and design, closely linked to Art Nouveau in Vienna.",
+          "explanation": "An artists' association founded in Vienna in 1897 that rejected academic historicism and became a major Austrian expression of Art Nouveau.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna_Secession"
         }
-      }
+      },
+      "background": "Late nineteenth-century Vienna was still dominated by the historicist apartment blocks and grand public architecture that had accompanied the Ringstrasse era. Yet the rapidly growing city was also acquiring new commercial corridors and a more modern visual culture. Along the regulated Wien River, the market district was a dense mixture of food stalls, small businesses, traffic, and rental housing. A residential block there had to do more than provide apartments: its street level needed to attract customers, while its exterior had to compete for attention amid the bustle of the market.\n\nThe commission gave Wagner an unusually visible chance to apply ideas from his recent architectural writing to speculative urban housing. Rather than treating a facade as a borrowed Renaissance or Baroque costume, he made the outward surface a field in which materials, structure, shops, balconies, and ornament could work together. The buildings retained the practical organization expected of Vienna rental property—commercial premises below and dwellings above—but their public faces declared a break with the prevailing language of historicism. This was not an isolated villa for a wealthy patron; it was architecture intended to operate within everyday metropolitan life.\n\nThe best-known pair demonstrates two sharply different ornamental strategies. The building later called the Majolica House is clad in ceramic tiles carrying an expansive floral pattern, designed by Wagner's student Alois Ludwig. Its glazed surface made color and pattern integral to the weather-facing exterior rather than an applied painted finish. Next door, the so-called Medallion House uses a paler facade punctuated by gilded circular reliefs designed by Koloman Moser. Moser's stylized female heads and the geometric ordering of the medallions gave the facade a deliberately graphic, almost poster-like character. Othmar Schimkowitz supplied additional sculptural ornament. Together, these contributions show how architects, designers, and sculptors associated with the Secession could treat an apartment-house facade as a collaborative work of art.\n\nThe houses became among the most recognizable surviving demonstrations of Vienna's turn toward Art Nouveau and modern design. Their reception has also tended to favor the flamboyant tiled and medallion facades, sometimes obscuring the broader point: Wagner was testing how a modern city building could unite rental-house economics, commercial frontage, new materials, and a contemporary artistic vocabulary. The ensemble therefore stands at a hinge in his work, between the ornamental confidence of the Secession and the increasingly restrained, functional language he would pursue in later commissions.",
+      "weight": 0.75
     },
     {
       "date": "1902",
       "date_precision": "year",
-      "date_end": "1912",
+      "date_end": "1907",
       "date_end_precision": "year",
-      "date_note": "This span covers the Steinhof planning and church (1902–1907) and the Postsparkasse building phases (1903–1906, 1910–1912)",
       "age": 61,
-      "title": "Completes landmark public works",
-      "description": "In [[Vienna|Vienna]], Wagner completed major public commissions: he prepared the overall plan for the [[Steinhof Psychiatric Hospital|Steinhof psychiatric institution]] and designed the [[Kirche am Steinhof|Church of St. Leopold]] (Kirche am Steinhof), while also designing and building the [[Austrian Postal Savings Bank|Imperial-Royal Postal Savings Bank]] and coordinating its architecture, structure, and interior fittings within a large state administrative project. The work brought him into sustained contact with public authorities and building contractors and the day-to-day realities of large institutional construction.",
+      "title": "Planned Steinhof Complex",
+      "description": "In 1902, Wagner prepared the general plan for the Lower Austrian State Asylum at Steinhof and designed its Church of St. Leopold. The planned hilltop church combined a prominent gilded dome with interiors carefully adapted for the institution’s patients and staff.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.285,
+            48.215
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "Marcel Kammerer"
+      "sources": [
+        "https://en.wikipedia.org/wiki/Otto_Wagner",
+        "https://en.wikipedia.org/wiki/Kirche_am_Steinhof"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Kirche_am_Steinhof_in_Penzing%2C_Vienna%2C_Austria-far_PNr%C2%B01120.jpg/960px-Kirche_am_Steinhof_in_Penzing%2C_Vienna%2C_Austria-far_PNr%C2%B01120.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Kirche am Steinhof, Vienna",
+          "source": "https://commons.wikimedia.org/wiki/File:Kirche_am_Steinhof_in_Penzing,_Vienna,_Austria-far_PNr°1120.jpg",
+          "creator": "D-Kuru",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "civic_modernism_takes_form",
+      "background": "At the beginning of the twentieth century, Lower Austria was replacing older forms of custodial psychiatric care with a purpose-built institution on Vienna’s Baumgartner Höhe. The site was conceived as a self-contained therapeutic settlement rather than a single massive asylum building. Its pavilions were distributed across landscaped grounds, separating patients according to sex and condition while giving the complex an ordered, village-like layout. Wagner supplied the overall conception, while Carlo von Boog was responsible for much of the institutional building work.\n\nThe project was unusually large and public in ambition. Construction proceeded from 1904 to 1907, producing an ensemble of some 60 pavilions intended to accommodate about 2,200 patients. Its elevated site, visible from parts of the city, made the church a visual focus for the entire institution. The religious building was therefore not treated as an afterthought: it gave a civic and ceremonial center to an establishment whose ordinary buildings were wards, service facilities, and residences for staff.\n\nThe most distinctive issue was designing a Catholic church for people undergoing psychiatric treatment. Wagner adapted ordinary ecclesiastical features to that setting. The interior had room for roughly 800 worshippers, with arrangements that allowed patients to be supervised and, where necessary, separated. He avoided sharp projecting details, used smooth and readily cleaned surfaces, and provided broad circulation routes. Even liturgical fittings were reconsidered for safety and practicality. These decisions made the church an early, conspicuous example of architecture shaped by the physical and psychological needs of its users, rather than by historical church models alone.\n\nWagner coordinated artists and craftsmen to give the building a unified appearance. Koloman Moser designed stained-glass windows and other decorative elements, Leopold Forstner executed mosaics, and Othmar Schimkowitz created sculptural work, including the angels around the exterior. The white facade, geometric ornament, copper-covered dome, and gilded metal elements placed the church near the transition from Vienna Secession decoration to Wagner’s increasingly spare late manner. Consecrated in 1907, it became widely known as the Church at Steinhof and remains the best-known surviving element of the former asylum complex.",
+      "weight": 0.9
+    },
+    {
+      "date": "1903",
+      "date_precision": "year",
+      "date_end": "1912",
+      "date_end_precision": "year",
+      "age": 62,
+      "title": "Built Postal Savings Bank",
+      "description": "In 1903, Wagner prepared the design for Vienna’s [[Imperial-Royal|Imperial-Royal]] Postal Savings Bank, whose construction proceeded in two phases. Its aluminum fittings, marble surfaces, visible structural logic, and restrained exterior departed sharply from the monumental historicism of nearby state buildings.",
+      "locations": [
+        {
+          "name_historic": "Vienna",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.3738,
+            48.2082
+          ],
+          "primary": true
+        }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Otto_Wagner",
-        "https://en.wikipedia.org/wiki/Church_of_St._Leopold,_Steinhof",
         "https://en.wikipedia.org/wiki/Austrian_Postal_Savings_Bank"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Otto_Wagner_Steinhofkirche.JPG/960px-Otto_Wagner_Steinhofkirche.JPG",
-          "caption": "Kirche am Steinhof, Vienna",
-          "source": "https://commons.wikimedia.org/wiki/File:Otto_Wagner_Steinhofkirche.JPG",
-          "creator": "Welleschik",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Wien_-_%C3%96sterreichische_Postsparkasse%2C_Georg-Coch-Platz.JPG/960px-Wien_-_%C3%96sterreichische_Postsparkasse%2C_Georg-Coch-Platz.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Main facade of Vienna Postal Savings Bank",
+          "source": "https://commons.wikimedia.org/wiki/File:Wien_-_Österreichische_Postsparkasse,_Georg-Coch-Platz.JPG",
+          "creator": "C.Stadler/Bwag",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
       "event_type_icon": "mdi-office-building",
-      "chapter": "inventing_modern_vienna",
+      "chapter": "civic_modernism_takes_form",
       "annotations": {
-        "Vienna": {
-          "explanation": "Capital of Austria and the seat of the Austro-Hungarian imperial administration, where Wagner’s key public commissions were carried out.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna"
-        },
-        "Steinhof Psychiatric Hospital": {
-          "explanation": "A major psychiatric hospital complex in Vienna (now Klinik Hietzing) developed around 1900; Wagner designed its overall plan and prominent buildings.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Steinhof"
-        },
-        "Kirche am Steinhof": {
-          "explanation": "The hospital church at Steinhof, officially the Church of St. Leopold (1904–1907), one of Wagner’s best-known Modernist sacred designs.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Church_of_St._Leopold,_Steinhof"
-        },
-        "Austrian Postal Savings Bank": {
-          "explanation": "Vienna’s Imperial-Royal Postal Savings Bank building (Postsparkasse), designed by Wagner and built 1904–1912 as a landmark of early Modern architecture.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Austrian_Postal_Savings_Bank"
+        "Imperial-Royal": {
+          "explanation": "A designation for institutions of the Austrian half of the Austro-Hungarian Dual Monarchy, administered under the emperor-king.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Austria-Hungary"
         }
-      }
+      },
+      "background": "The Postal Savings Bank was a state institution created to make saving and money transfers accessible through the far-reaching postal network. Its headquarters therefore had to accommodate a modern administrative operation rather than merely project the ceremonial authority expected of many ministries and banks in imperial Vienna. The commission placed a financial bureaucracy, its clerks, and its customers at the center of a public building on Georg-Coch-Platz, close to the Danube Canal and the old city’s major government quarter.\n\nWork on the first portion took place from 1904 to 1906, and a later enlargement followed from 1910 to 1912. The building’s planning treated its materials and circulation as parts of a coordinated system. Behind the street front was a reinforced-concrete and steel structure, while white marble facing was divided into regular panels and visibly secured with aluminum-headed bolts. The resulting facade did not depend on sculptural allegory, classical columns, or a grand historical costume. Its evenly spaced windows and fasteners instead gave an office building a deliberately mechanical clarity.\n\nThe most telling space was the main banking hall. Customers entered a high, bright room illuminated from above by a glass roof, so that the working floor could receive daylight without relying solely on windows at the perimeter. Wagner used polished materials and carefully designed metal fixtures, furniture, counters, and lighting to make the large room feel ordered rather than overloaded. Aluminum—still unusual in prestigious architecture—appeared in fittings and details not as an imitation of older luxury materials but as an openly contemporary one. The room’s organization made the bank’s daily transactions legible: public service occurred in a clear central space, while offices and administrative functions occupied the surrounding structure.\n\nThe project became one of the most influential demonstrations of Wagner’s argument that architecture should answer contemporary purposes and techniques. Its rigor was striking in a city whose Ringstrasse monuments had often communicated civic power through Renaissance, Baroque, or classical revival forms. Although the Postal Savings Bank was commissioned by the imperial state, its appearance suggested a different official language: practical, sanitary, materially candid, and adaptable to expansion. The completed complex became a landmark of Viennese modern architecture and a concise built statement of the principles Wagner had advanced in his architectural writing.",
+      "weight": 1.0
     },
     {
-      "date": "1915-10-26",
-      "date_precision": "day",
-      "age": 74,
-      "title": "Wife Louise dies",
-      "description": "On 26 October 1915, Wagner’s wife Louise died after an illness with cancer, ending their long marriage and leaving him personally shaken.",
+      "date": "1912",
+      "date_precision": "year",
+      "date_end": "1915",
+      "date_end_precision": "year",
+      "age": 71,
+      "title": "Built Villa Wagner II",
+      "description": "After selling his earlier family villa, Wagner built Villa Wagner II on the neighboring property in Vienna in a [[late Secessionist|late Secessionist]] style, intending it as a residence for Louise Stiffel.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Louise Wagner"
+        "Louise Stiffel"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Otto_Wagner"
       ],
-      "event_type_icon": "mdi-cross",
-      "chapter": "last_silence"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Villa_Wagner_II_Ansicht_1.jpg/960px-Villa_Wagner_II_Ansicht_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Villa Wagner II",
+          "source": "https://commons.wikimedia.org/wiki/File:Villa_Wagner_II_Ansicht_1.jpg",
+          "creator": "Thomas Ledl",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "civic_modernism_takes_form",
+      "annotations": {
+        "late Secessionist": {
+          "explanation": "A late phase of the Vienna Secession that reduced Art Nouveau’s flowing ornament into more spare, geometric forms, anticipating modern architecture.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna_Secession"
+        }
+      },
+      "background": "The new house belonged to a final, intensely personal phase of Wagner’s work. The neighborhood was Hütteldorf, then a leafy outer district on Vienna’s western edge, where detached houses and gardens offered a very different setting from the dense blocks of the Ringstrasse and central city. Domestic architecture gave Wagner control over nearly every visible decision: proportion, entrance sequence, windows, surface treatment, and the relation of the building to its grounds.\n\nThe contrast with the adjacent earlier villa was significant. Wagner’s first house there had emerged from the vocabulary of late nineteenth-century historicism, with a more picturesque and traditional villa character. By the 1910s, his architectural language had been pared down. The later house made its effect through a compact mass, plain light-colored wall surfaces, carefully placed openings, and a much more disciplined use of ornament. It was not a public monument, but its restraint stated the same preference for clarity and modern materials that had shaped Wagner’s mature thinking about architecture.\n\nA private residence also allowed the architect to test an idea that was difficult to pursue in large civic projects: that a house could be both comfortable and rigorously composed without relying on historical styles for status. Rather than treating decoration as an applied display, the design concentrated attention on the building’s silhouette and its limited, precisely controlled details. The villa consequently reads less as a country retreat in an inherited style than as a deliberately contemporary home. Its scale kept the experiment intimate, while its position beside the older house made the change in Wagner’s approach unusually visible.\n\nThe household’s hopes for the property were soon overtaken by Louise Stiffel’s terminal illness; she died of cancer on October 26, 1915. The First World War had already begun the previous year, transforming Vienna’s social and economic conditions and narrowing the prospects for the kind of settled domestic life the residence implied. Wagner lived only until 1918. Villa Wagner II nevertheless survived as a concise late statement of his movement away from historicist domestic architecture toward the austere geometric language associated with early modernism.",
+      "weight": 0.45
     },
     {
       "date": "1918-04-11",
       "date_precision": "day",
       "age": 76,
       "title": "Death in Vienna",
-      "description": "Otto Wagner died in Vienna on 11 April 1918, aged 76.",
+      "description": "Otto Wagner died in Vienna on April 11, 1918, aged 76.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
@@ -725,8 +684,8 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Grave_of_Otto_Wagner_on_the_cemetery_Hietzing_in_Vienna%2C_Austria-full_PNr%C2%B00793.jpg/960px-Grave_of_Otto_Wagner_on_the_cemetery_Hietzing_in_Vienna%2C_Austria-full_PNr%C2%B00793.jpg",
-          "caption": "Grave of Otto Wagner, Hietzing Cemetery, Vienna",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Grave_of_Otto_Wagner_on_the_cemetery_Hietzing_in_Vienna%2C_Austria-full_PNr%C2%B00793.jpg/960px-Grave_of_Otto_Wagner_on_the_cemetery_Hietzing_in_Vienna%2C_Austria-full_PNr%C2%B00793.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "caption": "Otto Wagner’s grave at Hietzing Cemetery",
           "source": "https://commons.wikimedia.org/wiki/File:Grave_of_Otto_Wagner_on_the_cemetery_Hietzing_in_Vienna,_Austria-full_PNr°0793.jpg",
           "creator": "D-Kuru",
           "license": "CC BY-SA 4.0",
@@ -734,9 +693,12 @@
         }
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "last_silence",
+      "chapter": "the_final_villa",
+      "background": "The final year of Wagner’s life came amid the deepening crisis of the First World War. Vienna, still the capital of the Austro-Hungarian Empire, faced shortages of food, fuel, and raw materials, while inflation and the military demands on labor disrupted daily civilian life. Construction was especially vulnerable: building materials were scarce, commissions slowed, and the professional world in which architects, artists, and contractors had worked before 1914 was severely constrained.\n\nThe city nevertheless remained the center of Wagner’s professional circle. His long service at the Academy of Fine Arts had helped establish an influential school of architects, including Josef Hoffmann, Jože Plečnik, Jan Kotěra, and Emil Hoppe. Their work had carried elements of Wagner’s approach well beyond Vienna, even as younger architects developed sharply different responses to modern construction, ornament, and urban life. By the war years, the debate Wagner had helped provoke—whether architecture should express contemporary materials, functions, and needs rather than reproduce historic styles—had become a central question for European design.\n\nA revealing sign of the pressure on Vienna was the January 1918 strike movement. It began after a reduction in flour rations and grew into a major protest involving factory workers, who were also reacting to hunger, war exhaustion, and the prospect of continued fighting. The unrest demonstrated that the imperial capital’s difficulties were no longer confined to the front or to government administration; they affected household provisions, industrial production, and public order. For cultural institutions and private practices alike, the circumstances narrowed the resources available for ambitious work and made the prewar assumptions of steady urban expansion seem increasingly remote.\n\nThe political setting changed decisively within months. Austria-Hungary collapsed in the autumn of 1918, and Vienna became the capital of the much smaller Austrian republic rather than the administrative center of a multinational empire. The municipal systems, civic institutions, and private clients that had sustained the city’s great late-imperial building culture had to adjust to a new economic and political reality. Wagner’s students, buildings, publications, and unbuilt schemes consequently became the chief means through which his ideas entered the architectural debates of the interwar period.",
+      "weight": 0.35,
       "event_class": {
-        "type": "death"
+        "type": "death",
+        "place_of_rest": "Hietzing Cemetery, Vienna"
       }
     }
   ]
