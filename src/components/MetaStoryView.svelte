@@ -15,7 +15,7 @@
     consumeMetaStoryScroll,
     saveMetaStoryScroll,
   } from "../stores/metaStoryScroll.js";
-  import { queryParams, originQuery } from "../stores/queryParams.js";
+  import { queryParams, personStoryHref } from "../stores/queryParams.js";
   import { restoreFocusTrigger } from "../stores/returnFocus.js";
   import { displayName } from "../utils/helpers.js";
   import {
@@ -124,14 +124,13 @@
 
   // Carry the meta story context so the story's close button returns here, and
   // the landing filters with it so the way out of the collection is unchanged.
-  function personStoryHref(personId) {
-    const search = originQuery(
-      metaStoryData?.meta_story?.id,
-      $queryParams.from_landing
-    );
-    return (
-      `#/${currentLanguage}/story/${personId}` + (search ? `?${search}` : "")
-    );
+  function storyHref(personId) {
+    return personStoryHref({
+      language: currentLanguage,
+      personId,
+      metaStoryId: metaStoryData?.meta_story?.id,
+      fromLanding: $queryParams.from_landing,
+    });
   }
 
   // Remember where the reader left the meta story before jumping into a story.
@@ -847,6 +846,7 @@
               <MetaStoryTimeline
                 bind:this={metaTimelineComponent}
                 metaStoryId={metaStoryData.meta_story.id}
+                {currentLanguage}
                 chapters={metaStoryData.chapters}
                 {personsRegistry}
                 subtopics={metaStoryData.subtopics}
@@ -957,7 +957,7 @@
               {person}
               class="ms-frame"
               personStyle={cardStyle(person.id)}
-              href={personStoryHref(person.id)}
+              href={storyHref(person.id)}
               ariaLabel={$_("meta_story.people_open_story", {
                 name: displayName(person.name),
               })}

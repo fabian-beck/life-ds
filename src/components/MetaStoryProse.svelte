@@ -9,7 +9,7 @@
   // story.
   import { segmentPersonMentions } from "../utils/personNames.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
-  import { queryParams, originQuery } from "../stores/queryParams.js";
+  import { queryParams, personStoryHref } from "../stores/queryParams.js";
 
   export let text = "";
   export let people = []; // [{ id, name, aliases, color }]
@@ -20,10 +20,12 @@
   $: colorById = new Map(people.map((p) => [p.id, p.color]));
 
   function hrefFor(personId) {
-    const search = originQuery(metaStoryId, $queryParams.from_landing);
-    return (
-      `#/${currentLanguage}/story/${personId}` + (search ? `?${search}` : "")
-    );
+    return personStoryHref({
+      language: currentLanguage,
+      personId,
+      metaStoryId,
+      fromLanding: $queryParams.from_landing,
+    });
   }
 
   function openStory() {

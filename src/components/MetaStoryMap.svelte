@@ -9,7 +9,7 @@
   import { segmentPersonMentions } from "../utils/personNames.js";
   import { metaStoryStyle } from "../utils/metaStoryStyles.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
-  import { queryParams, originQuery } from "../stores/queryParams.js";
+  import { queryParams, personStoryHref } from "../stores/queryParams.js";
   import { assetUrl } from "../utils/assetUrl.js";
   import personStylesData from "../../data/person_styles.json";
 
@@ -49,12 +49,13 @@
   // slide index when chapters exist), and `from_meta` lets the story's close
   // button return to this meta story.
   function eventHref(event) {
-    const idx = event.event_index != null ? event.event_index : 0;
-    const origin = originQuery(metaStoryId, $queryParams.from_landing);
-    return (
-      `#/${currentLanguage}/story/${event.person_id}?event=${idx}` +
-      (origin ? `&${origin}` : "")
-    );
+    return personStoryHref({
+      language: currentLanguage,
+      personId: event.person_id,
+      eventIndex: event.event_index != null ? event.event_index : 0,
+      metaStoryId,
+      fromLanding: $queryParams.from_landing,
+    });
   }
 
   // Remember where the reader left the meta story before jumping into a story,

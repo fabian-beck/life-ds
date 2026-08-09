@@ -1,7 +1,7 @@
 <script>
   import { _ } from "../stores/language";
   import { displayName } from "../utils/helpers.js";
-  import { getThumbnailUrl } from "../utils/storyHelpers.js";
+  import { extractYear, getThumbnailUrl } from "../utils/storyHelpers.js";
 
   export let metaStories = [];
   export let persons = [];
@@ -249,14 +249,13 @@
       .map((id) => persons.find((p) => p.id === id))
       .filter(Boolean)
       .sort((a, b) => {
-        // Parse birth years from birthDate (format: YYYY-MM-DD or YYYY)
-        const yearA = a.birthDate
-          ? parseInt(a.birthDate.split("-")[0])
-          : Infinity;
-        const yearB = b.birthDate
-          ? parseInt(b.birthDate.split("-")[0])
-          : Infinity;
-        return yearA - yearB;
+        // Birth years via the shared parser (handles BCE and unpadded years);
+        // people without a parseable date sort last instead of shuffling.
+        const yearOf = (person) => {
+          const year = extractYear(person.birthDate);
+          return Number.isFinite(year) ? year : Infinity;
+        };
+        return yearOf(a) - yearOf(b);
       });
 
     // If more than 6 people, randomly select 6 while maintaining temporal order

@@ -480,14 +480,7 @@
 
       // Clear the event param from URL and replace with slide param
       // This will cause activeIndex to update, which will trigger the normal scroll logic
-      const basePath = $location.split("?")[0];
-      const newUrl = buildUrlWithParams(basePath, {
-        slide: targetSlideIndex,
-        timeline: $queryParams.timeline,
-        network: $queryParams.network,
-        ...navigationContext($queryParams),
-      });
-      replace(newUrl);
+      updateStoryUrl({ slide: targetSlideIndex });
     }
   }
 
@@ -616,6 +609,23 @@
   // Track previous activeIndex to detect actual changes
   let previousActiveIndex = activeIndex;
 
+  // Rewrite the story URL in place, changing only what the caller names.
+  // Everything else — including the reader's from_meta/from_landing origin —
+  // is carried through, so no call site can forget it. Always replace(), not
+  // push(): view state must not create history entries.
+  function updateStoryUrl(patch) {
+    const basePath = $location.split("?")[0];
+    replace(
+      buildUrlWithParams(basePath, {
+        slide: activeIndex,
+        timeline: $queryParams.timeline,
+        network: $queryParams.network,
+        ...navigationContext($queryParams),
+        ...patch,
+      })
+    );
+  }
+
   // Close date note and network modal when slide actually changes
   $: if (activeIndex !== undefined && activeIndex !== previousActiveIndex) {
     visibleDateNote = null;
@@ -623,14 +633,7 @@
     visibleAnnotation = null;
     // Close network modal when slide changes by updating URL
     if ($queryParams.network) {
-      const basePath = $location.split("?")[0];
-      const newUrl = buildUrlWithParams(basePath, {
-        slide: activeIndex,
-        timeline: $queryParams.timeline,
-        network: false,
-        ...navigationContext($queryParams),
-      });
-      replace(newUrl);
+      updateStoryUrl({ network: false });
     }
     previousActiveIndex = activeIndex;
   }
@@ -1226,14 +1229,7 @@
   }
 
   function setNetworkModal(show) {
-    const basePath = $location.split("?")[0];
-    const newUrl = buildUrlWithParams(basePath, {
-      slide: activeIndex,
-      timeline: $queryParams.timeline,
-      network: show,
-      ...navigationContext($queryParams),
-    });
-    replace(newUrl);
+    updateStoryUrl({ network: show });
   }
 
   function openAIModal() {
@@ -1245,19 +1241,7 @@
   }
 
   function handleTimelineExpandChange(event) {
-    const expanded = event.detail.expanded;
-
-    // Build URL with or without timeline param
-    const basePath = $location.split("?")[0];
-    const newUrl = buildUrlWithParams(basePath, {
-      slide: activeIndex,
-      timeline: expanded,
-      network: $queryParams.network,
-      ...navigationContext($queryParams),
-    });
-
-    // Always use replace() - modal state should not create history entries
-    replace(newUrl);
+    updateStoryUrl({ timeline: event.detail.expanded });
   }
 
   // Handle initial scroll when component loads with a specific slide index

@@ -66,6 +66,40 @@ export function originQuery(metaStoryId, fromLanding) {
 }
 
 /**
+ * The hash-router href into a person's story, carrying the reader's origin.
+ *
+ * Every surface of a meta story links into person stories — prose mentions,
+ * the network popup, the map's narration, the timeline's tooltips — and each
+ * used to assemble this URL by hand, six times over, including the easy-to-flip
+ * choice between "?" and "&" around the origin parameters. The event index
+ * addresses life_events.json (event index ≠ slide index when chapters exist).
+ *
+ * @param {Object} options
+ * @param {string} options.language - The UI language prefix of the route
+ * @param {string} options.personId - The story to open
+ * @param {number|null} [options.eventIndex] - A life_events.json index to jump to
+ * @param {string|null} [options.metaStoryId] - The collection the reader is in
+ * @param {string|null} [options.fromLanding] - The landing filters behind it
+ * @returns {string} - "#/{lang}/story/{id}" plus the query it needs
+ */
+export function personStoryHref({
+  language,
+  personId,
+  eventIndex = null,
+  metaStoryId = null,
+  fromLanding = null,
+}) {
+  const params = new URLSearchParams();
+  if (eventIndex !== null && eventIndex !== undefined) {
+    params.set("event", String(eventIndex));
+  }
+  if (metaStoryId) params.set("from_meta", metaStoryId);
+  if (fromLanding) params.set("from_landing", fromLanding);
+  const search = params.toString();
+  return `#/${language}/story/${personId}` + (search ? `?${search}` : "");
+}
+
+/**
  * The parameters that say where the reader came from rather than what the view
  * is showing. Every URL rebuilt while the reader is inside a story or a
  * collection has to carry them through unchanged, so they are spread from here

@@ -6,6 +6,7 @@
     getSubcategory,
     getChapterPeople,
     formatSingleDate,
+    extractYear,
   } from "../utils/storyHelpers.js";
 
   export let chapter = {};
@@ -29,13 +30,14 @@
     const start = chapter.date_start;
     const end = chapter.date_end;
 
-    // Date range - always use year precision for chapters
-    // Extract year from date strings (e.g., "1912-06-23" -> "1912")
-    const startYear = start ? start.split("-")[0] : null;
-    const endYear = end ? end.split("-")[0] : null;
+    // Date range - always use year precision for chapters. The full date
+    // goes to the formatter (the shared parser handles BCE and unpadded
+    // years); the numeric years only decide whether the range collapses.
+    const startYear = extractYear(start);
+    const endYear = extractYear(end);
 
-    const startLabel = formatSingleDate(startYear, "year", formatters);
-    const endLabel = formatSingleDate(endYear, "year", formatters);
+    const startLabel = formatSingleDate(start, "year", formatters);
+    const endLabel = formatSingleDate(end, "year", formatters);
 
     if (startLabel && endLabel && startYear !== endYear) {
       return `${startLabel} – ${endLabel}`;

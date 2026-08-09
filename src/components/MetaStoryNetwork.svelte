@@ -16,7 +16,7 @@
   import { metaStoryStyle } from "../utils/metaStoryStyles.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { relationshipTypeLabel } from "../utils/relationshipLabels.js";
-  import { queryParams, originQuery } from "../stores/queryParams.js";
+  import { queryParams, personStoryHref } from "../stores/queryParams.js";
   import personStylesData from "../../data/person_styles.json";
 
   // The `social_network` block from a meta story: { nodes: [...], links: [...] }
@@ -233,10 +233,13 @@
   $: popupTailDx = popupNode ? popupNode.x - popupCx : 0;
   // Carry the meta story context so the story's close button returns here,
   // together with any landing filters behind it.
-  $: popupOrigin = originQuery(metaStoryId, $queryParams.from_landing);
   $: popupHref = popupNode
-    ? `#/${currentLanguage}/story/${popupNode.id}` +
-      (popupOrigin ? `?${popupOrigin}` : "")
+    ? personStoryHref({
+        language: currentLanguage,
+        personId: popupNode.id,
+        metaStoryId,
+        fromLanding: $queryParams.from_landing,
+      })
     : "#";
 
   // Remember where the reader left the meta story before jumping into a story.

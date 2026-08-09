@@ -4,12 +4,14 @@
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
-  import { queryParams, originQuery } from "../stores/queryParams.js";
+  import { queryParams, personStoryHref } from "../stores/queryParams.js";
+  import { extractYear } from "../utils/storyHelpers.js";
   import { assetUrl } from "../utils/assetUrl.js";
   import personStylesData from "../../data/person_styles.json";
   import { metaStoryStyle } from "../utils/metaStoryStyles.js";
 
   export let metaStoryId = null; // ID of the meta story (for navigation context)
+  export let currentLanguage = "en"; // Route language prefix for story links
   export let chapters = [];
   export let personsRegistry = [];
   export let subtopics = [];
@@ -58,10 +60,12 @@
     };
   }
 
-  // Extract year from date string (YYYY-MM-DD or YYYY)
+  // Extract year from a stored date via the shared parser, which handles the
+  // shapes a naive split misses: unpadded pre-1000 years and BCE dates
+  // ("-0500"), whose leading minus a split("-") reads as an empty year.
   function getYear(dateString) {
-    if (!dateString) return null;
-    return parseInt(dateString.split("-")[0]);
+    const year = extractYear(dateString);
+    return Number.isFinite(year) ? year : null;
   }
 
   // Calculate timeline boundaries (min/max years from meta story persons' birth/death dates)
@@ -766,8 +770,8 @@
     if (!chapters || chapters.length === 0) return [];
 
     return chapters.map((chapter) => {
-      const startYear = parseInt(chapter.date_start);
-      const endYear = parseInt(chapter.date_end);
+      const startYear = getYear(chapter.date_start);
+      const endYear = getYear(chapter.date_end);
 
       // Remove date range from title (e.g., "Title (1815-1899)" -> "Title")
       const titleWithoutDates = chapter.title.replace(
@@ -799,8 +803,8 @@
     // (e.g., chapter 1 ends 1808, chapter 2 starts 1808) resolve to the later chapter.
     const lastIndex = chaptersWithPositions.length - 1;
     const activeChapter = chaptersWithPositions.find((chapter, idx) => {
-      const startYear = parseInt(chapter.date_start);
-      const endYear = parseInt(chapter.date_end);
+      const startYear = getYear(chapter.date_start);
+      const endYear = getYear(chapter.date_end);
       const endInclusive = idx === lastIndex;
       return (
         currentIndicatorYear >= startYear &&
@@ -2058,41 +2062,27 @@
   }
 
   function handleEventClick(personId, event) {
-    // Navigate to the specific event in the person's story
-    // Use event_index from the meta story data which references the actual event index in life_events.json
-    // Note: We use the 'event' query parameter because event index ≠ slide index when chapters exist
-    const targetEventIndex =
-      event.event_index !== undefined ? event.event_index : 0;
-
-    // Get current language from the URL
-    const currentLang =
-      window.location.hash.match(/^#\/([a-z]{2})\//)?.[1] || "en";
-
-    // Include meta story and landing context if available
-    const origin = originQuery(metaStoryId, $queryParams.from_landing);
-    const originParam = origin ? `&${origin}` : "";
-
     // Remember where the reader left the meta story so returning restores it
     saveMetaStoryScroll(metaStoryId);
-
-    // Build URL with event query parameter and navigation context
-    window.location.hash = `/${currentLang}/story/${personId}?event=${targetEventIndex}${originParam}`;
+    window.location.hash = personStoryHref({
+      language: currentLanguage,
+      personId,
+      eventIndex: event.event_index !== undefined ? event.event_index : 0,
+      metaStoryId,
+      fromLanding: $queryParams.from_landing,
+    }).slice(1);
   }
 
   // Handle person click - navigate to their story
   function handlePersonClick(personId) {
-    // Get current language from the URL
-    const currentLang =
-      window.location.hash.match(/^#\/([a-z]{2})\//)?.[1] || "en";
-
-    // Include meta story and landing context if available
-    const origin = originQuery(metaStoryId, $queryParams.from_landing);
-    const originParam = origin ? `?${origin}` : "";
-
     // Remember where the reader left the meta story so returning restores it
     saveMetaStoryScroll(metaStoryId);
-
-    window.location.hash = `/${currentLang}/story/${personId}${originParam}`;
+    window.location.hash = personStoryHref({
+      language: currentLanguage,
+      personId,
+      metaStoryId,
+      fromLanding: $queryParams.from_landing,
+    }).slice(1);
   }
 
   // Click-outside handler to close tooltip
@@ -2191,7 +2181,7 @@
               {currentChapterByIndicator.title}
             </h3>
             <span class="chapter-year-range">
-              {parseInt(currentChapterByIndicator.date_start)}–{parseInt(
+              {getYear(currentChapterByIndicator.date_start)}–{getYear(
                 currentChapterByIndicator.date_end
               )}
             </span>
