@@ -2,15 +2,18 @@
   import { tick, onMount, onDestroy } from "svelte";
   import "maplibre-gl/dist/maplibre-gl.css";
   import maplibregl from "maplibre-gl";
-  import { Protocol } from "pmtiles";
-  import { layers, namedFlavor } from "@protomaps/basemaps";
   import { _ } from "../stores/language";
   import {
     isCoordinate,
     parseHexColor,
     rgbaFromHex,
   } from "../utils/storyHelpers.js";
-  import { assetUrl } from "../utils/assetUrl.js";
+  import {
+    resolveBasemapUrl,
+    createBasemapStyle,
+    acquirePmtilesProtocol,
+    releasePmtilesProtocol,
+  } from "../utils/basemap.js";
 
   export let activeCoordinates = null;
   export let allActiveCoordinates = [];
@@ -25,17 +28,7 @@
   export let styleConfig = null;
   export let migrationPath = null; // {from: {lon, lat}, to: {lon, lat}} or null
 
-  // Local basemap (zoom 0-5) extracted from Protomaps v4 demo bucket.
-  const DEFAULT_PM_TILES_URL = assetUrl("/basemap.pmtiles");
-  const PRIMARY_PM_TILES_URL =
-    import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
-  const FALLBACK_PM_TILES_URL =
-    import.meta.env.VITE_PROTOMAPS_PM_TILES_FALLBACK_URL ??
-    DEFAULT_PM_TILES_URL;
-
-  let pmtilesUrl = PRIMARY_PM_TILES_URL;
   let basemapError = null;
-  let basemapResolved = false;
   let mapContainer;
   let mapInstance = null;
   let mapReady = false;
@@ -44,8 +37,7 @@
   let currentMarkers = [];
   let trailMarkers = [];
   let lastViewportKey = "";
-  let pmtilesProtocol = null;
-  let basemapStyleCache = null;
+  let protocolAcquired = false;
 
   $: primaryMarkerColor =
     styleConfig?.secondary && parseHexColor(styleConfig.secondary)
@@ -53,82 +45,6 @@
       : "#38BDF8";
   $: fadedMarkerColor =
     rgbaFromHex(primaryMarkerColor, 0.7) ?? "rgba(56, 189, 248, 0.7)";
-
-  async function resolvePmtilesUrl() {
-    if (basemapResolved) return pmtilesUrl;
-    const candidates = [
-      ...new Set([PRIMARY_PM_TILES_URL, FALLBACK_PM_TILES_URL].filter(Boolean)),
-    ];
-
-    // Use Promise.any to test URLs in parallel instead of sequential await
-    const results = await Promise.allSettled(
-      candidates.map(async (url) => {
-        const res = await fetch(url, { method: "HEAD" });
-        if (res.ok) return url;
-        throw new Error(`Failed to fetch ${url}`);
-      })
-    );
-
-    // Find first successful result
-    const successfulResult = results.find((r) => r.status === "fulfilled");
-    if (successfulResult) {
-      pmtilesUrl = successfulResult.value;
-      basemapError = null;
-      basemapResolved = true;
-      basemapStyleCache = null;
-      return pmtilesUrl;
-    }
-    basemapError = $_("story.basemap_error");
-    basemapResolved = true;
-    return null;
-  }
-
-  function createBaseStyle() {
-    if (basemapError) return null;
-    if (
-      !basemapStyleCache ||
-      !basemapStyleCache.sources?.protomaps?.url?.includes(pmtilesUrl)
-    ) {
-      basemapStyleCache = {
-        version: 8,
-        glyphs:
-          "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
-        sprite: "https://protomaps.github.io/basemaps-assets/sprites/v4/dark",
-        sources: {
-          protomaps: {
-            type: "vector",
-            url: `pmtiles://${pmtilesUrl}`,
-            attribution:
-              '<a href="https://protomaps.com">Protomaps</a> · <a href="https://www.openstreetmap.org">OpenStreetMap</a>',
-          },
-        },
-        layers: layers("protomaps", namedFlavor("dark"), {
-          lang: "en",
-          labelsOnly: false,
-          landOnly: false,
-        }).filter((layer) => {
-          const id = layer?.id ?? "";
-          if (typeof id !== "string") return true;
-          const lower = id.toLowerCase();
-
-          // Remove all symbol layers (labels and icons)
-          if (layer.type === "symbol") return false;
-
-          // Remove labels
-          if (lower.includes("label")) return false;
-          if (lower.includes("text")) return false;
-          if (lower.includes("name")) return false;
-
-          // Remove boundaries/borders
-          if (lower.includes("boundary")) return false;
-          if (lower.includes("border")) return false;
-
-          return true;
-        }),
-      };
-    }
-    return JSON.parse(JSON.stringify(basemapStyleCache));
-  }
 
   function createMarkerElement(
     color,
@@ -1011,7 +927,12 @@
       if (mapInstance || !hasMapData || !mapContainer || isDestroyed) return;
 
       const initialContainer = mapContainer;
-      await resolvePmtilesUrl();
+      const url = await resolveBasemapUrl();
+      if (!url) {
+        basemapError = $_("story.basemap_error");
+        return;
+      }
+      basemapError = null;
       if (
         mapInstance ||
         !hasMapData ||
@@ -1022,12 +943,13 @@
         return;
       }
 
-      const style = createBaseStyle();
-      if (!style) return;
+      // The story map draws its own markers and labels, so the basemap stays
+      // letterless; the label language is irrelevant with every label gone.
+      const style = createBasemapStyle({ url, lang: "en", labelMode: "none" });
 
-      if (!pmtilesProtocol) {
-        pmtilesProtocol = new Protocol();
-        maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
+      if (!protocolAcquired) {
+        acquirePmtilesProtocol();
+        protocolAcquired = true;
       }
 
       const nextMap = new maplibregl.Map({
@@ -1074,14 +996,10 @@
   onDestroy(() => {
     isDestroyed = true;
     teardownMapInstance();
-    if (pmtilesProtocol && typeof maplibregl.removeProtocol === "function") {
-      try {
-        maplibregl.removeProtocol("pmtiles");
-      } catch {
-        // ignore removal issues
-      }
+    if (protocolAcquired) {
+      releasePmtilesProtocol();
+      protocolAcquired = false;
     }
-    pmtilesProtocol = null;
   });
 
   $: if (hasMapData) {

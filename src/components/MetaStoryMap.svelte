@@ -2,16 +2,19 @@
   import { onMount, onDestroy } from "svelte";
   import "maplibre-gl/dist/maplibre-gl.css";
   import maplibregl from "maplibre-gl";
-  import { Protocol } from "pmtiles";
-  import { layers, namedFlavor } from "@protomaps/basemaps";
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
   import { metaStoryStyle } from "../utils/metaStoryStyles.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { queryParams, personStoryHref } from "../stores/queryParams.js";
-  import { assetUrl } from "../utils/assetUrl.js";
   import personStylesData from "../../data/person_styles.json";
+  import {
+    resolveBasemapUrl,
+    createBasemapStyle,
+    acquirePmtilesProtocol,
+    releasePmtilesProtocol,
+  } from "../utils/basemap.js";
 
   // The `geo_map` block from a meta story: { clusters: [...], narration? }
   export let geoMap = null;
@@ -31,14 +34,6 @@
 
   // How many events a stop card spells out before summarizing the rest.
   const MAX_CARD_EVENTS = 4;
-
-  // Local basemap (zoom 0-5) extracted from Protomaps v4 demo bucket.
-  const DEFAULT_PM_TILES_URL = assetUrl("/basemap.pmtiles");
-  const PRIMARY_PM_TILES_URL =
-    import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
-  const FALLBACK_PM_TILES_URL =
-    import.meta.env.VITE_PROTOMAPS_PM_TILES_FALLBACK_URL ??
-    DEFAULT_PM_TILES_URL;
 
   function primaryColor(personId) {
     return personStyles[personId]?.primary || "#38bdf8";
@@ -149,50 +144,9 @@
   let mapInstance = null;
   let mapReady = false;
   let basemapError = null;
-  let pmtilesProtocol = null;
+  let protocolAcquired = false;
   let markers = [];
   let lastCameraStep = undefined; // last step the camera moved for
-
-  async function resolvePmtilesUrl() {
-    const candidates = [
-      ...new Set([PRIMARY_PM_TILES_URL, FALLBACK_PM_TILES_URL].filter(Boolean)),
-    ];
-    const results = await Promise.allSettled(
-      candidates.map(async (url) => {
-        const res = await fetch(url, { method: "HEAD" });
-        if (res.ok) return url;
-        throw new Error(`Failed to fetch ${url}`);
-      })
-    );
-    const ok = results.find((r) => r.status === "fulfilled");
-    if (ok) return ok.value;
-    basemapError = $_("story.basemap_error");
-    return null;
-  }
-
-  // Dark Protomaps style WITH place labels (the map is the story here, so
-  // labels help orientation), in the current UI language; boundaries kept.
-  function createBaseStyle(pmtilesUrl) {
-    return {
-      version: 8,
-      glyphs:
-        "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
-      sprite: "https://protomaps.github.io/basemaps-assets/sprites/v4/dark",
-      sources: {
-        protomaps: {
-          type: "vector",
-          url: `pmtiles://${pmtilesUrl}`,
-          attribution:
-            '<a href="https://protomaps.com">Protomaps</a> · <a href="https://www.openstreetmap.org">OpenStreetMap</a>',
-        },
-      },
-      layers: layers("protomaps", namedFlavor("dark"), {
-        lang: currentLanguage,
-        labelsOnly: false,
-        landOnly: false,
-      }),
-    };
-  }
 
   function markerElement(event, clusterIndex) {
     // MapLibre writes its per-frame positioning transform onto the marker
@@ -297,17 +251,27 @@
   }
 
   async function initMap() {
-    const pmtilesUrl = await resolvePmtilesUrl();
-    if (!pmtilesUrl || !mapContainer) return;
+    const pmtilesUrl = await resolveBasemapUrl();
+    if (!pmtilesUrl) {
+      basemapError = $_("story.basemap_error");
+      return;
+    }
+    if (!mapContainer) return;
 
-    if (!pmtilesProtocol) {
-      pmtilesProtocol = new Protocol();
-      maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
+    if (!protocolAcquired) {
+      acquirePmtilesProtocol();
+      protocolAcquired = true;
     }
 
     mapInstance = new maplibregl.Map({
       container: mapContainer,
-      style: createBaseStyle(pmtilesUrl),
+      // The map is the story here, so place labels help orientation — in the
+      // reader's language; boundaries kept.
+      style: createBasemapStyle({
+        url: pmtilesUrl,
+        lang: currentLanguage,
+        labelMode: "full",
+      }),
       center: clusters[0]?.centroid ?? [0, 20],
       zoom: 2,
       // The reader never pans or zooms — the story drives the camera.
@@ -347,14 +311,10 @@
       mapInstance.remove();
       mapInstance = null;
     }
-    if (pmtilesProtocol && typeof maplibregl.removeProtocol === "function") {
-      try {
-        maplibregl.removeProtocol("pmtiles");
-      } catch {
-        /* already removed */
-      }
+    if (protocolAcquired) {
+      releasePmtilesProtocol();
+      protocolAcquired = false;
     }
-    pmtilesProtocol = null;
     stepObserver?.disconnect();
   });
 </script>

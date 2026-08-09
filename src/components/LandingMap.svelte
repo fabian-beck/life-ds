@@ -5,8 +5,13 @@
   // itself rather than relying on StoryMap having been loaded first.
   import "maplibre-gl/dist/maplibre-gl.css";
   import maplibregl from "maplibre-gl";
-  import { Protocol } from "pmtiles";
-  import { layers, namedFlavor } from "@protomaps/basemaps";
+  import {
+    resolveBasemapUrl,
+    createBasemapStyle,
+    basemapLabelExpressions,
+    acquirePmtilesProtocol,
+    releasePmtilesProtocol,
+  } from "../utils/basemap.js";
   import {
     normalizeAllLocations,
     normalizePrimaryLocation,
@@ -21,12 +26,6 @@
   export let getStyle = () => ({});
   export let onNavigate = () => {};
 
-  const DEFAULT_PM_TILES_URL = assetUrl("/basemap.pmtiles");
-  const PRIMARY_PM_TILES_URL =
-    import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
-  const FALLBACK_PM_TILES_URL =
-    import.meta.env.VITE_PROTOMAPS_PM_TILES_FALLBACK_URL ??
-    DEFAULT_PM_TILES_URL;
   const MAX_CLUSTER_ZOOM = 12;
 
   let mapContainer;
@@ -37,36 +36,19 @@
   let updateGeneration = 0;
   let isLoading = false;
   const eventDataCache = new Map();
-  let pmtilesProtocol = null;
-  let pmtilesUrl = PRIMARY_PM_TILES_URL;
-  let basemapResolved = false;
+  let protocolAcquired = false;
   let basemapError = null;
-  let basemapStyleCache = null;
-  let basemapStyleLang = null;
 
   // Swap basemap label language in place when the UI language changes.
   // Only the text-field of existing label layers is touched, so the data
   // layers and their event handlers set up in setupMapLayers stay intact.
+  let basemapLang = null;
   function applyBasemapLanguage(lang) {
-    if (!mapInstance || basemapStyleLang === lang) return;
-    basemapStyleLang = lang;
-    basemapStyleCache = null;
-    const labelLayers = layers("protomaps", namedFlavor("dark"), {
-      lang,
-      labelsOnly: true,
-      landOnly: false,
-    });
-    for (const layer of labelLayers) {
-      if (
-        layer?.type === "symbol" &&
-        layer.layout?.["text-field"] &&
-        mapInstance.getLayer(layer.id)
-      ) {
-        mapInstance.setLayoutProperty(
-          layer.id,
-          "text-field",
-          layer.layout["text-field"]
-        );
+    if (!mapInstance || basemapLang === lang) return;
+    basemapLang = lang;
+    for (const { id, textField } of basemapLabelExpressions(lang)) {
+      if (mapInstance.getLayer(id)) {
+        mapInstance.setLayoutProperty(id, "text-field", textField);
       }
     }
   }
@@ -112,75 +94,6 @@
     ],
     { import: "default" }
   );
-
-  async function resolvePmtilesUrl() {
-    if (basemapResolved) return pmtilesUrl;
-    const candidates = [
-      ...new Set([PRIMARY_PM_TILES_URL, FALLBACK_PM_TILES_URL].filter(Boolean)),
-    ];
-
-    const results = await Promise.allSettled(
-      candidates.map(async (url) => {
-        const res = await fetch(url, { method: "HEAD" });
-        if (res.ok) return url;
-        throw new Error(`Failed to fetch ${url}`);
-      })
-    );
-
-    const successfulResult = results.find((r) => r.status === "fulfilled");
-    if (successfulResult) {
-      pmtilesUrl = successfulResult.value;
-      basemapError = null;
-      basemapResolved = true;
-      basemapStyleCache = null;
-      return pmtilesUrl;
-    }
-    basemapError = $_("landing.map_error");
-    basemapResolved = true;
-    return null;
-  }
-
-  function createBaseStyle() {
-    if (basemapError) return null;
-    if (
-      !basemapStyleCache ||
-      !basemapStyleCache.sources?.protomaps?.url?.includes(pmtilesUrl) ||
-      basemapStyleLang !== $currentLanguage
-    ) {
-      basemapStyleLang = $currentLanguage;
-      basemapStyleCache = {
-        version: 8,
-        glyphs:
-          "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
-        sprite: "https://protomaps.github.io/basemaps-assets/sprites/v4/dark",
-        sources: {
-          protomaps: {
-            type: "vector",
-            url: `pmtiles://${pmtilesUrl}`,
-            attribution:
-              '<a href="https://protomaps.com">Protomaps</a> · <a href="https://www.openstreetmap.org">OpenStreetMap</a>',
-          },
-        },
-        layers: layers("protomaps", namedFlavor("dark"), {
-          lang: $currentLanguage,
-          labelsOnly: false,
-          landOnly: false,
-        }).filter((layer) => {
-          const id = layer?.id ?? "";
-          if (typeof id !== "string") return true;
-          const lower = id.toLowerCase();
-
-          // Keep labels for major features (places, water)
-          // Remove boundary/border labels for cleaner look
-          if (lower.includes("boundary")) return false;
-          if (lower.includes("border")) return false;
-
-          return true;
-        }),
-      };
-    }
-    return JSON.parse(JSON.stringify(basemapStyleCache));
-  }
 
   function extractFeatures(personEntry, events) {
     const features = [];
@@ -867,19 +780,30 @@
         await loadAllEventLocations(initialEntries);
       if (isDestroyed || mapContainer !== initialContainer) return;
 
-      await resolvePmtilesUrl();
+      const basemapUrl = await resolveBasemapUrl();
+      if (!basemapUrl) {
+        basemapError = $_("landing.map_error");
+        return;
+      }
+      basemapError = null;
       if (isDestroyed || mapContainer !== initialContainer) return;
 
-      const style = createBaseStyle();
-      if (!style) return;
+      // Keep place and water names for orientation, in the reader's
+      // language; boundary and border lines stay off for a cleaner look.
+      const style = createBasemapStyle({
+        url: basemapUrl,
+        lang: $currentLanguage,
+        labelMode: "places",
+      });
+      basemapLang = $currentLanguage;
 
       currentEventLocations = geojson;
       connectionLinesData = connections;
       dummyMarkersData = dummies;
 
-      if (!pmtilesProtocol) {
-        pmtilesProtocol = new Protocol();
-        maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
+      if (!protocolAcquired) {
+        acquirePmtilesProtocol();
+        protocolAcquired = true;
       }
 
       const initialBounds = calculateInitialBounds(geojson);
@@ -1033,9 +957,9 @@
       mapInstance.remove();
       mapInstance = null;
     }
-    if (pmtilesProtocol) {
-      maplibregl.removeProtocol("pmtiles");
-      pmtilesProtocol = null;
+    if (protocolAcquired) {
+      releasePmtilesProtocol();
+      protocolAcquired = false;
     }
     eventDataCache.clear();
 
