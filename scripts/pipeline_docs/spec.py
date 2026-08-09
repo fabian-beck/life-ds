@@ -193,7 +193,14 @@ GROUPS: List[Group] = [
     Group(
         "imagery",
         "Imagery",
-        ["p_img_search", "p_img_fetch", "p_img_filter", "p_img_match", "p_portrait"],
+        [
+            "p_img_search",
+            "p_img_fetch",
+            "p_img_filter",
+            "p_img_match",
+            "p_img_verify",
+            "p_portrait",
+        ],
         note=(
             "One job: plan the searches, run them, score what comes back, match "
             "the survivors to events, and style-transfer the portrait the "
@@ -525,6 +532,25 @@ STEPS: List[Step] = [
         prompts=["match_images_to_events"],
     ),
     Step(
+        "p_img_verify",
+        "Verify the portrait",
+        PERSON,
+        AI,
+        "generate_person_events.py",
+        "verify_portrait_depicts_person",
+        summary=(
+            "Shows the chosen portrait file itself to the model and asks "
+            "whether it depicts the subject — the matcher judges by filenames "
+            "and captions alone, and a photograph of the subject's spouse "
+            "carries the subject's name in its caption. A no drops the pick; "
+            "a failed call keeps it, so the check can only catch a wrong "
+            "portrait, never lose a right one."
+        ),
+        depends_on=[Dep("p_img_match", "the portrait pick")],
+        prompts=["verify_portrait_depicts_person"],
+        calls_per_run="0-1",
+    ),
+    Step(
         "p_geocode",
         "Geocode locations",
         SHARED,
@@ -567,7 +593,7 @@ STEPS: List[Step] = [
         ),
         depends_on=[
             Dep("p_chapters", "chapters + conclusion"),
-            Dep("p_img_match", "per-event images + portrait pick"),
+            Dep("p_img_verify", "per-event images + the verified portrait"),
             Dep("p_geocode", "coordinates"),
             Dep("p_pub_links", "a link per published work"),
         ],

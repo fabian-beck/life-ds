@@ -503,8 +503,8 @@ class GroupTests(unittest.TestCase):
         runs = _group_runs(group)
         self.assertEqual(
             [len(run) for run in runs],
-            [4, 1],
-            "expected the four image steps to align and the portrait to detach",
+            [5, 1],
+            "expected the five image steps to align and the portrait to detach",
         )
         self.assertEqual(runs[-1], ["p_portrait"])
 

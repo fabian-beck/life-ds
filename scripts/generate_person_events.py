@@ -105,6 +105,13 @@ PHASE3_IMAGE_SEARCH_REASONING = LOW_REASONING_EFFORT
 PHASE3_IMAGE_MATCH_MODEL = BULK_MODEL
 PHASE3_IMAGE_MATCH_REASONING = BULK_REASONING_EFFORT
 
+# Portrait verification. The matcher judges by filenames and captions alone,
+# and its portrait pick is the one Phase 3 output nothing downstream checks —
+# a wrong yes quietly becomes the face of the story, which is the config's own
+# test for the default model. One call that actually looks at the chosen file.
+PORTRAIT_VERIFY_MODEL = DEFAULT_MODEL
+PORTRAIT_VERIFY_REASONING = LOW_REASONING_EFFORT
+
 CHAPTER_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Chapter generation (medium)
 RELATED_ARTICLES_REASONING = LOW_REASONING_EFFORT  # Related article discovery (none)
 
@@ -1455,6 +1462,18 @@ class PortraitSelection(BaseModel):
     reason: str = Field(description="Brief explanation of portrait selection")
 
 
+class PortraitVerification(BaseModel):
+    """One look at the selected portrait: does it show the subject at all?"""
+
+    depicts_subject: bool = Field(
+        description=(
+            "True only if the image plausibly depicts the named person "
+            "themselves — not someone else the caption mentions"
+        )
+    )
+    reason: str = Field(description="One sentence naming what the image shows")
+
+
 class ImageAssignmentResult(BaseModel):
     """Result of AI image-to-event matching."""
 
@@ -2344,6 +2363,55 @@ def match_images_to_events(
     except Exception as e:
         print(f"    Warning: Image matching failed: {e}")
         return {}, None
+
+
+def verify_portrait_depicts_person(
+    portrait: Dict[str, Any], person_name: str
+) -> Optional[bool]:
+    """One look at the selected portrait before it becomes the face of a story.
+
+    The matcher chooses from filenames and captions alone, and its portrait
+    pick is the one Phase 3 output nothing downstream checks — with Openverse
+    in the candidate pool, a photograph of the subject's spouse carries the
+    subject's name in its caption. This shows the chosen file itself to the
+    model. Returns None when the call fails, and the caller keeps the
+    unverified pick: the check exists to catch a wrong portrait, not to lose
+    a right one to a timeout.
+    """
+    prompt = (
+        f"Is this image a portrait of {person_name} — a depiction of that "
+        "person themselves?\n\n"
+        "Answer no if it shows someone else (a spouse, relative, or colleague, "
+        "even when the caption names the subject), a building, a work made BY "
+        "the subject, a costume plate, a memorial or grave, or a group in "
+        "which the subject cannot be identified.\n\n"
+        "What the file came with:\n"
+        f"- Caption: {portrait.get('caption') or 'none'}\n"
+        f"- Filename: {portrait.get('filename') or 'none'}\n"
+        f"- Source page: {portrait.get('source') or 'none'}\n\n"
+        "Judge by what the image shows, not by what the caption claims."
+    )
+    parsed = parse_structured(
+        get_client(),
+        model=PORTRAIT_VERIFY_MODEL,
+        reasoning_effort=PORTRAIT_VERIFY_REASONING,
+        input=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "input_text", "text": prompt},
+                    {"type": "input_image", "image_url": portrait["url"]},
+                ],
+            }
+        ],
+        text_format=PortraitVerification,
+        label="portrait verification",
+    )
+    if parsed is None:
+        return None
+    if not parsed.depicts_subject:
+        print(f"    Portrait verification says no: {parsed.reason}")
+    return parsed.depicts_subject
 
 
 # ============================================================================
@@ -3902,7 +3970,14 @@ def research_images_for_all_events(
     )
     print(f"    Assigned images to {len(assignments)} events")
     if portrait:
-        print("    ✓ Portrait selected")
+        verdict = verify_portrait_depicts_person(portrait, person_name)
+        if verdict is False:
+            print("    ✗ Portrait rejected on sight; leaving the pick empty")
+            portrait = None
+        elif verdict is None:
+            print("    ! Portrait unverified (the check did not run); keeping it")
+        else:
+            print("    ✓ Portrait selected and verified")
 
     # Apply assignments to events
     enriched_events = []
@@ -4804,18 +4879,27 @@ def resolve_portrait(
 ) -> Optional[Dict[str, Any]]:
     """The portrait block to store, or None when there is nothing to show.
 
-    A generated portrait always wins over the AI-selected Wikimedia one; the
-    latter then only refreshes the originalImage reference and, where missing,
-    the source link.
+    A generated portrait always wins over the AI-selected one; the latter then
+    replaces the original it was derived from — and `source` follows it, so
+    the reader's source link points at the page the current original lives on
+    rather than at wherever a previous one came from. The original's own
+    attribution travels under original* keys, because a CC-BY reference keeps
+    its license terms even behind a stylized derivative.
     """
     if ai_portrait:
         if existing_generated:
             portrait_data = existing_generated.copy()
             portrait_data["originalImage"] = ai_portrait["url"]
-            if "source" not in portrait_data or not portrait_data["source"].startswith(
-                "http"
+            portrait_data["source"] = ai_portrait["source"]
+            for src_key, dst_key in (
+                ("creator", "originalCreator"),
+                ("license", "originalLicense"),
+                ("licenseUrl", "originalLicenseUrl"),
             ):
-                portrait_data["source"] = ai_portrait["source"]
+                if ai_portrait.get(src_key):
+                    portrait_data[dst_key] = ai_portrait[src_key]
+                else:
+                    portrait_data.pop(dst_key, None)
             print(
                 f"{indent}Preserving generated portrait, updating originalImage to: "
                 f"{ai_portrait['url']}"
@@ -4951,7 +5035,14 @@ def regenerate_images_only(subject: str) -> Tuple[Path, str]:
     )
     print(f"    Assigned images to {len(assignments)} events")
     if portrait:
-        print("    ✓ Portrait selected")
+        verdict = verify_portrait_depicts_person(portrait, person_name)
+        if verdict is False:
+            print("    ✗ Portrait rejected on sight; leaving the pick empty")
+            portrait = None
+        elif verdict is None:
+            print("    ! Portrait unverified (the check did not run); keeping it")
+        else:
+            print("    ✓ Portrait selected and verified")
 
     # Apply portrait to person data
     print("[Step 3/4] Updating events with new image assignments...")

@@ -125,7 +125,7 @@ def parse_structured(
     *,
     model: str,
     reasoning_effort: str,
-    input: Sequence[Dict[str, str]],
+    input: Sequence[Dict[str, Any]],
     text_format: Type[ParsedT],
     label: str,
     attempts: int = DEFAULT_ATTEMPTS,
@@ -136,7 +136,7 @@ def parse_structured(
     calls says which one gave up. ``attempts`` bounds only the retryable
     failures; a refusal or a bad request ends the call at once.
     """
-    messages: List[Dict[str, str]] = [dict(message) for message in input]
+    messages: List[Dict[str, Any]] = [dict(message) for message in input]
     last_error = ""
 
     for attempt in range(1, max(1, attempts) + 1):

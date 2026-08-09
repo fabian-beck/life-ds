@@ -185,17 +185,17 @@
       }
     },
     "m_save": {
-      "fingerprint": "bd8718e2decd3f54",
+      "fingerprint": "ac21619cd50d1371",
       "summary": {
         "constraints": [
-          "Output path is exactly `META_STORIES_DIR / f\"{story_id}.json\"`.",
-          "Parent directories are created with `parents=True, exist_ok=True`.",
-          "JSON is written with `indent=2` and `ensure_ascii=False` in UTF-8 encoding.",
-          "Returns `True` after a successful write; on any exception, prints an error and returns `False`."
+          "Output filename is exactly `\"{story_id}.json\"` under `META_STORIES_DIR`.",
+          "The full `dataset` object is passed to `write_json` for serialization.",
+          "Parent directories are created if absent; existing directories do not cause an error.",
+          "Success returns `True`; any caught exception prints `Error: Failed to save meta-story: ...` and returns `False`."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Serializes the completed meta-story dataset to `META_STORIES_DIR/<story_id>.json`. It creates the destination directory tree if needed, writes UTF-8 JSON with two-space indentation and unescaped non-ASCII characters, then returns a boolean status for the caller to handle success or failure.",
-        "why_this_design": "Directory creation happens before opening the output file, allowing a fresh or partially initialized workspace to save stories without a separate setup step. Broad exception handling prevents filesystem or serialization failures from crashing the pipeline, while still emitting an error message."
+        "what_it_does": "Serializes the completed meta-story dataset to a JSON file at `META_STORIES_DIR / f\"{story_id}.json\"`. It creates the destination directory tree first, optionally logs the saved path, and returns `True` on success or `False` after printing any exception. Despite the maintainer note, this function contains no landing-page registry update; it only writes the story document.",
+        "why_this_design": "Creating parent directories with `parents=True, exist_ok=True` makes a first run succeed without separate environment setup. The broad exception boundary converts filesystem or serialization failures into a boolean result so an upstream caller can detect failure without an uncaught exception."
       }
     },
     "m_style": {
@@ -227,46 +227,45 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "6c9b703ec479c96e",
+      "fingerprint": "72b51ec21b0bb60c",
       "summary": {
         "constraints": [
-          "Targets only selected event indexes and, unless `overwrite` is set, events whose background is blank; `images_only` instead requires an existing background.",
-          "A usable background is `350-550` words in `3-5` blank-line-separated paragraphs, or null when sources add nothing beyond the event description.",
-          "Sources must be `1-3` Wikipedia URLs documenting this specific event; only normalized URLs from the event's allowed person, related-article, or prior-source set can replace stored citations.",
-          "Image queries contain `3-4` different report-named things and exclude portraits of the subject; a missing or empty passage is not written."
+          "Targets only selected indexes and, normally, events with blank backgrounds; `overwrite` overrides that rule.",
+          "A blank or missing generated background leaves the event unchanged.",
+          "Backgrounds must be \"350-550 words\" in \"3-5 paragraphs,\" or null when sources add nothing beyond the description.",
+          "Sources are limited to \"1-3\" Wikipedia URLs documenting this event and are retained only when they normalize to a URL shown to the call; image queries require \"3-4\" different non-portrait Commons subjects named in the report."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Adds a standalone background passage to selected life events without regenerating their existing event descriptions, locations, people, or classifications. For each eligible event, it reuses the Phase 2 research prompt with the event, person, related articles, neighboring events, summary, and ego network; stores the returned passage; conditionally updates event citations; and generates or refreshes Commons-oriented illustrations from report-specific queries. In images-only mode, it preserves the existing passage and reruns only query generation and image selection.",
-        "why_this_design": "The prompt is imported from the main Phase 2 path rather than duplicated, keeping the additive repair aligned with the original event-research rules. Citation replacement is deliberately restricted to URLs available to the call—preventing plausible but nonexistent URLs—and image selection is separated from passage writing so image-critic changes can be evaluated without rewriting prose."
+        "what_it_does": "Selects requested life events that lack a background passage, unless overwrite is enabled; in illustration-only mode, selects events that already have one. For each normal target, it requests a 350–550-word background report, event-specific Wikipedia sources, and Commons search queries using Phase 2’s shared event prompt plus event, neighboring-event, person, related-article, and network context. It writes only a nonempty passage, filters returned citations to URLs actually supplied to the call before replacing existing sources, then generates and evaluates illustrations against the completed passage.",
+        "why_this_design": "This is an additive repair path rather than a full event regeneration, preserving the original event record for review while filling the later-added depth layer. Reusing the Phase 2 prompt prevents the two research specifications from drifting, while a separate image-only path permits picture-critic tuning without rewriting otherwise acceptable prose."
       }
     },
     "p_chapters": {
-      "fingerprint": "d850b51d56734ee5",
+      "fingerprint": "1d1b6a07f99cd4dd",
       "summary": {
         "constraints": [
-          "Produce \"3–6\" chronologically ordered, non-overlapping chapters; the first begins on or before the first event, the last ends on or after the last, and every event belongs to exactly one chapter.",
-          "Use lowercase snake_case IDs; headlines must be \"2–5 words,\" vary in length, express one theme, and contain neither list-forming punctuation nor \"and.\"",
-          "Headlines may not contain \"Other,\" \"Miscellaneous,\" \"Additional,\" or \"Various.\"",
-          "Aggregate only significant non-subject people under one canonical name each, and summarize location at the broadest appropriate regional level rather than listing cities."
+          "Produce \"3–6\" chapters; start at or before the first event and end at or after the last.",
+          "Assign every event to exactly one chronologically ordered, non-overlapping chapter.",
+          "Use lowercase snake_case IDs and 2–5-word, single-concept headlines; forbid \"Other,\" \"Miscellaneous,\" \"Additional,\" and \"Various,\" as well as list-like punctuation or \"and.\"",
+          "Aggregate only significant non-subject people under one canonical name each; summarize location as the broadest appropriate region, and write the conclusion in \"1–2 sentences\" in American English."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Transforms the chronologically ordered, merged life-event record into 3–6 non-overlapping narrative chapters, each covering a coherent life phase rather than merely a span of dates. For every chapter, it produces machine-readable dates, age bounds, a deduplicated set of significant associates, and a broad regional location, then adds a 1–2 sentence statement of the subject’s legacy or journey.",
-        "why_this_design": "The step receives events only after they have been established and ordered, allowing it to enforce complete, exactly-once coverage while choosing thematic boundaries. It treats failure to produce valid structured chapters as fatal rather than returning a partial story, because downstream narrative presentation has no usable organizing shape without them."
+        "what_it_does": "Transforms the chronologically ordered, researched event record into a narrative scaffold of 3–6 life chapters. Each chapter supplies a thematic headline, bounded dates and ages, a deduplicated set of significant associated people, and one broad regional location; it also produces a 1–2 sentence legacy conclusion for the completed personal story.",
+        "why_this_design": "The chapter boundaries must cover every event exactly once while remaining chronological and non-overlapping, preventing narrative gaps and duplicate placement. Failure is fatal rather than degradable because later story construction depends on having a complete chapter structure."
       }
     },
     "p_classes": {
-      "fingerprint": "8e452baf316c30e6",
+      "fingerprint": "4090d679f7d35ef8",
       "summary": {
         "constraints": [
-          "Offers only events whose `event_class.type` is absent; already classified events are never overwritten.",
-          "Returns entries only for events that clearly match one of the four supported kinds; most events must be omitted.",
-          "A publication includes a completed or presented written work, but not merely beginning work on it.",
-          "Uses the supplied original event index; each result may populate only its selected class field, leaving the other three null.",
-          "Copies dates, partners, publishers, and other values only from event text or plainly supported sources; no invention."
+          "Only events with no existing `event_class.type` are offered; existing classifications, including prior birth and death handling, are not overwritten.",
+          "Return entries only for events that clearly match one of the four kinds; unmatched events must be omitted entirely.",
+          "A publication includes a presented or completed written work, but not merely beginning work on it.",
+          "Each returned entry must use the supplied index, populate only the field for its chosen kind, and derive values solely from the event text or plainly stated sources."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Loads a person’s life-events file and sends every event lacking an event-class type in one batch for classification under the imported Phase 1 rubric. It writes back only returned classifications that select a recognized class block, so older records can gain publication or other supported event panels, titles, and links without regenerating the timeline.",
-        "why_this_design": "The prompt is intentionally selective because an incorrect class creates a misleading specialized display; it asks for matches only and treats omission as the default for ordinary biographical events. Application is also defensive: returned indexes are checked against the full event list, and an event is skipped if another process or an earlier result has already classified it."
+        "what_it_does": "Loads one person’s life-events file and sends every event lacking an `event_class.type` in a single classification request. The response may identify only clear matches to the four Phase 1 event kinds; accepted classifications are written back onto their original indexed events, enabling previously unclassified items such as publications to receive the display metadata their class provides.",
+        "why_this_design": "The request imports Phase 1’s rubric rather than duplicating it, so backfilled records use the same definitions as newly generated records. Supplying all pending events in one person-level request preserves context while the injected indexes let returned classifications be applied to the correct source records."
       }
     },
     "p_db": {
@@ -284,45 +283,45 @@
       }
     },
     "p_death_cause": {
-      "fingerprint": "7a1957f2b5335c43",
+      "fingerprint": "5e1e3b504c88fcc8",
       "summary": {
         "constraints": [
-          "Uses only the supplied death event text, including its description and date note; outside knowledge is forbidden.",
-          "Cause is optional, must be a noun phrase of \"1-6 words,\" and must be omitted rather than inferred from age, date, or place.",
-          "Characterization is optional and limited to \"1-4 words.\"",
-          "Place of rest is emitted only when the text explicitly names a burial or resting location; unsuccessful calls return no result."
+          "`type` is always `\"death\"`.",
+          "Cause is optional, must be a 1-6-word noun phrase, and must be omitted rather than inferred from age, date, or location.",
+          "Characterization is optional and limited to 1-4 words; place of rest is emitted only when the text names a burial or resting location.",
+          "Extraction may use only the supplied death-event text; pronouns and hedging are removed from cause labels."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Repairs an existing death event by extracting three optional facts from the event text: a short medical or physical cause, a short description of the circumstances, and a documented burial or resting place. It returns a structured death classification whose type is fixed to \"death\"; if extraction cannot run or produces no parsed result, it returns no classification and leaves the broader pipeline running.",
-        "why_this_design": "This is deliberately a narrow, source-bound repair call rather than a regeneration of the life story, so older records can gain death classification without rewriting their stored narrative. Failures are non-fatal because losing an optional cause is safer than interrupting the entire dataset run, and the prompt prohibits plausible but unsourced biographical additions."
+        "what_it_does": "Repairs older personal-story records by classifying the existing death event rather than regenerating the person’s full timeline. It sends the person name, death-event date and title, description, and date note to extract an optional cause, circumstances characterization, and documented burial or resting place.",
+        "why_this_design": "The prompt is deliberately limited to the stored death-event text, preventing plausible but unsourced biographical knowledge from entering a backfill. Each person is processed independently, and missing credentials, request errors, incomplete responses, or parse failures return no classification so one failure loses only that event’s enrichment rather than stopping the run."
       }
     },
     "p_events_p1": {
-      "fingerprint": "953e482a2f1d6673",
+      "fingerprint": "5c26f2d094cd7ce7",
       "summary": {
         "constraints": [
-          "Returns exactly \"12–16\" events, in strict chronological order, with no \"Other Events\" or miscellaneous grouping.",
-          "Limits events to the target subject’s lifetime; excludes post-death events and legacy-focused events, while keeping any death entry factual.",
-          "Uses ISO-8601 dates with \"day,\" \"month,\" or \"year\" precision only as supported by the source; the description’s year must match the assigned date.",
-          "Requires 2–6-word specific titles and economical 2–4-sentence American English descriptions; descriptions cannot use hindsight, source commentary, annotations, or exact location/source fields."
+          "Produce exactly \"12–16\" events, in strict chronological order, about the target subject only.",
+          "Use \"day\" precision only when a day is stated, \"month\" only when a month is stated, and otherwise \"year\"; the description’s year must match the assigned date.",
+          "Titles must be \"2–6\" words; descriptions must be \"2–4\" direct, factual sentences in American English, without hindsight, meta-commentary, annotations, or exact-location/source detail.",
+          "Exclude post-death and legacy events; keep death factual, reserve retrospective impact for the separate \"1–2\" sentence conclusion, and never create an \"Other Events\" grouping."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reads the target person’s main article in full alongside related articles and any supplemental biographical text, then produces a LifePlan containing dataset metadata, person metadata, and 12–16 minimally structured event skeletons. Each skeleton establishes the narrative spine of one life through a concise title, an evidence-calibrated ISO-8601 date and precision, a 2–4-sentence in-the-moment description, a relative significance weight, and optionally a configured biographical event type; later phases add geographic, image, source, and annotation detail.",
-        "why_this_design": "The full article set is supplied in this one pass because relative event weight depends on comparing milestones across the entire life, rather than judging each event in isolation. Related articles are explicitly context-only, limiting a common extraction failure in which an associate’s or institution’s history is mistaken for the subject’s biography."
+        "what_it_does": "Builds a structured life plan from the target subject’s main article, an optional biographical text, and related articles supplied only as background. It returns dataset and person metadata plus a strictly chronological set of 12–16 minimal event skeletons, each with an ISO-8601 date and justified precision, a concise title, a 2–4-sentence narrative description, a relative significance weight, and optional event classification. The event set serves as the narrative spine for later enrichment rather than supplying locations, images, sources, or annotations.",
+        "why_this_design": "The full article set is evaluated in one pass so event significance can be scored comparatively across the entire life; the weight measures how much an event changes this particular life, not its general historical fame. Separating skeleton selection from later research protects the initial chronology and significance ranking from being crowded by source, location, and media details."
       }
     },
     "p_events_p2": {
-      "fingerprint": "1f735c9d36d65af5",
+      "fingerprint": "aca6efb59742fa24",
       "summary": {
         "constraints": [
-          "Descriptions must retain the original text unchanged when there are no annotations; otherwise annotation markers use `[[term|display]]`, with 0-3 conservative, unique annotations.",
-          "Locations must be city or region level at most, include historic and modern names plus a primary flag, and be an empty array when unknown or non-geographic.",
-          "Sources are limited to 1-3 URLs that actually document this event; the subject article is the default valid source, and unrelated or merely adjacent articles must not pad the list.",
-          "Background-image queries must contain 3-4 Wikimedia Commons searches illustrating the background rather than portraits; the background is null if sources add nothing, otherwise it is 350-550 words in 3-5 blank-line-separated paragraphs."
+          "Locations must be city or region level at most, with historic and modern names; unknown or non-geographic events return an empty location array.",
+          "Sources are limited to \"1-3\" Wikipedia URLs that actually document the event; the subject article is the fallback, and padding with merely related articles is forbidden.",
+          "Annotations are limited to \"0-3 per event,\" only for obscure, non-obvious terms, marked in the description on the first occurrence only; classified subjects must not be annotated.",
+          "The background is null when sources add nothing beyond the description; otherwise it is reader-facing prose in \"350-550 words\" across \"3-5\" blank-line-separated paragraphs, with \"3-4\" Commons queries illustrating that background rather than portraits of the subject."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Researches one biographical event at a time after filtering the related-article set to sources relevant to that event. It returns a revised, chronologically bounded event description; city-level historic and modern locations; directly involved people other than the subject; tightly relevant supporting URLs; a semantic icon; optional annotations; Commons background-image searches; and a prose background report that adds surrounding context rather than repeating the event.",
-        "why_this_design": "Classified events are routed through a class-aware prompt that suppresses technical detail and annotations about the classified subject, preventing duplication of metadata already carried by the event classification. The call is retried up to 3 total attempts, but a persistent failure returns a deliberately sparse event with no research fields and the neutral `mdi-calendar` icon so one unresolved event does not halt the story."
+        "what_it_does": "Enriches one biographical event at a time after filtering the related-article pool to material relevant to that event. It returns a refined, chronologically bounded description; city-level historic and modern locations; directly involved non-subject people; tightly matched Wikipedia sources; an MDI semantic icon; conservative inline annotations; Commons background-image searches; and, when evidence permits, a contextual background report that adds surrounding history rather than repeats the event. Classified events are routed through a class-aware prompt, while unclassified events use the base prompt.",
+        "why_this_design": "The class-aware route suppresses technical detail and annotations about the classified subject because that information is already represented as structured event metadata; this keeps the narrative description from duplicating the classification. Parsing is retried, but a single unresearchable event degrades to an empty research record with a neutral calendar icon rather than aborting the larger personal-story run."
       }
     },
     "p_geocode": {
@@ -410,31 +409,46 @@
       }
     },
     "p_img_match": {
-      "fingerprint": "bebdeeaae6df643c",
+      "fingerprint": "b8d057996091decb",
       "summary": {
         "constraints": [
-          "Candidate images are numbered from 1 in the prompt; returned image IDs are converted to 0-based indexes and bounds-checked.",
-          "One portrait only; it must be a depiction of the person, not their work, a generic costume illustration, a speculative recreation, or a building/plaque without a likeness.",
-          "The selected portrait cannot be assigned to an event; each remaining image and each event can appear at most once.",
-          "Only directly connected event images are accepted, with a target coverage of \"40-60%\" of events; generated event captions must be factual, metadata-grounded, and \"5-12 words.\""
+          "Select exactly one valid likeness as the portrait, or return null; never reuse it for an event.",
+          "Enforce at most one image per event and at most one event per image.",
+          "Assign only direct event connections; target images for \"40-60%\" of events and leave weak matches empty.",
+          "Generate factual captions of \"5-12 words\" using only explicit filename/source-caption information."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews candidate image filenames and truncated source captions alongside dated event summaries, then returns two products: one optional profile portrait and a mapping of selected images to timeline events. Event assignments receive new short captions, while the portrait retains its original source caption; invalid or failed results yield no assignments and no portrait.",
-        "why_this_design": "The prompt explicitly limits decisions to metadata because the step has no image pixels to inspect, reducing invented visual descriptions. Post-processing independently enforces one-image/one-event uniqueness and reserves the portrait before accepting event assignments, so malformed structured output cannot reuse an image."
+        "what_it_does": "Presents life-event titles, dates, and truncated descriptions alongside candidate-image filenames and source captions, then produces two selections: one optional profile portrait and a sparse mapping of other images to events. It replaces the source caption only for accepted event assignments; the portrait retains its retrieved source caption, preserving its existing attribution and descriptive metadata.",
+        "why_this_design": "The prompt explicitly limits decisions to filenames and metadata because the matching call has no image pixels. Post-processing independently validates all returned IDs, prevents reuse of the portrait or any event image, and discards malformed or duplicate assignments so a structured response cannot violate timeline invariants."
       }
     },
     "p_img_search": {
-      "fingerprint": "ee4029bee5ecdbe3",
+      "fingerprint": "b63f1e70a49e9ac5",
       "summary": {
         "constraints": [
-          "Returns exactly 20 search strings on the successful path, truncating any longer structured response to 20.",
-          "Each query must contain 2-4 words; years, adjectives, descriptive phrases, and long view/location strings are forbidden.",
-          "At least 5 queries must include the person’s name; generic cities, countries, and professions must be paired with that name or another specific named entity.",
-          "If credentials are unavailable, returns only the person’s name and a portrait query; if generation or parsing fails, returns only the person’s name."
+          "Requests exactly 20 strings; successful parsed output is truncated to the first 20.",
+          "Each query must contain 2-4 words.",
+          "At least 5 queries must include the person's name.",
+          "Standalone cities, countries, and professions are forbidden; years, adjectives, descriptive phrases, and long view-style wording are also forbidden.",
+          "Without credentials, returns only the person's name and a portrait query; on request failure, returns only the person's name."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds one compact Wikimedia Commons query plan from every event in a person’s timeline, passing each event’s title, date, and first 200 characters of description as context. It requests a structured list of 20 keyword searches intended to retrieve portraits and event-relevant named places, works, awards, or institutions.",
-        "why_this_design": "The prompt treats Commons as a simple keyword matcher, so it prioritizes short entity-based queries rather than natural-language descriptions. Supplying all events at once lets the 20-query budget cover the full biography instead of producing a repetitive set for each event."
+        "what_it_does": "Builds one consolidated prompt from every event title, date, and the first 200 characters of each event description, then produces a shared set of Wikimedia Commons image-search queries for the biographical timeline. The parsed result is returned as at most 20 strings, intended to retrieve portraits and event-related named places, works, awards, and institutions.",
+        "why_this_design": "The query rules are calibrated for Commons' literal keyword matching: short named-entity searches avoid wasting retrieval on broad geographic or occupational terms. Generating the set across all events at once lets the limited 20-query budget cover the full life story rather than allocating queries independently per event."
+      }
+    },
+    "p_img_verify": {
+      "fingerprint": "6550b34afb4532d7",
+      "summary": {
+        "constraints": [
+          "Judge the image content rather than the caption’s claim.",
+          "Return `depicts_subject: true` only when the named person plausibly appears in the image.",
+          "Reject spouses, relatives, colleagues, buildings, works made by the subject, costume plates, memorials or graves, and unidentifiable groups.",
+          "Return a one-sentence `reason`; if structured parsing fails, return `None` rather than rejecting the portrait."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Sends the selected portrait image alongside its caption, filename, source page, and the subject’s name for a visual verification. It returns a Boolean judgment on whether the image plausibly depicts the subject themself, with a one-sentence description of what is shown; a negative result is logged for the caller to discard the pick.",
+        "why_this_design": "Candidate matching relies on filenames and captions, which can name a subject while the image actually shows a spouse or another associated person. The image is therefore inspected directly, while failed verification calls return no decision so transient failures do not remove an otherwise valid portrait."
       }
     },
     "p_name_evidence": {
@@ -494,18 +508,18 @@
       }
     },
     "p_register": {
-      "fingerprint": "e1c21c795f1c9fba",
+      "fingerprint": "e2f34ff218284289",
       "summary": {
         "constraints": [
-          "Birth and death years are normalized through `pad_year` before being written as `birthDate` and `deathDate`.",
-          "`primary_roles` is written only when it is a list and is limited to the first \"3\" values.",
-          "`portrait` is removed from the stored entry when its value is `None`; otherwise its value is explicitly propagated.",
-          "Every record receives ISO 8601 timezone-aware `lastUpdated`; new records also receive `created`, while updates retain the original `created` value.",
-          "The `people` array is sorted by `name` and serialized as UTF-8, indented JSON with a trailing newline."
+          "`primary_roles` is retained only when it is a list, and is capped at the first 3 values.",
+          "Birth and death years are passed through `pad_year` before being stored as `birthDate` and `deathDate`.",
+          "A null portrait removes the `portrait` key entirely for both new and existing entries.",
+          "Every write sets `lastUpdated`; new entries also set `created`, while existing entries retain their prior `created` value.",
+          "Registry entries are sorted by `name` before serialization."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds or updates one record in the JSON `people` registry used by the landing-page index. It carries forward the person payload’s identity, summary, optional tagline, normalized life dates, up to three primary roles, and the portrait reference selected upstream; it then writes the registry in name-sorted order with creation and update timestamps.",
-        "why_this_design": "An update overlays only fields supplied by the generated entry onto the existing record, preserving fields not managed here and preserving `created`. Tagline is omitted when absent so an update cannot accidentally erase an existing tagline, while portrait is handled differently: an explicit missing or null portrait removes the registry reference so the later portrait consumer does not retain a stale image."
+        "what_it_does": "Builds or updates one person record in the shared `people` registry used by the landing-page index. It carries forward core metadata from the generated person payload, including the portrait reference selected upstream, normalizes dates, records lifecycle timestamps, and writes the registry back in name-sorted order.",
+        "why_this_design": "Updates merge the new fields over the existing record so unrelated registry data survives, while preserving the original `created` timestamp. Tagline is handled differently from other fields: an absent tagline does not overwrite an existing one, but portrait is always applied so a deliberate null can remove a stale image reference."
       }
     },
     "p_review": {
@@ -565,17 +579,17 @@
       }
     },
     "p_weights": {
-      "fingerprint": "a75e609020c843b6",
+      "fingerprint": "2af5f6166314126e",
       "summary": {
         "constraints": [
-          "Makes no request when the timeline has no events, or when every event already has a numeric weight unless `overwrite` is enabled.",
-          "Requires exactly one returned entry for every event index; any missing index skips the entire person.",
-          "Normalizes every accepted weight by clamping it to \"0.0\"–\"1.0\" and rounding to \"2\" decimal places.",
-          "Skips an alternate event file when its event count differs from the source timeline."
+          "Requests exactly one indexed weight per event, in timeline order.",
+          "Skips processing when all events already have numeric weights unless overwrite is enabled.",
+          "Rejects an incomplete result if any event index is absent.",
+          "Clamps every returned weight to \"0.0\"–\"1.0\" and rounds it to two decimal places; translated files with a different event count are skipped."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Loads a person’s complete `life_events.json` timeline and asks for one comparative importance weight for every indexed event. It validates that the response covers every event, clamps each value to the 0.0–1.0 range, rounds it to two decimals, and writes the same ordered weights into every event-file variant with the matching event count, including translated copies.",
-        "why_this_design": "Weights are requested for the entire life in one call because importance is relative across events; this replaces a prior derived score that could overvalue documentation-rich events rather than consequential ones. A partial response is discarded so one timeline never mixes the new comparative scale with the old derived fallback, and synchronized copies prevent language-specific editing of the story."
+        "what_it_does": "Assigns a comparative importance score to every event in one person’s complete timeline, sending the indexed dates, titles, and descriptions together so each score is judged against the other events in that life. It writes the validated scores into the canonical event file and any same-length translated copies, keeping the narrative’s editorial ranking consistent across languages.",
+        "why_this_design": "The step rejects partial responses rather than mixing returned scores with the older derived fallback, because those two scales would make a single timeline internally inconsistent. It also scores the full timeline in one request: importance is relative, and event-level calls could not reliably rank an event against the person’s other events."
       }
     },
     "p_wiki_fetch": {
@@ -607,17 +621,17 @@
       }
     },
     "p_write": {
-      "fingerprint": "9848d76aa3493b7e",
+      "fingerprint": "8a6b2467df6b4ff0",
       "summary": {
         "constraints": [
-          "Output location is `<PEOPLE_DIR>/<person_id>/life_events.json`.",
-          "Parent directories are created with `parents=True` and `exist_ok=True`.",
-          "JSON is serialized with `indent=2` and `ensure_ascii=False`.",
-          "The file is UTF-8 encoded and always ends with exactly one appended newline."
+          "Output location is `PEOPLE_DIR / person_id / \"life_events.json\"`.",
+          "Missing parent directories are created automatically.",
+          "Existing directories do not cause an error.",
+          "The full `payload` is passed to `write_json` unchanged."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Creates a per-person directory under the configured people-data root and writes the assembled personal-story payload to `life_events.json`. The file becomes the durable handoff artifact: later pipeline stages read this JSON document rather than the in-memory payload assembled by the preceding branches.",
-        "why_this_design": "The function creates missing parent directories before writing, so a new person ID does not require pre-provisioned storage. Pretty-printed JSON, preserved Unicode characters, and a final newline make the artifact stable and readable for inspection, version control, and downstream consumers."
+        "what_it_does": "Creates the per-person output directory if it does not already exist, then serializes the assembled payload to `life_events.json`. It returns the written path so later pipeline stages can consume the persisted life-events document rather than the in-memory payload.",
+        "why_this_design": "Directory creation uses `parents=True` and `exist_ok=True`, allowing a run to write nested person directories without a separate setup step and to safely replace the same person’s dataset on reruns."
       }
     }
   },
