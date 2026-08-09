@@ -3821,6 +3821,61 @@ def assign_events_to_chapters(
     return updated_events
 
 
+def clamp_chapter_bounds(
+    chapters: List[LifeChapter], events: List[LifeEvent]
+) -> List[LifeChapter]:
+    """Widen each chapter's boundary dates to cover its own events.
+
+    The model dates a chapter as precisely as its anchor event — Planck's
+    last chapter opened on the day his son was executed — while a member
+    event may carry only a year. Read at its own precision, that event then
+    begins before the chapter that contains it, and the assignment fallback
+    above hides the contradiction instead of failing. A chapter boundary may
+    never be more precise than the boundary event it has to cover, so where
+    a member event spills over, the boundary becomes that event's own date
+    at that event's own precision.
+    """
+    events_by_chapter: Dict[str, List[LifeEvent]] = {}
+    for event in events:
+        if event.chapter:
+            events_by_chapter.setdefault(event.chapter, []).append(event)
+
+    clamped = []
+    for chapter in chapters:
+        members = events_by_chapter.get(chapter.id) or []
+        update: Dict[str, Any] = {}
+        if members:
+            first = min(
+                members,
+                key=lambda e: normalize_date_for_comparison(e.date, to_end=False),
+            )
+            if normalize_date_for_comparison(
+                first.date, to_end=False
+            ) < normalize_date_for_comparison(chapter.date_start, to_end=False):
+                update["date_start"] = first.date
+                update["date_start_precision"] = first.date_precision
+            last = max(
+                members,
+                key=lambda e: normalize_date_for_comparison(
+                    e.date_end or e.date, to_end=True
+                ),
+            )
+            last_date = last.date_end or last.date
+            last_precision = (
+                last.date_end_precision if last.date_end else last.date_precision
+            ) or "year"
+            if normalize_date_for_comparison(
+                last_date, to_end=True
+            ) > normalize_date_for_comparison(chapter.date_end, to_end=True):
+                update["date_end"] = last_date
+                update["date_end_precision"] = last_precision
+        if update:
+            named = ", ".join(f"{k}={v}" for k, v in sorted(update.items()))
+            print(f"  Chapter '{chapter.id}' widened to cover its events: {named}")
+        clamped.append(chapter.model_copy(update=update) if update else chapter)
+    return clamped
+
+
 def _validate_chapter_headlines(chapters: List[LifeChapter]) -> None:
     """
     Validate that chapter headlines don't contain generic "Other" categorizations.
@@ -3896,12 +3951,15 @@ def generate_chapters_for_events(
             )
         deduplicated_chapters.append(chapter)
 
-    # Assign events to chapters
+    # Assign events to chapters, then widen chapter bounds to cover them —
+    # the assignment's last-chapter fallback would otherwise hide an event
+    # whose coarse date begins before its chapter's precise start.
     events_with_chapters = assign_events_to_chapters(
         merged_events, deduplicated_chapters
     )
+    clamped_chapters = clamp_chapter_bounds(deduplicated_chapters, events_with_chapters)
 
-    return deduplicated_chapters, events_with_chapters, chapter_output.conclusion
+    return clamped_chapters, events_with_chapters, chapter_output.conclusion
 
 
 def research_images_for_all_events(

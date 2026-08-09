@@ -21,6 +21,7 @@ from generate_person_events import (  # noqa: E402
     LifeChapter,
     LifeEvent,
     assign_events_to_chapters,
+    clamp_chapter_bounds,
 )
 
 # One value for every field of LifeEvent, all of them distinguishable from the
@@ -132,3 +133,70 @@ class FieldPreservationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ChapterBoundClampTests(unittest.TestCase):
+    """The Planck failure, replayed: a chapter opened on the day his son was
+    executed while the Göttingen move carried only a year, so the move began
+    before the chapter that held it."""
+
+    def chapter(self, **overrides):
+        fields = {
+            "id": "after_the_ruins",
+            "headline": "After the Ruins",
+            "date_start": "1945-01-23",
+            "date_start_precision": "day",
+            "date_end": "1947-10-04",
+            "date_end_precision": "day",
+        }
+        fields.update(overrides)
+        return LifeChapter(**fields)
+
+    def event(self, date, precision, **overrides):
+        fields = {
+            **EVENT_SAMPLE,
+            "date": date,
+            "date_precision": precision,
+            "date_end": None,
+            "date_end_precision": None,
+            "chapter": "after_the_ruins",
+        }
+        fields.update(overrides)
+        return LifeEvent(**fields)
+
+    def test_a_coarse_event_widens_the_chapter_start(self) -> None:
+        events = [
+            self.event("1945-01-23", "day"),
+            self.event("1945", "year"),
+            self.event("1947-10-04", "day"),
+        ]
+        (clamped,) = clamp_chapter_bounds([self.chapter()], events)
+        self.assertEqual(clamped.date_start, "1945")
+        self.assertEqual(clamped.date_start_precision, "year")
+        self.assertEqual(clamped.date_end, "1947-10-04")
+
+    def test_a_spilling_date_end_widens_the_chapter_end(self) -> None:
+        events = [
+            self.event(
+                "1945-01-23",
+                "day",
+                date_end="1948",
+                date_end_precision="year",
+            )
+        ]
+        (clamped,) = clamp_chapter_bounds([self.chapter()], events)
+        self.assertEqual(clamped.date_end, "1948")
+        self.assertEqual(clamped.date_end_precision, "year")
+
+    def test_covered_events_leave_the_chapter_alone(self) -> None:
+        events = [
+            self.event("1945-01-23", "day"),
+            self.event("1946-05", "month"),
+        ]
+        (clamped,) = clamp_chapter_bounds([self.chapter()], events)
+        self.assertEqual(clamped.date_start, "1945-01-23")
+        self.assertEqual(clamped.date_start_precision, "day")
+
+    def test_an_empty_chapter_is_untouched(self) -> None:
+        (clamped,) = clamp_chapter_bounds([self.chapter()], [])
+        self.assertEqual(clamped.date_start, "1945-01-23")
