@@ -1848,7 +1848,10 @@ def calculate_image_quality_score(
     if aspect_ratio < MIN_ASPECT_RATIO or aspect_ratio > MAX_ASPECT_RATIO:
         return -1.0  # Extreme aspect ratio
 
-    if file_size < MIN_FILE_SIZE or file_size > MAX_FILE_SIZE:
+    # A hard filter only when the source reports a size: Openverse returns no
+    # filesize for Flickr and museum providers, and an unknown size read as 0
+    # rejected every candidate they contributed.
+    if file_size > 0 and (file_size < MIN_FILE_SIZE or file_size > MAX_FILE_SIZE):
         return -1.0  # File size out of range
 
     # Strongly prefer JPEG/PNG, but don't reject others (permissive)
@@ -2057,6 +2060,13 @@ def search_openverse(query: str, limit: int = 10) -> List[Dict[str, Any]]:
         if not url:
             continue
 
+        # Openverse indexes Wikimedia Commons too, but the pipeline already
+        # searches Commons directly — and the same file surfaces here under a
+        # different URL form, which the exact-URL dedup cannot catch. Keep only
+        # the providers the Commons search cannot supply.
+        if item.get("provider") == "wikimedia":
+            continue
+
         # Extract filename from URL or title
         title = item.get("title", "")
         filename = title or url.split("/")[-1]
@@ -2093,6 +2103,17 @@ def search_openverse(query: str, limit: int = 10) -> List[Dict[str, Any]]:
                 "creator": creator,
                 "license": license_name,
                 "licenseUrl": license_url if license_url else None,
+                # The quality filter reads these; a candidate without them was
+                # scored as 0×0 pixels and rejected before any scoring ran.
+                # Flickr and museum providers report no filesize or filetype,
+                # so those stay 0/empty and the filter must treat them as
+                # unknown rather than as too small.
+                "width": item.get("width") or 0,
+                "height": item.get("height") or 0,
+                "size": item.get("filesize") or 0,
+                "mime": (
+                    f"image/{item['filetype']}" if item.get("filetype") else ""
+                ),
             }
         )
 
