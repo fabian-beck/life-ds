@@ -145,6 +145,21 @@ git branch -d "agent/<session>"
 
 If the primary worktree contains uncommitted changes, do not switch branches, pull, delete, or modify those changes. Leave primary-worktree cleanup to its owner.
 
+## Incidental Bugs
+
+Sessions notice defects that have little to do with their own task—a broken control on an adjacent screen, a script that fails on a case nobody asked about, data that contradicts itself. Do not widen the session to fix them, and do not let them vanish when the session ends. Open a GitHub issue in `fabian-beck/life-ds` instead, using whatever GitHub access the session has, such as the `gh` CLI or the GitHub MCP tools.
+
+File an issue only when both of these hold:
+
+- **The bug is verified.** Reproduce it in the running application, run the failing command, or trace the code path and the data that make the failure inevitable. A suspicion, a line that merely looks wrong on reading, or a failure you cannot trigger is not enough. When verification is inconclusive, say so in the session summary and file nothing.
+- **It is clearly a bug.** Something crashes, produces a wrong result, contradicts documented behavior, or leaves inconsistent data. Refactoring ideas, style preferences, and improvement wishes are not bugs; keep them in the session summary unless the user asks for an issue.
+
+Search open and closed issues before filing so no duplicate is created. When an open issue already covers the finding, add a comment only if the session contributes new evidence, and leave a closed issue alone unless the bug demonstrably returned—then say so and reference the old issue number.
+
+Write the issue for someone who does not have this session's context: what happens, what should happen instead, how to reproduce it, and the file and line where it starts. Label it `bug`. Do not file an issue for something the session already fixed, and do not file one for a bug inside the session's own task—fix that.
+
+An exploratory user test is the exception. Its report is its deliverable, and it opens issues only when asked to.
+
 ## Code and Data Conventions
 
 - Use camelCase for JavaScript variables and functions.
@@ -169,8 +184,9 @@ Before reporting completion:
 2. Run validation proportional to the change.
 3. Confirm new behavior has tests when practical.
 4. Report checks run and any checks not run.
-5. End every summary with an explicit merge status line, described below.
-6. Do not deploy unless the user explicitly requests deployment. Pushing or merging to `main` does not deploy this project automatically.
+5. Report incidental bugs noticed along the way, naming the issue filed for each or why none was.
+6. End every summary with an explicit merge status line, described below.
+7. Do not deploy unless the user explicitly requests deployment. Pushing or merging to `main` does not deploy this project automatically.
 
 ### Report the Merge Status
 
