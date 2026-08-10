@@ -63,7 +63,7 @@ def _period_bounds(date_str: str, precision: str) -> Tuple[datetime, datetime]:
 def _event_timestamp(
     date_str: Optional[str], precision: Optional[str]
 ) -> Optional[datetime]:
-    """Mirror toTimestamp() in src/utils/storyHelpers.js: start of the date's period."""
+    """Mirror toTimestamp() in src/utils/story/dates.js: start of the date's period."""
     if not date_str:
         return None
     start, _ = _period_bounds(date_str, precision or "day")

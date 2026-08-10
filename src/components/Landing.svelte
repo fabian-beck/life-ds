@@ -11,7 +11,8 @@
   } from "../stores/queryParams.js";
   import { rememberFocusTrigger } from "../stores/returnFocus.js";
   import { clamp, displayName } from "../utils/helpers.js";
-  import { computeYearsLabel, getThumbnailUrl } from "../utils/storyHelpers.js";
+  import { computeYearsLabel } from "../utils/story/dates.js";
+  import { getThumbnailUrl } from "../utils/story/images.js";
   import { assetUrl } from "../utils/assetUrl.js";
   import { slide, fade } from "svelte/transition";
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";

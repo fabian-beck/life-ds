@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { parseDescriptionSegments } from "../src/utils/storyHelpers.js";
+import { parseDescriptionSegments } from "../src/utils/story/prose.js";
 
 // An annotation is placed either by the `[[term|display]]` markup the
 // generator is asked to write, or — when it wrote the explanation and forgot

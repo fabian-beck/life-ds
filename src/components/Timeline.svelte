@@ -13,7 +13,7 @@
     mdiBook,
   } from "@mdi/js";
   import { _ } from "../stores/language";
-  import { extractYear } from "../utils/storyHelpers.js";
+  import { extractYear } from "../utils/story/dates.js";
   import { createEventDispatcher, onDestroy, tick } from "svelte";
   import { mdiIconMap } from "virtual:mdi-icon-map";
 

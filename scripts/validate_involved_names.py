@@ -2,20 +2,20 @@
 """Check that an event's people are spelled the way the network spells them.
 
 The story matches ``involved_people`` against ``ego_network.json`` by name to
-draw the person chips (``findRelevantConnections`` in
-``src/utils/storyHelpers.js``), scoring first and last names without folding
-diacritics or ß/ss. The corpus has already shipped the miss this produces:
-the events wrote "Marga von Hößlin Planck" while the network wrote "Marga
-von Hösslin", the ß kept the components from matching, and the chip silently
-lost its relationship metadata. Nothing reported it, because a failed match
-is also the correct outcome for the many involved people who are simply not
-in the network.
+draw the person chips (``getRelevantPeople`` in
+``src/utils/story/personMatching.js``), scoring first and last names without
+folding diacritics or ß/ss. The corpus has already shipped the miss this
+produces: the events wrote "Marga von Hößlin Planck" while the network wrote
+"Marga von Hösslin", the ß kept the components from matching, and the chip
+silently lost its relationship metadata. Nothing reported it, because a failed
+match is also the correct outcome for the many involved people who are simply
+not in the network.
 
 What this flags is the near miss the matcher cannot see: an involved name
 that folds to the same person as a connection — diacritics and ß/ss
 collapsed, particles dropped, parentheticals stripped, token subsets and
 one-letter slips allowed — and that the interface's own scoring nonetheless
-rejects. The scoring is ported from ``storyHelpers.js`` below; keep the two
+rejects. The scoring is ported from ``personMatching.js`` below; keep the two
 in sync when the matcher changes. Findings are one person spelled two ways,
 and the fix is to spell them identically; which spelling wins is the
 editor's call, not this script's.
@@ -129,7 +129,7 @@ def same_person_folded(involved: str, connection: str) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# The interface side: a faithful port of storyHelpers.js name matching.
+# The interface side: a faithful port of personMatching.js name matching.
 # ---------------------------------------------------------------------------
 
 HYPHENS = re.compile(r"[‐‑‒–—−]")

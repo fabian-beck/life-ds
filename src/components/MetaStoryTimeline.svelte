@@ -5,7 +5,7 @@
   import { displayName } from "../utils/helpers.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { queryParams, personStoryHref } from "../stores/queryParams.js";
-  import { extractYear } from "../utils/storyHelpers.js";
+  import { extractYear } from "../utils/story/dates.js";
   import { createTooltipPlacementEngine } from "../utils/tooltipPlacement.js";
   import { assetUrl } from "../utils/assetUrl.js";
   import personStylesData from "../../data/person_styles.json";

@@ -19,7 +19,7 @@
   import styleRegistry from "../data/person_styles.json";
   import { restoreFocusTrigger } from "./stores/returnFocus.js";
   import { displayName } from "./utils/helpers.js";
-  import { parseHexColor } from "./utils/storyHelpers.js";
+  import { parseHexColor } from "./utils/story/color.js";
 
   // Initial registry (will be replaced with language-specific version)
   let registry = { people: [] };

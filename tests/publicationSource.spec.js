@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { getPublicationSource } from "../src/utils/storyHelpers.js";
+import { getPublicationSource } from "../src/utils/story/images.js";
 
 // A publication slide names a work and has to offer somewhere to follow it.
 // The link in the data was verified by `scripts/enrich_publication_links.py`;

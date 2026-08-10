@@ -1,12 +1,14 @@
 import { test, expect } from "@playwright/test";
 import {
+  getEventDepth,
+  hasBackgroundReport,
+} from "../src/utils/story/eventDepth.js";
+import {
   collectStoryImages,
   getBackgroundImages,
-  getEventDepth,
   getThumbnailUrl,
-  hasBackgroundReport,
-  parseBackgroundBlocks,
-} from "../src/utils/storyHelpers.js";
+} from "../src/utils/story/images.js";
+import { parseBackgroundBlocks } from "../src/utils/story/prose.js";
 
 /* What the layer under the fold is made of. Everything it says is written by
    the generation pipeline — the report and the pictures chosen for it — so all

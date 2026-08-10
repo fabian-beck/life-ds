@@ -10,7 +10,7 @@
  */
 
 import metaStoryStylesData from "../../data/meta_story_styles.json";
-import { parseHexColor } from "./storyHelpers.js";
+import { parseHexColor } from "./story/color.js";
 
 const rawStyles =
   metaStoryStylesData && typeof metaStoryStylesData === "object"

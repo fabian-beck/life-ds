@@ -10,7 +10,7 @@
   import { _ } from "../stores/language";
   import { dialog } from "../utils/dialog.js";
   import { storyStyleVars } from "../utils/helpers.js";
-  import { getThumbnailUrl } from "../utils/storyHelpers.js";
+  import { getThumbnailUrl } from "../utils/story/images.js";
 
   // Width requested for the full-size lightbox view. getThumbnailUrl snaps this
   // to an allowed Wikimedia standard width, avoiding HTTP 400 (and the resulting

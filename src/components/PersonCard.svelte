@@ -1,7 +1,8 @@
 <script>
   import { currentLanguage } from "../stores/language";
   import { displayName } from "../utils/helpers.js";
-  import { computeYearsLabel, getThumbnailUrl } from "../utils/storyHelpers.js";
+  import { computeYearsLabel } from "../utils/story/dates.js";
+  import { getThumbnailUrl } from "../utils/story/images.js";
   import SeparatedList from "./SeparatedList.svelte";
 
   export let person = null;

@@ -12,12 +12,12 @@
     acquirePmtilesProtocol,
     releasePmtilesProtocol,
   } from "../utils/basemap.js";
+  import { parseHexColor } from "../utils/story/color.js";
+  import { formatSingleDate } from "../utils/story/dates.js";
   import {
     normalizeAllLocations,
     normalizePrimaryLocation,
-    formatSingleDate,
-    parseHexColor,
-  } from "../utils/storyHelpers";
+  } from "../utils/story/geo.js";
   import { displayName } from "../utils/helpers";
   import { arrangeOverlappingMarkers } from "../utils/mapHelpers";
   import { assetUrl } from "../utils/assetUrl.js";

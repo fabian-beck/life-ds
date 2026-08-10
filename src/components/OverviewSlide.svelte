@@ -1,7 +1,7 @@
 <script>
   import { mdiMagnifyPlusOutline } from "@mdi/js";
   import { _ } from "../stores/language";
-  import { getThumbnailUrl } from "../utils/storyHelpers.js";
+  import { getThumbnailUrl } from "../utils/story/images.js";
   import SeparatedList from "./SeparatedList.svelte";
 
   export let person = {};

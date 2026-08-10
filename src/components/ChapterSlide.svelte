@@ -2,13 +2,12 @@
   import { mdiMapMarkerOutline } from "@mdi/js";
   import PersonChip from "./PersonChip.svelte";
   import { _ } from "../stores/language";
+  import { extractYear, formatSingleDate } from "../utils/story/dates.js";
+  import { getThumbnailUrl } from "../utils/story/images.js";
   import {
-    getSubcategory,
     getChapterPeople,
-    formatSingleDate,
-    extractYear,
-    getThumbnailUrl,
-  } from "../utils/storyHelpers.js";
+    getSubcategory,
+  } from "../utils/story/personMatching.js";
 
   export let chapter = {};
   export let personStyle = null;

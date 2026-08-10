@@ -3,7 +3,7 @@ import {
   getBirthParents,
   isBirthEvent,
   normalizeFamilyRole,
-} from "../src/utils/storyHelpers.js";
+} from "../src/utils/story/personMatching.js";
 
 const father = {
   person_name: "Christian Bohr",

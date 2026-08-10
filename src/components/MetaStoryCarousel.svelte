@@ -1,7 +1,8 @@
 <script>
   import { _ } from "../stores/language";
   import { displayName } from "../utils/helpers.js";
-  import { extractYear, getThumbnailUrl } from "../utils/storyHelpers.js";
+  import { extractYear } from "../utils/story/dates.js";
+  import { getThumbnailUrl } from "../utils/story/images.js";
 
   export let metaStories = [];
   export let persons = [];

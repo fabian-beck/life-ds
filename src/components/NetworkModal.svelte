@@ -6,7 +6,10 @@
   import { _ } from "../stores/language";
   import { dialog } from "../utils/dialog.js";
   import { storyStyleVars } from "../utils/helpers.js";
-  import { escapeRegex, normalizeFamilyRole } from "../utils/storyHelpers.js";
+  import {
+    escapeRegex,
+    normalizeFamilyRole,
+  } from "../utils/story/personMatching.js";
   import { findPersonMentions } from "../utils/personNames.js";
   import {
     relationshipCategoryLabel,

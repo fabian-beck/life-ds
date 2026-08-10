@@ -27,19 +27,23 @@
   import { clamp, displayName, storyStyleVars } from "../utils/helpers.js";
   import { createAxisLock } from "../utils/gestureAxis.js";
   import {
-    toTimestamp,
-    normalizePrimaryLocation,
-    normalizeAllLocations,
-    isCoordinate,
-    resolveEventIcon,
     computeYearsLabel,
     createDateFormatters,
-    collectStoryImages,
-    getMigrationPath,
+    toTimestamp,
+  } from "../utils/story/dates.js";
+  import {
     getEventDepth,
     hasBackgroundReport,
     selectDeepEventIndexes,
-  } from "../utils/storyHelpers.js";
+  } from "../utils/story/eventDepth.js";
+  import { resolveEventIcon } from "../utils/story/eventIcons.js";
+  import {
+    getMigrationPath,
+    isCoordinate,
+    normalizeAllLocations,
+    normalizePrimaryLocation,
+  } from "../utils/story/geo.js";
+  import { collectStoryImages } from "../utils/story/images.js";
 
   export let dataset = null;
   export let egoNetwork = null;

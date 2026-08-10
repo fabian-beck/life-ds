@@ -8,7 +8,7 @@ import {
   getEventAgeRange,
   toIsoInstant,
   toTimestamp,
-} from "../src/utils/storyHelpers.js";
+} from "../src/utils/story/dates.js";
 
 // The registry writes pre-1000 years both ways — "0975-01-01" for Cunigunde,
 // "0973-05-06" for Henry II — and nothing stops a B.C. date from arriving.

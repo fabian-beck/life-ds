@@ -1,11 +1,8 @@
 <script>
   import { mdiChevronUp, mdiOpenInNew } from "@mdi/js";
   import { _ } from "../stores/language";
-  import {
-    getThumbnailUrl,
-    parseBackgroundBlocks,
-    sourceLabel,
-  } from "../utils/storyHelpers.js";
+  import { getThumbnailUrl, sourceLabel } from "../utils/story/images.js";
+  import { parseBackgroundBlocks } from "../utils/story/prose.js";
 
   export let slide = {};
   export let depth = null;

@@ -4,7 +4,7 @@ import {
   getEventDepth,
   getEventWeight,
   selectDeepEventIndexes,
-} from "../src/utils/storyHelpers.js";
+} from "../src/utils/story/eventDepth.js";
 
 const network = {
   connections: [

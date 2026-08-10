@@ -3,11 +3,8 @@
   import "maplibre-gl/dist/maplibre-gl.css";
   import maplibregl from "maplibre-gl";
   import { _ } from "../stores/language";
-  import {
-    isCoordinate,
-    parseHexColor,
-    rgbaFromHex,
-  } from "../utils/storyHelpers.js";
+  import { parseHexColor, rgbaFromHex } from "../utils/story/color.js";
+  import { isCoordinate } from "../utils/story/geo.js";
   import {
     resolveBasemapUrl,
     createBasemapStyle,

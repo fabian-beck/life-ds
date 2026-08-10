@@ -19,16 +19,20 @@
   import {
     formatDate,
     getDateNote,
+    getEventAgeRange,
+  } from "../utils/story/dates.js";
+  import {
+    getPublicationSource,
     getThumbnailUrl,
     getValidImages,
-    getSubcategory,
-    getEventAgeRange,
-    getRelevantPeople,
-    parseDescriptionSegments,
+  } from "../utils/story/images.js";
+  import {
     findPersonInNetwork,
     getBirthParents,
-    getPublicationSource,
-  } from "../utils/storyHelpers.js";
+    getRelevantPeople,
+    getSubcategory,
+  } from "../utils/story/personMatching.js";
+  import { parseDescriptionSegments } from "../utils/story/prose.js";
   import { assetUrl } from "../utils/assetUrl.js";
   import {
     eventClassLabel,
