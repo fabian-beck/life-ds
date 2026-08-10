@@ -130,8 +130,15 @@ const RELATIVE_WORDS = foldedSet(allLanguages(nameVocabulary.relative_words));
 const ROMAN_NUMERAL_RE = /^(?:x{0,2})(?:ix|iv|v?i{0,3})$/;
 
 /**
- * Words too common to stand alone as a person's name. Only English words are
- * listed so far — the German half of the vocabulary is still to be curated.
+ * Words too common to stand alone as a person's name, in every language the
+ * corpus is written in. German carries the longer half: it capitalizes every
+ * noun, so "Berg" and "Vogel" enter a name run on the same footing as a real
+ * surname, with none of the signal English capitalization gives.
+ *
+ * The list is deliberately free of words that are somebody's surname here —
+ * guarding "Adler" would cost Dankmar Adler his bare mentions in the Wright
+ * story, which is the trade this guard is only worth making for words nobody
+ * in the corpus is called.
  */
 const COMMON_NAME_WORDS = new Set(
   allLanguages(nameVocabulary.common_name_words)

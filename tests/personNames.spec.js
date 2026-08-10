@@ -140,6 +140,25 @@ test("a title plus a given name stays with the monarch it names", () => {
   );
 });
 
+// German capitalizes every noun, so an everyday word walks into a name run the
+// way "King" does in English — and it does so far more often, since the
+// capitalization carries no signal at all. Both people here are real German
+// surnames; only one of them is also a word.
+const germans = [person("wolf", "Christa Wolf"), person("zuse", "Konrad Zuse")];
+
+test("an everyday German word needs its given name beside it", () => {
+  expect(render("Der Wolf lief durch den Wald.", germans)).toBe(
+    "Der Wolf lief durch den Wald."
+  );
+  expect(render("Christa Wolf las aus dem Manuskript.", germans)).toBe(
+    "⟦Christa Wolf|wolf⟧ las aus dem Manuskript."
+  );
+  // A surname that is nobody's everyday word still stands on its own.
+  expect(render("Zuse baute die Z3 in Berlin.", germans)).toBe(
+    "⟦Zuse|zuse⟧ baute die Z3 in Berlin."
+  );
+});
+
 test("short given names are not evidence on their own", () => {
   expect(render("He met John Mauchly around ENIAC.", pioneers)).toBe(
     "He met John Mauchly around ENIAC."
