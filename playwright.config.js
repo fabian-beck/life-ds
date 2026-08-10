@@ -30,7 +30,7 @@ export default defineConfig({
     {
       name: "logic",
       testMatch:
-        /(depthLayer|eventWeight|personNames|historicalDates|relationshipLabels|descriptionSegments|birthEvent|publicationSource|eventClassLabels|gestureAxis|metaStorySections|styleVars|storyModel)\.spec\.js/,
+        /(depthLayer|eventWeight|personNames|historicalDates|relationshipLabels|descriptionSegments|birthEvent|publicationSource|eventClassLabels|gestureAxis|metaStorySections|styleVars|storyModel|localizedData)\.spec\.js/,
       use: {},
     },
     {
@@ -38,7 +38,7 @@ export default defineConfig({
       // personMentions asserts rendered text, not layout, so it runs at one
       // viewport rather than both: the meta story it opens loads a map, and
       // paying for that twice only lengthens the run.
-      testMatch: /(interface|personMentions)\.spec\.js/,
+      testMatch: /(interface|personMentions|localeSwitching)\.spec\.js/,
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1440, height: 900 },

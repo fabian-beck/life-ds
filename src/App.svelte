@@ -18,6 +18,10 @@
   } from "./stores/queryParams";
   import styleRegistry from "../data/person_styles.json";
   import { restoreFocusTrigger } from "./stores/returnFocus.js";
+  import {
+    makeLocalizedLoader,
+    mergeLocalized,
+  } from "./utils/localizedData.js";
   import { displayName } from "./utils/helpers.js";
   import { parseHexColor } from "./utils/story/color.js";
 
@@ -54,16 +58,11 @@
           const localizedModule = await import(
             `../data/persons_${language}.json`
           );
-          const localizedById = new Map(
-            (localizedModule.default?.people ?? []).map((person) => [
-              person.id,
-              person,
-            ])
-          );
           merged = {
             ...merged,
-            people: (merged.people ?? []).map(
-              (person) => localizedById.get(person.id) ?? person
+            people: mergeLocalized(
+              merged.people,
+              localizedModule.default?.people
             ),
           };
         } catch (error) {
@@ -95,14 +94,9 @@
           const localizedModule = await import(
             `../data/meta_stories_${language}.json`
           );
-          const localizedById = new Map(
-            (localizedModule.default?.meta_stories ?? []).map((story) => [
-              story.id,
-              story,
-            ])
-          );
-          metaStoryRegistry = metaStoryRegistry.map(
-            (story) => localizedById.get(story.id) ?? story
+          metaStoryRegistry = mergeLocalized(
+            metaStoryRegistry,
+            localizedModule.default?.meta_stories
           );
         } catch {
           // No localized meta story registry yet — English fallback
@@ -308,91 +302,37 @@
     };
   }
 
-  // Helper to load data on-demand
-  async function loadDataset(personId, language = "en") {
-    // Try language-specific path first
-    let path =
+  // The three localized documents, each addressed a little differently but
+  // all following the one fallback rule (see utils/localizedData.js).
+  const loadDataset = makeLocalizedLoader({
+    modules: datasetModules,
+    pathFor: (personId, language) =>
       language === "en"
         ? `../data/people/${personId}/life_events.json`
-        : `../data/people/${personId}/${language}/life_events.json`;
+        : `../data/people/${personId}/${language}/life_events.json`,
+    label: "Dataset",
+  });
 
-    let loader = datasetModules[path];
-
-    // Fallback to English if translation doesn't exist
-    if (!loader && language !== "en") {
-      console.warn(
-        `Translation not found for ${personId} in ${language}, falling back to English`
-      );
-      path = `../data/people/${personId}/life_events.json`;
-      loader = datasetModules[path];
-    }
-
-    if (!loader) return null;
-
-    try {
-      return await loader();
-    } catch (error) {
-      console.error(`Failed to load dataset for ${personId}:`, error);
-      return null;
-    }
-  }
-
-  async function loadEgoNetwork(personId, language = "en") {
-    let path =
+  const loadEgoNetwork = makeLocalizedLoader({
+    modules: egoNetworkModules,
+    pathFor: (personId, language) =>
       language === "en"
         ? `../data/people/${personId}/ego_network.json`
-        : `../data/people/${personId}/${language}/ego_network.json`;
+        : `../data/people/${personId}/${language}/ego_network.json`,
+    label: "Network",
+  });
 
-    let loader = egoNetworkModules[path];
-
-    // Fallback to English
-    if (!loader && language !== "en") {
-      console.warn(
-        `Network translation not found for ${personId} in ${language}, falling back to English`
-      );
-      path = `../data/people/${personId}/ego_network.json`;
-      loader = egoNetworkModules[path];
-    }
-
-    if (!loader) return null;
-
-    try {
-      return await loader();
-    } catch (error) {
-      console.error(`Failed to load ego network for ${personId}:`, error);
-      return null;
-    }
-  }
-
-  async function loadMetaStoryData(metaStoryId, language = "en") {
-    let path =
+  // A meta story id comes from a registry that promised the file exists, so
+  // finding nothing is worth saying out loud; a person's missing network is not.
+  const loadMetaStoryData = makeLocalizedLoader({
+    modules: metaStoryDetailModules,
+    pathFor: (metaStoryId, language) =>
       language === "en"
         ? `../data/meta_stories/${metaStoryId}.json`
-        : `../data/meta_stories/${language}/${metaStoryId}.json`;
-
-    let loader = metaStoryDetailModules[path];
-
-    // Fallback to English if translation doesn't exist
-    if (!loader && language !== "en") {
-      console.warn(
-        `Meta story translation not found for ${metaStoryId} in ${language}, falling back to English`
-      );
-      path = `../data/meta_stories/${metaStoryId}.json`;
-      loader = metaStoryDetailModules[path];
-    }
-
-    if (!loader) {
-      console.warn(`Meta story not found: ${metaStoryId}`);
-      return null;
-    }
-
-    try {
-      return await loader();
-    } catch (error) {
-      console.error(`Failed to load meta story ${metaStoryId}:`, error);
-      return null;
-    }
-  }
+        : `../data/meta_stories/${language}/${metaStoryId}.json`,
+    label: "Meta story",
+    warnWhenMissing: true,
+  });
 
   // Build registry entries directly from registry data (no dataset loading needed)
   $: registryEntries = (() => {
@@ -477,6 +417,16 @@
   let dataLoading = false;
   let loadingStage = null; // Track which part is loading: 'initial', 'dataset', 'network', null
 
+  // Clear whatever person story is on screen. Written out four times before —
+  // when a person starts loading, when that load fails, when the route leaves
+  // a person, and when a meta story takes over the view.
+  function resetPersonState() {
+    dataset = null;
+    egoNetwork = null;
+    loadedPersonId = null;
+    loadedDatasetLanguage = null;
+  }
+
   // Shared across person and meta story loading: navigating quickly between
   // people (or between a person and a meta story) leaves earlier loads in
   // flight, and without this guard the last one to *resolve* would win and
@@ -489,10 +439,7 @@
     const requestedLanguage = $currentLanguage;
     dataLoading = true;
     loadingStage = "initial";
-    dataset = null;
-    egoNetwork = null;
-    loadedPersonId = null;
-    loadedDatasetLanguage = null;
+    resetPersonState();
 
     // Load dataset first (includes portrait and events)
     loadingStage = "dataset";
@@ -515,19 +462,13 @@
       .catch((error) => {
         if (generation !== dataLoadGeneration) return;
         console.error("Failed to load data:", error);
-        dataset = null;
-        egoNetwork = null;
-        loadedPersonId = null;
-        loadedDatasetLanguage = null;
+        resetPersonState();
         dataLoading = false;
         loadingStage = null;
       });
   } else if (!personId) {
     dataLoadGeneration += 1;
-    dataset = null;
-    egoNetwork = null;
-    loadedPersonId = null;
-    loadedDatasetLanguage = null;
+    resetPersonState();
     dataLoading = false;
     loadingStage = null;
   }
@@ -537,10 +478,7 @@
     const generation = ++dataLoadGeneration;
     dataLoading = true;
     metaStoryData = null;
-    dataset = null;
-    egoNetwork = null;
-    loadedPersonId = null;
-    loadedDatasetLanguage = null;
+    resetPersonState();
 
     loadMetaStoryData(metaStoryId, $currentLanguage)
       .then((result) => {
