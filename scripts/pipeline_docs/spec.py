@@ -597,7 +597,7 @@ STEPS: List[Step] = [
         "Geocode locations",
         SHARED,
         EXTERNAL,
-        "generate_person_events.py",
+        "utils/geocode.py",
         "geocode_location",
         summary=(
             "Resolves each place through Nominatim, preferring the modern name "

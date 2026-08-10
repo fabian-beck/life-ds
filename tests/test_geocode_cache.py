@@ -1,4 +1,4 @@
-"""Tests for the geocoder cache in the person-events pipeline.
+"""Tests for the geocoder cache.
 
 Nominatim asks for one request per second, and each location is expanded into
 several candidate spellings. So what matters here is that an answer is asked for
@@ -17,7 +17,7 @@ from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-import generate_person_events as events  # noqa: E402
+from utils import geocode  # noqa: E402
 
 
 def _response(payload: object) -> Mock:
@@ -34,7 +34,7 @@ class GeocodeCacheTests(unittest.TestCase):
         self.cache_path = Path(self._temp.name) / "geocode.json"
 
         patcher = patch.multiple(
-            events,
+            geocode,
             GEOCODE_CACHE_PATH=self.cache_path,
             GEOCODER_DELAY_SECONDS=0.0,
             GEOCODER_MAX_ATTEMPTS=2,
@@ -47,73 +47,73 @@ class GeocodeCacheTests(unittest.TestCase):
 
     def _reset_in_memory(self) -> None:
         """Forget everything this process learned, keeping the file on disk."""
-        events._geocode_cache.clear()
-        events._geocode_failures.clear()
-        events._geocode_cache_loaded = False
+        geocode._geocode_cache.clear()
+        geocode._geocode_failures.clear()
+        geocode._geocode_cache_loaded = False
 
     def test_an_unresolvable_place_is_queried_once(self) -> None:
         with patch.object(
-            events.requests, "get", return_value=_response([])
+            geocode.requests, "get", return_value=_response([])
         ) as request:
-            self.assertIsNone(events.geocode_location("Nowhere At All"))
+            self.assertIsNone(geocode.geocode_location("Nowhere At All"))
             calls_after_first = request.call_count
-            self.assertIsNone(events.geocode_location("Nowhere At All"))
+            self.assertIsNone(geocode.geocode_location("Nowhere At All"))
             self.assertEqual(request.call_count, calls_after_first)
 
     def test_a_confirmed_miss_survives_into_the_next_run(self) -> None:
-        with patch.object(events.requests, "get", return_value=_response([])):
-            self.assertIsNone(events.geocode_location("Nowhere At All"))
+        with patch.object(geocode.requests, "get", return_value=_response([])):
+            self.assertIsNone(geocode.geocode_location("Nowhere At All"))
 
         self._reset_in_memory()
         with patch.object(
-            events.requests, "get", return_value=_response([])
+            geocode.requests, "get", return_value=_response([])
         ) as request:
-            self.assertIsNone(events.geocode_location("Nowhere At All"))
+            self.assertIsNone(geocode.geocode_location("Nowhere At All"))
         request.assert_not_called()
 
     def test_a_hit_is_cached_on_disk(self) -> None:
         hit = _response([{"lon": "13.4", "lat": "52.5", "display_name": "Berlin"}])
-        with patch.object(events.requests, "get", return_value=hit):
-            first = events.geocode_location("Berlin")
+        with patch.object(geocode.requests, "get", return_value=hit):
+            first = geocode.geocode_location("Berlin")
         self.assertIsNotNone(first)
 
         stored = json.loads(self.cache_path.read_text(encoding="utf-8"))
         self.assertIn("Berlin", stored)
 
         self._reset_in_memory()
-        with patch.object(events.requests, "get", return_value=hit) as request:
-            second = events.geocode_location("Berlin")
+        with patch.object(geocode.requests, "get", return_value=hit) as request:
+            second = geocode.geocode_location("Berlin")
         request.assert_not_called()
         self.assertEqual(second, first)
 
     def test_a_transient_failure_is_retried_and_not_remembered(self) -> None:
         with patch.object(
-            events.requests, "get", side_effect=OSError("connection reset")
+            geocode.requests, "get", side_effect=OSError("connection reset")
         ) as request:
-            self.assertIsNone(events.geocode_location("Berlin"))
+            self.assertIsNone(geocode.geocode_location("Berlin"))
         # Every candidate spelling gets the full retry budget.
-        self.assertEqual(request.call_count, events.GEOCODER_MAX_ATTEMPTS)
+        self.assertEqual(request.call_count, geocode.GEOCODER_MAX_ATTEMPTS)
         self.assertFalse(self.cache_path.exists())
 
         self._reset_in_memory()
         hit = _response([{"lon": "13.4", "lat": "52.5", "display_name": "Berlin"}])
-        with patch.object(events.requests, "get", return_value=hit):
-            self.assertIsNotNone(events.geocode_location("Berlin"))
+        with patch.object(geocode.requests, "get", return_value=hit):
+            self.assertIsNotNone(geocode.geocode_location("Berlin"))
 
     def test_a_transient_failure_is_not_repeated_within_a_run(self) -> None:
         with patch.object(
-            events.requests, "get", side_effect=OSError("connection reset")
+            geocode.requests, "get", side_effect=OSError("connection reset")
         ) as request:
-            self.assertIsNone(events.geocode_location("Berlin"))
+            self.assertIsNone(geocode.geocode_location("Berlin"))
             calls_after_first = request.call_count
-            self.assertIsNone(events.geocode_location("Berlin"))
+            self.assertIsNone(geocode.geocode_location("Berlin"))
             self.assertEqual(request.call_count, calls_after_first)
 
     def test_an_unreadable_cache_file_is_ignored(self) -> None:
         self.cache_path.write_text("{ this is not json", encoding="utf-8")
         hit = _response([{"lon": "13.4", "lat": "52.5", "display_name": "Berlin"}])
-        with patch.object(events.requests, "get", return_value=hit):
-            self.assertIsNotNone(events.geocode_location("Berlin"))
+        with patch.object(geocode.requests, "get", return_value=hit):
+            self.assertIsNotNone(geocode.geocode_location("Berlin"))
 
 
 if __name__ == "__main__":
