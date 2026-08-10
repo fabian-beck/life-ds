@@ -68,7 +68,7 @@
       "id": "alan_turing",
       "name": "Alan_Turing",
       "tagline": "Vater der theoretischen Informatik",
-      "summary": "Alan Turing war ein englischer Mathematiker und Kryptoanalytiker. Seine Arbeiten legten den Grundstein für die moderne Berechenbarkeitstheorie, trugen dazu bei, die deutschen Kriegschiffren in Bletchley Park zu entschlüsseln, und prägten die frühe Entwicklung von Computern und die Forschung zur künstlichen Intelligenz. In seinen späteren Jahren entwickelte er außerdem einflussreiche Ansätze in der mathematischen Biologie. 1952 wurde er wegen homosexueller Handlungen strafrechtlich verfolgt; 1954 starb er an einer Zyanidvergiftung.",
+      "summary": "Alan Turing war ein englischer Mathematiker und Kryptoanalytiker. Seine Arbeiten legten den Grundstein für die moderne Berechenbarkeitstheorie, trugen in Bletchley zur Entzifferung deutscher Chiffren aus dem Zweiten Weltkrieg bei und prägten die frühen Entwicklungen von Computern und der Forschung zur künstlichen Intelligenz. In seinen späteren Jahren entwickelte er zudem wegweisende Ideen auf dem Gebiet der mathematischen Biologie. 1952 wurde er wegen homosexueller Handlungen strafrechtlich verfolgt; 1954 starb er an einer Zyanidvergiftung.",
       "portrait": {
         "image": "/portraits/alan_turing_thumbnail.webp",
         "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg",
@@ -86,14 +86,14 @@
         "Kryptoanalytiker"
       ],
       "created": "2025-11-07T16:52:54+01:00",
-      "lastUpdated": "2026-08-08T04:53:17.656557+00:00",
+      "lastUpdated": "2026-08-10T02:25:50.222759+00:00",
       "birthDate": "1912-06-23",
       "deathDate": "1954-06-07",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
         "source_fingerprint": "59a4f5efa3c7cf01",
-        "translated_on": "2026-08-08T04:53:17.656695+00:00",
+        "translated_on": "2026-08-10T02:25:50.222839+00:00",
         "translator": "openai:gpt-5.6-luna"
       }
     },
@@ -545,31 +545,32 @@
     {
       "id": "emmy_noether",
       "name": "Emmy_Noether",
-      "tagline": "Mutter der modernen Algebra",
-      "summary": "Emmy Noether (1882–1935) war eine deutsche Mathematikerin, deren Werk die abstrakte Algebra umgestaltete und die mathematische Physik tiefgreifend beeinflusste. In Erlangen und später in Göttingen entwickelte sie die moderne Theorie der Ringe, Ideale und Moduln, führte den Begriff der noetherschen Strukturen ein und bewies die Noether-Theoreme, die Symmetrien mit Erhaltungssätzen der Physik verknüpfen. Jahrelang als Frau und Jüdin von bezahlten akademischen Stellen ausgeschlossen, leitete sie dennoch eine renommierte Schule von Algebraikern, bevor sie von den Nationalsozialisten entlassen wurde und ihre Forschung und Lehre am Bryn Mawr College und am Institute for Advanced Study in den Vereinigten Staaten fortsetzte.",
+      "tagline": "Architektin der modernen abstrakten Algebra",
+      "summary": "Emmy Noether war eine deutsche Mathematikerin, deren Arbeit die abstrakte Algebra grundlegend veränderte und grundlegende Zusammenhänge zwischen Symmetrien und Erhaltungssätzen in der Physik aufzeigte. Weil sie eine Frau war, blieb ihr in Deutschland der akademische Aufstieg verwehrt; später wurde sie durch die nationalsozialistische Verfolgung zur Emigration gezwungen. In den Vereinigten Staaten setzte sie ihre Lehr- und Forschungstätigkeit bis zu ihrem Tod fort.",
       "portrait": {
         "image": "/portraits/emmy_noether_thumbnail.webp",
         "source": "https://en.wikipedia.org/wiki/Emmy_Noether",
         "caption": "Stylized portrait based on historical photograph",
         "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Emmy_Noether_%283x4_cropped%29.jpg",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Noether.jpg/960px-Noether.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
         "thumbnail": "/portraits/emmy_noether_thumbnail.webp",
         "medium": "/portraits/emmy_noether_medium.webp",
         "full": "/portraits/emmy_noether_full.webp"
       },
       "primaryRoles": [
-        "Mathematikerin"
+        "Mathematikerin",
+        "Pädagogin"
       ],
       "created": "2025-11-08T06:22:55+01:00",
-      "lastUpdated": "2026-07-18T14:37:51.190528+00:00",
+      "lastUpdated": "2026-08-10T02:25:59.749962+00:00",
       "birthDate": "1882-03-23",
       "deathDate": "1935-04-14",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "7506639e5f9cfcc1",
-        "translated_on": "2026-07-18T14:37:51.190542+00:00",
-        "translator": "manual"
+        "source_fingerprint": "a206eddcde262610",
+        "translated_on": "2026-08-10T02:25:59.750041+00:00",
+        "translator": "openai:gpt-5.6-luna"
       }
     },
     {
@@ -1372,7 +1373,7 @@
     {
       "id": "max_planck",
       "name": "Max_Planck",
-      "summary": "Max Planck war ein deutscher theoretischer Physiker, der mit seinen Arbeiten zur Schwarzkörperstrahlung die Energiequanten einführte und die moderne Physik grundlegend veränderte. Er lehrte in Kiel und Berlin, erhielt den Nobelpreis für Physik des Jahres 1918 und stand in Zeiten von Krieg und politischen Umbrüchen bedeutenden deutschen Wissenschaftsinstitutionen vor.",
+      "summary": "Max Planck war ein deutscher theoretischer Physiker. Seine Arbeiten zur Schwarzkörperstrahlung führten zur Entdeckung der Energiequanten und veränderten die moderne Physik grundlegend. Er lehrte in Kiel und Berlin, erhielt 1919 den Nobelpreis für Physik des Jahres 1918 und leitete in Zeiten von Krieg und politischen Umbrüchen bedeutende deutsche wissenschaftliche Institutionen.",
       "tagline": "Begründer der Quantenphysik",
       "portrait": {
         "image": "/portraits/max_planck_thumbnail.webp",
@@ -1392,13 +1393,13 @@
         "Professor"
       ],
       "created": "2026-08-09T14:43:09.599533+00:00",
-      "lastUpdated": "2026-08-09T14:48:30.812331+00:00",
+      "lastUpdated": "2026-08-10T02:25:34.811435+00:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
         "source_fingerprint": "6f4143245815a9ed",
-        "translated_on": "2026-08-09T14:48:30.812431+00:00",
-        "translator": "openai:gpt-5.6-terra"
+        "translated_on": "2026-08-10T02:25:34.811505+00:00",
+        "translator": "openai:gpt-5.6-luna"
       }
     },
     {
@@ -1437,8 +1438,8 @@
     {
       "id": "otto_wagner",
       "name": "Otto_Wagner",
-      "summary": "Otto Koloman Wagner war ein österreichischer Architekt, Designer und Stadtplaner. Sein Wiener Schaffen führte vom Historismus zu einer modernen Formensprache der Zeit der Wiener Secession. Als prägender Lehrer und äußerst produktiver Praktiker gestaltete er bedeutende öffentliche Infrastrukturbauten und markante Gebäude. Zugleich entwickelte er wegweisende Ideen zur modernen Architektur und zur Stadt der Moderne.",
-      "tagline": "Architekt der Wiener Moderne",
+      "summary": "Otto Wagner war ein österreichischer Architekt, Designer, Architekturtheoretiker und Stadtplaner, dessen Werk Wien um die Wende zum 20. Jahrhundert nachhaltig prägte. Ausgehend vom Historismus über die Wiener Secession hin zu einer zurückhaltenden modernen Architektur entwarf er bedeutende Verkehrs-, öffentliche, Wohn- und Sakralbauten und bildete zugleich eine ganze Generation von Architekten aus.",
+      "tagline": "Wiens Architekt der Moderne",
       "portrait": {
         "image": "/portraits/otto_wagner_thumbnail.webp",
         "thumbnail": "/portraits/otto_wagner_thumbnail.webp",
@@ -1447,22 +1448,22 @@
         "source": "https://de.wikipedia.org/wiki/Otto_Wagner",
         "caption": "Stylized portrait based on historical photograph",
         "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Otto_Wagner_%281841%E2%80%931918%29.jpg"
+        "originalImage": "https://images.rawpixel.com/editor_1024/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA2L3dpZW45NjAyNV8xLWltYWdlLmpwZw.jpg"
       },
       "birthDate": "1841-07-13",
       "deathDate": "1918-04-11",
       "primaryRoles": [
         "Architekt",
-        "Designer",
-        "Stadtplaner"
+        "Stadtplaner",
+        "Designer"
       ],
       "created": "2026-01-09T06:46:49.512016+01:00",
-      "lastUpdated": "2026-08-02T12:53:32.069530+00:00",
+      "lastUpdated": "2026-08-10T02:26:55.354219+00:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "dae8799dadfa1210",
-        "translated_on": "2026-08-02T12:53:32.069619+00:00",
+        "source_fingerprint": "1c693a721272ba6f",
+        "translated_on": "2026-08-10T02:26:55.354319+00:00",
         "translator": "openai:gpt-5.6-luna"
       }
     },

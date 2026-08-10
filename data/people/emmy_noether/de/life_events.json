@@ -1,21 +1,23 @@
 {
-  "dataset": "wiki-biography-timeline",
-  "created_on": "2025-12-06",
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-08-08",
   "person": {
     "name": "Emmy_Noether",
     "birth_date": "1882-03-23",
     "death_date": "1935-04-14",
     "primary_roles": [
-      "Mathematikerin"
+      "Mathematikerin",
+      "Pädagogin"
     ],
-    "summary": "Emmy Noether (1882–1935) war eine deutsche Mathematikerin, deren Arbeit die abstrakte Algebra grundlegend veränderte und die mathematische Physik nachhaltig prägte. In Erlangen und später in Göttingen entwickelte sie die moderne Theorie der Ringe, Ideale und Moduln, führte den Begriff der noetherschen Strukturen ein und bewies Noethers Theoreme, die Symmetrien mit Erhaltungssätzen in der Physik verknüpfen. Weil sie eine Frau und Jüdin war, blieb ihr der Zugang zu bezahlten akademischen Stellen jahrelang verwehrt. Dennoch leitete sie eine renommierte Schule von Algebraikern, bevor die Nationalsozialisten sie entließen und sie ihre Forschung und Lehre am Bryn Mawr College sowie am Institute for Advanced Study in den Vereinigten Staaten fortsetzte.",
+    "tagline": "Architektin der modernen abstrakten Algebra",
+    "summary": "Emmy Noether war eine deutsche Mathematikerin, deren Arbeit die abstrakte Algebra grundlegend veränderte und fundamentale Verbindungen zwischen Symmetrie und Erhaltungssätzen in der Physik herstellte. Weil sie eine Frau war, blieb ihr in Deutschland der akademische Aufstieg verwehrt; später musste sie vor der nationalsozialistischen Verfolgung fliehen. In den Vereinigten Staaten setzte sie ihre Lehr- und Forschungstätigkeit bis zu ihrem Tod fort.",
     "wikipedia": "https://en.wikipedia.org/wiki/Emmy_Noether",
     "portrait": {
       "image": "/portraits/emmy_noether_thumbnail.webp",
       "source": "https://en.wikipedia.org/wiki/Emmy_Noether",
       "caption": "Stylized portrait based on historical photograph",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Emmy_Noether_%283x4_cropped%29.jpg",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Noether.jpg/960px-Noether.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "thumbnail": "/portraits/emmy_noether_thumbnail.webp",
       "medium": "/portraits/emmy_noether_medium.webp",
       "full": "/portraits/emmy_noether_full.webp"
@@ -23,8 +25,8 @@
   },
   "chapters": [
     {
-      "id": "academic_roots_in_erlangen",
-      "headline": "Akademische Wurzeln in Erlangen",
+      "id": "the_forbidden_curriculum",
+      "headline": "Der verbotene Bildungsweg",
       "date_start": "1882-03-23",
       "date_start_precision": "day",
       "date_end": "1907",
@@ -34,7 +36,6 @@
       "involved_people": [
         "Max Noether",
         "Ida Amalia Kaufmann",
-        "Karl Schwarzschild",
         "Hermann Minkowski",
         "Felix Klein",
         "David Hilbert",
@@ -43,72 +44,81 @@
       "location": "Deutschland"
     },
     {
-      "id": "struggle_for_recognition",
-      "headline": "Kampf um Anerkennung",
+      "id": "seven_unpaid_years",
+      "headline": "Sieben Jahre ohne Gehalt",
       "date_start": "1908",
       "date_start_precision": "year",
-      "date_end": "1919-06",
+      "date_end": "1915-03",
       "date_end_precision": "month",
       "age_start": 26,
+      "age_end": 32,
+      "involved_people": [
+        "Max Noether"
+      ],
+      "location": "Deutschland"
+    },
+    {
+      "id": "symmetrys_hidden_law",
+      "headline": "Das verborgene Gesetz der Symmetrie",
+      "date_start": "1915-04",
+      "date_start_precision": "month",
+      "date_end": "1919",
+      "date_end_precision": "year",
+      "age_start": 33,
       "age_end": 37,
       "involved_people": [
-        "Max Noether",
-        "Ernst Sigismund Fischer",
         "David Hilbert",
         "Felix Klein",
-        "Ida Amalia Noether"
+        "Ida Noether"
       ],
       "location": "Deutschland"
     },
     {
-      "id": "architect_of_modern_algebra",
-      "headline": "Architektin der modernen Algebra",
-      "date_start": "1919-06",
-      "date_start_precision": "month",
-      "date_end": "1933-04",
-      "date_end_precision": "month",
+      "id": "algebra_finds_its_voice",
+      "headline": "Die Algebra findet ihre Sprache",
+      "date_start": "1920",
+      "date_start_precision": "year",
+      "date_end": "1932",
+      "date_end_precision": "year",
       "age_start": 37,
-      "age_end": 51,
+      "age_end": 50,
       "involved_people": [
-        "Felix Klein",
-        "David Hilbert",
-        "Bartel Leendert van der Waerden",
-        "Albert Einstein",
-        "Hermann Weyl"
+        "Bartel Leendert van der Waerden"
       ],
-      "location": "Deutschland"
+      "location": "Mitteleuropa"
     },
     {
-      "id": "exile_and_final_legacy",
-      "headline": "Exil in der US-Akademie",
-      "date_start": "1933-04",
-      "date_start_precision": "month",
+      "id": "exile_across_the_atlantic",
+      "headline": "Exil über den Atlantik",
+      "date_start": "1933",
+      "date_start_precision": "year",
       "date_end": "1935-04-14",
       "date_end_precision": "day",
-      "age_start": 51,
+      "age_start": 50,
       "age_end": 53,
       "involved_people": [
-        "David Hilbert",
-        "Marie Johanna Weiss",
-        "Olga Taussky-Todd",
-        "Albert Einstein"
+        "Anna Pell Wheeler",
+        "Marion Park",
+        "Abraham Flexner",
+        "Oswald Veblen"
       ],
-      "location": "Vereinigte Staaten"
+      "location": "Deutschland und die Vereinigten Staaten"
     }
   ],
+  "conclusion": "Emmy Noether verwandelte Ausgrenzung in eine intellektuelle Revolution: Mit ihrem Theorem prägte sie die moderne Physik, mit ihrem strukturellen Denken die moderne Algebra. Die Verfolgung setzte ihrem Leben früh ein Ende, doch ihre Ideen wurden Teil der bleibenden Sprache der Mathematik.",
   "events": [
     {
       "date": "1882-03-23",
       "date_precision": "day",
-      "age": null,
+      "age": 0,
       "title": "Geburt in Erlangen",
-      "description": "Amalie Emmy Noether wurde am 23. März 1882 in der bayerischen Universitätsstadt Erlangen als Tochter einer wohlhabenden jüdischen Familie geboren. Ihr Vater, Max Noether, war ein angesehener Mathematikprofessor, ihre Mutter, Ida Amalia Kaufmann, stammte aus einer wohlhabenden Kaufmannsfamilie. Emmy wuchs mit drei jüngeren Brüdern in einem akademisch geprägten Haushalt auf und war schon von Kindesbeinen an von mathematischen Gesprächen und dem Universitätsleben umgeben – auch wenn man sie zunächst auf die für Mädchen ihrer gesellschaftlichen Schicht üblichen häuslichen Fähigkeiten verwies.",
+      "description": "Amalie Emmy Noether wurde in Erlangen, Bayern, in eine wohlhabende jüdische Familie hineingeboren, deren Leben von der Universität und kaufmännischen Verbindungen geprägt war.",
       "locations": [
         {
           "name_historic": "Erlangen",
-          "name_modern": "Erlangen, Bayern, Deutschland",
+          "name_modern": "Erlangen, Deutschland",
           "centroid": [
-            11.0059,
+            11.0775,
             49.5897
           ],
           "primary": true
@@ -120,24 +130,202 @@
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Fritz_Noether",
         "https://de.wikipedia.org/wiki/Max_Noether"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "academic_roots_in_erlangen",
+      "chapter": "the_forbidden_curriculum",
+      "background": "Erlangen war eine vergleichsweise kleine fränkische Universitätsstadt im Königreich Bayern, das damals zum Deutschen Reich gehörte. Die Friedrich-Alexander-Universität verlieh der Stadt ein geistiges Leben, das in keinem Verhältnis zu ihrer Größe stand – auch wenn der Zugang zu dieser Welt weiterhin stark von Geschlecht, Religion, sozialer Schicht und akademischer Hierarchie bestimmt wurde. Im Hause Noether verbanden sich zwei Formen jüdischen Aufstiegs im Bürgertum: auf der einen Seite universitär-wissenschaftliche Bildung, auf der anderen kaufmännische und finanzielle Verbindungen.\n\n## Max Noethers Laufbahn\n\nDie akademische Seite der Familie war auf ungewöhnlichem und anspruchsvollem Weg entstanden. Nachdem Max Noether im Alter von vierzehn Jahren an Kinderlähmung erkrankt war, blieb seine Beweglichkeit beeinträchtigt; mehrere Jahre lang erhielt er Privatunterricht und las ausgiebig. 1865 begann er in Heidelberg Mathematik zu studieren, nachdem er zuvor ein Jahr an der Mannheimer Sternwarte verbracht hatte. Von der theoretischen Physik wandte er sich der Arbeit Bernhard Riemanns zu. Nach der Promotion in Heidelberg, weiteren Studien in Gießen bei Alfred Clebsch und einer Zeit in Göttingen habilitierte er sich 1870 in Heidelberg. 1875 wurde er außerordentlicher Professor in Erlangen, den Rang eines ordentlichen Professors erhielt er dort jedoch erst 1888.\n\nSeine Forschung brachte die Familie in die Nähe einer der lebhaftesten mathematischen Debatten jener Zeit: des Versuchs, algebraische Kurven mit algebraischen statt vorwiegend geometrischen Methoden zu behandeln. 1873 bewies er einen Satz über algebraische Funktionen, der später als Noethers Fundamentalsatz bekannt wurde. Gemeinsam mit Alexander von Brill gab er außerdem einen rein algebraischen Beweis des Satzes von Riemann-Roch, der 1874 veröffentlicht wurde. Ihr Ansatz befasste sich mit den Eigenschaften und der Klassifikation von Raumkurven und stand teilweise in Konkurrenz zur Arbeit des französischen Mathematikers Georges Halphen. 1882 verlieh die Berliner Akademie Noether und Halphen für ihre Arbeiten über algebraische Raumkurven den Steiner-Preis.\n\n## Kaufmännischer Hintergrund\n\nAuch der kaufmännische Hintergrund war beträchtlich. Max Noethers Vater war Miteigentümer des Mannheimer Eisenhändlers Joseph Nöther & Co. Auf mütterlicher Seite war Emmy Noethers Großvater Marcus Kaufmann ein jüdischer Kaufmann und Grundbesitzer in Köln; ihre Großmutter stammte aus einer Düsseldorfer Bankiersfamilie. Diese Verbindung aus Bildungsrang, beruflichen Netzwerken und materieller Sicherheit ermöglichte ein kultiviertes Elternhaus. Die institutionellen Grenzen, denen Frauen im deutschen Hochschulwesen unterlagen, beseitigte sie jedoch nicht. Wenn Noether erwachsen werden würde, sollte die Möglichkeit eines regulären Universitätsstudiums zu einer entscheidenden Frage werden.",
+      "weight": 0.3,
       "event_class": {
         "type": "birth",
         "father": "Max Noether",
-        "mother": "Ida Amalia Kaufmann (Ida Amalia Noether)"
-      }
+        "mother": "Ida Amalia Kaufmann",
+        "birth_name": "Amalie Emmy Noether",
+        "characterization": "jüdische Gelehrtenfamilie"
+      },
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Mannheim_Sternwarte_20100809.jpg/960px-Mannheim_Sternwarte_20100809.jpg",
+          "caption": "Mannheim, Sternwarte",
+          "source": "https://commons.wikimedia.org/wiki/File:Mannheim_Sternwarte_20100809.jpg",
+          "creator": "Rudolf Stricker",
+          "license": "Attribution",
+          "licenseUrl": null,
+          "query": "Mannheim Observatory"
+        }
+      ]
     },
     {
       "date": "1900",
       "date_precision": "year",
-      "date_note": "Anfang 1900 legte sie die Sprachlehrerinnenprüfung ab und entschied sich kurz darauf für ein Universitätsstudium",
       "age": 18,
-      "title": "Entscheidet sich für Mathematik",
-      "description": "Nachdem Noether besonderes Talent im Französischen und Englischen gezeigt hatte, legte sie die Staatsprüfung ab, die sie zum Sprachunterricht an Mädchenschulen berechtigte, und erhielt die Bestnote „sehr gut“. Statt die sichere Laufbahn als Lehrerin einzuschlagen, die sich ihr damit eröffnete, beschloss sie, an der Universität Erlangen zu studieren, an der ihr Vater lehrte – obwohl Frauen damals Vorlesungen nur mit Genehmigung des jeweiligen Professors besuchen durften. Mit dieser Entscheidung schlug sie einen unkonventionellen und unsicheren Weg in der höheren Mathematik ein.",
+      "title": "Qualifiziert sich als Sprachlehrerin",
+      "description": "Noether bestand die Prüfungen, die sie zum Unterricht in Französisch und Englisch an Mädchenschulen berechtigten, mit der Gesamtnote „sehr gut“. Statt den Sprachunterricht zu ihrem Beruf zu machen, entschied sie sich für ein weiterführendes Mathematikstudium.",
+      "locations": [
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Deutschland",
+          "centroid": [
+            11.003,
+            49.59
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "the_forbidden_curriculum",
+      "background": "Für eine junge Frau in Bayern um die Wende zum 20. Jahrhundert bot die höhere Mädchenschule eine sorgfältig begrenzte Form weiterführender Bildung. Die Höhere Töchterschule in Erlangen, die Noether von 1889 bis 1897 besuchte, sollte ihre Schülerinnen auf gesellschaftlich anerkannte Tätigkeiten und das häusliche Leben vorbereiten, nicht auf ein Universitätsstudium. Die Ausbildung in modernen Sprachen eröffnete einen der anerkannten Berufswege für Frauen: den Unterricht an Mädchenschulen. Der Weg an die Universität war dagegen weiterhin formal versperrt.\n\nIn ihrem Elternhaus war dieser Gegensatz besonders sichtbar. Erlangen war eine Universitätsstadt, und ihr Vater Max Noether hatte dort einen Mathematiklehrstuhl inne. Er war ein bedeutender algebraischer Geometer und 1899 Präsident der Deutschen Mathematiker-Vereinigung. Doch selbst ein angesehener Mathematiker in der Familie beseitigte die institutionellen Hindernisse für seine Tochter nicht. Die übliche schulische Qualifikation zur Vorbereitung auf die Universität hatte sie an der Höheren Töchterschule nicht erworben. Für einen anderen Bildungsweg musste sie sich außerhalb der für männliche Schüler vorgesehenen Ordnung zusätzlich vorbereiten.\n\n## Universitätsstatus\n\nDas entscheidende Hindernis war nicht nur die Aufnahmeprüfung, sondern der Status an der Universität. An der Universität Erlangen waren Frauen damals nicht als reguläre Studentinnen zugelassen. Sie durften Vorlesungen nur als Gasthörerinnen besuchen, und auch das nur mit Zustimmung jedes einzelnen Dozenten. Der Zugang zur höheren Bildung lag damit im Ermessen einzelner Professoren; ein Recht auf Einschreibung, ein vollständiges Studium oder einen regulären Studienabschluss bestand nicht. In den Jahren nach ihrer Lehramtsprüfung nahm Noether Privatunterricht, um sich auf die Universitätsaufnahmeprüfung vorzubereiten. Diese zusätzliche Ausbildung bildete die praktische Brücke zwischen dem Mädchenschulsystem und der akademischen Mathematik.\n\nDas Ergebnis war die bewusste Abkehr von einem sicheren, geschlechtsspezifisch anerkannten Beruf hin zu einem Weg, dessen institutionelle Bedingungen noch ungeklärt waren. Dank ihrer Vorbereitung konnte sie im Wintersemester 1903/04 gemeinsam mit zwei weiteren Frauen beginnen, in Erlangen Vorlesungen zu hören, noch bevor Frauen dort immatrikuliert werden durften. Das Lehramtszeugnis war daher kein Umweg aus Mangel an Fähigkeiten; es war zunächst die Qualifikation, die die vorhandene Bildungsordnung ihr zugänglich machte. Zugleich zeigt es, dass der Zugang von Frauen zur mathematischen Ausbildung von Beharrlichkeit, Selbststudium und schrittweisen Änderungen der Hochschulpolitik abhängen konnte – nicht von einem geradlinigen Schulweg.",
+      "weight": 0.2
+    },
+    {
+      "date": "1903-07-14",
+      "date_precision": "day",
+      "date_end": "1904",
+      "date_end_precision": "year",
+      "age": 21,
+      "title": "Bereitet sich auf die Universität vor",
+      "description": "Noether bestand am 14. Juli 1903 an einem [[Realgymnasium|Realgymnasium]] in Nürnberg die Reifeprüfung. Im Wintersemester 1903/04 hörte sie an der Universität Göttingen als Gasthörerin Vorlesungen bei Hermann Minkowski, Felix Klein, David Hilbert und anderen.",
+      "locations": [
+        {
+          "name_historic": "Nürnberg",
+          "name_modern": "Nürnberg, Deutschland",
+          "centroid": [
+            11.0775,
+            49.4521
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Deutschland",
+          "centroid": [
+            9.935,
+            51.534
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Hermann Minkowski",
+        "Felix Klein",
+        "David Hilbert"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "the_forbidden_curriculum",
+      "annotations": {
+        "Realgymnasium": {
+          "explanation": "Eine deutsche höhere Schule mit Schwerpunkt auf modernen Sprachen, Mathematik und Naturwissenschaften statt auf dem altsprachlichen Lehrplan eines traditionellen Gymnasiums.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Realgymnasium"
+        }
+      },
+      "background": "Um die Wende zum 20. Jahrhundert setzte der Zugang zu einer deutschen Universität einen höheren Schulabschluss voraus, doch Frauen stand dieser Weg weit weniger offen als Männern. Das humanistische Gymnasium mit seinem Schwerpunkt auf Latein und Griechisch war die herkömmliche Vorbereitung; das Realgymnasium bot eine moderne Alternative mit stärkerem Gewicht auf Naturwissenschaften und modernen Sprachen. Für Frauen waren Mädchenschulen und die Ausbildung zur Lehrerin die üblichen Wege, während der Zugang zur Universität je nach Staat und Hochschule unterschiedlich geregelt blieb. Frauen durften einzelne Lehrveranstaltungen oft nur als Gäste besuchen, ohne die Stellung und Rechte immatrikulierter Studierender.\n\n## Göttingens mathematisches Umfeld\n\nGöttingen war dennoch ein außergewöhnlich wichtiges Ziel. Felix Klein hatte die Universität seit seiner Berufung 1886 zu einem bedeutenden Zentrum mathematischer und naturwissenschaftlicher Forschung ausgebaut. Er richtete wöchentliche Diskussionsabende sowie einen mathematischen Lesesaal und eine Bibliothek ein und schuf damit ein Umfeld, in dem aktuelle Forschung auch außerhalb der regulären Vorlesungen zirkulieren konnte. Die Universität hatte 1893 begonnen, Frauen zuzulassen; später betreute Klein dort die erste von einer Frau verfasste Mathematikpromotion, die von Grace Chisholm Young. Auch im Hause Noether war akademische Mathematik allgegenwärtig: Emmys Vater Max Noether war Professor in Erlangen und arbeitete über algebraische Geometrie und algebraische Funktionen.\n\nDie Göttinger Fakultät vereinte verschiedene mathematische Ansätze. Klein verband Geometrie mit Symmetrie und suchte Beziehungen zwischen Mathematik, Mechanik und Physik. David Hilbert, der 1895 aus Königsberg berufen worden war, machte Göttingen noch einflussreicher; seine Liste von 23 Problemen aus dem Jahr 1900 formulierte öffentlich ein weitgespanntes Forschungsprogramm für das neue Jahrhundert. Hermann Minkowski, ein enger Freund Hilberts aus dessen Königsberger Zeit, arbeitete auf dem Gebiet der Geometrie der Zahlen und der mathematischen Physik. Klein gab außerdem die Mathematische Annalen heraus, eine der führenden mathematischen Zeitschriften der Epoche. Die Redaktion traf sich regelmäßig, um über die Veröffentlichung von Beiträgen zu entscheiden. So verband die Abteilung formale Lehre mit einer ungewöhnlich sichtbaren Forschungskultur.\n\nDie Zeit als Gasthörerin verschaffte Noether Zugang zu dieser Welt, bevor ihr eine herkömmliche Universitätslaufbahn offenstand. Sie brachte sie außerdem in die Nähe mathematischer Arbeiten, die weit über Schulprüfungen und Lehramtsvorbereitung hinausgingen. Als Frauen an der Universität Erlangen regulär studieren durften, konnte sie dort 1904 das Mathematikstudium aufnehmen. Die beiden Hochschulen eröffneten ihr unterschiedliche Möglichkeiten: Erlangen bot die formale Einschreibung, Göttingen den Einblick in die Abteilung, die zum führenden mathematischen Zentrum Deutschlands geworden war.",
+      "weight": 0.35,
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Mathematische_Annalen_1869_Titel.jpg",
+          "caption": "Scan des Buches „Mathematische Annalen“",
+          "source": "https://commons.wikimedia.org/wiki/File:Mathematische_Annalen_1869_Titel.jpg",
+          "creator": "Alfred Clebsch",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Mathematische Annalen journal"
+        }
+      ]
+    },
+    {
+      "date": "1904-10",
+      "date_precision": "month",
+      "age": 22,
+      "title": "Beginnt das Mathematikstudium in Erlangen",
+      "description": "Nachdem die bayerischen Universitäten die Beschränkungen für die reguläre Einschreibung von Frauen aufgehoben hatten, kehrte Noether offiziell an die Universität Erlangen zurück. Sie wählte Mathematik als einziges Studienfach und war die einzige Frau in ihrem Studiengang.",
+      "locations": [
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Deutschland",
+          "centroid": [
+            11.0775,
+            49.5897
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Gr%C3%B6%C3%9Fer_H%C3%B6rsaal_FAU_2022.jpg/960px-Gr%C3%B6%C3%9Fer_H%C3%B6rsaal_FAU_2022.jpg",
+          "caption": "Großer Hörsaal der Friedrich-Alexander-Universität Erlangen",
+          "source": "https://commons.wikimedia.org/wiki/File:Größer_Hörsaal_FAU_2022.jpg",
+          "creator": "Cavaliere grande",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "the_forbidden_curriculum",
+      "background": "Zu Beginn des 20. Jahrhunderts war der formale Zugang deutscher Universitäten für Frauen weiterhin uneinheitlich. Vor der bayerischen Änderung der Hochschulpolitik konnten Frauen Vorlesungen meist nur als Gasthörerinnen besuchen, wenn einzelne Dozenten ihre Erlaubnis erteilten. Die neuen Regeln beseitigten dieses Hindernis in Bayern, machten die Mathematik aber keineswegs zu einem gewöhnlichen oder für Frauen offenen Bildungsweg.\n\n## Mathematik in Erlangen\n\nErlangen bot dennoch eine ungewöhnlich unmittelbare Verbindung zur höheren Mathematik. Max Noether, ein bedeutender algebraischer Geometer und Emmys Vater, hatte dort viele Jahre den Mathematiklehrstuhl inne. Eine weitere führende Persönlichkeit war Paul Gordan, der für seine Arbeiten zur Invariantentheorie bekannt war. Die Fakultät umfasste außerdem Erhard Schmidt, dessen Forschung von der Analysis bis zur mathematischen Physik reichte. So verband der örtliche Lehrplan ältere, konkrete Zugänge zur Algebra mit neueren Strömungen der deutschen Mathematik.\n\nGordans Stellung verdeutlicht die geistige Atmosphäre der Abteilung. Für seine expliziten Formeln und endlichen Invariantensysteme wurde er als „König der Invariantentheorie“ gefeiert. Sein Ansatz stand in offenem Gegensatz zu David Hilberts abstrakteren Existenzbeweisen. Gordan soll eines von Hilberts Argumenten als „Theologie“ statt als Mathematik abgetan haben, weil es die Existenz von Objekten nachwies, ohne sie unmittelbar zu konstruieren. Dieser Streit war nicht bloß persönlich; er markierte den Übergang vom Rechnen und Konstruieren zu strukturellem Denken. Erlangen führte Studierende damit in eine Disziplin ein, die aktiv darüber stritt, was als überzeugender Beweis und als angemessene Methode gelten sollte.\n\n## Noethers institutioneller Weg\n\nDie neue Einschreibungsregel verschaffte Noether einen stabilen institutionellen Zugang zu diesem Umfeld. Ihre Konzentration auf ein einziges Fach war folgenschwer, denn das Universitätsstudium der Mathematik verlangte eine lange Folge von Vorlesungen, Übungen, Prüfungen und Kontakten zu Professoren, bevor eigenständige Forschung möglich wurde. Zugleich machte die Geschlechterungleichheit sich unübersehbar bemerkbar: Noether besuchte nicht bloß eine Lehrveranstaltung, sondern strebte dieselbe akademische Qualifikation an wie ihre männlichen Kommilitonen. Die Ausbildung und die Kontakte zu den Lehrenden in dieser Zeit bildeten das unmittelbare Fundament für ihre spätere Promotion.",
+      "weight": 0.5
+    },
+    {
+      "date": "1907",
+      "date_precision": "year",
+      "age": 25,
+      "title": "Promoviert summa cum laude",
+      "description": "An der Universität Erlangen schloss Noether ihre Promotion bei Paul Gordan ab und erhielt den Doktorgrad summa cum laude.",
+      "locations": [
+        {
+          "name_historic": "Erlangen",
+          "name_modern": "Erlangen, Deutschland",
+          "centroid": [
+            11.0775,
+            49.5897
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Paul Gordan"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Emmy_Noether_-_Table_of_invariants_1.jpg/960px-Emmy_Noether_-_Table_of_invariants_1.jpg",
+          "caption": "Tabelle aus Emmy Noethers Dissertation",
+          "source": "https://commons.wikimedia.org/wiki/File:Emmy_Noether_-_Table_of_invariants_1.jpg",
+          "creator": "en:Emmy Noether",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "the_forbidden_curriculum",
+      "background": "Zu Beginn des 20. Jahrhunderts begannen deutsche Universitäten erst allmählich, Frauen regulär aufzunehmen. Noether hatte Vorlesungen zunächst nur mit der Erlaubnis einzelner Professoren besuchen können – ein Weg, der Frauen offenstand, bevor in Bayern die formale Einschreibung möglich wurde. Erlangen bot ein außergewöhnlich enges mathematisches Umfeld: Ihr Vater Max Noether war dort Professor, Paul Gordan seit den 1870er Jahren ebenfalls. Diese Umgebung ermöglichte ihr den Zugang zu fortgeschrittener Forschung, doch ein Doktortitel beseitigte nicht die Hindernisse, die Frauen von regulären akademischen Stellen fernhielten.\n\n## Gordans Invariantentheorie\n\nGordan war als „König der Invariantentheorie“ berühmt, eines Gebiets, das sich mit algebraischen Eigenschaften von Formen befasst, die unter vorgeschriebenen Transformationen unverändert bleiben. Sein Ansatz war konstruktiv und rechnerisch; er suchte nach expliziten Ausdrücken und Verfahren. 1888 hatte David Hilbert einen grundlegenden Endlichkeitssatz mit nichtkonstruktiven Mitteln bewiesen und gezeigt, dass bestimmte Invariantensysteme existierten, ohne Formeln zu liefern, mit denen man sie im Sinne Gordans erzeugen konnte. Gordan soll dagegen eingewandt haben, solche Arbeiten seien „Theologie, nicht Mathematik“ – eine Bemerkung, die einen tatsächlichen methodischen Gegensatz zum Ausdruck brachte.\n\nNoethers Ausbildung gehörte zunächst eindeutig zu Gordans Seite dieses Gegensatzes. Ihre Arbeit verlangte ausdauernde symbolische Rechnungen in der klassischen Sprache der algebraischen Formen und bewies ihre sichere Beherrschung der damals in Erlangen gelehrten Methoden. Insofern war sie ein konventioneller Anfang: Sie führte ein bestehendes Forschungsprogramm weiter, statt bereits jenen abstrakten Stil anzukündigen, für den Noether später bekannt wurde. Die in dieser Zeit erlernte Präzision algebraischer Manipulation blieb jedoch Teil ihres mathematischen Rüstzeugs, auch als sie sich später von Gegenstand und Methoden ihrer Dissertation entfernte.\n\n## Eine bezahlte Universitätslaufbahn\n\nDer Doktorgrad bedeutete den Eintritt in das professionelle mathematische Leben, nicht aber in eine bezahlte Universitätslaufbahn. Erlangen bot Noether anschließend keine reguläre Stelle; bald lehrte sie dort ohne Gehalt. Ihr Erfolg war daher zugleich bedeutend und begrenzt: Er bescheinigte ihr Forschungsfähigkeit auf höchstem akademischem Niveau und machte zugleich die institutionellen Beschränkungen sichtbar, denen Wissenschaftlerinnen unterlagen. Die spätere Hinwendung zu einer stärker begrifflichen Algebra ließ die frühe rechnerische Arbeit schließlich als Ausgangspunkt erscheinen, nicht als Ziel ihrer Forschung.",
+      "weight": 0.55,
+      "event_class": {
+        "type": "publication",
+        "title": "Über die Bildung des Formensystems der ternären biquadratischen Form",
+        "publication_type": "thesis",
+        "significance": "Dissertation",
+        "impact": "Die Dissertation untersuchte vollständige Invariantensysteme ternärer biquadratischer Formen anhand expliziter Berechnungen."
+      }
+    },
+    {
+      "date": "1908",
+      "date_precision": "year",
+      "date_end": "1915",
+      "date_end_precision": "year",
+      "age": 26,
+      "title": "Lehrt ohne Bezahlung",
+      "description": "Ab 1908 arbeitete Noether sieben Jahre lang ohne Gehalt am Mathematischen Institut in Erlangen und vertrat gelegentlich ihren Vater, wenn dieser krankheitsbedingt nicht lesen konnte. Sie veröffentlichte Arbeiten, die die [[invariant theory|Invariantentheorie]] und Hilberts Methoden auf Körper rationaler Funktionen und Invarianten endlicher Gruppen ausdehnten.",
       "locations": [
         {
           "name_historic": "Erlangen",
@@ -153,205 +341,94 @@
         "Max Noether"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/University_of_Erlangen%E2%80%93Nuremberg",
-        "https://en.wikipedia.org/wiki/Max_Noether"
-      ],
-      "event_type_icon": "mdi-school",
-      "chapter": "academic_roots_in_erlangen"
-    },
-    {
-      "date": "1904-10",
-      "date_precision": "month",
-      "date_note": "Die bayerischen Beschränkungen für die reguläre Immatrikulation von Frauen wurden 1903 aufgehoben; im Oktober 1904 schrieb sie sich in Erlangen erneut offiziell ein",
-      "age": 22,
-      "title": "Ordentliche Immatrikulation in Erlangen",
-      "description": "Nach einem Studienjahr in Göttingen im Wintersemester 1903/04, in dem sie Vorlesungen von Karl Schwarzschild, Hermann Minkowski, Felix Klein, David Hilbert und anderen besuchte, kehrte Noether nach Erlangen zurück und schrieb sich im Oktober 1904 offiziell als ordentliche Studentin ein. Nun als einzige Frau in ihrem Mathematikjahrgang widmete sie sich ganz der Mathematik. Unter dem Einfluss des Invariantentheoretikers Paul Gordan begann sie jene Forschungen, die zu ihrer Promotion führen sollten.",
-      "locations": [
-        {
-          "name_historic": "Erlangen",
-          "name_modern": "Erlangen, Deutschland",
-          "centroid": [
-            11.0044,
-            49.5897
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Göttingen",
-          "name_modern": "Göttingen, Deutschland",
-          "centroid": [
-            9.9323,
-            51.5413
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Karl Schwarzschild",
-        "Hermann Minkowski",
-        "Felix Klein",
-        "David Hilbert",
-        "Paul Gordan"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/University_of_Erlangen%E2%80%93Nuremberg",
-        "https://en.wikipedia.org/wiki/Paul_Gordan"
-      ],
-      "event_type_icon": "mdi-school",
-      "chapter": "academic_roots_in_erlangen"
-    },
-    {
-      "date": "1907",
-      "date_precision": "year",
-      "date_note": "Sie schloss ihre Dissertation 1907 ab, verteidigte sie und erhielt noch im selben Jahr den Grad summa cum laude",
-      "age": 25,
-      "title": "Promotion bei Paul Gordan",
-      "description": "1907 promovierte Noether an der Universität Erlangen mit einer von Paul Gordan betreuten Dissertation über [[invariant theory|Invariantentheorie]] mit dem Titel „Über die Bildung des Formensystems der ternären biquadratischen Form“. Die Arbeit, ganz im damals vorherrschenden explizit-rechnerischen Stil gehalten, enthielt Hunderte ausgearbeitete Invarianten und wurde mit summa cum laude ausgezeichnet. Obwohl sie dieses Frühwerk später als „Mist“ abtat, wies die Dissertation sie als Forschungsmathematikerin aus und verschaffte ihr ihre ersten Veröffentlichungen.",
-      "locations": [
-        {
-          "name_historic": "Erlangen",
-          "name_modern": "Erlangen, Deutschland",
-          "centroid": [
-            11.0078,
-            49.5897
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Paul Gordan"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Paul_Gordan"
-      ],
-      "event_type_icon": "mdi-book-open-variant",
-      "chapter": "academic_roots_in_erlangen",
-      "annotations": {
-        "invariant theory": {
-          "explanation": "Ein Teilgebiet der abstrakten Algebra, das Größen oder Eigenschaften mathematischer Objekte untersucht, die unter den Transformationen einer bestimmten Gruppe – etwa Drehungen oder linearen Koordinatenänderungen – unverändert bleiben.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Invariant_theory"
-        }
-      }
-    },
-    {
-      "date": "1908",
-      "date_precision": "year",
-      "date_end": "1915-04",
-      "date_end_precision": "month",
-      "age": 26,
-      "title": "Unbezahlte Dozentin in Erlangen",
-      "description": "Von 1908 bis 1915 arbeitete Noether unbezahlt am Mathematischen Institut in Erlangen und vertrat in den Vorlesungen häufig ihren erkrankten Vater, während sie zugleich eigene Forschungen betrieb. Sie trat Fachgesellschaften wie dem [[Circolo Matematico di Palermo|Circolo Matematico di Palermo]] und der [[Deutsche Mathematiker‑Vereinigung|Deutschen Mathematiker‑Vereinigung]] bei und erweiterte die Ergebnisse ihrer Dissertation auf mehr Variablen. Dabei bewegte sie sich allmählich von konkreten Invariantenberechnungen zu abstrakteren, von Ernst Fischer und David Hilbert beeinflussten Methoden. In dieser Zeit betreute sie auch informell Doktoranden, obwohl die offizielle Anerkennung weiterhin ihrem Vater zufiel – ein Spiegelbild der damals geltenden Hindernisse für den akademischen Aufstieg von Frauen.",
-      "locations": [
-        {
-          "name_historic": "Erlangen",
-          "name_modern": "Erlangen, Deutschland",
-          "centroid": [
-            11.0044,
-            49.5975
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Palermo",
-          "name_modern": "Palermo, Italien",
-          "centroid": [
-            13.3615,
-            38.1157
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Max Noether",
-        "Ernst Sigismund Fischer",
-        "David Hilbert"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Deutsche_Mathematiker-Vereinigung",
-        "https://en.wikipedia.org/wiki/Circolo_Matematico_di_Palermo"
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
       ],
       "event_type_icon": "mdi-school-outline",
-      "chapter": "struggle_for_recognition",
+      "chapter": "seven_unpaid_years",
       "annotations": {
-        "Circolo Matematico di Palermo": {
-          "explanation": "Eine 1884 in Palermo gegründete italienische mathematische Gesellschaft, die im späten 19. und frühen 20. Jahrhundert zu einem der angesehensten internationalen Zentren für die Veröffentlichung mathematischer Forschung wurde.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Circolo_Matematico_di_Palermo"
-        },
-        "Deutsche Mathematiker‑Vereinigung": {
-          "explanation": "Die 1890 gegründete Deutsche Mathematiker-Vereinigung, die als wichtigste Berufsvertretung der Mathematiker im deutschen Sprachraum diente.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Deutsche_Mathematiker-Vereinigung"
+        "invariant theory": {
+          "explanation": "Ein Teilgebiet der Algebra, das Größen oder Ausdrücke untersucht, die unter bestimmten Transformationen unverändert bleiben, häufig unter den Transformationen einer Gruppe.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Invariant_theory"
         }
-      }
+      },
+      "background": "Zu Beginn des 20. Jahrhunderts eröffnete eine Promotion einer Frau noch keine normale deutsche Universitätslaufbahn. Erlangen hatte Frauen erst wenige Jahre zuvor zum regulären Studium zugelassen; der Weg zu einer bezahlten Dozentur und zur Habilitation blieb ihnen faktisch versperrt. Das Mathematische Institut gab Noether dennoch Zugang zum Arbeitsalltag einer Universitätsabteilung, zu ihren Seminaren und wissenschaftlichen Netzwerken. Ihr Vater Max Noether hatte seit 1888 den Erlanger Mathematiklehrstuhl inne und war ein bedeutender algebraischer Geometer; das Institut war daher zugleich beruflicher und familiärer Ort.\n\n## Hilberts Invariantentheorie\n\nDas Forschungsproblem dieser Zeit ging auf David Hilberts bedeutende Arbeiten über Invarianten zurück. Die Invariantentheorie untersucht algebraische Ausdrücke, die unverändert bleiben, wenn eine Transformationsgruppe auf die Variablen wirkt. Hilbert hatte gezeigt, dass sich Polynominvarianten durch eine endliche Zahl von Erzeugern beherrschen lassen – ein Ergebnis, das viele Einzelfallrechnungen durch ein strukturelles Argument ersetzte. Noether verfolgte diese Frage im beweglicheren Rahmen rationaler Funktionen, also von Quotienten aus Polynomen, wo Nenner zusätzliche Schwierigkeiten schaffen.\n\nDas war nicht bloß eine Frage der Bezeichnung. In einem Körper rationaler Funktionen darf man durch jedes von null verschiedene Polynom teilen; ein Argument über Polynominvarianten lässt sich daher nicht automatisch übertragen. Noether untersuchte, wie Hilberts Methoden angepasst werden konnten, um auch hier Endlichkeit und strukturelle Kontrolle zu bewahren. Ihre Arbeit befasste sich außerdem mit Invarianten endlicher Gruppen, deren Transformationen eine unter Verknüpfung und Inversenbildung abgeschlossene endliche Menge bilden. Diese Probleme lagen an der Schnittstelle zwischen der älteren, rechenintensiven Invariantentheorie, in der sie ausgebildet worden war, und der zunehmend abstrakten Algebra, die später ins Zentrum ihrer Arbeit rückte.\n\n## Erlangens Begrenzung und Chance\n\nDie Verhältnisse in Erlangen zeigten sowohl die Begrenzung als auch die Chance dieser Phase: Noether konnte anspruchsvoll lehren und ernsthafte Forschung betreiben, tat dies jedoch ohne den institutionellen Status und die Bezahlung, die normalerweise damit verbunden waren. Die Veröffentlichungen dieser Jahre bewiesen, dass sie nicht mehr bloß mit den Methoden ihres Doktorvaters Paul Gordan arbeitete, sondern sich unmittelbar mit Hilberts einflussreichem Programm auseinandersetzte. Diese Leistungen machten sie zu einer glaubwürdigen Kandidatin, als Göttinger Mathematiker ihre Mitarbeit an Fragen der Algebra und der mathematischen Physik suchten.",
+      "weight": 0.6
     },
     {
       "date": "1915-04",
       "date_precision": "month",
-      "date_note": "Ende April 1915 verließ sie auf Einladung Hilberts und Kleins Erlangen und ging nach Göttingen",
       "age": 33,
-      "title": "Wechsel nach Göttingen trotz Widerstands",
-      "description": "1915 luden David Hilbert und Felix Klein Noether nach Göttingen ein, damals das führende Zentrum mathematischer Forschung, um sie bei algebraischen Problemen zu unterstützen, die sich aus der neuen [[general theory of relativity|allgemeinen Relativitätstheorie]] ergaben. Ihre Berufung stieß bei Mitgliedern der Philosophischen Fakultät auf erbitterten Widerstand; sie lehnten es ab, dass eine Frau [[Privatdozent|Privatdozentin]] werden sollte. Hilbert entgegnete darauf berühmt, eine Universität sei „kein Badehaus“. Noether zog Ende April nach Göttingen, kurz vor dem plötzlichen Tod ihrer Mutter, und begann dort unter Hilberts Namen zu lehren – unbezahlt und ohne offiziellen Status. Zugleich kümmerte sie sich während des Krieges um ihren pensionierten Vater.",
+      "title": "Wechselt nach Göttingen",
+      "description": "Auf Einladung von David Hilbert und Felix Klein arbeitete Noether an mathematischen Fragen im Zusammenhang mit Albert Einsteins Forschung. In Göttingen stieß ihre Berufung als Dozentin auf Widerstand gegen eine Frau im Lehrkörper. Fakultätsmitglieder verhinderten ihre Ernennung zur [[Privatdozent|Privatdozentin]], sodass sie unter Hilberts Namen Lehrveranstaltungen abhielt – ohne offiziellen Status und ohne Gehalt. Kurz darauf starb ihre Mutter Ida Noether unerwartet in Erlangen.",
       "locations": [
-        {
-          "name_historic": "Göttingen",
-          "name_modern": "Göttingen, Deutschland",
-          "centroid": [
-            9.9359,
-            51.5413
-          ],
-          "primary": true
-        },
         {
           "name_historic": "Erlangen",
           "name_modern": "Erlangen, Deutschland",
           "centroid": [
-            11.0039,
+            11.0014,
             49.5897
           ],
           "primary": false
+        },
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Deutschland",
+          "centroid": [
+            9.935,
+            51.5339
+          ],
+          "primary": true
         }
       ],
       "involved_people": [
         "David Hilbert",
         "Felix Klein",
-        "Max Noether",
-        "Ida Amalia Noether"
+        "Ida Noether"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Felix_Klein",
-        "https://en.wikipedia.org/wiki/David_Hilbert"
+        "https://en.wikipedia.org/wiki/Felix_Klein"
       ],
-      "event_type_icon": "mdi-home-switch-outline",
-      "chapter": "struggle_for_recognition",
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/David_Hilbert%2C_1907.jpg/960px-David_Hilbert%2C_1907.jpg",
+          "caption": "David Hilbert, Göttinger Mathematiker",
+          "source": "https://commons.wikimedia.org/wiki/File:David_Hilbert,_1907.jpg",
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "symmetrys_hidden_law",
       "annotations": {
-        "general theory of relativity": {
-          "explanation": "Einsteins 1915 formulierte geometrische Gravitationstheorie, die Schwerkraft als durch Masse und Energie verursachte Krümmung der Raumzeit beschreibt und in den meisten Zusammenhängen die Newtonsche Gravitation ersetzte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/General_relativity"
-        },
         "Privatdozent": {
-          "explanation": "Ein deutscher akademischer Titel für jemanden, der sich habilitiert hat und berechtigt ist, selbstständig an einer Universität zu lehren – gewöhnlich ohne besoldete Professur.",
+          "explanation": "Ein akademischer Rang nach der Habilitation, der das Recht zum selbstständigen Lehren verlieh, gewöhnlich jedoch ohne reguläres Professorengehalt.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
         }
+      },
+      "background": "Zu Beginn des Ersten Weltkriegs war Göttingen bereits ein internationales Zentrum der Mathematik. Felix Klein hatte über Jahrzehnte hinweg mit Lehrstühlen, Seminaren, einem mathematischen Lesesaal und einer Spezialbibliothek eine lebendige Forschungskultur aufgebaut. Obwohl er 1913 emeritiert worden war, blieb er einflussreich. David Hilbert, den Klein 1895 aus Königsberg berufen hatte, war zu einer der zentralen Gestalten der Universität geworden. Ihre Bemühung, eine in Invariantentheorie ausgebildete Mathematikerin für Fragen zu gewinnen, die durch die neue Physik aufgeworfen wurden, spiegelte den ungewöhnlich direkten Austausch zwischen reiner Mathematik und Physik wider.\n\n## Frauen im Lehrkörper\n\nFrauen durften sich ab 1908 an preußischen Universitäten einschreiben, doch die Einschreibung bedeutete noch keinen gleichberechtigten Zugang zu einer akademischen Laufbahn. Die entscheidende Qualifikation war die Habilitation, die einem Gelehrten das selbstständige Lehren als Privatdozent ermöglichte und gewöhnlich Voraussetzung für eine Professur war. In Preußen hatte bis dahin noch keine Frau diese Qualifikation erhalten. Der Widerstand war daher nicht bloß ein Streit um eine einzelne Lehrveranstaltung oder eine vorübergehende Stelle; er stellte grundsätzlich die Frage, ob eine Frau überhaupt in die Universitätsstruktur eintreten durfte.\n\nHilberts Reaktion auf die Einwände der Fakultät wurde zu einer der bekanntesten Episoden in der Geschichte der Frauen an deutschen Hochschulen. Als Gegner den Gedanken einer Dozentin für unangebracht hielten, soll er gesagt haben: „Meine Herren, dies ist eine Universität und kein Badehaus.“ Damit wies er die Vorstellung zurück, das Geschlecht einer Lehrenden sage etwas über ihre wissenschaftliche Eignung aus. Die formale Entscheidung änderte sich dadurch jedoch zunächst nicht. Dass die Lehrveranstaltungen unter Hilberts Namen angekündigt wurden, ermöglichte zwar ihre Arbeit, machte aber zugleich die institutionelle Ungleichheit sichtbar: Unterricht wurde akzeptiert, eigenständige Anerkennung blieb ihr versagt.\n\n## Privater Verlust und Habilitation\n\nDer familiäre Verlust, der darauf folgte, verband diese berufliche Ungewissheit mit einem abrupten persönlichen Einschnitt. Ida Amalia Noether gehörte zum Erlanger Haushalt, in dem Mathematik zum Familienleben gehörte, da ihr Mann Max Noether dort Professor war. Noethers frühe Göttinger Zeit begann somit unter intellektuellem Druck und persönlicher Trauer. Die Sackgasse in der Frage ihres akademischen Status dauerte bis 1919, als der politische Umbruch nach dem Krieg Noether die Habilitation ermöglichte. Damit öffnete sich der Weg zu eigenständiger Lehre in Göttingen, auch wenn eine sichere, bezahlte Professur weiterhin unerreichbar blieb.",
+      "weight": 0.75,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Erlangen, Bayern, Deutschland",
+        "to_location": "Göttingen, Deutschland",
+        "characterization": "akademische Berufung"
       }
     },
     {
-      "date": "1918-07-26",
-      "date_precision": "day",
-      "date_note": "An diesem Tag stellte Felix Klein ihre Arbeit „Invariante Variationsprobleme“ vor der Göttinger Königlichen Gesellschaft der Wissenschaften vor",
+      "date": "1918",
+      "date_precision": "year",
       "age": 36,
-      "title": "Begründet Noethers Theorem",
-      "description": "Kurz nach ihrer Ankunft in Göttingen löste Noether ein grundlegendes Problem der [[calculus of variations|Variationsrechnung]] und bewies, was heute Noethers Theorem genannt wird: Jede differenzierbare Symmetrie der Wirkung eines physikalischen Systems entspricht einem Erhaltungssatz. Ihre Arbeit „Invariante Variationsprobleme“ wurde am 26. Juli 1918 von Felix Klein vor der Göttinger Königlichen Gesellschaft der Wissenschaften vorgestellt, da Noether selbst kein Mitglied war. Das Ergebnis wurde zu einem Grundpfeiler der modernen theoretischen Physik. Es erklärte, weshalb Größen wie Energie und Impuls erhalten bleiben, und beeinflusste die spätere Forschung in der Feld- und Teilchenphysik.",
+      "title": "Veröffentlicht Noethers Theorem",
+      "description": "In Göttingen legte Felix Klein Noethers Arbeit am 26. Juli 1918 der Königlichen Gesellschaft der Wissenschaften vor, da sie selbst kein Mitglied war.",
       "locations": [
         {
           "name_historic": "Göttingen",
           "name_modern": "Göttingen, Deutschland",
           "centroid": [
-            9.934,
-            51.5413
+            9.935,
+            51.533
           ],
           "primary": true
         }
@@ -361,119 +438,170 @@
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Noether%27s_theorem",
-        "https://en.wikipedia.org/wiki/Felix_Klein"
+        "https://en.wikipedia.org/wiki/Noether%27s_theorem"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Noether_theorem_1st_page.png",
-          "caption": "Titelseite von E. Noethers Arbeit „Invariante Variationsprobleme“ (Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, Mathematisch-Physikalische Klasse 1918 (1918): 235–257. <http://eudml.org/doc/59024>), in der sie das gleichnamige Theorem bewies.",
+          "caption": "Erste Seite von Noethers Theorem-Arbeit aus dem Jahr 1918",
           "source": "https://commons.wikimedia.org/wiki/File:Noether_theorem_1st_page.png",
           "creator": "Emmy Noether",
-          "license": "Public domain"
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-file-document",
-      "chapter": "struggle_for_recognition",
-      "annotations": {
-        "calculus of variations": {
-          "explanation": "Ein Teilgebiet der mathematischen Analysis, das untersucht, wie man Funktionen findet, die durch Integrale ausgedrückte Größen minimieren oder maximieren; grundlegend für die Formulierung physikalischer Gesetze und die Herleitung von Bewegungsgleichungen.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Calculus_of_variations"
-        }
+      "chapter": "symmetrys_hidden_law",
+      "background": "Der unmittelbare Anlass war der Umbruch in der mathematischen Physik durch Albert Einsteins allgemeine Relativitätstheorie. Die klassische Mechanik hatte vertraute physikalische Größen wie Energie, Impuls und Drehimpuls mit Regelmäßigkeiten eines Systems verbunden. Die allgemeine Relativitätstheorie arbeitete jedoch mit Gleichungen, die unter beliebigen Koordinatenänderungen unverändert blieben. Diese weitgehende Freiheit erschwerte es, Erhaltungssätze in der gewohnten Form zu formulieren, insbesondere für die Gravitationsenergie. David Hilbert und Felix Klein, die in Göttingen an der Grenze zwischen Mathematik und Physik arbeiteten, baten Noether 1915, das Problem mithilfe der Variationsrechnung zu untersuchen.\n\nIhr Ansatz ging von einer Wirkung aus, einem Integral über die möglichen Verläufe eines physikalischen Systems. Die Bewegungsgleichungen entstehen, wenn kleine Änderungen eines Verlaufs dieses Integral stationär lassen. Statt Erhaltung als empirische Regel nachträglich zu den Gleichungen hinzuzufügen, untersuchte Noether Transformationen, die das Integral unverändert lassen. Das war eine natürliche Fortsetzung ihrer früheren Beherrschung der Invariantentheorie und des Interesses der Göttinger Schule an kontinuierlichen Transformationsgruppen, insbesondere im Sinne von Sophus Lie.\n\nDie Arbeit unterschied zwei Fälle. Das erste Ergebnis betraf Transformationen, die von einer festen, endlichen Zahl kontinuierlicher Parameter abhängen; Verschiebungen und Drehungen sind typische Beispiele. Das zweite behandelte Transformationen, die von beliebigen Funktionen abhängen – genau der subtilere Fall, den die allgemeine Kovarianz der Relativitätstheorie erforderte. Hier ergeben sich Identitäten zwischen den Bewegungsgleichungen statt gewöhnlicher Erhaltungsgrößen. Diese Identitäten erklärten, warum Versuche, die Gravitationsenergie lokal genau wie die Energie in der Newtonschen Mechanik zu formulieren, auf Schwierigkeiten stoßen. Hilberts Formulierung der Gravitationsfeldgleichungen hatte das Problem nahegelegt; Noether lieferte dafür den allgemeinen mathematischen Rahmen.\n\n## Noethers Stellung in Göttingen\n\nDie Arbeit zeigte auch, wie ungewöhnlich Noethers Stellung in Göttingen weiterhin war. Obwohl Hilbert und Klein sie in ihren Forschungskreis aufgenommen hatten, schränkten die akademischen Regeln ihren Status und ihre öffentliche Rolle noch immer ein. Die Vorlage der Arbeit bei der Gelehrtengesellschaft war daher auf die Fürsprache eines älteren Kollegen angewiesen. Ihre Bedeutung ging weit über den ursprünglichen Streit um die Relativitätstheorie hinaus: Das erste Ergebnis wurde zu einem grundlegenden Ordnungsprinzip der klassischen Mechanik, der Quantentheorie und der Teilchenphysik; das zweite wurde für die mathematische Behandlung von Eichtheorien und der allgemeinen Relativitätstheorie unverzichtbar. Eine englische Übersetzung von M. A. Tavel aus dem Jahr 1971 machte das ursprüngliche Argument später einem größeren Leserkreis zugänglich.",
+      "weight": 1.0,
+      "event_class": {
+        "type": "publication",
+        "title": "Invariante Variationsprobleme",
+        "publication_type": "paper",
+        "significance": "grundlegendes Theorem",
+        "impact": "Die Arbeit formulierte den Zusammenhang zwischen kontinuierlichen Symmetrien und Erhaltungssätzen in der Variationsphysik."
       }
     },
     {
       "date": "1919-06",
       "date_precision": "month",
-      "date_note": "Ihre mündliche Prüfung fand Ende Mai 1919 statt, die Habilitationsvorlesung folgte im Juni",
       "age": 37,
-      "title": "Habilitation und Privatdozentur",
-      "description": "Nachdem der Erste Weltkrieg und die [[German Revolution of 1918–1919|Deutsche Revolution von 1918/19]] einige Beschränkungen für Frauen gelockert hatten, erlaubte Göttingen Noether schließlich, die [[habilitation|Habilitation]] zu beantragen. Ende Mai 1919 bestand sie ihre mündliche Prüfung und hielt im Juni ihre Antrittsvorlesung, womit sie [[Privatdozent|Privatdozentin]] für Mathematik wurde. Im Herbst bot sie erstmals eine offiziell unter ihrem eigenen Namen angekündigte Lehrveranstaltung an. Ein Gehalt erhielt sie weiterhin nicht; damit war ihre formale, aber nur teilweise anerkannte Aufnahme in die Fakultät markiert.",
+      "title": "Schließt die Habilitation ab",
+      "description": "Nachdem die deutsche Revolution die rechtlichen Hindernisse für den akademischen Aufstieg von Frauen beseitigt hatte, gestattete Göttingen Noether die Habilitation. Im Juni hielt sie die vorgeschriebene Antrittsvorlesung und wurde zur [[Privatdozent|Privatdozentin]]; im Herbst wurden ihre Lehrveranstaltungen unter ihrem eigenen Namen angekündigt.",
       "locations": [
         {
           "name_historic": "Göttingen",
           "name_modern": "Göttingen, Deutschland",
           "centroid": [
-            9.932966,
-            51.54128
+            9.935,
+            51.541
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
+      "involved_people": [
+        "David Hilbert",
+        "Felix Klein"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Habilitation"
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
       ],
       "event_type_icon": "mdi-school-outline",
-      "chapter": "struggle_for_recognition",
+      "chapter": "symmetrys_hidden_law",
       "annotations": {
-        "German Revolution of 1918–1919": {
-          "explanation": "Ein Bürgerkrieg und politischer Umbruch am Ende des Ersten Weltkriegs, der die deutsche Monarchie stürzte und zur Gründung der Weimarer Republik führte; damit gingen auch Reformen wie eine teilweise Erweiterung der Frauenrechte einher.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/German_Revolution_of_1918%E2%80%931919"
-        },
-        "habilitation": {
-          "explanation": "Eine im deutschen Sprachraum übliche nach der Promotion erworbene Qualifikation, die die Befähigung zur selbstständigen Lehre und Forschungsbetreuung an einer Universität bescheinigt.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Habilitation"
-        },
         "Privatdozent": {
-          "explanation": "Ein akademischer Titel an deutschsprachigen Universitäten für jemanden, der zur selbstständigen Lehre befähigt ist, gewöhnlich nach der Habilitation, Lehrveranstaltungen anbieten darf, aber meist keine besoldete Professur innehat.",
+          "explanation": "Ein deutscher Universitätslehrer mit der Qualifikation zum selbstständigen Unterricht, gewöhnlich ohne bezahlte Professur.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
         }
-      }
+      },
+      "background": "An der Universität Göttingen war die Habilitation die entscheidende Qualifikation nach der Promotion. Sie bescheinigte einem Gelehrten die Fähigkeit zu eigenständiger Forschung und universitärer Lehre, verlieh aber weder ein sicheres Gehalt noch einen Lehrstuhl. Göttingen hatte Studentinnen bereits seit den 1890er Jahren zugelassen, und preußische Universitäten öffneten 1908 die reguläre Einschreibung für Frauen; der Weg in den Lehrkörper blieb dennoch faktisch versperrt. Besonders deutlich wurde dies, nachdem Noether 1915 nach Göttingen gekommen war, das Felix Klein zu einem führenden internationalen Zentrum ausgebaut hatte.\n\nKlein und David Hilbert unterstützten ihre Bewerbung, doch andere Fakultätsmitglieder wandten sich gegen eine Frau im Lehrkörper. Mehrere Jahre lang hielt sie ihre Lehrveranstaltungen in einer Notlösung ab: Im Vorlesungsverzeichnis erschienen sie unter Hilberts Namen, während Noether den Unterricht tatsächlich weitgehend übernahm. Die Regelung verschaffte den Studierenden Zugang zu ihrer Lehre, verweigerte ihr aber den formalen Status, den ihre wissenschaftliche Arbeit verdient hatte. Ihre Habilitationsschrift „Invarianten beliebiger Differentialausdrücke“ gehörte zur Invariantentheorie, dem Gebiet der mathematischen Eigenschaften, die unter bestimmten Transformationen unverändert bleiben.\n\nDer Streit um ihre Zulassung brachte jene Episode hervor, die am häufigsten mit Göttingens Widerstand verbunden wird. Als Kollegen das Geschlecht der Bewerberin als Grund für ihren Ausschluss betrachteten, soll Hilbert geantwortet haben, er sehe nicht, inwiefern das Geschlecht ein Argument gegen die Zulassung einer Privatdozentin sei; schließlich sei man „an einer Universität und nicht in einem Badehaus“. Die Bemerkung machte sowohl die Engstirnigkeit des Einwands als auch Hilberts Weigerung deutlich, ihn als akademisch relevant anzuerkennen.\n\n## Eine unbezahlte Professur\n\nDer politische Umbruch nach dem Krieg machte es möglich, eine Stellung zu legalisieren, die Göttingen informell jahrelang hinausgezögert hatte. Der neue Status gab Noether einen eigenständigen Platz im Lehrbetrieb der mathematischen Abteilung, blieb aber weit von einer bezahlten Professur entfernt. Ihre Lehre konnte nun unmittelbar Studierende für ihren Zugang zur Algebra gewinnen, während ihr späterer offizieller Professorentitel unbezahlt blieb. Die Episode bedeutete somit eine wirkliche institutionelle Öffnung, zeigte aber zugleich deren Grenzen: Anerkennung erhielt sie erst nach Jahren einer Tätigkeit ohne die übliche Sicherheit und Autorität eines Universitätsamtes.",
+      "weight": 0.75
     },
     {
       "date": "1921",
       "date_precision": "year",
       "age": 39,
-      "title": "Begründet die noethersche Ringtheorie",
-      "description": "1921 veröffentlichte Noether ihre bahnbrechende Arbeit „[[Idealtheorie in Ringbereichen|Idealtheorie in Ringbereichen]]“, die die Theorie der kommutativen Ringe und Ideale in radikal abstrakter Form neu fasste. Sie führte die [[ascending chain condition|aufsteigende Kettenbedingung]] für Ideale ein und nutzte sie, um die Klasse der „[[Noetherian ring|noetherschen]]“ Ringe und Moduln zu schaffen, die für die moderne Algebra und algebraische Geometrie zentral werden sollte. Diese Arbeit leitete ihre zweite schöpferische Epoche ein, in der sie unterschiedliche algebraische Ergebnisse zu einer mächtigen Strukturtheorie systematisierte und vereinheitlichte.",
+      "title": "Ordnet die Idealtheorie neu",
+      "description": "In Göttingen veröffentlichte Noether die Arbeit in den Mathematischen Annalen, während sich ihre Forschung entschieden von der Invariantentheorie zur strukturellen Untersuchung der Algebra wandte.",
       "locations": [
         {
           "name_historic": "Göttingen",
           "name_modern": "Göttingen, Deutschland",
           "centroid": [
-            9.934,
-            51.5413
+            9.935,
+            51.533
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Deutschland",
+          "centroid": [
+            12.373,
+            51.34
+          ],
+          "primary": false
         }
       ],
-      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
         "https://en.wikipedia.org/wiki/Noetherian_ring"
       ],
       "event_type_icon": "mdi-file-document",
-      "chapter": "architect_of_modern_algebra",
-      "annotations": {
-        "Idealtheorie in Ringbereichen": {
-          "explanation": "Titel von Noethers Arbeit aus dem Jahr 1921, gewöhnlich übersetzt als „Theory of Ideals in Ring Domains“; sie gilt als Gründungsarbeit der modernen abstrakten Idealtheorie in der kommutativen Algebra.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Emmy_Noether"
-        },
-        "ascending chain condition": {
-          "explanation": "Eine Endlichkeitsbedingung für eine teilweise geordnete Menge, nach der jede aufsteigende Folge von Elementen schließlich stabil wird; in der Ringtheorie schränkt sie ein, wie Ideale wachsen können.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Artinian_module#Ascending_chain_condition"
-        },
-        "Noetherian ring": {
-          "explanation": "Ein kommutativer Ring, in dem jede aufsteigende Kette von Idealen stabil wird; gleichbedeutend damit, dass jedes Ideal endlich erzeugt ist. Diese Klasse bildet eine Grundlage großer Teile der modernen algebraischen Geometrie und kommutativen Algebra.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Noetherian_ring"
-        }
+      "chapter": "algebra_finds_its_voice",
+      "background": "In den frühen 1920er Jahren war Göttingen dank seiner Seminare, seiner bedeutenden Bibliothek und der internationalen Reichweite der Mathematischen Annalen eines der wichtigsten Zentren der Mathematik. Die Algebra war jedoch noch häufig um bestimmte Gleichungen, Zahlensysteme oder geometrische Probleme organisiert. Die ältere Idealtheorie war aus Richard Dedekinds Arbeiten über algebraische Zahlen erwachsen, während David Hilberts Forschung über Polynomgleichungen mächtige Endlichkeitsresultate geliefert hatte. Die Methoden waren wirksam, doch ihre gemeinsame Grundstruktur war noch nicht zum eigentlichen Gegenstand der Untersuchung geworden.\n\n## Der Aufsatz von 1921\n\nDer Aufsatz erschien 1921 im 83. Band der Mathematischen Annalen auf den Seiten 24–66. Er behandelte einen Ring als eigenständiges mathematisches Gebilde und nicht bloß als Sammlung von Zahlen oder Polynomen, die einem anderen Problem dient. Der Ansatz verband mehrere Entwicklungslinien: Hilberts Basissatz, die Arbeiten Ernst Kummers und Dedekinds in der Zahlentheorie sowie Emanuel Laskers Untersuchung von Polynomidealen aus dem Jahr 1905. Lasker hatte einen Zerlegungssatz für Polynomideale bewiesen; Noethers neue Darstellung schuf einen Rahmen, in dem sich solche Fragen wesentlich allgemeiner stellen und beantworten ließen.\n\nDie zentrale Endlichkeitsbedingung ist auch für Laien unmittelbar verständlich. Man beginnt mit einem Ideal, vergrößert es, vergrößert es erneut. In vielen Ringen könnte eine solche streng anwachsende Folge prinzipiell endlos weitergehen. In den hier betrachteten Ringen muss der Vorgang nach endlich vielen Schritten abbrechen. Gleichbedeutend lässt sich sagen, dass jedes Ideal von endlich vielen Elementen erzeugt werden kann. Diese Gleichwertigkeit machte die Bedingung besonders nützlich: Eine scheinbar unbegrenzte Frage über alle möglichen algebraischen Kombinationen wurde auf endlich viele Daten zurückgeführt. Der Aufsatz bewies außerdem einen allgemeinen Primärzerlegungssatz und zeigte, dass sich Ideale in diesem Rahmen in endlich viele elementarere Bestandteile zerlegen lassen.\n\n## Noethersche Ringe\n\nDie Arbeit trug dazu bei, die strukturelle Algebra zu einer gemeinsamen Sprache statt zu einer Sammlung spezieller Techniken zu machen. Ringe, die ihre Endlichkeitsbedingung erfüllen, wurden als noethersche Ringe bezeichnet; der Zerlegungssatz ist als Satz von Lasker-Noether bekannt. Diese Sichtweise wurde rasch in die entstehende abstrakte Algebra aufgenommen und schuf später ein grundlegendes technisches Gerüst für algebraische Geometrie und kommutative Algebra. Bartel Leendert van der Waerdens zweibändiges Werk Moderne Algebra, das 1930 und 1931 erschien und vom Göttinger algebraischen Umfeld geprägt war, trug diese Denkweise einem weit größeren mathematischen Publikum zu.",
+      "weight": 1.0,
+      "event_class": {
+        "type": "publication",
+        "title": "Idealtheorie in Ringbereichen",
+        "publication_type": "paper",
+        "significance": "bahnbrechender algebraischer Aufsatz",
+        "impact": "Die Arbeit rückte die Idealtheorie kommutativer Ringe ins Zentrum der strukturellen Untersuchung der abstrakten Algebra."
       }
     },
     {
-      "date": "1924",
+      "date": "1922",
       "date_precision": "year",
-      "age": 42,
-      "title": "Leitet Göttinger Algebra-Schule",
-      "description": "Mitte der 1920er Jahre war Noether das geistige Zentrum einer blühenden algebraischen Schule in [[Göttingen|Göttingen]], die unter ihren ergebenen Schülern informell als „Noether Boys“ bekannt war. 1924 stieß der junge niederländische Mathematiker Bartel Leendert van der Waerden zu ihrem Kreis, nahm ihre Ideen auf und systematisierte sie später in seinem einflussreichen Lehrbuch „Moderne Algebra“, dessen zweiter Band weitgehend auf ihren Vorlesungen beruhte. Durch ihre großzügige Bereitschaft, Probleme und Methoden zu teilen, gab Noether den Anstoß zu bedeutenden Fortschritten ihrer Schüler und Kollegen – von der Körpertheorie bis zur algebraischen Topologie.",
+      "age": 40,
+      "title": "Erhält den Professorentitel",
+      "description": "Das preußische Ministerium für Wissenschaft, Kunst und Volksbildung verlieh Noether an der Universität Göttingen den Titel einer [[non-civil-service extraordinary professor|nicht beamteten außerordentlichen Professorin]]. Der Titel würdigte ihre Lehr- und Forschungstätigkeit, brachte jedoch weder die sichere noch die bezahlte Stellung einer regulären Professur.",
       "locations": [
         {
           "name_historic": "Göttingen",
           "name_modern": "Göttingen, Deutschland",
           "centroid": [
-            9.934,
-            51.5413
+            9.935,
+            51.533
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
+      ],
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "algebra_finds_its_voice",
+      "annotations": {
+        "non-civil-service extraordinary professor": {
+          "explanation": "Ein deutscher akademischer Rang unterhalb einer mit Lehrstuhl und Beamtenstatus verbundenen Professur; er verlieh den Titel, nicht aber die Sicherheit und das Gehalt einer regulären staatlichen Ernennung."
+        }
+      },
+      "background": "Deutsche Universitäten hatten erst vor kurzer Zeit begonnen, ihre formalen akademischen Ränge für Frauen zu öffnen. Preußen ließ Frauen seit 1908 als reguläre Studentinnen zu, doch der Zugang zum akademischen Beruf blieb dadurch nicht frei. Eine Professur bedeutete gewöhnlich eine staatliche Ernennung, ein Gehalt und meist einen Lehrstuhl innerhalb einer Fakultät. Der Unterschied zwischen ordentlicher Professorin, außerordentlicher Professorin und Privatdozentin war daher nicht bloß eine Frage des Ansehens, sondern bestimmte auch Lehrbefugnis, Prüfungsrechte und den Lebensunterhalt.\n\n## Göttingen und Noether\n\nDurch die Arbeit Felix Kleins und David Hilberts war Göttingen zu einem der führenden mathematischen Zentren Europas geworden. Seine mathematische Kultur beruhte auf Vorlesungen, Seminaren und der Zeitschrift Mathematische Annalen, über die Forschung international verbreitet wurde. Die anfängliche Reaktion der Fakultät auf eine Mathematikerin im Lehrbetrieb zeigte jedoch die Grenzen dieser Kultur. Als Hilbert und Klein Noether während des Ersten Weltkriegs nach Göttingen holen wollten, protestierten Kollegen gegen eine Dozentin. Hilbert soll erwidert haben: „Ich sehe nicht, dass das Geschlecht der Bewerberin ein Argument gegen ihre Zulassung als Privatdozentin ist. Schließlich sind wir eine Universität und kein Badehaus.“\n\n## Eine nichtbeamtete Kategorie\n\nDer institutionelle Kompromiss war mehrere Jahre lang besonders deutlich: Noether hielt Lehrveranstaltungen, die zunächst unter Hilberts Namen angekündigt wurden. Die erfolgreiche Habilitation beseitigte ein formales Hindernis, indem sie sie zur selbstständigen Lehre berechtigte, garantierte aber keine akademische Stelle. Die spätere Professorenbezeichnung erkannte eine offenkundige Tatsache in Göttingen an – Studierende und Kollegen suchten bereits ihre Lehre und ihre Ideen –, bewahrte jedoch eine Hierarchie, die ihr die materiellen Bedingungen eines Lehrstuhls vorenthielt. Die staatliche Kategorie einer nichtbeamteten Professur machte diese Anerkennung möglich, ohne eine reguläre Professur zu schaffen.\n\nVon 1923 an erhielt sie eine kleine Vergütung für ihre Lehrveranstaltungen, jedoch nicht das Gehalt oder die Sicherheit einer regulären Professur. Die Episode korrigiert daher die einfache Aussage, Noether sei „Professorin geworden“: Der Titel bedeutete echte berufliche Anerkennung, dokumentierte aber zugleich, wie ungleich diese Anerkennung für Frauen an deutschen Hochschulen blieb.",
+      "weight": 0.6,
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Mathematische_Annalen_1869_Titel.jpg",
+          "caption": "Scan des Buches „Mathematische Annalen“",
+          "source": "https://commons.wikimedia.org/wiki/File:Mathematische_Annalen_1869_Titel.jpg",
+          "creator": "Alfred Clebsch",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Mathematische Annalen journal"
+        }
+      ]
+    },
+    {
+      "date": "1924",
+      "date_precision": "year",
+      "age": 42,
+      "title": "Baut Göttingens Algebra-Kreis auf",
+      "description": "1924 schloss sich der niederländische Mathematiker B. L. van der Waerden Noethers Göttinger Kreis an und studierte ihren Zugang zur Algebra. Noether lehrte und diskutierte Mathematik mit einer wachsenden Gruppe von Studierenden und Kollegen, die später als „Noether Boys“ bezeichnet wurden.",
+      "locations": [
+        {
+          "name_historic": "Göttingen",
+          "name_modern": "Göttingen, Deutschland",
+          "centroid": [
+            9.935,
+            51.533
           ],
           "primary": true
         }
@@ -482,24 +610,30 @@
         "Bartel Leendert van der Waerden"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Emmy_Noether",
         "https://de.wikipedia.org/wiki/Bartel_Leendert_van_der_Waerden"
       ],
-      "event_type_icon": "mdi-microscope",
-      "chapter": "architect_of_modern_algebra",
-      "annotations": {
-        "Göttingen": {
-          "explanation": "Universitätsstadt in Niedersachsen, die im späten 19. und frühen 20. Jahrhundert zu einem der weltweit führenden Zentren der Mathematik und Physik wurde und Persönlichkeiten wie Hilbert, Klein und Noether anzog.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/G%C3%B6ttingen"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/ErnstWitt_PaulBernays_etc_1932_MFO.jpg",
+          "caption": "Emmy Noether im Kreis Göttinger Mathematikkollegen",
+          "source": "https://commons.wikimedia.org/wiki/File:ErnstWitt_PaulBernays_etc_1932_MFO.jpg",
+          "creator": "Natascha Artin",
+          "license": "CC BY-SA 2.0 de",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/de/deed.en"
         }
-      }
+      ],
+      "event_type_icon": "mdi-account-multiple",
+      "chapter": "algebra_finds_its_voice",
+      "background": "Mitte der 1920er Jahre war Göttingen eines der wichtigsten Zentren mathematischer Forschung. Felix Kleins institutioneller Aufbau und David Hilberts langjährige Tätigkeit hatten die Universität für junge Mathematiker aus dem Ausland besonders attraktiv gemacht. Zugleich bot das Umfeld fruchtbaren Boden für einen Wandel der Algebra. Während sich die Algebra des 19. Jahrhunderts vielfach auf das Lösen von Gleichungen und die Umformung expliziter Formeln konzentriert hatte, interessierte sich eine jüngere Generation zunehmend für Eigenschaften, die ganzen Klassen mathematischer Systeme gemeinsam sind.\n\n## Noethers strukturelle Algebra\n\nNoethers Arbeiten gaben dieser strukturellen Wende eine besonders entschiedene Form. Statt ein Polynom oder eine Zahlenmenge als isoliertes Objekt zu behandeln, fragte sie, was aus den Regeln für Ringe, Ideale und verwandte Systeme folgt. Ein Ideal ist in diesem Zusammenhang eine Teilmenge eines Rings, die unter der Multiplikation mit beliebigen Ringelementen stabil bleibt. So lassen sich Teilbarkeit und Gleichungen in einem allgemeinen Rahmen ordnen. Die Methode verband Fragen, die zuvor getrennt behandelt worden waren, und stellte Algebraikern Begriffe zur Verfügung, die in Zahlentheorie, Geometrie und Darstellungstheorie einsetzbar waren.\n\nVan der Waerden stand damals noch am Anfang seiner Laufbahn. Er hatte seine mathematischen Prüfungen in Amsterdam abgelegt und setzte sein Studium im Ausland fort. Göttingen bot mehr als formale Vorlesungen: Zur mathematischen Kultur gehörten Seminare, Lektüre und intensive persönliche Gespräche, in denen sich vorläufige Argumente prüfen ließen, bevor sie gedruckt wurden. Neben Stoffen aus dem Umfeld Emil Artins nahm van der Waerden auch diese Art auf, Algebra zu ordnen. Das Ergebnis war sein zweibändiges Lehrbuch Moderne Algebra, dessen erster Band 1930 erschien. Es schöpfte aus Vorlesungen Noethers und Artins und stellte die neue strukturelle Algebra in einer zusammenhängenden, lehrbaren Form dar.\n\n## Der Einfluss der Modernen Algebra\n\nDas Lehrbuch war bedeutsam, weil es Methoden aus einem konzentrierten deutschen Forschungsumfeld zu Studierenden und Forschern weit darüber hinaus trug. Über Jahrzehnte wurde es zum Standardwerk und half, die abstrakte Algebra als zentrale Sprache der Mathematik des 20. Jahrhunderts zu etablieren. Die informelle Bezeichnung „Noether Boys“ ist zwar männlich und erfasst nicht alle von ihr beeinflussten Personen, verweist aber auf die ungewöhnlich starke geistige Verbundenheit der Studierenden und jüngeren Kollegen, die ihre Methoden übernahmen und weiterentwickelten. Ihre spätere Arbeit trug dazu bei, den Göttinger Ansatz an Universitäten Europas und der Vereinigten Staaten zu verbreiten.",
+      "weight": 0.7
     },
     {
       "date": "1932-09",
       "date_precision": "month",
-      "date_note": "Der Internationale Mathematikerkongress in Zürich fand im September 1932 statt",
       "age": 50,
-      "title": "Plenarvortrag beim ICM in Zürich",
-      "description": "Im September 1932 hielt Noether auf dem Internationalen Mathematikerkongress in Zürich einen Plenarvortrag – eine herausragende Ehrung, die ihren Rang als eine der führenden Algebraikerinnen der Welt widerspiegelte. In ihrem Vortrag stellte sie einem internationalen Publikum, zu dem viele der bedeutendsten Mathematiker ihrer Zeit gehörten, die neuesten Entwicklungen der Idealtheorie und der [[noncommutative algebra|nichtkommutativen Algebra]] vor. Zu diesem Zeitpunkt war ihr Ruf fest etabliert. Persönlichkeiten wie Albert Einstein und Hermann Weyl priesen sie öffentlich als bedeutendste Frau in der Geschichte der Mathematik.",
+      "title": "Spricht auf dem Internationalen Kongress",
+      "description": "Noether hielt in Zürich einen Plenarvortrag auf dem Internationalen Mathematikerkongress. Ihre Einladung rückte ihre Arbeit auf dem Kongress vor ein internationales mathematisches Publikum.",
       "locations": [
         {
           "name_historic": "Zürich",
@@ -511,65 +645,81 @@
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Emmy_Noether",
         "https://en.wikipedia.org/wiki/International_Congress_of_Mathematicians"
       ],
-      "event_type_icon": "mdi-school-outline",
-      "chapter": "architect_of_modern_algebra",
-      "annotations": {
-        "noncommutative algebra": {
-          "explanation": "Ein Teilgebiet der Algebra, in dem die Multiplikation von Elementen nicht notwendig kommutativ ist, also ab nicht gleich ba sein muss; mit wichtigen Anwendungen in der Ringtheorie und Quantenmechanik.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Noncommutative_ring_theory"
-        }
-      }
+      "event_type_icon": "mdi-account-group",
+      "chapter": "algebra_finds_its_voice",
+      "background": "Das Zürcher Treffen fand in einer komplizierten Phase der internationalen Organisation der Mathematik statt. Der erste offizielle Internationale Mathematikerkongress hatte 1897 in Zürich getagt; die Kongresse nach dem Ersten Weltkrieg waren jedoch durch eine Regel beeinträchtigt, die Mathematiker aus den ehemaligen Mittelmächten ausschloss. Die Tagungen in Straßburg 1920 und Toronto 1924 waren deshalb umstritten, und selbst die Frage, ob sie als reguläre Kongresse gelten sollten, blieb offen. 1932 sollte die Zusammenkunft wieder ein tatsächlich internationales Forum werden.\n\nDiese ungeklärte Vorgeschichte wurde bei der Eröffnung ausdrücklich thematisiert. Hermann Weyl, der damals eng mit Zürich und Göttingen verbunden war, scherzte, der neu eröffnete Kongress habe einen Index n mit „7 ≤ n ≤ 9“, doch die axiomatischen Grundlagen der Mathematiker erlaubten keine genauere Bestimmung. Der Witz verwandelte einen Verwaltungsstreit in einen mathematischen. Zugleich erklärt er, warum die späteren ICMs nicht nummeriert wurden: Die Organisatoren vermieden eine nachträgliche Entscheidung darüber, welche unterbrochenen Nachkriegstagungen als rechtmäßige Kongresse gelten sollten.\n\n## Hyperkomplexe Größen und Darstellungstheorie\n\nDer gedruckte Titel von Noethers Beitrag lautete „Hyperkomplexe Größen und Darstellungstheorie“. „Hyperkomplex“ war damals ein weiter Begriff für algebraische Systeme, die gewöhnliche komplexe Zahlen erweitern, darunter auch Systeme, in denen die Multiplikation nicht kommutativ sein muss. Die Darstellungstheorie untersucht, wie sich ein abstraktes algebraisches Objekt durch Transformationen eines Vektorraums verwirklichen lässt, sodass strukturelle Fragen mithilfe von Matrizen und linearen Operationen behandelt werden können. Das Thema passte zu einem Fach im Wandel: Die Algebra entfernte sich von der Bearbeitung einzelner Gleichungen und wandte sich Ringen, Körpern, Gruppen, Idealen und ihren strukturellen Beziehungen zu.\n\nDiese Wende hatte durch Bartel van der Waerdens Lehrbuch Moderne Algebra bereits ein breiteres Publikum erreicht. Der erste Band erwuchs aus Vorlesungen Noethers und Emil Artins und wurde zu einem einflussreichen Träger des neuen strukturellen Ansatzes. Die Einladung nach Zürich würdigte daher Arbeiten im Zentrum einer sich entwickelnden mathematischen Sprache, keine enge Spezialdisziplin. Zugleich markierte sie einen Einschnitt in der Geschlechtergeschichte des Kongresses: Noether war die erste Frau, die einen Plenarvortrag auf einem ICM hielt. Erst 1990, 58 Jahre später, folgte mit Karen Uhlenbeck in Kyōto die nächste Frau. Das lange Intervall zeigt sowohl die besondere Bedeutung der Einladung als auch die fortbestehenden Hindernisse für die volle Sichtbarkeit von Frauen in der internationalen Mathematik.",
+      "weight": 0.65
     },
     {
-      "date": "1933-04",
-      "date_precision": "month",
-      "date_note": "Nach der nationalsozialistischen Machtübernahme und dem Beamtengesetz vom April 1933 wurde sie als Jüdin und politisch Verdächtige aus ihrer Göttinger Stelle entlassen",
+      "date": "1933",
+      "date_precision": "year",
       "age": 51,
-      "title": "Von den Nazis aus Göttingen entlassen",
-      "description": "Nachdem die Nationalsozialisten 1933 an die Macht gekommen waren und [[Law for the Restoration of the Professional Civil Service|Gesetze zur Entfernung von Juden und politischen Gegnern aus den deutschen Universitäten]] erlassen hatten, wurde Noether kurzerhand von ihrer Stelle in Göttingen entfernt. Ihr Algebra-Seminar wurde abrupt aufgelöst, ihre Schüler wurden auseinandergetrieben und Göttingens Vorrangstellung in der Algebra beendet. Kollegen wie David Hilbert protestierten vergeblich. Für Noethers Lebenswerk in Deutschland bedeutete dieser Vorgang einen erschütternden persönlichen und beruflichen Bruch.",
+      "title": "Flieht aus Nazi-Deutschland",
+      "description": "Die nationalsozialistische Rassengesetzgebung entfernte Juden aus deutschen Universitätsämtern und beendete Noethers Stellung in Göttingen. Mit Unterstützung amerikanischer akademischer Kollegen fand sie am Bryn Mawr College eine neue akademische Heimat und hielt außerdem Vorlesungen am Institute for Advanced Study.",
       "locations": [
         {
           "name_historic": "Göttingen",
           "name_modern": "Göttingen, Deutschland",
           "centroid": [
-            9.93699,
-            51.54128
+            9.935,
+            51.533
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Bryn Mawr",
+          "name_modern": "Bryn Mawr, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.316,
+            40.02
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "David Hilbert"
+        "Anna Pell Wheeler",
+        "Marion Park",
+        "Abraham Flexner",
+        "Oswald Veblen"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Law_for_the_Restoration_of_the_Professional_Civil_Service",
-        "https://en.wikipedia.org/wiki/David_Hilbert"
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
       ],
-      "event_type_icon": "mdi-exit-to-app",
-      "chapter": "architect_of_modern_algebra",
-      "annotations": {
-        "Law for the Restoration of the Professional Civil Service": {
-          "explanation": "Ein am 7. April 1933 erlassenes nationalsozialistisches Gesetz, das die Entlassung jüdischer und politisch unzuverlässiger Beamter, darunter Hochschullehrer, aus dem Staatsdienst anordnete.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Law_for_the_Restoration_of_the_Professional_Civil_Service"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Entrance_Bryn_Mawr.JPG/960px-Entrance_Bryn_Mawr.JPG",
+          "caption": "Eingang zum Bryn Mawr College",
+          "source": "https://commons.wikimedia.org/wiki/File:Entrance_Bryn_Mawr.JPG",
+          "creator": "Smallbones",
+          "license": "Public domain",
+          "licenseUrl": null
         }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "exile_across_the_atlantic",
+      "background": "Die Entfernung jüdischer Wissenschaftler war Teil der raschen nationalsozialistischen Gleichschaltung öffentlicher Einrichtungen im Jahr 1933. Das am 7. April verkündete Gesetz zur Wiederherstellung des Berufsbeamtentums machte „nichtarische“ Beamte entlassbar, mit einer begrenzten Ausnahme für Teilnehmer am Ersten Weltkrieg. Da Universitäten staatliche Einrichtungen waren, erreichte das Gesetz unmittelbar Professoren und Dozenten. Göttingen, eines der weltweit führenden Zentren für Mathematik und Physik, wurde besonders schwer getroffen, weil jüdische und politisch missliebige Wissenschaftler einen wichtigen Teil seiner geistigen Gemeinschaft bildeten.\n\nDie Entlassungen zerstörten ein dichtes Netz aus Seminaren, Studierenden und Mitarbeitern, statt lediglich einzelne Stellen zu beseitigen. Auch Richard Courant, Max Born und andere mit Göttingen verbundene führende Persönlichkeiten wurden vertrieben oder gingen unter dem Druck. David Hilbert, damals bereits emeritiert, aber weiterhin der berühmteste Mathematiker der Universität, soll auf die Frage des nationalsozialistischen Bildungsministers Bernhard Rust nach dem Zustand der Göttinger Mathematik geantwortet haben, dort gebe es keine Mathematik mehr. Die Bemerkung machte die unmittelbaren Kosten der Säuberung sichtbar.\n\n## Akademische Zuflucht in Amerika\n\nAmerikanische Hochschulen und neue Forschungseinrichtungen wurden zu entscheidenden Rettungswegen, boten jedoch keine gleichen Bedingungen. Am Bryn Mawr College halfen die Leiterin des Mathematikdepartments Anna Pell Wheeler und die Präsidentin Marion Park, Noether eine Stelle zu sichern. Wheeler hatte in Göttingen studiert und wusste dessen mathematische Kultur zu schätzen. Die Berufung brachte eine international bekannte Forscherin an ein kleines College für Frauen, wo fortgeschrittene Studentinnen eng mit ihr arbeiten konnten. Das erst wenige Jahre zuvor gegründete Institute for Advanced Study eröffnete ihr außerdem Zugang zum Forschungsumfeld in Princeton. Die Einladung stand mit Direktor Abraham Flexner und dem Mathematiker Oswald Veblen in Verbindung. Die frühen Regeln des Instituts sahen Frauen jedoch nicht als reguläre Mitglieder des Lehrkörpers vor; seine Beziehung zu Noether blieb daher begrenzter und informeller, als die Bedeutung ihrer Vorträge vermuten lässt.\n\nDiese Regelungen zeigen Reichweite und Grenzen akademischer Zuflucht in den Vereinigten Staaten. Bryn Mawr bot eine stabile Basis und Studierende, Princeton den Kontakt zu einem größeren internationalen Kreis von Mathematikern. Die erzwungene Zerstreuung deutscher Gelehrter übertrug zugleich Teile der Göttinger Seminarkultur über den Atlantik: informelle Diskussion, genaue Aufmerksamkeit für die Arbeit der Studierenden und Forschung im gemeinsamen Austausch. Kurzfristig bedeutete die Emigration jedoch die Zerstörung des beruflichen Umfelds, in dem Noether fast zwei Jahrzehnte gearbeitet hatte, und die Zersplitterung einer für die moderne Mathematik zentralen Universitätsabteilung.",
+      "weight": 0.9,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Deutschland",
+        "to_location": "Vereinigte Staaten",
+        "characterization": "nationalsozialistische Verfolgung"
       }
     },
     {
       "date": "1935-04-14",
       "date_precision": "day",
       "age": 53,
-      "title": "Tod in Pennsylvania",
-      "description": "Im April 1935 wurde Noether in [[Pennsylvania|Pennsylvania]] wegen einer Zyste operiert, bei der es sich Berichten zufolge um eine Gebärmutter- oder Eierstockzyste handelte. Zunächst schien sie sich gut zu erholen, doch eine plötzlich auftretende postoperative Infektion führte am 14. April zu ihrem Tod. Sie wurde 53 Jahre alt. Kollegen in den Vereinigten Staaten und Europa, darunter Albert Einstein, verfassten Nachrufe, in denen sie sowohl die Tiefe ihrer mathematischen Leistungen als auch ihre selbstlose, begeisterte Hingabe an Studierende und Mitarbeiter hervorhoben.",
+      "title": "Stirbt in Bryn Mawr",
+      "description": "Nach einer Operation schien Emmy Noether zunächst zu genesen, doch sie starb am 14. April 1935 im Alter von 53 Jahren in Bryn Mawr, Pennsylvania.",
       "locations": [
         {
-          "name_historic": "Bryn Mawr, Pennsylvania",
-          "name_modern": "Bryn Mawr, Pennsylvania, USA",
+          "name_historic": "Bryn Mawr",
+          "name_modern": "Bryn Mawr, Pennsylvania, Vereinigte Staaten",
           "centroid": [
             -75.3155,
             40.0198
@@ -577,33 +727,25 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Albert Einstein"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Emmy_Noether",
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
+        "https://en.wikipedia.org/wiki/Emmy_Noether"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "exile_and_final_legacy",
-      "annotations": {
-        "Pennsylvania": {
-          "explanation": "Ein US-Bundesstaat im Mittelatlantik; zum Zeitpunkt dieses Ereignisses lebte Noether am Bryn Mawr College in Pennsylvania, wo sie operiert wurde und starb.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Pennsylvania"
-        }
-      },
+      "chapter": "exile_across_the_atlantic",
+      "background": "Der Schauplatz war das Bryn Mawr College, ein College für Frauen, an dem Noether nach ihrer Flucht aus Deutschland eine vergleichsweise aufgeschlossene Wirkungsstätte gefunden hatte. Das kleine Mathematikprogramm ermöglichte ihr engen Kontakt mit Studierenden statt der großen Hörsäle und der formalen Hierarchie einer deutschen Universität. Außerdem fuhr sie ins nahe Princeton, um am jungen Institute for Advanced Study Vorträge zu halten, das zu einem wichtigen amerikanischen Zufluchtsort für durch politische Verfolgung vertriebene europäische Gelehrte geworden war.\n\nIhre Arbeit in den Vereinigten Staaten war kein bloß repräsentatives Exilamt. In Bryn Mawr lehrte sie höhere Mathematik und forschte mit Studierenden und Gästen; in Princeton traf sie Kollegen aus den wachsenden Gebieten der Algebra und mathematischen Physik. Diese Tätigkeit an zwei Einrichtungen war bedeutsam, weil die Princeton University damals keine Frauen in ihren Lehrkörper berief, während Bryn Mawr ihr eine formale akademische Heimat bieten konnte. Der Gegensatz zeigt die Chancen und Grenzen, denen eine Mathematikerin in der amerikanischen Hochschulbildung der 1930er Jahre begegnete.\n\n## Die medizinische Krise\n\nDie medizinische Krise kam unerwartet plötzlich. Nach dem ärztlichen Befund wurde eine Operation vorgenommen; die ersten Berichte waren so beruhigend, dass man mit einer Genesung rechnete. Gerade dieser anfängliche Optimismus macht die spätere Wendung in den Berichten ihrer Umgebung so eindringlich: Es gab keine lange Phase eines öffentlich sichtbaren Verfalls und keinen Rückzug aus der Arbeit. Kollegen und Studierende durften erwarten, dass ihre Lehre und Forschung weitergingen. Stattdessen beendete die plötzliche Verschlechterung ihre kurze Zeit in Bryn Mawr, während sie noch an beiden Hochschulen tätig war.\n\n## Die Nachricht von ihrem Tod\n\nDie Nachricht verbreitete sich rasch in der internationalen mathematischen Gemeinschaft, deren Mitglieder durch die Umwälzungen in Deutschland bereits zerstreut worden waren. Albert Einstein, der sich damals ebenfalls in den Vereinigten Staaten befand, sandte der New York Times einen Nachruf, in dem er sowohl die Eigenständigkeit ihrer mathematischen Arbeit als auch die Hindernisse hervorhob, denen sie als Frau begegnet war. Bryn Mawr bewahrte die institutionelle Erinnerung an sie durch das Emmy Noether Campus Center; das Institute for Advanced Study und das College blieben mit jenem kurzen letzten amerikanischen Lebensabschnitt verbunden, in dem sie weiter lehrte, zusammenarbeitete und ihre Ideen entwickelte.",
+      "weight": 0.8,
       "event_class": {
         "type": "death",
-        "cause": "postoperative Infektion",
-        "characterization": "plötzlich"
+        "cause": "postoperative Komplikationen",
+        "characterization": "nach einer Tumoroperation"
       }
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "dea19665e9df0bad",
-    "translated_on": "2026-08-02T12:15:14.192928+00:00",
+    "source_fingerprint": "32d91385eae9c340",
+    "translated_on": "2026-08-10T02:25:41.973431+00:00",
     "translator": "openai:gpt-5.6-luna"
   }
 }
