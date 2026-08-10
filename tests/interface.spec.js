@@ -496,35 +496,10 @@ test("a slide scrolls only when there is something below to reach", async ({
 
 async function expectSlidesReachTheirContent(page, viewport) {
   await page.setViewportSize(viewport);
-  const audit = await page.evaluate(async () => {
+  const audit = await page.evaluate(() => {
     // The previous and next buttons and the timeline bar float over the foot of
     // every slide. Text under them is text the reader cannot read.
     const controls = document.querySelector(".indicator");
-    // The story is walked rather than read off in one pass. A slide the browser
-    // has skipped — every one off screen, under `content-visibility: auto` —
-    // has no laid out content to measure, and the slide has not measured itself
-    // either. Both wake up when the slide comes on screen, which is the only
-    // state a reader ever sees it in, so that is the state audited here.
-    const strip = document.querySelector("main.slides");
-    const settle = () =>
-      new Promise((resolve) =>
-        requestAnimationFrame(() => requestAnimationFrame(resolve))
-      );
-    const bringOnScreen = async (slide, index) => {
-      strip.scrollTo({ left: index * strip.clientWidth, behavior: "instant" });
-      // The slide is rendered a frame or two after it becomes relevant, and its
-      // own measurement lands on the frame after that.
-      for (let attempt = 0; attempt < 10; attempt += 1) {
-        await settle();
-        if (
-          typeof slide.checkVisibility !== "function" ||
-          slide.checkVisibility({ contentVisibilityAuto: true })
-        ) {
-          await settle();
-          return;
-        }
-      }
-    };
     // A slide with a depth layer scrolls by design: what is below its fold is
     // the second screen, not empty margin. It is audited on its own terms
     // further down.
@@ -543,11 +518,9 @@ async function expectSlidesReachTheirContent(page, viewport) {
       shallow: [],
     };
 
-    const slides = [...document.querySelectorAll("section.slide")];
-    for (const [index, slide] of slides.entries()) {
+    for (const slide of document.querySelectorAll("section.slide")) {
       const content = slide.querySelector(".content");
       if (!content) continue;
-      await bringOnScreen(slide, index);
       const foot = slide.getBoundingClientRect().bottom;
       const controlsReach = foot - controls.getBoundingClientRect().top;
       const label = slide.getAttribute("aria-label");
@@ -601,9 +574,6 @@ async function expectSlidesReachTheirContent(page, viewport) {
         }
       }
     }
-    // Leave the story where the walk found it.
-    strip.scrollTo({ left: 0, behavior: "instant" });
-    await settle();
     return result;
   });
 

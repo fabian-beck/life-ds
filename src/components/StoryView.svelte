@@ -1169,17 +1169,6 @@
     if (!content || !reserve || typeof ResizeObserver === "undefined") return;
 
     const measure = () => {
-      // A slide the browser has skipped has no laid out content, and measuring
-      // it here would answer that everything fits — for every slide off screen,
-      // which is most of them. The observer is called again when the slide is
-      // rendered, because that is when its content takes a size, and that is
-      // also the first moment the answer is worth anything.
-      if (
-        typeof section.checkVisibility === "function" &&
-        !section.checkVisibility({ contentVisibilityAuto: true })
-      ) {
-        return;
-      }
       const style = getComputedStyle(section);
       const room =
         section.clientHeight -
@@ -2147,19 +2136,15 @@
        next slide until it snapped there. Containing the scroll keeps a gesture
        aimed at the event inside the event. */
     overscroll-behavior: contain;
-    /* The whole story is in the DOM at once, and a slide is not cheap to paint:
-       two full-screen pattern layers of its own, blended, over a background of
-       its own, under whatever the event brings. Painting a life's worth of them
-       for every frame of a transition is what made the transition stutter — a
-       third of the frames over 32 ms on a throttled phone, with the
-       compositor's layer list rather than script taking the time. This lets the
-       browser skip the slides that are not on screen, which changes nothing
-       about how the story looks or behaves: a slide is sized by the strip
-       around it, a fixed share of its width and a full screen tall, so skipping
-       what is inside one moves nothing. What it does change is that a skipped
-       slide has no laid out content to measure, which `watchContentFit`
-       accounts for. */
-    content-visibility: auto;
+    /* A slide is expensive to paint — two full-screen pattern layers of its
+       own, blended, over a background of its own — and the whole story is in
+       the DOM at once, which is what makes a transition stutter. It is not
+       expensive enough to be worth `content-visibility: auto` here, which was
+       tried and reverted: on a slide carrying an event panel Chromium painted
+       the top of the slide and left the rest transparent, with the story map
+       showing through where the description belonged. Layout was correct and
+       identical either way, so nothing in the application could see it — only
+       a screenshot could. */
   }
 
   /* A deep slide always scrolls, so a scrollbar here would say nothing the
