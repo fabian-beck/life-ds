@@ -1,5 +1,12 @@
 <script>
   import { tick, onMount, onDestroy } from "svelte";
+  import {
+    buildSlides,
+    eventToSlideIndex,
+    rawEventToSlideIndex,
+    slideToEventIndex,
+  } from "../utils/story/storyModel.js";
+  import { relatedPersonsByRole } from "../utils/story/personMatching.js";
   import { replace } from "svelte-spa-router";
   import { location } from "../stores/router.js";
   import CloseButton from "./CloseButton.svelte";
@@ -133,122 +140,19 @@
   })();
 
   // Compute related persons by role overlap
-  $: relatedPersons = (() => {
-    if (!person?.primary_roles || !personsRegistry?.people) return [];
+  $: relatedPersons = relatedPersonsByRole({
+    person,
+    registry: personsRegistry,
+    egoNetwork,
+  });
 
-    // Match current person by name in registry
-    const currentPersonName = displayName(person?.name);
-    const currentPersonEntry = personsRegistry.people.find(
-      (p) => displayName(p.name) === currentPersonName
-    );
-
-    if (!currentPersonEntry) return [];
-
-    const currentRoles = new Set(
-      (person.primary_roles || []).map((r) => r.toLowerCase())
-    );
-
-    if (currentRoles.size === 0) return [];
-
-    return personsRegistry.people
-      .filter((p) => p.id !== currentPersonEntry.id) // Exclude self
-      .map((p) => {
-        const personRoles = new Set(
-          (p.primaryRoles || []).map((r) => r.toLowerCase())
-        );
-        const overlap = [...currentRoles].filter((r) => personRoles.has(r));
-
-        // Check if person is in ego network
-        const inNetwork = egoNetwork?.connections?.some((c) =>
-          c.person_name
-            ?.toLowerCase()
-            .includes(displayName(p.name).toLowerCase())
-        )
-          ? 1
-          : 0;
-
-        // Weight: (roleOverlapCount × 3) + (inEgoNetwork × 3)
-        const overlapCount = overlap.length;
-        const score = overlapCount * 3 + inNetwork * 3;
-
-        return { person: p, overlapCount, score, sharedRoles: overlap };
-      })
-      .filter((r) => r.overlapCount > 0) // At least one role in common
-      .sort((a, b) => b.score - a.score || b.overlapCount - a.overlapCount)
-      .slice(0, 5); // Top 5
-  })();
-
-  // Build slides array with chapter slides inserted before first event of each chapter
-  $: slides = (() => {
-    // Check if we should add a conclusion slide
-    const hasConclusion =
-      conclusion || (relatedPersons && relatedPersons.length > 0);
-
-    if (totalSlides === 0) {
-      // If no events but there's a conclusion, show overview + conclusion
-      if (hasConclusion) {
-        return [
-          { type: "overview" },
-          { type: "conclusion", conclusion, relatedPersons, allSources },
-        ];
-      }
-      return [{ type: "overview" }];
-    }
-
-    const result = [{ type: "overview" }];
-    const hasChapters = chapters && chapters.length > 0;
-
-    if (!hasChapters) {
-      const allSlides = [
-        { type: "overview" },
-        ...eventSlides.map((event) => ({ ...event, type: "event" })),
-      ];
-      // Add conclusion at the end if it exists
-      if (hasConclusion) {
-        allSlides.push({
-          type: "conclusion",
-          conclusion,
-          relatedPersons,
-          allSources,
-        });
-      }
-      return allSlides;
-    }
-
-    let lastChapterId = null;
-
-    eventSlides.forEach((event, index) => {
-      const eventChapter = event.chapter;
-
-      // Insert chapter slide when entering a new chapter
-      if (eventChapter && eventChapter !== lastChapterId) {
-        const chapter = chapters.find((ch) => ch.id === eventChapter);
-        if (chapter) {
-          result.push({
-            type: "chapter",
-            chapter: chapter,
-            chapterIndex: chapters.indexOf(chapter),
-            eventIndex: index, // Index of first event in this chapter
-          });
-        }
-        lastChapterId = eventChapter;
-      }
-
-      result.push({ ...event, type: "event" });
-    });
-
-    // Add conclusion at the end if it exists
-    if (hasConclusion) {
-      result.push({
-        type: "conclusion",
-        conclusion,
-        relatedPersons,
-        allSources,
-      });
-    }
-
-    return result;
-  })();
+  $: slides = buildSlides({
+    events: eventSlides,
+    chapters,
+    conclusion,
+    relatedPersons,
+    allSources,
+  });
 
   $: totalPanels = slides.length;
 
@@ -270,57 +174,9 @@
     activeIndex = clamp(activeIndex, 0, totalPanels - 1);
   }
 
-  // Map slide index to event index (accounting for chapter and conclusion slides)
-  $: slideIndexToEventIndex = (() => {
-    const map = new Map();
-    let eventIndex = 0;
-
-    slides.forEach((slide, slideIndex) => {
-      if (slide.type === "overview") {
-        map.set(slideIndex, -1); // Overview = event index -1
-      } else if (slide.type === "chapter" || slide.type === "conclusion") {
-        map.set(slideIndex, null); // Chapter and conclusion slides don't map to events
-      } else {
-        map.set(slideIndex, eventIndex);
-        eventIndex++;
-      }
-    });
-
-    return map;
-  })();
-
-  // Map event index to slide index (for timeline navigation)
-  $: eventIndexToSlideIndex = (() => {
-    const map = new Map();
-
-    slides.forEach((slide, slideIndex) => {
-      if (slide.type !== "overview" && slide.type !== "chapter") {
-        const eventIdx = slideIndexToEventIndex.get(slideIndex);
-        if (eventIdx !== null && eventIdx !== undefined && eventIdx !== -1) {
-          map.set(eventIdx, slideIndex);
-        }
-      }
-    });
-
-    return map;
-  })();
-
-  // Map each event's RAW source-array index to its slide index. This is the
-  // identity external links use (LandingMap markers, meta-story event_index
-  // references are both generated from the person's events array in its
-  // original order), which can differ from the chronological sort position
-  // above whenever dates aren't already in strict array order.
-  $: rawEventIndexToSlideIndex = (() => {
-    const map = new Map();
-
-    slides.forEach((slide, slideIndex) => {
-      if (slide.type === "event" && typeof slide.rawIndex === "number") {
-        map.set(slide.rawIndex, slideIndex);
-      }
-    });
-
-    return map;
-  })();
+  $: slideIndexToEventIndex = slideToEventIndex(slides);
+  $: eventIndexToSlideIndex = eventToSlideIndex(slides);
+  $: rawEventIndexToSlideIndex = rawEventToSlideIndex(slides);
 
   // What a slide is called, for its own `aria-label` and for the status region
   // that announces slide changes. One expression, so the two cannot drift.

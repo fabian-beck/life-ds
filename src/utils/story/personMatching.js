@@ -2,6 +2,7 @@
  * Relating events to the people around them: name normalization and
  * similarity, the relevant connections of an event, and family roles.
  */
+import { displayName } from "../helpers.js";
 import { findPersonMentions } from "../personNames.js";
 import { extractYear } from "./dates.js";
 
@@ -471,4 +472,69 @@ export function getBirthParents(event, egoNetwork) {
         !PLACEHOLDER_NAME.test(connection.person_name || "")
     )
   ).filter(Boolean);
+}
+
+/**
+ * The people a story points at once it is over: others in the registry who
+ * share a primary role with its subject, best first.
+ *
+ * Being in the subject's ego network counts for exactly as much as one shared
+ * role, so a colleague the story actually mentions outranks a stranger with
+ * the same job — but a stranger with two shared roles outranks the colleague
+ * again. Someone with no role in common is not offered at all, which is why
+ * the list can come back empty.
+ *
+ * @param {Object} inputs - What the scoring reads
+ * @param {Object} inputs.person - The story's subject
+ * @param {Object} inputs.registry - `persons.json`, as `{ people: [...] }`
+ * @param {Object} [inputs.egoNetwork] - The subject's network, if loaded
+ * @param {number} [inputs.limit] - How many to return
+ * @returns {Array<{person: Object, overlapCount: number, score: number,
+ *   sharedRoles: Array<string>}>} Candidates, highest score first
+ */
+export function relatedPersonsByRole({
+  person,
+  registry,
+  egoNetwork = null,
+  limit = 5,
+} = {}) {
+  const people = registry?.people;
+  if (!person?.primary_roles || !Array.isArray(people)) return [];
+
+  const subjectName = displayName(person?.name);
+  const subject = people.find(
+    (entry) => displayName(entry.name) === subjectName
+  );
+  if (!subject) return [];
+
+  const subjectRoles = new Set(
+    (person.primary_roles || []).map((role) => role.toLowerCase())
+  );
+  if (subjectRoles.size === 0) return [];
+
+  return people
+    .filter((entry) => entry.id !== subject.id)
+    .map((entry) => {
+      const roles = new Set(
+        (entry.primaryRoles || []).map((role) => role.toLowerCase())
+      );
+      const sharedRoles = [...subjectRoles].filter((role) => roles.has(role));
+      const inNetwork = egoNetwork?.connections?.some((connection) =>
+        connection.person_name
+          ?.toLowerCase()
+          .includes(displayName(entry.name).toLowerCase())
+      )
+        ? 1
+        : 0;
+      const overlapCount = sharedRoles.length;
+      return {
+        person: entry,
+        overlapCount,
+        score: overlapCount * 3 + inNetwork * 3,
+        sharedRoles,
+      };
+    })
+    .filter((candidate) => candidate.overlapCount > 0)
+    .sort((a, b) => b.score - a.score || b.overlapCount - a.overlapCount)
+    .slice(0, limit);
 }
