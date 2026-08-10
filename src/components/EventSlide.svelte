@@ -219,7 +219,10 @@
   }
 
   // Sizes the thumbnail container and mask from the image's aspect ratio and
-  // the current viewport. Re-run on resize/rotation, not only on load.
+  // the room the event actually leaves free on its slide: a slide with little
+  // text lets the picture grow into the empty top and side, a full one keeps
+  // it the corner accent it always was. Re-run on resize/rotation, not only
+  // on load.
   function applyImageLayout(img) {
     // Clamp extreme aspect ratios so the container never becomes an elongated
     // sliver. The <img> keeps object-fit: cover, so images more extreme than
@@ -233,75 +236,66 @@
       Math.min(MAX_LAYOUT_ASPECT, rawAspect)
     );
 
-    // Get ACTUAL viewport dimensions in pixels
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    const viewportAspect = viewportWidth / viewportHeight;
 
-    // Base bounds in relative units (vw/vh)
-    let baseMaxWidth, baseMaxHeight;
+    // Largest box of the image's aspect that fits a width x height budget.
+    const fitBudget = (maxWidth, maxHeight) => {
+      const width = Math.min(maxWidth, maxHeight * imageAspect);
+      return { width, height: width / imageAspect };
+    };
 
-    if (imageAspect < 0.8) {
-      // Portrait images - allow taller bounds
-      baseMaxWidth = 55; // vw
-      baseMaxHeight = 75; // vh
-    } else if (imageAspect > 1.25) {
-      // Landscape images - allow wider bounds
-      baseMaxWidth = 75; // vw
-      baseMaxHeight = 55; // vh
-    } else {
-      // Square/near-square images - balanced bounds
-      baseMaxWidth = 58; // vw
-      baseMaxHeight = 58; // vh
-    }
-
-    // Aspect ratio correction factor: adjusts bounds based on how well the image
-    // aspect ratio matches the viewport aspect ratio.
-    //
-    // KEY INSIGHT: Images should be LARGER when their orientation matches the viewport,
-    // and SMALLER when orientations conflict.
-    //
-    // Calculate similarity: when both are portrait or both are landscape, aspects are similar.
-    // When one is portrait and one is landscape, they differ significantly.
-
-    // Measure how much image aspect differs from viewport aspect
-    const aspectRatioDifference = Math.abs(
-      Math.log(imageAspect / viewportAspect)
+    // The free room is measured from the slide rather than assumed from the
+    // viewport: the strip above the event's first line, and the column right
+    // of the description. Either budget may be exceeded by roughly the width
+    // of the picture's faded edge — the image is a backdrop, the mask thins
+    // it out long before the budget line, and the text keeps its shadows.
+    // Several images split the vertical room instead of each taking all of
+    // it, since they stack in one column.
+    const imagesContainerEl = img.closest(".event-images");
+    const slideRoot = imagesContainerEl?.parentElement ?? null;
+    const headerRect = slideRoot
+      ?.querySelector(".event-header")
+      ?.getBoundingClientRect();
+    const descriptionRect = slideRoot
+      ?.querySelector(".event-description")
+      ?.getBoundingClientRect();
+    const imageCount = Math.max(
+      1,
+      imagesContainerEl?.querySelectorAll(".image-thumbnail:not(.image-failed)")
+        .length ?? 1
     );
 
-    // Convert difference to a correction factor:
-    // - Small difference (good match) → factor close to 1.0 or above
-    // - Large difference (bad match) → factor well below 1.0
-    //
-    // Using exp(-k * difference) where k controls sensitivity
-    const correctionFactor = Math.exp(-0.5 * aspectRatioDifference);
+    const headroom = headerRect
+      ? Math.max(0, headerRect.top)
+      : viewportHeight * 0.15;
+    const sideRoom = descriptionRect
+      ? Math.max(0, viewportWidth - descriptionRect.right)
+      : viewportWidth * 0.25;
 
-    // Clamp the factor to prevent extreme adjustments
-    const clampedFactor = Math.max(0.65, Math.min(1.0, correctionFactor));
+    // Above the text: nearly the whole width, down to the first line.
+    const above = fitBudget(
+      viewportWidth * 0.92,
+      Math.min(headroom + viewportHeight * 0.08, viewportHeight * 0.66) /
+        imageCount
+    );
+    // Beside the text: the free column, stopping short of the map band.
+    const beside = fitBudget(
+      Math.min(sideRoom + viewportWidth * 0.1, viewportWidth * 0.75),
+      (viewportHeight * 0.58) / imageCount
+    );
+    // The floor keeps the corner presence a slide full of text always had.
+    const floor = fitBudget(viewportWidth * 0.45, viewportHeight * 0.3);
 
-    // Adjust max width by the correction factor
-    const adjustedMaxWidth = baseMaxWidth * clampedFactor;
-    const adjustedMaxHeight = baseMaxHeight;
-
-    // Calculate effective viewport aspect from adjusted bounds (in pixels)
-    const maxWidthPx = (adjustedMaxWidth / 100) * viewportWidth;
-    const maxHeightPx = (adjustedMaxHeight / 100) * viewportHeight;
-    const effectiveViewportAspect = maxWidthPx / maxHeightPx;
-
-    // Calculate container dimensions that preserve aspect ratio
-    let containerWidth, containerHeight;
-
-    if (imageAspect > effectiveViewportAspect) {
-      // Wide image - width hits max first
-      containerWidth = adjustedMaxWidth;
-      containerHeight =
-        (adjustedMaxWidth / imageAspect) * (viewportWidth / viewportHeight);
-    } else {
-      // Tall image - height hits max first
-      containerHeight = adjustedMaxHeight;
-      containerWidth =
-        adjustedMaxHeight * imageAspect * (viewportHeight / viewportWidth);
+    let chosen = floor;
+    for (const candidate of [above, beside]) {
+      if (candidate.width * candidate.height > chosen.width * chosen.height) {
+        chosen = candidate;
+      }
     }
+
+    const containerWidth = (chosen.width / viewportWidth) * 100;
+    const containerHeight = (chosen.height / viewportHeight) * 100;
 
     // Apply container dimensions
     img.parentElement.style.width = `${containerWidth}vw`;
