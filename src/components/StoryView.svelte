@@ -2349,14 +2349,11 @@
     flex-shrink: 0;
     align-self: center;
     width: min(54rem, 100%);
-    /* Top-anchored, exactly as the event sits on a slide with no depth below
-       it. An auto top margin used to center the event-plus-invitation block in
-       the fold, which read fine on its own — but the neighboring slides pin
-       their text to the top, so a short deep slide dropped its headline as
-       much as a hundred pixels below where the last slide had it, and swiping
-       through the story made the text jump down and back up. The free space
-       stays below the invitation, where the reserve absorbs it. */
-    margin: 0 auto;
+    /* The event and the invitation under it are centered in the fold as one
+       block, exactly as the event alone is centered on a slide with no depth
+       below it: the free space is split between the margin above the event and
+       the one below the invitation, so nothing opens up between them. */
+    margin: auto auto 0;
   }
 
   .slide-fold > .slide-reserve {
@@ -2478,6 +2475,20 @@
      one of the slide components, outside this file's scoping. */
   .slide > :global(.content) {
     flex-shrink: 0;
+  }
+
+  /* An event floats in the room the map band leaves it, placed by how much of
+     it there is: a short event centers in the free space, a long one rises
+     toward the top as its auto margins give way, and once they are gone the
+     reserve yields and the slide scrolls. Both margins are auto so the split
+     adapts to the viewport as well as to the text — a taller screen carries
+     the event lower instead of pinning it under the masthead over a void. The
+     overview, chapter, and conclusion slides keep their own flex-start
+     anchoring; the `:not()` chain also outweighs the component's own
+     `margin: 0 auto`, which stays as the horizontal fallback. */
+  .slide:not(.overview):not(.chapter):not(.conclusion) > :global(.content) {
+    margin-top: auto;
+    margin-bottom: auto;
   }
 
   /* `--slide-reserve-shrink` comes from `watchContentFit`: 1 while the content
