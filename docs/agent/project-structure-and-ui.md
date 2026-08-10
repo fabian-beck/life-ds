@@ -72,6 +72,16 @@ life-ds/
 └── public/                  # Static assets
 ```
 
+## Svelte 5 Modes
+
+The application runs on Svelte 5 and every one of its 29 components is in legacy mode: props are `export let`, derived values are `$:`, and there is not one rune in `src/`. That is a supported configuration rather than an oversight, and it is deliberately not a migration waiting to be scheduled. The components carrying most of the reactivity are the ones a conversion would have to start with—`StoryView.svelte` holds 47 reactive blocks and `MetaStoryTimeline.svelte` 31—and converting them means rewriting the hand-guarded state machines inside them, which is where the deterministic suite is thinnest: reactivity races here have historically surfaced as flaky interface tests rather than as reproducible failures.
+
+The rule that follows is to migrate by displacement rather than by project. A new component is written with runes, and so is a component extracted out of an existing one, because the extraction is already a rewrite and a fresh component carries no legacy state machine to preserve. A component that is merely edited stays as it is. Mixing the two modes across the application is supported; mixing them inside one component is not, so a file is converted whole or not at all.
+
+Three legacy APIs are marked deprecated in the installed Svelte and must not gain new uses: `createEventDispatcher` (use callback props), `beforeUpdate` (use `$effect.pre`), and `afterUpdate` (use `$effect`). Two of them survive, once each—`createEventDispatcher` in `Timeline.svelte` and `afterUpdate` in `NetworkModal.svelte`. The second is the harder constraint rather than the smaller one: `afterUpdate` throws `lifecycle_legacy_only` outside legacy mode, so `NetworkModal.svelte` cannot move to runes at all while it is there. Removing it is the one piece of migration worth doing on its own, instead of waiting for the component to be opened for some other reason.
+
+`eslint.config.js` turns off `svelte/prefer-svelte-reactivity` and `svelte/infinite-reactive-loop` for exactly this reason, and its comments name the guarded state machines the second rule would otherwise report. Both belong back on once the components they cover are on runes; until then a report from either is noise rather than a finding.
+
 ## Routing
 
 Uses `svelte-spa-router` with URL-based navigation:
