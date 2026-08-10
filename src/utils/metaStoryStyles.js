@@ -9,7 +9,8 @@
  * declares as fallbacks.
  */
 
-import metaStoryStylesData from "../../data/meta_story_styles.json";
+import metaStoryStylesData from "../../data/meta_story_styles.json" with { type: "json" };
+import { cssUrl, fontStack, styleVars } from "./helpers.js";
 import { parseHexColor } from "./story/color.js";
 
 const rawStyles =
@@ -143,29 +144,21 @@ export function metaStoryStyle(metaStoryId) {
  */
 export function metaStoryStyleVars(style) {
   if (!style || typeof style !== "object") return "";
-  const segments = [];
-  if (style.primary) segments.push(`--ms-primary: ${style.primary}`);
-  if (style.secondary) segments.push(`--ms-secondary: ${style.secondary}`);
-  if (style.background) segments.push(`--ms-page-bg: ${style.background}`);
-  if (style.backgroundRgb)
-    segments.push(`--ms-page-bg-rgb: ${style.backgroundRgb}`);
-  if (style.patternDataUrl)
-    segments.push(`--ms-pattern-image: url("${style.patternDataUrl}")`);
-  if (style.separatorGlyphDataUrl)
-    segments.push(`--ms-glyph: url("${style.separatorGlyphDataUrl}")`);
-  if (style.ornamentDataUrl)
-    segments.push(`--ms-ornament: url("${style.ornamentDataUrl}")`);
-  const frame = FRAMES[style.frame];
-  if (frame) {
-    segments.push(`--ms-frame-radius: ${frame.radius}`);
-    segments.push(`--ms-frame-radius-sm: ${frame.radiusSmall}`);
-    segments.push(`--ms-frame-border-width: ${frame.borderWidth}`);
-    segments.push(`--ms-frame-border-style: ${frame.borderStyle}`);
-    segments.push(`--ms-frame-rule-width: ${frame.ruleWidth}`);
-  }
-  if (style.headingFont)
-    segments.push(`--heading-font: "${style.headingFont}", Inter, sans-serif`);
-  if (style.bodyFont)
-    segments.push(`--body-font: "${style.bodyFont}", Inter, sans-serif`);
-  return segments.join("; ");
+  const frame = FRAMES[style.frame] ?? {};
+  return styleVars([
+    ["--ms-primary", style.primary],
+    ["--ms-secondary", style.secondary],
+    ["--ms-page-bg", style.background],
+    ["--ms-page-bg-rgb", style.backgroundRgb],
+    ["--ms-pattern-image", cssUrl(style.patternDataUrl)],
+    ["--ms-glyph", cssUrl(style.separatorGlyphDataUrl)],
+    ["--ms-ornament", cssUrl(style.ornamentDataUrl)],
+    ["--ms-frame-radius", frame.radius],
+    ["--ms-frame-radius-sm", frame.radiusSmall],
+    ["--ms-frame-border-width", frame.borderWidth],
+    ["--ms-frame-border-style", frame.borderStyle],
+    ["--ms-frame-rule-width", frame.ruleWidth],
+    ["--heading-font", fontStack(style.headingFont)],
+    ["--body-font", fontStack(style.bodyFont)],
+  ]);
 }

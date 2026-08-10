@@ -10,7 +10,13 @@
     landingFilterQuery,
   } from "../stores/queryParams.js";
   import { rememberFocusTrigger } from "../stores/returnFocus.js";
-  import { clamp, displayName } from "../utils/helpers.js";
+  import {
+    clamp,
+    cssUrl,
+    displayName,
+    fontStack,
+    styleVars,
+  } from "../utils/helpers.js";
   import { computeYearsLabel } from "../utils/story/dates.js";
   import { getThumbnailUrl } from "../utils/story/images.js";
   import { assetUrl } from "../utils/assetUrl.js";
@@ -518,29 +524,21 @@
 
   function cardStyleVars(style) {
     if (!style || typeof style !== "object") return "";
-    const segments = [];
-    if (style.background) segments.push(`--card-bg: ${style.background}`);
-    if (style.primary) segments.push(`--card-primary: ${style.primary}`);
-    if (style.secondary) segments.push(`--card-secondary: ${style.secondary}`);
-    if (style.backgroundPatternDataUrl) {
-      segments.push(
-        `--card-pattern-image: url("${style.backgroundPatternDataUrl}")`
-      );
-      segments.push(`--card-pattern-size: 500px`);
-    }
-    if (typeof style.patternOpacity === "number") {
-      const opacity = clamp(style.patternOpacity, 0, 1);
-      segments.push(`--card-pattern-opacity: ${opacity}`);
-    }
-    if (style.headingFont) {
-      segments.push(
-        `--card-heading-font: "${style.headingFont}", Inter, sans-serif`
-      );
-    }
-    if (style.bodyFont) {
-      segments.push(`--card-body-font: "${style.bodyFont}", Inter, sans-serif`);
-    }
-    return segments.join("; ");
+    return styleVars([
+      ["--card-bg", style.background],
+      ["--card-primary", style.primary],
+      ["--card-secondary", style.secondary],
+      ["--card-pattern-image", cssUrl(style.backgroundPatternDataUrl)],
+      ["--card-pattern-size", style.backgroundPatternDataUrl ? "500px" : null],
+      [
+        "--card-pattern-opacity",
+        typeof style.patternOpacity === "number"
+          ? clamp(style.patternOpacity, 0, 1)
+          : null,
+      ],
+      ["--card-heading-font", fontStack(style.headingFont)],
+      ["--card-body-font", fontStack(style.bodyFont)],
+    ]);
   }
 </script>
 

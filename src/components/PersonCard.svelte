@@ -1,6 +1,6 @@
 <script>
   import { currentLanguage } from "../stores/language";
-  import { displayName } from "../utils/helpers.js";
+  import { displayName, fontStack, styleVars } from "../utils/helpers.js";
   import { computeYearsLabel } from "../utils/story/dates.js";
   import { getThumbnailUrl } from "../utils/story/images.js";
   import SeparatedList from "./SeparatedList.svelte";
@@ -41,6 +41,16 @@
       .join("");
   }
 
+  // Unlike Landing's card this one names a value for every variable, because
+  // it is dropped into surfaces (a meta story's frame) whose own colors and
+  // fonts would otherwise show through where the person has none.
+  $: cardVars = styleVars([
+    ["--card-primary", personStyle?.primary || "#f8fafc"],
+    ["--card-secondary", personStyle?.secondary || "#38bdf8"],
+    ["--card-heading-font", fontStack(personStyle?.headingFont, "inherit")],
+    ["--card-body-font", fontStack(personStyle?.bodyFont, "inherit")],
+  ]);
+
   $: lifespan = formatLifespan(person, $currentLanguage);
   $: roles = Array.isArray(person?.primaryRoles) ? person.primaryRoles : [];
 
@@ -56,13 +66,7 @@
 <a
   {href}
   class="person-card {className}"
-  style="--card-primary: {personStyle?.primary ||
-    '#f8fafc'}; --card-secondary: {personStyle?.secondary ||
-    '#38bdf8'}; --card-heading-font: {personStyle?.headingFont
-    ? `'${personStyle.headingFont}', Inter, sans-serif`
-    : 'inherit'}; --card-body-font: {personStyle?.bodyFont
-    ? `'${personStyle.bodyFont}', Inter, sans-serif`
-    : 'inherit'};"
+  style={cardVars}
   aria-label={ariaLabel || displayName(person?.name)}
   on:click={handleClick}
 >
