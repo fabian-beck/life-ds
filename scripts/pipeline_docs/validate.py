@@ -26,7 +26,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Set
 
-from . import bibliography, concepts, screenshots, spec, teaser
+from . import bibliography, concepts, screenshots, spec, summarize, teaser
 from .facts import Fact
 from .introspect import AiCall, Codebase
 from .report import COMPONENTS, Document
@@ -304,6 +304,28 @@ def check(codebase: Codebase) -> List[Problem]:
         problems.append(Problem("error", "concepts", message))
 
     return problems
+
+
+def check_freshness(codebase: Codebase, cache_path: Path) -> List[Problem]:
+    """Cached explanations against the source they claim to have been written from.
+
+    The report states that a step's explanation is rewritten whenever its
+    source, prompt or schema changes, and prints it under that attribution.
+    Nothing enforced it. The coverage check above notices a step that stopped
+    calling the model and a function that was renamed away, but never a step
+    whose body was rewritten under an explanation that stayed behind—so a
+    refactor that rerouted twelve call sites left twelve explanations
+    describing code that no longer existed, and `--check` reported no drift.
+    """
+    return [
+        Problem(
+            "error",
+            f"summary '{step_id}'",
+            "was written from source that has since changed—re-summarize it: "
+            "python scripts/generate_report.py",
+        )
+        for step_id in summarize.stale_steps(codebase, cache_path)
+    ]
 
 
 def check_summaries(

@@ -23,7 +23,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 from pipeline_docs import bibliography, concepts  # noqa: E402
 from pipeline_docs import facts as facts_module  # noqa: E402
 from pipeline_docs import render, report, screenshots  # noqa: E402
-from pipeline_docs import spec, teaser, validate  # noqa: E402
+from pipeline_docs import spec, summarize, teaser, validate  # noqa: E402
 from pipeline_docs.introspect import scan_codebase, scan_script  # noqa: E402
 from pipeline_docs.model import build_payload  # noqa: E402
 
@@ -303,6 +303,72 @@ class WrittenExplanationTests(unittest.TestCase):
         detail = detail[: detail.index("\n  function ", 1)]
         self.assertIn("summary.source", detail)
         self.assertIn("Explanation written by", detail)
+
+
+class ExplanationFreshnessTests(unittest.TestCase):
+    """An explanation is published as written from the step's current source.
+
+    The coverage check catches a step that stopped calling the model and a
+    function renamed away, but not a body rewritten under an explanation that
+    stayed behind: a refactor across twelve call sites left twelve of them
+    describing code that no longer existed, and `--check` reported no drift.
+    """
+
+    def setUp(self) -> None:
+        self.codebase = scan_codebase()
+        self.step = next(item for item in spec.STEPS if item.id == "p_style")
+
+    def _cache(self, fingerprint: str) -> Path:
+        directory = tempfile.mkdtemp()
+        path = Path(directory) / "summaries.json"
+        path.write_text(
+            json.dumps(
+                {
+                    "version": 2,
+                    "steps": {
+                        self.step.id: {
+                            "fingerprint": fingerprint,
+                            "summary": {
+                                "what_it_does": "Writes a palette.",
+                                "why_this_design": "",
+                                "constraints": [],
+                                "source": "gpt-5.6-terra",
+                            },
+                        }
+                    },
+                }
+            ),
+            encoding="utf-8",
+        )
+        return path
+
+    def _current_fingerprint(self) -> str:
+        context = summarize.build_context(self.codebase, self.step)
+        return summarize._fingerprint(context)
+
+    def test_an_explanation_written_from_the_current_source_passes(self) -> None:
+        problems = validate.check_freshness(
+            self.codebase, self._cache(self._current_fingerprint())
+        )
+        self.assertEqual([], problems)
+
+    def test_source_that_moved_under_the_explanation_fails_the_build(self) -> None:
+        problems = validate.check_freshness(self.codebase, self._cache("0" * 16))
+        self.assertEqual(1, len(problems))
+        self.assertEqual("error", problems[0].severity)
+        self.assertIn(self.step.id, problems[0].where)
+
+    def test_a_step_the_cache_never_described_is_not_stale(self) -> None:
+        """The build writes it, and without a key `spec.py` text stands in."""
+        directory = tempfile.mkdtemp()
+        path = Path(directory) / "summaries.json"
+        path.write_text(json.dumps({"version": 2, "steps": {}}), encoding="utf-8")
+        self.assertEqual([], validate.check_freshness(self.codebase, path))
+
+    def test_every_published_explanation_matches_the_source_it_describes(self) -> None:
+        """The committed cache, against the code in the same commit."""
+        cache = REPO_ROOT / "docs" / "report" / "summaries.json"
+        self.assertEqual([], summarize.stale_steps(self.codebase, cache))
 
 
 def _layers() -> dict:

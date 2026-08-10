@@ -191,6 +191,26 @@ def cached_summaries(path: Path) -> Dict[str, Dict[str, Any]]:
     }
 
 
+def stale_steps(codebase: Codebase, path: Path) -> List[str]:
+    """Steps whose cached explanation was written from source that has moved.
+
+    The explanation is published as written from the step's current source,
+    prompt and schema, so an entry whose fingerprint no longer matches is a
+    claim the page can no longer support. A step the cache has never described
+    is not stale: the build writes it, and without a key it falls back to the
+    `spec.py` text, which is attributed to the maintainer rather than a model.
+    """
+    entries = load_cache(path).get("steps") or {}
+    stale: List[str] = []
+    for step in spec.STEPS:
+        entry = entries.get(step.id)
+        if not isinstance(entry, dict) or not isinstance(entry.get("summary"), dict):
+            continue
+        if entry.get("fingerprint") != _fingerprint(build_context(codebase, step)):
+            stale.append(step.id)
+    return stale
+
+
 def _fallback(step: spec.Step) -> Dict[str, Any]:
     return {
         "what_it_does": step.summary,
@@ -242,6 +262,15 @@ def summarize_steps(
             fresh += 1
             continue
         if skip_ai or client is None:
+            # Reached only when the fingerprint missed, so a cached entry here
+            # describes source that has since changed. Rendering it silently is
+            # how a refactor across twelve call sites reached the published page
+            # under twelve explanations of the code it replaced.
+            if cached:
+                print(
+                    f"  '{step.id}' keeps an explanation written from source "
+                    "that has since changed."
+                )
             results[step.id] = (cached or {}).get("summary") or _fallback(step)
             continue
         if verbose:

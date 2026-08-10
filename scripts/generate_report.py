@@ -25,10 +25,12 @@ The report is half written and half measured, and the two halves never mix.
 
 `--check` runs only the drift checks: it fails when a documented step no longer
 exists, when a model call site is not claimed by any step in `spec.py`, when the
-report cites a fact or mounts a component that no longer resolves, or when a
-cached step explanation names a model that step does not resolve. It reads the
-summary cache rather than writing it, so it stays safe to wire into CI without
-needing an API key.
+report cites a fact or mounts a component that no longer resolves, when a
+cached step explanation names a model that step does not resolve, or when one
+was written from source that has since changed. It reads the summary cache
+rather than writing it, so it needs no API key to run—but the last of those
+failures is fixed by a rebuild that does, because the explanation it names has
+to be written again.
 """
 
 from __future__ import annotations
@@ -175,7 +177,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         cached = cached_summaries(SUMMARY_CACHE)
         print(f"  {len(cached)} cached step summaries.")
         if validate.report(
-            validate.check_summaries(codebase, cached), subject="Summaries"
+            validate.check_summaries(codebase, cached)
+            + validate.check_freshness(codebase, SUMMARY_CACHE),
+            subject="Summaries",
         ):
             print(
                 "\nRe-summarize the affected steps: "
