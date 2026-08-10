@@ -164,6 +164,23 @@ test("the names the network knows are emphasized in the prose", () => {
   ]);
 });
 
+/* A description names a person twice at most. A report about Max Brod names
+   Brod twelve times, and twelve bold Brods down one page is speckle rather
+   than emphasis — the mark says the network knows this person, which needs
+   saying the first time and not after. */
+test("a person is emphasized once in a report, not at every mention", () => {
+  expect(
+    render(
+      "Max Newman lectured on it.\n\nNewman later hired him, and Max Newman " +
+        "signed the letter.",
+      [connection("Max Newman")]
+    )
+  ).toEqual([
+    "«Max Newman» lectured on it.",
+    "Newman later hired him, and Max Newman signed the letter.",
+  ]);
+});
+
 test("a name the network does not know is left alone", () => {
   expect(render("Winston Churchill read the decrypts.", [])).toEqual([
     "Winston Churchill read the decrypts.",

@@ -19,6 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import backfill_event_backgrounds as backfill  # noqa: E402
 import generate_person_events as pipeline  # noqa: E402
+import translate_person as translate  # noqa: E402
 
 REPORT = (
     "Bletchley ran on shifts.\n\n"
@@ -85,6 +86,32 @@ class HeadingTests(unittest.TestCase):
         )
         self.assertEqual(result.count("\n## "), 2)
         self.assertNotIn("## The end", result)
+
+    def test_a_report_already_divided_is_re_divided_not_re_labeled(self) -> None:
+        # --overwrite reads a report that carries headings already. A '## '
+        # line survives the paragraph split as a paragraph of its own, so
+        # without taking them off first the pass stands a heading over a
+        # heading and counts the labels as prose.
+        divided_once = (
+            "Bletchley ran on shifts.\n\n"
+            "## The old label\n\n"
+            "Two hundred bombes by 1943.\n\n"
+            "The huts were huts.\n\n"
+            "It ended with the war."
+        )
+        result = divided(
+            answer([{"before_paragraph": 4, "heading": "The end"}]), divided_once
+        )
+        self.assertNotIn("The old label", result)
+        self.assertEqual(result.count("## "), 1)
+        self.assertEqual(
+            result,
+            "Bletchley ran on shifts.\n\n"
+            "Two hundred bombes by 1943.\n\n"
+            "The huts were huts.\n\n"
+            "## The end\n\n"
+            "It ended with the war.",
+        )
 
     def test_a_report_of_two_paragraphs_is_too_short_to_divide(self) -> None:
         short = "One paragraph.\n\nAnd a second."
@@ -182,3 +209,94 @@ class CaptionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TranslatedHeadingTests(unittest.TestCase):
+    """A German reader must not meet an English heading over German prose.
+
+    The report is handed to the translator taken apart — its paragraphs as one
+    array, its headings as another — and reassembled here. Neither structure
+    survived being trusted: a `## ` line inside the passage reads as formatting
+    to preserve, so two of the first five lives came back with German prose
+    under English headings, and a passage sent as one string came back with
+    four paragraphs merged into three.
+    """
+
+    source = "First.\n\n## A label\n\nSecond.\n\nThird."
+
+    def test_the_report_is_taken_apart_for_the_translator(self) -> None:
+        self.assertEqual(
+            translate._paragraphs_of(self.source), ["First.", "Second.", "Third."]
+        )
+        self.assertEqual(translate._heading_texts(self.source), ["A label"])
+        self.assertEqual(translate._heading_positions(self.source), [1])
+
+    def test_a_translated_heading_lands_above_the_paragraph_it_had(self) -> None:
+        self.assertEqual(
+            translate._rebuild_background(
+                self.source,
+                ["Erster.", "Zweiter.", "Dritter."],
+                ["Ein Etikett"],
+            ),
+            "Erster.\n\n## Ein Etikett\n\nZweiter.\n\nDritter.",
+        )
+
+    def test_two_headings_keep_their_order_and_places(self) -> None:
+        source = "A.\n\n## One\n\nB.\n\n## Two\n\nC."
+        self.assertEqual(
+            translate._rebuild_background(source, ["A.", "B.", "C."], ["Eins", "Zwei"]),
+            "A.\n\n## Eins\n\nB.\n\n## Zwei\n\nC.",
+        )
+
+    def test_an_undivided_report_comes_back_undivided(self) -> None:
+        self.assertEqual(
+            translate._rebuild_background(
+                "Plain.\n\nMore.", ["Schlicht.", "Mehr."], []
+            ),
+            "Schlicht.\n\nMehr.",
+        )
+
+    def test_an_event_without_a_report_stays_without_one(self) -> None:
+        self.assertIsNone(translate._rebuild_background("", [], []))
+        self.assertIsNone(translate._rebuild_background(self.source, None, None))
+
+    def test_a_summarized_report_is_called_out(self) -> None:
+        # The small model summarizes the longest documents instead of
+        # translating them — every paragraph present, every second detail
+        # gone — and nothing else in the merge would notice.
+        long_source = "\n\n".join(["Ein langer Absatz voller Einzelheiten." * 4] * 3)
+        with mock.patch("builtins.print") as printed:
+            translate._rebuild_background(long_source, ["Kurz.", "Kurz.", "Kurz."], [])
+        self.assertIn("abridged", " ".join(str(c) for c in printed.call_args_list))
+
+        with mock.patch("builtins.print") as printed:
+            translate._rebuild_background(long_source, long_source.split("\n\n"), [])
+        printed.assert_not_called()
+
+    def test_a_dropped_field_never_blanks_a_report(self) -> None:
+        # The small model omits the paragraphs on the longest documents. An
+        # empty list is an unanswered field, not an empty report: returning
+        # None leaves the merge holding what the source has, and one run that
+        # wrote "" instead emptied every report in a life.
+        self.assertIsNone(translate._rebuild_background(self.source, [], ["Etikett"]))
+        self.assertIsNone(
+            translate._rebuild_background(self.source, ["", "  "], ["Etikett"])
+        )
+
+    def test_merged_paragraphs_cost_the_headings_and_nothing_else(self) -> None:
+        # The small model merges two paragraphs of a long report about once
+        # every dozen events, and then no heading has a place to stand.
+        # Discarding the document would trade a whole German story for its
+        # section headings, so the prose stands and the report goes undivided.
+        self.assertEqual(
+            translate._rebuild_background(
+                self.source, ["Erster und Zweiter.", "Dritter."], ["Ein Etikett"]
+            ),
+            "Erster und Zweiter.\n\nDritter.",
+        )
+        self.assertEqual(
+            translate._rebuild_background(
+                self.source, ["Erster.", "Zweiter.", "Dritter."], []
+            ),
+            "Erster.\n\nZweiter.\n\nDritter.",
+        )

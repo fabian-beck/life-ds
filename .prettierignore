@@ -12,6 +12,8 @@ data/persons_*.json
 data/person_styles.json
 data/people/**/*.json
 data/people/**/_cache/
+# Geocoder answers, written by the generation scripts and not committed.
+data/_cache/
 *.md
 package-lock.json
 pmtiles.exe

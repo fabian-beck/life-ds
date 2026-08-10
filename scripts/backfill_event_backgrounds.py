@@ -453,6 +453,9 @@ def _wanted_here(
 # The report is otherwise plain prose, and this is the only markup in it.
 _HEADING = re.compile(r"^##\s+\S", re.MULTILINE)
 
+# The same line with the blank line under it, for taking one back off.
+_HEADING_LINE = re.compile(r"^##\s+.*\n?\n?", re.MULTILINE)
+
 
 class ReportHeading(BaseModel):
     """One heading, and the paragraph it stands above."""
@@ -491,9 +494,16 @@ def _with_headings(client: OpenAI, report: str) -> str:
     paragraphs, so this pass can only add lines — which is the point: these
     reports were written and reviewed before the interface could show a
     heading, and rewriting a good report to gain one is a poor trade.
+
+    Headings the report already carries are taken off before it is read, so
+    ``--overwrite`` re-divides a report rather than dividing its own headings:
+    a ``## `` line survives the paragraph split as a paragraph of its own, and
+    what came back was a heading standing over a heading.
     """
     paragraphs = [
-        block.strip() for block in re.split(r"\n\s*\n", report) if block.strip()
+        block.strip()
+        for block in re.split(r"\n\s*\n", _HEADING_LINE.sub("", report))
+        if block.strip()
     ]
     if len(paragraphs) < 3:
         return report
@@ -525,12 +535,13 @@ def _with_headings(client: OpenAI, report: str) -> str:
                     "argument, return none — that is a normal answer, and a "
                     "heading over every paragraph is worse than no heading at "
                     "all.\n"
-                    "Two to five words, in the report's own language, naming "
-                    "the thing rather than the section:\n"
+                    "Two to five words, in the report's own language, in "
+                    "sentence case — only the first word and proper nouns "
+                    "capitalized — naming the thing rather than the section:\n"
                     "- GOOD: 'The bombe on the floor', 'What Bletchley kept "
-                    "quiet'\n"
+                    "quiet', 'Eight small notebooks'\n"
                     "- BAD: 'Background', 'Aftermath', 'Introduction', "
-                    "'The situation'\n\n"
+                    "'The situation', 'A Cover Kafka Rejected'\n\n"
                     f"REPORT:\n{listing}\n"
                 ),
             },

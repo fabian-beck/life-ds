@@ -277,6 +277,9 @@ export function parseBackgroundBlocks(
     : null;
   const candidates = subject ? [...people, subject] : people;
 
+  // Who has already been marked, across the whole report rather than per
+  // paragraph: a person is introduced once.
+  const introduced = new Set();
   const blocks = [];
   for (const raw of background.split(/\n\s*\n/)) {
     const block = raw.trim();
@@ -291,7 +294,7 @@ export function parseBackgroundBlocks(
 
     blocks.push({
       type: "paragraph",
-      segments: segmentBackgroundParagraph(block, candidates),
+      segments: segmentBackgroundParagraph(block, candidates, introduced),
     });
   }
   return blocks;
@@ -301,13 +304,23 @@ export function parseBackgroundBlocks(
  * One paragraph of the report, split into plain text and emphasized names.
  * @param {string} paragraph - Paragraph text
  * @param {Array} candidates - People to match, the subject among them
+ * @param {Set} introduced - People already emphasized earlier in this report
  * @returns {Array} Segments: {type: 'text'|'person', content, person?}
  */
-function segmentBackgroundParagraph(paragraph, candidates) {
+function segmentBackgroundParagraph(paragraph, candidates, introduced) {
   const matches = findPersonMentions(paragraph, candidates)
     // The subject competes for their own name so that a shared surname comes
     // out ambiguous rather than handed to a relative, and then stays plain.
-    .filter((match) => !match.person?.isSubject);
+    .filter((match) => !match.person?.isSubject)
+    // Once each. A description names a person twice at most; a report about
+    // Max Brod names Brod twelve times, and twelve bold Brods down one page is
+    // speckle rather than emphasis. The mark says "the network knows this
+    // person", which needs saying the first time and not after.
+    .filter((match) => {
+      if (introduced.has(match.person)) return false;
+      introduced.add(match.person);
+      return true;
+    });
   if (matches.length === 0) return [{ type: "text", content: paragraph }];
 
   const segments = [];

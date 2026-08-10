@@ -135,10 +135,25 @@ class TrEventClass(BaseModel):
 class TrEvent(BaseModel):
     title: str
     description: str
-    # The passage Phase 2 writes. Optional because datasets generated before
-    # the field existed have none, and an event without one must not be asked
-    # to invent a paragraph in order to keep the shape.
-    background: Optional[str] = None
+    # The report Phase 2 writes, taken apart into the two things it is made of
+    # and put back together on merge. Both lists are empty for the datasets
+    # written before the field existed, which must not be asked to invent a
+    # paragraph in order to keep the shape.
+    #
+    # It used to travel as one string, headings and all. A `## ` line inside a
+    # passage reads to a translator as formatting to preserve, and rule 3 tells
+    # it to preserve formatting exactly: two of the first five lives came back
+    # with German prose under English headings. Offering the headings a second
+    # time as fields only taught it to copy the one from the other.
+    #
+    # So the headings travel alone, where nothing marks them as formatting, and
+    # the prose travels as one string per paragraph — because rule 1's array
+    # contract is the only structure this pipeline can actually hold the model
+    # to. As one string the German came back with paragraphs merged, four into
+    # three, and a heading counted from the source no longer had a paragraph to
+    # stand above.
+    background_paragraphs: List[str] = Field(default_factory=list)
+    background_headings: List[str] = Field(default_factory=list)
     date_note: Optional[str] = None
     locations: List[TrLocation]
     images: List[TrImage]
@@ -260,7 +275,11 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         entry: Dict[str, Any] = {
             "title": event.get("title", ""),
             "description": event.get("description", ""),
-            "background": event.get("background"),
+            # The report, taken apart: its paragraphs as an array the length
+            # contract holds the translator to, its headings as text nothing
+            # marks as formatting. `_rebuild_background` puts them back.
+            "background_paragraphs": _paragraphs_of(event.get("background") or ""),
+            "background_headings": _heading_texts(event.get("background") or ""),
             "date_note": event.get("date_note"),
             "locations": [
                 {
@@ -431,27 +450,115 @@ def _reconcile_markers(kind: str, source: str, translated: str) -> str:
 
 
 _HEADING_LINE_RE = re.compile(r"^#{1,6}\s+\S", re.MULTILINE)
+# Trailing blanks, but never the line break: `\s*$` swallows the newline under
+# MULTILINE and would glue the heading to the paragraph under it.
+_HEADING_TEXT_RE = re.compile(r"^#{1,6}[^\S\n]+(.*\S)[^\S\n]*$", re.MULTILINE)
 
 
-def _reconcile_headings(source: str, translated: Optional[str]) -> Optional[str]:
-    """Return the translated report, saying so when its headings went missing.
+def _heading_texts(report: str) -> List[str]:
+    """The section headings a background report carries, in order."""
+    return _HEADING_TEXT_RE.findall(report or "")
 
-    A background report may be divided by ``## `` lines, and the interface sets
-    those as headings and everything else as prose. Losing one in translation
-    costs a reader a division, not a link into a table, so unlike an annotation
-    marker it is not worth discarding a whole document over — but a German
-    reader silently getting the undivided version is worth a line in the log.
+
+def _paragraphs_of(report: str) -> List[str]:
+    """A report's prose blocks, with its heading lines taken off."""
+    stripped = _HEADING_TEXT_RE.sub("", report or "")
+    return [block.strip() for block in re.split(r"\n\s*\n", stripped) if block.strip()]
+
+
+def _heading_positions(report: str) -> List[int]:
+    """Which paragraph each heading stands above, by its index in the prose."""
+    positions: List[int] = []
+    paragraphs = 0
+    for block in re.split(r"\n\s*\n", report or ""):
+        block = block.strip()
+        if not block:
+            continue
+        if _HEADING_LINE_RE.match(block):
+            positions.append(paragraphs)
+        else:
+            paragraphs += 1
+    return positions
+
+
+def _rebuild_background(
+    source: str,
+    paragraphs: Optional[List[str]],
+    headings: Optional[List[str]],
+) -> Optional[str]:
+    """The translated report, reassembled in the shape the source has.
+
+    The translator is handed the paragraphs as an array and the headings as
+    another, and this puts them back together: paragraph *i* where the source
+    had paragraph *i*, each heading above the paragraph it stood above there.
+    Nothing about the German structure is taken on trust, because none of it
+    survived being trusted — a `## ` line inside a passage reads as formatting
+    to preserve, so two of the first five lives came back with German prose
+    under English headings; and a passage sent as one string came back with
+    four paragraphs merged into three.
+
+    A translator that merged two paragraphs into one — which the small model
+    does on a long report about once every dozen events — leaves the headings
+    with no place to stand. That is not worth discarding a document over the
+    way a changed list of images or annotations is: the reader would lose the
+    whole German story to save its section headings. So the prose is kept as
+    it came back and the report is set undivided, with a line in the log.
     """
-    if translated is None:
+    source_paragraphs = _paragraphs_of(source or "")
+    if not source_paragraphs:
         return None
-    expected = len(_HEADING_LINE_RE.findall(source or ""))
-    found = len(_HEADING_LINE_RE.findall(translated))
-    if expected != found:
+
+    kept = [text.strip() for text in (paragraphs or []) if text and text.strip()]
+    if not kept:
+        # The model dropped the field — which the small one does on the longest
+        # documents — and an empty list must not be written over a report. The
+        # merge keeps what the source has, as it does for any field a
+        # translation does not answer.
+        return None
+    paragraphs = kept
+
+    positions = _heading_positions(source or "")
+    wanted = [text.strip() for text in (headings or [])]
+    if len(paragraphs) != len(source_paragraphs) or len(wanted) != len(positions):
+        if positions:
+            print(
+                f"  Warning: background left undivided "
+                f"({len(source_paragraphs)} paragraphs and {len(positions)} "
+                f"headings in the source, {len(paragraphs)} and {len(wanted)} "
+                f"translated)"
+            )
+        return "\n\n".join(paragraph.strip() for paragraph in paragraphs if paragraph)
+
+    blocks: List[str] = []
+    for index, paragraph in enumerate(paragraphs):
+        for position, heading in zip(positions, wanted):
+            if position == index and heading:
+                blocks.append(f"## {heading}")
+        blocks.append(paragraph.strip())
+    rebuilt = "\n\n".join(blocks)
+    _warn_if_abridged(source, rebuilt)
+    return rebuilt
+
+
+# German runs a little longer than English, so a translation this much shorter
+# is not a translation. The report is the longest text in the corpus and the
+# small model summarizes it rather than translating it once a document carries
+# a dozen of them: two of the five lives came back at two-thirds length, with
+# every paragraph present and every second detail gone.
+_ABRIDGED_BELOW = 0.8
+
+
+def _warn_if_abridged(source: str, translated: str) -> None:
+    """Say so when a translated report came back visibly shorter than its source."""
+    if not source or not translated:
+        return
+    ratio = len(translated) / len(source)
+    if ratio < _ABRIDGED_BELOW:
         print(
-            f"  Warning: background headings changed in translation "
-            f"({expected} in the source, {found} in the translation)"
+            f"  Warning: background reads as abridged, not translated "
+            f"({ratio:.0%} of the source's length). Re-run with "
+            f"--model {DEFAULT_MODEL}."
         )
-    return translated
 
 
 def _set_if_source_has(target: Dict[str, Any], key: str, value: Optional[str]) -> None:
@@ -508,8 +615,10 @@ def apply_life_events_translations(
         _set_if_source_has(
             event,
             "background",
-            _reconcile_headings(
-                event.get("background") or "", tr_event.get("background")
+            _rebuild_background(
+                event.get("background") or "",
+                tr_event.get("background_paragraphs"),
+                tr_event.get("background_headings"),
             ),
         )
         _set_if_source_has(event, "date_note", tr_event.get("date_note"))
@@ -1148,11 +1257,11 @@ GENERAL RULES:
    - Preserve the full meaning, tone, and register faithfully; do not summarize,
      extend, or omit — but likeness of wording to the English is NOT a goal.
 3. Preserve Markdown formatting exactly (links, emphasis, line breaks).
-   A background report may be divided by section headings: a line of its own
-   opening with "## ". Translate the heading text, keep the "## " and the line
-   break around it, and never add a heading the source does not have or drop
-   one it does — the interface sets those lines as headings and the paragraphs
-   between them as prose.
+   A background report arrives taken apart: "background_paragraphs" is one
+   entry per paragraph and "background_headings" is its section headings, as
+   short phrases. Translate both, keep both the same length and order as the
+   source (rule 1), never merge two paragraphs into one entry, and add no
+   headings of your own. The interface reassembles them.
 4. Descriptions may contain [[term|display]] annotation markers:
    - Keep the marker syntax and the term (before the |) EXACTLY as-is.
    - Translate ONLY the display text (after the |).

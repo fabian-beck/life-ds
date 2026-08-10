@@ -211,17 +211,17 @@
       }
     },
     "m_translate": {
-      "fingerprint": "a3fd8e889cfa87cd",
+      "fingerprint": "f4582b60bc67a08c",
       "summary": {
         "constraints": [
-          "Missing source meta-story files cause an error and return `False`.",
-          "Without `force`, translation is skipped only when every reported status value is `\"current\"`.",
-          "Translation preserves JSON array length and order exactly; output item N corresponds to input item N.",
-          "Markdown, `## ` section boundaries, annotation keys, and each existing `[[term|display]]` marker must be preserved exactly; markers cannot be added, removed, or duplicated."
+          "Skips processing when every translation-status value is \"current\", unless `force` is enabled.",
+          "Returns the input JSON structure with every array at exactly the same length and order.",
+          "Preserves Markdown exactly, including links, emphasis, and line breaks.",
+          "Keeps each existing `[[term|display]]` marker exactly once, leaves its term and annotation keys unchanged, and never invents markers."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Loads a meta-story JSON detail file, checks whether its translation status is current for the requested language, and delegates translation of the story data when needed. On success, writes the translated detail file under the language-specific meta-story directory, then updates that language’s meta-story registry; event titles and person-name forms are aligned with the corresponding translated person data.",
-        "why_this_design": "The current-status check avoids re-translating unchanged stories unless `force` is set. Saving the translated detail file before updating the registry prevents the registry from advertising a translation that was not successfully written."
+        "what_it_does": "Loads a meta-story JSON detail file, translates its extracted text fields into the target language through the shared translation routine, and writes the translated detail file under the language-specific meta-stories directory. It then updates the target-language meta-story registry, so the translated story remains discoverable alongside its detail content; missing source data, translation failure, or save failure stops the update.",
+        "why_this_design": "Translation freshness is checked before any work, avoiding unnecessary rewrites unless forced. Event titles and person names are synchronized with the corresponding translated person data, preventing chapter and slide text from diverging across related documents."
       }
     },
     "p_backgrounds": {
@@ -549,17 +549,17 @@
       }
     },
     "p_report_headings": {
-      "fingerprint": "a73bdd47cf3382eb",
+      "fingerprint": "5e99926b275940a6",
       "summary": {
         "constraints": [
-          "Reports with fewer than 3 nonblank paragraphs bypass heading generation.",
-          "Headings may appear only before paragraphs 2 through the final paragraph, with at most one heading at any paragraph.",
-          "At most 2 headings are inserted; an empty result is valid and leaves the report unchanged.",
-          "Heading text is normalized and must be nonempty; the prompt limits it to 2–5 words in the report’s language and rejects generic section labels."
+          "Reports with fewer than 3 paragraphs bypass heading generation.",
+          "Headings may appear only before paragraphs 2 through the final paragraph; never above paragraph 1.",
+          "The output permits at most 2 headings, with no more than 1 assigned to any paragraph.",
+          "Each heading should be \"2 to 5 words,\" use the report's language and sentence case, and name the subject rather than use generic labels."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Takes an already written background report, splits it into nonblank paragraphs, and asks for the one or two points where the subject genuinely changes. It then inserts approved headings as Markdown level-two lines immediately before those paragraphs, preserving every word of the reviewed prose; if no placement survives validation, it returns the original report exactly.",
-        "why_this_design": "The step separates structural labeling from writing because older reports have already been reviewed; adding standalone lines is safer than regenerating prose to accommodate headings. Placement and count are enforced again in code so malformed, duplicate, or overabundant structured output cannot alter the corpus."
+        "what_it_does": "Takes an already written background report, identifies genuine shifts in subject or argument, and inserts one or two Markdown level-two headings immediately before the corresponding paragraphs. It first removes any existing heading lines, numbers the remaining paragraphs for placement, and returns the original report unchanged when no valid division is found.",
+        "why_this_design": "The pass deliberately preserves reviewed prose: it can add standalone heading lines but cannot edit paragraph text. Stripping existing headings before analysis makes repeated or overwrite runs re-divide the prose rather than producing a heading above a prior heading."
       }
     },
     "p_review": {
@@ -605,17 +605,17 @@
       }
     },
     "p_translate": {
-      "fingerprint": "f724148a5858a013",
+      "fingerprint": "6668e74a774982a7",
       "summary": {
         "constraints": [
-          "Return the same JSON structure; every array must retain exactly the input length and order.",
-          "Translate meaning, tone, and register naturally; do not summarize, extend, or omit content.",
-          "Preserve Markdown exactly, including links, emphasis, line breaks, and existing \"## \" heading lines.",
-          "Keep each existing [[term|display]] marker exactly once; preserve term keys and marker syntax, translate only display text, and never add markers."
+          "Return the same JSON structure; every array must retain exactly the source length and order.",
+          "Preserve Markdown exactly, including links, emphasis, and line breaks; background paragraphs and headings remain separate entries.",
+          "For every `[[term|display]]` marker, keep `term` and syntax unchanged, translate only `display`, retain each source marker exactly once, and add none.",
+          "Apply the supplied person-name glossary consistently; use established target-language place names when available, but keep foreign names without an established form unchanged."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Translates the text-only fields extracted from a person-related document into the target language and returns them in the same structured shape. The translated payload can then be merged back onto an English-document copy, leaving nontextual values such as dates, coordinates, URLs, and IDs outside the translation path. It supplies person-name glossary mappings, target-language style rules, and optional source-derived naming evidence for people, places, and institutions.",
-        "why_this_design": "Translation is constrained to an extracted payload rather than the full record, protecting immutable structured data during merge. Source-derived naming evidence outranks the general place-name rule and the translator’s recollection, reducing invented or incorrectly localized names while still preserving qualifiers in longer place strings."
+        "what_it_does": "Translates only the text fields extracted from a larger person document into the target language and returns them in the requested structured format. The translated fields are later overlaid onto an English-document copy, leaving nontranslatable values such as dates, coordinates, URLs, and IDs outside the translation path. It supplies a person-name glossary, language-specific style guidance, optional extra rules, and source-derived naming evidence for people, places, and institutions.",
+        "why_this_design": "Sending an extract rather than the whole record narrows the mutation surface: structured factual fields cannot be altered during translation. Source-derived naming evidence overrides general place-name rules and memory, preventing invented localized forms while preserving qualifiers when evidence matches only part of a place string."
       }
     },
     "p_weights": {

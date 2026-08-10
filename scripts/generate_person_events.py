@@ -3469,11 +3469,14 @@ def build_phase2_prompt_base(
     prompt += "     and never above the opening paragraph — the reader has just arrived from the\n"
     prompt += "     event and wants prose, not a table of contents. A report that runs as a single\n"
     prompt += "     argument takes none at all\n"
-    prompt += "   - A heading names the thing it is about, not the part of the report it is:\n"
+    prompt += "   - A heading names the thing it is about, not the part of the report it is,\n"
+    prompt += "     and is set in sentence case: the first word and proper nouns, nothing else\n"
     prompt += (
         "     * GOOD: '## The bombe on the floor', '## What Bletchley kept quiet'\n"
     )
-    prompt += "     * BAD: '## Background', '## Aftermath', '## Introduction', '## The situation'\n"
+    prompt += (
+        "     * BAD: '## Background', '## Aftermath', '## A Cover Kafka Rejected'\n"
+    )
     prompt += (
         "   - BUILD IT LIKE A REPORT, roughly in this order, as the material allows:\n"
     )
