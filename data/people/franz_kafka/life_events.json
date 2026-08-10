@@ -1,6 +1,6 @@
 {
-  "dataset": "historical_biography_v1",
-  "created_on": "2025-12-09",
+  "dataset": "Wikipedia biographical timelines",
+  "created_on": "2026-08-10",
   "person": {
     "name": "Franz_Kafka",
     "birth_date": "1883-07-03",
@@ -9,110 +9,123 @@
       "writer",
       "novelist"
     ],
-    "tagline": "Master of the Kafkaesque imagination",
-    "summary": "Franz Kafka (1883–1924) was a German-language Jewish writer from Prague whose unsettling, precise prose reshaped 20th‑century literature. Trained as a lawyer and employed in insurance, he wrote fiction in his spare hours, portraying isolated protagonists trapped in opaque bureaucratic systems. Only a handful of works, including \"The Metamorphosis\" and the story collections \"Contemplation\" and \"A Country Doctor\", appeared during his lifetime, but they influenced generations of writers, philosophers, and artists. His early death from tuberculosis left his novels unfinished and his reputation to grow posthumously from near-obscurity to global prominence.",
+    "tagline": "Chronicler of modern estrangement",
+    "summary": "Franz Kafka was a German-language Jewish writer from Prague whose fiction portrayed individuals confronting alienation, family conflict, and opaque authority. While supporting himself as an insurance official, he produced stories and unfinished novels including The Metamorphosis, The Trial, and The Castle.",
     "wikipedia": "https://en.wikipedia.org/wiki/Franz_Kafka",
     "portrait": {
       "image": "/portraits/franz_kafka_thumbnail.webp",
-      "source": "https://de.wikipedia.org/wiki/Franz_Kafka",
+      "source": "https://commons.wikimedia.org/wiki/File:Franz_Kafka,_1923.jpg",
       "caption": "Stylized portrait based on historical photograph",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/2/26/Franz_Kafka%2C_1923.jpg",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Franz_Kafka%2C_1923.jpg/960px-Franz_Kafka%2C_1923.jpg",
       "thumbnail": "/portraits/franz_kafka_thumbnail.webp",
       "medium": "/portraits/franz_kafka_medium.webp",
-      "full": "/portraits/franz_kafka_full.webp"
+      "full": "/portraits/franz_kafka_full.webp",
+      "originalCreator": "Unknown photographer",
+      "originalLicense": "Public domain"
     }
   },
   "chapters": [
     {
-      "id": "prague_childhood_formative_schooling",
-      "headline": "Prague Childhood Foundations",
+      "id": "prague_formation",
+      "headline": "Prague Beginnings",
       "date_start": "1883-07-03",
       "date_start_precision": "day",
-      "date_end": "1901",
+      "date_end": "1906",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 18,
+      "age_end": 17,
       "involved_people": [
         "Hermann Kafka",
-        "Julie Kafka (née Löwy)",
-        "Siegfried Löwy"
+        "Julie Löwy Kafka"
       ],
-      "location": "Central Europe"
+      "location": "Bohemia"
     },
     {
-      "id": "university_years_literary_awakenings",
-      "headline": "University Years Awakening",
-      "date_start": "1901",
+      "id": "university_circle",
+      "headline": "Finding His Circle",
+      "date_start": "1902",
       "date_start_precision": "year",
-      "date_end": "1907-10-31",
-      "date_end_precision": "day",
+      "date_end": "1907",
+      "date_end_precision": "year",
       "age_start": 18,
       "age_end": 24,
       "involved_people": [
-        "Hermann Kafka",
-        "Max Brod",
-        "Felix Weltsch",
-        "Oskar Baum"
+        "Max Brod"
       ],
-      "location": "Central Europe"
+      "location": "Bohemia"
     },
     {
-      "id": "insurance_career_creative_breakthroughs",
-      "headline": "Insurance Career Breakthroughs",
-      "date_start": "1907-11-01",
-      "date_start_precision": "day",
-      "date_end": "1917-07",
-      "date_end_precision": "month",
-      "age_start": 24,
-      "age_end": 34,
+      "id": "bureaucratic_apprenticeship",
+      "headline": "The Office Years",
+      "date_start": "1908",
+      "date_start_precision": "year",
+      "date_end": "1922-07-01",
+      "date_end_precision": "day",
+      "age_start": 25,
+      "age_end": 28,
+      "involved_people": null,
+      "location": "Bohemia"
+    },
+    {
+      "id": "fiction_finds_its_form",
+      "headline": "Fiction Finds Its Form",
+      "date_start": "1912",
+      "date_start_precision": "year",
+      "date_end": "1916",
+      "date_end_precision": "year",
+      "age_start": 29,
+      "age_end": 33,
       "involved_people": [
+        "Kurt Wolff",
         "Max Brod",
-        "Jizchak Löwy",
-        "Felice Bauer"
+        "Felice Bauer",
+        "René Schickele"
       ],
       "location": "Central Europe"
     },
     {
-      "id": "illness_reflection_intimate_correspondence",
-      "headline": "Illness Reflection Correspondence",
-      "date_start": "1917-08",
+      "id": "tuberculosis_narrows_the_world",
+      "headline": "Illness and Retreat",
+      "date_start": "1917-09",
       "date_start_precision": "month",
       "date_end": "1922-07-01",
       "date_end_precision": "day",
       "age_start": 34,
       "age_end": 39,
       "involved_people": [
-        "Ottla Kafka",
+        "Ottilie \"Ottla\" Kafka",
         "Karl Hermann",
+        "Hermann Kafka",
+        "Kurt Wolff",
         "Milena Jesenská"
       ],
       "location": "Central Europe"
     },
     {
-      "id": "final_years_berlin_partnership",
-      "headline": "Final Years Berlin Partnership",
-      "date_start": "1922-07-01",
-      "date_start_precision": "day",
+      "id": "berlin_freedom",
+      "headline": "A Brief Freedom",
+      "date_start": "1923-07",
+      "date_start_precision": "month",
       "date_end": "1924-06-03",
       "date_end_precision": "day",
-      "age_start": 39,
+      "age_start": 40,
       "age_end": 40,
       "involved_people": [
         "Dora Diamant",
-        "Ottla Kafka",
-        "Max Brod"
+        "Robert Klopstock"
       ],
       "location": "Central Europe"
     }
   ],
+  "conclusion": "Kafka transformed the pressures of family, bureaucracy, love, and illness into a literature of unsettling clarity. Though his life was brief and much of his work unfinished, his vision gave modern anxiety its most enduring voice.",
   "events": [
     {
       "date": "1883-07-03",
       "date_precision": "day",
       "age": 0,
-      "title": "Birth in Prague",
-      "description": "Franz Kafka is born into a German-speaking Jewish middle‑class family in Prague, then part of the Austro‑Hungarian Empire. His father, Hermann Kafka, is a self‑made haberdasher, while his mother, Julie, comes from a more educated mercantile family and works long hours in the family business. The household is marked by the parents’ frequent absence and the presence of governesses and servants, circumstances that later inform Kafka’s depictions of emotional distance and authority.",
+      "title": "Born into Prague's German-Jewish World",
+      "description": "Kafka was born in Prague, then part of the Austro-Hungarian Empire, into a middle-class Jewish merchant family. German was the household's main language, in a multilingual city whose Czech, German, and Jewish communities shaped his early world.",
       "locations": [
         {
           "name_historic": "Prague",
@@ -126,15 +139,15 @@
       ],
       "involved_people": [
         "Hermann Kafka",
-        "Julie Kafka (née Löwy)"
+        "Julie Löwy Kafka"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/34/Czech-2013-Prague-Plaque_%28birthplace_of_Franz_Kafka%29.jpg",
-          "caption": "Plaque marking Franz Kafka’s birthplace in Prague",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Czech-2013-Prague-Plaque_%28birthplace_of_Franz_Kafka%29.jpg/960px-Czech-2013-Prague-Plaque_%28birthplace_of_Franz_Kafka%29.jpg",
+          "caption": "Plaque commemorating Kafka’s birthplace in Prague",
           "source": "https://commons.wikimedia.org/wiki/File:Czech-2013-Prague-Plaque_(birthplace_of_Franz_Kafka).jpg",
           "creator": "Godot13",
           "license": "CC BY-SA 4.0",
@@ -142,9 +155,34 @@
         }
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "prague_childhood_formative_schooling",
+      "chapter": "prague_formation",
+      "background": "Prague was the capital of the Kingdom of Bohemia, a crown land of the Habsburg monarchy, and its overlapping Czech, German, and Jewish communities gave the city a particularly layered social character. Czech was the majority language, but German was the language of much administration, education, commerce, and cultivated urban life. The Jewish population was itself far from uniform: families could preserve traditional religious practices while also participating fully in German-language bourgeois culture. This was the setting in which the Kafka household occupied a place between inherited Jewish custom and modern commercial Prague.\n\n## Hermann and Julie Kafka\n\nHermann Kafka had come to Prague from Osek, a village in southern Bohemia with a substantial Jewish population. His father, Jakob Kafka, had been a shochet, or kosher butcher; Hermann instead established himself in the city as a seller of haberdashery and ladies’ accessories. His store used the image of a jackdaw, a visual pun on kavka, the Czech word associated with the family name. Julie Löwy came from Humpolec in eastern Bohemia, where her father, Jakob Löwy, worked as a cloth maker. The marriage thus joined two families whose backgrounds were rooted in provincial Jewish trades but whose ambitions and livelihood were urban and commercial.\n\nThe business was not merely Hermann’s concern. Julie helped manage it, and the household’s routines were shaped by the demands of the shop. Accounts of the family emphasize that both parents were often occupied with work; domestic care consequently depended in part on governesses and servants. Their home was not a secluded literary or academic milieu, but a busy middle-class apartment tied to the rhythms of retail trade, family discipline, and the social expectations of upward mobility.\n\n## German at home\n\nLanguage marked that world as strongly as occupation. Hermann and Julie spoke German colored by Yiddish influences, whereas their children were raised with Standard German. In a city where German was not the everyday language of the majority, this distinction mattered. It situated the family within an acculturated German-Jewish minority while preserving traces of an older Jewish vernacular. The contrast between the Czech-speaking surroundings and the formal German cultivated at home formed one of the distinctive cultural conditions of Kafka’s early environment.\n\nThe family’s address was near Prague’s Old Town Square, close to the historic center where commerce, municipal life, and the former Jewish quarter converged. That proximity made the household part of a dense and changing city rather than an isolated ethnic enclave. Its particular combination of shopkeeping, German education, Jewish ancestry, and Prague urban life provided the immediate social ground from which the family’s later expectations for its children would emerge.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/20190816_Rynek_Staromiejski_w_Pradze_1143_5231.jpg/960px-20190816_Rynek_Staromiejski_w_Pradze_1143_5231.jpg",
+          "caption": "Old Town Square, Prague",
+          "source": "https://commons.wikimedia.org/wiki/File:20190816_Rynek_Staromiejski_w_Pradze_1143_5231.jpg",
+          "creator": "Jakub Hałun",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Prague Old Town Square"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Praha%2C_Josefov%2C_2021_%2801%29.jpg/960px-Praha%2C_Josefov%2C_2021_%2801%29.jpg",
+          "caption": "Josefov",
+          "source": "https://commons.wikimedia.org/wiki/File:Praha,_Josefov,_2021_(01).jpg",
+          "creator": "Draceane",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Josefov Prague"
+        }
+      ],
+      "weight": 0.45,
       "event_class": {
-        "type": "birth"
+        "type": "birth",
+        "father": "Hermann Kafka",
+        "mother": "Julie Löwy Kafka",
+        "characterization": "Jewish merchant family"
       }
     },
     {
@@ -153,8 +191,8 @@
       "date_end": "1901",
       "date_end_precision": "year",
       "age": 6,
-      "title": "Schooling and early anxieties",
-      "description": "From 1889 Kafka attends a German boys’ elementary school and then the rigorous Altstädter Deutsches Gymnasium in Prague’s Old Town. He excels academically but is plagued by intense fear of failure and by his father’s harsh expectations, experiences that later echo in his portraits of oppressive authority. Around 1899 he briefly embraces socialism, even wearing a red carnation in his buttonhole, and in 1901 passes his [[Matura|Matura]] exams and travels outside Bohemia for the first time with his uncle Siegfried Löwy. These years establish both his intellectual ambitions and his enduring sense of inner insecurity.",
+      "title": "Attends Prague schools",
+      "description": "Kafka attended the German boys' elementary school before entering Prague's German humanistic state gymnasium. He performed well academically but experienced persistent anxiety about failure and his father's expectations.",
       "locations": [
         {
           "name_historic": "Prague",
@@ -167,29 +205,24 @@
         }
       ],
       "involved_people": [
-        "Hermann Kafka",
-        "Siegfried Löwy"
+        "Hermann Kafka"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "prague_childhood_formative_schooling",
-      "annotations": {
-        "Matura": {
-          "explanation": "Final secondary-school examinations in parts of Central and Eastern Europe (including the former Austro-Hungarian lands), required for university entrance.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Matura"
-        }
-      }
+      "chapter": "prague_formation",
+      "background": "In late nineteenth-century Prague, language determined much of a child's educational and social setting. The city was the capital of the Kingdom of Bohemia within Austria-Hungary and was predominantly Czech-speaking, but it also contained a prominent German-speaking Jewish middle class. The Kafka household belonged to that milieu: German was the family language, while Hermann Kafka's expanding retail business gave the family access to the institutions associated with bourgeois advancement. A German-language education could open a route into the civil service, law, commerce, and the empire's professional world.\n\n## A narrower religious routine\n\nThe secular curriculum existed alongside a much narrower religious routine. Kafka's formal Jewish instruction concluded with his bar mitzvah at thirteen. The family observed the major holidays, but synagogue attendance was limited: he accompanied his father on only four high holy days each year. This separation between a demanding German academic culture and a relatively restricted practice of Judaism was characteristic of many assimilated German-speaking Jewish families in Prague, though it did not remove the social distinctions that marked the city's Czech, German, and Jewish communities.\n\n## The classical secondary course\n\nThe classical secondary course that followed elementary education was built around the humanities and demanded sustained work in languages and formal examinations. Its final credential, the Matura, was the qualification required for university study in the Austrian half of the Habsburg Empire. The program lasted eight years, making it a long, regimented passage through adolescence rather than a brief preparatory school. Kafka completed it in 1901, thereby meeting the entry requirement for his subsequent legal studies. His consistently strong school record made that next step possible, even though academic success did not settle the private pressures he associated with achievement.\n\nOne significant connection from these school years was Oskar Pollak, a slightly older student who became Kafka's friend. Their relationship supplied an intellectual companionship beyond the formal requirements of the classroom. Pollak was interested in art and literature, and the friendship helped draw Kafka toward wider cultural interests during his adolescence. The school environment thus furnished more than credentials: it placed him within Prague's compact German-speaking educated circle, where future friendships and literary conversations could develop. By the time he left the gymnasium, the path expected by his family pointed toward a professional career, while the habits of reading and reflection fostered during these years were already becoming a competing source of commitment.",
+      "weight": 0.3
     },
     {
       "date": "1901",
       "date_precision": "year",
-      "date_end": "1906-06-18",
-      "date_end_precision": "day",
-      "age": 18,
-      "title": "Studies law at Prague university",
-      "description": "In 1901 Kafka matriculates at the German [[Charles‑Ferdinand University|Charles‑Ferdinand University]] in [[Prague|Prague]], initially enrolling in chemistry before switching to law, a choice that satisfies his father and offers practical career prospects. He joins the [[Lese- und Redehalle der deutschen Studenten|Lese- und Redehalle der deutschen Studenten]], where he attends literary events and forges close friendships with Max Brod, Felix Weltsch, Oskar Baum, and other members of the later \"Prague Circle.\" Alongside his law courses he listens to lectures on philosophy, German literature, and art history, while reading writers such as Flaubert, Dostoevsky, and Gogol. On 18 June 1906 he receives his Doctor of Law degree and proceeds to an obligatory year as a law clerk in the civil and criminal courts of Prague.",
+      "date_end": "1906",
+      "date_end_precision": "year",
+      "age": 17,
+      "title": "Studies law in Prague",
+      "description": "Kafka enrolled at the German University in Prague in 1901, initially sampling chemistry, German studies, and art history before settling on law.",
       "locations": [
         {
           "name_historic": "Prague",
@@ -201,132 +234,31 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Hermann Kafka",
-        "Max Brod",
-        "Felix Weltsch",
-        "Oskar Baum"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://de.wikipedia.org/wiki/Max_Brod",
-        "https://de.wikipedia.org/wiki/Felix_Weltsch"
-      ],
-      "event_type_icon": "mdi-school",
-      "chapter": "prague_childhood_formative_schooling",
-      "annotations": {
-        "Charles‑Ferdinand University": {
-          "explanation": "The German Charles‑Ferdinand University was the German-language branch of Prague’s historic Charles University, serving the city’s German-speaking population in the Austro‑Hungarian period.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Charles_University"
-        },
-        "Prague": {
-          "explanation": "At the time of Kafka’s studies, Prague was the capital of the Kingdom of Bohemia within the Austro‑Hungarian Empire and had distinct German- and Czech-speaking cultural spheres.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Prague"
-        },
-        "Lese- und Redehalle der deutschen Studenten": {
-          "explanation": "The Lese- und Redehalle der deutschen Studenten was a German-speaking student reading and debating society in Prague that functioned as a cultural and literary club for university students.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Lese-_und_Redehalle_der_deutschen_Studenten_in_Prag"
-        }
-      }
-    },
-    {
-      "date": "1907-11-01",
-      "date_precision": "day",
-      "date_end": "1908-07-15",
-      "date_end_precision": "day",
-      "age": 24,
-      "title": "First insurance job in Prague",
-      "description": "On 1 November 1907 Kafka begins full‑time work at the Italian insurance firm [[Assicurazioni Generali|Assicurazioni Generali]] in Prague. The long office hours, often from early morning until evening, leave little time for writing and quickly exhaust him. His letters from this period already contrast the demands of salaried work with his longing to devote himself entirely to literature. Feeling trapped, he resigns on 15 July 1908, resolving to find a position more compatible with his literary ambitions.",
-      "locations": [
-        {
-          "name_historic": "Prague",
-          "name_modern": "Prague, Czech Republic",
-          "centroid": [
-            14.4378,
-            50.0755
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://en.wikipedia.org/wiki/Assicurazioni_Generali"
-      ],
-      "images": [
-        {
-          "url": "https://live.staticflickr.com/3048/2752617043_177a14ea49_b.jpg",
-          "caption": "Assicurazioni Generali building in Prague",
-          "source": "https://www.flickr.com/photos/58668786@N00/2752617043"
-        }
-      ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "insurance_career_creative_breakthroughs",
-      "annotations": {
-        "Assicurazioni Generali": {
-          "explanation": "Assicurazioni Generali is a large Italian insurance company, founded in 1831 in Trieste, that expanded across Central and Eastern Europe in the late 19th and early 20th centuries.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Assicurazioni_Generali"
-        }
-      }
-    },
-    {
-      "date": "1908-08",
-      "date_precision": "month",
-      "date_end": "1922-07-01",
-      "date_end_precision": "day",
-      "age": 25,
-      "title": "Career at Workers’ Accident Insurance Institute",
-      "description": "Within weeks of leaving Assicurazioni Generali, Kafka joins the [[Workers’ Accident Insurance Institute for the Kingdom of Bohemia|Workers’ Accident Insurance Institute for the Kingdom of Bohemia]], a semi‑state body responsible for industrial accident insurance. Over the next fourteen years he investigates factory accidents, drafts technical reports and safety regulations, and is repeatedly promoted, eventually becoming Obersekretär. World War I brings him into contact with wounded veterans and eastern Jewish refugees, and the Institute has him work on rehabilitation schemes rather than at the front. Though he calls the post his \"bread job\" and resents its encroachment on his writing time, the bureaucratic routines and power structures he encounters here profoundly shape the atmospheres of \"The Trial\" and \"The Castle.\"",
-      "locations": [
-        {
-          "name_historic": "Prague",
-          "name_modern": "Prague, Czech Republic",
-          "centroid": [
-            14.4378,
-            50.0755
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/81/Na_Porici_7%2C_Prague.JPG",
-          "caption": "Former Workers’ Accident Insurance Institute building, Prague",
-          "source": "https://commons.wikimedia.org/wiki/File:Na_Porici_7,_Prague.JPG",
-          "creator": "alphabet55",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Franz_Kafka_%281906%29_%282%29.jpg/960px-Franz_Kafka_%281906%29_%282%29.jpg",
+          "caption": "Kafka as Doctor of Law, around 1906",
+          "source": "https://commons.wikimedia.org/wiki/File:Franz_Kafka_(1906)_(2).jpg",
+          "creator": "Atelier Jacobi, possibly Sigismund Jacobi (1860–1935)",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "insurance_career_creative_breakthroughs",
-      "annotations": {
-        "Workers’ Accident Insurance Institute for the Kingdom of Bohemia": {
-          "explanation": "A semi-public insurance institution based in Prague that administered compulsory accident insurance for industrial workers in the Kingdom of Bohemia, where Kafka worked as a legal and technical expert from 1908 to 1922.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Franz_Kafka"
-        }
-      }
+      "event_type_icon": "mdi-school",
+      "chapter": "prague_formation",
+      "background": "At the turn of the twentieth century, Prague’s Charles-Ferdinand University was shaped by the national division imposed in 1882, when its Czech- and German-language sections became separate institutions. The German university belonged to the cultural world of the city’s German-speaking bourgeoisie, including many Jewish families, even as Czech and German national politics made language and public institutions intensely contested matters. It offered a conventional route into the professions for a middle-class student, while Prague itself remained a compact city in which university, coffeehouse, publishing, and theater circles overlapped.\n\nLaw was among the most practical and socially secure university choices available. Its curriculum led students through the legal structures of the Habsburg monarchy and prepared them for work in government, courts, business, and the expanding world of insurance. The decision mattered especially in a household headed by a commercially successful father who valued a dependable profession. Yet the university environment also let a student range beyond strictly vocational material through lectures, reading, and student societies. This coexistence of professional discipline and broad literary-cultural curiosity was characteristic of Prague’s German intellectual milieu.\n\n## Pollak, Brod, and student life\n\nOskar Pollak, a former classmate from the Altstädter Staatsgymnasium, was an important companion during these early university years. Pollak had strong interests in art and literature, and his friendship connected academic life with the city’s German-language cultural scene. Kafka also took part in the Lese- und Redehalle der deutschen Studenten, a reading and debating society for German students. Its lectures and discussions brought together students from different faculties rather than confining them to legal instruction. Within that setting, he encountered Max Brod, beginning the friendship that became central to his intellectual and literary life.\n\nThe legal course ultimately supplied a credential that could satisfy family expectations and make paid professional work possible, but it did not turn university life into a narrowly legal apprenticeship. The years at the German university placed Kafka among young writers, critics, and students debating philosophy, literature, and art in German while living in a predominantly Czech-speaking city. That dual position—inside an established professional track but also inside a small, intensely literary urban network—helped define the immediate setting from which he entered adult working life.",
+      "weight": 0.55
     },
     {
-      "date": "1908",
-      "date_precision": "year",
-      "age": 25,
-      "title": "First literary publications",
-      "description": "In 1908 Kafka’s first prose pieces appear in print when the Munich journal Hyperion publishes a group of short texts later collected under the title \"Contemplation.\" Encouraged by Max Brod, he continues revising and submitting stories, gradually gaining confidence in his vocation as a writer even while keeping his literary ambitions largely hidden from his family. These early sketches, with their precise yet disquieting observations of everyday life, anticipate the tone of his mature work. They also establish him, within a small avant‑garde readership, as part of the emerging German‑language literature of Prague.",
+      "date": "1902-10-23",
+      "date_precision": "day",
+      "age": 19,
+      "title": "Meets Max Brod",
+      "description": "Kafka met fellow student Max Brod after Brod delivered a lecture at the Reading and Lecture Hall of German Students in Prague. Their conversation began a close friendship.",
       "locations": [
-        {
-          "name_historic": "Munich",
-          "name_modern": "Munich, Germany",
-          "centroid": [
-            11.582,
-            48.1351
-          ],
-          "primary": true
-        },
         {
           "name_historic": "Prague",
           "name_modern": "Prague, Czech Republic",
@@ -334,27 +266,29 @@
             14.4378,
             50.0755
           ],
-          "primary": false
+          "primary": true
         }
       ],
       "involved_people": [
         "Max Brod"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://de.wikipedia.org/wiki/Max_Brod"
+        "https://de.wikipedia.org/wiki/Max_Brod",
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "event_type_icon": "mdi-book",
-      "chapter": "insurance_career_creative_breakthroughs"
+      "event_type_icon": "mdi-account-group",
+      "chapter": "university_circle",
+      "background": "Prague's German-speaking Jewish middle class supported a dense network of schools, student groups, newspapers, cafés, and literary associations alongside the city’s Czech-speaking public life. The German Charles-Ferdinand University, where both young men studied law, brought together students whose professional training did not necessarily suppress artistic ambitions. Brod, born in 1884 into a prosperous German-Jewish Prague family, had already developed strong interests in music, theater, and literature; his parents’ enthusiasm for opera had encouraged those interests from childhood. He would eventually turn from government service to criticism, editing, and writing.\n\n## An argument over language\n\nBrod later gave an unusually concrete account of the beginning of the relationship. He recalled that Kafka had regularly attended the meetings of the relevant student section, although the two had scarcely noticed one another. Kafka, a year older, struck Brod as exceptionally inconspicuous: he rarely spoke, and even his elegant, usually dark-blue suits appeared restrained. The reserved student nevertheless approached him afterward and accompanied him home. Brod remembered the walk as an extended discussion that opened with Kafka strongly objecting to what he considered Brod’s overly crude formulations. The memory is revealing because it preserves neither a ceremonial introduction nor instant agreement, but an argument over language and thought.\n\nThe two subsequently saw each other frequently—often daily—and Brod’s family home became an important social setting for Kafka. Through Brod’s circle, Kafka encountered other German-Jewish Prague writers and intellectuals, including Felix Weltsch. The three were later associated with the loose grouping often called the Prague Circle or Prague School, though it was not a formal literary movement with a manifesto or membership rules. Brod also introduced Kafka to Felice Bauer at his home in 1912, an encounter that began one of Kafka’s most consequential relationships.\n\n## Kafka’s literary executor\n\nBrod proved to be more than a companion in conversation. He read Kafka’s work closely, encouraged him during periods of uncertainty, and became a central witness to his life through letters and later memoirs. After Kafka’s death, Brod—named literary executor—did not follow Kafka’s request that unpublished manuscripts be destroyed. Instead, he edited and issued major unfinished works, including The Trial and The Castle. That decision has remained controversial because it conflicted with Kafka’s instructions, but it made a large portion of Kafka’s surviving literary work available to readers.",
+      "weight": 0.7
     },
     {
-      "date": "1911-10",
-      "date_precision": "month",
-      "date_end": "1912-03",
-      "date_end_precision": "month",
-      "age": 28,
-      "title": "Immerses in Yiddish theatre",
-      "description": "In the autumn of 1911 Kafka encounters a [[Yiddish theatre|Yiddish theatre]] troupe performing in Prague and is captivated by their language and intensity. He befriends the actor Jizchak Löwy, helps organize a recitation evening, and for several months throws himself into Yiddish plays and stories. This immersion renews his connection to Jewish tradition and prompts him to reflect on the contrast between assimilated Western Jews and the more overtly religious culture he sees on stage. The experience feeds into his evolving sense of identity and leaves traces in later texts that evoke itinerant performers and marginal communities.",
+      "date": "1908",
+      "date_precision": "year",
+      "date_end": "1922-07-01",
+      "date_end_precision": "day",
+      "age": 25,
+      "title": "Joins accident insurance institute",
+      "description": "After leaving Assicurazioni Generali in July 1908, Kafka entered Prague's [[Workers' Accident Insurance Institute for the Kingdom of Bohemia|Workers' Accident Insurance Institute for the Kingdom of Bohemia]], a public insurer serving industrial workers.",
       "locations": [
         {
           "name_historic": "Prague",
@@ -366,30 +300,25 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Jizchak Löwy"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://de.wikipedia.org/wiki/Jizchak_L%C3%B6wy"
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "event_type_icon": "mdi-microphone",
-      "chapter": "insurance_career_creative_breakthroughs",
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "bureaucratic_apprenticeship",
       "annotations": {
-        "Yiddish theatre": {
-          "explanation": "Professional or semi-professional theatrical performances in the Yiddish language, which flourished among Eastern European Jewish communities and often combined melodrama, music, and religious or folk themes.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Yiddish_theatre"
+        "Workers' Accident Insurance Institute for the Kingdom of Bohemia": {
+          "explanation": "A state-regulated Bohemian insurer that assessed employers and administered compensation for workplace injuries."
         }
-      }
+      },
+      "background": "At the beginning of the twentieth century, Bohemia was one of the Habsburg Empire's most industrialized crown lands, with textile mills, mines, construction sites, and engineering works employing large numbers of wage laborers. Austria's 1887 accident-insurance law made employers responsible for financing insurance against industrial injuries. The resulting regional institutions did more than pay claims: they classified workplaces by risk, calculated employers' contributions, collected evidence on accidents, and pressed for safer working conditions. The Prague institute was therefore a substantial public bureaucracy at the meeting point of law, industry, and social policy.\n\nThe contrast with commercial insurance was meaningful. Kafka had spent roughly a year at the Italian company Assicurazioni Generali, where the long schedule, from early morning until evening, left him dissatisfied. The public institute's office hours normally ended in the early afternoon. That arrangement did not remove the pressures of a salaried career, but it gave him a more workable division between official responsibilities and private life. His legal training was directly relevant: accident insurance required careful reading of regulations, correspondence with employers and claimants, and precise written decisions.\n\n## Industrial risk and prevention\n\nThe institute's work concerned the mechanics of industrial risk rather than an abstract idea of bureaucracy. A workplace accident could prompt reports from a factory, medical evidence concerning a worker's injury, a determination of whether insurance applied, and a decision on compensation. Premiums depended on the danger associated with a trade, so classification had financial consequences for employers as well as protective implications for workers. The office also treated prevention as part of its mission. Kafka's professional writing included a 1910 article, “The Scope of Compulsory Insurance in the Building Trade,” addressing whether construction work should fall within compulsory coverage. Such work shows the specialized, technical side of the post: an official had to translate changing industrial practices into enforceable administrative categories.\n\n## A civil-service career\n\nThe position developed into a durable civil-service career rather than a temporary clerical stop. Kafka became assistant secretary in 1910, deputy secretary in 1913, and chief secretary in 1920. During World War I, the institute successfully sought his deferment from military service on the grounds that his work was indispensable. The promotions brought greater standing and obligations, while the job's regular salary gave him an independence that commercial literary publication could not provide. Its procedures, reports, and hierarchies have often been linked to the atmosphere of his fiction, but the documentary record also shows a capable official whose practical expertise was valued by his employer.",
+      "weight": 0.65
     },
     {
       "date": "1912-08-13",
       "date_precision": "day",
-      "date_end": "1917",
-      "date_end_precision": "year",
       "age": 29,
-      "title": "Meets Felice Bauer and breakthrough night",
-      "description": "On 13 August 1912 Kafka meets Felice Bauer, a Berlin office professional visiting the home of Max Brod’s family in Prague; within days he begins an intense, mostly epistolary courtship that will lead to two engagements and repeated ruptures. During this emotionally charged period he experiences a creative breakthrough: in a single night, 22–23 September 1912, he writes the story \"The Judgment,\" which he dedicates to Felice. In the following years he drafts major sections of the novel later titled \"Amerika\" and, in 1912–1913, the novella \"The Metamorphosis.\" The tangled hopes and fears surrounding marriage and autonomy in his relationship with Felice deeply inform the themes of these works.",
+      "title": "Meets Felice Bauer",
+      "description": "Kafka met Felice Bauer at Max Brod's home in Prague and soon began writing to her almost daily. Their relationship unfolded largely through letters, with infrequent meetings between Prague and Berlin.",
       "locations": [
         {
           "name_historic": "Prague",
@@ -415,29 +344,110 @@
         "Max Brod"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://en.wikipedia.org/wiki/The_Metamorphosis",
-        "https://en.wikipedia.org/wiki/The_Judgement"
+        "https://en.wikipedia.org/wiki/Felice_Bauer",
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "event_type_icon": "mdi-calendar",
-      "chapter": "insurance_career_creative_breakthroughs"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Felice_Bauer_and_Franz_Kafka.jpg/960px-Felice_Bauer_and_Franz_Kafka.jpg",
+          "caption": "Felice Bauer and Franz Kafka",
+          "source": "https://commons.wikimedia.org/wiki/File:Felice_Bauer_and_Franz_Kafka.jpg",
+          "creator": "Mondadori Portfolio, Unknown photographer",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "fiction_finds_its_form",
+      "background": "Felice Bauer was not part of Kafka’s everyday Prague circle. Born into a Jewish family in Upper Silesia, she had moved with her family to Berlin in 1899. Financial circumstances forced her to leave commercial school in 1908, and she supported herself first as a stenographer for Odeon and then at the Carl Lindström Company. The firm made gramophones and Parlograph dictation machines, among the most advanced office-recording devices of the period. Bauer advanced into marketing and represented the company at trade fairs, while contributing substantially to her family’s income.\n\nHer Prague visit was incidental to a journey connected with her sister Else, who was being visited in Budapest. Family connections made the introduction possible: Max Brod’s sister Sophie had married a cousin of Bauer’s. The encounter thus joined two German-speaking Jewish urban worlds—Prague’s literary and professional milieu and Berlin’s growing commercial culture—without Bauer having come to Prague in search of a literary relationship.\n\n## Kafka’s first impression\n\nThe most immediate record is Kafka’s diary entry of August 20, written a week afterward. It is strikingly detached and forensic: he recalled Bauer seated at a table and itemized her face, throat, blouse, hair, nose, and chin. He said he had initially taken her for granted, then decided that he had formed an “unshakeable opinion” of her almost as soon as he sat down. The entry’s close, uncomfortable scrutiny has often been noted because it reveals the tension that would mark the connection: intense attention paired with emotional distance. It also differs sharply from Bauer’s practical independence and public-facing work in Berlin.\n\n## The surviving correspondence\n\nThe relationship’s documentary record is unusually rich but incomplete. Bauer preserved more than 500 of Kafka’s letters, later published as Letters to Felice, whereas her letters to him did not survive. The surviving correspondence consequently presents Kafka’s demands for replies, anxieties, affection, and self-questioning far more fully than Bauer’s side of their exchanges. He dedicated “The Judgment,” written in a single night in September 1912, to her.\n\nThe correspondence led to two engagements, the first in 1914 and the second in 1917; neither resulted in marriage. Bauer’s preservation of the letters gave the relationship its lasting literary importance. Elias Canetti later called his study of them Kafka’s Other Trial, arguing that the correspondence exposed conflicts of obligation, judgment, and intimacy that also preoccupied Kafka’s fiction.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/ConcertRecordGramophone.JPG/960px-ConcertRecordGramophone.JPG",
+          "caption": "Inspelning på Concert Record Gramophone Februari 1910.",
+          "source": "https://commons.wikimedia.org/wiki/File:ConcertRecordGramophone.JPG",
+          "creator": "FBQ",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Carl Lindström Company gramophone"
+        }
+      ],
+      "weight": 0.7
     },
     {
-      "date": "1915",
+      "date": "1912",
       "date_precision": "year",
-      "age": 32,
-      "title": "Publishes \"The Metamorphosis\"",
-      "description": "In 1915 the expressionist journal [[Die Weißen Blätter|Die Weißen Blätter]] publishes Kafka’s novella \"The Metamorphosis,\" in which the traveling salesman Gregor Samsa wakes up transformed into a monstrous vermin. Written while Kafka continues his demanding insurance work and struggles with his engagement to Felice Bauer, the story distills his preoccupations with family guilt, bodily estrangement, and mute suffering. Contemporary reception is modest, but within a small circle of readers the text is recognized as strikingly original. It will later become one of the most discussed and emblematic narratives of 20th‑century literature.",
+      "date_note": "Published at the end of 1912; its title page was dated 1913",
+      "age": 29,
+      "title": "Publishes Contemplation",
+      "description": "In Leipzig, Kurt Wolff brought Kafka’s early writing into print as a book; Kafka marked the occasion by dedicating the volume to his close friend Max Brod.",
       "locations": [
         {
           "name_historic": "Leipzig",
           "name_modern": "Leipzig, Germany",
           "centroid": [
-            12.373075,
-            51.3396955
+            12.3731,
+            51.3397
           ],
           "primary": true
-        },
+        }
+      ],
+      "involved_people": [
+        "Kurt Wolff",
+        "Max Brod"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka",
+        "https://en.wikipedia.org/wiki/Contemplation_(Kafka)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Kaf2_%282%29.jpg/960px-Kaf2_%282%29.jpg",
+          "caption": "First edition of Kafka’s Contemplation, 1912",
+          "source": "https://commons.wikimedia.org/wiki/File:Kaf2_(2).jpg",
+          "creator": "Photograph HJPrieß",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "fiction_finds_its_form",
+      "background": "In the years before World War I, the German-language literary world depended heavily on little magazines and adventurous small presses to introduce unfamiliar writers. Prague’s German-speaking writers were connected to this larger network, but they remained distant from the major publishing centers of Berlin, Munich, and Leipzig. Kafka had already tested the periodical route in 1908, when the Munich journal Hyperion printed eight of his short prose pieces. That appearance gave the later volume a small body of previously public work, rather than making it an entirely unknown manuscript.\n\n## Rowohlt and Wolff\n\nThe bibliographical imprint was Ernst Rowohlt Verlag in Leipzig. Kurt Wolff, then the firm’s young literary editor, was closely associated with the decision to issue Kafka’s book; this helps explain why he is frequently named as its publisher. Wolff’s independent publishing house was founded only the following year, but he was already becoming a significant advocate for new German-language writing. The first edition was a modest 800-copy printing, a scale suited to a debut author without an established readership and to a publisher willing to take limited commercial risks on literary experimentation.\n\nThe transition from magazine items to a unified book mattered because the material had been produced over a long and uneven period. The Hyperion selections included such pieces as “The Sudden Walk,” “Resolutions,” and “The Excursion into the Mountains.” Their earlier appearance also shows that Kafka’s initial route into print was through very short forms, not the long fiction for which he later became known. The book’s compact format matched an early-1910s market in which readers encountered new writers through brief prose, poems, reviews, and small, inexpensive volumes.\n\n## Brod and later recognition\n\nMax Brod’s support placed the book within a durable Prague literary friendship and gave its dedication a practical as well as personal meaning. Brod was already active as a writer and critic, possessed stronger literary connections, and consistently pressed Kafka to regard his work as publishable. Yet the volume did not create an immediate public reputation. Like the other work Kafka allowed into print during his lifetime, it received little attention, and its small first run gave it limited circulation.\n\nIts importance therefore lay less in contemporary acclaim than in establishing a publishing precedent. It demonstrated that Kafka’s work could pass from private manuscripts and magazine pages into a commercial book, while the association with Wolff and Rowohlt linked him to a publisher receptive to modernist fiction. Later readers came to treat this unassuming debut as the opening book of a career whose decisive recognition would largely occur after Kafka’s death.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Kafka_Betrachtung_1912.jpg/960px-Kafka_Betrachtung_1912.jpg",
+          "caption": "Franz Kafka's Contemplation",
+          "source": "https://commons.wikimedia.org/wiki/File:Kafka_Betrachtung_1912.jpg",
+          "creator": "© Foto H.-P.Haack",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Betrachtung 1912 book cover"
+        }
+      ],
+      "weight": 0.6,
+      "event_class": {
+        "type": "publication",
+        "title": "Contemplation",
+        "publication_type": "book",
+        "publisher": "Rowohlt Verlag",
+        "significance": "first book",
+        "impact": "The collection brought Kafka's short prose together in book form for the first time.",
+        "source_link": {
+          "url": "https://en.wikipedia.org/wiki/Contemplation_(short_story_collection)",
+          "kind": "wikipedia",
+          "site": "Wikipedia",
+          "entity": "Q831637",
+          "resolved_by": "wikipedia",
+          "resolved_on": "2026-08-10"
+        }
+      }
+    },
+    {
+      "date": "1914",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Begins The Trial",
+      "description": "Kafka began writing The Trial, centered on Josef K., a man arrested and pursued by an inaccessible legal authority. He left the novel incomplete, though he wrote its final chapter.",
+      "locations": [
         {
           "name_historic": "Prague",
           "name_modern": "Prague, Czech Republic",
@@ -445,20 +455,68 @@
             14.4378,
             50.0755
           ],
-          "primary": false
+          "primary": true
         }
-      ],
-      "involved_people": [
-        "Felice Bauer"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://en.wikipedia.org/wiki/The_Metamorphosis"
+        "https://en.wikipedia.org/wiki/The_Trial"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/1104/538614370_bb28a3c599_b.jpg",
+          "caption": "Manuscript of Kafka’s The Trial",
+          "source": "https://www.flickr.com/photos/58668786@N00/538614370",
+          "creator": "pabsanch",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "fiction_finds_its_form",
+      "background": "Prague's German-speaking literary world was entering a period of acute uncertainty. Austria-Hungary had declared war on Serbia at the end of July, and the wider European conflict quickly followed. Kafka still had the demanding routine of his post at the Workers' Accident Insurance Institute, where he drafted reports and dealt with industrial-injury insurance. At home, however, he had a quieter space than before: he had moved into the apartment formerly occupied by his sister Valli. The separation between an official daytime life and nocturnal writing was an enduring strain rather than a clean division.\n\nHis private circumstances were also unsettled. Kafka and Felice Bauer had formally become engaged in late May 1914, but the relationship was conducted largely through letters and had become a source of anxiety. A difficult meeting involving Bauer and her friend Grete Bloch at Berlin's Askanischer Hof in July was later remembered by Kafka as tribunal-like, an association that has often invited comparison with his fiction. The engagement was broken off in August. That comparison should not be treated as a simple key to the novel, but the collision of intimate conflict, bureaucratic work, and wartime disruption formed the immediate atmosphere of its composition.\n\n## The unfinished manuscript\n\nThe surviving draft does not present a finished book. Kafka wrote in separate groups of manuscript leaves, with chapters and fragments in varying states of completion. Some portions are fully developed, while others break off or remain only partly connected to the central narrative. The conclusion was available, but the route to it was not fully settled; this is why the work can feel at once rigorously shaped and discontinuous. Its procedural vocabulary—summonses, offices, officials, hearings, and files—draws force from concrete institutions without becoming a realistic account of any identifiable court.\n\nKafka stopped sustained work on the manuscript in early 1915 and did not prepare it for publication. After his death, Max Brod preserved the papers despite Kafka's request that unpublished work be destroyed. Brod issued the novel in 1925 under the title Der Prozess, arranging its materials into a readable sequence. Later editors returned to the manuscript to distinguish Kafka's own ordering from Brod's editorial decisions. The resulting text became central to Kafka's posthumous reputation, while its unfinished condition has remained essential to how readers understand its uncertainty and its power.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Na_Porici_7%2C_Prague.JPG/960px-Na_Porici_7%2C_Prague.JPG",
+          "caption": "Former Home of the Worker's Accident Insurance Institute.",
+          "source": "https://commons.wikimedia.org/wiki/File:Na_Porici_7,_Prague.JPG",
+          "creator": "alphabet55",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Prague Workers Accident Insurance Institute"
+        }
+      ],
+      "weight": 0.95
+    },
+    {
+      "date": "1915-10",
+      "date_precision": "month",
+      "age": 32,
+      "title": "The Metamorphosis Reaches Print",
+      "description": "In October 1915, Kafka's novella The Metamorphosis appeared in the journal Die Weißen Blätter and initially drew little attention.",
+      "locations": [
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Germany",
+          "centroid": [
+            12.3731,
+            51.3397
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "René Schickele"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/The_Metamorphosis",
+        "https://en.wikipedia.org/wiki/Die_Wei%C3%9Fen_Bl%C3%A4tter",
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Franz_Kafka_Die_Verwandlung_1916_Orig.-Pappband.jpg",
-          "caption": "First edition of Kafka’s novella “Die Verwandlung”",
+          "caption": "First edition of Kafka’s The Metamorphosis",
           "source": "https://commons.wikimedia.org/wiki/File:Franz_Kafka_Die_Verwandlung_1916_Orig.-Pappband.jpg",
           "creator": "© Foto H.-P.Haack",
           "license": "CC BY 3.0",
@@ -466,64 +524,154 @@
         }
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "insurance_career_creative_breakthroughs",
-      "annotations": {
-        "Die Weißen Blätter": {
-          "explanation": "A German expressionist literary journal, published in Leipzig, that served as an important early outlet for avant‑garde writing in the 1910s.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Die_Wei%C3%9Fen_Bl%C3%A4tter"
+      "chapter": "fiction_finds_its_form",
+      "background": "German-language literary life continued under wartime conditions, though censorship, military service, and material shortages reshaped its audience and its publishing networks. Leipzig remained an important center of the German book trade, while small periodicals offered newer writers an alternative to established newspapers and large publishing houses. Die Weißen Blätter, founded in 1913, was associated with Expressionist literary culture and, under its editor René Schickele, increasingly became a venue for writers critical of the war and sympathetic to pacifist currents.\n\n## Kafka’s delayed publication\n\nThe text had waited some time for this outlet. Kafka drafted it rapidly between November 17 and December 7, 1912, during an unusually productive period of writing. The delay between composition and print was typical of his career: he placed only a small portion of his work before the public and had little confidence that publication would settle his dissatisfaction with a manuscript. The magazine appearance nevertheless put the work before the same transregional German-reading public served by Leipzig’s literary press, rather than restricting it to Prague friends or private readings.\n\nA revealing publishing dispute arose as Kurt Wolff prepared a separate book edition for his avant-garde series Der Jüngste Tag. In a letter to Wolff, Kafka objected firmly to the possibility that the transformed creature might be illustrated on the cover. It “cannot be drawn,” he insisted, adding that it should not even be shown from a distance. His concern was not an abstract complaint about decoration: he wanted the reader’s encounter with the central situation to remain unpictured and unresolved. The edition that followed used artwork by Ottomar Starke without displaying the creature itself, respecting that restriction.\n\n## The book edition\n\nThe magazine publication was followed by Wolff’s book edition later that year, but neither format made Kafka widely famous during his lifetime. His individual magazine pieces and collections attracted limited notice, even as they reached influential editors and writers. The story’s later standing therefore should not be projected backward onto this moment: it entered print quietly, through a periodical that was itself part of a fragile wartime literary culture. Its movement from a magazine issue into Wolff’s series did, however, preserve it in durable form and made it available for the later translations, criticism, and reinterpretations that transformed its reputation.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/De_Kafka_Die_Verwandlung_1182.jpg",
+          "caption": "Die Verwandlung [In: Die weißen Blätter]",
+          "source": "https://commons.wikimedia.org/wiki/File:De_Kafka_Die_Verwandlung_1182.jpg",
+          "creator": "Franz Kafka",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Die weißen Blätter 1915"
+        }
+      ],
+      "weight": 1.0,
+      "event_class": {
+        "type": "publication",
+        "title": "The Metamorphosis",
+        "publication_type": "article",
+        "publisher": "Die Weißen Blätter",
+        "significance": "major novella",
+        "impact": "The novella presented a family crisis through Gregor Samsa's sudden and grotesque transformation.",
+        "source_link": {
+          "url": "https://en.wikisource.org/wiki/The_Metamorphosis",
+          "kind": "wikisource",
+          "site": "Wikisource",
+          "entity": "Q184222",
+          "resolved_by": "wikidata",
+          "resolved_on": "2026-08-10"
         }
       }
     },
     {
-      "date": "1917-08",
+      "date": "1917-09",
       "date_precision": "month",
-      "date_end": "1918",
-      "date_end_precision": "year",
+      "date_end": "1918-04",
+      "date_end_precision": "month",
       "age": 34,
-      "title": "Tuberculosis diagnosis and Zürau retreat",
-      "description": "In August 1917 Kafka suffers a severe lung hemorrhage and is diagnosed with tuberculosis, forcing him to take extended leave from the insurance institute. He moves to the rural village of Zürau (Siřem), where his sister Ottla and her husband manage a farm, and spends several months living quietly in the countryside. Free for the first time from both office work and urban pressures, he fills notebooks with reflections and aphorisms later known as the Zürau Aphorisms. Although physically ill, he later recalls this period as one of the most peaceful and creatively focused of his life.",
+      "title": "Recovers in Zürau",
+      "description": "Following his tuberculosis diagnosis, Kafka withdrew from his insurance post and the Prague family household to the western Bohemian farm where his sister Ottla worked. There he drafted the numbered reflections later known as the Zürau Aphorisms.",
       "locations": [
         {
-          "name_historic": "Prague",
-          "name_modern": "Prague, Czech Republic",
-          "centroid": [
-            14.4378,
-            50.0755
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Zürau",
+          "name_historic": "Zürau, Bohemia",
           "name_modern": "Siřem, Czech Republic",
           "centroid": [
-            13.4415,
-            50.2527
+            13.5080919,
+            50.2313451
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Ottla Kafka",
+        "Ottilie \"Ottla\" Kafka",
         "Karl Hermann"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka",
         "https://de.wikipedia.org/wiki/Ottla_Kafka"
       ],
-      "event_type_icon": "mdi-hospital",
-      "chapter": "illness_reflection_intimate_correspondence"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/15/Kafka_in_Z%C3%BCrau.jpg",
+          "caption": "Kafka in Zürau, Bohemia, circa 1917",
+          "source": "https://commons.wikimedia.org/wiki/File:Kafka_in_Zürau.jpg",
+          "creator": "Unknown photographer",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-heart-pulse",
+      "chapter": "tuberculosis_narrows_the_world",
+      "background": "The First World War had made ordinary life in Prague increasingly constrained, and Kafka’s position at the Workers’ Accident Insurance Institute was both demanding and consequential. The institute had previously supported his exemption from military service on the grounds that his work was indispensable, yet office employment remained a source of strain. His family home was crowded and governed by his father’s authority; a prolonged absence offered a practical separation from both bureaucratic routine and domestic conflict.\n\nThe rural household was connected to Kafka through his sister Elli’s husband, Karl Hermann, whose agricultural estate employed Ottla. Ottla had pursued agricultural training with her brother’s encouragement, an unusual path for a woman from their urban middle-class family and one her father had opposed. The setting gave Kafka access to a family member with whom he had an unusually close and sympathetic relationship, while placing him outside the rhythms of Prague’s offices, cafés, and parental apartment. His medical leave was extended, and he remained away into the spring of 1918.\n\nKafka’s illness also intensified a personal crisis already underway. He had entered a second engagement to Felice Bauer in July 1917, but the prospect of marriage and a shared household became increasingly difficult for him to contemplate amid declining health. He broke off the engagement in December. The period therefore combined enforced rest with an acute sense of uncertainty about work, marriage, bodily vulnerability, and independence.\n\n## Eight octavo notebooks\n\nThe texts associated with this stay were first written in eight octavo notebooks. Kafka later cut the individual entries apart and arranged them on separate slips, a material process that helped give the pieces their compact, self-contained form. There are 109 numbered statements, varying from brief paradoxes to several-sentence meditations on guilt, suffering, hope, evil, and the possibility of a “true way.” They were not prepared by Kafka as a finished book. Max Brod later assembled and published them in 1931 under the title Reflections on Sin, Suffering, Hope and the True Way. The title “Zürau Aphorisms,” now commonly used, identifies the period and setting rather than a title Kafka chose.",
+      "weight": 0.75
+    },
+    {
+      "date": "1919",
+      "date_precision": "year",
+      "age": 35,
+      "title": "Publishes A Country Doctor",
+      "description": "The volume was Kafka’s second collection and bore the dedication “Meinem Vater” to his father, Hermann Kafka. It brought together fourteen stories written between 1914 and 1917; contrary to some accounts, “In the Penal Colony” appeared separately that year.",
+      "locations": [
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Germany",
+          "centroid": [
+            12.3731,
+            51.3397
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Munich",
+          "name_modern": "Munich, Germany",
+          "centroid": [
+            11.5761,
+            48.1372
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Kurt Wolff",
+        "Hermann Kafka"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/A_Country_Doctor_(short_story_collection)",
+        "https://en.wikipedia.org/wiki/Franz_Kafka",
+        "https://en.wikipedia.org/wiki/In_the_Penal_Colony"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Kafka_Ein_Landarzt_1919.jpg/960px-Kafka_Ein_Landarzt_1919.jpg",
+          "caption": "First edition of Kafka’s A Country Doctor",
+          "source": "https://commons.wikimedia.org/wiki/File:Kafka_Ein_Landarzt_1919.jpg",
+          "creator": "© Foto H.-P.Haack Das Foto darf gebührenfrei verwendet werden, sofern der Urheber mit Foto H.-P.Haack vermerkt wird.",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "tuberculosis_narrows_the_world",
+      "background": "The armistice did not immediately restore a settled German-language book market. Paper shortages, disrupted distribution, and rapidly changing political borders complicated the trade, while the older networks linking Prague writers with Leipzig and Munich publishers remained important. Kafka had already placed prose in journals and small editions, but his readership was still narrow. Kurt Wolff was nevertheless a consequential outlet: his firm had developed a reputation for publishing modern German-language writing, particularly authors associated with Expressionism.\n\n## A book collection\n\nA book collection offered a different kind of public presence from a magazine appearance. It could gather work written at different moments, including pieces previously seen only by journal readers and texts that had remained unpublished. The volume did not present a unified sequence composed for a single occasion; it gave a durable common setting to short prose produced over several years. Its printed dedication is especially striking in light of Kafka’s difficult, formal relationship with Hermann Kafka, but the inscription itself does not explain its motive or establish a reconciliation.\n\nOne item in the volume also shows how fluid the boundaries of Kafka’s writing could be. “Before the Law” circulated as an independent parable, yet Kafka also incorporated it into the manuscript of The Trial. Readers thus encountered it both as a self-contained work and as part of a larger, unfinished narrative. That dual status was not an editorial mistake: short forms, fragments, and passages capable of being recontextualized were central to Kafka’s working practice. The period’s separate editions and later catalogs have also encouraged confusion between works issued by the same publisher at roughly the same time, especially regarding “In the Penal Colony.”\n\n## The limited public record\n\nContemporary response remained modest. The collection did not create a large literary public for Kafka or alter the fact that most of his writing was unavailable in book form during his lifetime. It did, however, preserve a carefully selected portion of his short fiction in an authorized printed edition. Along with the earlier collection Contemplation and individual magazine publications, it formed the limited public record by which contemporary readers could encounter Kafka’s work.",
+      "weight": 0.7,
+      "event_class": {
+        "type": "publication",
+        "title": "A Country Doctor",
+        "publication_type": "book",
+        "publisher": "Kurt Wolff Verlag",
+        "significance": "story collection",
+        "impact": "The volume assembled several of Kafka's most ambitious published stories.",
+        "source_link": {
+          "url": "https://de.wikisource.org/wiki/Ein_Landarzt_(Sammelband)",
+          "kind": "wikisource",
+          "site": "Wikisource",
+          "entity": "Q15872155",
+          "resolved_by": "wikidata",
+          "resolved_on": "2026-08-10"
+        }
+      }
     },
     {
       "date": "1920",
       "date_precision": "year",
-      "date_end": "1922",
-      "date_end_precision": "year",
-      "age": 37,
-      "title": "Relationship with Milena Jesenská",
-      "description": "Around 1920 Kafka enters into an intense relationship with the Czech journalist and translator Milena Jesenská, who is married and lives mostly in Vienna. After she translates his story \"The Stoker\" into Czech, their correspondence quickly deepens into a passionate and tormented exchange about love, illness, and self‑doubt. Kafka visits her in person only a few times, but the emotional strain of the affair, combined with his worsening health, contributes to the eventual break in late 1920. The letters he writes to Milena, later published posthumously, offer some of the most revealing insights into his inner life and his view of his own writing.",
+      "age": 36,
+      "title": "Corresponds with Milena Jesenská",
+      "description": "Kafka developed an intense, principally epistolary relationship with Milena Jesenská, a Czech journalist and translator who had translated his work. Their romantic correspondence ended in November, although a more limited friendship continued.",
       "locations": [
         {
-          "name_historic": "Prague",
+          "name_historic": "Prag",
           "name_modern": "Prague, Czech Republic",
           "centroid": [
             14.4378,
@@ -532,7 +680,7 @@
           "primary": true
         },
         {
-          "name_historic": "Vienna",
+          "name_historic": "Wien",
           "name_modern": "Vienna, Austria",
           "centroid": [
             16.3738,
@@ -548,25 +696,89 @@
         "https://en.wikipedia.org/wiki/Franz_Kafka",
         "https://de.wikipedia.org/wiki/Milena_Jesensk%C3%A1"
       ],
-      "images": [
+      "event_type_icon": "mdi-email",
+      "chapter": "tuberculosis_narrows_the_world",
+      "background": "The connection grew out of translation work across the new Czechoslovak-Austrian border rather than from a settled literary circle. Jesenská had moved to Vienna after marrying Ernst Polak, and the couple lived precariously while he pursued a bohemian life. She supported herself through occasional work, teaching Czech, journalism, and translation. In 1920 she was writing chiefly for the Prague newspaper Tribuna. Her rendering of Kafka’s story “Der Heizer” into Czech in 1919, followed by translations of other prose, gave the two writers a practical reason to begin exchanging letters.\n\nTranslation mattered because Jesenská was not simply a reader offering praise. She was carrying work written in German into Czech at a moment when Prague’s German- and Czech-language cultures were often treated as separate spheres. Kafka’s letters therefore addressed both the wording of his prose and the unusually personal authority he granted her as a reader. The surviving correspondence is overwhelmingly his side of the exchange, which makes its emotional intensity vivid but leaves Jesenská’s responses much less fully recoverable. Their written contact was supplemented by only a few meetings, including encounters connected with Vienna.\n\n## The limits of intimacy\n\nJesenská was married throughout this period, a fact that imposed practical and emotional limits on any imagined shared life. Kafka’s letters repeatedly turn communication itself into a source of strain: delays, expectations, and the possibility of causing pain become subjects in their own right. In November he expressed the condition bluntly in a letter to Jesenská: “I occupy myself with nothing else but being tortured and torturing.” The line is revealing not as a general statement of his fiction, but as evidence of how he understood the damage that continued intimacy might inflict on both correspondents. He brought the intense exchange to an abrupt halt rather than trying to sustain a relationship whose circumstances he found unbearable.\n\n## Jesenská’s independent career\n\nThe break did not erase Jesenská from Kafka’s personal world. Isolated letters were exchanged again about two years later, and he eventually entrusted some of his diaries to her. For Jesenská, the association was only one part of an independent career that made her known as a reporter on Vienna’s social conditions and as a translator of writers including Franz Werfel, Gustav Landauer, and Rosa Luxemburg. Yet the preserved letters became one of the central documentary records of Kafka’s private life, showing how a professional translation connection could become a demanding and unequal archive of intimacy.",
+      "background_images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Ehem_Pension_Villa_Ottoburg_Meran-Untermais.jpg",
-          "caption": "Villa Ottoburg in Meran-Untermais where Kafka stayed",
-          "source": "https://commons.wikimedia.org/wiki/File:Ehem_Pension_Villa_Ottoburg_Meran-Untermais.jpg",
-          "creator": "Zintosch7",
-          "license": "CC BY 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/De_Der_Heizer._Ein_Fragment_01.PNG/960px-De_Der_Heizer._Ein_Fragment_01.PNG",
+          "caption": "Der Heizer",
+          "source": "https://commons.wikimedia.org/wiki/File:De_Der_Heizer._Ein_Fragment_01.PNG",
+          "creator": "Franz Kafka",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Der Heizer Kafka"
         }
       ],
-      "event_type_icon": "mdi-email",
-      "chapter": "illness_reflection_intimate_correspondence"
+      "weight": 0.65
     },
     {
       "date": "1922-07-01",
       "date_precision": "day",
-      "age": 39,
-      "title": "Retires from insurance work",
-      "description": "On 1 July 1922 the Workers’ Accident Insurance Institute finally grants Kafka a pension on medical grounds, releasing him from regular employment. By this point his tuberculosis and chronic exhaustion make sustained office work impossible, yet he continues to write when his health allows, working on the novel \"The Castle\" and revising stories. Financially dependent on his family and friends, he shuttles between Prague and various sanatoriums in the Bohemian countryside. The separation from salaried work intensifies both his sense of marginality and his determination to shape his remaining prose.",
+      "age": 38,
+      "title": "Leaves insurance service",
+      "description": "The [[Workers' Accident Insurance Institute|Workers' Accident Insurance Institute]] granted Kafka retirement from service after tuberculosis had increasingly limited his work. That year, he worked on The Castle, an unfinished novel about a land surveyor's futile attempts to reach a remote authority.",
+      "locations": [
+        {
+          "name_historic": "Prag",
+          "name_modern": "Prague, Czech Republic",
+          "centroid": [
+            14.4378,
+            50.0755
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
+      ],
+      "event_type_icon": "mdi-exit-to-app",
+      "chapter": "tuberculosis_narrows_the_world",
+      "annotations": {
+        "Workers' Accident Insurance Institute": {
+          "explanation": "A public insurance body that administered compulsory workplace-accident coverage for industrial workers and employers in Bohemia."
+        }
+      },
+      "background": "The Prague Workers’ Accident Insurance Institute was a large public institution responsible for compulsory workplace-injury insurance. Its officials dealt with claims, compensation rules, employers’ reports, and the prevention of industrial accidents. Kafka had entered its service in 1908 after finding private insurance work uncongenial. Although the job secured a dependable income, it imposed the routines of an office bureaucracy on someone who regarded writing as his central vocation. His duties were not merely clerical: he prepared reports and handled legal and technical questions arising from factory injuries and insurance law.\n\nThe institute’s work had practical urgency in an industrial region where machinery, construction, and manufacturing brought frequent hazards. Kafka was considered a capable employee and received promotions during his career. Yet the stability of the position became increasingly difficult to sustain after his pulmonary tuberculosis was diagnosed in 1917. Long periods away from the office followed, with attempts to resume work interrupted by fatigue and recurring illness. The eventual pension mattered materially: it transformed years of salaried service into a means of support at a point when regular office attendance was no longer possible.\n\n## The Castle\n\nIn early 1922, during a stay in the mountain resort of Špindlerův Mlýn, Kafka began drafting The Castle. The manuscript opens with the arrival of K., a land surveyor, in a snowbound village whose officials insist that his position is uncertain. Rather than giving K. a direct path to the castle authorities, the narrative surrounds him with innkeepers, messengers, village officials, and contradictory instructions. The obstruction is administrative as well as geographic: every apparent contact produces another intermediary or another unexplained rule.\n\nKafka worked intensively on the novel during the year, but his worsening health halted the writing in September. The surviving text breaks off without resolving K.’s status or granting him access to the authority he seeks. This incompletion is central to the work’s shape rather than a simple missing final scene: the existing chapters repeatedly turn progress into delay, making the unfinished manuscript a record of an inquiry that never reaches its promised destination.",
+      "weight": 0.75
+    },
+    {
+      "date": "1923-07",
+      "date_precision": "month",
+      "age": 40,
+      "title": "Meets Dora Diamant",
+      "description": "While staying at the Baltic resort of Graal-Müritz, Kafka met Dora Diamant, who was working with a children's holiday group. They began a close relationship as his health continued to deteriorate.",
+      "locations": [
+        {
+          "name_historic": "Graal-Müritz",
+          "name_modern": "Graal-Müritz, Germany",
+          "centroid": [
+            12.25,
+            54.25
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Dora Diamant"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka",
+        "https://de.wikipedia.org/wiki/Dora_Diamant"
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "berlin_freedom",
+      "background": "The encounter came during a period in which Kafka's private options had narrowed sharply. Tuberculosis had first been diagnosed in 1917, and by the early 1920s its effects had made a conventional working life increasingly difficult. He was no longer employed at Prague's Workers' Accident Insurance Institute, and a summer visit with his sister Elli and her children offered a temporary setting outside the family household and the routines that had governed much of his adult life.\n\n## Dora Diamant\n\nDora Diamant brought a markedly different background into that setting. Born Dworja Diament in Pabianice, then in Congress Poland, she was the daughter of Hersz Aron Diament, a small businessman and follower of the Gerer Rebbe. After her mother died in 1912, the family moved to Będzin. Diamant received brief training as a kindergarten teacher in Kraków and, at 21, went to Berlin, where she worked at the Berliner Jüdisches Volksheim. The organization’s holiday program placed her in practical charge of children rather than in literary society; she was 25, while Kafka was 40.\n\n## Diamant’s memories\n\nMuch of the texture of this final period comes from Diamant herself. In 1947 she recounted her memories to the art critic Josef Paul Hodin, whose 1948 essay, Erinnerungen an Franz Kafka, became a major firsthand source. Her account pushed against the familiar image of Kafka as wholly neurotic, sexless, or withdrawn. She described him as sensuous, playful, cheerful, and full of appetite for life—“like an animal,” or “like a child,” in her formulation. Those memories are necessarily retrospective, but they preserve an important corrective: in her experience, illness did not erase humor, physical affection, or pleasure.\n\nThe connection quickly made a life apart from Prague imaginable. Within a few months, the pair would establish a household in Berlin, though Germany’s acute inflation forced repeated moves and made the experiment financially precarious. Marriage was contemplated but resisted by Diamant’s father. Meanwhile, Kafka’s tuberculosis, increasingly severe, set the limits within which the relationship unfolded. Diamant nevertheless remained central in the months ahead, and her later testimony—together with the loss of Kafka’s letters to her and papers seized by the Gestapo in 1933—has made the surviving evidence of their shared life both unusually valuable and incomplete.",
+      "weight": 0.7
+    },
+    {
+      "date": "1923-09",
+      "date_precision": "month",
+      "date_end": "1924-03",
+      "date_end_precision": "month",
+      "age": 40,
+      "title": "Moves to Berlin",
+      "description": "Seeking greater independence from his family and space for writing, Kafka began living with Dora Diamant. Hyperinflation and his worsening tuberculosis forced the couple to change apartments, and declining health soon brought the arrangement to an end.",
       "locations": [
         {
           "name_historic": "Prague",
@@ -574,41 +786,6 @@
           "centroid": [
             14.4378,
             50.0755
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Bohemia",
-          "name_modern": "Bohemia, Czech Republic",
-          "centroid": [
-            14.5,
-            49.75
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka"
-      ],
-      "event_type_icon": "mdi-account-clock",
-      "chapter": "illness_reflection_intimate_correspondence"
-    },
-    {
-      "date": "1923-07",
-      "date_precision": "month",
-      "date_end": "1924-03",
-      "date_end_precision": "month",
-      "age": 40,
-      "title": "Life with Dora Diamant in Berlin",
-      "description": "During a seaside holiday at [[Graal-Müritz|Graal‑Müritz]] in July 1923, Kafka meets Dora Diamant, a young woman from an orthodox Jewish background working with children at a holiday camp. Seeking distance from his family and a space devoted to writing, he moves with her to Berlin in September, and the couple share modest flats while he studies Hebrew and tentatively plans a future in Palestine. Despite poverty and his deteriorating health, this partnership brings him emotional support and a renewed engagement with Jewish texts and traditions. In these months he completes several stories later collected under the title \"A Hunger Artist.\"",
-      "locations": [
-        {
-          "name_historic": "Graal-Müritz",
-          "name_modern": "Graal-Müritz, Germany",
-          "centroid": [
-            12.2502,
-            54.2507
           ],
           "primary": false
         },
@@ -627,87 +804,84 @@
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://en.wikipedia.org/wiki/Dora_Diamant"
+        "https://de.wikipedia.org/wiki/Dora_Diamant"
       ],
-      "images": [
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "berlin_freedom",
+      "background": "Germany’s 1923 currency crisis made ordinary domestic life precarious. The mark’s purchasing power collapsed at extraordinary speed, so that wages, savings, and rents could change meaning almost from one day to the next. Berlin also offered a larger German-language literary world than Prague, but its cultural energy came with acute material uncertainty. For a writer whose income and health were already limited, a private household there depended on constant practical adjustment rather than the stable independence he had hoped to establish.\n\n## Dora Diamant in Berlin\n\nDora Diamant had arrived in Berlin as a young woman and worked at the Berliner Jüdisches Volksheim, a Jewish community institution that organized social and educational work. When she met Kafka during a summer stay at Graal-Müritz, she was serving as a supervisor for a Volksheim holiday group. Their shared life thus joined a former insurance employee, medically retired on account of tuberculosis, with a woman whose work connected her to Berlin’s Jewish social world. Diamant later recalled him not as the conventionally gloomy or sexually abnormal figure sometimes imagined by commentators, but as lively, playful, and intensely responsive to physical pleasures.\n\nTheir first Berlin home was in Steglitz, then a southwestern district of the city. The pressure of inflation made repeated changes of lodging necessary, while Kafka’s pulmonary tuberculosis became increasingly severe. Marriage was contemplated, but Diamant’s father opposed it. Those obstacles mattered especially because the relationship represented an unusually direct attempt by Kafka to form a household outside the authority of his parents. He reportedly regarded that separation from Prague family life as the greatest achievement of his life.\n\n## Kafka’s final months\n\nDespite the worsening circumstances, the period included sustained writing. Kafka composed the short story “A Little Woman” during his time with Diamant. His ability to work, however, was increasingly constrained by disease; tuberculosis had first been diagnosed in 1917 and had progressed beyond the intermittent illness he had managed in earlier years. After the Berlin arrangement ended, the illness soon required sanatorium care at Kierling near Klosterneuburg. Diamant accompanied and nursed him there, becoming the principal witness to his final months. Her later recollections, recorded in 1947 by the critic Josef Paul Hodin, became an important source for accounts of this last phase of Kafka’s life.",
+      "background_images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Dora_Diamantova_%281898_1952%29_BW_AI.jpg",
-          "caption": "Portrait of Dora Diamant, Kafka’s later companion",
-          "source": "https://commons.wikimedia.org/wiki/File:Dora_Diamantova_(1898_1952)_BW_AI.jpg",
-          "creator": "Author of this photo is unknown person.",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/GER-124a-Reichsbanknote-500_Billion_Mark_%281923%29.jpg/960px-GER-124a-Reichsbanknote-500_Billion_Mark_%281923%29.jpg",
+          "caption": "German Papiermark of the Weimar Republic, post World War I hyperinflation era (1921–24).",
+          "source": "https://commons.wikimedia.org/wiki/File:GER-124a-Reichsbanknote-500_Billion_Mark_(1923).jpg",
+          "creator": "Reichsbankdirektorium Berlin",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "German hyperinflation banknotes 1923"
         }
       ],
-      "event_type_icon": "mdi-home-switch-outline",
-      "chapter": "final_years_berlin_partnership",
-      "annotations": {
-        "Graal-Müritz": {
-          "explanation": "Graal-Müritz is a Baltic Sea resort town in northern Germany that developed in the late 19th and early 20th centuries as a seaside health and holiday destination, popular with urban middle‑class visitors.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Graal-M%C3%BCritz"
-        }
+      "weight": 0.65,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Prague, Czechoslovakia",
+        "to_location": "Berlin, Germany",
+        "characterization": "independent household"
       }
     },
     {
       "date": "1924-06-03",
       "date_precision": "day",
       "age": 40,
-      "title": "Death in Kierling sanatorium",
-      "description": "Kafka’s throat tuberculosis worsens in early 1924, making eating agonizing and forcing his transfer from Berlin back to Prague and then to a sanatorium in Kierling near Vienna. There Dora Diamant and his sister Ottla help care for him as he corrects the proofs of \"A Hunger Artist\" even on his sickbed. Unable to take sufficient nourishment and with no effective medical treatment available, he dies on 3 June 1924 at the age of forty. His body is returned to Prague and buried in the New Jewish Cemetery, leaving behind mostly unpublished manuscripts that his friend Max Brod will later edit and bring to world attention.",
+      "title": "Death in Kierling",
+      "description": "Kafka died at a sanatorium in Kierling, near Vienna, aged 40, with Dora Diamant among those caring for him.",
       "locations": [
         {
           "name_historic": "Kierling",
-          "name_modern": "Kierling, Klosterneuburg, Austria",
+          "name_modern": "Klosterneuburg, Austria",
           "centroid": [
-            16.304,
-            48.318
+            16.291,
+            48.31
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Berlin",
-          "name_modern": "Berlin, Germany",
-          "centroid": [
-            13.405,
-            52.52
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Prague",
-          "name_modern": "Prague, Czech Republic",
-          "centroid": [
-            14.437,
-            50.0755
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
         "Dora Diamant",
-        "Ottla Kafka",
-        "Max Brod"
+        "Robert Klopstock"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://en.wikipedia.org/wiki/Dora_Diamant",
-        "https://de.wikipedia.org/wiki/Ottla_Kafka"
+        "https://de.wikipedia.org/wiki/Dora_Diamant"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Ehemaliges_Sanatorium_Hoffmann.JPG",
-          "caption": "Sanatorium Hoffmann in Kierling, where Kafka died",
-          "source": "https://commons.wikimedia.org/wiki/File:Ehemaliges_Sanatorium_Hoffmann.JPG",
-          "creator": "Peter34asf",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Franz-Kafka-Denkmal_Kierling_01.jpg/960px-Franz-Kafka-Denkmal_Kierling_01.jpg",
+          "caption": "Franz Kafka monument in Kierling",
+          "source": "https://commons.wikimedia.org/wiki/File:Franz-Kafka-Denkmal_Kierling_01.jpg",
+          "creator": "Funke",
           "license": "CC BY-SA 4.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "final_years_berlin_partnership",
+      "chapter": "berlin_freedom",
+      "background": "The final crisis followed a difficult winter in Berlin, where inflation and Kafka’s declining strength had made ordinary life increasingly precarious. In March 1924 he left Berlin for Prague, and plans for further treatment soon brought him to Lower Austria. His long illness, first diagnosed in 1917, had entered a stage for which physicians of the period had few effective remedies: antibiotics for tuberculosis were still decades away. A sanatorium could provide rest, nursing, and supervision, but not a cure.\n\n## Kierling and Kafka’s care\n\nKierling was then a village near Klosterneuburg, northwest of Vienna, rather than a large urban hospital center. Kafka was admitted in April to Dr. Hugo Hoffmann’s sanatorium. Dora Diamant, his partner since the previous summer, remained at his side and handled much of the practical work of nursing. Robert Klopstock, a young physician and Kafka’s friend, also assisted in caring for him. Their presence meant that Kafka’s immediate circle was not limited to the institution’s staff: Dora provided the intimate constancy of a household companion, while Klopstock could help interpret and manage the medical situation.\n\nHis deteriorating throat condition made nourishment and speech progressively harder, turning basic care into the central problem of the last weeks. The limited therapeutic options of the time gave special weight to relief of pain and to sustaining the patient as far as possible. This was also a period of intense dependence, sharply at odds with the independent life Kafka and Diamant had attempted to make in Berlin. Accounts of Diamant’s care emphasize its steadiness; it also changed the attitude of Kafka’s parents, who had previously viewed her with suspicion.\n\n## Dora Diamant’s authority\n\nWhen immediate decisions had to be made after his death, Hermann Kafka sent the telegram, “Dora decides.” The message was an unusual acknowledgment of Diamant’s place in Kafka’s final household and of the responsibility she had assumed at Kierling. She retained some of his notebooks and letters, despite his earlier instruction that his unpublished papers be destroyed. Their later fate became uncertain after the Gestapo seized Diamant’s papers in Berlin in 1933; many of the materials she had preserved have never been recovered. Klopstock, meanwhile, later emigrated to the United States and became a physician, leaving recollections that helped document the circumstances of Kafka’s last illness.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ehemaliges_Sanatorium_Hoffmann.JPG/960px-Ehemaliges_Sanatorium_Hoffmann.JPG",
+          "caption": "The place where writer Franz Kafka died in 1924, in Kierling / Austria.",
+          "source": "https://commons.wikimedia.org/wiki/File:Ehemaliges_Sanatorium_Hoffmann.JPG",
+          "creator": "Peter34asf",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Sanatorium Hoffmann Kierling"
+        }
+      ],
+      "weight": 0.8,
       "event_class": {
         "type": "death",
-        "cause": "throat tuberculosis",
-        "characterization": "after long illness",
+        "cause": "starvation",
+        "characterization": "laryngeal tuberculosis",
         "place_of_rest": "New Jewish Cemetery, Prague"
       }
     }

@@ -1,118 +1,131 @@
 {
-  "dataset": "historical_biography_v1",
-  "created_on": "2025-12-09",
+  "dataset": "Wikipedia biographical timelines",
+  "created_on": "2026-08-10",
   "person": {
     "name": "Franz_Kafka",
     "birth_date": "1883-07-03",
     "death_date": "1924-06-03",
     "primary_roles": [
       "Schriftsteller",
-      "Romanautor"
+      "Romancier"
     ],
-    "tagline": "Meister der kafkaesken Vorstellungskraft",
-    "summary": "Franz Kafka (1883–1924) war ein deutschsprachiger jüdischer Schriftsteller aus Prag, dessen verstörend präzise Prosa die Literatur des 20. Jahrhunderts neu prägte. Er studierte Jura und arbeitete in der Versicherungsbranche; in seinen freien Stunden schrieb er Erzählungen, in denen isolierte Protagonisten in undurchschaubaren bürokratischen Systemen gefangen sind. Zu seinen Lebzeiten erschienen nur wenige Werke, darunter „Die Verwandlung“ sowie die Erzählbände „Betrachtung“ und „Ein Landarzt“. Dennoch beeinflussten sie Generationen von Schriftstellern, Philosophen und Künstlern. Sein früher Tod an Tuberkulose ließ seine Romane unvollendet; postum wuchs sein Ruf von nahezu völliger Unbekanntheit zu weltweiter Bedeutung.",
+    "tagline": "Chronist moderner Entfremdung",
+    "summary": "Franz Kafka war ein deutschsprachiger jüdischer Schriftsteller aus Prag, dessen Erzählungen Menschen zeigen, die mit Entfremdung, familiären Konflikten und undurchsichtiger Autorität konfrontiert sind. Während er als Versicherungsbeamter seinen Lebensunterhalt verdiente, schrieb er Erzählungen und unvollendete Romane wie Die Verwandlung, Der Process und Das Schloss.",
     "wikipedia": "https://en.wikipedia.org/wiki/Franz_Kafka",
     "portrait": {
       "image": "/portraits/franz_kafka_thumbnail.webp",
-      "source": "https://de.wikipedia.org/wiki/Franz_Kafka",
+      "source": "https://commons.wikimedia.org/wiki/File:Franz_Kafka,_1923.jpg",
       "caption": "Stylized portrait based on historical photograph",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/2/26/Franz_Kafka%2C_1923.jpg",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Franz_Kafka%2C_1923.jpg/960px-Franz_Kafka%2C_1923.jpg",
       "thumbnail": "/portraits/franz_kafka_thumbnail.webp",
       "medium": "/portraits/franz_kafka_medium.webp",
-      "full": "/portraits/franz_kafka_full.webp"
+      "full": "/portraits/franz_kafka_full.webp",
+      "originalCreator": "Unknown photographer",
+      "originalLicense": "Public domain"
     }
   },
   "chapters": [
     {
-      "id": "prague_childhood_formative_schooling",
-      "headline": "Prager Kindheitsjahre",
+      "id": "prague_formation",
+      "headline": "Prager Anfänge",
       "date_start": "1883-07-03",
       "date_start_precision": "day",
-      "date_end": "1901",
+      "date_end": "1906",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 18,
+      "age_end": 17,
       "involved_people": [
         "Hermann Kafka",
-        "Julie Kafka (née Löwy)",
-        "Siegfried Löwy"
+        "Julie Löwy Kafka"
       ],
-      "location": "Mitteleuropa"
+      "location": "Böhmen"
     },
     {
-      "id": "university_years_literary_awakenings",
-      "headline": "Erwachen an der Universität",
-      "date_start": "1901",
+      "id": "university_circle",
+      "headline": "Seinen Kreis finden",
+      "date_start": "1902",
       "date_start_precision": "year",
-      "date_end": "1907-10-31",
-      "date_end_precision": "day",
+      "date_end": "1907",
+      "date_end_precision": "year",
       "age_start": 18,
       "age_end": 24,
       "involved_people": [
-        "Hermann Kafka",
-        "Max Brod",
-        "Felix Weltsch",
-        "Oskar Baum"
+        "Max Brod"
       ],
-      "location": "Mitteleuropa"
+      "location": "Böhmen"
     },
     {
-      "id": "insurance_career_creative_breakthroughs",
-      "headline": "Durchbruch im Versicherungsberuf",
-      "date_start": "1907-11-01",
-      "date_start_precision": "day",
-      "date_end": "1917-07",
-      "date_end_precision": "month",
-      "age_start": 24,
-      "age_end": 34,
+      "id": "bureaucratic_apprenticeship",
+      "headline": "Die Amtsjahre",
+      "date_start": "1908",
+      "date_start_precision": "year",
+      "date_end": "1922-07-01",
+      "date_end_precision": "day",
+      "age_start": 25,
+      "age_end": 28,
+      "involved_people": null,
+      "location": "Böhmen"
+    },
+    {
+      "id": "fiction_finds_its_form",
+      "headline": "Die Form der Dichtung",
+      "date_start": "1912",
+      "date_start_precision": "year",
+      "date_end": "1916",
+      "date_end_precision": "year",
+      "age_start": 29,
+      "age_end": 33,
       "involved_people": [
+        "Kurt Wolff",
         "Max Brod",
-        "Jizchak Löwy",
-        "Felice Bauer"
+        "Felice Bauer",
+        "René Schickele"
       ],
       "location": "Mitteleuropa"
     },
     {
-      "id": "illness_reflection_intimate_correspondence",
-      "headline": "Krankheit und Briefwechsel",
-      "date_start": "1917-08",
+      "id": "tuberculosis_narrows_the_world",
+      "headline": "Krankheit und Rückzug",
+      "date_start": "1917-09",
       "date_start_precision": "month",
       "date_end": "1922-07-01",
       "date_end_precision": "day",
       "age_start": 34,
       "age_end": 39,
       "involved_people": [
-        "Ottla Kafka",
+        "Ottilie \"Ottla\" Kafka",
         "Karl Hermann",
+        "Hermann Kafka",
+        "Kurt Wolff",
         "Milena Jesenská"
       ],
       "location": "Mitteleuropa"
     },
     {
-      "id": "final_years_berlin_partnership",
-      "headline": "Letzte Jahre in Berlin",
-      "date_start": "1922-07-01",
-      "date_start_precision": "day",
+      "id": "berlin_freedom",
+      "headline": "Kurze Freiheit",
+      "date_start": "1923-07",
+      "date_start_precision": "month",
       "date_end": "1924-06-03",
       "date_end_precision": "day",
-      "age_start": 39,
+      "age_start": 40,
       "age_end": 40,
       "involved_people": [
         "Dora Diamant",
-        "Ottla Kafka",
-        "Max Brod"
+        "Robert Klopstock"
       ],
       "location": "Mitteleuropa"
     }
   ],
+  "conclusion": "Kafka verwandelte den Druck von Familie, Bürokratie, Liebe und Krankheit in eine Literatur von verstörender Klarheit. Sein Leben war kurz und vieles von seinem Werk blieb unvollendet, doch seine Vision gab der modernen Angst ihre dauerhafteste Stimme.",
   "events": [
     {
       "date": "1883-07-03",
       "date_precision": "day",
       "age": 0,
-      "title": "Geburt in Prag",
-      "description": "Franz Kafka wird in Prag, damals Teil der Österreichisch-Ungarischen Monarchie, in eine deutschsprachige jüdische Familie des Mittelstands geboren. Sein Vater Hermann Kafka ist ein Selfmademan und Kurzwarenhändler, während seine Mutter Julie aus einer gebildeteren Kaufmannsfamilie stammt und lange im Familiengeschäft arbeitet. Das häusliche Leben ist geprägt von der häufigen Abwesenheit der Eltern sowie von Gouvernanten und Dienstboten – Verhältnisse, die später in Kafkas Darstellungen emotionaler Distanz und autoritärer Macht nachwirken.",
+      "title": "Geboren in Prags deutsch-jüdischer Welt",
+      "description": "Kafka wurde in Prag, damals Teil der Österreichisch-Ungarischen Monarchie, als Sohn einer jüdischen Kaufmannsfamilie aus dem Mittelstand geboren. Deutsch war die Hauptsprache im Elternhaus, in einer vielsprachigen Stadt, deren tschechische, deutsche und jüdische Gemeinschaften seine frühe Welt prägten.",
       "locations": [
         {
           "name_historic": "Prag",
@@ -126,15 +139,15 @@
       ],
       "involved_people": [
         "Hermann Kafka",
-        "Julie Kafka (née Löwy)"
+        "Julie Löwy Kafka"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/34/Czech-2013-Prague-Plaque_%28birthplace_of_Franz_Kafka%29.jpg",
-          "caption": "Gedenktafel am Geburtshaus Franz Kafkas in Prag",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Czech-2013-Prague-Plaque_%28birthplace_of_Franz_Kafka%29.jpg/960px-Czech-2013-Prague-Plaque_%28birthplace_of_Franz_Kafka%29.jpg",
+          "caption": "Gedenktafel an Kafkas Geburtshaus in Prag",
           "source": "https://commons.wikimedia.org/wiki/File:Czech-2013-Prague-Plaque_(birthplace_of_Franz_Kafka).jpg",
           "creator": "Godot13",
           "license": "CC BY-SA 4.0",
@@ -142,9 +155,34 @@
         }
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "prague_childhood_formative_schooling",
+      "chapter": "prague_formation",
+      "background": "Prag war die Hauptstadt des Königreichs Böhmen, eines Kronlands der Habsburgermonarchie; das Nebeneinander tschechischer, deutscher und jüdischer Gemeinschaften verlieh der Stadt ein besonders vielschichtiges gesellschaftliches Gepräge. Tschechisch war die Sprache der Mehrheit, doch Deutsch dominierte weite Bereiche von Verwaltung, Bildung, Handel und kultiviertem Stadtleben. Auch die jüdische Bevölkerung war keineswegs einheitlich: Familien konnten an traditionellen religiösen Bräuchen festhalten und zugleich ganz in der deutschsprachigen bürgerlichen Kultur aufgehen. In diesem Umfeld nahm der Haushalt der Kafkas eine Stellung zwischen überlieferter jüdischer Sitte und dem modernen Handelsprag ein.\n\n## Hermann und Julie Kafka\n\nHermann Kafka war aus Osek, einem Dorf in Südböhmen mit einer bedeutenden jüdischen Bevölkerung, nach Prag gekommen. Sein Vater Jakob Kafka war Schächter, also koscherer Metzger, gewesen; Hermann dagegen etablierte sich in der Stadt als Händler für Kurzwaren und Damenaccessoires. Sein Geschäft führte eine Dohle als Zeichen – ein bildliches Wortspiel mit kavka, dem tschechischen Wort, das mit dem Familiennamen verbunden ist. Julie Löwy stammte aus Humpolec in Ostböhmen, wo ihr Vater Jakob Löwy als Tuchmacher arbeitete. Die Ehe verband somit zwei Familien, deren Wurzeln im jüdischen Gewerbe der Provinz lagen, deren Ehrgeiz und Lebensunterhalt jedoch städtisch und kaufmännisch ausgerichtet waren.\n\nDas Geschäft war nicht allein Hermanns Angelegenheit. Julie half bei der Führung, und der Alltag im Haushalt richtete sich nach den Anforderungen des Ladens. Familienzeugnisse betonen, dass beide Eltern häufig mit der Arbeit beschäftigt waren; die häusliche Fürsorge lag daher zum Teil bei Gouvernanten und Dienstboten. Das Zuhause war kein abgeschiedenes literarisches oder akademisches Milieu, sondern eine geschäftige bürgerliche Wohnung, bestimmt vom Rhythmus des Einzelhandels, familiärer Disziplin und den gesellschaftlichen Erwartungen sozialen Aufstiegs.\n\n## Deutsch im Elternhaus\n\nDie Sprache prägte diese Welt ebenso stark wie der Beruf. Hermann und Julie sprachen ein vom Jiddischen gefärbtes Deutsch, während ihre Kinder in Standarddeutsch erzogen wurden. In einer Stadt, in der Deutsch nicht die Alltagssprache der Mehrheit war, hatte dieser Unterschied Gewicht. Er verortete die Familie in einer akkulturierten deutsch-jüdischen Minderheit und bewahrte zugleich Spuren einer älteren jüdischen Volkssprache. Der Gegensatz zwischen der tschechischsprachigen Umgebung und dem zu Hause gepflegten formellen Deutsch gehörte zu den besonderen kulturellen Voraussetzungen von Kafkas früher Lebenswelt.\n\nDie Wohnung der Familie lag nahe dem Prager Altstädter Ring, unweit des historischen Zentrums, wo Handel, städtisches Leben und das ehemalige jüdische Viertel zusammentrafen. Diese Nähe machte den Haushalt zu einem Teil einer dichten, sich wandelnden Stadt und nicht zu einer abgeschlossenen ethnischen Enklave. Die besondere Verbindung von Ladenbetrieb, deutscher Bildung, jüdischer Herkunft und Prager Stadtleben bildete den unmittelbaren sozialen Boden, aus dem später die Erwartungen der Familie an ihre Kinder hervorgingen.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/20190816_Rynek_Staromiejski_w_Pradze_1143_5231.jpg/960px-20190816_Rynek_Staromiejski_w_Pradze_1143_5231.jpg",
+          "caption": "Altstädter Ring, Prag",
+          "source": "https://commons.wikimedia.org/wiki/File:20190816_Rynek_Staromiejski_w_Pradze_1143_5231.jpg",
+          "creator": "Jakub Hałun",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Prague Old Town Square"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Praha%2C_Josefov%2C_2021_%2801%29.jpg/960px-Praha%2C_Josefov%2C_2021_%2801%29.jpg",
+          "caption": "Josefov",
+          "source": "https://commons.wikimedia.org/wiki/File:Praha,_Josefov,_2021_(01).jpg",
+          "creator": "Draceane",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Josefov Prague"
+        }
+      ],
+      "weight": 0.45,
       "event_class": {
-        "type": "birth"
+        "type": "birth",
+        "father": "Hermann Kafka",
+        "mother": "Julie Löwy Kafka",
+        "characterization": "jüdische Kaufmannsfamilie"
       }
     },
     {
@@ -153,8 +191,8 @@
       "date_end": "1901",
       "date_end_precision": "year",
       "age": 6,
-      "title": "Schule und frühe Ängste",
-      "description": "Ab 1889 besucht Kafka eine deutsche Knabenschule und anschließend das anspruchsvolle Altstädter Deutsche Gymnasium in der Prager Altstadt. Er ist ein hervorragender Schüler, wird jedoch von intensiver Versagensangst und den strengen Erwartungen seines Vaters geplagt – Erfahrungen, die später in seinen Bildern bedrückender Autorität widerhallen. Um 1899 bekennt er sich kurzzeitig zum Sozialismus und trägt sogar eine rote Nelke im Knopfloch. 1901 legt er die [[Matura|Matura-Prüfung]] ab und reist mit seinem Onkel Siegfried Löwy erstmals außerhalb Böhmens. In diesen Jahren bilden sich sowohl seine intellektuellen Ambitionen als auch sein anhaltendes Gefühl innerer Unsicherheit heraus.",
+      "title": "Besucht Prager Schulen",
+      "description": "Kafka besuchte zunächst die deutsche Knabenvolksschule und anschließend das deutsche humanistische Staatsgymnasium in Prag. Er war ein guter Schüler, litt jedoch an anhaltender Versagensangst und unter den Erwartungen seines Vaters.",
       "locations": [
         {
           "name_historic": "Prag",
@@ -167,29 +205,24 @@
         }
       ],
       "involved_people": [
-        "Hermann Kafka",
-        "Siegfried Löwy"
+        "Hermann Kafka"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "prague_childhood_formative_schooling",
-      "annotations": {
-        "Matura": {
-          "explanation": "Abschlussprüfungen der höheren Schule in Teilen Mittel- und Osteuropas, darunter den ehemaligen Ländern der Österreichisch-Ungarischen Monarchie; Voraussetzung für die Aufnahme eines Universitätsstudiums.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Matura"
-        }
-      }
+      "chapter": "prague_formation",
+      "background": "Im Prag des späten 19. Jahrhunderts bestimmte die Sprache weitgehend das schulische und soziale Umfeld eines Kindes. Die Stadt war Hauptstadt des Königreichs Böhmen innerhalb Österreich-Ungarns und überwiegend tschechischsprachig, besaß aber auch eine bedeutende deutschsprachige jüdische Mittelschicht. Der Haushalt der Kafkas gehörte zu diesem Milieu: Deutsch war Familiensprache, und Hermann Kafkas wachsendes Handelsgeschäft verschaffte der Familie Zugang zu den Institutionen bürgerlichen Aufstiegs. Eine deutschsprachige Ausbildung konnte den Weg in Verwaltung, Recht, Handel und die Berufswelt des Reiches eröffnen.\n\n## Ein engerer religiöser Alltag\n\nNeben dem weltlichen Lehrplan stand ein weit begrenzterer religiöser Alltag. Kafkas formaler jüdischer Unterricht endete mit seiner Bar Mizwa im Alter von dreizehn Jahren. Die Familie beging die wichtigsten Feiertage, doch Synagogenbesuche blieben selten: Nur an vier hohen Feiertagen im Jahr begleitete er seinen Vater. Diese Trennung zwischen anspruchsvoller deutscher Bildungskultur und einer vergleichsweise eingeschränkten jüdischen Praxis war für viele assimilierte deutschsprachige jüdische Familien in Prag kennzeichnend, hob jedoch die gesellschaftlichen Unterschiede zwischen den tschechischen, deutschen und jüdischen Gemeinschaften der Stadt nicht auf.\n\n## Der klassische Sekundarschulgang\n\nDer klassische Sekundarschulgang nach der Volksschule war geisteswissenschaftlich ausgerichtet und verlangte anhaltende Arbeit in Sprachen sowie formellen Prüfungen. Sein Abschluss, die Matura, war die Voraussetzung für ein Universitätsstudium in der österreichischen Reichshälfte der Habsburgermonarchie. Der Bildungsgang dauerte acht Jahre und war damit kein kurzer Vorbereitungskurs, sondern ein langer, streng geregelter Weg durch die Jugend. Kafka schloss ihn 1901 ab und erfüllte damit die Zugangsvoraussetzung für sein späteres Jurastudium. Seine durchweg guten Leistungen machten diesen nächsten Schritt möglich, auch wenn der Erfolg in der Schule den privaten Druck, den er mit Leistung verband, nicht aufhob.\n\nEine wichtige Bekanntschaft aus den Schuljahren war Oskar Pollak, ein etwas älterer Schüler, der Kafkas Freund wurde. Ihre Beziehung bot ihm geistige Gesellschaft jenseits der formalen Anforderungen des Unterrichts. Pollak interessierte sich für Kunst und Literatur, und die Freundschaft führte Kafka während seiner Jugend an weiterreichende kulturelle Interessen heran. So vermittelte die Schule mehr als Zeugnisse: Sie brachte ihn in den engen deutschsprachigen gebildeten Kreis Prags, in dem spätere Freundschaften und literarische Gespräche entstehen konnten. Als er das Gymnasium verließ, wies der von seiner Familie erwartete Weg auf einen bürgerlichen Beruf, während Lektüre und Nachdenken bereits zu einer konkurrierenden Bindung wurden.",
+      "weight": 0.3
     },
     {
       "date": "1901",
       "date_precision": "year",
-      "date_end": "1906-06-18",
-      "date_end_precision": "day",
-      "age": 18,
-      "title": "Jurastudium an der Prager Universität",
-      "description": "1901 schreibt sich Kafka an der deutschen [[Charles‑Ferdinand University|Karl-Ferdinand-Universität]] in [[Prague|Prag]] ein. Zunächst beginnt er ein Chemiestudium, wechselt dann jedoch zur Rechtswissenschaft – eine Entscheidung, die seinen Vater zufriedenstellt und ihm berufliche Sicherheit verspricht. Er tritt der [[Lese- und Redehalle der deutschen Studenten|Lese- und Redehalle der deutschen Studenten]] bei, besucht dort literarische Veranstaltungen und schließt enge Freundschaften mit Max Brod, Felix Weltsch, Oskar Baum und anderen Mitgliedern des späteren „Prager Kreises“. Neben seinen juristischen Lehrveranstaltungen hört er Vorlesungen über Philosophie, deutsche Literatur und Kunstgeschichte und liest Autoren wie Flaubert, Dostojewski und Gogol. Am 18. Juni 1906 erhält er den Doktorgrad der Rechte und absolviert anschließend das vorgeschriebene Gerichtsjahr als Rechtspraktikant an den Zivil- und Strafgerichten Prags.",
+      "date_end": "1906",
+      "date_end_precision": "year",
+      "age": 17,
+      "title": "Studiert Jura in Prag",
+      "description": "Kafka schrieb sich 1901 an der Deutschen Universität in Prag ein, hörte zunächst Chemie, Germanistik und Kunstgeschichte, bevor er sich für Jura entschied.",
       "locations": [
         {
           "name_historic": "Prag",
@@ -201,132 +234,31 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Hermann Kafka",
-        "Max Brod",
-        "Felix Weltsch",
-        "Oskar Baum"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://de.wikipedia.org/wiki/Max_Brod",
-        "https://de.wikipedia.org/wiki/Felix_Weltsch"
-      ],
-      "event_type_icon": "mdi-school",
-      "chapter": "prague_childhood_formative_schooling",
-      "annotations": {
-        "Charles‑Ferdinand University": {
-          "explanation": "Die deutsche Karl-Ferdinand-Universität war der deutschsprachige Zweig der historischen Karls-Universität in Prag und diente während der österreichisch-ungarischen Zeit der deutschsprachigen Bevölkerung der Stadt.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Charles_University"
-        },
-        "Prague": {
-          "explanation": "Zur Zeit von Kafkas Studium war Prag die Hauptstadt des Königreichs Böhmen innerhalb der Österreichisch-Ungarischen Monarchie und besaß eigenständige deutsch- und tschechischsprachige Kulturkreise.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Prague"
-        },
-        "Lese- und Redehalle der deutschen Studenten": {
-          "explanation": "Die Lese- und Redehalle der deutschen Studenten war ein deutschsprachiger studentischer Lese- und Debattierverein in Prag, der als kultureller und literarischer Treffpunkt für Universitätsstudenten diente.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Lese-_und_Redehalle_der_deutschen_Studenten_in_Prag"
-        }
-      }
-    },
-    {
-      "date": "1907-11-01",
-      "date_precision": "day",
-      "date_end": "1908-07-15",
-      "date_end_precision": "day",
-      "age": 24,
-      "title": "Erste Stelle bei einer Versicherung",
-      "description": "Am 1. November 1907 beginnt Kafka seine Vollzeittätigkeit bei der italienischen Versicherungsgesellschaft [[Assicurazioni Generali|Assicurazioni Generali]] in Prag. Die langen Bürozeiten, oft vom frühen Morgen bis zum Abend, lassen ihm kaum Zeit zum Schreiben und zehren rasch an seinen Kräften. Schon seine Briefe aus dieser Zeit stellen die Anforderungen der Lohnarbeit seiner Sehnsucht gegenüber, sich ganz der Literatur zu widmen. Kafka fühlt sich gefangen und kündigt am 15. Juli 1908, entschlossen, eine Stelle zu finden, die sich besser mit seinen literarischen Ambitionen vereinbaren lässt.",
-      "locations": [
-        {
-          "name_historic": "Prag",
-          "name_modern": "Prag, Tschechische Republik",
-          "centroid": [
-            14.4378,
-            50.0755
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://en.wikipedia.org/wiki/Assicurazioni_Generali"
-      ],
-      "images": [
-        {
-          "url": "https://live.staticflickr.com/3048/2752617043_177a14ea49_b.jpg",
-          "caption": "Gebäude der Assicurazioni Generali in Prag",
-          "source": "https://www.flickr.com/photos/58668786@N00/2752617043"
-        }
-      ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "insurance_career_creative_breakthroughs",
-      "annotations": {
-        "Assicurazioni Generali": {
-          "explanation": "Assicurazioni Generali ist eine große italienische Versicherungsgesellschaft, die 1831 in Triest gegründet wurde und sich im späten 19. und frühen 20. Jahrhundert in Mittel- und Osteuropa ausbreitete.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Assicurazioni_Generali"
-        }
-      }
-    },
-    {
-      "date": "1908-08",
-      "date_precision": "month",
-      "date_end": "1922-07-01",
-      "date_end_precision": "day",
-      "age": 25,
-      "title": "Karriere bei der Arbeiterunfallversicherung",
-      "description": "Wenige Wochen nach seinem Ausscheiden bei Assicurazioni Generali tritt Kafka dem [[Workers’ Accident Insurance Institute for the Kingdom of Bohemia|Arbeiter-Unfallversicherungs-Institut für das Königreich Böhmen]] bei, einer halbstaatlichen Einrichtung für die Versicherung von Arbeitsunfällen in der Industrie. In den folgenden vierzehn Jahren untersucht er Fabrikunfälle, verfasst technische Gutachten und Sicherheitsvorschriften und wird wiederholt befördert, bis er schließlich Obersekretär wird. Der Erste Weltkrieg bringt ihn mit verwundeten Kriegsteilnehmern und jüdischen Flüchtlingen aus dem Osten in Kontakt; das Institut setzt ihn an Rehabilitationsprogrammen ein, statt ihn an die Front zu schicken. Obwohl er die Stelle als seinen „Brotberuf“ bezeichnet und es ihm missfällt, wie sie ihm die Zeit zum Schreiben raubt, prägen die bürokratischen Abläufe und Machtstrukturen, denen er hier begegnet, die Atmosphäre von „Der Process“ und „Das Schloss“ zutiefst.",
-      "locations": [
-        {
-          "name_historic": "Prag",
-          "name_modern": "Prag, Tschechische Republik",
-          "centroid": [
-            14.4378,
-            50.0755
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/81/Na_Porici_7%2C_Prague.JPG",
-          "caption": "Ehemaliges Gebäude des Arbeiter-Unfallversicherungs-Instituts in Prag",
-          "source": "https://commons.wikimedia.org/wiki/File:Na_Porici_7,_Prague.JPG",
-          "creator": "alphabet55",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Franz_Kafka_%281906%29_%282%29.jpg/960px-Franz_Kafka_%281906%29_%282%29.jpg",
+          "caption": "Kafka als Doktor der Rechte, um 1906",
+          "source": "https://commons.wikimedia.org/wiki/File:Franz_Kafka_(1906)_(2).jpg",
+          "creator": "Atelier Jacobi, possibly Sigismund Jacobi (1860–1935)",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "insurance_career_creative_breakthroughs",
-      "annotations": {
-        "Workers’ Accident Insurance Institute for the Kingdom of Bohemia": {
-          "explanation": "Eine halbstaatliche Versicherungseinrichtung mit Sitz in Prag, die im Königreich Böhmen die obligatorische Unfallversicherung für Industriearbeiter verwaltete; Kafka arbeitete dort von 1908 bis 1922 als juristischer und technischer Fachmann.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Franz_Kafka"
-        }
-      }
+      "event_type_icon": "mdi-school",
+      "chapter": "prague_formation",
+      "background": "Zu Beginn des 20. Jahrhunderts war die Prager Karls-Ferdinands-Universität von der 1882 vollzogenen nationalen Teilung geprägt, die ihre tschechisch- und deutschsprachigen Abteilungen zu getrennten Institutionen gemacht hatte. Die deutsche Universität gehörte zur Kulturwelt des deutschsprachigen Bürgertums der Stadt, darunter vieler jüdischer Familien, während tschechische und deutsche Nationalpolitik Sprache und öffentliche Institutionen heftig umkämpft machte. Für einen Studenten aus dem Mittelstand bot sie einen konventionellen Weg in die freien Berufe; zugleich blieb Prag eine überschaubare Stadt, in der Universität, Kaffeehaus, Verlags- und Theaterkreise ineinandergriffen.\n\nJura gehörte zu den praktischsten und sozial sichersten Studienmöglichkeiten. Der Lehrplan führte in die Rechtsordnung der Habsburgermonarchie ein und bereitete auf Tätigkeiten in Verwaltung, Gerichten, Wirtschaft und der expandierenden Versicherungswelt vor. Die Entscheidung wog besonders schwer in einem Haushalt, dessen kommerziell erfolgreicher Vater Wert auf einen verlässlichen Beruf legte. Doch das universitäre Umfeld erlaubte auch, durch Vorlesungen, Lektüre und studentische Vereinigungen über das rein Berufliche hinauszugehen. Dieses Nebeneinander von beruflicher Disziplin und weiter literarisch-kultureller Neugier war für das deutsche intellektuelle Milieu Prags bezeichnend.\n\n## Pollak, Brod und das Studentenleben\n\nOskar Pollak, ein ehemaliger Mitschüler vom Altstädter Staatsgymnasium, war in diesen frühen Universitätsjahren ein wichtiger Gefährte. Pollak hatte ausgeprägte Interessen an Kunst und Literatur, und seine Freundschaft verband das Studium mit der deutschsprachigen Kulturszene der Stadt. Kafka nahm auch an der Lese- und Redehalle der deutschen Studenten teil, einer Lese- und Debattiergesellschaft deutscher Studenten. Ihre Vorträge und Diskussionen brachten Studierende verschiedener Fakultäten zusammen, statt sie auf die juristische Ausbildung zu beschränken. Dort begegnete er Max Brod und begründete die Freundschaft, die für sein geistiges und literarisches Leben zentral werden sollte.\n\nDas Jurastudium verschaffte ihm schließlich einen Abschluss, der den familiären Erwartungen genügen und eine bezahlte berufliche Tätigkeit ermöglichen konnte; dennoch machte es die Universitätszeit nicht zu einer bloß juristischen Lehrzeit. Die Jahre an der deutschen Universität brachten Kafka mit jungen Schriftstellern, Kritikern und Studenten zusammen, die in deutscher Sprache über Philosophie, Literatur und Kunst debattierten, während sie in einer überwiegend tschechischsprachigen Stadt lebten. Diese doppelte Stellung – innerhalb einer etablierten Berufslaufbahn und zugleich eines kleinen, intensiv literarischen städtischen Netzwerks – prägte das unmittelbare Umfeld, aus dem er ins Arbeitsleben trat.",
+      "weight": 0.55
     },
     {
-      "date": "1908",
-      "date_precision": "year",
-      "age": 25,
-      "title": "Erste literarische Veröffentlichungen",
-      "description": "1908 erscheinen Kafkas erste Prosastücke im Druck: Die Münchner Zeitschrift Hyperion veröffentlicht eine Reihe kurzer Texte, die später unter dem Titel „Betrachtung“ gesammelt werden. Von Max Brod ermutigt, überarbeitet und verschickt Kafka weiterhin Erzählungen und gewinnt allmählich Vertrauen in seine Berufung zum Schriftsteller, obwohl er seine literarischen Ambitionen vor seiner Familie weitgehend geheim hält. Diese frühen Skizzen mit ihren präzisen und zugleich beunruhigenden Beobachtungen des Alltags nehmen den Ton seines reifen Werks vorweg. Zugleich machen sie ihn innerhalb einer kleinen avantgardistischen Leserschaft zu einem Vertreter der entstehenden deutschsprachigen Literatur Prags.",
+      "date": "1902-10-23",
+      "date_precision": "day",
+      "age": 19,
+      "title": "Begegnet Max Brod",
+      "description": "Kafka lernte den Mitstudenten Max Brod kennen, nachdem Brod in der Lese- und Redehalle der deutschen Studenten in Prag einen Vortrag gehalten hatte. Aus ihrem Gespräch entstand eine enge Freundschaft.",
       "locations": [
-        {
-          "name_historic": "München",
-          "name_modern": "München, Deutschland",
-          "centroid": [
-            11.582,
-            48.1351
-          ],
-          "primary": true
-        },
         {
           "name_historic": "Prag",
           "name_modern": "Prag, Tschechische Republik",
@@ -334,27 +266,29 @@
             14.4378,
             50.0755
           ],
-          "primary": false
+          "primary": true
         }
       ],
       "involved_people": [
         "Max Brod"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://de.wikipedia.org/wiki/Max_Brod"
+        "https://de.wikipedia.org/wiki/Max_Brod",
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "event_type_icon": "mdi-book",
-      "chapter": "insurance_career_creative_breakthroughs"
+      "event_type_icon": "mdi-account-group",
+      "chapter": "university_circle",
+      "background": "Prags deutschsprachiges jüdisches Bürgertum unterhielt neben dem tschechischsprachigen öffentlichen Leben der Stadt ein dichtes Netz aus Schulen, Studentengruppen, Zeitungen, Cafés und literarischen Vereinigungen. Die deutsche Karls-Ferdinands-Universität, an der beide jungen Männer Jura studierten, vereinte Studenten, deren Berufsausbildung künstlerische Ambitionen nicht zwingend verdrängte. Brod, 1884 in eine wohlhabende deutsch-jüdische Prager Familie geboren, hatte schon früh ein starkes Interesse an Musik, Theater und Literatur entwickelt; die Opernbegeisterung seiner Eltern hatte diese Neigungen seit seiner Kindheit gefördert. Später wandte er sich vom Staatsdienst der Kritik, dem Lektorat und dem Schreiben zu.\n\n## Ein Streit über Sprache\n\nBrod schilderte später den Beginn der Beziehung ungewöhnlich anschaulich. Er erinnerte sich, dass Kafka die Zusammenkünfte der betreffenden Studentensektion regelmäßig besucht habe, obwohl die beiden einander kaum wahrgenommen hätten. Kafka, ein Jahr älter, erschien Brod außergewöhnlich unauffällig: Er sprach selten, und selbst seine eleganten, meist dunkelblauen Anzüge wirkten zurückhaltend. Dennoch sprach der reservierte Student ihn nach dem Vortrag an und begleitete ihn nach Hause. Brod erinnerte den Weg als ein ausgedehntes Gespräch, das damit begann, dass Kafka sich entschieden gegen das wandte, was er für Brods allzu grobe Formulierungen hielt. Die Erinnerung ist aufschlussreich, weil sie weder eine feierliche Vorstellung noch sofortige Übereinstimmung festhält, sondern einen Streit über Sprache und Denken.\n\nDanach sahen sie sich häufig, oft täglich, und das Haus der Familie Brod wurde für Kafka zu einem wichtigen gesellschaftlichen Ort. Durch Brods Kreis begegnete Kafka weiteren deutsch-jüdischen Prager Schriftstellern und Intellektuellen, darunter Felix Weltsch. Später verband man die drei mit der lockeren Gruppierung, die oft Prager Kreis oder Prager Schule genannt wird, doch handelte es sich nicht um eine formelle literarische Bewegung mit Manifest oder Mitgliedschaftsregeln. Brod stellte Kafka 1912 bei sich zu Hause auch Felice Bauer vor – eine Begegnung, aus der eine von Kafkas folgenreichsten Beziehungen hervorging.\n\n## Kafkas Nachlassverwalter\n\nBrod war mehr als ein Gesprächsgefährte. Er las Kafkas Arbeiten aufmerksam, ermutigte ihn in Zeiten der Ungewissheit und wurde durch Briefe und spätere Erinnerungen zu einem zentralen Zeugen seines Lebens. Nach Kafkas Tod folgte Brod, der zum literarischen Nachlassverwalter bestimmt worden war, nicht dessen Wunsch, unveröffentlichte Manuskripte zu vernichten. Stattdessen gab er bedeutende unvollendete Werke heraus, darunter Der Process und Das Schloss. Diese Entscheidung bleibt umstritten, weil sie Kafkas Anweisungen widersprach, doch machte sie einen großen Teil seines überlieferten Werks für Leser zugänglich.",
+      "weight": 0.7
     },
     {
-      "date": "1911-10",
-      "date_precision": "month",
-      "date_end": "1912-03",
-      "date_end_precision": "month",
-      "age": 28,
-      "title": "Begegnung mit dem jiddischen Theater",
-      "description": "Im Herbst 1911 begegnet Kafka in Prag einer [[Yiddish theatre|jiddischen Theater]]truppe und ist von ihrer Sprache und Ausdruckskraft fasziniert. Er freundet sich mit dem Schauspieler Jizchak Löwy an, hilft bei der Organisation eines Rezitationsabends und widmet sich mehrere Monate lang mit großer Hingabe jiddischen Theaterstücken und Erzählungen. Diese intensive Beschäftigung erneuert seine Verbindung zur jüdischen Tradition und lässt ihn über den Gegensatz zwischen assimilierten Juden Westeuropas und der offenkundig religiöseren Kultur nachdenken, die er auf der Bühne erlebt. Die Erfahrung fließt in sein sich wandelndes Identitätsgefühl ein und hinterlässt Spuren in späteren Texten über umherziehende Künstler und gesellschaftliche Randgruppen.",
+      "date": "1908",
+      "date_precision": "year",
+      "date_end": "1922-07-01",
+      "date_end_precision": "day",
+      "age": 25,
+      "title": "Tritt in die Unfallversicherungsanstalt ein",
+      "description": "Nach seinem Ausscheiden bei Assicurazioni Generali im Juli 1908 trat Kafka in die Prager [[Workers' Accident Insurance Institute for the Kingdom of Bohemia|Arbeiter-Unfallversicherungsanstalt für das Königreich Böhmen]] ein, einen öffentlichen Versicherer für Industriearbeiter.",
       "locations": [
         {
           "name_historic": "Prag",
@@ -366,30 +300,25 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Jizchak Löwy"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://de.wikipedia.org/wiki/Jizchak_L%C3%B6wy"
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "event_type_icon": "mdi-microphone",
-      "chapter": "insurance_career_creative_breakthroughs",
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "bureaucratic_apprenticeship",
       "annotations": {
-        "Yiddish theatre": {
-          "explanation": "Professionelle oder semiprofessionelle Theateraufführungen in jiddischer Sprache, die in den jüdischen Gemeinden Osteuropas blühten und häufig Melodram, Musik sowie religiöse oder volkstümliche Themen verbanden.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Yiddish_theatre"
+        "Workers' Accident Insurance Institute for the Kingdom of Bohemia": {
+          "explanation": "Eine staatlich regulierte böhmische Versicherungsanstalt, die Arbeitgeber veranlagte und Entschädigungen für Arbeitsunfälle verwaltete."
         }
-      }
+      },
+      "background": "Zu Beginn des 20. Jahrhunderts war Böhmen eines der am stärksten industrialisierten Kronländer des Habsburgerreichs; Textilfabriken, Bergwerke, Baustellen und Maschinenbaubetriebe beschäftigten große Zahlen von Lohnarbeitern. Österreichs Unfallversicherungsgesetz von 1887 verpflichtete Arbeitgeber, die Versicherung gegen Betriebsunfälle zu finanzieren. Die daraus hervorgegangenen regionalen Anstalten zahlten nicht nur Entschädigungen: Sie stuften Arbeitsplätze nach Risiken ein, berechneten die Arbeitgeberbeiträge, ermittelten bei Unfällen und drängten auf sicherere Arbeitsbedingungen. Die Prager Anstalt war somit eine bedeutende öffentliche Bürokratie an der Schnittstelle von Recht, Industrie und Sozialpolitik.\n\nDer Unterschied zur privaten Versicherung war bedeutsam. Kafka hatte etwa ein Jahr bei der italienischen Gesellschaft Assicurazioni Generali gearbeitet, wo ihn die langen Arbeitszeiten vom frühen Morgen bis zum Abend unzufrieden machten. Die Dienstzeit in der öffentlichen Anstalt endete gewöhnlich am frühen Nachmittag. Das nahm dem Angestelltenberuf nicht seinen Druck, ermöglichte ihm jedoch eine praktikablere Trennung zwischen amtlichen Pflichten und Privatleben. Seine juristische Ausbildung war unmittelbar einschlägig: Die Unfallversicherung verlangte sorgfältige Lektüre von Vorschriften, Korrespondenz mit Arbeitgebern und Anspruchstellern sowie präzise schriftliche Entscheidungen.\n\n## Industrielle Risiken und Prävention\n\nDie Arbeit der Anstalt betraf die konkrete Mechanik industrieller Risiken, nicht eine abstrakte Vorstellung von Bürokratie. Ein Betriebsunfall konnte Berichte aus einer Fabrik, ärztliche Befunde zur Verletzung eines Arbeiters, die Klärung der Versicherungspflicht und eine Entscheidung über die Entschädigung nach sich ziehen. Die Beiträge richteten sich nach der Gefährlichkeit eines Gewerbes; die Einstufung hatte daher finanzielle Folgen für Arbeitgeber und schützende Auswirkungen für Arbeiter. Auch Prävention gehörte zum Auftrag der Behörde. Zu Kafkas fachlichen Schriften zählte ein Aufsatz von 1910, „Der Umfang der Unfallversicherungspflicht im Baugewerbe“, der der Frage nachging, ob Bauarbeiten der Pflichtversicherung unterliegen sollten. Solche Arbeit zeigt die spezialisierte technische Seite seines Amtes: Ein Beamter musste sich wandelnde industrielle Praktiken in durchsetzbare Verwaltungskategorien übersetzen.\n\n## Eine Beamtenlaufbahn\n\nDie Stelle entwickelte sich zu einer dauerhaften Beamtenlaufbahn und blieb keine vorübergehende Bürotätigkeit. Kafka wurde 1910 Konzipist, 1913 Vizesekretär und 1920 Obersekretär. Während des Ersten Weltkriegs erwirkte die Anstalt seine Zurückstellung vom Militärdienst, weil seine Arbeit als unentbehrlich galt. Die Beförderungen brachten höheres Ansehen und mehr Verpflichtungen, während das regelmäßige Gehalt ihm eine Unabhängigkeit verschaffte, die literarische Veröffentlichungen nicht bieten konnten. Die Verfahren, Berichte und Hierarchien seines Berufs werden oft mit der Atmosphäre seiner Dichtung verbunden; die Akten zeigen jedoch auch einen fähigen Beamten, dessen praktische Sachkenntnis sein Arbeitgeber schätzte.",
+      "weight": 0.65
     },
     {
       "date": "1912-08-13",
       "date_precision": "day",
-      "date_end": "1917",
-      "date_end_precision": "year",
       "age": 29,
-      "title": "Felice Bauer und eine Durchbruchsnacht",
-      "description": "Am 13. August 1912 lernt Kafka Felice Bauer kennen, eine Berliner Büroangestellte, die das Haus der Familie Max Brods in Prag besucht. Innerhalb weniger Tage beginnt er eine intensive, überwiegend briefliche Annäherung, die zu zwei Verlobungen und wiederholten Trennungen führen wird. In dieser emotional aufgeladenen Zeit erlebt er einen schöpferischen Durchbruch: In der einzigen Nacht vom 22. auf den 23. September 1912 schreibt er die Erzählung „Das Urteil“, die er Felice widmet. In den folgenden Jahren entwirft er wesentliche Teile des später „Amerika“ genannten Romans und verfasst 1912–1913 die Novelle „Die Verwandlung“. Die verworrenen Hoffnungen und Ängste rund um Ehe und Selbstbestimmung in seiner Beziehung zu Felice prägen die Themen dieser Werke zutiefst.",
+      "title": "Begegnet Felice Bauer",
+      "description": "Kafka lernte Felice Bauer im Haus Max Brods in Prag kennen und begann bald, ihr fast täglich zu schreiben. Ihre Beziehung entfaltete sich überwiegend in Briefen, bei seltenen Begegnungen zwischen Prag und Berlin.",
       "locations": [
         {
           "name_historic": "Prag",
@@ -415,29 +344,110 @@
         "Max Brod"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://en.wikipedia.org/wiki/The_Metamorphosis",
-        "https://en.wikipedia.org/wiki/The_Judgement"
+        "https://en.wikipedia.org/wiki/Felice_Bauer",
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "event_type_icon": "mdi-calendar",
-      "chapter": "insurance_career_creative_breakthroughs"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Felice_Bauer_and_Franz_Kafka.jpg/960px-Felice_Bauer_and_Franz_Kafka.jpg",
+          "caption": "Felice Bauer und Franz Kafka",
+          "source": "https://commons.wikimedia.org/wiki/File:Felice_Bauer_and_Franz_Kafka.jpg",
+          "creator": "Mondadori Portfolio, Unknown photographer",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "fiction_finds_its_form",
+      "background": "Felice Bauer gehörte nicht zu Kafkas alltäglichem Prager Kreis. In eine jüdische Familie in Oberschlesien geboren, war sie 1899 mit ihrer Familie nach Berlin gezogen. Finanzielle Umstände zwangen sie 1908, die Handelsschule zu verlassen; ihren Lebensunterhalt verdiente sie zunächst als Stenotypistin bei Odeon und danach bei der Carl-Lindström-Gesellschaft. Das Unternehmen stellte Grammophone und Parlograph-Diktiergeräte her, einige der fortschrittlichsten Büroaufzeichnungsgeräte jener Zeit. Bauer stieg ins Marketing auf, vertrat die Firma auf Messen und trug wesentlich zum Einkommen ihrer Familie bei.\n\nIhr Besuch in Prag war eine beiläufige Station auf einer Reise, die mit ihrer Schwester Else zusammenhing, die in Budapest besucht wurde. Familienverbindungen ermöglichten die Vorstellung: Max Brods Schwester Sophie hatte einen Cousin Bauers geheiratet. Die Begegnung führte damit zwei deutschsprachige jüdische Stadtwelten zusammen – Prags literarisch-berufliches Milieu und Berlins wachsende Handelswelt –, ohne dass Bauer nach Prag gekommen wäre, um eine literarische Beziehung zu suchen.\n\n## Kafkas erster Eindruck\n\nDas unmittelbarste Zeugnis ist Kafkas Tagebucheintrag vom 20. August, eine Woche danach. Er wirkt auffallend distanziert und forensisch: Kafka erinnerte Bauer an einem Tisch sitzend und zählte Gesicht, Hals, Bluse, Haare, Nase und Kinn auf. Zunächst, schrieb er, habe er sie für selbstverständlich genommen, dann aber fast unmittelbar nach dem Niedersetzen ein „unerschütterliches Urteil“ über sie gefasst. Die genaue, unangenehme Musterung ist oft hervorgehoben worden, weil sie die Spannung erkennen lässt, die diese Verbindung prägen sollte: intensive Aufmerksamkeit neben emotionaler Distanz. Sie steht auch in scharfem Gegensatz zu Bauers praktischer Unabhängigkeit und ihrer öffentlich zugewandten Arbeit in Berlin.\n\n## Die erhaltene Korrespondenz\n\nDie dokumentarische Überlieferung der Beziehung ist ungewöhnlich reich, aber unvollständig. Bauer bewahrte mehr als 500 Briefe Kafkas, die später als Briefe an Felice veröffentlicht wurden; ihre Briefe an ihn sind dagegen nicht erhalten. Die überlieferte Korrespondenz zeigt folglich Kafkas Forderungen nach Antworten, Ängste, Zuneigung und Selbstbefragung weitaus vollständiger als Bauers Seite des Austauschs. Er widmete ihr „Das Urteil“, das er im September 1912 in einer einzigen Nacht schrieb.\n\nDie Korrespondenz führte zu zwei Verlobungen, der ersten 1914 und der zweiten 1917; keine endete in einer Heirat. Dass Bauer die Briefe bewahrte, verlieh der Beziehung ihre bleibende literarische Bedeutung. Elias Canetti nannte seine Studie darüber Kafkas anderer Prozess und vertrat die Ansicht, die Korrespondenz lege Konflikte von Verpflichtung, Urteil und Intimität offen, die auch Kafkas Dichtung beschäftigten.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/ConcertRecordGramophone.JPG/960px-ConcertRecordGramophone.JPG",
+          "caption": "Aufnahme auf Concert Record Gramophone, Februar 1910.",
+          "source": "https://commons.wikimedia.org/wiki/File:ConcertRecordGramophone.JPG",
+          "creator": "FBQ",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Carl Lindström Company gramophone"
+        }
+      ],
+      "weight": 0.7
     },
     {
-      "date": "1915",
+      "date": "1912",
       "date_precision": "year",
-      "age": 32,
-      "title": "Veröffentlichung von „Die Verwandlung“",
-      "description": "1915 veröffentlicht die expressionistische Zeitschrift [[Die Weißen Blätter|Die Weißen Blätter]] Kafkas Novelle „Die Verwandlung“, in der der Handlungsreisende Gregor Samsa eines Morgens in ein ungeheures Ungeziefer verwandelt aufwacht. Kafka schreibt die Erzählung während seiner anstrengenden Tätigkeit bei der Versicherung und unter den Belastungen seiner Verlobung mit Felice Bauer. Sie verdichtet seine Beschäftigung mit familiärer Schuld, körperlicher Entfremdung und stummem Leiden. Die zeitgenössische Resonanz bleibt verhalten, doch in einem kleinen Kreis von Lesern erkennt man den Text als außerordentlich originell. Später wird er zu einer der meistdiskutierten und emblematischsten Erzählungen der Literatur des 20. Jahrhunderts.",
+      "date_note": "Ende 1912 veröffentlicht; das Titelblatt trug die Jahreszahl 1913",
+      "age": 29,
+      "title": "Veröffentlicht Betrachtung",
+      "description": "In Leipzig brachte Kurt Wolff Kafkas frühe Texte erstmals als Buch heraus; Kafka widmete den Band aus diesem Anlass seinem engen Freund Max Brod.",
       "locations": [
         {
           "name_historic": "Leipzig",
           "name_modern": "Leipzig, Deutschland",
           "centroid": [
-            12.373075,
-            51.3396955
+            12.3731,
+            51.3397
           ],
           "primary": true
-        },
+        }
+      ],
+      "involved_people": [
+        "Kurt Wolff",
+        "Max Brod"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka",
+        "https://en.wikipedia.org/wiki/Contemplation_(Kafka)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Kaf2_%282%29.jpg/960px-Kaf2_%282%29.jpg",
+          "caption": "Erstausgabe von Kafkas Betrachtung, 1912",
+          "source": "https://commons.wikimedia.org/wiki/File:Kaf2_(2).jpg",
+          "creator": "Photograph HJPrieß",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "fiction_finds_its_form",
+      "background": "In den Jahren vor dem Ersten Weltkrieg war die deutschsprachige Literaturwelt stark auf kleine Zeitschriften und wagemutige Kleinverlage angewiesen, um unbekannte Autoren vorzustellen. Die deutschsprachigen Schriftsteller Prags waren mit diesem größeren Netzwerk verbunden, blieben jedoch von den großen Verlagszentren Berlin, München und Leipzig entfernt. Kafka hatte den Weg über Zeitschriften bereits 1908 erprobt, als die Münchner Zeitschrift Hyperion acht seiner kurzen Prosastücke druckte. Diese Veröffentlichung gab dem späteren Band einen kleinen Bestand bereits öffentlicher Arbeiten, statt ihn zu einem völlig unbekannten Manuskript zu machen.\n\n## Rowohlt und Wolff\n\nIm Impressum stand der Ernst Rowohlt Verlag in Leipzig. Kurt Wolff, damals junger literarischer Lektor des Hauses, war eng mit der Entscheidung verbunden, Kafkas Buch herauszugeben; das erklärt, weshalb er häufig als dessen Verleger genannt wird. Wolffs eigener Verlag wurde erst im folgenden Jahr gegründet, doch er entwickelte sich bereits zu einem bedeutenden Förderer neuer deutschsprachiger Literatur. Die erste Auflage umfasste bescheidene 800 Exemplare – eine Größenordnung, die zu einem Debütautor ohne etablierte Leserschaft und zu einem Verlag passte, der bei literarischen Experimenten begrenzte wirtschaftliche Risiken einzugehen bereit war.\n\nDer Übergang von Zeitschriftenbeiträgen zu einem geschlossenen Buch war bedeutsam, weil das Material über einen langen und ungleichmäßigen Zeitraum entstanden war. Zu den Hyperion-Texten gehörten Stücke wie „Der plötzliche Spaziergang“, „Entschlüsse“ und „Ausflug ins Gebirge“. Ihr früheres Erscheinen zeigt zudem, dass Kafkas erster Weg in den Druck über sehr kurze Formen führte, nicht über die längere Prosa, für die er später bekannt wurde. Das kompakte Format des Buches entsprach einem Markt der frühen 1910er Jahre, in dem Leser neuen Autoren durch kurze Prosa, Gedichte, Rezensionen und kleine preisgünstige Bände begegneten.\n\n## Brod und die spätere Anerkennung\n\nMax Brods Unterstützung stellte den Band in den Zusammenhang einer dauerhaften Prager literarischen Freundschaft und gab der Widmung nicht nur persönlichen, sondern auch praktischen Sinn. Brod war bereits als Schriftsteller und Kritiker tätig, verfügte über stärkere literarische Verbindungen und drängte Kafka stets, seine Arbeit als veröffentlichungswürdig anzusehen. Der Band begründete jedoch keinen unmittelbaren öffentlichen Ruf. Wie die anderen Werke, die Kafka zu Lebzeiten drucken ließ, erhielt er wenig Aufmerksamkeit, und die kleine Erstauflage sorgte für eine begrenzte Verbreitung.\n\nSeine Bedeutung lag daher weniger im zeitgenössischen Beifall als darin, einen Präzedenzfall für Veröffentlichungen zu schaffen. Er zeigte, dass Kafkas Werk aus privaten Manuskripten und Zeitschriftenseiten in ein Handelsbuch übergehen konnte, während die Verbindung mit Wolff und Rowohlt ihn an einen für modernistische Prosa aufgeschlossenen Verlag band. Spätere Leser sahen in diesem unscheinbaren Debüt den Auftakt einer Laufbahn, deren entscheidende Anerkennung überwiegend erst nach Kafkas Tod erfolgte.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Kafka_Betrachtung_1912.jpg/960px-Kafka_Betrachtung_1912.jpg",
+          "caption": "Franz Kafkas Betrachtung",
+          "source": "https://commons.wikimedia.org/wiki/File:Kafka_Betrachtung_1912.jpg",
+          "creator": "© Foto H.-P.Haack",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Betrachtung 1912 book cover"
+        }
+      ],
+      "weight": 0.6,
+      "event_class": {
+        "type": "publication",
+        "title": "Betrachtung",
+        "publication_type": "book",
+        "publisher": "Rowohlt Verlag",
+        "significance": "erstes Buch",
+        "impact": "Die Sammlung vereinte Kafkas kurze Prosa erstmals in Buchform.",
+        "source_link": {
+          "url": "https://en.wikipedia.org/wiki/Contemplation_(short_story_collection)",
+          "kind": "wikipedia",
+          "site": "Wikipedia",
+          "entity": "Q831637",
+          "resolved_by": "wikipedia",
+          "resolved_on": "2026-08-10"
+        }
+      }
+    },
+    {
+      "date": "1914",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Beginnt Der Process",
+      "description": "Kafka begann Der Process, dessen Mittelpunkt Josef K. ist, ein Mann, der verhaftet und von einer unzugänglichen Rechtsgewalt verfolgt wird. Er ließ den Roman unvollendet, schrieb jedoch dessen Schlusskapitel.",
+      "locations": [
         {
           "name_historic": "Prag",
           "name_modern": "Prag, Tschechische Republik",
@@ -445,20 +455,68 @@
             14.4378,
             50.0755
           ],
-          "primary": false
+          "primary": true
         }
-      ],
-      "involved_people": [
-        "Felice Bauer"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://en.wikipedia.org/wiki/The_Metamorphosis"
+        "https://en.wikipedia.org/wiki/The_Trial"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/1104/538614370_bb28a3c599_b.jpg",
+          "caption": "Manuskript von Kafkas Der Process",
+          "source": "https://www.flickr.com/photos/58668786@N00/538614370",
+          "creator": "pabsanch",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "fiction_finds_its_form",
+      "background": "Prags deutschsprachige Literaturwelt trat in eine Zeit akuter Ungewissheit. Ende Juli hatte Österreich-Ungarn Serbien den Krieg erklärt, und bald weitete sich der Konflikt auf ganz Europa aus. Kafka hatte weiterhin den fordernden Arbeitsalltag in der Arbeiter-Unfallversicherungsanstalt, wo er Berichte verfasste und sich mit der Versicherung von Betriebsunfällen befasste. Zu Hause jedoch verfügte er über einen ruhigeren Raum als zuvor: Er war in die Wohnung gezogen, die seine Schwester Valli früher bewohnt hatte. Die Trennung zwischen amtlichem Tagesleben und nächtlichem Schreiben blieb eine dauerhafte Belastung, keine klare Scheidung.\n\nAuch seine privaten Verhältnisse waren ungeklärt. Kafka und Felice Bauer hatten sich Ende Mai 1914 offiziell verlobt, doch die überwiegend brieflich geführte Beziehung war zu einer Quelle der Angst geworden. Ein schwieriges Treffen mit Bauer und ihrer Freundin Grete Bloch im Berliner Askanischen Hof im Juli erinnerte Kafka später an ein Tribunal – eine Verbindung, die oft zum Vergleich mit seiner Dichtung Anlass gab. Im August wurde die Verlobung gelöst. Dieser Vergleich sollte nicht als einfacher Schlüssel zum Roman gelten, doch das Zusammentreffen intimer Konflikte, bürokratischer Arbeit und kriegsbedingter Erschütterung bildete die unmittelbare Atmosphäre seiner Entstehung.\n\n## Das unvollendete Manuskript\n\nDas erhaltene Manuskript bietet kein fertiges Buch. Kafka schrieb auf getrennten Konvoluten von Blättern, mit Kapiteln und Fragmenten in unterschiedlich weit fortgeschrittenen Stadien. Manche Teile sind vollständig ausgearbeitet, andere brechen ab oder bleiben nur lose mit der Haupterzählung verbunden. Der Schluss lag vor, doch der Weg dorthin war nicht endgültig bestimmt; deshalb kann das Werk zugleich streng geformt und sprunghaft wirken. Sein Verfahrensvokabular – Vorladungen, Kanzleien, Beamte, Verhandlungen und Akten – gewinnt seine Kraft aus konkreten Institutionen, ohne zu einem realistischen Bericht über ein bestimmbares Gericht zu werden.\n\nAnfang 1915 stellte Kafka die kontinuierliche Arbeit am Manuskript ein und bereitete es nicht für den Druck vor. Nach seinem Tod bewahrte Max Brod die Papiere entgegen Kafkas Wunsch, unveröffentlichte Arbeiten zu vernichten. Brod veröffentlichte den Roman 1925 unter dem Titel Der Prozess und ordnete das Material zu einer lesbaren Folge. Spätere Herausgeber kehrten zum Manuskript zurück, um Kafkas eigene Anordnung von Brods editorischen Entscheidungen zu unterscheiden. Der daraus hervorgegangene Text wurde zentral für Kafkas posthumen Ruf, während sein unvollendeter Zustand wesentlich dafür blieb, wie Leser seine Ungewissheit und seine Kraft verstehen.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Na_Porici_7%2C_Prague.JPG/960px-Na_Porici_7%2C_Prague.JPG",
+          "caption": "Ehemaliger Sitz der Arbeiter-Unfallversicherungsanstalt.",
+          "source": "https://commons.wikimedia.org/wiki/File:Na_Porici_7,_Prague.JPG",
+          "creator": "alphabet55",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Prague Workers Accident Insurance Institute"
+        }
+      ],
+      "weight": 0.95
+    },
+    {
+      "date": "1915-10",
+      "date_precision": "month",
+      "age": 32,
+      "title": "Die Verwandlung erscheint im Druck",
+      "description": "Im Oktober 1915 erschien Kafkas Novelle Die Verwandlung in der Zeitschrift Die Weißen Blätter und fand zunächst wenig Beachtung.",
+      "locations": [
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Deutschland",
+          "centroid": [
+            12.3731,
+            51.3397
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "René Schickele"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/The_Metamorphosis",
+        "https://en.wikipedia.org/wiki/Die_Wei%C3%9Fen_Bl%C3%A4tter",
+        "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Franz_Kafka_Die_Verwandlung_1916_Orig.-Pappband.jpg",
-          "caption": "Erstausgabe von Kafkas Novelle „Die Verwandlung“",
+          "caption": "Erstausgabe von Kafkas Die Verwandlung",
           "source": "https://commons.wikimedia.org/wiki/File:Franz_Kafka_Die_Verwandlung_1916_Orig.-Pappband.jpg",
           "creator": "© Foto H.-P.Haack",
           "license": "CC BY 3.0",
@@ -466,61 +524,151 @@
         }
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "insurance_career_creative_breakthroughs",
-      "annotations": {
-        "Die Weißen Blätter": {
-          "explanation": "Eine in Leipzig erscheinende deutsche expressionistische Literaturzeitschrift, die in den 1910er-Jahren ein wichtiges frühes Forum für avantgardistische Literatur war.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Die_Wei%C3%9Fen_Bl%C3%A4tter"
+      "chapter": "fiction_finds_its_form",
+      "background": "Das deutschsprachige Literaturleben bestand unter Kriegsbedingungen fort, doch Zensur, Militärdienst und Materialknappheit veränderten Publikum und Verlagsnetzwerke. Leipzig blieb ein wichtiges Zentrum des deutschen Buchhandels, während kleine Zeitschriften neueren Autoren eine Alternative zu etablierten Zeitungen und großen Verlagen boten. Die 1913 gegründeten Weißen Blätter standen der expressionistischen Literaturkultur nahe und wurden unter ihrem Herausgeber René Schickele zunehmend zu einem Forum für kriegskritische und pazifistisch gesinnte Autoren.\n\n## Kafkas verzögerte Veröffentlichung\n\nDer Text hatte lange auf diese Veröffentlichung gewartet. Kafka schrieb ihn zwischen dem 17. November und dem 7. Dezember 1912 in ungewöhnlich kurzer Zeit, während einer besonders produktiven Schreibphase. Die Verzögerung zwischen Niederschrift und Druck war typisch für seine Laufbahn: Er gab nur einen kleinen Teil seines Werks an die Öffentlichkeit und vertraute wenig darauf, dass eine Veröffentlichung seine Unzufriedenheit mit einem Manuskript beheben würde. Dennoch stellte der Zeitschriftenabdruck das Werk demselben überregionalen deutsch lesenden Publikum vor, das von der Leipziger Literaturpresse erreicht wurde, statt es auf Prager Freunde oder private Lesungen zu beschränken.\n\nAls Kurt Wolff eine gesonderte Buchausgabe für seine avantgardistische Reihe Der Jüngste Tag vorbereitete, entstand ein aufschlussreicher Verlagsstreit. In einem Brief an Wolff wandte Kafka sich entschieden gegen die Möglichkeit, das verwandelte Wesen auf dem Umschlag abzubilden. Es „kann nicht gezeichnet werden“, beharrte er, und dürfe nicht einmal aus der Ferne gezeigt werden. Sein Einwand richtete sich nicht abstrakt gegen Buchschmuck: Die Begegnung des Lesers mit der zentralen Situation sollte unbebildert und ungelöst bleiben. Die spätere Ausgabe verwendete ein Kunstwerk von Ottomar Starke, ohne das Wesen selbst darzustellen, und respektierte damit diese Vorgabe.\n\n## Die Buchausgabe\n\nDem Zeitschriftenabdruck folgte später im selben Jahr Wolffs Buchausgabe, doch machte keines der beiden Formate Kafka zu Lebzeiten weithin berühmt. Seine einzelnen Zeitschriftenbeiträge und Sammlungen fanden nur begrenzte Aufmerksamkeit, selbst wenn sie einflussreiche Herausgeber und Schriftsteller erreichten. Die spätere Geltung der Erzählung darf daher nicht in diesen Augenblick zurückprojiziert werden: Sie trat leise in den Druck, durch eine Zeitschrift, die selbst Teil einer fragilen Kriegsliteratur war. Ihr Weg vom Heft in Wolffs Reihe bewahrte sie jedoch in dauerhafter Form und machte sie für spätere Übersetzungen, Kritik und Neuinterpretationen zugänglich, die ihren Ruf verwandelten.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/De_Kafka_Die_Verwandlung_1182.jpg",
+          "caption": "Die Verwandlung [In: Die weißen Blätter]",
+          "source": "https://commons.wikimedia.org/wiki/File:De_Kafka_Die_Verwandlung_1182.jpg",
+          "creator": "Franz Kafka",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Die weißen Blätter 1915"
+        }
+      ],
+      "weight": 1.0,
+      "event_class": {
+        "type": "publication",
+        "title": "Die Verwandlung",
+        "publication_type": "article",
+        "publisher": "Die Weißen Blätter",
+        "significance": "bedeutende Novelle",
+        "impact": "Die Novelle zeigte eine Familienkrise durch Gregor Samsas plötzliche groteske Verwandlung.",
+        "source_link": {
+          "url": "https://en.wikisource.org/wiki/The_Metamorphosis",
+          "kind": "wikisource",
+          "site": "Wikisource",
+          "entity": "Q184222",
+          "resolved_by": "wikidata",
+          "resolved_on": "2026-08-10"
         }
       }
     },
     {
-      "date": "1917-08",
+      "date": "1917-09",
       "date_precision": "month",
-      "date_end": "1918",
-      "date_end_precision": "year",
+      "date_end": "1918-04",
+      "date_end_precision": "month",
       "age": 34,
-      "title": "Tuberkulose und Rückzug nach Zürau",
-      "description": "Im August 1917 erleidet Kafka eine schwere Lungenblutung und erhält die Diagnose Tuberkulose, woraufhin er längeren Urlaub vom Versicherungsinstitut nehmen muss. Er zieht in das ländliche Dorf Zürau (Siřem), wo seine Schwester Ottla und ihr Mann einen Bauernhof bewirtschaften, und verbringt mehrere Monate in stiller Zurückgezogenheit auf dem Land. Zum ersten Mal ist er sowohl von der Büroarbeit als auch vom Druck des städtischen Lebens frei und füllt Hefte mit Betrachtungen und Aphorismen, die später als Zürauer Aphorismen bekannt werden. Obwohl er körperlich krank ist, erinnert er sich später an diese Zeit als eine der friedlichsten und schöpferisch konzentriertesten seines Lebens.",
+      "title": "Erholt sich in Zürau",
+      "description": "Nach der Diagnose Tuberkulose zog sich Kafka von seiner Versicherungsstelle und dem Prager Elternhaus auf das westböhmische Gut zurück, auf dem seine Schwester Ottla arbeitete. Dort entwarf er die nummerierten Betrachtungen, die später als Zürauer Aphorismen bekannt wurden.",
       "locations": [
         {
-          "name_historic": "Prag",
-          "name_modern": "Prag, Tschechische Republik",
-          "centroid": [
-            14.4378,
-            50.0755
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Zürau",
+          "name_historic": "Zürau, Böhmen",
           "name_modern": "Siřem, Tschechische Republik",
           "centroid": [
-            13.4415,
-            50.2527
+            13.5080919,
+            50.2313451
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Ottla Kafka",
+        "Ottilie \"Ottla\" Kafka",
         "Karl Hermann"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka",
         "https://de.wikipedia.org/wiki/Ottla_Kafka"
       ],
-      "event_type_icon": "mdi-hospital",
-      "chapter": "illness_reflection_intimate_correspondence"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/15/Kafka_in_Z%C3%BCrau.jpg",
+          "caption": "Kafka in Zürau, Böhmen, um 1917",
+          "source": "https://commons.wikimedia.org/wiki/File:Kafka_in_Zürau.jpg",
+          "creator": "Unknown photographer",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-heart-pulse",
+      "chapter": "tuberculosis_narrows_the_world",
+      "background": "Der Erste Weltkrieg hatte das Alltagsleben in Prag zunehmend eingeengt, und Kafkas Stelle bei der Arbeiter-Unfallversicherungsanstalt war zugleich fordernd und bedeutsam. Die Anstalt hatte zuvor seine Befreiung vom Militärdienst erwirkt, weil seine Arbeit als unentbehrlich galt, doch die Bürotätigkeit blieb eine Belastung. Das Elternhaus war beengt und stand unter der Autorität seines Vaters; eine längere Abwesenheit bot eine praktische Distanz sowohl zum bürokratischen Alltag als auch zum häuslichen Konflikt.\n\nDer ländliche Haushalt war über Karl Hermann, den Mann von Kafkas Schwester Elli, mit Kafka verbunden; auf dessen landwirtschaftlichem Gut arbeitete Ottla. Ottla hatte mit der Ermutigung ihres Bruders eine landwirtschaftliche Ausbildung aufgenommen – ein ungewöhnlicher Weg für eine Frau aus ihrer städtischen Mittelstandsfamilie, den ihr Vater abgelehnt hatte. Der Ort gab Kafka die Nähe zu einem Familienmitglied, zu dem er eine ungewöhnlich enge und verständnisvolle Beziehung hatte, und rückte ihn zugleich aus dem Rhythmus der Prager Ämter, Cafés und Elternwohnung heraus. Sein Krankenurlaub wurde verlängert, und er blieb bis ins Frühjahr 1918 fort.\n\nKafkas Krankheit verschärfte auch eine bereits bestehende persönliche Krise. Im Juli 1917 hatte er sich zum zweiten Mal mit Felice Bauer verlobt, doch die Vorstellung von Ehe und gemeinsamem Haushalt wurde ihm angesichts seines nachlassenden Gesundheitszustands immer schwerer. Im Dezember löste er die Verlobung. Die Zeit verband daher erzwungene Ruhe mit einem akuten Gefühl der Ungewissheit über Arbeit, Ehe, körperliche Verletzlichkeit und Unabhängigkeit.\n\n## Acht Oktavhefte\n\nDie mit diesem Aufenthalt verbundenen Texte schrieb Kafka zunächst in acht Oktavhefte. Später schnitt er die einzelnen Einträge auseinander und ordnete sie auf separaten Zetteln an – ein materieller Vorgang, der den Stücken ihre knappe, in sich geschlossene Form verlieh. Es gibt 109 nummerierte Sätze, von kurzen Paradoxien bis zu mehrsätzigen Betrachtungen über Schuld, Leiden, Hoffnung, das Böse und die Möglichkeit eines „wahren Weges“. Kafka bereitete sie nicht als fertiges Buch vor. Max Brod stellte sie später zusammen und veröffentlichte sie 1931 unter dem Titel Betrachtungen über Sünde, Leid, Hoffnung und den wahren Weg. Die heute gebräuchliche Bezeichnung „Zürauer Aphorismen“ benennt die Zeit und den Ort, nicht einen von Kafka gewählten Titel.",
+      "weight": 0.75
+    },
+    {
+      "date": "1919",
+      "date_precision": "year",
+      "age": 35,
+      "title": "Veröffentlicht Ein Landarzt",
+      "description": "Der Band war Kafkas zweite Sammlung und trug die Widmung „Meinem Vater“ an Hermann Kafka. Er vereinte vierzehn zwischen 1914 und 1917 geschriebene Erzählungen; entgegen manchen Darstellungen erschien „In der Strafkolonie“ in jenem Jahr gesondert.",
+      "locations": [
+        {
+          "name_historic": "Leipzig",
+          "name_modern": "Leipzig, Deutschland",
+          "centroid": [
+            12.3731,
+            51.3397
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "München",
+          "name_modern": "München, Deutschland",
+          "centroid": [
+            11.5761,
+            48.1372
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Kurt Wolff",
+        "Hermann Kafka"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/A_Country_Doctor_(short_story_collection)",
+        "https://en.wikipedia.org/wiki/Franz_Kafka",
+        "https://en.wikipedia.org/wiki/In_the_Penal_Colony"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Kafka_Ein_Landarzt_1919.jpg/960px-Kafka_Ein_Landarzt_1919.jpg",
+          "caption": "Erstausgabe von Kafkas Ein Landarzt",
+          "source": "https://commons.wikimedia.org/wiki/File:Kafka_Ein_Landarzt_1919.jpg",
+          "creator": "© Foto H.-P.Haack Das Foto darf gebührenfrei verwendet werden, sofern der Urheber mit Foto H.-P.Haack vermerkt wird.",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "tuberculosis_narrows_the_world",
+      "background": "Der Waffenstillstand stellte einen geordneten deutschsprachigen Buchmarkt nicht sofort wieder her. Papiermangel, gestörte Vertriebswege und rasch wechselnde politische Grenzen erschwerten den Handel, während die älteren Netzwerke zwischen Prager Autoren und Verlagen in Leipzig und München wichtig blieben. Kafka hatte bereits Prosa in Zeitschriften und kleinen Ausgaben veröffentlicht, doch seine Leserschaft war noch immer klein. Kurt Wolff war dennoch ein bedeutender Ansprechpartner: Sein Verlag hatte sich einen Namen mit moderner deutschsprachiger Literatur gemacht, besonders mit Autoren, die dem Expressionismus verbunden waren.\n\n## Eine Buchsammlung\n\nEine Buchsammlung bedeutete eine andere Form öffentlicher Präsenz als ein Zeitschriftenabdruck. Sie konnte Texte aus verschiedenen Entstehungszeiten zusammenführen, darunter Stücke, die nur Zeitschriftenleser kannten, und bislang unveröffentlichte Arbeiten. Der Band bot keine einheitliche, für einen einzigen Anlass geschaffene Folge; er gab über Jahre entstandener kurzer Prosa einen dauerhaften gemeinsamen Rahmen. Die gedruckte Widmung fällt besonders angesichts Kafkas schwieriger, förmlicher Beziehung zu Hermann Kafka auf, doch erklärt die Inschrift selbst ihr Motiv nicht und belegt keine Versöhnung.\n\nEin Text des Bandes zeigt zudem, wie durchlässig die Grenzen in Kafkas Schreiben sein konnten. „Vor dem Gesetz“ zirkulierte als eigenständige Parabel, doch Kafka nahm sie auch in das Manuskript von Der Process auf. Leser begegneten ihr somit sowohl als abgeschlossenem Werk als auch als Teil einer größeren, unvollendeten Erzählung. Dieser Doppelstatus war kein editorischer Irrtum: Kurze Formen, Fragmente und Passagen, die sich neu kontextualisieren ließen, waren zentral für Kafkas Arbeitsweise. Die getrennten Ausgaben der Zeit und spätere Kataloge haben außerdem Verwirrung zwischen Werken begünstigt, die ungefähr gleichzeitig beim selben Verlag erschienen, besonders hinsichtlich von „In der Strafkolonie“.\n\n## Die begrenzte öffentliche Überlieferung\n\nDie zeitgenössische Resonanz blieb bescheiden. Die Sammlung schuf Kafka kein großes literarisches Publikum und änderte nichts daran, dass der größte Teil seines Schreibens zu Lebzeiten nicht in Buchform zugänglich war. Sie bewahrte jedoch einen sorgfältig ausgewählten Teil seiner kurzen Prosa in einer autorisierten Druckausgabe. Zusammen mit der früheren Sammlung Betrachtung und einzelnen Zeitschriftenveröffentlichungen bildete sie die begrenzte öffentliche Überlieferung, durch die zeitgenössische Leser Kafkas Werk begegnen konnten.",
+      "weight": 0.7,
+      "event_class": {
+        "type": "publication",
+        "title": "Ein Landarzt",
+        "publication_type": "book",
+        "publisher": "Kurt Wolff Verlag",
+        "significance": "Erzählband",
+        "impact": "Der Band versammelte mehrere von Kafkas anspruchsvollsten veröffentlichten Erzählungen.",
+        "source_link": {
+          "url": "https://de.wikisource.org/wiki/Ein_Landarzt_(Sammelband)",
+          "kind": "wikisource",
+          "site": "Wikisource",
+          "entity": "Q15872155",
+          "resolved_by": "wikidata",
+          "resolved_on": "2026-08-10"
+        }
+      }
     },
     {
       "date": "1920",
       "date_precision": "year",
-      "date_end": "1922",
-      "date_end_precision": "year",
-      "age": 37,
-      "title": "Beziehung zu Milena Jesenská",
-      "description": "Um 1920 beginnt Kafka eine intensive Beziehung mit der tschechischen Journalistin und Übersetzerin Milena Jesenská, die verheiratet ist und überwiegend in Wien lebt. Nachdem sie seine Erzählung „Der Heizer“ ins Tschechische übersetzt hat, vertieft sich ihr Briefwechsel rasch zu einem leidenschaftlichen und quälenden Austausch über Liebe, Krankheit und Selbstzweifel. Kafka besucht sie nur wenige Male persönlich, doch die seelische Belastung der Affäre trägt gemeinsam mit seinem sich verschlechternden Gesundheitszustand zum endgültigen Bruch Ende 1920 bei. Die Briefe an Milena, die später postum veröffentlicht werden, eröffnen einige der aufschlussreichsten Einblicke in sein Innenleben und in sein Verhältnis zum eigenen Schreiben.",
+      "age": 36,
+      "title": "Korrespondiert mit Milena Jesenská",
+      "description": "Kafka entwickelte mit Milena Jesenská, einer tschechischen Journalistin und Übersetzerin seiner Werke, eine intensive, vor allem briefliche Beziehung. Ihre Liebeskorrespondenz endete im November, doch eine eingeschränktere Freundschaft bestand fort.",
       "locations": [
         {
           "name_historic": "Prag",
@@ -548,25 +696,28 @@
         "https://en.wikipedia.org/wiki/Franz_Kafka",
         "https://de.wikipedia.org/wiki/Milena_Jesensk%C3%A1"
       ],
-      "images": [
+      "event_type_icon": "mdi-email",
+      "chapter": "tuberculosis_narrows_the_world",
+      "background": "Die Verbindung entstand aus Übersetzungsarbeit über die neue tschechoslowakisch-österreichische Grenze hinweg, nicht aus einem gefestigten literarischen Kreis. Jesenská war nach ihrer Heirat mit Ernst Polak nach Wien gezogen; das Paar lebte prekär, während er ein bohèmehaftes Leben führte. Sie verdiente ihren Unterhalt mit gelegentlichen Arbeiten, Tschechischunterricht, Journalismus und Übersetzungen. 1920 schrieb sie vor allem für die Prager Zeitung Tribuna. Ihre Übersetzung von Kafkas Erzählung „Der Heizer“ ins Tschechische im Jahr 1919 und die Übertragung weiterer Prosatexte gaben beiden Schriftstellern einen praktischen Anlass, miteinander zu korrespondieren.\n\nÜbersetzung war wichtig, weil Jesenská nicht einfach eine Leserbriefschreiberin mit Lob war. Sie übertrug deutsch geschriebene Texte ins Tschechische, zu einer Zeit, als die deutsche und die tschechische Kultur Prags oft als getrennte Sphären galten. Kafkas Briefe behandelten daher sowohl die Formulierung seiner Prosa als auch die ungewöhnlich persönliche Autorität, die er ihr als Leserin einräumte. Die erhaltene Korrespondenz besteht überwiegend aus seiner Seite, was ihre emotionale Intensität deutlich hervortreten lässt, Jesenskás Antworten jedoch weit weniger vollständig erschließbar macht. Der schriftliche Kontakt wurde nur durch wenige Begegnungen ergänzt, darunter Treffen im Zusammenhang mit Wien.\n\n## Die Grenzen der Intimität\n\nJesenská war während dieser gesamten Zeit verheiratet, was jeder vorgestellten gemeinsamen Lebensform praktische und emotionale Grenzen setzte. Kafkas Briefe machen die Kommunikation selbst immer wieder zur Belastung: Verzögerungen, Erwartungen und die Möglichkeit, Schmerz zuzufügen, werden zu eigenständigen Themen. Im November formulierte er den Zustand in einem Brief an Jesenská unverblümt: „Ich beschäftige mich mit nichts anderem als damit, gequält zu werden und zu quälen.“ Der Satz ist nicht als allgemeine Aussage über seine Dichtung aufschlussreich, sondern als Zeugnis dafür, wie er den Schaden verstand, den fortgesetzte Intimität beiden Briefpartnern zufügen könnte. Er brach den intensiven Austausch abrupt ab, statt eine Beziehung aufrechtzuerhalten, deren Umstände er als unerträglich empfand.\n\n## Jesenskás eigenständige Laufbahn\n\nDer Bruch löschte Jesenská nicht aus Kafkas persönlicher Welt. Etwa zwei Jahre später wurden wieder vereinzelte Briefe gewechselt, und schließlich vertraute er ihr einige seiner Tagebücher an. Für Jesenská war die Verbindung nur ein Teil einer eigenständigen Laufbahn, die sie als Reporterin über Wiens soziale Verhältnisse und als Übersetzerin von Autoren wie Franz Werfel, Gustav Landauer und Rosa Luxemburg bekannt machte. Die erhaltenen Briefe wurden jedoch zu einem der zentralen dokumentarischen Zeugnisse von Kafkas Privatleben und zeigen, wie aus einer beruflichen Übersetzungsverbindung ein forderndes und ungleiches Archiv der Intimität werden konnte.",
+      "background_images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Ehem_Pension_Villa_Ottoburg_Meran-Untermais.jpg",
-          "caption": "Villa Ottoburg in Meran-Untermais, in der Kafka wohnte",
-          "source": "https://commons.wikimedia.org/wiki/File:Ehem_Pension_Villa_Ottoburg_Meran-Untermais.jpg",
-          "creator": "Zintosch7",
-          "license": "CC BY 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/De_Der_Heizer._Ein_Fragment_01.PNG/960px-De_Der_Heizer._Ein_Fragment_01.PNG",
+          "caption": "Der Heizer",
+          "source": "https://commons.wikimedia.org/wiki/File:De_Der_Heizer._Ein_Fragment_01.PNG",
+          "creator": "Franz Kafka",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Der Heizer Kafka"
         }
       ],
-      "event_type_icon": "mdi-email",
-      "chapter": "illness_reflection_intimate_correspondence"
+      "weight": 0.65
     },
     {
       "date": "1922-07-01",
       "date_precision": "day",
-      "age": 39,
-      "title": "Ruhestand vom Versicherungsdienst",
-      "description": "Am 1. Juli 1922 gewährt das Arbeiter-Unfallversicherungs-Institut Kafka aus medizinischen Gründen endlich eine Pension und entlässt ihn aus dem regulären Berufsleben. Zu diesem Zeitpunkt machen seine Tuberkulose und chronische Erschöpfung eine dauerhafte Büroarbeit unmöglich. Dennoch schreibt er weiter, wann immer es seine Gesundheit erlaubt, arbeitet an dem Roman „Das Schloss“ und überarbeitet Erzählungen. Finanziell von seiner Familie und Freunden abhängig, pendelt er zwischen Prag und verschiedenen Sanatorien auf dem böhmischen Land. Die Trennung von der Lohnarbeit verstärkt sowohl sein Gefühl, am Rand zu stehen, als auch seinen Entschluss, seine verbleibende Prosa zu gestalten.",
+      "age": 38,
+      "title": "Scheidet aus dem Versicherungsdienst",
+      "description": "Die [[Workers' Accident Insurance Institute|Arbeiter-Unfallversicherungsanstalt]] bewilligte Kafka wegen der zunehmend arbeitshemmenden Tuberkulose den Ruhestand. Im selben Jahr arbeitete er an Das Schloss, einem unvollendeten Roman über die vergeblichen Versuche eines Landvermessers, eine ferne Autorität zu erreichen.",
       "locations": [
         {
           "name_historic": "Prag",
@@ -576,39 +727,65 @@
             50.0755
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Böhmen",
-          "name_modern": "Böhmen, Tschechische Republik",
-          "centroid": [
-            14.5,
-            49.75
-          ],
-          "primary": false
         }
       ],
-      "involved_people": null,
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "event_type_icon": "mdi-account-clock",
-      "chapter": "illness_reflection_intimate_correspondence"
+      "event_type_icon": "mdi-exit-to-app",
+      "chapter": "tuberculosis_narrows_the_world",
+      "annotations": {
+        "Workers' Accident Insurance Institute": {
+          "explanation": "Eine öffentliche Versicherungsanstalt, die für Industriearbeiter und Arbeitgeber in Böhmen den obligatorischen Arbeitsunfallschutz verwaltete."
+        }
+      },
+      "background": "Die Prager Arbeiter-Unfallversicherungsanstalt war eine große öffentliche Institution für die obligatorische Arbeitsunfallversicherung. Ihre Beamten bearbeiteten Ansprüche, Entschädigungsregeln, Arbeitgeberberichte und die Verhütung von Betriebsunfällen. Kafka war 1908 in ihren Dienst getreten, nachdem ihm die private Versicherungsarbeit nicht zugesagt hatte. Die Stelle sicherte ein verlässliches Einkommen, zwang aber einem Menschen, der das Schreiben als seine zentrale Berufung ansah, den Rhythmus einer Amtsbürokratie auf. Seine Aufgaben waren keineswegs bloß Kanzleiarbeit: Er verfasste Berichte und bearbeitete Rechts- und Fachfragen, die sich aus Fabrikunfällen und dem Versicherungsrecht ergaben.\n\nDie Arbeit der Anstalt war in einer Industrieregion, in der Maschinen, Bauwesen und Produktion häufige Gefahren mit sich brachten, von praktischer Dringlichkeit. Kafka galt als fähiger Angestellter und wurde während seiner Laufbahn befördert. Doch nach der Diagnose seiner Lungentuberkulose 1917 ließ sich die Stabilität der Stelle immer schwerer aufrechterhalten. Es folgten lange Abwesenheiten vom Amt, und Versuche, die Arbeit wieder aufzunehmen, wurden durch Erschöpfung und wiederkehrende Krankheit unterbrochen. Die spätere Pension war materiell bedeutsam: Sie machte die Jahre besoldeten Dienstes zu einer Existenzgrundlage, als regelmäßiger Bürodienst nicht mehr möglich war.\n\n## Das Schloss\n\nAnfang 1922 begann Kafka während eines Aufenthalts im Bergkurort Špindlerův Mlýn mit der Niederschrift von Das Schloss. Das Manuskript setzt mit der Ankunft K.s ein, eines Landvermessers, in einem verschneiten Dorf, dessen Beamte darauf bestehen, dass seine Stellung ungewiss sei. Statt K. einen direkten Weg zu den Schlossbehörden zu eröffnen, umgibt ihn die Erzählung mit Wirten, Boten, Dorfbeamten und widersprüchlichen Anweisungen. Das Hindernis ist verwaltungstechnisch ebenso wie geografisch: Jeder scheinbare Kontakt bringt einen weiteren Vermittler oder eine weitere unerklärte Regel hervor.\n\nKafka arbeitete im Laufe des Jahres intensiv an dem Roman, doch seine sich verschlechternde Gesundheit brach das Schreiben im September ab. Der erhaltene Text endet, ohne K.s Stellung zu klären oder ihm Zugang zu der gesuchten Autorität zu gewähren. Diese Unvollendetheit ist für die Gestalt des Werks zentral und nicht einfach das Fehlen einer letzten Szene: Die vorhandenen Kapitel verwandeln jeden Fortschritt immer wieder in Verzögerung, sodass das unvollendete Manuskript ein Zeugnis einer Suche bleibt, die ihr versprochenes Ziel nie erreicht.",
+      "weight": 0.75
     },
     {
       "date": "1923-07",
       "date_precision": "month",
-      "date_end": "1924-03",
-      "date_end_precision": "month",
       "age": 40,
-      "title": "Leben mit Dora Diamant in Berlin",
-      "description": "Während eines Aufenthalts am Meer in [[Graal-Müritz|Graal-Müritz]] im Juli 1923 lernt Kafka Dora Diamant kennen, eine junge Frau aus einem orthodox-jüdischen Elternhaus, die in einem Ferienlager mit Kindern arbeitet. Um Abstand von seiner Familie zu gewinnen und einen Ort ganz dem Schreiben zu widmen, zieht er im September mit ihr nach Berlin. Das Paar lebt in bescheidenen Wohnungen; Kafka lernt Hebräisch und entwirft vorsichtig Pläne für eine Zukunft in Palästina. Trotz der Armut und seiner sich verschlechternden Gesundheit schenkt ihm diese Partnerschaft emotionalen Rückhalt und führt ihn erneut intensiv zu jüdischen Texten und Traditionen. In diesen Monaten vollendet er mehrere Erzählungen, die später unter dem Titel „Ein Hungerkünstler“ gesammelt werden.",
+      "title": "Begegnet Dora Diamant",
+      "description": "Während eines Aufenthalts im Ostseebad Graal-Müritz lernte Kafka Dora Diamant kennen, die dort eine Kinderferiengruppe betreute. Sie begannen eine enge Beziehung, während sich sein Gesundheitszustand weiter verschlechterte.",
       "locations": [
         {
           "name_historic": "Graal-Müritz",
           "name_modern": "Graal-Müritz, Deutschland",
           "centroid": [
-            12.2502,
-            54.2507
+            12.25,
+            54.25
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Dora Diamant"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Franz_Kafka",
+        "https://de.wikipedia.org/wiki/Dora_Diamant"
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "berlin_freedom",
+      "background": "Die Begegnung fiel in eine Zeit, in der Kafkas private Möglichkeiten sich stark verengt hatten. Tuberkulose war erstmals 1917 diagnostiziert worden, und ihre Folgen machten ein herkömmliches Erwerbsleben Anfang der 1920er Jahre zunehmend unmöglich. Er arbeitete nicht mehr bei der Prager Arbeiter-Unfallversicherungsanstalt, und ein Sommeraufenthalt bei seiner Schwester Elli und ihren Kindern bot einen vorübergehenden Ort außerhalb des Elternhauses und der Routinen, die sein Erwachsenenleben weitgehend bestimmt hatten.\n\n## Dora Diamant\n\nDora Diamant brachte einen deutlich anderen Hintergrund in dieses Umfeld. Als Dworja Diament in Pabianice, damals im Kongresspolen, geboren, war sie die Tochter von Hersz Aron Diament, eines kleinen Geschäftsmanns und Anhängers des Gerer Rebbe. Nach dem Tod ihrer Mutter 1912 zog die Familie nach Będzin. Diamant erhielt in Kraków eine kurze Ausbildung zur Kindergärtnerin und ging mit 21 Jahren nach Berlin, wo sie im Berliner Jüdischen Volksheim arbeitete. Das Ferienprogramm der Organisation übertrug ihr die praktische Verantwortung für Kinder, nicht einen Platz in literarischer Gesellschaft; sie war 25, Kafka 40.\n\n## Diamants Erinnerungen\n\nVieles von der Atmosphäre dieser letzten Lebensphase verdanken wir Diamant selbst. 1947 erzählte sie dem Kunstkritiker Josef Paul Hodin ihre Erinnerungen, dessen Essay Erinnerungen an Franz Kafka von 1948 zu einer bedeutenden Quelle aus erster Hand wurde. Ihr Bericht wandte sich gegen das geläufige Bild Kafkas als vollständig neurotischem, asexuellem oder zurückgezogenem Menschen. Sie beschrieb ihn als sinnlich, spielerisch, heiter und voller Lebenshunger – in ihrer Formulierung „wie ein Tier“ oder „wie ein Kind“. Diese Erinnerungen sind unvermeidlich rückblickend, bewahren aber eine wichtige Korrektur: Krankheit löschte in ihrer Erfahrung weder Humor noch körperliche Zuneigung oder Freude aus.\n\nDie Verbindung ließ rasch ein Leben außerhalb Prags denkbar werden. Innerhalb weniger Monate gründete das Paar einen Haushalt in Berlin, doch die schwere Inflation in Deutschland erzwang wiederholte Umzüge und machte das Experiment finanziell prekär. Eine Heirat wurde erwogen, aber von Diamants Vater abgelehnt. Zugleich setzte Kafkas immer schwerere Tuberkulose die Grenzen, innerhalb derer sich die Beziehung entfaltete. Diamant blieb dennoch in den folgenden Monaten zentral, und ihr späteres Zeugnis – zusammen mit dem Verlust von Kafkas Briefen an sie und den 1933 von der Gestapo beschlagnahmten Papieren – macht die erhaltenen Belege ihres gemeinsamen Lebens zugleich besonders wertvoll und unvollständig.",
+      "weight": 0.7
+    },
+    {
+      "date": "1923-09",
+      "date_precision": "month",
+      "date_end": "1924-03",
+      "date_end_precision": "month",
+      "age": 40,
+      "title": "Zieht nach Berlin",
+      "description": "Auf der Suche nach größerer Unabhängigkeit von seiner Familie und Raum zum Schreiben begann Kafka mit Dora Diamant zusammenzuleben. Hyperinflation und seine sich verschlimmernde Tuberkulose zwangen das Paar zu Wohnungswechseln, und seine nachlassende Gesundheit beendete das Zusammenleben bald.",
+      "locations": [
+        {
+          "name_historic": "Prag",
+          "name_modern": "Prag, Tschechische Republik",
+          "centroid": [
+            14.4378,
+            50.0755
           ],
           "primary": false
         },
@@ -627,96 +804,93 @@
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://en.wikipedia.org/wiki/Dora_Diamant"
+        "https://de.wikipedia.org/wiki/Dora_Diamant"
       ],
-      "images": [
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "berlin_freedom",
+      "background": "Die deutsche Währungskrise von 1923 machte selbst den gewöhnlichen Haushalt prekär. Die Kaufkraft der Mark brach in außerordentlichem Tempo ein, sodass Löhne, Ersparnisse und Mieten fast von einem Tag auf den anderen ihre Bedeutung ändern konnten. Berlin bot zwar eine größere deutschsprachige Literaturwelt als Prag, doch seine kulturelle Energie ging mit scharfer materieller Unsicherheit einher. Für einen Schriftsteller, dessen Einkommen und Gesundheit bereits eingeschränkt waren, beruhte ein eigener Haushalt dort auf ständiger praktischer Anpassung statt auf der stabilen Unabhängigkeit, die er sich erhofft hatte.\n\n## Dora Diamant in Berlin\n\nDora Diamant war als junge Frau nach Berlin gekommen und arbeitete im Berliner Jüdischen Volksheim, einer jüdischen Gemeinschaftseinrichtung für soziale und Bildungsarbeit. Als sie Kafka während eines Sommeraufenthalts in Graal-Müritz kennenlernte, betreute sie eine Feriengruppe des Volksheims. Ihr gemeinsames Leben verband somit einen wegen Tuberkulose medizinisch pensionierten ehemaligen Versicherungsbeamten mit einer Frau, deren Arbeit sie in Berlins jüdische soziale Welt einband. Diamant erinnerte sich später nicht an den konventionell düsteren oder sexuell abnormen Menschen, zu dem manche Kommentatoren ihn machten, sondern an einen lebhaften, spielerischen Mann, der körperlichen Freuden stark zugänglich war.\n\nIhre erste Berliner Wohnung lag in Steglitz, damals einem südwestlichen Stadtteil. Der Inflationsdruck machte wiederholte Quartierwechsel nötig, während Kafkas Lungentuberkulose zunehmend schwerer wurde. Eine Heirat wurde erwogen, doch Diamants Vater widersetzte sich ihr. Diese Hindernisse wogen besonders schwer, weil die Beziehung einen ungewöhnlich unmittelbaren Versuch Kafkas darstellte, einen Haushalt außerhalb der Autorität seiner Eltern zu gründen. Berichten zufolge betrachtete er diese Loslösung vom Prager Familienleben als die größte Leistung seines Lebens.\n\n## Kafkas letzte Monate\n\nTrotz der sich verschärfenden Umstände schrieb Kafka in dieser Zeit kontinuierlich. Während seines Zusammenlebens mit Diamant entstand die Erzählung „Eine kleine Frau“. Seine Arbeitsfähigkeit wurde jedoch immer stärker durch die Krankheit begrenzt; die Tuberkulose war 1917 diagnostiziert worden und hatte sich über die schubweise Erkrankung hinaus entwickelt, die er in früheren Jahren noch hatte bewältigen können. Nach dem Ende des Berliner Zusammenlebens machte die Krankheit bald eine Sanatoriumsbehandlung in Kierling bei Klosterneuburg nötig. Diamant begleitete und pflegte ihn dort und wurde zur wichtigsten Zeugin seiner letzten Monate. Ihre Erinnerungen, die der Kritiker Josef Paul Hodin 1947 aufzeichnete, wurden zu einer bedeutenden Quelle für Darstellungen dieser letzten Phase von Kafkas Leben.",
+      "background_images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Dora_Diamantova_%281898_1952%29_BW_AI.jpg",
-          "caption": "Porträt von Dora Diamant, Kafkas späterer Lebensgefährtin",
-          "source": "https://commons.wikimedia.org/wiki/File:Dora_Diamantova_(1898_1952)_BW_AI.jpg",
-          "creator": "Author of this photo is unknown person.",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/GER-124a-Reichsbanknote-500_Billion_Mark_%281923%29.jpg/960px-GER-124a-Reichsbanknote-500_Billion_Mark_%281923%29.jpg",
+          "caption": "Deutsche Papiermark der Weimarer Republik aus der Hyperinflationszeit nach dem Ersten Weltkrieg (1921–24).",
+          "source": "https://commons.wikimedia.org/wiki/File:GER-124a-Reichsbanknote-500_Billion_Mark_(1923).jpg",
+          "creator": "Reichsbankdirektorium Berlin",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "German hyperinflation banknotes 1923"
         }
       ],
-      "event_type_icon": "mdi-home-switch-outline",
-      "chapter": "final_years_berlin_partnership",
-      "annotations": {
-        "Graal-Müritz": {
-          "explanation": "Graal-Müritz ist ein Ostseebad im Norden Deutschlands, das sich im späten 19. und frühen 20. Jahrhundert als Seebad und Kurort entwickelte und bei Besuchern aus dem städtischen Bürgertum beliebt war.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Graal-M%C3%BCritz"
-        }
+      "weight": 0.65,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Prag, Tschechoslowakei",
+        "to_location": "Berlin, Deutschland",
+        "characterization": "eigenständiger Haushalt"
       }
     },
     {
       "date": "1924-06-03",
       "date_precision": "day",
       "age": 40,
-      "title": "Tod im Sanatorium Kierling",
-      "description": "Anfang 1924 verschlimmert sich Kafkas Kehlkopftuberkulose. Das Essen wird für ihn zur Qual, und er muss aus Berlin zunächst zurück nach Prag und anschließend in ein Sanatorium im Wienerwaldort Kierling gebracht werden. Dort helfen Dora Diamant und seine Schwester Ottla bei seiner Pflege, während Kafka selbst auf dem Krankenbett noch die Druckfahnen von „Ein Hungerkünstler“ korrigiert. Weil er keine ausreichende Nahrung mehr zu sich nehmen kann und keine wirksame medizinische Behandlung zur Verfügung steht, stirbt er am 3. Juni 1924 im Alter von vierzig Jahren. Sein Leichnam wird nach Prag überführt und auf dem Neuen Jüdischen Friedhof beigesetzt. Zurück bleiben überwiegend unveröffentlichte Manuskripte, die sein Freund Max Brod später herausgeben und der Welt bekannt machen wird.",
+      "title": "Tod in Kierling",
+      "description": "Kafka starb im Alter von 40 Jahren in einem Sanatorium in Kierling bei Wien; Dora Diamant gehörte zu denen, die ihn pflegten.",
       "locations": [
         {
           "name_historic": "Kierling",
-          "name_modern": "Kierling, Klosterneuburg, Österreich",
+          "name_modern": "Klosterneuburg, Österreich",
           "centroid": [
-            16.304,
-            48.318
+            16.291,
+            48.31
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Berlin",
-          "name_modern": "Berlin, Deutschland",
-          "centroid": [
-            13.405,
-            52.52
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Prag",
-          "name_modern": "Prag, Tschechische Republik",
-          "centroid": [
-            14.437,
-            50.0755
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
         "Dora Diamant",
-        "Ottla Kafka",
-        "Max Brod"
+        "Robert Klopstock"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka",
-        "https://en.wikipedia.org/wiki/Dora_Diamant",
-        "https://de.wikipedia.org/wiki/Ottla_Kafka"
+        "https://de.wikipedia.org/wiki/Dora_Diamant"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Ehemaliges_Sanatorium_Hoffmann.JPG",
-          "caption": "Sanatorium Hoffmann in Kierling, wo Kafka starb",
-          "source": "https://commons.wikimedia.org/wiki/File:Ehemaliges_Sanatorium_Hoffmann.JPG",
-          "creator": "Peter34asf",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Franz-Kafka-Denkmal_Kierling_01.jpg/960px-Franz-Kafka-Denkmal_Kierling_01.jpg",
+          "caption": "Franz-Kafka-Denkmal in Kierling",
+          "source": "https://commons.wikimedia.org/wiki/File:Franz-Kafka-Denkmal_Kierling_01.jpg",
+          "creator": "Funke",
           "license": "CC BY-SA 4.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "final_years_berlin_partnership",
+      "chapter": "berlin_freedom",
+      "background": "Der letzte Zusammenbruch folgte auf einen schwierigen Winter in Berlin, wo Inflation und Kafkas schwindende Kräfte das Alltagsleben zunehmend prekär gemacht hatten. Im März 1924 verließ er Berlin in Richtung Prag, und Pläne für eine weitere Behandlung führten ihn bald nach Niederösterreich. Seine langwierige, 1917 erstmals diagnostizierte Krankheit hatte ein Stadium erreicht, für das die Ärzte jener Zeit kaum wirksame Mittel kannten: Antibiotika gegen Tuberkulose lagen noch Jahrzehnte in der Zukunft. Ein Sanatorium konnte Ruhe, Pflege und Aufsicht bieten, aber keine Heilung.\n\n## Kierling und Kafkas Pflege\n\nKierling war damals ein Dorf bei Klosterneuburg nordwestlich von Wien, kein großes städtisches Krankenhauszentrum. Kafka wurde im April in Dr. Hugo Hoffmanns Sanatorium aufgenommen. Dora Diamant, seit dem vergangenen Sommer seine Partnerin, blieb an seiner Seite und übernahm einen großen Teil der praktischen Pflege. Auch Robert Klopstock, ein junger Arzt und Freund Kafkas, half bei seiner Betreuung. Ihre Gegenwart bedeutete, dass Kafkas engster Kreis nicht auf das Personal der Anstalt beschränkt war: Dora gab ihm die innige Beständigkeit einer Lebensgefährtin, während Klopstock die medizinische Situation mitdeuten und mitgestalten konnte.\n\nSein sich verschlechterndes Kehlkopfleiden machte Essen und Sprechen zunehmend schwer und stellte die Grundpflege in den Mittelpunkt der letzten Wochen. Die begrenzten therapeutischen Möglichkeiten jener Zeit ließen die Linderung von Schmerzen und die bestmögliche Ernährung des Patienten besonders wichtig werden. Es war auch eine Zeit intensiver Abhängigkeit, die in scharfem Gegensatz zu dem unabhängigen Leben stand, das Kafka und Diamant in Berlin hatten aufzubauen versucht. Berichte über Diamants Pflege betonen ihre Verlässlichkeit; sie veränderte auch die Haltung von Kafkas Eltern, die ihr zuvor mit Misstrauen begegnet waren.\n\n## Dora Diamants Autorität\n\nAls nach seinem Tod unmittelbare Entscheidungen getroffen werden mussten, schickte Hermann Kafka das Telegramm: „Dora entscheidet.“ Die Nachricht war eine ungewöhnliche Anerkennung von Diamants Stellung in Kafkas letztem Haushalt und der Verantwortung, die sie in Kierling übernommen hatte. Sie behielt einige seiner Hefte und Briefe, obwohl er zuvor verfügt hatte, seine unveröffentlichten Papiere zu vernichten. Ihr späteres Schicksal blieb unsicher, nachdem die Gestapo 1933 Diamants Unterlagen in Berlin beschlagnahmt hatte; viele der von ihr bewahrten Materialien wurden nie wiedergefunden. Klopstock emigrierte später in die Vereinigten Staaten und wurde Arzt; seine Erinnerungen halfen, die Umstände von Kafkas letzter Krankheit zu dokumentieren.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ehemaliges_Sanatorium_Hoffmann.JPG/960px-Ehemaliges_Sanatorium_Hoffmann.JPG",
+          "caption": "Der Ort in Kierling/Österreich, an dem der Schriftsteller Franz Kafka 1924 starb.",
+          "source": "https://commons.wikimedia.org/wiki/File:Ehemaliges_Sanatorium_Hoffmann.JPG",
+          "creator": "Peter34asf",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Sanatorium Hoffmann Kierling"
+        }
+      ],
+      "weight": 0.8,
       "event_class": {
         "type": "death",
-        "cause": "Kehlkopftuberkulose",
-        "characterization": "nach langer Krankheit",
-        "place_of_rest": "Neuer Jüdischer Friedhof, Prag"
+        "cause": "Verhungern",
+        "characterization": "Kehlkopftuberkulose",
+        "place_of_rest": "Neuer Jüdischer Friedhof"
       }
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "701813a0b574b25a",
-    "translated_on": "2026-08-02T12:03:34.290841+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "be342c1010ce8880",
+    "translated_on": "2026-08-10T08:40:31.871225+00:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }
