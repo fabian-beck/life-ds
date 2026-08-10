@@ -48,6 +48,7 @@ from icon_categories import (
     format_icon_categories_for_prompt,
     normalize_icon,
 )
+from utils.registry import Registry
 from utils.model_calls import (
     get_client,
     parse_structured,
@@ -4833,36 +4834,19 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
     if primary_roles:
         entry["primaryRoles"] = primary_roles
 
-    register: Dict[str, Any] = {"people": []}
-    if REGISTER_PATH.exists():
-        register = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
-    people = register.setdefault("people", [])
+    entry["created"] = current_timestamp
+    entry["lastUpdated"] = current_timestamp
 
-    for idx, existing in enumerate(people):
-        if existing.get("id") == person_id:
-            created_timestamp = existing.get("created", current_timestamp)
-            updated_entry = {
-                **existing,
-                **entry,
-                "created": created_timestamp,
-                "lastUpdated": current_timestamp,
-            }
-            # Remove portrait key entirely if it's None
-            if updated_entry.get("portrait") is None:
-                updated_entry.pop("portrait", None)
-            people[idx] = updated_entry
-            break
-    else:
-        # Remove portrait key if None for new entries
-        if entry.get("portrait") is None:
-            entry.pop("portrait", None)
-        entry["created"] = current_timestamp
-        entry["lastUpdated"] = current_timestamp
-        people.append(entry)
-
-    people.sort(key=lambda item: item.get("name", ""))
-    REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
-    write_json(REGISTER_PATH, register)
+    registry = Registry(REGISTER_PATH)
+    # `created` records when the person first appeared, so the existing entry
+    # always wins on it; everything else this function knows about is newer.
+    stored = registry.upsert(entry, preserve=("created",))
+    # An explicit None means "no portrait", which is stored as the key's
+    # absence rather than a null.
+    if stored.get("portrait") is None:
+        stored.pop("portrait", None)
+    registry.sort_by_name()
+    registry.save()
 
 
 # ============================================================================

@@ -17,6 +17,7 @@ from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
 from utils.model_calls import parse_structured_or_raise
+from utils.registry import Registry
 from utils.text import slugify
 from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
@@ -695,30 +696,21 @@ def write_ego_network(payload: Dict[str, Any], person_id: str) -> Path:
 
 def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) -> None:
     """Update the persons register - ensure person exists and update lastUpdated timestamp."""
-    register: Dict[str, Any] = {"people": []}
-    if REGISTER_PATH.exists():
-        register = json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
-
-    people = register.setdefault("people", [])
-
-    # Get current ISO timestamp
     from datetime import datetime
 
     current_timestamp = datetime.now().astimezone().isoformat()
+    registry = Registry(REGISTER_PATH)
+    existing = registry.find(person_id)
 
-    # Check if person already exists in register
-    person_found = False
-    for idx, existing in enumerate(people):
-        if existing.get("id") == person_id:
-            # Update lastUpdated timestamp for existing person
-            people[idx]["lastUpdated"] = current_timestamp
-            person_found = True
-            break
-
-    if not person_found:
-        # Person not in register yet, add minimal entry
-        # The life_events generation script should have run first and added full details
-        people.append(
+    if existing is not None:
+        # The dataset generator owns this entry's contents; a network run only
+        # records that it touched the person.
+        existing["lastUpdated"] = current_timestamp
+    else:
+        # Nothing has generated life events for this person yet, so leave a
+        # minimal entry for that run to fill in — and put it in its place,
+        # which is only needed when the list actually grew.
+        registry.upsert(
             {
                 "id": person_id,
                 "name": payload.get("ego", {}).get(
@@ -729,13 +721,9 @@ def update_register(person_id: str, payload: Dict[str, Any], file_path: Path) ->
                 "lastUpdated": current_timestamp,
             }
         )
+        registry.sort_by_name()
 
-        people.sort(key=lambda item: item.get("name", ""))
-
-    REGISTER_PATH.parent.mkdir(parents=True, exist_ok=True)
-    REGISTER_PATH.write_text(
-        json.dumps(register, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
+    registry.save()
 
 
 def generate_person_network(

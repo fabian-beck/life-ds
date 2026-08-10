@@ -7,9 +7,11 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, cast
+from typing import Any, Dict
 
 from PIL import Image
+
+from utils.registry import Registry
 
 # Set UTF-8 encoding for Windows console with unbuffered output
 if sys.platform == "win32":
@@ -28,27 +30,6 @@ DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 REGISTER_PATH = DATA_DIR / "persons.json"
 PUBLIC_DIR = Path(__file__).resolve().parents[1] / "public"
 PORTRAITS_DIR = PUBLIC_DIR / "portraits"
-
-
-def load_person_registry() -> Dict[str, Any]:
-    """Load the persons registry."""
-    if not REGISTER_PATH.exists():
-        raise FileNotFoundError(f"Persons registry not found: {REGISTER_PATH}")
-
-    try:
-        return cast(
-            Dict[str, Any], json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
-        )
-    except json.JSONDecodeError as e:
-        raise ValueError(f"Invalid JSON in persons registry: {e}") from e
-
-
-def save_person_registry(registry: Dict[str, Any]) -> None:
-    """Save the persons registry."""
-    REGISTER_PATH.write_text(
-        json.dumps(registry, indent=2, ensure_ascii=False) + "\n",
-        encoding="utf-8",
-    )
 
 
 def create_webp_sizes(source_image_path: Path, person_id: str) -> Dict[str, str]:
@@ -259,21 +240,15 @@ def convert_portrait(person_id: str, force: bool = False) -> bool:
         return False
 
     # Update registry
-    registry = load_person_registry()
-    people = registry.get("people", [])
-
-    person = None
-    for p in people:
-        if p.get("id") == person_id:
-            person = p
-            break
+    registry = Registry(REGISTER_PATH)
+    person = registry.find(person_id)
 
     if not person:
         print("    Warning: Person not found in registry", file=sys.stderr)
         return False
 
     update_person_portrait_paths(person, portrait_paths)
-    save_person_registry(registry)
+    registry.save()
     print("    ✓ Registry updated")
 
     # Update life_events.json

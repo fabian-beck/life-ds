@@ -11,7 +11,7 @@ import sys
 import tempfile
 import time
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple, cast
+from typing import Any, Dict, Optional, Tuple
 from urllib.parse import unquote, urlparse
 
 import requests
@@ -19,6 +19,7 @@ from bs4 import BeautifulSoup
 from openai import APIStatusError, OpenAI
 from PIL import Image, ImageOps
 
+from utils.registry import Registry
 from utils.text import slugify
 
 # Set UTF-8 encoding for Windows console with unbuffered output
@@ -445,36 +446,11 @@ def prepare_reference_image(
     return original_size, prepared_size
 
 
-def load_person_registry() -> Dict[str, Any]:
-    """Load the persons registry."""
+def person_registry() -> Registry:
+    """The persons registry, which this script only ever edits in place."""
     if not REGISTER_PATH.exists():
         raise FileNotFoundError(f"Persons registry not found: {REGISTER_PATH}")
-
-    try:
-        return cast(
-            Dict[str, Any], json.loads(REGISTER_PATH.read_text(encoding="utf-8"))
-        )
-    except json.JSONDecodeError as e:
-        raise ValueError(f"Invalid JSON in persons registry: {e}") from e
-
-
-def save_person_registry(registry: Dict[str, Any]) -> None:
-    """Save the persons registry."""
-    REGISTER_PATH.write_text(
-        json.dumps(registry, indent=2, ensure_ascii=False) + "\n",
-        encoding="utf-8",
-    )
-
-
-def find_person_in_registry(
-    registry: Dict[str, Any], person_id: str
-) -> Optional[Dict[str, Any]]:
-    """Find a person entry in the registry by ID."""
-    people = registry.get("people", [])
-    for person in people:
-        if person.get("id") == person_id:
-            return cast(Optional[Dict[str, Any]], person)
-    return None
+    return Registry(REGISTER_PATH)
 
 
 def load_person_colors(person_id: str) -> Dict[str, str]:
@@ -583,8 +559,8 @@ def update_person_registry(
         original_image_url: Original image URL used for generation
         source_page_url: Optional source page URL for attribution (e.g., Openverse, Flickr page)
     """
-    registry = load_person_registry()
-    person = find_person_in_registry(registry, person_id)
+    registry = person_registry()
+    person = registry.find(person_id)
 
     if not person:
         print(f"⚠ Warning: Person {person_id} not found in registry", file=sys.stderr)
@@ -628,7 +604,7 @@ def update_person_registry(
     ):
         person["portrait"]["originalCaption"] = original_caption
 
-    save_person_registry(registry)
+    registry.save()
     sync_translated_registries(person_id, person["portrait"])
 
 
@@ -640,15 +616,12 @@ def sync_translated_registries(
     updated = []
     for registry_path in sorted(DATA_DIR.glob("persons_*.json")):
         try:
-            registry = json.loads(registry_path.read_text(encoding="utf-8"))
-            person = find_person_in_registry(registry, person_id)
+            registry = Registry(registry_path)
+            person = registry.find(person_id)
             if not person:
                 continue
             person["portrait"] = portrait_data
-            registry_path.write_text(
-                json.dumps(registry, indent=2, ensure_ascii=False) + "\n",
-                encoding="utf-8",
-            )
+            registry.save()
             updated.append(registry_path.name)
         except (OSError, ValueError, TypeError) as error:
             print(
@@ -770,8 +743,7 @@ def generate_portrait(
 
     # If reference_image_url is None, load from registry
     if reference_image_url is None:
-        registry = load_person_registry()
-        person = find_person_in_registry(registry, person_id)
+        person = person_registry().find(person_id)
 
         if not person:
             error_msg = f"Person '{person_id}' not found in registry"
@@ -1201,8 +1173,7 @@ Professional and dignified composition, portrait orientation, shoulders visible.
             print("  ✓ Registry updated with portrait paths")
 
             # Get the portrait data that was just saved to the registry
-            registry = load_person_registry()
-            person = find_person_in_registry(registry, person_id)
+            person = person_registry().find(person_id)
             if person and person.get("portrait"):
                 # Update life_events.json and translations with the same portrait data
                 update_life_events_portrait(person_id, person["portrait"])
@@ -1335,8 +1306,7 @@ def main(argv: Any = None) -> int:
 
         else:
             # Load registry to get reference portrait URL
-            registry = load_person_registry()
-            person = find_person_in_registry(registry, person_id)
+            person = person_registry().find(person_id)
 
             if not person:
                 print(

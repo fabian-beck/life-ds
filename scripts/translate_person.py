@@ -49,6 +49,7 @@ from config import (
     enable_utf8_console,
 )
 from utils.model_calls import parse_structured
+from utils.registry import Registry
 from utils.text import slugify as canonical_slugify
 from utils.wikipedia_cache import (
     extract_wikipedia_title,
@@ -1362,37 +1363,23 @@ def update_language_registry(
     registries stay aligned.
     """
     registry_path = DATA_DIR / f"persons_{target_lang}.json"
+    registry = Registry(registry_path)
 
-    # Load existing registry or create new one
-    if registry_path.exists():
-        with open(registry_path, "r", encoding="utf-8") as f:
-            registry = json.load(f)
-    else:
-        registry = {"people": []}
-
-    # Find and update or append
     person_id = person_entry["id"]
-    found = False
-    for i, person in enumerate(registry["people"]):
-        if person["id"] == person_id:
-            registry["people"][i] = person_entry
-            found = True
-            if verbose:
-                print(f"  Updated {person_id} in {registry_path.name}")
-            break
+    existed = registry.find(person_id) is not None
+    # The translated entry replaces the old one outright rather than merging:
+    # a field the new translation dropped was dropped on purpose.
+    registry.upsert(person_entry, merge=False)
+    if verbose:
+        verb = "Updated" if existed else "Added"
+        print(f"  {verb} {person_id} in {registry_path.name}")
 
-    if not found:
-        registry["people"].append(person_entry)
-        if verbose:
-            print(f"  Added {person_id} to {registry_path.name}")
-
-    # Keep the language registry ordered like the English registry
-    english = load_json_file(REGISTER_PATH) or {}
-    order = {p["id"]: i for i, p in enumerate(english.get("people", []))}
-    registry["people"].sort(key=lambda p: order.get(p.get("id"), len(order)))
-
-    # Save registry
-    return save_json_file(registry, registry_path)
+    registry.sort_like(Registry(REGISTER_PATH).ids())
+    # Saved through `save_json_file` rather than `registry.save()`: it writes
+    # the same bytes but also scans the text on the way out for words that mix
+    # writing systems, which is exactly the defect a translated registry entry
+    # can carry and a diff cannot show.
+    return save_json_file(registry.document, registry_path)
 
 
 # ---------------------------------------------------------------------------

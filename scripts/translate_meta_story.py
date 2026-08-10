@@ -22,6 +22,7 @@ from typing import Any, Dict, List, Optional
 from openai import OpenAI
 
 from config import enable_utf8_console
+from utils.registry import META_STORIES, Registry
 from meta_story_translation import (
     extract_meta_story_translatables,
     translate_meta_story,
@@ -93,22 +94,17 @@ def update_language_meta_registry(
     }
 
     registry_path = DATA_DIR / f"meta_stories_{target_lang}.json"
-    registry = load_json_file(registry_path) or {"meta_stories": []}
-    stories = registry.setdefault("meta_stories", [])
-    for i, existing in enumerate(stories):
-        if existing.get("id") == story_id:
-            stories[i] = entry
-            break
-    else:
-        stories.append(entry)
-
-    # Keep the language registry ordered like the English registry
-    order = {sid: i for i, sid in enumerate(list_meta_story_ids())}
-    stories.sort(key=lambda e: order.get(e.get("id"), len(order)))
+    registry = Registry(registry_path, collection=META_STORIES)
+    # The entry is derived whole from the English one, so it replaces rather
+    # than merges — see the deepcopy above.
+    registry.upsert(entry, merge=False)
+    registry.sort_like(list_meta_story_ids())
 
     if verbose:
         print(f"  ✓ Updated {registry_path.name}")
-    return save_json_file(registry, registry_path)
+    # See update_language_registry: the mixed-script scan is the reason this
+    # goes through save_json_file rather than registry.save().
+    return save_json_file(registry.document, registry_path)
 
 
 def _extract_registry_translatables(entry: Dict[str, Any]) -> Dict[str, Any]:

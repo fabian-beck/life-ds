@@ -12,7 +12,7 @@ from generate_person_portrait import (
     DEFAULT_MASTER_STYLE_PATH,
     PORTRAITS_DIR,
     generate_portrait,
-    load_person_registry,
+    person_registry,
 )
 
 # Note: UTF-8 encoding is already set by generate_person_portrait module
@@ -103,7 +103,7 @@ def main(argv: Any = None) -> int:
 
     # Load registry
     try:
-        registry = load_person_registry()
+        registry = person_registry().document
     except Exception as e:
         print(f"✗ Error loading persons registry: {e}", file=sys.stderr)
         return 1
