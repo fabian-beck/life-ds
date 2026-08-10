@@ -52,21 +52,6 @@ export const queryParams = derived(querystring, ($querystring) => {
 });
 
 /**
- * The query string that carries a reader's origin into a person story: the
- * collection they came through, and the landing filters behind it.
- * @param {string|null} metaStoryId - The collection being read, if any
- * @param {string|null} fromLanding - The landing filters, if any
- * @returns {string} - "from_meta=…&from_landing=…", or "" when there is no
- *   context to carry
- */
-export function originQuery(metaStoryId, fromLanding) {
-  const params = new URLSearchParams();
-  if (metaStoryId) params.set("from_meta", metaStoryId);
-  if (fromLanding) params.set("from_landing", fromLanding);
-  return params.toString();
-}
-
-/**
  * The hash-router href into a person's story, carrying the reader's origin.
  *
  * Every surface of a meta story links into person stories — prose mentions,
