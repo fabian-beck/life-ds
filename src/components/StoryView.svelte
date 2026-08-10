@@ -207,6 +207,21 @@
   // per chapter, so the gesture stays rare enough to mean something.
   $: deepEventIndexes = selectDeepEventIndexes(eventSlides, egoNetwork);
 
+  // Selected as a landmark AND carrying the report that is the whole of the
+  // layer. The selection is what the backfill script fills against, so it names
+  // the events worth a report; a life whose reports are not written yet simply
+  // offers no way down. Both the markup and the measurement below ask here, so
+  // the two cannot drift apart. The selection is passed in rather than read
+  // from the closure, so that asking the question is what makes a caller
+  // depend on it.
+  function slideHasDepth(slide, deepIndexes) {
+    return (
+      slide?.type === "event" &&
+      deepIndexes.has(slide.eventIndex) &&
+      hasBackgroundReport(slide)
+    );
+  }
+
   // How far into the active slide's depth layer the reader has come, 0 to 1.
   // The story map fades out over the same interval: it belongs to the event
   // above, and it would otherwise sit lit behind a page of running text.
@@ -214,9 +229,14 @@
 
   // A slide keeps its scroll position while it is in the DOM, so the progress
   // has to be re-read when the reader arrives rather than assumed to be 0.
+  // Only from a slide that has somewhere to go: reading it costs a synchronous
+  // layout, taken in the frame a slide change has just dirtied the whole strip
+  // in, and four slides in five have no depth layer to report on.
   $: if (activeIndex >= 0) {
     depthProgress = 0;
-    measureActiveDepth();
+    if (slideHasDepth(slides[activeIndex], deepEventIndexes)) {
+      measureActiveDepth();
+    }
   }
 
   function readDepthProgress(section) {
@@ -1149,6 +1169,17 @@
     if (!content || !reserve || typeof ResizeObserver === "undefined") return;
 
     const measure = () => {
+      // A slide the browser has skipped has no laid out content, and measuring
+      // it here would answer that everything fits — for every slide off screen,
+      // which is most of them. The observer is called again when the slide is
+      // rendered, because that is when its content takes a size, and that is
+      // also the first moment the answer is worth anything.
+      if (
+        typeof section.checkVisibility === "function" &&
+        !section.checkVisibility({ contentVisibilityAuto: true })
+      ) {
+        return;
+      }
       const style = getComputedStyle(section);
       const room =
         section.clientHeight -
@@ -1346,14 +1377,7 @@
                through slides they never asked to see. `inert` takes the
                inactive ones out of the tab order and the accessibility tree at
                once, leaving the arrow keys as the way to move between slides. -->
-          <!-- Selected as a landmark AND carrying the report that is the whole
-               of the layer. The selection is what the backfill script fills
-               against, so it names the events worth a report; a life whose
-               reports are not written yet simply offers no way down. -->
-          {@const isDeep =
-            slide.type === "event" &&
-            deepEventIndexes.has(slide.eventIndex) &&
-            hasBackgroundReport(slide)}
+          {@const isDeep = slideHasDepth(slide, deepEventIndexes)}
           <section
             class="slide slide-loaded"
             class:overview={slide.type === "overview"}
@@ -2123,6 +2147,19 @@
        next slide until it snapped there. Containing the scroll keeps a gesture
        aimed at the event inside the event. */
     overscroll-behavior: contain;
+    /* The whole story is in the DOM at once, and a slide is not cheap to paint:
+       two full-screen pattern layers of its own, blended, over a background of
+       its own, under whatever the event brings. Painting a life's worth of them
+       for every frame of a transition is what made the transition stutter — a
+       third of the frames over 32 ms on a throttled phone, with the
+       compositor's layer list rather than script taking the time. This lets the
+       browser skip the slides that are not on screen, which changes nothing
+       about how the story looks or behaves: a slide is sized by the strip
+       around it, a fixed share of its width and a full screen tall, so skipping
+       what is inside one moves nothing. What it does change is that a skipped
+       slide has no laid out content to measure, which `watchContentFit`
+       accounts for. */
+    content-visibility: auto;
   }
 
   /* A deep slide always scrolls, so a scrollbar here would say nothing the
