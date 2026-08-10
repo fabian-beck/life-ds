@@ -506,17 +506,17 @@
       }
     },
     "p_portrait": {
-      "fingerprint": "9c0ac3cc6606c56a",
+      "fingerprint": "f21e8c5a39c86959",
       "summary": {
         "constraints": [
-          "Use a shared master-style image as the FIRST input and the person’s source portrait as the SECOND/primary input; preserve facial likeness, expression, gaze, head pose, hair, and clothing silhouette from the second image.",
-          "Generate a borderless, vertical 2:3 portrait at `1024x1536`, cropped to head-and-shoulders or upper torso; the subject must not be made small merely to retain the source composition.",
-          "Render broad, glowing light strokes on a deep black background, with white dominant and only the person’s configured primary and secondary accent colors; do not add decorative elements absent from the references.",
-          "Reject missing registry entries, absent/invalid HTTP portrait URLs, missing or invalid master-style files, failed downloads, and reference images that exceed API requirements; retain a cached PNG unless `--force` is used."
+          "Requires a registry portrait URL—or an explicitly supplied HTTP(S) reference—and a valid local master-style image.",
+          "Preserves the second image’s facial features, expression, gaze, head pose, shoulder orientation, hair, and clothing silhouette exactly; the person must remain immediately recognizable.",
+          "Produces a borderless 2:3 vertical head-and-shoulders or upper-torso portrait, cropping away lower body and source-scene material when needed.",
+          "Uses a pitch-black background with broad glowing white strokes plus the person’s configured primary and secondary accent colors; no added decorative elements are allowed."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a stylized, vertical portrait for a registered person by sending two images to an image-editing model: a shared master-style image first and the person’s licensed/source reference portrait second. The model is asked to retain the second image’s identity, expression, pose, hair, and historical clothing while rendering it as a borderless light-drawing portrait on a dark background, using that person’s configured primary and secondary colors. The generated PNG is then prepared for portrait delivery, with thumbnail, medium, and full WebP paths recorded under `/portraits/`.\n\nBefore generation, the step resolves the original portrait URL from the person registry (including falling back from an existing generated `/portraits/` path to `originalImage`), downloads and normalizes JPEG input to RGBA PNG, validates the master style image, and skips an existing output unless `force` is set.",
-        "why_this_design": "The dual-image ordering explicitly separates identity from style: the first image supplies only rendering treatment, while the second is repeatedly designated as the primary likeness source. Strong framing and no-border instructions counter a common failure mode with archival portraits, where model outputs preserve an engraved oval, cartouche, furniture, or a full-body source composition instead of producing a usable collection portrait."
+        "what_it_does": "Creates a standardized, vertical light-drawing portrait for a registered person by combining two inputs: a shared master-style image and the person’s licensed source portrait. The source portrait supplies identity, expression, pose, hair, and historical clothing, while the master image supplies the collection-wide rendering treatment; the result is saved as a PNG and later exposed in thumbnail, medium, and full WebP variants.",
+        "why_this_design": "The dual-image prompt explicitly assigns different roles to the inputs so style transfer does not replace the subject’s likeness with features from the master portrait. It also discards inherited ovals, frames, furniture, and scene context common in archival imagery, preventing inconsistent decorative containers across the collection."
       }
     },
     "p_pub_links": {
@@ -534,18 +534,18 @@
       }
     },
     "p_register": {
-      "fingerprint": "e2f34ff218284289",
+      "fingerprint": "88b37437e4a5895b",
       "summary": {
         "constraints": [
-          "`primary_roles` is retained only when it is a list, and is capped at the first 3 values.",
-          "Birth and death years are passed through `pad_year` before being stored as `birthDate` and `deathDate`.",
-          "A null portrait removes the `portrait` key entirely for both new and existing entries.",
-          "Every write sets `lastUpdated`; new entries also set `created`, while existing entries retain their prior `created` value.",
-          "Registry entries are sorted by `name` before serialization."
+          "Limits list-valued `primary_roles` to the first 3 entries.",
+          "Includes `tagline` only when its source value is not `None`, preserving an existing tagline when no replacement was supplied.",
+          "Uses the person ID as a fallback name after replacing underscores and title-casing it.",
+          "Preserves `created` during upsert; sets `lastUpdated` to the current timezone-aware ISO timestamp.",
+          "Removes `portrait` from the stored entry when its value is `None`, then sorts the full registry by name before saving."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds or updates one person record in the shared `people` registry used by the landing-page index. It carries forward core metadata from the generated person payload, including the portrait reference selected upstream, normalizes dates, records lifecycle timestamps, and writes the registry back in name-sorted order.",
-        "why_this_design": "Updates merge the new fields over the existing record so unrelated registry data survives, while preserving the original `created` timestamp. Tagline is handled differently from other fields: an absent tagline does not overwrite an existing one, but portrait is always applied so a deliberate null can remove a stale image reference."
+        "what_it_does": "Builds or refreshes one person’s entry in the shared persons registry used by the landing-page index. It copies core person metadata from the event payload, normalizes birth and death years, carries the selected portrait reference forward, then upserts, alphabetizes, and saves the registry.",
+        "why_this_design": "The update preserves the original creation timestamp while treating all other fields known here as current, so repeated runs do not make an existing person appear newly added. Portrait nulls are deliberately converted to an absent key, distinguishing removal from a stored JSON null and allowing the later portrait consumer to read a clean optional field."
       }
     },
     "p_report_headings": {
