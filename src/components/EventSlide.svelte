@@ -174,6 +174,23 @@
     !showBirthLineage &&
     !showDeathDetails;
 
+  // The classified event's own box — birth lineage, death details, marriage,
+  // invention, publication — renders in a column of its own so a wide screen
+  // can seat it beside the description instead of stacking the two.
+  $: hasClassBox =
+    showBirthLineage ||
+    showDeathDetails ||
+    slide.event_class?.type === "marriage_partnership" ||
+    slide.event_class?.type === "invention" ||
+    slide.event_class?.type === "publication";
+  // Birth, death, and marriage introduce the event, so their box precedes the
+  // description when the two are stacked; the invention and publication boxes
+  // elaborate on it and follow.
+  $: classBoxLeads =
+    showBirthLineage ||
+    showDeathDetails ||
+    slide.event_class?.type === "marriage_partnership";
+
   let imageLoadStateKey = "";
   let imageLoadGeneration = 0;
   let loadedImageUrls = new Set();
@@ -465,187 +482,6 @@
   </div>
   <div class="event-body">
     <div class="event-description">
-      {#if showBirthLineage}
-        <div class="birth-pretext">
-          <div class="birth-meta-line">
-            <svg
-              class="icon birth-icon-inline"
-              viewBox="0 0 24 24"
-              role="presentation"
-              aria-hidden="true"
-            >
-              <path d={mdiCradle} />
-            </svg>
-            <span class="birth-inline-label">{$_("story.birth.label")}</span>
-            {#if slide.event_class.birth_name}
-              <span class="birth-separator">·</span>
-              <span class="birth-name-inline"
-                >{$_("story.birth.born_as", {
-                  name: slide.event_class.birth_name,
-                })}</span
-              >
-            {/if}
-            {#if slide.event_class.characterization}
-              <span class="birth-separator">·</span>
-              <span class="birth-characterization-inline"
-                >{slide.event_class.characterization}</span
-              >
-            {/if}
-          </div>
-          {#if birthParents.length > 0}
-            <!-- The parents stand above the newborn in the same generational
-                 layout the network view uses for a family. -->
-            <div class="birth-lineage">
-              <div class="lineage-box">
-                <span class="lineage-box-label"
-                  >{$_(
-                    birthParents.length === 1
-                      ? "network.family.parents_one"
-                      : "network.family.parents_other"
-                  )}</span
-                >
-                <div class="lineage-people">
-                  {#each birthParents as parent, idx (parent.person_name)}
-                    <PersonChip
-                      person={parent}
-                      personKey={`${slide.eventIndex}-parent-${idx}`}
-                      {visiblePersonInfo}
-                      subcategory={getSubcategory(parent.relationship_type)}
-                      {styleConfig}
-                      stacked
-                      onToggle={onTogglePersonInfo}
-                      {onOpenNetwork}
-                    />
-                  {/each}
-                </div>
-              </div>
-              <div class="lineage-link" aria-hidden="true"></div>
-              <div class="newborn-chip" title={egoNetwork?.ego?.name ?? ""}>
-                {#if portrait?.thumbnail || portrait?.image}
-                  <span class="newborn-portrait-clip">
-                    <img
-                      class="newborn-portrait"
-                      src={assetUrl(portrait.thumbnail || portrait.image)}
-                      alt={egoNetwork?.ego?.name ?? ""}
-                    />
-                  </span>
-                {:else}
-                  <svg
-                    class="newborn-icon"
-                    viewBox="0 0 24 24"
-                    role="img"
-                    aria-label={egoNetwork?.ego?.name ??
-                      $_("story.birth.label")}
-                  >
-                    <path d={mdiAccount} />
-                  </svg>
-                {/if}
-              </div>
-            </div>
-          {/if}
-        </div>
-      {/if}
-      {#if showDeathDetails}
-        <div class="death-pretext">
-          <div class="death-meta-line">
-            <svg
-              class="icon death-icon-inline"
-              viewBox="0 0 24 24"
-              role="presentation"
-              aria-hidden="true"
-            >
-              <path d={mdiGraveStone} />
-            </svg>
-            <span class="death-inline-label">{$_("story.death.label")}</span>
-            {#if slide.event_class.characterization}
-              <span class="death-separator">·</span>
-              <span class="death-characterization-inline"
-                >{slide.event_class.characterization}</span
-              >
-            {/if}
-          </div>
-          {#if slide.event_class.cause}
-            <!-- The cause is boxed and labeled the way the birth boxes the
-                 parents: the one fact the slide exists to carry. -->
-            <div class="cause-box">
-              <span class="cause-box-label">{$_("story.death.cause")}</span>
-              <p class="cause-text">{slide.event_class.cause}</p>
-            </div>
-          {/if}
-          {#if slide.event_class.place_of_rest}
-            <p class="death-rest">
-              <span class="death-rest-label"
-                >{$_("story.death.place_of_rest")}</span
-              >
-              <span class="death-rest-text"
-                >{slide.event_class.place_of_rest}</span
-              >
-            </p>
-          {/if}
-        </div>
-      {/if}
-      {#if slide.event_class?.type === "marriage_partnership"}
-        {@const partnerPerson = findPersonInNetwork(
-          slide.event_class.partner,
-          egoNetwork
-        )}
-        <div class="marriage-pretext">
-          <div class="marriage-meta-line">
-            <svg
-              class="icon marriage-icon-inline"
-              viewBox="0 0 24 24"
-              role="presentation"
-              aria-hidden="true"
-            >
-              <path d={mdiRing} />
-            </svg>
-            <span class="marriage-inline-label"
-              >{eventClassLabel($_, slide.event_class)}</span
-            >
-            {#if slide.event_class.characterization}
-              <span class="marriage-separator">·</span>
-              <span class="marriage-characterization-inline"
-                >{slide.event_class.characterization}</span
-              >
-            {/if}
-            {#if slide.event_class.children}
-              <span class="marriage-separator">·</span>
-              <span class="marriage-children-inline"
-                >{slide.event_class.children === 1
-                  ? $_("story.children_one", {
-                      count: slide.event_class.children,
-                    })
-                  : $_("story.children_other", {
-                      count: slide.event_class.children,
-                    })}</span
-              >
-            {/if}
-            {#if slide.event_class.duration}
-              <span class="marriage-separator">·</span>
-              <span class="marriage-duration-inline"
-                >{slide.event_class.duration}</span
-              >
-            {/if}
-          </div>
-          {#if partnerPerson}
-            {@const personKey = `${slide.eventIndex}-partner`}
-            {@const subcategory = getSubcategory(
-              partnerPerson.relationship_type
-            )}
-            <div class="marriage-partner-chips">
-              <PersonChip
-                person={partnerPerson}
-                {personKey}
-                {visiblePersonInfo}
-                {subcategory}
-                {styleConfig}
-                onToggle={onTogglePersonInfo}
-                {onOpenNetwork}
-              />
-            </div>
-          {/if}
-        </div>
-      {/if}
       <p class="description">
         {#each descriptionSegments as segment}{#if segment.type === "text"}{segment.content}{:else if segment.type === "annotation"}<span
               role="button"
@@ -683,100 +519,287 @@
           </div>
         </div>
       {/each}
-      {#if slide.event_class?.type === "invention"}
-        <div class="invention-info-box">
-          <div class="invention-header">
-            <svg
-              class="icon invention-icon"
-              viewBox="0 0 24 24"
-              role="presentation"
-              aria-hidden="true"
-            >
-              <path d={mdiLightbulbOnOutline} />
-            </svg>
-            <h3 class="invention-title">{slide.event_class.title}</h3>
-          </div>
-          {#if slide.event_class.description}
-            <p class="invention-description">{slide.event_class.description}</p>
-          {/if}
-          {#if slide.event_class.impact}
-            <div class="invention-impact">
-              <span class="impact-label">{$_("story.impact")}:</span><span
-                class="impact-text"
-              >
-                {slide.event_class.impact}</span
-              >
-            </div>
-          {/if}
-        </div>
-      {/if}
-      {#if slide.event_class?.type === "publication"}
-        <div class="publication-info-box">
-          <div class="publication-header">
-            <svg
-              class="icon publication-icon"
-              viewBox="0 0 24 24"
-              role="presentation"
-              aria-hidden="true"
-            >
-              <path d={mdiBook} />
-            </svg>
-            <h3 class="publication-title">{slide.event_class.title}</h3>
-          </div>
-          <div class="publication-meta">
-            <span class="publication-type-badge"
-              >{publicationTypeLabel(
-                $_,
-                slide.event_class.publication_type
-              )}</span
-            >
-            {#if slide.event_class.significance}
-              <span class="publication-separator">·</span>
-              <span class="publication-significance"
-                >{slide.event_class.significance}</span
-              >
-            {/if}
-          </div>
-          {#if slide.event_class.impact}
-            <div class="publication-impact">
-              <span class="impact-label">{$_("story.impact")}:</span><span
-                class="impact-text"
-              >
-                {slide.event_class.impact}</span
-              >
-            </div>
-          {/if}
-          {#if publicationSource}
-            <a
-              class="publication-source"
-              class:is-search={publicationSource.isSearch}
-              href={publicationSource.url}
-              target="_blank"
-              rel="noreferrer"
-              on:click|stopPropagation
-            >
+    </div>
+    {#if hasClassBox}
+      <div class="event-class-col" class:leads={classBoxLeads}>
+        {#if showBirthLineage}
+          <div class="birth-pretext">
+            <div class="birth-meta-line">
               <svg
-                class="icon publication-source-icon"
+                class="icon birth-icon-inline"
                 viewBox="0 0 24 24"
                 role="presentation"
                 aria-hidden="true"
               >
-                <path
-                  d={publicationSource.isSearch ? mdiMagnify : mdiOpenInNew}
-                />
+                <path d={mdiCradle} />
               </svg>
-              {publicationSource.isSearch
-                ? $_("story.publication_search", {
-                    source: publicationSource.site,
-                  })
-                : $_("story.publication_source", {
-                    source: publicationSource.site,
-                  })}
-            </a>
-          {/if}
-        </div>
-      {/if}
-    </div>
+              <span class="birth-inline-label">{$_("story.birth.label")}</span>
+              {#if slide.event_class.birth_name}
+                <span class="birth-separator">·</span>
+                <span class="birth-name-inline"
+                  >{$_("story.birth.born_as", {
+                    name: slide.event_class.birth_name,
+                  })}</span
+                >
+              {/if}
+              {#if slide.event_class.characterization}
+                <span class="birth-separator">·</span>
+                <span class="birth-characterization-inline"
+                  >{slide.event_class.characterization}</span
+                >
+              {/if}
+            </div>
+            {#if birthParents.length > 0}
+              <!-- The parents stand above the newborn in the same generational
+                 layout the network view uses for a family. -->
+              <div class="birth-lineage">
+                <div class="lineage-box">
+                  <span class="lineage-box-label"
+                    >{$_(
+                      birthParents.length === 1
+                        ? "network.family.parents_one"
+                        : "network.family.parents_other"
+                    )}</span
+                  >
+                  <div class="lineage-people">
+                    {#each birthParents as parent, idx (parent.person_name)}
+                      <PersonChip
+                        person={parent}
+                        personKey={`${slide.eventIndex}-parent-${idx}`}
+                        {visiblePersonInfo}
+                        subcategory={getSubcategory(parent.relationship_type)}
+                        {styleConfig}
+                        stacked
+                        onToggle={onTogglePersonInfo}
+                        {onOpenNetwork}
+                      />
+                    {/each}
+                  </div>
+                </div>
+                <div class="lineage-link" aria-hidden="true"></div>
+                <div class="newborn-chip" title={egoNetwork?.ego?.name ?? ""}>
+                  {#if portrait?.thumbnail || portrait?.image}
+                    <span class="newborn-portrait-clip">
+                      <img
+                        class="newborn-portrait"
+                        src={assetUrl(portrait.thumbnail || portrait.image)}
+                        alt={egoNetwork?.ego?.name ?? ""}
+                      />
+                    </span>
+                  {:else}
+                    <svg
+                      class="newborn-icon"
+                      viewBox="0 0 24 24"
+                      role="img"
+                      aria-label={egoNetwork?.ego?.name ??
+                        $_("story.birth.label")}
+                    >
+                      <path d={mdiAccount} />
+                    </svg>
+                  {/if}
+                </div>
+              </div>
+            {/if}
+          </div>
+        {/if}
+        {#if showDeathDetails}
+          <div class="death-pretext">
+            <div class="death-meta-line">
+              <svg
+                class="icon death-icon-inline"
+                viewBox="0 0 24 24"
+                role="presentation"
+                aria-hidden="true"
+              >
+                <path d={mdiGraveStone} />
+              </svg>
+              <span class="death-inline-label">{$_("story.death.label")}</span>
+              {#if slide.event_class.characterization}
+                <span class="death-separator">·</span>
+                <span class="death-characterization-inline"
+                  >{slide.event_class.characterization}</span
+                >
+              {/if}
+            </div>
+            {#if slide.event_class.cause}
+              <!-- The cause is boxed and labeled the way the birth boxes the
+                 parents: the one fact the slide exists to carry. -->
+              <div class="cause-box">
+                <span class="cause-box-label">{$_("story.death.cause")}</span>
+                <p class="cause-text">{slide.event_class.cause}</p>
+              </div>
+            {/if}
+            {#if slide.event_class.place_of_rest}
+              <p class="death-rest">
+                <span class="death-rest-label"
+                  >{$_("story.death.place_of_rest")}</span
+                >
+                <span class="death-rest-text"
+                  >{slide.event_class.place_of_rest}</span
+                >
+              </p>
+            {/if}
+          </div>
+        {/if}
+        {#if slide.event_class?.type === "marriage_partnership"}
+          {@const partnerPerson = findPersonInNetwork(
+            slide.event_class.partner,
+            egoNetwork
+          )}
+          <div class="marriage-pretext">
+            <div class="marriage-meta-line">
+              <svg
+                class="icon marriage-icon-inline"
+                viewBox="0 0 24 24"
+                role="presentation"
+                aria-hidden="true"
+              >
+                <path d={mdiRing} />
+              </svg>
+              <span class="marriage-inline-label"
+                >{eventClassLabel($_, slide.event_class)}</span
+              >
+              {#if slide.event_class.characterization}
+                <span class="marriage-separator">·</span>
+                <span class="marriage-characterization-inline"
+                  >{slide.event_class.characterization}</span
+                >
+              {/if}
+              {#if slide.event_class.children}
+                <span class="marriage-separator">·</span>
+                <span class="marriage-children-inline"
+                  >{slide.event_class.children === 1
+                    ? $_("story.children_one", {
+                        count: slide.event_class.children,
+                      })
+                    : $_("story.children_other", {
+                        count: slide.event_class.children,
+                      })}</span
+                >
+              {/if}
+              {#if slide.event_class.duration}
+                <span class="marriage-separator">·</span>
+                <span class="marriage-duration-inline"
+                  >{slide.event_class.duration}</span
+                >
+              {/if}
+            </div>
+            {#if partnerPerson}
+              {@const personKey = `${slide.eventIndex}-partner`}
+              {@const subcategory = getSubcategory(
+                partnerPerson.relationship_type
+              )}
+              <div class="marriage-partner-chips">
+                <PersonChip
+                  person={partnerPerson}
+                  {personKey}
+                  {visiblePersonInfo}
+                  {subcategory}
+                  {styleConfig}
+                  onToggle={onTogglePersonInfo}
+                  {onOpenNetwork}
+                />
+              </div>
+            {/if}
+          </div>
+        {/if}
+        {#if slide.event_class?.type === "invention"}
+          <div class="invention-info-box">
+            <div class="invention-header">
+              <svg
+                class="icon invention-icon"
+                viewBox="0 0 24 24"
+                role="presentation"
+                aria-hidden="true"
+              >
+                <path d={mdiLightbulbOnOutline} />
+              </svg>
+              <h3 class="invention-title">{slide.event_class.title}</h3>
+            </div>
+            {#if slide.event_class.description}
+              <p class="invention-description">
+                {slide.event_class.description}
+              </p>
+            {/if}
+            {#if slide.event_class.impact}
+              <div class="invention-impact">
+                <span class="impact-label">{$_("story.impact")}:</span><span
+                  class="impact-text"
+                >
+                  {slide.event_class.impact}</span
+                >
+              </div>
+            {/if}
+          </div>
+        {/if}
+        {#if slide.event_class?.type === "publication"}
+          <div class="publication-info-box">
+            <div class="publication-header">
+              <svg
+                class="icon publication-icon"
+                viewBox="0 0 24 24"
+                role="presentation"
+                aria-hidden="true"
+              >
+                <path d={mdiBook} />
+              </svg>
+              <h3 class="publication-title">{slide.event_class.title}</h3>
+            </div>
+            <div class="publication-meta">
+              <span class="publication-type-badge"
+                >{publicationTypeLabel(
+                  $_,
+                  slide.event_class.publication_type
+                )}</span
+              >
+              {#if slide.event_class.significance}
+                <span class="publication-separator">·</span>
+                <span class="publication-significance"
+                  >{slide.event_class.significance}</span
+                >
+              {/if}
+            </div>
+            {#if slide.event_class.impact}
+              <div class="publication-impact">
+                <span class="impact-label">{$_("story.impact")}:</span><span
+                  class="impact-text"
+                >
+                  {slide.event_class.impact}</span
+                >
+              </div>
+            {/if}
+            {#if publicationSource}
+              <a
+                class="publication-source"
+                class:is-search={publicationSource.isSearch}
+                href={publicationSource.url}
+                target="_blank"
+                rel="noreferrer"
+                on:click|stopPropagation
+              >
+                <svg
+                  class="icon publication-source-icon"
+                  viewBox="0 0 24 24"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <path
+                    d={publicationSource.isSearch ? mdiMagnify : mdiOpenInNew}
+                  />
+                </svg>
+                {publicationSource.isSearch
+                  ? $_("story.publication_search", {
+                      source: publicationSource.site,
+                    })
+                  : $_("story.publication_source", {
+                      source: publicationSource.site,
+                    })}
+              </a>
+            {/if}
+          </div>
+        {/if}
+      </div>
+    {/if}
     <div class="event-details">
       {#if slide.event_class?.type === "marriage_partnership" && relevantPeople.length > 0}
         {@const partnerPerson = findPersonInNetwork(
@@ -924,6 +947,18 @@
     position: relative;
   }
 
+  /* The column the classified event's box stands in. Stacked (portrait), it
+     keeps the reading order the boxes always had: a box that introduces the
+     event — birth, death, marriage — steps in front of the description, one
+     that elaborates — invention, publication — stays behind it. */
+  .event-class-col {
+    min-width: 0;
+  }
+
+  .event-class-col.leads {
+    order: -1;
+  }
+
   .invention-info-box {
     width: 100%;
     background: rgba(255, 255, 255, 0.05);
@@ -933,7 +968,6 @@
        would bend it away from the text it marks. */
     border-left: 3px solid var(--story-secondary, #38bdf8);
     padding: 0.75rem;
-    margin-top: 0.75rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     pointer-events: auto;
   }
@@ -1015,7 +1049,6 @@
        would bend it away from the text it marks. */
     border-left: 3px solid var(--story-secondary, #38bdf8);
     padding: 0.75rem;
-    margin-top: 0.75rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     pointer-events: auto;
   }
@@ -1098,7 +1131,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    margin-bottom: 0.75rem;
     padding: 0.75rem;
     /* Hugs the lineage instead of stretching the column: the box holds a
        diagram, not running text, so a full-width frame would be mostly air. */
@@ -1279,7 +1311,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    margin-bottom: 0.75rem;
     padding: 0.75rem;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(8px);
@@ -1387,7 +1418,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin-bottom: 0.75rem;
     padding: 0.75rem;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(8px);
@@ -1462,6 +1492,21 @@
 
     .event-description {
       grid-column: 1;
+    }
+
+    /* On a wide screen the classified event's box stands beside the
+       description instead of above or below it, so the text starts directly
+       under the headline and the box fills the room to its right. Rows are
+       left to auto-placement: the box takes the first row of the column and
+       the people list follows beneath it — or takes the first row itself on
+       an event without a box. The stacked `order: -1` must not survive here:
+       auto-placement's cursor follows order, and a box placed first parks the
+       cursor in the second column, which bumps the description to the row
+       below and leaves the first row of the text column empty. */
+    .event-class-col,
+    .event-class-col.leads {
+      grid-column: 2;
+      order: 0;
     }
 
     .event-details {
@@ -1814,7 +1859,6 @@
 
     .invention-info-box {
       padding: 1.5rem;
-      margin-top: 1.25rem;
     }
 
     .invention-title {
@@ -1831,7 +1875,6 @@
 
     .publication-info-box {
       padding: 1.5rem;
-      margin-top: 1.25rem;
     }
 
     .publication-title {
