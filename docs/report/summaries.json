@@ -171,17 +171,17 @@
       }
     },
     "m_p8": {
-      "fingerprint": "df24ba478da3a29e",
+      "fingerprint": "5deed21ab7b8bf63",
       "summary": {
         "constraints": [
-          "All claims must be grounded in the supplied material; events, dates, relationships, and quotations cannot be invented.",
-          "Quotes must be verbatim and attributed; IDs and keys must be copied exactly rather than constructed.",
+          "Ground claims in the supplied material; do not invent events, dates, relationships, or quotations.",
+          "Quote only verbatim and with attribution; copy every supplied ID and key exactly rather than constructing one.",
           "Use at most \"{MAX_IMAGES_PER_STORY}\" images across the story, with no image reused.",
-          "Write in American English and third person; never address the reader or make the page or one of its parts the subject of a sentence."
+          "Write in American English and third person; do not address the audience or make the page or a page part the subject of a sentence."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Makes one structured model call over the fully assembled page, item-level source material, Wikipedia context, and eligible image candidates. It replaces bottom-up drafts with a coherent top-to-bottom narrative package: page title and tagline, header and section prose, four section headings, rewritten chapter text, network circles, and map-stop copy. It also returns a private 2-4-sentence throughline and can identify map stops to remove.",
-        "why_this_design": "The whole page is supplied at once because earlier steps wrote individual components without visibility into the overall argument; composing in reading order lets the model establish a single arc across prose, chronology, relationships, and places. Returning every displayable field in one typed result keeps presentation order and copy revisions synchronized while allowing weak map locations to be discarded."
+        "what_it_does": "Makes one structured editorial pass over the assembled evidence, page configuration, earlier item-level material, background excerpts, and image candidates. It establishes the story’s private throughline, title and header copy; chooses the reader-facing order of the timeline, network, and map; and rewrites section prose, chapters, network circles, and map stops as a unified narrative. It can retain or discard map stops and returns every page element in display order.",
+        "why_this_design": "Earlier drafting is explicitly bottom-up, whereas this pass receives the complete page and writes in top-down reading order so transitions, emphasis, and the rationale linking the lives can be coordinated across components. A typed result preserves the chosen ordering and all rewritten component content for downstream rendering rather than relying on prose parsing."
       }
     },
     "m_save": {

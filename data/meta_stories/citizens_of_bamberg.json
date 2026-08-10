@@ -3,8 +3,8 @@
   "created_on": "2026-02-08T07:19:02.967535+01:00",
   "meta_story": {
     "id": "citizens_of_bamberg",
-    "title": "Citizens of Bamberg",
-    "tagline": "Saints, thinkers, builders, dissenters",
+    "title": "Bamberg’s Changing Inheritance",
+    "tagline": "From sacred rule to modern responsibility",
     "person_ids": [
       "henry_ii",
       "cunigunde_of_luxembourg",
@@ -17,7 +17,7 @@
     ],
     "date_range_start": "1002",
     "date_range_end": "1978",
-    "lastUpdated": "2026-02-08T07:19:02.967535+01:00"
+    "lastUpdated": "2026-08-09T20:45:29.341813+00:00"
   },
   "generation_metadata": {
     "hints": {
@@ -51,21 +51,17 @@
   "description": [
     {
       "type": "paragraph",
-      "text": "Bamberg’s identity was forged as much by power and piety as by paper, ink, and stone. Founded and endowed as an imperial project, the city became a stage where rulership, reform, and artistic patronage could be turned into durable institutions—cathedrals, dioceses, courts, and civic offices that anchored Franconia to the wider Holy Roman Empire."
+      "text": "The lives that follow do not form an unbroken lineage. They mark successive answers to a recurring question: how can learning, talent or authority be made durable in public life? After the founders came sacred memory; after the old ecclesiastical order collapsed came writers, scientists and municipal professionals working through new institutions."
     },
     {
       "type": "paragraph",
-      "text": "Centuries later, Bamberg’s streets and theatres drew a different kind of talent: writers and philosophers whose careers were shaped by the pressures of Napoleonic change and the rise of modern German public life. The city also produced and employed practical modernizers—municipal professionals and medical teachers—whose work translated lofty ideals into infrastructure and clinical method."
-    },
-    {
-      "type": "paragraph",
-      "text": "Even figures only loosely tied to Bamberg can illuminate its “citizenship” in a broader sense: the way German history and science, from resistance to radiochemistry, pressed upon every city’s memory and institutions. Bamberg becomes a lens: a place where local lives meet national turning points."
+      "text": "By the 20th century, the stakes had shifted again. Ida Noddack’s chemistry depended on turning a disputed claim into material proof, while Claus von Stauffenberg’s military career became a confrontation with dictatorship. Across nearly a millennium, institutional power moved from cathedral and court toward laboratory, city administration and the moral choices of individuals."
     }
   ],
   "chapters": [
     {
       "id": "imperial_bamberg_is_founded",
-      "title": "Imperial Foundations (1002-1024)",
+      "title": "An Imperial Foundation (1002-1024)",
       "date_start": "1002",
       "date_start_precision": "year",
       "date_end": "1024",
@@ -99,11 +95,12 @@
           "date_end_precision": null,
           "wikipedia_url": "https://en.wikipedia.org/wiki/Synod_of_Frankfurt_(1007)"
         }
-      ]
+      ],
+      "lead_in": "Henry II and Cunigunde made Bamberg a joint imperial and ecclesiastical project. The new diocese joined their resources and authority to the city’s future."
     },
     {
       "id": "saintly_memory_and_dynastic_afterlife",
-      "title": "Dynastic Afterlife (1025-1040)",
+      "title": "Founders Become Memory (1025-1040)",
       "date_start": "1025",
       "date_start_precision": "year",
       "date_end": "1040",
@@ -130,11 +127,12 @@
           "date_end_precision": null,
           "wikipedia_url": "https://en.wikipedia.org/wiki/Cunigunde_of_Luxembourg"
         }
-      ]
+      ],
+      "lead_in": "After Henry’s death, Cunigunde served as interim regent, supported the succession and arranged his burial at Bamberg Cathedral before entering religious life. Their later canonizations transformed dynastic rule into enduring sacred memory."
     },
     {
       "id": "romantic_laboratory_of_the_arts_and_ideas",
-      "title": "Napoleonic Crossroads (1806-1816)",
+      "title": "Creation After Upheaval (1806-1816)",
       "date_start": "1806",
       "date_start_precision": "year",
       "date_end": "1816",
@@ -161,11 +159,12 @@
           "date_end_precision": null,
           "wikipedia_url": "https://en.wikipedia.org/wiki/German_mediatization"
         }
-      ]
+      ],
+      "lead_in": "Napoleonic victory and secularization overturned the political and ecclesiastical order around Bamberg. In the aftermath, Hegel worked as an editor and writer, while Hoffmann moved among theater, music and fantastical literature."
     },
     {
       "id": "modern_civic_state_and_public_works",
-      "title": "Civic Modernization (1820-1914)",
+      "title": "Knowledge Becomes Civic (1820-1914)",
       "date_start": "1820",
       "date_start_precision": "year",
       "date_end": "1914",
@@ -207,11 +206,12 @@
           "date_end_precision": null,
           "wikipedia_url": "https://en.wikipedia.org/wiki/Unification_of_Germany"
         }
-      ]
+      ],
+      "lead_in": "Scientific medicine, public collections and professional urban administration widened the scope of civic life. Schönlein’s research and books joined Erlwein’s schools, utilities and municipal facilities as durable forms of public knowledge and service."
     },
     {
       "id": "twentieth_century_reckonings",
-      "title": "Science and Resistance (1914-1978)",
+      "title": "Proof and Resistance (1914-1978)",
       "date_start": "1914",
       "date_start_precision": "year",
       "date_end": "1978",
@@ -271,7 +271,8 @@
           "date_end_precision": null,
           "wikipedia_url": "https://en.wikipedia.org/wiki/20_July_plot"
         }
-      ]
+      ],
+      "lead_in": "Modern Germany imposed tests in both laboratory and state. Noddack pursued material proof of rhenium, while war and dictatorship moved Stauffenberg from military service into active resistance."
     }
   ],
   "social_network": {
@@ -595,15 +596,102 @@
       "circles": [
         {
           "key": "henry_ii+cunigunde_of_luxembourg",
-          "text": "Henry II and Cunigunde ruled as partners: crowned in 1002 by Archbishop Willigis of Mainz, Henry at Mainz and Cunigunde in her own ceremony at Paderborn, and raised to emperor and empress in 1014 by their papal ally Benedict VIII, they governed, reformed the church, and endowed Bamberg together. Around them stood family and succession — Henry’s mother Gisela of Burgundy and Cunigunde’s mother Hedwig behind them, Henry’s cousin and predecessor Otto III before them, and Conrad II after: when Henry died childless, the widowed Cunigunde steered the interregnum and ceremonially handed Conrad the imperial regalia."
+          "member_ids": ["henry_ii", "cunigunde_of_luxembourg"],
+          "title": "The Founding Partners",
+          "text": "Henry II and Cunigunde were spouses and partners in imperial representation, church patronage and Bamberg’s endowment. Their separate royal coronations in 1002 and joint imperial coronation in 1014 affirmed Cunigunde’s public position. After Henry died without an heir, she served as interim regent and helped secure the succession of Conrad II."
+        },
+        {
+          "key": "georg_wilhelm_friedrich_hegel+e_t_a_hoffmann",
+          "member_ids": ["georg_wilhelm_friedrich_hegel", "e_t_a_hoffmann"],
+          "title": "After the Old Order",
+          "text": "Hegel and Hoffmann both worked in Bamberg after war and secularization had overturned its former political and ecclesiastical order. Hegel’s work there passed through journalism and editing; Hoffmann’s combined theater, composition, fiction and law. No personal relationship between them is documented here."
+        },
+        {
+          "key": "johann_lukas_sch_nlein+hans_erlwein",
+          "member_ids": ["johann_lukas_sch_nlein", "hans_erlwein"],
+          "title": "Civic Expertise",
+          "text": "Schönlein and Erlwein represent different professions directed toward public institutions. Schönlein advanced natural-scientific medicine and gave part of his historical collection to Bamberg’s royal library; Erlwein turned municipal administration into schools, utilities and service buildings. Their connection is thematic rather than personal."
+        },
+        {
+          "key": "ida_noddack+claus_schenk_graf_von_stauffenberg",
+          "member_ids": ["ida_noddack", "claus_schenk_graf_von_stauffenberg"],
+          "title": "Modern Tests",
+          "text": "Noddack and Stauffenberg faced different demands in 20th-century Germany, with no documented relationship between them. Her work subjected scientific claims to difficult isolation and measurement. His opposition to National Socialism culminated in the July 20 attempt on Hitler."
         }
       ]
     }
   },
   "conclusion": [
     {
+      "type": "image",
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Wolfsschanze_-_panoramio.jpg/960px-Wolfsschanze_-_panoramio.jpg",
+        "caption": "Wolfsschanze (Hitler’s headquarters)",
+        "source": "https://commons.wikimedia.org/wiki/File:Wolfsschanze_-_panoramio.jpg",
+        "person_id": "claus_schenk_graf_von_stauffenberg",
+        "event_index": 15,
+        "image_index": 0
+      },
+      "layout": "full"
+    },
+    {
       "type": "paragraph",
-      "text": "Bamberg’s “citizens” are not only those who were born within its walls, but also those who built its institutions, worked its stages and presses, and left marks on its civic fabric. From imperial founders to modern professionals—and even to figures of science and resistance—Bamberg reads like a small city with a long, European-scale echo."
+      "text": "The institutions changed, and so did the meaning of service. Henry and Cunigunde invested land and authority in a diocese. Schönlein left both a scientific legacy and books for Bamberg’s royal library, while Erlwein translated municipal office into schools, utilities and service buildings. Noddack’s isolation of rhenium made a chemical claim tangible."
+    },
+    {
+      "type": "paragraph",
+      "text": "Stauffenberg’s path exposes the limits of any story that equates institutions with the public good. After joining the military resistance, he carried a bomb into Hitler’s headquarters on July 20, 1944, making opposition to the regime a matter of decisive personal action. From an imperial foundation to resistance against dictatorship, these lives trace not a simple march of progress but a continuing struggle over how power, knowledge and responsibility should meet."
     }
-  ]
+  ],
+  "section_order": ["timeline", "network"],
+  "opening": [
+    {
+      "type": "image",
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Consecration_of_the_Bamberg_Cathedral_in_the_presence_of_Emperor_Henry_II_and_his_wife_Cunigunde_in_1007.jpg",
+        "caption": "Consecration of Bamberg Cathedral with Henry II and Cunigunde",
+        "source": "https://commons.wikimedia.org/wiki/File:Consecration_of_the_Bamberg_Cathedral_in_the_presence_of_Emperor_Henry_II_and_his_wife_Cunigunde_in_1007.jpg",
+        "person_id": "cunigunde_of_luxembourg",
+        "event_index": 5,
+        "image_index": 0
+      },
+      "layout": "right"
+    },
+    {
+      "type": "paragraph",
+      "text": "In 1007, Henry II and Cunigunde of Luxembourg helped turn Bamberg into the seat of a new diocese. Lands, privileges and dynastic resources gave their religious project institutional form, binding imperial ambition to the city’s future."
+    }
+  ],
+  "section_bodies": {
+    "timeline": [
+      {
+        "type": "paragraph",
+        "text": "Change came in bursts rather than by steady progress. An imperial foundation established Bamberg’s sacred and political identity; widowhood and later canonization preserved its founders as objects of veneration. Centuries later, secularization and Napoleonic upheaval dismantled the world that had sustained that identity."
+      },
+      {
+        "type": "paragraph",
+        "text": "The 19th and 20th centuries relocated public purpose into other kinds of work. Philosophy, theater and fiction interpreted a disrupted society; medicine, collections and municipal construction expanded civic capacity; chemistry and resistance tested what proof and conscience demanded under modern conditions."
+      }
+    ],
+    "network": [
+      {
+        "type": "paragraph",
+        "text": "The strongest personal connection belongs to Henry II and Cunigunde. Their marriage was also a governing partnership expressed through coronations, ecclesiastical patronage and Bamberg’s endowment. Cunigunde’s regency after Henry’s death extended that partnership into the transfer of power to Conrad II."
+      },
+      {
+        "type": "paragraph",
+        "text": "The remaining pairs are historical counterparts, not documented acquaintances. Hegel and Hoffmann responded to the same post-secularization upheaval through different intellectual and artistic careers; Schönlein and Erlwein placed specialized knowledge in public institutions; Noddack and Stauffenberg confronted the distinct demands of evidence and conscience in modern Germany."
+      }
+    ]
+  },
+  "section_headings": {
+    "timeline": "Forms of Public Power",
+    "network": "Partners and Counterparts",
+    "conclusion": "What Endured"
+  },
+  "composition": {
+    "model": "gpt-5.6-sol",
+    "composed_at": "2026-08-09T20:45:29.341813+00:00",
+    "throughline": "Bamberg provides the starting point for a long history of changing public authority: first embodied in an imperial couple and a new diocese, then reshaped through art, knowledge, municipal expertise, scientific proof and resistance to dictatorship. Only Henry II and Cunigunde share a documented personal bond within the main cast; the later figures belong together as successive counterparts in the changing relationship between individual work and public institutions."
+  }
 }
