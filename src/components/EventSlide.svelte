@@ -2040,12 +2040,6 @@
     text-decoration: underline;
   }
 
-  /* Person name highlighting */
-  .person-mention {
-    font-weight: bold;
-    text-shadow: 0 0 4px var(--story-secondary, rgba(56, 189, 248, 0.25));
-  }
-
   /* Responsive positioning */
   @media (max-width: 768px) {
     .annotation-popup {

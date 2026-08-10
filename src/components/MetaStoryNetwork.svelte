@@ -13,6 +13,7 @@
   import { displayName } from "../utils/helpers.js";
   import { computeClusters } from "../utils/networkClusters.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
+  import PersonMentions from "./PersonMentions.svelte";
   import { metaStoryStyle } from "../utils/metaStoryStyles.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { relationshipTypeLabel } from "../utils/relationshipLabels.js";
@@ -804,15 +805,18 @@
               </h3>
               {#if narrationTexts.has(cluster.key)}
                 <p class="step-body">
-                  {#each highlightNarration(narrationTexts.get(cluster.key), cluster) as seg}{#if seg.type === "text"}{seg.content}{:else if seg.person.type === "main"}<strong
-                        class="person-mention"
-                        style={`--mention-color: ${primaryColor(
-                          seg.person.id
-                        )}`}>{seg.content}</strong
-                      >{:else}<strong
-                        class="person-mention person-mention-secondary"
-                        >{seg.content}</strong
-                      >{/if}{/each}
+                  <PersonMentions
+                    segments={highlightNarration(
+                      narrationTexts.get(cluster.key),
+                      cluster
+                    )}
+                    colorFor={(person) =>
+                      person.type === "main" ? primaryColor(person.id) : null}
+                    classFor={(person) =>
+                      person.type === "main"
+                        ? null
+                        : "person-mention-secondary"}
+                  />
                 </p>
               {:else}
                 <ul class="tie-list">
@@ -1058,13 +1062,6 @@
   /* Shared narration-card styling lives in meta-frames.css (.ms-steps);
      only the network's own rules below. Bridging (secondary) people get a
      neutral emphasis instead of the story-color glow. */
-  /* Doubled class so this reliably beats the shared .ms-steps .person-mention
-     glow regardless of stylesheet order. */
-  .person-mention.person-mention-secondary {
-    color: #e2e8f0;
-    text-shadow: none;
-  }
-
   .tie-list {
     list-style: none;
     margin: 0.8rem 0 0;

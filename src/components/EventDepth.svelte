@@ -239,9 +239,9 @@
      knows, so a person reads as a person on both screens. The chip belongs to
      the event above; this is emphasis, not an affordance. */
   .depth-paragraph .person-mention {
-    font-weight: bold;
-    color: rgba(241, 245, 249, 0.98);
-    text-shadow: 0 0 4px var(--story-secondary, rgba(56, 189, 248, 0.25));
+    /* Weight and glow come from the shared rule in app.css; the layer's
+       dimmer background is why this one lifts the text color. */
+    color: rgb(241 245 249 / 98%);
   }
 
   .depth-figure {

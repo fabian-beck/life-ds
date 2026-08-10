@@ -5,6 +5,7 @@
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
+  import PersonMentions from "./PersonMentions.svelte";
   import { metaStoryStyle } from "../utils/metaStoryStyles.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { createScrollSteps } from "../utils/scrollSteps.js";
@@ -331,11 +332,13 @@
             </h3>
             {#if stopTexts.has(cluster.key)}
               <p class="step-body">
-                {#each highlightNarration(stopTexts.get(cluster.key), cluster) as seg}{#if seg.type === "text"}{seg.content}{:else}<strong
-                      class="person-mention"
-                      style={`--mention-color: ${primaryColor(seg.person.id)}`}
-                      >{seg.content}</strong
-                    >{/if}{/each}
+                <PersonMentions
+                  segments={highlightNarration(
+                    stopTexts.get(cluster.key),
+                    cluster
+                  )}
+                  colorFor={(person) => primaryColor(person.id)}
+                />
               </p>
             {/if}
             <ul class="event-list">

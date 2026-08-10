@@ -1,5 +1,6 @@
 <script>
   import { afterUpdate, onMount } from "svelte";
+  import PersonMentions from "./PersonMentions.svelte";
   import { mdiAccount, mdiAccountMultipleOutline } from "@mdi/js";
   import PersonChip from "./PersonChip.svelte";
   import CloseButton from "./CloseButton.svelte";
@@ -685,9 +686,7 @@
                     people
                   )}
                   <p class="category-summary">
-                    {#each summarySegments as segment}{#if segment.type === "text"}{segment.content}{:else}<strong
-                          class="person-mention">{segment.content}</strong
-                        >{/if}{/each}
+                    <PersonMentions segments={summarySegments} />
                   </p>
                 {/if}
               </div>
@@ -818,9 +817,7 @@
                     people
                   )}
                   <p class="category-summary">
-                    {#each summarySegments as segment}{#if segment.type === "text"}{segment.content}{:else}<strong
-                          class="person-mention">{segment.content}</strong
-                        >{/if}{/each}
+                    <PersonMentions segments={summarySegments} />
                   </p>
                 {/if}
               </div>
@@ -1156,12 +1153,6 @@
     width: 1.3rem;
     height: 1.3rem;
     fill: var(--story-primary, #f8fafc);
-  }
-
-  /* Person name highlighting */
-  .person-mention {
-    font-weight: bold;
-    text-shadow: 0 0 4px var(--story-secondary, rgba(56, 189, 248, 0.25));
   }
 
   @media (min-width: 768px) {

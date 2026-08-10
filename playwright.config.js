@@ -35,7 +35,10 @@ export default defineConfig({
     },
     {
       name: "desktop-chromium",
-      testMatch: "interface.spec.js",
+      // personMentions asserts rendered text, not layout, so it runs at one
+      // viewport rather than both: the meta story it opens loads a map, and
+      // paying for that twice only lengthens the run.
+      testMatch: /(interface|personMentions)\.spec\.js/,
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1440, height: 900 },
@@ -43,7 +46,7 @@ export default defineConfig({
     },
     {
       name: "mobile-chromium",
-      testMatch: "interface.spec.js",
+      testMatch: /interface\.spec\.js/,
       use: {
         ...devices["Pixel 7"],
       },

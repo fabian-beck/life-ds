@@ -139,3 +139,14 @@ html.high-contrast .map-frame::before {
 html.high-contrast .map-gradient {
   opacity: 0.7;
 }
+
+/* A person named in prose, emphasized in the surrounding story's own accent.
+   Declared here rather than per component because five components rendered a
+   mention and three of them carried a byte-identical copy of this rule, which
+   is also how the two that drifted came to drift. The meta story's narration
+   cards override it under `.ms-steps` in meta-frames.css, and PersonMentions
+   carries the link variant. */
+.person-mention {
+  font-weight: bold;
+  text-shadow: 0 0 4px var(--story-secondary, rgb(56 189 248 / 25%));
+}

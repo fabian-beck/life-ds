@@ -281,6 +281,15 @@
   text-shadow: 0 0 6px var(--mention-color, rgb(56 189 248 / 35%));
 }
 
+/* Bridging people in the network's narration get a neutral emphasis rather
+   than a story-color glow. Doubled class so it beats the rule above whatever
+   the stylesheet order; global because the mention is rendered by
+   PersonMentions, out of reach of a scoped rule in MetaStoryNetwork. */
+.person-mention.person-mention-secondary {
+  color: #e2e8f0;
+  text-shadow: none;
+}
+
 @media (width <= 640px) {
   .ms-steps .step-card {
     width: min(28rem, 100%);
