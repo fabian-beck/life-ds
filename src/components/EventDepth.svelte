@@ -1,6 +1,7 @@
 <script>
   import { mdiChevronUp, mdiOpenInNew } from "@mdi/js";
   import { _ } from "../stores/language";
+  import PersonMentions from "./PersonMentions.svelte";
   import { getThumbnailUrl, sourceLabel } from "../utils/story/images.js";
   import { parseBackgroundBlocks } from "../utils/story/prose.js";
 
@@ -79,10 +80,10 @@
           .slice(0, index)
           .filter((earlier) => earlier.type === "paragraph").length}
         <p class="depth-paragraph" class:depth-lead={position === 0}>
-          <!-- prettier-ignore -->
-          {#each block.segments as segment}{#if segment.type === "person"}<strong
-                class="person-mention">{segment.content}</strong
-              >{:else}{segment.content}{/if}{/each}
+          <!-- The segments are made here rather than in the component: the
+               report emphasizes a person once and then leaves them plain, so
+               what a paragraph marks depends on the paragraphs above it. -->
+          <PersonMentions segments={block.segments} />
         </p>
 
         {#if figurePlacement.has(position)}
@@ -237,8 +238,13 @@
 
   /* The same treatment the event's own description gives a name the network
      knows, so a person reads as a person on both screens. The chip belongs to
-     the event above; this is emphasis, not an affordance. */
-  .depth-paragraph .person-mention {
+     the event above; this is emphasis, not an affordance.
+
+     Global, because the mention is rendered by `PersonMentions` and Svelte's
+     scoping cannot reach a child component's element — the same reason the
+     network's variant is global. Kept narrow by the `.depth-paragraph`
+     ancestor, which is this component's own. */
+  :global(.depth-paragraph .person-mention) {
     /* Weight and glow come from the shared rule in app.css; the layer's
        dimmer background is why this one lifts the text color. */
     color: rgb(241 245 249 / 98%);
