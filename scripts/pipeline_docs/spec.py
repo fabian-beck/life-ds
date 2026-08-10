@@ -500,7 +500,14 @@ STEPS: List[Step] = [
         AI,
         "generate_person_events.py",
         "generate_image_search_strings",
-        summary="Writes the Commons search strings most likely to surface usable imagery.",
+        summary=(
+            "Writes twenty Commons search strings for the life as a whole: "
+            "five for the person, from which the portrait is chosen, and "
+            "fifteen naming the things the events name. It is forbidden to "
+            "search for a commemoration, because 'Franz Kafka Prague' answers "
+            "with a birthplace plaque, a bronze head, and two statues before "
+            "it answers with anything Kafka saw."
+        ),
         depends_on=[Dep("p_events_p1", "event skeletons")],
         prompts=["generate_image_search_strings"],
     ),
@@ -514,9 +521,16 @@ STEPS: List[Step] = [
         summary=(
             "Runs every planned query against Wikimedia Commons and Openverse "
             "and deduplicates the hits by URL, keeping the Commons record when "
-            "both services return the same picture."
+            "both services return the same picture. The searches Phase 2 wrote "
+            "for each event run too, and first, so that the tag saying which "
+            "event a picture was found for survives the deduplication—two per "
+            "event, Commons only, because a query naming a machine or a "
+            "document is a query Commons indexes well."
         ),
-        depends_on=[Dep("p_img_search", "the planned search strings")],
+        depends_on=[
+            Dep("p_img_search", "the planned search strings"),
+            Dep("p_events_p2", "the searches each event asked for"),
+        ],
     ),
     Step(
         "p_img_filter",
@@ -526,10 +540,14 @@ STEPS: List[Step] = [
         "generate_person_events.py",
         "filter_images_by_quality",
         summary=(
-            "Scores every hit on resolution, file efficiency, how close it "
-            "falls to the life it illustrates, and its categories, then drops "
-            "the ones under a permissive threshold and ranks the rest—so the "
-            "matching call sees candidates rather than noise."
+            "Scores every hit on resolution, file efficiency, and how "
+            "informative its filename is, then drops the ones under a "
+            "permissive threshold and ranks the rest—so the matching call sees "
+            "candidates rather than noise. The function can also weigh how "
+            "close a picture falls to the event and what its Commons "
+            "categories say, but both callers leave that off: the scores are "
+            "computed once for the whole pool, and the pool serves every event "
+            "at once."
         ),
         depends_on=[Dep("p_img_fetch", "every hit the queries returned")],
     ),
@@ -543,10 +561,17 @@ STEPS: List[Step] = [
         summary=(
             "Matches the retrieved Commons images to events and writes captions, "
             "preserving the attribution each image requires. The same call picks "
-            "the person's reference portrait."
+            "the person's reference portrait. It is told which event a candidate "
+            "was searched for, and it is given no quota: an event with no "
+            "picture is a correct answer, and the earlier instruction to fill "
+            "40–60% of the slides is what put a gravestone under fifteen deaths."
         ),
         depends_on=[Dep("p_img_filter", "the ranked image candidates")],
-        prompts=["match_images_to_events"],
+        prompts=[
+            "build_image_match_prompt",
+            "STAND_IN_REJECTION_INSTRUCTIONS",
+            "match_images_to_events",
+        ],
     ),
     Step(
         "p_img_verify",
@@ -952,10 +977,9 @@ STEPS: List[Step] = [
             "nothing."
         ),
         depends_on=[
-            Dep("p_events_p2", "the report, and the searches it asked for"),
             Dep("p_img_match", "the event's own picture, to keep out of them"),
         ],
-        prompts=["fetch_background_images"],
+        prompts=["STAND_IN_REJECTION_INSTRUCTIONS", "fetch_background_images"],
         inputs=["life_events"],
         outputs=["life_events"],
         calls_per_run="1 per report illustrated",

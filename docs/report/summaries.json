@@ -393,74 +393,75 @@
       }
     },
     "p_illustrations": {
-      "fingerprint": "ea3108bf428e4027",
+      "fingerprint": "a384674e80d930c2",
       "summary": {
         "constraints": [
-          "Return only candidate indexes in `keep`, best first; return `[]` when no candidate clearly fits.",
-          "Keep at most \"three\" selections, subject to the configured output limit.",
-          "Every kept image must depict a different report-named thing; code permits no more than one image from each query.",
-          "Reject name-only matches, portraits or subject images, maps unless the ground itself is the topic, composites, generic stand-ins, modern memorials or institutional views, and images documenting later incidents rather than the report’s described role."
+          "Returns candidate indexes best first, with at most \"three\" selections.",
+          "Keeps only images of a thing actually named in the report; rejects name matches, generic stand-ins, related-era subjects, reenactments, portraits, and images of the subject.",
+          "Rejects maps, plans, charts, diagrams, montages, posters, book covers, film stills, and composites except where the report is about the depicted ground itself.",
+          "Code ignores out-of-range indexes, caps results at the requested limit, and permits only one image from each query."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews Commons search candidates against the completed background report and returns the indexes of images that genuinely depict a named thing in that report. Each candidate is presented with both its filename and caption, then accepted candidates are ranked best first; downstream code converts those indexes into image records after filtering invalid and duplicate-query selections.",
-        "why_this_design": "Commons keyword results frequently match only a word or surname, so this is deliberately a strict relevance critic rather than a search-result pass-through. It runs after the event’s main image has been selected, allowing already-shown images to be excluded; code also enforces one retained image per search query because prompt-only deduplication repeatedly admitted near-duplicate illustrations."
+        "what_it_does": "Screens Commons search results against the completed background report and returns the candidate indexes that genuinely depict named non-subject details in it. Candidates are presented with both filename and caption because filenames often identify the depicted object more reliably than uploader-focused captions; invalid output, no candidates, or no convincing matches produces no images.",
+        "why_this_design": "Keyword search frequently returns name collisions rather than relevant illustrations, such as a Belliss & Morcom engine for Christopher Morcom or a Banbury map for the Banbury sheets. The selection is deliberately conservative and runs after the event image is assigned, so it can avoid repeating the subject already shown; code also enforces one retained result per search query when prompt instructions alone proved insufficient."
       }
     },
     "p_img_fetch": {
-      "fingerprint": "3ecd28b2d777608b",
+      "fingerprint": "0a0c11c203eb1ab0",
       "summary": {
         "constraints": [
-          "Queries are run against exactly 2 sources: Wikimedia Commons and Openverse.",
-          "Each source call uses the same per-query limit, defaulting to \"10\" images.",
-          "Deduplication is exact-match URL based across all queries and both sources.",
-          "Non-ASCII characters are replaced only in printed query text; the original query is sent to search functions."
+          "Event-query results are searched on Wikimedia Commons only; life-wide queries search both sources.",
+          "Each query requests up to `images_per_query` results, defaulting to `10`.",
+          "Duplicate image URLs are discarded globally; the first occurrence wins, which gives Commons precedence over Openverse for shared URLs.",
+          "Individual search failures emit a warning and do not stop the remaining queries."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Runs every planned image query against Wikimedia Commons first and then Openverse, collecting returned image metadata into one candidate list. It marks each retained record with its source provider and returns only the first occurrence of each image URL.",
-        "why_this_design": "Commons is searched before Openverse so URL-level duplicates retain the Commons metadata and provider label. Search failures are isolated to an individual query and source pass, allowing the remaining searches to continue."
+        "what_it_does": "Executes the planned life-wide image searches against Wikimedia Commons and Openverse, collecting candidate-image metadata from both sources. It also runs event-specific searches first, against Commons only, and marks their results with the originating event index in `for_event`; all results are deduplicated by image URL before being returned.",
+        "why_this_design": "Event-specific hits run before broader searches because URL deduplication preserves the first record encountered, protecting the `for_event` association needed by later matching. Those searches use Commons alone because named machines, documents, and other concrete objects are expected to be indexed there more effectively, while Openverse broadens the person-oriented search pool."
       }
     },
     "p_img_filter": {
-      "fingerprint": "c68ee377c560a73e",
+      "fingerprint": "d8a0fa5c1b3549cc",
       "summary": {
         "constraints": [
-          "Default minimum score: \"10.0\" out of \"45\".",
-          "An image is retained when its score is greater than or equal to the threshold.",
-          "Retained images receive a \"quality_score\" field.",
-          "Output is sorted by \"quality_score\" in descending order."
+          "Reject images with a score below `min_score`; the default is `10.0`.",
+          "Attach `quality_score` only to retained image dictionaries.",
+          "Sort retained images in descending numeric quality-score order.",
+          "Preserve the input metadata dictionaries rather than creating copies."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Computes a quality score for every image candidate using the supplied person name, event date, and event title/description, along with each image's metadata. It retains images meeting the minimum score, adds the computed score to retained metadata for debugging or logging, and returns those candidates in descending score order for the downstream image-matching stage.",
-        "why_this_design": "Scoring occurs before filtering and sorting so the next stage receives a ranked candidate set rather than every retrieval hit. The score is attached only after an image passes the threshold, keeping rejected items out of the returned diagnostic payload."
+        "what_it_does": "Computes a quality score for every image metadata record by calling `calculate_image_quality_score`, optionally passing person, event-date, and event-text context. Keeps images scoring at least the threshold, writes each retained score into `img[\"quality_score\"]` for downstream inspection, and returns the retained pool ordered from highest to lowest score.",
+        "why_this_design": "The threshold is intentionally permissive—`10.0` out of a documented `45`—so this shared prefilter removes weak metadata candidates without prematurely eliminating images before later event-specific matching. Although the scorer accepts contextual relevance inputs, shared callers can omit them and score one common image pool once rather than recomputing scores for every event."
       }
     },
     "p_img_match": {
-      "fingerprint": "fd681be8478e7172",
+      "fingerprint": "1913d4587116f420",
       "summary": {
         "constraints": [
-          "Returns no assignments and no portrait when there are no candidate images, no credential is configured, the structured result is absent, or the call fails.",
-          "Select exactly one portrait only when metadata supports an actual depiction of the person; otherwise return null. Do not use buildings, plaques without a likeness, works created by the subject, generic costume plates, or speculative reconstructions.",
-          "Assign each image to at most one event and each event to at most one image; the portrait cannot be assigned to an event. Event matches must be direct, with a target of \"40-60%\" of events illustrated rather than forced coverage.",
-          "Captions must be factual, supported only by filename or metadata, and \"5-12 words\" long; event descriptions are truncated to 150 characters and image captions to 200 characters in the prompt."
+          "Portrait: choose at most one actual depiction of the person; return null if none exists.",
+          "Portraits cannot also be event images; event images cannot be portraits of the subject.",
+          "Each image and each event may appear in at most one assignment.",
+          "Assignments require a direct, printable-beside-the-event connection; no quota applies, and empty events are valid.",
+          "Captions must rely only on supplied metadata and be factual, minimal, and \"5-12 words.\"",
+          "Reject commemorative stand-ins, generic stock objects, merely name-sharing images, and present-day institutional buildings unless the event is specifically about that object."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a joint selection task from life-event titles, dates, truncated descriptions, and each candidate image's filename and source caption. It returns one optional profile portrait plus a mapping of event indexes to distinct images, replacing event-image source captions with newly generated concise captions while retaining the portrait's original source caption.",
-        "why_this_design": "Portrait selection is performed in the same pass but the chosen portrait is marked used before event assignments are processed, preventing a profile image from also illustrating a timeline event. Post-processing treats returned IDs as untrusted: it converts the prompt's 1-based image IDs to internal 0-based indexes and silently drops invalid, duplicate-image, and duplicate-event assignments."
+        "what_it_does": "Selects one optional reference portrait and matches retrieved image candidates to biographical timeline events. It uses only each candidate's filename, source caption, and the event for which it was originally searched; accepted event matches receive a short generated caption, while the portrait retains its original source caption.",
+        "why_this_design": "The step deliberately treats retrieval provenance as a lead rather than evidence, because an image searched for an event can still be only tangentially related. Post-processing independently enforces one-image-per-event and one-use-per-image rules, reserves the selected portrait from event use, and drops malformed or duplicate indices."
       }
     },
     "p_img_search": {
-      "fingerprint": "d5ed8cad31062d96",
+      "fingerprint": "48fb1226c41fd6c2",
       "summary": {
         "constraints": [
-          "Returns at most 20 parsed strings; the requested output is exactly 20 strings.",
-          "Each query must contain \"2-4 words maximum.\"",
-          "At least 5 queries must include the person’s name.",
-          "No standalone cities, countries, or professions; no adjectives, years, or descriptive phrases.",
-          "If credentials are unavailable, returns only the person’s name and a portrait query; if structured parsing fails, returns only the person’s name."
+          "Returns exactly \"20\" strings when structured generation succeeds; downstream truncates any excess with `[:20]`.",
+          "Each query is \"2-4 words MAXIMUM\"; no years, adjectives, descriptive phrases, or long view-style wording.",
+          "Exactly \"5\" queries are for the person; the other \"15\" must name things from the events.",
+          "Forbids memorial, grave, birthplace, plaque, statue, monument, museum, and stamp searches; generic cities, countries, and professions cannot stand alone."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds one Commons-oriented query plan from every event in a person’s timeline, passing each event’s title, date, and first 200 characters of description as context. It requests a structured list of 20 short search strings intended to retrieve portraits and images of named buildings, artworks, awards, and institutions relevant to the life story.",
-        "why_this_design": "The prompt treats Commons as a simple keyword index rather than a semantic retrieval system, so it favors compact named entities over descriptive natural-language searches. Generic geographic or occupational terms must be anchored to the subject or another specific entity to avoid broad, unusable result sets."
+        "what_it_does": "Builds one Wikimedia Commons query plan from every event in the person’s timeline, giving the prompt each event’s title, date, and first 200 description characters. It requests 20 short search strings: five person-focused candidates for portrait selection and 15 queries for named historical things—such as works, documents, institutions, machines, buildings, ships, or awards—mentioned across the life.",
+        "why_this_design": "The query rules are tuned for Commons’ literal keyword matching rather than semantic retrieval. In particular, shifting most queries from person-plus-place terms to event-specific named objects avoids commemorative results, a documented source of plaques, statues, and gravestones that depict later remembrance rather than the subject’s lived experience."
       }
     },
     "p_img_verify": {

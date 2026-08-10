@@ -24,6 +24,7 @@ from typing import (
     Dict,
     List,
     Optional,
+    Sequence,
     Tuple,
     Set,
     Union,
@@ -2102,12 +2103,16 @@ def generate_image_search_strings(
 
     prompt += "SEARCH STRING RULES:\n"
     prompt += "  • Use 2-4 words MAXIMUM per search string\n"
-    prompt += "  • At least 5 searches should include the person's name\n"
-    prompt += (
-        "  • Focus on: building names, artwork names, award names, institution names\n"
-    )
-    prompt += "  • ALWAYS combine the person's name with generic terms (city names, professions, etc.)\n"
-    prompt += "  • NO standalone city names, countries, or professions without the person's name\n"
+    prompt += "  • Exactly 5 searches are for the PERSON: the name alone, or the name with one generic word. These are what the profile portrait is chosen from\n"
+    prompt += "  • The other 15 name THINGS the events name: the building, the machine, the document, the published work, the ship, the award, the institution. A proper name needs no person attached to it\n"
+    # The old rule was "ALWAYS combine the person's name with generic terms
+    # (city names, professions, etc.)", and Commons answers that form with what
+    # a later century built: "Franz Kafka Prague" returns a birthplace plaque, a
+    # bronze head, a kinetic sculpture, and a statue before it returns anything
+    # Kafka saw. Fifteen of the corpus's death slides carry a gravestone, and
+    # this line is where they were found.
+    prompt += "  • NEVER search for a commemoration: no 'X memorial', 'X grave', 'X birthplace', 'X plaque', 'X statue', 'X monument', 'X museum', 'X stamp'. Those return what a later century built to remember the person, and this story is about what the person did\n"
+    prompt += "  • A generic term must be anchored to something — the person's name or a proper name. NO standalone city names, countries, or professions\n"
     prompt += "  • NO adjectives, NO years, NO descriptive phrases\n"
     prompt += "  • NO long phrases like 'exterior view of' or 'night view'\n\n"
 
@@ -2119,20 +2124,23 @@ def generate_image_search_strings(
     prompt += "  • 'Pritzker Prize'\n"
     prompt += "  • 'Zaha Hadid architecture'\n"
     prompt += "  • 'London Aquatics Centre'\n"
-    prompt += "  • 'Béla Bartók portrait' (person + generic term)\n"
-    prompt += "  • 'Bartók Budapest' (person + city)\n\n"
+    prompt += "  • 'Béla Bartók portrait' (one of the five for the person)\n"
+    prompt += "  • 'Bartók phonograph recording' (a thing he worked with)\n\n"
 
-    prompt += "BAD EXAMPLES (too generic or too long):\n"
-    prompt += "  • 'Budapest' ❌ (too generic - use 'Bartók Budapest' instead)\n"
+    prompt += "BAD EXAMPLES (too generic, too long, or commemorative):\n"
+    prompt += "  • 'Budapest' ❌ (too generic - name what happened there instead)\n"
     prompt += "  • 'composer' ❌ (too generic - use 'Bartók composer' instead)\n"
-    prompt += "  • 'Hungary' ❌ (too generic - use 'Bartók Hungary' instead)\n"
+    prompt += "  • 'Hungary' ❌ (too generic - name the thing instead)\n"
+    prompt += "  • 'Bartók memorial Budapest' ❌ (a monument, not the life)\n"
+    prompt += "  • 'Kafka birthplace' ❌ (returns the plaque on the wall)\n"
+    prompt += "  • 'Turing grave' ❌ (a stone, not a death)\n"
     prompt += "  • 'Vitra Fire Station Weil am Rhein exterior 1993 Zaha Hadid' ❌ (too long)\n"
     prompt += "  • 'Deconstructivist Architecture exhibition 1988 MoMA New York' ❌ (too long)\n"
     prompt += "  • 'ancient Sumerian city ruins Iraq Ur archaeological site' ❌ (too long)\n\n"
 
-    prompt += "CRITICAL RULE: Never search for standalone generic terms (cities, countries, professions).\n"
+    prompt += "CRITICAL RULE: Never search for standalone generic terms (cities, countries, professions),\n"
     prompt += (
-        "Always anchor generic terms to the person's name or specific named entities.\n"
+        "and never search for what was built afterwards to remember this person.\n"
     )
 
     if not os.getenv("OPENAI_API_KEY"):
@@ -2162,18 +2170,83 @@ def generate_image_search_strings(
     return [person_name]
 
 
+# Two searches per event, not the three or four Phase 2 wrote. They are ordered,
+# the first names what the report is most about, and every one of them costs a
+# request now and a line of the matcher's prompt afterwards.
+EVENT_IMAGE_QUERIES_PER_EVENT = 2
+
+
+def plan_event_image_searches(
+    queries_by_event: Sequence[Sequence[str]],
+    limit: int = EVENT_IMAGE_QUERIES_PER_EVENT,
+) -> Dict[int, List[str]]:
+    """The per-event Commons searches, as a map from event index to queries.
+
+    Phase 2 already names what would illustrate each event while it still has
+    the researched material in front of it — the machine, the building, the
+    document — and those searches went to the background report and nowhere
+    else. The twenty searches written for the whole life cannot do that job:
+    they are written from titles and truncated descriptions, and the only thing
+    they reliably know about an event is the person and the city it happened
+    in, which is the search that returns a plaque.
+    """
+    planned: Dict[int, List[str]] = {}
+    for index, queries in enumerate(queries_by_event):
+        kept: List[str] = []
+        for query in queries or []:
+            text = " ".join(str(query or "").split())
+            if text and text not in kept:
+                kept.append(text)
+            if len(kept) >= limit:
+                break
+        if kept:
+            planned[index] = kept
+    return planned
+
+
 def execute_batch_image_search(
-    search_strings: List[str], images_per_query: int = 10
+    search_strings: List[str],
+    images_per_query: int = 10,
+    event_queries: Optional[Dict[int, List[str]]] = None,
 ) -> List[Dict[str, Any]]:
     """
     Execute all search queries against Wikimedia Commons and Openverse.
+
+    ``event_queries`` maps an event index to the searches written for that
+    event; their hits are tagged with ``for_event`` so the matcher knows which
+    event a candidate was found for. They run first, because deduplication
+    keeps the first sighting of a URL and the tag is worth more than the order.
 
     Returns deduplicated list of image candidates with metadata.
     """
     all_images = []
     seen_urls: Set[str] = set()
 
-    # Search Wikimedia Commons
+    # Commons only for these: they name things, and the thing-shaped query is
+    # what Commons indexes well. Openverse contributes breadth to the person
+    # searches below, where breadth is what is missing.
+    if event_queries:
+        planned = sum(len(queries) for queries in event_queries.values())
+        print(f"    [Per event] {planned} search(es) from the researched events:")
+        for event_index in sorted(event_queries):
+            for query in event_queries[event_index]:
+                safe_query = query.encode("ascii", "replace").decode("ascii")
+                print(f"      Event {event_index}: '{safe_query}'")
+                try:
+                    results = search_wikimedia_commons(query, limit=images_per_query)
+                except Exception as e:
+                    print(f"        Warning: Search failed: {e}")
+                    continue
+                for img in results:
+                    if img["url"] in seen_urls:
+                        continue
+                    seen_urls.add(img["url"])
+                    img["provider"] = "wikimedia"
+                    img["for_event"] = event_index
+                    all_images.append(img)
+        print(f"      Found {len(all_images)} unique images for named things")
+
+    # Search Wikimedia Commons for the searches written for the whole life
     print("    [Source 1/2] Wikimedia Commons:")
     for query in search_strings:
         safe_query = query.encode("ascii", "replace").decode("ascii")
@@ -2190,7 +2263,7 @@ def execute_batch_image_search(
             print(f"        Warning: Search failed: {e}")
 
     commons_count = len(all_images)
-    print(f"      Found {commons_count} unique images from Commons")
+    print(f"      Found {commons_count} unique images from Commons and events")
 
     # Search Openverse (aggregates Flickr, museums, etc.)
     print("    [Source 2/2] Openverse (Flickr, museums, etc.):")
@@ -2214,23 +2287,47 @@ def execute_batch_image_search(
     return all_images
 
 
-def match_images_to_events(
+# The picture that stands in for the thing instead of showing it. Both calls
+# that choose pictures are held to this — the one that puts a picture on a slide
+# and the one that puts pictures under a report — because they used to disagree
+# about it and only one of them was right. The report critic has rejected "a
+# modern memorial, plaque, or reenactment standing in for the thing itself"
+# since it was written; the slide matcher listed "Memorial/plaque -> later
+# events or death" among its GOOD MATCHES. The slide is the picture the reader
+# actually meets, and the corpus records what that permission bought: a grave on
+# fifteen of the death slides, a birthplace plaque on Kafka's birth, a
+# commemorative sparrow on Einstein's.
+STAND_IN_REJECTION_INSTRUCTIONS = (
+    "- a memorial, plaque, gravestone, tomb, statue, bust, commemorative "
+    "stamp, coin, or street sign standing in for what it commemorates. A "
+    "plaque on a house is a picture of a plaque, not of the birth it marks, "
+    "and a grave is not a picture of a death. The one exception is an event "
+    "that is ABOUT the object itself — the monument unveiled, the medal "
+    "awarded, the burial described. The test is whether the event names the "
+    "thing, not whether the thing names the person\n"
+    "- a present-day photograph of an institution's buildings, campus, or "
+    "signage standing in for the institution. A university logo on a wall is "
+    "a picture of a wall\n"
+    "- a picture that merely shares a name or a word with the text. A firm "
+    "called Morcom is not Christopher Morcom, and a map of the town of "
+    "Banbury is not the Banbury sheets. A place that lent its name to a thing "
+    "is not that thing\n"
+    "- a generic stock photograph of an everyday object — an apple, a cup, a "
+    "letter, a laboratory bench — standing in for the particular one the text "
+    "describes. Anybody's apple is not a picture of that apple\n"
+)
+
+
+def build_image_match_prompt(
     candidate_images: List[Dict[str, Any]],
     event_skeletons: List[EventSkeleton],
     person_name: str,
-    model: str = PHASE3_IMAGE_MATCH_MODEL,
-) -> Tuple[Dict[int, Dict[str, Any]], Optional[Dict[str, Any]]]:
-    """
-    Use AI to match images to events based on caption and filename.
-    Also selects the best portrait image for the person.
+) -> str:
+    """What the matcher is shown: the events, the candidates, and the rules.
 
-    Returns:
-        Tuple of (event_assignments dict, portrait dict or None)
+    Built here rather than at the call site so that the rules the corpus
+    depends on can be read without paying for a model call.
     """
-    if not candidate_images:
-        return {}, None
-
-    # Build prompt
     prompt = f"PERSON: {person_name}\n\n"
 
     prompt += "LIFE EVENTS:\n"
@@ -2246,7 +2343,15 @@ def match_images_to_events(
     for idx, img in enumerate(candidate_images, 1):
         prompt += f"[Image {idx}]\n"
         prompt += f"  Filename: {img['filename']}\n"
-        prompt += f"  Caption: {img['caption'][:200]}\n\n"
+        prompt += f"  Caption: {img['caption'][:200]}\n"
+        # Where the picture came from, when it came from one event's own
+        # searches rather than from the twenty written for the whole life. The
+        # per-event searches name things — the machine, the building, the
+        # document — so a candidate carrying this line is already a candidate
+        # for something in particular.
+        if img.get("for_event") is not None:
+            prompt += f"  Searched for: Event {img['for_event']}\n"
+        prompt += "\n"
 
     prompt += "=" * 60 + "\n"
     prompt += "TASK: Select portrait AND assign images to events\n"
@@ -2275,23 +2380,27 @@ def match_images_to_events(
     prompt += "  • Each image can be assigned to AT MOST one event\n"
     prompt += "  • Each event can have AT MOST one image\n"
     prompt += "  • Only assign if the image DIRECTLY relates to that specific event\n"
-    prompt += "  • Leave events without images if no good match exists\n"
-    prompt += "  • Aim for 40-60% of events to have images\n\n"
+    prompt += "  • A candidate marked 'Searched for: Event N' was retrieved by a query written for that event. Treat it as a lead, not an instruction — it still has to pass every rule below\n"
+    # No quota. The old one read "Aim for 40-60% of events to have images", and
+    # a quota asked of a call that cannot see its candidates is a quota met with
+    # whatever shares a word with the event: the corpus landed on 47% and paid
+    # for it in gravestones. The picture the reader meets is the largest thing
+    # on the slide, and a wrong one costs more than an empty space does.
+    prompt += "  • An event with NO image is a normal, correct outcome. There is no target number and no quota — assigning nothing to two thirds of the events is a good answer if the candidates deserve nothing better\n"
+    prompt += "  • Ask of each assignment: could this picture be printed beside this event with a straight face? If you have to explain the connection, the answer is no\n\n"
 
     prompt += "GOOD MATCHES:\n"
     prompt += "  • Document/publication image → event about publishing that work\n"
     prompt += "  • Building photo → event that took place at that building\n"
     prompt += "  • Machine/device → event about inventing or working with it\n"
-    prompt += "  • Memorial/plaque → later events or death (NOT birth/early events)\n"
-    prompt += "  • Historical photo from specific year → event from that year\n\n"
+    prompt += "  • Historical photo from specific year → event from that year\n"
+    prompt += "  • A picture of a person or object the event NAMES, where that person is not the subject\n\n"
 
-    prompt += "AVOID:\n"
-    prompt += "  • Generic portraits for any event\n"
-    prompt += "  • Modern commemorations for historical events\n"
-    prompt += (
-        "  • Loosely related images (e.g., city photo for event that happened there)\n"
-    )
-    prompt += "  • Assigning same type of image (e.g., plaques) to multiple events\n\n"
+    prompt += "NEVER ASSIGN:\n"
+    prompt += STAND_IN_REJECTION_INSTRUCTIONS
+    prompt += "- a portrait of the subject. The story already carries one, and a face beside every event says nothing about any of them\n"
+    prompt += "- a picture of a different subject from the same era or field, however evocative\n"
+    prompt += "- a loosely related image, such as a city photo for an event that merely happened in that city\n\n"
 
     prompt += "CAPTION GUIDELINES:\n"
     prompt += "  • IMPORTANT: You CANNOT see the images - only filenames and metadata\n"
@@ -2305,6 +2414,27 @@ def match_images_to_events(
     prompt += "  • Good: 'Bletchley Park, wartime codebreaking headquarters'\n"
     prompt += "  • Good: 'The Olympiastadion Munich roof structure'\n"
     prompt += "  • Bad: 'Aerial view showing the curved tensile membrane' (you can't see this)\n"
+
+    return prompt
+
+
+def match_images_to_events(
+    candidate_images: List[Dict[str, Any]],
+    event_skeletons: List[EventSkeleton],
+    person_name: str,
+    model: str = PHASE3_IMAGE_MATCH_MODEL,
+) -> Tuple[Dict[int, Dict[str, Any]], Optional[Dict[str, Any]]]:
+    """
+    Use AI to match images to events based on caption and filename.
+    Also selects the best portrait image for the person.
+
+    Returns:
+        Tuple of (event_assignments dict, portrait dict or None)
+    """
+    if not candidate_images:
+        return {}, None
+
+    prompt = build_image_match_prompt(candidate_images, event_skeletons, person_name)
 
     if not os.getenv("OPENAI_API_KEY"):
         return {}, None
@@ -2589,12 +2719,8 @@ def fetch_background_images(
                     "face? If you have to explain the connection, the answer "
                     "is no.\n"
                     "REJECT, without exception:\n"
-                    "- a picture that merely shares a name or a word with the "
-                    "report. A firm called Morcom is not Christopher Morcom, "
-                    "and a map of the town of Banbury is not the Banbury "
-                    "sheets. A place that lent its name to a thing is not that "
-                    "thing\n"
-                    "- a map, plan, chart, or diagram of somewhere, unless the "
+                    + STAND_IN_REJECTION_INSTRUCTIONS
+                    + "- a map, plan, chart, or diagram of somewhere, unless the "
                     "report is about that ground itself\n"
                     "- a montage, collage, poster, book cover, film still, or "
                     "'events of the year' composite: it depicts nothing in "
@@ -2604,17 +2730,7 @@ def fetch_background_images(
                     "subject: the slide above already carries those\n"
                     "- a picture of a different subject from the same era or "
                     "field, however evocative\n"
-                    "- a modern memorial, plaque, or reenactment standing in "
-                    "for the thing itself\n"
-                    "- a present-day photograph of an institution's buildings, "
-                    "campus, or signage standing in for the institution the "
-                    "report names. A university logo on a wall is a picture of "
-                    "a wall\n"
-                    "- a generic stock photograph of an everyday object — an "
-                    "apple, a cup, a letter, a laboratory bench — standing in "
-                    "for the particular one the report describes. The report's "
-                    "apple was a particular apple in a particular room, and "
-                    "anybody's apple is not a picture of it\n"
+                    "- a reenactment standing in for the thing itself\n"
                     "- a picture whose caption is about some later incident at "
                     "the place (building works, a protest, a fire) rather than "
                     "the place in the role the report gives it\n"
@@ -4238,8 +4354,15 @@ def research_images_for_all_events(
     search_strings = generate_image_search_strings(event_skeletons, person_name)
     print(f"    Generated {len(search_strings)} search strings")
 
+    event_queries = plan_event_image_searches(
+        [details.background_image_queries or [] for details in event_details_list]
+    )
+    print(f"    Plus searches for {len(event_queries)} event(s) from Phase 2")
+
     print("  [Phase 3b] Searching image sources (Commons + Openverse)...")
-    candidate_images = execute_batch_image_search(search_strings, images_per_query=10)
+    candidate_images = execute_batch_image_search(
+        search_strings, images_per_query=10, event_queries=event_queries
+    )
 
     if not candidate_images:
         print("    No images found, skipping assignment")
@@ -5341,8 +5464,26 @@ def regenerate_images_only(subject: str) -> Tuple[Path, str]:
         safe_ss = ss.encode("ascii", "replace").decode("ascii")
         print(f"      • {safe_ss}")
 
+    # The searches Phase 2 wrote are not stored on the event, but the pictures
+    # they found are, and each one remembers the query that found it. A rerun
+    # therefore recovers the named things for every event that carries a
+    # background illustration, and searches the whole life for the rest.
+    event_queries = plan_event_image_searches(
+        [
+            [
+                image.get("query") or ""
+                for image in (event.get("background_images") or [])
+            ]
+            for event in events
+        ]
+    )
+    if event_queries:
+        print(f"    Plus recovered searches for {len(event_queries)} event(s)")
+
     print("  [Phase 3b] Searching image sources (Commons + Openverse)...")
-    candidate_images = execute_batch_image_search(search_strings, images_per_query=10)
+    candidate_images = execute_batch_image_search(
+        search_strings, images_per_query=10, event_queries=event_queries
+    )
 
     if not candidate_images:
         print("    No images found")
