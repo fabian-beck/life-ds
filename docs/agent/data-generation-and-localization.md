@@ -632,8 +632,8 @@ Example from `src/locales/de.json`:
   "app.tagline": "Erkunde bemerkenswerte Leben durch Datengeschichten",
   "story.loading_life": "Lade Lebensgeschichte...",
   "story.age": "Alter {age}",
-  "story.source_one": "{count} Quelle",
-  "story.source_other": "{count} Quellen"
+  "timeline.event_one": "{count} Ereignis",
+  "timeline.event_other": "{count} Ereignisse"
 }
 ```
 
