@@ -109,6 +109,22 @@ def collect_links(root: Path = PEOPLE_DIR) -> Dict[str, List[str]]:
                 source_link = event_class.get("source_link")
                 if isinstance(source_link, dict):
                     note(source_link.get("url"), path)
+
+    # The network carries links of its own — the subject's article on the ego
+    # node and a source list per connection — written by the same model call
+    # that writes the events, and rendered the same way in the network modal.
+    for path in sorted(root.rglob("ego_network.json")):
+        if "_cache" in path.parts:
+            continue
+        data = json.loads(path.read_text(encoding="utf-8"))
+        ego = data.get("ego")
+        if isinstance(ego, dict):
+            note(ego.get("wikipedia"), path)
+        for connection in data.get("connections") or []:
+            if not isinstance(connection, dict):
+                continue
+            for source in connection.get("sources") or []:
+                note(source, path)
     return citations
 
 
@@ -314,6 +330,15 @@ def rewrite(citations: Dict[str, List[str]], replacements: Dict[str, str]) -> Li
                     link = annotation.get("wikipedia_url")
                     if link in replacements:
                         annotation["wikipedia_url"] = replacements[link]
+        ego = data.get("ego")
+        if isinstance(ego, dict) and ego.get("wikipedia") in replacements:
+            ego["wikipedia"] = replacements[ego["wikipedia"]]
+        for connection in data.get("connections") or []:
+            if not isinstance(connection, dict):
+                continue
+            sources = connection.get("sources")
+            if isinstance(sources, list):
+                connection["sources"] = [replacements.get(s, s) for s in sources]
         path.write_text(
             json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
         )
