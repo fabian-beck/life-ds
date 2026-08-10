@@ -252,19 +252,7 @@
           "explanation": "Eine stabile Karte, auf der Daten durch Löcher an festgelegten Stellen gespeichert werden und die zum Zählen, Sortieren oder Tabellieren mechanisch oder elektrisch gelesen werden kann.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Punched_card"
         }
-      },
-      "location_coordinates": [
-        {
-          "label": "Cambridge, Massachusetts",
-          "name": "Cambridge, Massachusetts, United States",
-          "primary": true,
-          "centroid": [
-            -71.1040018,
-            42.3656347
-          ],
-          "source": "logical inference from MIT location in existing data"
-        }
-      ]
+      }
     },
     {
       "date": "1884-09-23",
@@ -347,29 +335,7 @@
           "explanation": "The federal census organization in the 19th century; it later evolved into today’s permanent U.S. Census Bureau.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Census_Bureau"
         }
-      },
-      "location_coordinates": [
-        {
-          "label": "Cambridge, Massachusetts",
-          "name": "Cambridge, Massachusetts, United States",
-          "primary": false,
-          "centroid": [
-            -71.1040018,
-            42.3656347
-          ],
-          "source": "inferred from preceding MIT event location"
-        },
-        {
-          "label": "Washington, D.C.",
-          "name": "Washington, D.C., United States",
-          "primary": true,
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "source": "existing event location"
-        }
-      ]
+      }
     },
     {
       "date": "1886",
@@ -779,28 +745,6 @@
           "wikipedia_url": "https://en.wikipedia.org/wiki/Oak_Hill_Cemetery_(Washington,_D.C.)"
         }
       },
-      "location_coordinates": [
-        {
-          "label": "Washington, D.C.",
-          "name": "Washington, D.C., United States",
-          "primary": true,
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "source": "existing event location"
-        },
-        {
-          "label": "Oak Hill Cemetery",
-          "name": "Oak Hill Cemetery, Georgetown, Washington, D.C., United States",
-          "primary": false,
-          "centroid": [
-            -77.0617,
-            38.9126
-          ],
-          "source": "Oak Hill Cemetery (Washington, D.C.) Wikipedia + logical geocoding"
-        }
-      ],
       "event_class": {
         "type": "death",
         "cause": "Herzinfarkt",

@@ -80,8 +80,14 @@ Events are the core narrative units displayed as slides. Events can optionally b
       "title": "Publishes 'On Computable Numbers'",
       "description": "Long-form markdown description...",
       "chapter": "early_years",
-      "locations": ["Cambridge, England"],
-      "location_modern": "Cambridge, United Kingdom",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, England, United Kingdom",
+          "primary": true,
+          "centroid": [0.1218, 52.2053]
+        }
+      ],
       "involved_people": ["Max Newman", "Alonzo Church"],
       "sources": ["https://en.wikipedia.org/wiki/..."],
       "event_type_icon": "mdi-file-document",
@@ -91,15 +97,6 @@ Events are the core narrative units displayed as slides. Events can optionally b
           "caption": "...",
           "source": "https://commons.wikimedia.org/..."
         }
-      ],
-      "location_coordinates": [
-        {
-          "label": "Cambridge, England, United Kingdom",
-          "name": "Cambridge, England",
-          "primary": true,
-          "centroid": [0.1218, 52.2053],
-          "source": "nominatim"
-        }
       ]
     }
   ]
@@ -107,7 +104,7 @@ Events are the core narrative units displayed as slides. Events can optionally b
 ```
 
 **New Fields (Two-Phase System)**:
-- `location_modern`: Modern geographic name for geocoding (e.g., "Kaliningrad, Russia" for historic "Königsberg")
+- `locations`: every place the event touches, each with the name at the time (`name_historic`), the name to geocode against today (`name_modern`, e.g. "Kaliningrad, Russia" for historic "Königsberg"), a `centroid` as `[lon, lat]`, and a `primary` flag marking the one the maps pin. This is the only location field the application reads. An older `location_coordinates` list (`label`/`name`/`source`) survives on 29 events and is dead everywhere except as a fallback in `scripts/meta_story_map.py`; see issue #71.
 - `involved_people`: List of people directly involved in this event (excludes the main subject)
 - `event_type_icon`: MDI icon identifier for visual categorization (e.g., "mdi-crown", "mdi-book", "mdi-school")
 
