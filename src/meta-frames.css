@@ -247,6 +247,7 @@
 
 .ms-steps .step-card.marked .step-title::before {
   content: "";
+  pointer-events: none;
   flex: 0 0 auto;
   width: 0.85em;
   height: 0.85em;

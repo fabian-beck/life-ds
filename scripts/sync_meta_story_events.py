@@ -121,7 +121,8 @@ def _load(path: Path) -> Optional[Dict[str, Any]]:
 
 def _translation_fingerprint(detail: Dict[str, Any]) -> str:
     """Match the canonical fingerprint used by check_meta_story_translation()."""
-    from translate_person import compute_fingerprint, extract_meta_story_translatables
+    from meta_story_translation import extract_meta_story_translatables
+    from translate_person import compute_fingerprint
 
     return compute_fingerprint(extract_meta_story_translatables(detail))
 

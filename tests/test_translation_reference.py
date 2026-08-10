@@ -17,6 +17,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
+import meta_story_translation as mst  # noqa: E402
 import translate_person as tp  # noqa: E402
 from utils import wikipedia_cache as wiki  # noqa: E402
 
@@ -284,10 +285,10 @@ class MetaStoryReferenceTests(unittest.TestCase):
 
     def test_takes_each_name_from_that_persons_own_translation(self) -> None:
         with (
-            patch.object(tp, "load_json_file", side_effect=self._registry),
-            patch.object(tp, "fetch_language_links", return_value={}),
+            patch.object(mst, "load_json_file", side_effect=self._registry),
+            patch.object(mst, "fetch_language_links", return_value={}),
         ):
-            reference = tp.build_meta_story_reference(self.STORY, "de")
+            reference = mst.build_meta_story_reference(self.STORY, "de")
 
         # Only the story's own cast, and each under the name their story shows.
         self.assertEqual(
@@ -312,10 +313,10 @@ class MetaStoryReferenceTests(unittest.TestCase):
             return {"Bamberg": {"title": "Bamberg"}}
 
         with (
-            patch.object(tp, "load_json_file", side_effect=self._registry),
-            patch.object(tp, "fetch_language_links", side_effect=links),
+            patch.object(mst, "load_json_file", side_effect=self._registry),
+            patch.object(mst, "fetch_language_links", side_effect=links),
         ):
-            tp.build_meta_story_reference(self.STORY, "de")
+            mst.build_meta_story_reference(self.STORY, "de")
 
         self.assertEqual(asked, [["Bamberg"]])
 

@@ -22,15 +22,17 @@ from typing import Any, Dict, List, Optional
 from openai import OpenAI
 
 from config import enable_utf8_console
+from meta_story_translation import (
+    extract_meta_story_translatables,
+    translate_meta_story,
+)
 from translate_person import (
     DATA_DIR,
     LANGUAGE_NAMES,
     TRANSLATION_MODEL,
     compute_fingerprint,
-    extract_meta_story_translatables,
     load_json_file,
     save_json_file,
-    translate_meta_story,
     translation_status,
 )
 
