@@ -30,10 +30,10 @@ from typing import (
     Literal,
     cast,
 )
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 
 import requests
-from openai import APIStatusError
+from openai import APIStatusError, OpenAI
 from pydantic import BaseModel, Field
 
 from config import (
@@ -815,7 +815,9 @@ class EventDetails(BaseModel):
             "A background report for this event, 350-550 words in 3-5 "
             "paragraphs separated by blank lines: the situation it sat in, the "
             "concrete specifics, a scene or episode told at length, and what "
-            "came of it. Prose for a reader, not a list. Null when the sources "
+            "came of it. One or two '## Section heading' lines may divide it "
+            "where it turns to a different thing, never above the first "
+            "paragraph. Prose for a reader, not a list. Null when the sources "
             "give nothing beyond the description."
         ),
     )
@@ -1855,6 +1857,20 @@ def filter_images_by_quality(
     return filtered
 
 
+def _clean_commons_url(url: Optional[str]) -> Optional[str]:
+    """The file's address without the analytics Commons hangs off it.
+
+    The API answers with ``?utm_source=commons.wikimedia.org&...`` appended to
+    every URL. It is tracking, not identity: it makes one photograph look like
+    two when a stored URL is compared with a fresh one, and the interface's
+    thumbnail rewriter — which appends a size to the path — builds a broken
+    address out of it when the query string sits between the two.
+    """
+    if not url:
+        return url
+    return url.split("?", 1)[0] if "upload.wikimedia.org/" in url else url
+
+
 def search_wikimedia_commons(query: str, limit: int = 10) -> List[Dict[str, Any]]:
     """
     Search Wikimedia Commons using MediaWiki API.
@@ -1895,7 +1911,7 @@ def search_wikimedia_commons(query: str, limit: int = 10) -> List[Dict[str, Any]
 
         # For SVGs, prefer thumburl (PNG render) over url (raw SVG)
         # thumburl is provided when iiurlwidth is set
-        url = image_info.get("thumburl") or image_info.get("url")
+        url = _clean_commons_url(image_info.get("thumburl") or image_info.get("url"))
 
         if not url:
             continue
@@ -2412,6 +2428,254 @@ def verify_portrait_depicts_person(
     if not parsed.depicts_subject:
         print(f"    Portrait verification says no: {parsed.reason}")
     return parsed.depicts_subject
+
+
+# ============================================================================
+# BACKGROUND ILLUSTRATIONS
+# ============================================================================
+
+# Three per report: the layer deals them out between the paragraphs, so a
+# report of four or five paragraphs can carry three without turning into a
+# gallery — and one picture on a page this long reads as a token.
+BACKGROUND_IMAGE_LIMIT = 3
+
+
+class ChosenImages(BaseModel):
+    """Which candidates, if any, actually illustrate the report."""
+
+    keep: List[int] = Field(
+        default_factory=list,
+        description=(
+            "Indexes of candidates that genuinely depict what the report "
+            "describes, best first, at most three. Empty when none do."
+        ),
+    )
+
+
+CHOOSER_SYSTEM = (
+    "You decide whether a picture illustrates a text. You are strict: a picture "
+    "that merely shares a word with the text illustrates nothing, and an "
+    "irrelevant picture printed beside a report is worse than no picture."
+)
+
+
+# A Commons description field is whatever the uploader typed there, and often
+# what they typed was their own paperwork. The layer prints the caption under
+# the picture, where "Author: Schadel URL: http://turing.izt.uam.mx Made by me
+# on..." reads as a bug.
+_CAPTION_JUNK = re.compile(
+    r"(author\s*:|source\s*:|https?://|own work|made by me|permission\s*:"
+    r"|other[_ ]versions|photographer[,:]|owner of|\{\{|\[\[)",
+    re.IGNORECASE,
+)
+
+
+def background_image_key(url: str) -> str:
+    """A Commons file identified by its filename, not by the size asked for."""
+    name = unquote(str(url or "")).split("/")[-1].split("?")[0]
+    return re.sub(r"^\d+px-", "", name).lower()
+
+
+def background_caption(candidate: Dict[str, Any], query: str) -> str:
+    """A line fit to print under the picture.
+
+    The uploader's description when it reads like one, the filename when it
+    does not — a filename is at least always about the thing — and the query
+    when there is neither.
+    """
+    caption = " ".join(str(candidate.get("caption") or "").split())
+    if caption and not _CAPTION_JUNK.search(caption):
+        if len(caption) > 160:
+            head = caption[:160].rsplit(". ", 1)[0]
+            caption = (head + ".") if len(head) > 40 else caption[:157].rstrip() + "…"
+        return caption
+    filename = str(candidate.get("filename") or "")
+    stem = re.sub(r"\.[A-Za-z0-9]+$", "", filename).replace("_", " ").strip()
+    return stem or query
+
+
+def _background_candidates(
+    queries: List[str], already_shown: Set[str]
+) -> List[Dict[str, Any]]:
+    """What Commons returns for the call's own queries, deduplicated.
+
+    The event's own pictures are excluded: the slide above is already showing
+    them, and an illustration the reader has just scrolled past illustrates
+    nothing. Only images carrying a license are kept, because the layer prints
+    a credit under every picture and one with no credit cannot be published.
+    """
+    found: List[Dict[str, Any]] = []
+    seen = set(already_shown)
+    for query in queries[:4]:
+        # Commons ranks by keyword match, and the thing itself is often a few
+        # places down behind a map, a modern plaque, and somebody's holiday
+        # photograph. The critic reads all of them and mostly says no, so a
+        # deeper pool costs one longer prompt and is the difference between a
+        # report with one illustration and one with three.
+        results = filter_images_by_quality(search_wikimedia_commons(query, limit=12))
+        for candidate in results[:6]:
+            url = candidate.get("url")
+            if not url or background_image_key(url) in seen:
+                continue
+            if not candidate.get("license"):
+                continue
+            found.append(
+                {
+                    "url": url,
+                    "caption": background_caption(candidate, query),
+                    "source": candidate.get("source"),
+                    "creator": candidate.get("creator"),
+                    "license": candidate.get("license"),
+                    "licenseUrl": candidate.get("licenseUrl"),
+                    "query": query,
+                    # Not stored — the filename is shown to the critic and then
+                    # dropped. Commons captions are often a sentence about the
+                    # upload rather than about the subject, and the filename is
+                    # the one field that always names the thing.
+                    "_filename": candidate.get("filename") or "",
+                }
+            )
+            seen.add(background_image_key(url))
+    return found
+
+
+def fetch_background_images(
+    client: OpenAI,
+    report: str,
+    queries: List[str],
+    already_shown: Set[str],
+    wanted: int = BACKGROUND_IMAGE_LIMIT,
+) -> List[Dict[str, Any]]:
+    """Pictures for the report: searched by its own queries, then read.
+
+    A Commons keyword search is a keyword search. Asking it for "On Computable
+    Numbers manuscript" returned a 16th-century Mexican codex, and asking after
+    Christopher Morcom returned a steam engine built by Belliss & Morcom.
+    Roughly half of what came back shared a word with the report and nothing
+    else, so what comes back is now read against the report before any of it is
+    kept, and keeping none is a normal outcome.
+    """
+    candidates = _background_candidates(queries, already_shown)
+    if not candidates:
+        return []
+
+    listing = "\n".join(
+        f"[{index}] {candidate['_filename'] or '(no filename)'} — {candidate['caption']}"
+        for index, candidate in enumerate(candidates)
+    )
+    parsed = parse_structured(
+        client,
+        # A critic, and config.py is explicit that a critic weaker than the
+        # generator is worse than no critic. On the small model this one kept
+        # letting the Belliss & Morcom steam engine through, which is the exact
+        # confusion its instructions name.
+        model=DEFAULT_MODEL,
+        reasoning_effort=DEFAULT_REASONING_EFFORT,
+        input=[
+            {"role": "system", "content": CHOOSER_SYSTEM},
+            {
+                "role": "user",
+                "content": (
+                    "Which of these pictures illustrate the report below?\n\n"
+                    "Each candidate is given as its Commons filename and its "
+                    "caption. Read both: a caption is often about the upload, "
+                    "and the filename is what names the thing.\n\n"
+                    "KEEP a picture that shows a thing the report actually "
+                    "names: the machine, the building, the room, the document, "
+                    "the instrument, the place. Ask of each one: could this "
+                    "picture be printed beside this paragraph with a straight "
+                    "face? If you have to explain the connection, the answer "
+                    "is no.\n"
+                    "REJECT, without exception:\n"
+                    "- a picture that merely shares a name or a word with the "
+                    "report. A firm called Morcom is not Christopher Morcom, "
+                    "and a map of the town of Banbury is not the Banbury "
+                    "sheets. A place that lent its name to a thing is not that "
+                    "thing\n"
+                    "- a map, plan, chart, or diagram of somewhere, unless the "
+                    "report is about that ground itself\n"
+                    "- a montage, collage, poster, book cover, film still, or "
+                    "'events of the year' composite: it depicts nothing in "
+                    "particular, and a film the report merely alludes to is "
+                    "not an illustration of the report\n"
+                    "- a portrait of any person, and any picture of the "
+                    "subject: the slide above already carries those\n"
+                    "- a picture of a different subject from the same era or "
+                    "field, however evocative\n"
+                    "- a modern memorial, plaque, or reenactment standing in "
+                    "for the thing itself\n"
+                    "- a present-day photograph of an institution's buildings, "
+                    "campus, or signage standing in for the institution the "
+                    "report names. A university logo on a wall is a picture of "
+                    "a wall\n"
+                    "- a generic stock photograph of an everyday object — an "
+                    "apple, a cup, a letter, a laboratory bench — standing in "
+                    "for the particular one the report describes. The report's "
+                    "apple was a particular apple in a particular room, and "
+                    "anybody's apple is not a picture of it\n"
+                    "- a picture whose caption is about some later incident at "
+                    "the place (building works, a protest, a fire) rather than "
+                    "the place in the role the report gives it\n"
+                    "Keep at most three, and every one you keep must show a "
+                    "DIFFERENT thing: two photographs of the same machine are "
+                    "one illustration printed twice, so keep the better one "
+                    "and move on. Best first.\n"
+                    "THREE IS A CEILING, NOT A TARGET. Do not reach for it. "
+                    "One picture that plainly shows what the report describes "
+                    "beats three that gesture at it, and keeping none is a "
+                    "normal answer.\n\n"
+                    f"REPORT:\n{report}\n\n"
+                    f"CANDIDATES:\n{listing}\n"
+                ),
+            },
+        ],
+        text_format=ChosenImages,
+        label="Illustrations for a background report",
+    )
+    if parsed is None:
+        return []
+
+    # One picture per query, enforced here rather than asked for: the two
+    # queries are the two things the report wanted illustrated, so taking two
+    # answers to the same one prints the same thing twice — which is what kept
+    # happening with the Manchester Mark I no matter how the instruction was
+    # worded.
+    kept: List[Dict[str, Any]] = []
+    used_queries = set()
+    for index in parsed.keep:
+        if not 0 <= index < len(candidates) or len(kept) >= wanted:
+            continue
+        candidate = candidates[index]
+        if candidate["query"] in used_queries:
+            continue
+        used_queries.add(candidate["query"])
+        kept.append({k: v for k, v in candidate.items() if not k.startswith("_")})
+    return kept
+
+
+def illustrate_event(
+    client: OpenAI,
+    event: Dict[str, Any],
+    report: str,
+    queries: List[str],
+) -> List[Dict[str, Any]]:
+    """Put the report's illustrations on the event, or take them off."""
+    shown = {
+        background_image_key(image.get("url", ""))
+        for image in (event.get("images") or [])
+        if isinstance(image, dict)
+    }
+    pictures = (
+        fetch_background_images(client, report, queries, shown) if queries else []
+    )
+    if pictures:
+        event["background_images"] = pictures
+        for picture in pictures:
+            print(f"    image: {picture['query']} -> {picture['caption'][:60]}")
+    else:
+        event.pop("background_images", None)
+        print("    no illustrations found for the report")
+    return pictures
 
 
 # ============================================================================
@@ -3223,8 +3487,19 @@ def build_phase2_prompt_base(
     prompt += "     you write here and the only one addressed to a reader rather than to a schema.\n"
     prompt += "     Aim for the upper end whenever the sources support it: a reader who has chosen to\n"
     prompt += "     scroll down here has asked for depth, and three thin paragraphs are a let-down\n"
-    prompt += "   - Prose. Complete sentences, no bullets, no headings, no lists, no section labels\n"
+    prompt += "   - Prose. Complete sentences, no bullets, no lists\n"
     prompt += "   - Separate paragraphs with a blank line\n"
+    prompt += "   - HEADINGS, where the report turns to a genuinely different thing: a line of its\n"
+    prompt += "     own beginning with '## ', two to five words, naming what the paragraphs under it\n"
+    prompt += "     are about. Use one or two in a report of this length, never one per paragraph,\n"
+    prompt += "     and never above the opening paragraph — the reader has just arrived from the\n"
+    prompt += "     event and wants prose, not a table of contents. A report that runs as a single\n"
+    prompt += "     argument takes none at all\n"
+    prompt += "   - A heading names the thing it is about, not the part of the report it is:\n"
+    prompt += (
+        "     * GOOD: '## The bombe on the floor', '## What Bletchley kept quiet'\n"
+    )
+    prompt += "     * BAD: '## Background', '## Aftermath', '## Introduction', '## The situation'\n"
     prompt += (
         "   - BUILD IT LIKE A REPORT, roughly in this order, as the material allows:\n"
     )
@@ -3262,7 +3537,9 @@ def build_phase2_prompt_base(
     )
     prompt += "   - Do NOT use [[term|display]] markers here - they belong in the description only\n"
     prompt += "   - Write for someone who does not know the field. Name what an insider would assume\n"
-    prompt += "   - American English. No headings, no bullet points, no meta-commentary about sources\n"
+    prompt += (
+        "   - American English. No bullet points, no meta-commentary about sources\n"
+    )
     prompt += "   - Return null only if the sources give you nothing beyond the description\n\n"
 
     prompt += "7. BACKGROUND_IMAGE_QUERIES (3-4 short Commons searches):\n"
@@ -4051,7 +4328,62 @@ def research_images_for_all_events(
 
         enriched_events.append(LifeEvent(**event_dict))
 
+    enriched_events = illustrate_background_reports(enriched_events, event_details_list)
+
     return enriched_events, portrait
+
+
+def illustrate_background_reports(
+    events: List[LifeEvent],
+    event_details_list: List[EventDetails],
+) -> List[LifeEvent]:
+    """Phase 3d: give each background report the pictures it asked for.
+
+    Phase 2 names three or four things worth a picture while it still has the
+    report in front of it — the machine, the building, the document — and those
+    searches used to be dropped on the floor here. Every dataset generated
+    after the report existed therefore arrived with reports and no
+    illustrations, and the layer under the fold read as a wall of text. The
+    searches run now, at the one point in the run where the event's own picture
+    is already known and can be kept out of them.
+    """
+    illustratable = [
+        idx
+        for idx, event in enumerate(events)
+        if (event.background or "").strip()
+        and idx < len(event_details_list)
+        and (event_details_list[idx].background_image_queries or [])
+    ]
+    if not illustratable:
+        return events
+
+    try:
+        client = get_client()
+    except RuntimeError:
+        # No key: the reports stand as prose, which is what a run without a
+        # picture search has always produced.
+        return events
+
+    print(f"  [Phase 3d] Illustrating {len(illustratable)} background report(s)...")
+    illustrated = []
+    for idx, event in enumerate(events):
+        if idx not in illustratable:
+            illustrated.append(event)
+            continue
+        event_dict = event.model_dump()
+        safe_title = event.title.encode("ascii", "replace").decode("ascii")
+        print(f"    [{idx}] {safe_title}")
+        illustrate_event(
+            client,
+            event_dict,
+            (event.background or "").strip(),
+            list(event_details_list[idx].background_image_queries or []),
+        )
+        illustrated.append(LifeEvent(**event_dict))
+
+    pictures = sum(len(event.background_images or []) for event in illustrated)
+    print(f"  [Phase 3d] Kept {pictures} illustration(s)")
+    return illustrated
 
 
 # ============================================================================

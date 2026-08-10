@@ -40,6 +40,7 @@ export {
   sourceLabel,
   getPublicationSource,
   getBackgroundImages,
+  collectStoryImages,
 } from "./story/images.js";
 
 export {
@@ -54,7 +55,10 @@ export {
   getBirthParents,
 } from "./story/personMatching.js";
 
-export { parseDescriptionSegments } from "./story/prose.js";
+export {
+  parseDescriptionSegments,
+  parseBackgroundBlocks,
+} from "./story/prose.js";
 
 export {
   getEventWeight,

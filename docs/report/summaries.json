@@ -213,31 +213,31 @@
       }
     },
     "m_translate": {
-      "fingerprint": "264dcf0d4ae3b94f",
+      "fingerprint": "a3fd8e889cfa87cd",
       "summary": {
         "constraints": [
-          "Skips processing unless forced when every meta-story translation status is \"current\".",
-          "Returns failure if the source story is missing, translation fails, or the translated JSON cannot be saved.",
-          "Output arrays must retain exactly the input length and order; output item N translates input item N.",
-          "Markdown, annotation keys, and fixed [[term|display]] markers must be preserved exactly; no markers may be added or removed."
+          "Missing source meta-story files cause an error and return `False`.",
+          "Without `force`, translation is skipped only when every reported status value is `\"current\"`.",
+          "Translation preserves JSON array length and order exactly; output item N corresponds to input item N.",
+          "Markdown, `## ` section boundaries, annotation keys, and each existing `[[term|display]]` marker must be preserved exactly; markers cannot be added, removed, or duplicated."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Loads a meta-story JSON document, translates its extracted text fields into the target language, saves the translated detail file under the target-language directory, and updates that language’s meta-story registry entry. Translation uses language-specific spelling evidence, a person-name glossary, and reference material so prose uses the same localized names and event titles already established in translated person data.",
-        "why_this_design": "The step preserves a shared extract–translate–merge contract rather than translating the whole document freely. Reusing names and event titles settled in person translations prevents chapter text, story slides, and biographical entries from diverging over the same entity."
+        "what_it_does": "Loads a meta-story JSON detail file, checks whether its translation status is current for the requested language, and delegates translation of the story data when needed. On success, writes the translated detail file under the language-specific meta-story directory, then updates that language’s meta-story registry; event titles and person-name forms are aligned with the corresponding translated person data.",
+        "why_this_design": "The current-status check avoids re-translating unchanged stories unless `force` is set. Saving the translated detail file before updating the registry prevents the registry from advertising a translation that was not successfully written."
       }
     },
     "p_backgrounds": {
-      "fingerprint": "72b51ec21b0bb60c",
+      "fingerprint": "261e3f7548ca0d68",
       "summary": {
         "constraints": [
-          "Targets only selected indexes and, normally, events with blank backgrounds; `overwrite` overrides that rule.",
-          "A blank or missing generated background leaves the event unchanged.",
-          "Backgrounds must be \"350-550 words\" in \"3-5 paragraphs,\" or null when sources add nothing beyond the description.",
-          "Sources are limited to \"1-3\" Wikipedia URLs documenting this event and are retained only when they normalize to a URL shown to the call; image queries require \"3-4\" different non-portrait Commons subjects named in the report."
+          "Normal generation leaves an event untouched when no nonempty background passage is returned.",
+          "Background prose must be \"350-550 words\" in \"3-5 paragraphs,\" with at most two `##` headings and none before paragraph one.",
+          "Sources must contain \"1-3\" Wikipedia URLs documenting this specific event; accepted replacements must normalize to an allowed, supplied URL.",
+          "Image queries must contain \"3-4\" distinct Commons search targets named in the passage and must not be portraits of the subject."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Selects requested life events that lack a background passage, unless overwrite is enabled; in illustration-only mode, selects events that already have one. For each normal target, it requests a 350–550-word background report, event-specific Wikipedia sources, and Commons search queries using Phase 2’s shared event prompt plus event, neighboring-event, person, related-article, and network context. It writes only a nonempty passage, filters returned citations to URLs actually supplied to the call before replacing existing sources, then generates and evaluates illustrations against the completed passage.",
-        "why_this_design": "This is an additive repair path rather than a full event regeneration, preserving the original event record for review while filling the later-added depth layer. Reusing the Phase 2 prompt prevents the two research specifications from drifting, while a separate image-only path permits picture-critic tuning without rewriting otherwise acceptable prose."
+        "what_it_does": "Selects requested life events that need a depth-layer repair, then adds a 350-550-word background passage without regenerating the event title, description, locations, people, or classification data. In the normal path, it also re-evaluates event-specific Wikipedia sources, generates Commons-oriented image queries, and illustrates the new passage; dedicated modes can instead re-illustrate an existing passage or add headings to it without rewriting its prose. It writes the person’s event file only after at least one successful change and propagates revised sources afterward.",
+        "why_this_design": "The background prompt is imported from the Phase 2 prompt builder rather than duplicated, preventing the repair path from drifting from initial generation while supplying the existing slide context so the passage complements nearby events and interface elements. Returned citations are accepted only when they match the person article, related articles, or preexisting event sources that were available to the call; this blocks invented or malformed URLs, while retaining old sources if the new list is empty."
       }
     },
     "p_chapter_art": {
@@ -339,17 +339,17 @@
       }
     },
     "p_events_p2": {
-      "fingerprint": "aca6efb59742fa24",
+      "fingerprint": "e7643edb37f6cff3",
       "summary": {
         "constraints": [
-          "Locations must be city or region level at most, with historic and modern names; unknown or non-geographic events return an empty location array.",
-          "Sources are limited to \"1-3\" Wikipedia URLs that actually document the event; the subject article is the fallback, and padding with merely related articles is forbidden.",
-          "Annotations are limited to \"0-3 per event,\" only for obscure, non-obvious terms, marked in the description on the first occurrence only; classified subjects must not be annotated.",
-          "The background is null when sources add nothing beyond the description; otherwise it is reader-facing prose in \"350-550 words\" across \"3-5\" blank-line-separated paragraphs, with \"3-4\" Commons queries illustrating that background rather than portraits of the subject."
+          "Uses 1-3 supporting Wikipedia URLs; the subject’s article is the fallback when no related article specifically documents the event, and sources must never be padded.",
+          "Locations may be multiple, but names must be no more specific than a city or region; a single location is marked `primary=true`, and unknown or non-geographic events return an empty array.",
+          "Annotations are limited to 0-3 highly obscure, context-bearing terms, each marked only on its first occurrence; most events receive none, and classified-event subjects must not be annotated.",
+          "The optional background is `null` when sources add nothing beyond the description; otherwise it is 350-550 words in 3-5 blank-line-separated paragraphs, with at most two `##` headings and none before paragraph one."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Enriches one biographical event at a time after filtering the related-article pool to material relevant to that event. It returns a refined, chronologically bounded description; city-level historic and modern locations; directly involved non-subject people; tightly matched Wikipedia sources; an MDI semantic icon; conservative inline annotations; Commons background-image searches; and, when evidence permits, a contextual background report that adds surrounding history rather than repeats the event. Classified events are routed through a class-aware prompt, while unclassified events use the base prompt.",
-        "why_this_design": "The class-aware route suppresses technical detail and annotations about the classified subject because that information is already represented as structured event metadata; this keeps the narrative description from duplicating the classification. Parsing is retried, but a single unresearchable event degrades to an empty research record with a neutral calendar icon rather than aborting the larger personal-story run."
+        "what_it_does": "Enriches one biographical event at a time after filtering the related-article pool to the event’s most relevant articles. It returns a refined, chronologically bounded description; city-level historic and modern locations; directly involved people other than the subject; narrowly chosen supporting sources; an event icon; conservative inline annotations; Commons background-image searches; and, when evidence permits, a prose background report that adds surrounding context rather than repeating the event.",
+        "why_this_design": "Classified events are routed through a class-aware prompt and barred from repeating or annotating information already represented as structured classification metadata, protecting the narrative description from technical duplication. Failed structured-generation attempts do not halt the story: after the configured retries, the event is retained with empty research fields and the neutral `mdi-calendar` icon."
       }
     },
     "p_geocode": {
@@ -395,17 +395,17 @@
       }
     },
     "p_illustrations": {
-      "fingerprint": "69b6dc4183746f93",
+      "fingerprint": "ea3108bf428e4027",
       "summary": {
         "constraints": [
-          "Select indexes only, ranked best first; retain at most three, and an empty list is valid.",
-          "Keep only images that plainly show a machine, building, room, document, instrument, or place actually named in the report; reject name-only, thematic, or explainable connections.",
-          "Reject portraits or other images of the report’s subject, maps and diagrams not about the relevant ground, composites, memorials, generic stand-ins, and present-day institutional signage or campuses.",
-          "Discard invalid indexes, stop at the configured image limit, and retain no more than one candidate for each search query."
+          "Return only candidate indexes in `keep`, best first; return `[]` when no candidate clearly fits.",
+          "Keep at most \"three\" selections, subject to the configured output limit.",
+          "Every kept image must depict a different report-named thing; code permits no more than one image from each query.",
+          "Reject name-only matches, portraits or subject images, maps unless the ground itself is the topic, composites, generic stand-ins, modern memorials or institutional views, and images documenting later incidents rather than the report’s described role."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a numbered list of Commons search candidates from the report’s image queries, exposing each item’s filename and caption, then asks a critic to select only images that directly depict a specifically named non-subject element of the report. It returns the selected candidate records after validating their indexes and filtering out internal metadata; an empty selection or an unparseable response produces no images.",
-        "why_this_design": "Commons keyword results frequently match only an incidental word, so the selection is judged against the full report rather than trusted as a search result. Filenames are supplied alongside captions because captions may describe upload administration rather than identify the depicted object; code also enforces one retained image per originating query, which prevents duplicate illustrations even when the selection response overlooks that rule."
+        "what_it_does": "Reviews Commons search candidates against the completed background report and returns the indexes of images that genuinely depict a named thing in that report. Each candidate is presented with both its filename and caption, then accepted candidates are ranked best first; downstream code converts those indexes into image records after filtering invalid and duplicate-query selections.",
+        "why_this_design": "Commons keyword results frequently match only a word or surname, so this is deliberately a strict relevance critic rather than a search-result pass-through. It runs after the event’s main image has been selected, allowing already-shown images to be excluded; code also enforces one retained image per search query because prompt-only deduplication repeatedly admitted near-duplicate illustrations."
       }
     },
     "p_img_fetch": {
@@ -550,18 +550,32 @@
         "why_this_design": "Updates merge the new fields over the existing record so unrelated registry data survives, while preserving the original `created` timestamp. Tagline is handled differently from other fields: an absent tagline does not overwrite an existing one, but portrait is always applied so a deliberate null can remove a stale image reference."
       }
     },
-    "p_review": {
-      "fingerprint": "4167e00ea8910ce8",
+    "p_report_headings": {
+      "fingerprint": "a73bdd47cf3382eb",
       "summary": {
         "constraints": [
-          "Facts must be verifiable against the supplied Wikipedia sources; unverified claims are flagged as low confidence and linked to a supporting article where possible.",
-          "Event titles are \"5-10 words\" and no more than \"100 chars\"; descriptions target \"500-800 words,\" use plain text only, and avoid repeating the title's opening idea.",
-          "Each event location has exactly one `primary`; historical and modern place names are distinguished when they differ, and no coordinates are supplied.",
-          "Relationship descriptions are limited to \"1-2 sentences\" and must complement event text rather than repeat it."
+          "Reports with fewer than 3 nonblank paragraphs bypass heading generation.",
+          "Headings may appear only before paragraphs 2 through the final paragraph, with at most one heading at any paragraph.",
+          "At most 2 headings are inserted; an empty result is valid and leaves the report unchanged.",
+          "Heading text is normalized and must be nonempty; the prompt limits it to 2–5 words in the report’s language and rejects generic section labels."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Runs a single critic pass over the biography timeline and ego network, using the cached primary-page extract and any related Wikipedia articles as the verification corpus. It returns a typed, combined review containing issue lists and proposed event and network edits, so timeline prose, metadata, chapter structure, relationship chips, and cross-file consistency can be assessed together. The output also records overall and balance assessments plus a concise change summary for downstream application or review.",
-        "why_this_design": "Reviewing both datasets in one request exposes discrepancies that separate passes would miss, such as a significant person named in an event but absent from the network or duplicated context across an event and relationship tooltip. The function returns proposed changes rather than mutating either input, preserving a high-confidence gate before edits are applied; schema parsing and completion checks reject incomplete or malformed critic output."
+        "what_it_does": "Takes an already written background report, splits it into nonblank paragraphs, and asks for the one or two points where the subject genuinely changes. It then inserts approved headings as Markdown level-two lines immediately before those paragraphs, preserving every word of the reviewed prose; if no placement survives validation, it returns the original report exactly.",
+        "why_this_design": "The step separates structural labeling from writing because older reports have already been reviewed; adding standalone lines is safer than regenerating prose to accommodate headings. Placement and count are enforced again in code so malformed, duplicate, or overabundant structured output cannot alter the corpus."
+      }
+    },
+    "p_review": {
+      "fingerprint": "8fb3353850df8198",
+      "summary": {
+        "constraints": [
+          "Event titles must be 5–10 words and no more than 100 characters; descriptions target 500–800 words and must be plain text without Markdown.",
+          "Relationship descriptions are limited to 1–2 sentences; category summaries must interpret the circle rather than enumerate already visible names.",
+          "Every factual claim should be verifiable in the supplied Wikipedia sources; unsupported claims must be flagged low confidence with a supporting article citation where available.",
+          "Event anchor dates cannot change; only a demonstrated later end may be proposed as `new_date_end` in YYYY, YYYY-MM, or YYYY-MM-DD form. Locations require exactly one `primary` entry and no coordinates."
+        ],
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Audits generated life-event slides and ego-network data together against the cached Wikipedia extract and related-article material. It returns a typed combined review covering metadata, individual events, chapters, conclusion, connections, balance, proposed event and network changes, and a change summary; downstream automation is intended to apply only high-confidence corrections.",
+        "why_this_design": "Reviewing both datasets in one pass exposes cross-file mismatches that separate critiques would miss, such as a consequential person named in an event but absent from the network. Structured parsing rejects incomplete or schema-invalid reviews rather than passing free-form criticism into the change pipeline."
       }
     },
     "p_review_style": {
@@ -593,17 +607,17 @@
       }
     },
     "p_translate": {
-      "fingerprint": "7e78a524e74afb9a",
+      "fingerprint": "f724148a5858a013",
       "summary": {
         "constraints": [
-          "Return the same JSON structure; every array must retain exactly the input length and order, with output item N translating input item N.",
-          "Preserve Markdown exactly, including links, emphasis, and line breaks.",
-          "For each `[[term|display]]` marker, preserve the syntax and `term` exactly, translate only `display`, retain every source marker exactly once, and add no markers; annotation term keys remain unchanged.",
-          "Apply glossary forms consistently to listed person names; leave all other person names unchanged. Use established target-language place names, except where supplied reference evidence specifies the observed form."
+          "Return the same JSON structure; every array must retain exactly the input length and order.",
+          "Translate meaning, tone, and register naturally; do not summarize, extend, or omit content.",
+          "Preserve Markdown exactly, including links, emphasis, line breaks, and existing \"## \" heading lines.",
+          "Keep each existing [[term|display]] marker exactly once; preserve term keys and marker syntax, translate only display text, and never add markers."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Sends only the extracted, translatable text fields from a person document for translation and parses the result into the caller’s required structured schema. It asks for native-sounding biographical prose while applying a person-name glossary, standard target-language place names, optional language-specific style rules, and optional reference evidence showing spellings used by a target-language source. The translated fields can then be merged back onto an unchanged English-document copy, leaving nontext data such as identifiers, dates, coordinates, and URLs outside the translation request.",
-        "why_this_design": "The extract–translate–merge boundary prevents structural or factual fields from drifting during translation. Reference-derived spellings outrank the generic place-name rule and remembered forms, which anchors names to observed target-language usage while limiting each evidence entry to the exact string it covers."
+        "what_it_does": "Translates the text-only fields extracted from a person-related document into the target language and returns them in the same structured shape. The translated payload can then be merged back onto an English-document copy, leaving nontextual values such as dates, coordinates, URLs, and IDs outside the translation path. It supplies person-name glossary mappings, target-language style rules, and optional source-derived naming evidence for people, places, and institutions.",
+        "why_this_design": "Translation is constrained to an extracted payload rather than the full record, protecting immutable structured data during merge. Source-derived naming evidence outranks the general place-name rule and the translator’s recollection, reducing invented or incorrectly localized names while still preserving qualifiers in longer place strings."
       }
     },
     "p_weights": {

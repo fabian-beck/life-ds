@@ -99,15 +99,21 @@ export function getThumbnailUrl(imageOrPortrait, width = 400) {
     // so snap to an allowed standard size.
     const stdWidth = snapToWikimediaWidth(width);
 
+    // The Commons API hands its URLs back with `?utm_source=...` attached, and
+    // a size is appended to the *path*: left on, the tracking ends up in the
+    // middle of the address and the picture 404s. It carries nothing the
+    // reader needs, so it goes.
+    const cleanUrl = imageUrl.split("?")[0];
+
     // Check if URL is already a thumbnail
-    if (imageUrl.includes("/thumb/")) {
+    if (cleanUrl.includes("/thumb/")) {
       // URL is already a thumbnail - just adjust the size
       // Example: .../thumb/a/b/File.svg/800px-File.svg.png -> .../thumb/a/b/File.svg/500px-File.svg.png
-      return imageUrl.replace(/\/\d+px-([^/]+)$/, `/${stdWidth}px-$1`);
+      return cleanUrl.replace(/\/\d+px-([^/]+)$/, `/${stdWidth}px-$1`);
     }
 
     // Convert full URL to thumbnail URL
-    const parts = imageUrl.split("/wikipedia/commons/");
+    const parts = cleanUrl.split("/wikipedia/commons/");
     if (parts.length === 2) {
       const [base, path] = parts;
       const filename = path.split("/").pop();
@@ -229,7 +235,98 @@ export function getPublicationSource(eventClass, authorName, language = "en") {
  * @returns {Array} Image objects with url and, where known, caption and credit
  */
 export function getBackgroundImages(event) {
-  return Array.isArray(event?.background_images)
-    ? event.background_images.filter((image) => image?.url)
-    : [];
+  if (!Array.isArray(event?.background_images)) return [];
+  // The searches are told to leave the event's own pictures alone and the
+  // candidate list drops them, but a picture that reached the reader twice —
+  // once above the fold and once under it — is exactly what the layer is not
+  // allowed to be, so the rule is held here as well as at generation.
+  const onTheSlide = new Set(
+    getValidImages(event?.images)
+      .map((image) =>
+        imageFileKey(typeof image === "string" ? image : image?.url)
+      )
+      .filter(Boolean)
+  );
+  const shown = new Set();
+  return event.background_images.filter((image) => {
+    const key = imageFileKey(image?.url);
+    if (!key || onTheSlide.has(key) || shown.has(key)) return false;
+    shown.add(key);
+    return true;
+  });
+}
+
+/**
+ * A hosted image identified by the file it is, not by the size asked for.
+ *
+ * Commons serves the same file at any width, so the slide's copy and the
+ * report's copy of one photograph differ only in a `640px-` prefix and a query
+ * string. Comparing URLs would call them two pictures.
+ * @param {string} url - Image URL
+ * @returns {string} A key two sizes of the same file share
+ */
+function imageFileKey(url) {
+  if (typeof url !== "string" || !url) return "";
+  const name = decodeURIComponent(url.split("?")[0].split("/").pop() ?? "");
+  return name.replace(/^\d+px-/, "").toLowerCase();
+}
+
+/**
+ * Every picture in one story, in reading order, as the lightbox pages them.
+ *
+ * The portrait first, then each event's own picture followed by whatever
+ * illustrates the report under it: a reader who opens a picture from the depth
+ * layer arrives in the same gallery as one who opened it from a slide, next to
+ * the pictures of the same event, rather than in a lightbox holding one image
+ * with nowhere to page to.
+ * @param {Object} portrait - The story's portrait, if it has one
+ * @param {Array} eventSlides - Event slides in story order
+ * @param {Map<number, number>} eventIndexToSlideIndex - Where each event sits
+ * @returns {Array} Image objects carrying their event's identity
+ */
+export function collectStoryImages(
+  portrait,
+  eventSlides = [],
+  eventIndexToSlideIndex = new Map()
+) {
+  const credited = (image) => ({
+    url: image.url,
+    caption: image.caption || null,
+    source: image.source || null,
+    creator: image.creator || null,
+    license: image.license || null,
+    licenseUrl: image.licenseUrl || null,
+  });
+
+  const images =
+    portrait?.image || portrait?.full
+      ? [
+          {
+            // Full-size for the viewer; the slide shows the thumbnail.
+            ...credited({ ...portrait, url: portrait.full || portrait.image }),
+            eventIndex: -1,
+            eventTitle: null,
+            eventDate: null,
+            slideIndex: 0,
+          },
+        ]
+      : [];
+
+  for (const slide of eventSlides) {
+    const slideIndex = eventIndexToSlideIndex.get(slide.eventIndex) ?? -1;
+    const own = getValidImages(slide.images).map((image) =>
+      typeof image === "string" ? { url: image } : image
+    );
+    for (const image of [...own, ...getBackgroundImages(slide)]) {
+      images.push({
+        ...credited(image),
+        eventIndex: slide.eventIndex,
+        eventTitle: slide.title,
+        eventDate: slide.date,
+        slideIndex,
+      });
+    }
+  }
+
+  return images;
 }

@@ -1,29 +1,60 @@
 <script>
   import { mdiChevronUp, mdiOpenInNew } from "@mdi/js";
   import { _ } from "../stores/language";
-  import { getThumbnailUrl, sourceLabel } from "../utils/storyHelpers.js";
+  import {
+    getThumbnailUrl,
+    parseBackgroundBlocks,
+    sourceLabel,
+  } from "../utils/storyHelpers.js";
 
   export let slide = {};
   export let depth = null;
+  export let egoNetwork = null;
+  export let subjectName = null;
   export let onEnlargeImage = () => {};
   export let onReturnToEvent = () => {};
 
-  // The report Phase 2 wrote, as its paragraphs. It is the whole of the layer's
-  // text: everything else an event knows is said by something on the slide
-  // above — a popup, a chip, the map — and was taken out of here rather than
-  // said twice.
-  $: paragraphs = (depth?.background ?? "")
-    .split(/\n\s*\n/)
-    .map((block) => block.trim())
-    .filter(Boolean);
+  // The report Phase 2 wrote, as the page it is set as: its section headings,
+  // its paragraphs, and the people its own life's network knows named inside
+  // them. It is the whole of the layer's text: everything else an event knows
+  // is said by something on the slide above — a popup, a chip, the map — and
+  // was taken out of here rather than said twice.
+  $: blocks = parseBackgroundBlocks(
+    depth?.background ?? "",
+    egoNetwork?.connections ?? [],
+    subjectName
+  );
+  $: paragraphCount = blocks.filter(
+    (block) => block.type === "paragraph"
+  ).length;
 
-  // The pictures are dealt out between the paragraphs rather than banked at the
-  // top, so the report reads as an illustrated page. The first goes after the
-  // opening paragraph, where a chapter would put it, and never before the
-  // reader has read anything.
+  // The pictures are dealt out along the report rather than banked at the top,
+  // so it reads as an illustrated page. They are spaced across the paragraphs
+  // instead of following the first few: three pictures under the opening three
+  // paragraphs of a five-paragraph report is a gallery with a tail of text.
   $: figures = depth?.illustrations ?? [];
-  function figureAfter(index) {
-    return index === 0 ? (figures[0] ?? null) : (figures[index] ?? null);
+  $: figurePlacement = placeFigures(figures, paragraphCount);
+
+  /**
+   * Which paragraph each picture follows, keyed by the paragraph's position.
+   * Nothing is placed under the closing paragraph while there is room
+   * elsewhere: that paragraph belongs to the sources and the way back up.
+   */
+  function placeFigures(pictures, paragraphs) {
+    const placement = new Map();
+    if (!pictures.length || paragraphs < 1) return placement;
+    const preferredLast = Math.max(paragraphs - 2, 0);
+    pictures.forEach((picture, index) => {
+      const spread =
+        Math.round(((index + 1) * paragraphs) / (pictures.length + 1)) - 1;
+      let position = Math.min(Math.max(spread, 0), preferredLast);
+      while (placement.has(position) && position < paragraphs - 1)
+        position += 1;
+      while (placement.has(position) && position > 0) position -= 1;
+      if (placement.has(position)) return; // more pictures than paragraphs
+      placement.set(position, picture);
+    });
+    return placement;
   }
 </script>
 
@@ -40,45 +71,60 @@
       <p class="depth-title">{slide.title}</p>
     {/if}
 
-    {#each paragraphs as paragraph, index (index)}
-      <p class="depth-paragraph" class:depth-lead={index === 0}>{paragraph}</p>
+    {#each blocks as block, index (index)}
+      {#if block.type === "heading"}
+        <!-- The report is long enough to have a shape, and a heading is the
+             only markup in it: a line of its own, naming what the paragraphs
+             under it are about. -->
+        <h3 class="depth-section">{block.text}</h3>
+      {:else}
+        {@const position = blocks
+          .slice(0, index)
+          .filter((earlier) => earlier.type === "paragraph").length}
+        <p class="depth-paragraph" class:depth-lead={position === 0}>
+          <!-- prettier-ignore -->
+          {#each block.segments as segment}{#if segment.type === "person"}<strong
+                class="person-mention">{segment.content}</strong
+              >{:else}{segment.content}{/if}{/each}
+        </p>
 
-      {#if figureAfter(index)}
-        {@const image = figureAfter(index)}
-        <figure class="depth-figure">
-          <button
-            type="button"
-            class="depth-figure-button"
-            on:click={() => onEnlargeImage(image, slide)}
-            aria-label={$_("story.enlarge_image")}
-          >
-            <img
-              src={getThumbnailUrl(image.url, 800)}
-              alt=""
-              loading="lazy"
-              decoding="async"
-            />
-          </button>
-          {#if image.caption || image.creator || image.license}
-            <figcaption>
-              {#if image.caption}<span>{image.caption}</span>{/if}
-              <!-- The credit the lightbox carries, printed where the reader
+        {#if figurePlacement.has(position)}
+          {@const image = figurePlacement.get(position)}
+          <figure class="depth-figure">
+            <button
+              type="button"
+              class="depth-figure-button"
+              on:click={() => onEnlargeImage(image, slide)}
+              aria-label={$_("story.enlarge_image")}
+            >
+              <img
+                src={getThumbnailUrl(image.url, 800)}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+            {#if image.caption || image.creator || image.license}
+              <figcaption>
+                {#if image.caption}<span>{image.caption}</span>{/if}
+                <!-- The credit the lightbox carries, printed where the reader
                    does not have to open anything to read it. -->
-              {#if image.creator || image.license}
-                <span class="figure-credit"
-                  >{#if image.creator}{image.creator}{/if}{#if image.creator && image.license}<span
-                      aria-hidden="true">&#32;·&#32;</span
-                    >{/if}{#if image.license}{#if image.licenseUrl}<a
-                        class="depth-link"
-                        href={image.licenseUrl}
-                        target="_blank"
-                        rel="noreferrer">{image.license}</a
-                      >{:else}{image.license}{/if}{/if}</span
-                >
-              {/if}
-            </figcaption>
-          {/if}
-        </figure>
+                {#if image.creator || image.license}
+                  <span class="figure-credit"
+                    >{#if image.creator}{image.creator}{/if}{#if image.creator && image.license}<span
+                        aria-hidden="true">&#32;·&#32;</span
+                      >{/if}{#if image.license}{#if image.licenseUrl}<a
+                          class="depth-link"
+                          href={image.licenseUrl}
+                          target="_blank"
+                          rel="noreferrer">{image.license}</a
+                        >{:else}{image.license}{/if}{/if}</span
+                  >
+                {/if}
+              </figcaption>
+            {/if}
+          </figure>
+        {/if}
       {/if}
     {/each}
 
@@ -130,8 +176,9 @@
     flex-direction: column;
   }
 
-  /* No card, no rules, no icons, no headings, and above all no line per
-     record: this is a short chapter of background, and it is set like one. The
+  /* No card, no rules, no icons, and above all no line per record: this is a
+     short chapter of background, and it is set like one — prose, its own
+     headings where it turns, and the pictures between its paragraphs. The
      measure is narrower than the slide's, because this is the one place in the
      app with more than a few sentences to run. */
   .depth-prose {
@@ -175,6 +222,29 @@
      than the ones that follow it. */
   .depth-lead {
     color: rgba(241, 245, 249, 0.96);
+  }
+
+  /* A heading here divides prose; it does not announce a new screen. It is set
+     barely larger than the text it stands over, and its space above it is what
+     actually does the dividing. */
+  .depth-section {
+    margin: 0.9rem 0 -0.35rem;
+    font-family: var(--story-heading-font, Inter, sans-serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    color: var(--story-primary, #f8fafc);
+    text-wrap: balance;
+  }
+
+  /* The same treatment the event's own description gives a name the network
+     knows, so a person reads as a person on both screens. The chip belongs to
+     the event above; this is emphasis, not an affordance. */
+  .depth-paragraph .person-mention {
+    font-weight: bold;
+    color: rgba(241, 245, 249, 0.98);
+    text-shadow: 0 0 4px var(--story-secondary, rgba(56, 189, 248, 0.25));
   }
 
   .depth-figure {

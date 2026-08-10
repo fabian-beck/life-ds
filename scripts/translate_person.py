@@ -429,6 +429,30 @@ def _reconcile_markers(kind: str, source: str, translated: str) -> str:
     return repaired
 
 
+_HEADING_LINE_RE = re.compile(r"^#{1,6}\s+\S", re.MULTILINE)
+
+
+def _reconcile_headings(source: str, translated: Optional[str]) -> Optional[str]:
+    """Return the translated report, saying so when its headings went missing.
+
+    A background report may be divided by ``## `` lines, and the interface sets
+    those as headings and everything else as prose. Losing one in translation
+    costs a reader a division, not a link into a table, so unlike an annotation
+    marker it is not worth discarding a whole document over — but a German
+    reader silently getting the undivided version is worth a line in the log.
+    """
+    if translated is None:
+        return None
+    expected = len(_HEADING_LINE_RE.findall(source or ""))
+    found = len(_HEADING_LINE_RE.findall(translated))
+    if expected != found:
+        print(
+            f"  Warning: background headings changed in translation "
+            f"({expected} in the source, {found} in the translation)"
+        )
+    return translated
+
+
 def _set_if_source_has(target: Dict[str, Any], key: str, value: Optional[str]) -> None:
     """Overwrite target[key] only if the source document had that field."""
     if key in target and value is not None:
@@ -480,7 +504,13 @@ def apply_life_events_translations(
                 "event.description", event.get("description") or "", tr_description
             )
         _set_if_source_has(event, "description", tr_description)
-        _set_if_source_has(event, "background", tr_event.get("background"))
+        _set_if_source_has(
+            event,
+            "background",
+            _reconcile_headings(
+                event.get("background") or "", tr_event.get("background")
+            ),
+        )
         _set_if_source_has(event, "date_note", tr_event.get("date_note"))
 
         src_locations = [
@@ -1117,6 +1147,11 @@ GENERAL RULES:
    - Preserve the full meaning, tone, and register faithfully; do not summarize,
      extend, or omit — but likeness of wording to the English is NOT a goal.
 3. Preserve Markdown formatting exactly (links, emphasis, line breaks).
+   A background report may be divided by section headings: a line of its own
+   opening with "## ". Translate the heading text, keep the "## " and the line
+   break around it, and never add a heading the source does not have or drop
+   one it does — the interface sets those lines as headings and the paragraphs
+   between them as prose.
 4. Descriptions may contain [[term|display]] annotation markers:
    - Keep the marker syntax and the term (before the |) EXACTLY as-is.
    - Translate ONLY the display text (after the |).

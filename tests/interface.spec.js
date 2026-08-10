@@ -680,10 +680,26 @@ test("an important event opens downward, and the map gives way to it", async ({
   for (const explanation of explanations) {
     expect(layer).not.toContain(explanation);
   }
-  // Prose, not a card: no headings and no definition list anywhere in it.
-  expect(await slide.locator(".event-depth h3, .event-depth dt").count()).toBe(
-    0
-  );
+  // Prose, not a card: no definition list, no line per record. What headings
+  // there are divide the prose rather than label its parts, so they are the
+  // report's own `## ` lines and never stand above its opening paragraph.
+  expect(await slide.locator(".event-depth dt").count()).toBe(0);
+  const sections = slide.locator(".event-depth .depth-section");
+  expect(await sections.count()).toBeLessThanOrEqual(3);
+  const first = await slide.evaluate((node) => {
+    const prose = node.querySelector(".depth-prose");
+    const blocks = [...prose.children].filter((child) =>
+      child.matches(".depth-paragraph, .depth-section")
+    );
+    return blocks[0]?.className ?? "";
+  });
+  expect(first).toContain("depth-paragraph");
+  // A person the ego network knows is emphasized where the report names them,
+  // exactly as the description emphasizes them — and stays emphasis, since the
+  // chip a screen above is where a person opens.
+  const mentions = slide.locator(".event-depth .person-mention");
+  expect(await mentions.count()).toBeGreaterThan(0);
+  expect(await slide.locator(".event-depth .person-chip").count()).toBe(0);
   await expect
     .poll(async () => (await geometry()).mapOpacity)
     .toBeLessThan(0.1);

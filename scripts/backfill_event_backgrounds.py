@@ -24,6 +24,7 @@ Usage:
     python scripts/backfill_event_backgrounds.py --selection deep_events.json
     python scripts/backfill_event_backgrounds.py --overwrite        # redo filled ones
     python scripts/backfill_event_backgrounds.py --images-only      # redo illustrations
+    python scripts/backfill_event_backgrounds.py --headings-only    # divide the passages
 """
 
 from __future__ import annotations
@@ -48,8 +49,6 @@ from utils.datasets import person_ids
 from utils.json_io import read_json, write_json
 from generate_person_events import (
     CLASSIFICATION_MODELS,
-    filter_images_by_quality,
-    search_wikimedia_commons,
     PEOPLE_DIR,
     PHASE2_MODEL,
     PHASE2_REASONING_EFFORT,
@@ -59,6 +58,7 @@ from generate_person_events import (
     build_phase2_prompt_base,
     build_phase2_prompt_classified,
     filter_related_articles_for_event,
+    illustrate_event,
 )
 from utils.model_calls import parse_structured
 from utils.wikipedia_cache import get_cache_dir
@@ -90,7 +90,9 @@ class BackgroundOnly(BaseModel):
             "A background report for this event, 350-550 words in 3-5 "
             "paragraphs separated by blank lines: the situation it sat in, the "
             "concrete specifics, a scene or episode told at length, and what "
-            "came of it. Prose for a reader, not a list. Null when the sources "
+            "came of it. One or two '## Section heading' lines may divide it "
+            "where it turns to a different thing, never above the first "
+            "paragraph. Prose for a reader, not a list. Null when the sources "
             "give nothing beyond the description."
         ),
     )
@@ -313,6 +315,7 @@ def backfill_person(
     overwrite: bool = False,
     dry_run: bool = False,
     images_only: bool = False,
+    headings_only: bool = False,
 ) -> int:
     """Fill the passage for one person. Returns how many events were written.
 
@@ -321,6 +324,11 @@ def backfill_person(
     thin, a Commons search is right or a steam engine — and tuning the picture
     critic by rewriting every report is both expensive and a way of never
     seeing whether the critic improved.
+
+    ``headings_only`` divides passages already on disk, and touches nothing
+    else. Phase 2 writes the headings itself now, but the reports written
+    before it did are good reports, and rewriting them to gain a heading is a
+    way of losing prose that has already been reviewed.
     """
     path = PEOPLE_DIR / person_id / "life_events.json"
     data = read_json(path)
@@ -336,10 +344,11 @@ def backfill_person(
         index
         for index, event in enumerate(events)
         if (wanted is None or index in wanted)
-        and (
-            (event.get("background") or "").strip()
-            if images_only
-            else (overwrite or not (event.get("background") or "").strip())
+        and _wanted_here(
+            event,
+            overwrite=overwrite,
+            images_only=images_only,
+            headings_only=headings_only,
         )
     ]
     if not targets:
@@ -358,9 +367,19 @@ def backfill_person(
         title = str(event.get("title", "")).encode("ascii", "replace").decode("ascii")
         print(f"  {person_id}[{index}] {title}")
 
+        if headings_only:
+            passage = (event.get("background") or "").strip()
+            divided = _with_headings(client, passage)
+            if divided == passage:
+                print("    left whole; it runs as one argument")
+                continue
+            event["background"] = divided
+            written += 1
+            continue
+
         if images_only:
             passage = (event.get("background") or "").strip()
-            _illustrate(client, event, passage, _image_queries(client, passage))
+            illustrate_event(client, event, passage, _image_queries(client, passage))
             written += 1
             continue
 
@@ -401,7 +420,7 @@ def backfill_person(
             print(f"    sources: {event.get('sources')} -> {chosen}")
             event["sources"] = chosen
 
-        _illustrate(client, event, passage, parsed.background_image_queries)
+        illustrate_event(client, event, passage, parsed.background_image_queries)
         written += 1
 
     if written:
@@ -411,28 +430,138 @@ def backfill_person(
     return written
 
 
-def _illustrate(
-    client: OpenAI,
+def _wanted_here(
     event: Dict[str, Any],
-    report: str,
-    queries: List[str],
-) -> None:
-    """Put the report's illustrations on the event, or take them off."""
-    shown = {
-        _image_key(image.get("url", ""))
-        for image in (event.get("images") or [])
-        if isinstance(image, dict)
-    }
-    pictures = (
-        _fetch_background_images(client, report, queries, shown) if queries else []
+    *,
+    overwrite: bool,
+    images_only: bool,
+    headings_only: bool,
+) -> bool:
+    """Whether this event is one the requested pass has work to do on."""
+    passage = (event.get("background") or "").strip()
+    if headings_only:
+        # A report that is already divided is left alone: the pass adds
+        # headings to prose that has none, and asking it again would only
+        # relabel what a reviewer has already seen.
+        return bool(passage) and (overwrite or not _HEADING.search(passage))
+    if images_only:
+        return bool(passage)
+    return overwrite or not passage
+
+
+# A section heading in a report: its own line, opened by a Markdown ``##``.
+# The report is otherwise plain prose, and this is the only markup in it.
+_HEADING = re.compile(r"^##\s+\S", re.MULTILINE)
+
+
+class ReportHeading(BaseModel):
+    """One heading, and the paragraph it stands above."""
+
+    before_paragraph: int = Field(
+        description=(
+            "The number of the paragraph this heading introduces, as numbered "
+            "in the report below. Never 1: the reader has just arrived from "
+            "the event and wants prose before a label."
+        )
     )
-    if pictures:
-        event["background_images"] = pictures
-        for picture in pictures:
-            print(f"    image: {picture['query']} -> {picture['caption'][:60]}")
-    else:
-        event.pop("background_images", None)
-        print("    no illustrations found for the report")
+    heading: str = Field(
+        description=(
+            "Two to five words naming what the paragraphs under it are about. "
+            "The thing itself, never the part of the report it is."
+        )
+    )
+
+
+class ReportHeadings(BaseModel):
+    """Where a report already on disk divides, if it divides at all."""
+
+    headings: List[ReportHeading] = Field(
+        default_factory=list,
+        description=(
+            "One or two headings, in paragraph order. Empty when the report "
+            "runs as a single argument."
+        ),
+    )
+
+
+def _with_headings(client: OpenAI, report: str) -> str:
+    """The report with section headings inserted, or exactly as it came.
+
+    The prose is not touched. A heading is a line of its own between two
+    paragraphs, so this pass can only add lines — which is the point: these
+    reports were written and reviewed before the interface could show a
+    heading, and rewriting a good report to gain one is a poor trade.
+    """
+    paragraphs = [
+        block.strip() for block in re.split(r"\n\s*\n", report) if block.strip()
+    ]
+    if len(paragraphs) < 3:
+        return report
+
+    listing = "\n\n".join(
+        f"[{number}] {paragraph}" for number, paragraph in enumerate(paragraphs, 1)
+    )
+    parsed = parse_structured(
+        client,
+        model=DEFAULT_MODEL,
+        reasoning_effort=DEFAULT_REASONING_EFFORT,
+        input=[
+            {
+                "role": "system",
+                "content": (
+                    "You divide a piece of written background into sections. "
+                    "You add nothing and rewrite nothing: you say where it "
+                    "turns, and what it turns to."
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    "Give this report one or two section headings, so a reader "
+                    "scrolling it can see its shape.\n\n"
+                    "A heading goes above the paragraph where the report turns "
+                    "to a genuinely different thing. Never above paragraph 1. "
+                    "Never one per paragraph. If the report runs as a single "
+                    "argument, return none — that is a normal answer, and a "
+                    "heading over every paragraph is worse than no heading at "
+                    "all.\n"
+                    "Two to five words, in the report's own language, naming "
+                    "the thing rather than the section:\n"
+                    "- GOOD: 'The bombe on the floor', 'What Bletchley kept "
+                    "quiet'\n"
+                    "- BAD: 'Background', 'Aftermath', 'Introduction', "
+                    "'The situation'\n\n"
+                    f"REPORT:\n{listing}\n"
+                ),
+            },
+        ],
+        text_format=ReportHeadings,
+        label="Headings for a background report",
+    )
+    if parsed is None or not parsed.headings:
+        return report
+
+    # At most one heading per paragraph, never above the first, and at most two
+    # in a report this short — the model is asked for all three and the count
+    # is held here, where a stray answer cannot reach the corpus.
+    placed: Dict[int, str] = {}
+    for heading in parsed.headings:
+        text = " ".join(str(heading.heading or "").split()).strip("#").strip()
+        position = heading.before_paragraph
+        if not text or position < 2 or position > len(paragraphs):
+            continue
+        if position in placed or len(placed) >= 2:
+            continue
+        placed[position] = text
+    if not placed:
+        return report
+
+    blocks: List[str] = []
+    for number, paragraph in enumerate(paragraphs, 1):
+        if number in placed:
+            blocks.append(f"## {placed[number]}")
+        blocks.append(paragraph)
+    return "\n\n".join(blocks)
 
 
 class ImageQueries(BaseModel):
@@ -479,220 +608,6 @@ def _image_queries(client: OpenAI, report: str) -> List[str]:
         label="Illustration searches for a background report",
     )
     return list(parsed.queries) if parsed else []
-
-
-# Three per report: the layer deals them out between the paragraphs, so a
-# report of four or five paragraphs can carry three without turning into a
-# gallery — and one picture on a page this long reads as a token.
-BACKGROUND_IMAGE_LIMIT = 3
-
-
-class ChosenImages(BaseModel):
-    """Which candidates, if any, actually illustrate the report."""
-
-    keep: List[int] = Field(
-        default_factory=list,
-        description=(
-            "Indexes of candidates that genuinely depict what the report "
-            "describes, best first, at most three. Empty when none do."
-        ),
-    )
-
-
-CHOOSER_SYSTEM = (
-    "You decide whether a picture illustrates a text. You are strict: a picture "
-    "that merely shares a word with the text illustrates nothing, and an "
-    "irrelevant picture printed beside a report is worse than no picture."
-)
-
-
-# A Commons description field is whatever the uploader typed there, and often
-# what they typed was their own paperwork. The layer prints the caption under
-# the picture, where "Author: Schadel URL: http://turing.izt.uam.mx Made by me
-# on..." reads as a bug.
-_CAPTION_JUNK = re.compile(
-    r"(author\s*:|source\s*:|https?://|own work|made by me|permission\s*:"
-    r"|other[_ ]versions|photographer[,:]|owner of|\{\{|\[\[)",
-    re.IGNORECASE,
-)
-
-
-def _caption(candidate: Dict[str, Any], query: str) -> str:
-    """A line fit to print under the picture.
-
-    The uploader's description when it reads like one, the filename when it
-    does not — a filename is at least always about the thing — and the query
-    when there is neither.
-    """
-    caption = " ".join(str(candidate.get("caption") or "").split())
-    if caption and not _CAPTION_JUNK.search(caption):
-        if len(caption) > 160:
-            head = caption[:160].rsplit(". ", 1)[0]
-            caption = (head + ".") if len(head) > 40 else caption[:157].rstrip() + "…"
-        return caption
-    filename = str(candidate.get("filename") or "")
-    stem = re.sub(r"\.[A-Za-z0-9]+$", "", filename).replace("_", " ").strip()
-    return stem or query
-
-
-def _candidates(queries: List[str], already_shown: set) -> List[Dict[str, Any]]:
-    """What Commons returns for the call's own queries, deduplicated.
-
-    The event's own pictures are excluded: the slide above is already showing
-    them, and an illustration the reader has just scrolled past illustrates
-    nothing. Only images carrying a license are kept, because the layer prints
-    a credit under every picture and one with no credit cannot be published.
-    """
-    found: List[Dict[str, Any]] = []
-    seen = set(already_shown)
-    for query in queries[:4]:
-        # Commons ranks by keyword match, and the thing itself is often a few
-        # places down behind a map, a modern plaque, and somebody's holiday
-        # photograph. The critic reads all of them and mostly says no, so a
-        # deeper pool costs one longer prompt and is the difference between a
-        # report with one illustration and one with three.
-        results = filter_images_by_quality(search_wikimedia_commons(query, limit=12))
-        for candidate in results[:6]:
-            url = candidate.get("url")
-            if not url or _image_key(url) in seen or not candidate.get("license"):
-                continue
-            found.append(
-                {
-                    "url": url,
-                    "caption": _caption(candidate, query),
-                    "source": candidate.get("source"),
-                    "creator": candidate.get("creator"),
-                    "license": candidate.get("license"),
-                    "query": query,
-                    # Not stored — the filename is shown to the critic and then
-                    # dropped. Commons captions are often a sentence about the
-                    # upload rather than about the subject, and the filename is
-                    # the one field that always names the thing.
-                    "_filename": candidate.get("filename") or "",
-                }
-            )
-            seen.add(_image_key(url))
-    return found
-
-
-def _fetch_background_images(
-    client: OpenAI,
-    report: str,
-    queries: List[str],
-    already_shown: set,
-    wanted: int = BACKGROUND_IMAGE_LIMIT,
-) -> List[Dict[str, Any]]:
-    """Pictures for the report: searched by its own queries, then read.
-
-    A Commons keyword search is a keyword search. Asking it for "On Computable
-    Numbers manuscript" returned a 16th-century Mexican codex, and asking after
-    Christopher Morcom returned a steam engine built by Belliss & Morcom.
-    Roughly half of what came back shared a word with the report and nothing
-    else, so what comes back is now read against the report before any of it is
-    kept, and keeping none is a normal outcome.
-    """
-    candidates = _candidates(queries, already_shown)
-    if not candidates:
-        return []
-
-    listing = "\n".join(
-        f"[{index}] {candidate['_filename'] or '(no filename)'} — {candidate['caption']}"
-        for index, candidate in enumerate(candidates)
-    )
-    parsed = parse_structured(
-        client,
-        # A critic, and config.py is explicit that a critic weaker than the
-        # generator is worse than no critic. On the small model this one kept
-        # letting the Belliss & Morcom steam engine through, which is the exact
-        # confusion its instructions name.
-        model=DEFAULT_MODEL,
-        reasoning_effort=DEFAULT_REASONING_EFFORT,
-        input=[
-            {"role": "system", "content": CHOOSER_SYSTEM},
-            {
-                "role": "user",
-                "content": (
-                    "Which of these pictures illustrate the report below?\n\n"
-                    "Each candidate is given as its Commons filename and its "
-                    "caption. Read both: a caption is often about the upload, "
-                    "and the filename is what names the thing.\n\n"
-                    "KEEP a picture that shows a thing the report actually "
-                    "names: the machine, the building, the room, the document, "
-                    "the instrument, the place. Ask of each one: could this "
-                    "picture be printed beside this paragraph with a straight "
-                    "face? If you have to explain the connection, the answer "
-                    "is no.\n"
-                    "REJECT, without exception:\n"
-                    "- a picture that merely shares a name or a word with the "
-                    "report. A firm called Morcom is not Christopher Morcom, "
-                    "and a map of the town of Banbury is not the Banbury "
-                    "sheets. A place that lent its name to a thing is not that "
-                    "thing\n"
-                    "- a map, plan, chart, or diagram of somewhere, unless the "
-                    "report is about that ground itself\n"
-                    "- a montage, collage, poster, book cover, film still, or "
-                    "'events of the year' composite: it depicts nothing in "
-                    "particular, and a film the report merely alludes to is "
-                    "not an illustration of the report\n"
-                    "- a portrait of any person, and any picture of the "
-                    "subject: the slide above already carries those\n"
-                    "- a picture of a different subject from the same era or "
-                    "field, however evocative\n"
-                    "- a modern memorial, plaque, or reenactment standing in "
-                    "for the thing itself\n"
-                    "- a present-day photograph of an institution's buildings, "
-                    "campus, or signage standing in for the institution the "
-                    "report names. A university logo on a wall is a picture of "
-                    "a wall\n"
-                    "- a generic stock photograph of an everyday object — an "
-                    "apple, a cup, a letter, a laboratory bench — standing in "
-                    "for the particular one the report describes. The report's "
-                    "apple was a particular apple in a particular room, and "
-                    "anybody's apple is not a picture of it\n"
-                    "- a picture whose caption is about some later incident at "
-                    "the place (building works, a protest, a fire) rather than "
-                    "the place in the role the report gives it\n"
-                    "Keep at most three, and every one you keep must show a "
-                    "DIFFERENT thing: two photographs of the same machine are "
-                    "one illustration printed twice, so keep the better one "
-                    "and move on. Best first.\n"
-                    "THREE IS A CEILING, NOT A TARGET. Do not reach for it. "
-                    "One picture that plainly shows what the report describes "
-                    "beats three that gesture at it, and keeping none is a "
-                    "normal answer.\n\n"
-                    f"REPORT:\n{report}\n\n"
-                    f"CANDIDATES:\n{listing}\n"
-                ),
-            },
-        ],
-        text_format=ChosenImages,
-        label="Illustrations for a background report",
-    )
-    if parsed is None:
-        return []
-
-    # One picture per query, enforced here rather than asked for: the two
-    # queries are the two things the report wanted illustrated, so taking two
-    # answers to the same one prints the same thing twice — which is what kept
-    # happening with the Manchester Mark I no matter how the instruction was
-    # worded.
-    kept: List[Dict[str, Any]] = []
-    used_queries = set()
-    for index in parsed.keep:
-        if not 0 <= index < len(candidates) or len(kept) >= wanted:
-            continue
-        candidate = candidates[index]
-        if candidate["query"] in used_queries:
-            continue
-        used_queries.add(candidate["query"])
-        kept.append({k: v for k, v in candidate.items() if not k.startswith("_")})
-    return kept
-
-
-def _image_key(url: str) -> str:
-    """A Commons file identified by its filename, not by the size asked for."""
-    name = unquote(str(url or "")).split("/")[-1].split("?")[0]
-    return re.sub(r"^\d+px-", "", name).lower()
 
 
 def _propagate_sources(person_id: str, events: List[Dict[str, Any]]) -> None:
@@ -747,6 +662,11 @@ def main() -> int:
         help="Keep the passages on disk and redo only their illustrations.",
     )
     parser.add_argument(
+        "--headings-only",
+        action="store_true",
+        help="Keep the passages on disk and only divide them with headings.",
+    )
+    parser.add_argument(
         "--dry-run", action="store_true", help="Say what would be filled, call nothing."
     )
     args = parser.parse_args()
@@ -777,6 +697,7 @@ def main() -> int:
             overwrite=args.overwrite,
             dry_run=args.dry_run,
             images_only=args.images_only,
+            headings_only=args.headings_only,
         )
 
     print(f"\nWrote {total} passage(s).")

@@ -930,8 +930,9 @@ STEPS: List[Step] = [
         "Illustrate a background report",
         PERSON,
         AI,
-        "backfill_event_backgrounds.py",
-        "_fetch_background_images",
+        "generate_person_events.py",
+        "fetch_background_images",
+        phase_label="Phase 3d",
         summary=(
             "The report says what it would like a picture of; Commons is asked "
             "for each, and this call reads what came back against the report "
@@ -945,13 +946,44 @@ STEPS: List[Step] = [
             "often the uploader's paperwork; and one picture per query is "
             "enforced in code, since two photographs of the same machine are "
             "one illustration printed twice. Three is a ceiling, not a target, "
-            "and keeping none is a normal outcome."
+            "and keeping none is a normal outcome. It runs after the event's "
+            "own picture is assigned, which is what lets it exclude it: an "
+            "illustration the reader scrolled past a screen ago illustrates "
+            "nothing."
         ),
-        depends_on=[Dep("p_backgrounds", "the report, and the searches it asked for")],
-        prompts=["_fetch_background_images"],
+        depends_on=[
+            Dep("p_events_p2", "the report, and the searches it asked for"),
+            Dep("p_img_match", "the event's own picture, to keep out of them"),
+        ],
+        prompts=["fetch_background_images"],
         inputs=["life_events"],
         outputs=["life_events"],
-        calls_per_run="0 in a generation run; 1 per report illustrated",
+        calls_per_run="1 per report illustrated",
+        model_from="generate_person_events.py",
+    ),
+    Step(
+        "p_report_headings",
+        "Divide a background report",
+        PERSON,
+        AI,
+        "backfill_event_backgrounds.py",
+        "_with_headings",
+        summary=(
+            "Phase 2 writes its own headings now, into a report of 350-550 "
+            "words that reads better with a shape. The reports written before "
+            "it did are good reports, and rewriting one to gain a heading "
+            "trades reviewed prose for a label, so this pass adds the lines "
+            "and touches nothing else: it is shown the paragraphs, numbered, "
+            "and answers with at most two headings and the paragraph each "
+            "stands above. Never above the first — the reader has just arrived "
+            "from the event — and returning none is a normal answer for a "
+            "report that runs as one argument."
+        ),
+        depends_on=[Dep("p_backgrounds", "the report, as it stands on disk")],
+        prompts=["_with_headings"],
+        inputs=["life_events"],
+        outputs=["life_events"],
+        calls_per_run="0 in a generation run; 1 per report divided",
         model_from="backfill_event_backgrounds.py",
     ),
     Step(

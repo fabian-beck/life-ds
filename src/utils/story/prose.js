@@ -246,3 +246,88 @@ export function parseDescriptionSegments(
 
   return segments;
 }
+
+/**
+ * The background report as the page it is set as: its headings, its
+ * paragraphs, and inside a paragraph the people this life's network knows.
+ *
+ * The report is plain prose with one piece of markup in it, a `## ` line for a
+ * section heading, and it is the one text in the application long enough to
+ * need them. The names are emphasized the way the event's own description
+ * emphasizes them — the same matcher, the same treatment — so a reader meets
+ * Christopher Morcom the same way whichever screen they are on. They are
+ * emphasis and not chips: the chip belongs to the event above, where the
+ * person was actually involved, and a report ranging over a decade names
+ * people the event never did.
+ * @param {string} background - The report, as the generator wrote it
+ * @param {Array} people - Connection objects from the ego network
+ * @param {string} [subjectName] - The story's own subject, whose name stays
+ *   plain: this is their story, and there is nothing to point them at
+ * @returns {Array} Blocks: {type: 'heading', text} | {type: 'paragraph', segments}
+ */
+export function parseBackgroundBlocks(
+  background,
+  people = [],
+  subjectName = null
+) {
+  if (typeof background !== "string" || !background.trim()) return [];
+
+  const subject = subjectName
+    ? { person_name: subjectName, isSubject: true }
+    : null;
+  const candidates = subject ? [...people, subject] : people;
+
+  const blocks = [];
+  for (const raw of background.split(/\n\s*\n/)) {
+    const block = raw.trim();
+    if (!block) continue;
+
+    const heading = block.match(/^#{1,6}\s+(.*)$/);
+    if (heading) {
+      const text = heading[1].trim();
+      if (text) blocks.push({ type: "heading", text });
+      continue;
+    }
+
+    blocks.push({
+      type: "paragraph",
+      segments: segmentBackgroundParagraph(block, candidates),
+    });
+  }
+  return blocks;
+}
+
+/**
+ * One paragraph of the report, split into plain text and emphasized names.
+ * @param {string} paragraph - Paragraph text
+ * @param {Array} candidates - People to match, the subject among them
+ * @returns {Array} Segments: {type: 'text'|'person', content, person?}
+ */
+function segmentBackgroundParagraph(paragraph, candidates) {
+  const matches = findPersonMentions(paragraph, candidates)
+    // The subject competes for their own name so that a shared surname comes
+    // out ambiguous rather than handed to a relative, and then stays plain.
+    .filter((match) => !match.person?.isSubject);
+  if (matches.length === 0) return [{ type: "text", content: paragraph }];
+
+  const segments = [];
+  let cursor = 0;
+  for (const match of matches) {
+    if (match.start > cursor) {
+      segments.push({
+        type: "text",
+        content: paragraph.slice(cursor, match.start),
+      });
+    }
+    segments.push({
+      type: "person",
+      content: paragraph.slice(match.start, match.end),
+      person: match.person,
+    });
+    cursor = match.end;
+  }
+  if (cursor < paragraph.length) {
+    segments.push({ type: "text", content: paragraph.slice(cursor) });
+  }
+  return segments;
+}

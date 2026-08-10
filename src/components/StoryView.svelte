@@ -34,7 +34,7 @@
     resolveEventIcon,
     computeYearsLabel,
     createDateFormatters,
-    getValidImages,
+    collectStoryImages,
     getMigrationPath,
     getEventDepth,
     hasBackgroundReport,
@@ -405,46 +405,11 @@
   }
 
   // Flattened collection of all images across the story with event metadata
-  $: allImages = [
-    // Portrait from overview slide (if exists)
-    ...(portrait?.image || portrait?.full
-      ? [
-          {
-            url: portrait.full || portrait.image, // Use full-size for image viewer
-            caption: portrait.caption || null,
-            source: portrait.source || null,
-            creator: portrait.creator || null,
-            license: portrait.license || null,
-            licenseUrl: portrait.licenseUrl || null,
-            eventIndex: -1,
-            eventTitle: null,
-            eventDate: null,
-            slideIndex: 0,
-          },
-        ]
-      : []),
-    // All event images
-    ...eventSlides.flatMap((slide) =>
-      getValidImages(slide.images).map((img) => {
-        const imgObj = typeof img === "string" ? { url: img } : img;
-        // Find the actual slide index for this event
-        const actualSlideIndex =
-          eventIndexToSlideIndex.get(slide.eventIndex) ?? -1;
-        return {
-          url: imgObj.url,
-          caption: imgObj.caption || null,
-          source: imgObj.source || null,
-          creator: imgObj.creator || null,
-          license: imgObj.license || null,
-          licenseUrl: imgObj.licenseUrl || null,
-          eventIndex: slide.eventIndex,
-          eventTitle: slide.title,
-          eventDate: slide.date,
-          slideIndex: actualSlideIndex,
-        };
-      })
-    ),
-  ];
+  $: allImages = collectStoryImages(
+    portrait,
+    eventSlides,
+    eventIndexToSlideIndex
+  );
 
   // Track the last activeIndex value to detect external changes (e.g., from browser history)
   let lastPropActiveIndex = activeIndex;
@@ -1598,6 +1563,8 @@
               <EventDepth
                 {slide}
                 depth={getEventDepth(slide, egoNetwork)}
+                {egoNetwork}
+                subjectName={personName}
                 onEnlargeImage={enlargeImage}
                 onReturnToEvent={() => scrollSlideTo("fold")}
               />

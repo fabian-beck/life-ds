@@ -151,10 +151,17 @@ def document_paths(person_dir: Path) -> List[Path]:
 
 
 def images_in(data: Dict[str, Any]) -> Iterable[Dict[str, Any]]:
+    """Every picture an event carries — its own, and its report's.
+
+    The depth layer prints the credit under each illustration rather than
+    behind a lightbox, so a background image missing its license is a license
+    condition unmet on the one screen that shows it in the open.
+    """
     for event in data.get("events") or []:
-        for image in event.get("images") or []:
-            if isinstance(image, dict):
-                yield image
+        for key in ("images", "background_images"):
+            for image in event.get(key) or []:
+                if isinstance(image, dict):
+                    yield image
 
 
 def person_dirs(person_ids: List[str]) -> List[Path]:
