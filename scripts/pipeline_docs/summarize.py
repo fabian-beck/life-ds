@@ -228,6 +228,9 @@ def summarize_steps(
 
         model = DEFAULT_MODEL
 
+    from config import BULK_REASONING_EFFORT
+    from utils.model_calls import parse_structured
+
     fresh = 0
     written = 0
     for step in spec.STEPS:
@@ -243,28 +246,26 @@ def summarize_steps(
             continue
         if verbose:
             print(f"  Summarizing {step.id} ({step.label})...")
-        try:
-            response = client.responses.parse(
-                model=model,
-                input=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": context},
-                ],
-                text_format=StepSummary,
-            )
-            parsed = response.output_parsed
-            if parsed is None:
-                raise RuntimeError("no parsed output")
-            summary = parsed.model_dump()
-            summary["source"] = model
-            entries[step.id] = {"fingerprint": fingerprint, "summary": summary}
-            results[step.id] = summary
-            written += 1
-        except Exception as error:
-            print(
-                f"  WARNING: summary for '{step.id}' failed ({error}); using spec text."
-            )
+        parsed = parse_structured(
+            client,
+            model=model,
+            reasoning_effort=BULK_REASONING_EFFORT,
+            input=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": context},
+            ],
+            text_format=StepSummary,
+            label=f"Step summary ({step.id})",
+        )
+        if parsed is None:
+            print(f"  Falling back to the spec text for '{step.id}'.")
             results[step.id] = (cached or {}).get("summary") or _fallback(step)
+            continue
+        summary = parsed.model_dump()
+        summary["source"] = model
+        entries[step.id] = {"fingerprint": fingerprint, "summary": summary}
+        results[step.id] = summary
+        written += 1
 
     # Drop entries for steps that no longer exist, so a renamed or removed step
     # does not keep paying for cache space and reading as current.

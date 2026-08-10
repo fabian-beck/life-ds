@@ -11,6 +11,7 @@ from openai import OpenAI
 from pydantic import BaseModel, Field
 
 from config import BULK_MODEL, LOW_REASONING_EFFORT
+from utils.model_calls import parse_structured
 from utils.text import slugify
 from utils.wikipedia_cache import (
     cache_exists,
@@ -266,34 +267,27 @@ Return exactly {max_to_select} article titles about PEOPLE and LIFE EVENTS, orde
 
     system = "You are an expert research librarian specializing in biographical context and Wikipedia article analysis."
 
-    try:
-        response = client.responses.parse(
-            model=model,
-            reasoning=cast(Any, {"effort": LOW_REASONING_EFFORT}),
-            input=[
-                {"role": "system", "content": system},
-                {"role": "user", "content": prompt},
-            ],
-            text_format=SelectedArticles,
-        )
-
-        if response.status != "completed" or not response.output_parsed:
-            print("    Warning: AI selection failed, using simple filtering")
-            return candidate_titles[:max_to_select]
-
-        # Extract selected titles
-        selected_titles = response.output_parsed.selected_titles
-
-        # Print selections
-        print(f"    AI selected {len(selected_titles)} articles:")
-        for i, title in enumerate(selected_titles, 1):
-            print(f"      {i}. {title}")
-
-        return selected_titles[:max_to_select]
-
-    except Exception as error:
-        print(f"    Warning: AI selection failed ({error}), using simple filtering")
+    parsed = parse_structured(
+        client,
+        model=model,
+        reasoning_effort=LOW_REASONING_EFFORT,
+        input=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": prompt},
+        ],
+        text_format=SelectedArticles,
+        label="Article selection",
+    )
+    if parsed is None:
+        print("    Using simple filtering instead")
         return candidate_titles[:max_to_select]
+
+    selected_titles = parsed.selected_titles
+    print(f"    AI selected {len(selected_titles)} articles:")
+    for i, title in enumerate(selected_titles, 1):
+        print(f"      {i}. {title}")
+
+    return selected_titles[:max_to_select]
 
 
 def fetch_related_articles(

@@ -149,5 +149,58 @@ class ParseStructuredTests(unittest.TestCase):
         self.assertIn("a phase", said)
 
 
+class ParseStructuredOrRaiseTests(unittest.TestCase):
+    """The variant for phases that must stop rather than write a stub.
+
+    Curation cannot absorb a ``None``: a dataset with no events, or a review
+    that reports nothing, would be written to disk and read later as a
+    finding. These phases raised before the wrapper existed and still do.
+    """
+
+    def setUp(self) -> None:
+        patcher = patch.object(model_calls.time, "sleep")
+        self.slept = patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def _call(self, client: Mock):
+        return model_calls.parse_structured_or_raise(
+            client,
+            model="gpt-test",
+            reasoning_effort="low",
+            input=[{"role": "user", "content": "hello"}],
+            text_format=Answer,
+            label="a phase",
+        )
+
+    def test_a_parsed_answer_is_returned_unwrapped(self) -> None:
+        self.assertEqual(self._call(_client(_ok("yes"))).value, "yes")
+
+    def test_giving_up_raises_rather_than_returning_none(self) -> None:
+        with patch("builtins.print"):
+            with self.assertRaises(model_calls.ModelCallFailed):
+                self._call(_client(_status_error(400)))
+
+    def test_the_reason_travels_with_the_exception(self) -> None:
+        # The log line is far from where a caller reports the failure, so the
+        # exception has to carry the phase and the cause on its own.
+        with patch("builtins.print"):
+            with self.assertRaises(model_calls.ModelCallFailed) as caught:
+                self._call(_client(_refused("I can't help with that")))
+        message = str(caught.exception)
+        self.assertIn("a phase", message)
+        self.assertIn("refused", message)
+
+    def test_it_retries_before_it_raises(self) -> None:
+        # The point of routing these sites through the wrapper: a rate limit
+        # mid-run used to kill the phase outright.
+        client = _client(_status_error(429), _ok("recovered"))
+        with patch("builtins.print"):
+            self.assertEqual(self._call(client).value, "recovered")
+        self.assertEqual(client.responses.parse.call_count, 2)
+
+    def test_it_is_a_runtime_error_for_callers_that_still_catch_one(self) -> None:
+        self.assertTrue(issubclass(model_calls.ModelCallFailed, RuntimeError))
+
+
 if __name__ == "__main__":
     unittest.main()

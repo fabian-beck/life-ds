@@ -12,10 +12,11 @@ from typing import Any, Dict, List, Optional, Set, Tuple, cast
 from urllib.parse import unquote, urlparse
 
 import requests
-from openai import APIStatusError, OpenAI
+from openai import OpenAI
 from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from utils.model_calls import parse_structured_or_raise
 from utils.text import slugify
 from utils.wikipedia_cache import (
     get_cached_wikipedia_page,
@@ -498,49 +499,18 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "- Plain prose only: no markdown, no bullet lists, no headings."
     )
 
-    try:
-        # Use modern Responses API with structured outputs
-        response = client.responses.parse(
-            model=model,
-            reasoning=cast(Any, {"effort": DEFAULT_REASONING_EFFORT}),
-            input=[
-                {"role": "system", "content": system},
-                {"role": "user", "content": instructions},
-                {"role": "user", "content": prompt},
-            ],
-            text_format=EgoNetwork,
-        )
-    except APIStatusError as error:
-        message = ""
-        try:
-            # error.response is an httpx.Response, which has no .get(); the body
-            # has to be parsed first. Any failure here (non-JSON body, unexpected
-            # shape) just means falling back to the exception's own text.
-            message = error.response.json().get("error", {}).get("message", "")
-        except Exception:
-            message = str(error)
-        raise RuntimeError(
-            "OpenAI API request failed. Verify the model name, account access, and billing status. "
-            f"Details: {error.status_code} {message}"
-        ) from error
-
-    # Handle different response statuses
-    if response.status == "failed":
-        error_msg = (
-            f"Response generation failed: {response.error}"
-            if response.error
-            else "Unknown error"
-        )
-        raise RuntimeError(error_msg)
-    elif response.status != "completed":
-        raise RuntimeError(f"Response has unexpected status: {response.status}")
-
-    # Parse the structured output from the Responses API
-    parsed = response.output_parsed
-    if parsed is None:
-        raise RuntimeError("Failed to parse structured output from model")
-
-    # Convert Pydantic model to dict
+    parsed = parse_structured_or_raise(
+        client,
+        model=model,
+        reasoning_effort=DEFAULT_REASONING_EFFORT,
+        input=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": instructions},
+            {"role": "user", "content": prompt},
+        ],
+        text_format=EgoNetwork,
+        label="Ego network",
+    )
     return parsed.model_dump()
 
 

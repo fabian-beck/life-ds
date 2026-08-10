@@ -13,8 +13,7 @@ import sys
 from pathlib import Path
 from typing import Dict, Any, List, Optional, cast
 
-from openai import OpenAI, APIStatusError
-from pydantic import ValidationError
+from openai import OpenAI
 
 # Add parent directory to path for imports. Everything below resolves through
 # it, so these imports have to follow the insert — hence the E402 waivers.
@@ -26,6 +25,7 @@ from config import (  # noqa: E402
     LOW_REASONING_EFFORT,
 )
 from generate_person_events import enrich_event_coordinates_v2  # noqa: E402
+from utils.model_calls import parse_structured_or_raise  # noqa: E402
 from utils.review_models import (  # noqa: E402
     CombinedReviewOutput,
     StyleReviewOutput,
@@ -214,31 +214,16 @@ def review_combined(
         events_data, network_data or {}, wiki_text, related_articles
     )
 
-    try:
-        # Call AI with structured output
-        response = client.responses.parse(
-            model=model,
-            reasoning=cast(Any, {"effort": reasoning_effort}),
-            input=[{"role": "user", "content": prompt}],
-            text_format=CombinedReviewOutput,
-        )
-
-        if response.status != "completed" or not response.output_parsed:
-            raise RuntimeError(
-                "Failed to parse structured output from model (Combined review)"
-            )
-
-        review_output = response.output_parsed
-        print(f"  * Review complete: {review_output.change_summary}")
-
-        return review_output
-
-    except APIStatusError as e:
-        print(f"  X API error during combined review: {e}")
-        raise
-    except ValidationError as e:
-        print(f"  X Validation error in combined review output: {e}")
-        raise
+    review_output = parse_structured_or_raise(
+        client,
+        model=model,
+        reasoning_effort=reasoning_effort,
+        input=[{"role": "user", "content": prompt}],
+        text_format=CombinedReviewOutput,
+        label="Combined review",
+    )
+    print(f"  * Review complete: {review_output.change_summary}")
+    return review_output
 
 
 def review_style(
@@ -267,30 +252,16 @@ def review_style(
 
     prompt = get_style_review_prompt(style_data, events_data)
 
-    try:
-        response = client.responses.parse(
-            model=model,
-            reasoning=cast(Any, {"effort": reasoning_effort}),
-            input=[{"role": "user", "content": prompt}],
-            text_format=StyleReviewOutput,
-        )
-
-        if response.status != "completed" or not response.output_parsed:
-            raise RuntimeError(
-                "Failed to parse structured output from model (Style review)"
-            )
-
-        review_output = response.output_parsed
-        print(f"  * Style review complete: {review_output.change_summary}")
-
-        return review_output
-
-    except APIStatusError as e:
-        print(f"  X API error during style review: {e}")
-        raise
-    except ValidationError as e:
-        print(f"  X Validation error in style review output: {e}")
-        raise
+    review_output = parse_structured_or_raise(
+        client,
+        model=model,
+        reasoning_effort=reasoning_effort,
+        input=[{"role": "user", "content": prompt}],
+        text_format=StyleReviewOutput,
+        label="Style review",
+    )
+    print(f"  * Style review complete: {review_output.change_summary}")
+    return review_output
 
 
 def review_person_data(

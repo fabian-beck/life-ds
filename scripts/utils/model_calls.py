@@ -22,7 +22,10 @@ delay; the second returns immediately.
 the model produced nothing usable — for any reason, already logged with the
 phase's name. Callers decide what that means, because only they know: some fall
 back to a deterministic answer, some skip an optional section, and curation
-stops the run rather than let a story keep every event of every life.
+stops the run rather than let a story keep every event of every life. The
+phases in that last group call :func:`parse_structured_or_raise`, which is the
+same call ending in a :class:`ModelCallFailed` instead of a ``None`` nobody
+downstream would know how to interpret.
 
 The parsed object is *not* validated here beyond its schema. Identifiers still
 have to be matched against real entities, and lists against the source they
@@ -54,6 +57,14 @@ _shared_client: Optional[OpenAI] = None
 
 class MissingApiKey(RuntimeError):
     """OPENAI_API_KEY is not set, so no model can be called."""
+
+
+class ModelCallFailed(RuntimeError):
+    """A call that had to succeed did not.
+
+    Subclasses RuntimeError because that is what the phases raised when each
+    of them classified its own API errors, and their callers still catch it.
+    """
 
 
 def get_client() -> OpenAI:
@@ -136,6 +147,70 @@ def parse_structured(
     calls says which one gave up. ``attempts`` bounds only the retryable
     failures; a refusal or a bad request ends the call at once.
     """
+    parsed, _ = _parse_structured(
+        client,
+        model=model,
+        reasoning_effort=reasoning_effort,
+        input=input,
+        text_format=text_format,
+        label=label,
+        attempts=attempts,
+    )
+    return parsed
+
+
+def parse_structured_or_raise(
+    client: OpenAI,
+    *,
+    model: str,
+    reasoning_effort: str,
+    input: Sequence[Dict[str, Any]],
+    text_format: Type[ParsedT],
+    label: str,
+    attempts: int = DEFAULT_ATTEMPTS,
+) -> ParsedT:
+    """The same call for the phases that must stop the run rather than go on.
+
+    Most callers can absorb a ``None``: an optional section is skipped, a
+    deterministic answer stands in, a batch is left unrated. Curation cannot.
+    A person's dataset with no events, a network with no ties, a review that
+    reports nothing — each is worse than no output at all, because it would be
+    written to disk and read later as a finding.
+
+    Those phases raised before this wrapper existed and still do. What changes
+    is that they now retry the failures worth retrying first, and that the
+    reason they give is the same sentence every other phase would have logged.
+    """
+    parsed, reason = _parse_structured(
+        client,
+        model=model,
+        reasoning_effort=reasoning_effort,
+        input=input,
+        text_format=text_format,
+        label=label,
+        attempts=attempts,
+    )
+    if parsed is None:
+        raise ModelCallFailed(f"{label} produced no usable result: {reason}")
+    return parsed
+
+
+def _parse_structured(
+    client: OpenAI,
+    *,
+    model: str,
+    reasoning_effort: str,
+    input: Sequence[Dict[str, Any]],
+    text_format: Type[ParsedT],
+    label: str,
+    attempts: int = DEFAULT_ATTEMPTS,
+) -> "tuple[Optional[ParsedT], str]":
+    """The call itself, paired with the reason it gave up.
+
+    The reason is already printed on the way out, so ``parse_structured``
+    drops it; only the raising variant needs it a second time, to put in the
+    exception a caller will surface far from this log line.
+    """
     messages: List[Dict[str, Any]] = [dict(message) for message in input]
     last_error = ""
 
@@ -148,18 +223,19 @@ def parse_structured(
                 text_format=text_format,
             )
         except Exception as error:  # noqa: BLE001 — classified immediately below
+            reason = f"{type(error).__name__}: {error}"
             if not is_retryable(error):
-                print(f"  Error: {label} failed: {type(error).__name__}: {error}")
-                return None
-            last_error = f"{type(error).__name__}: {error}"
+                print(f"  Error: {label} failed: {reason}")
+                return None, reason
+            last_error = reason
         else:
             parsed = getattr(response, "output_parsed", None)
             if parsed is not None:
-                return cast(ParsedT, parsed)
+                return cast(ParsedT, parsed), ""
             refusal = _refusal(response)
             if refusal:
                 print(f"  Error: {label} was refused: {refusal}")
-                return None
+                return None, f"the model refused: {refusal}"
             last_error = _why_empty(response)
 
         if attempt < attempts:
@@ -167,4 +243,4 @@ def parse_structured(
             time.sleep(BACKOFF_SECONDS * attempt)
 
     print(f"  Error: {label} failed after {attempts} attempt(s): {last_error}")
-    return None
+    return None, last_error

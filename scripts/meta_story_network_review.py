@@ -35,6 +35,8 @@ from typing import Any, Dict, List, Literal, Optional, Tuple
 
 from pydantic import BaseModel, Field
 
+from utils.model_calls import parse_structured
+
 try:  # Package-style import (scripts/ on sys.path)
     from utils.wikipedia_cache import load_from_cache
 except Exception:  # pragma: no cover - fallback for unusual import setups
@@ -529,29 +531,26 @@ def review_social_network(
         )
         print(f"  Main-subgraph density {edges}/{possible} = {density:.2f} ({label})")
 
-    try:
-        response = client.responses.parse(
-            model=model,
-            reasoning={"effort": reasoning_effort},
-            input=[
-                {
-                    "role": "system",
-                    "content": "You are a careful biographical network editor. "
-                    "You add, refine, and prune social-network ties strictly from "
-                    "the evidence provided, never inventing people or unsupported "
-                    "connections. You write in American English.",
-                },
-                {"role": "user", "content": prompt},
-            ],
-            text_format=NetworkReview,
-        )
-        review = response.output_parsed
-        if review is None:
-            if verbose:
-                print("  Network review returned no result, keeping derived network")
-            return network
-    except Exception as e:
-        print(f"Warning: network review failed: {e}")
+    review = parse_structured(
+        client,
+        model=model,
+        reasoning_effort=reasoning_effort,
+        input=[
+            {
+                "role": "system",
+                "content": "You are a careful biographical network editor. "
+                "You add, refine, and prune social-network ties strictly from "
+                "the evidence provided, never inventing people or unsupported "
+                "connections. You write in American English.",
+            },
+            {"role": "user", "content": prompt},
+        ],
+        text_format=NetworkReview,
+        label="Network review",
+    )
+    if review is None:
+        if verbose:
+            print("  Keeping the derived network")
         return network
 
     return apply_review(network, review, verbose=verbose)

@@ -50,6 +50,7 @@ AI_CALL_SUFFIXES: Dict[Tuple[str, ...], str] = {
     ("images", "generate"): "images.generate",
     ("images", "edit"): "images.edit",
     ("parse_structured",): "responses.parse",
+    ("parse_structured_or_raise",): "responses.parse",
 }
 
 TRANSPORT_MODULE = "model_calls.py"

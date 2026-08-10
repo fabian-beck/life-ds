@@ -33,7 +33,7 @@ from typing import (
 from urllib.parse import quote, unquote
 
 import requests
-from openai import APIStatusError, OpenAI
+from openai import OpenAI
 from pydantic import BaseModel, Field
 
 from config import (
@@ -48,7 +48,11 @@ from icon_categories import (
     format_icon_categories_for_prompt,
     normalize_icon,
 )
-from utils.model_calls import get_client, parse_structured
+from utils.model_calls import (
+    get_client,
+    parse_structured,
+    parse_structured_or_raise,
+)
 from utils.json_io import write_json
 from utils.text import slugify
 from utils.wikipedia_cache import (
@@ -2136,25 +2140,22 @@ def generate_image_search_strings(
 
     client = get_client()
 
-    try:
-        response = client.responses.parse(
-            model=model,
-            reasoning=cast(Any, {"effort": PHASE3_IMAGE_SEARCH_REASONING}),
-            input=[
-                {
-                    "role": "system",
-                    "content": "You are an expert at crafting search queries for Wikimedia Commons to find historically relevant images for biographical timelines.",
-                },
-                {"role": "user", "content": prompt},
-            ],
-            text_format=ImageSearchStrings,
-        )
-
-        if response.status == "completed" and response.output_parsed:
-            return response.output_parsed.search_strings[:20]
-
-    except Exception as e:
-        print(f"    Warning: Search string generation failed: {e}")
+    parsed = parse_structured(
+        client,
+        model=model,
+        reasoning_effort=PHASE3_IMAGE_SEARCH_REASONING,
+        input=[
+            {
+                "role": "system",
+                "content": "You are an expert at crafting search queries for Wikimedia Commons to find historically relevant images for biographical timelines.",
+            },
+            {"role": "user", "content": prompt},
+        ],
+        text_format=ImageSearchStrings,
+        label="Image search strings",
+    )
+    if parsed is not None:
+        return parsed.search_strings[:20]
 
     # Fallback
     return [person_name]
@@ -2310,9 +2311,10 @@ def match_images_to_events(
     client = get_client()
 
     try:
-        response = client.responses.parse(
+        result = parse_structured(
+            client,
             model=model,
-            reasoning=cast(Any, {"effort": PHASE3_IMAGE_MATCH_REASONING}),
+            reasoning_effort=PHASE3_IMAGE_MATCH_REASONING,
             input=[
                 {
                     "role": "system",
@@ -2325,12 +2327,11 @@ def match_images_to_events(
                 {"role": "user", "content": prompt},
             ],
             text_format=ImageAssignmentResult,
+            label="Image matching",
         )
 
-        if response.status != "completed" or not response.output_parsed:
+        if result is None:
             return {}, None
-
-        result = response.output_parsed
 
         # Extract portrait selection
         portrait_image: Optional[Dict[str, Any]] = None
@@ -3058,46 +3059,18 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "Examples: 'Father of Computer Science', 'The First Programmer', 'Architect of Relativity', 'Pioneer of Structured Programming'."
     )
 
-    try:
-        response = client.responses.parse(
-            model=model,
-            reasoning=cast(Any, {"effort": PHASE1_REASONING_EFFORT}),
-            input=[
-                {"role": "system", "content": system},
-                {"role": "user", "content": instructions},
-                {"role": "user", "content": prompt},
-            ],
-            text_format=LifePlan,
-        )
-    except APIStatusError as error:
-        message = ""
-        try:
-            # error.response is an httpx.Response, which has no .get(); the body
-            # has to be parsed first. Any failure here (non-JSON body, unexpected
-            # shape) just means falling back to the exception's own text.
-            message = error.response.json().get("error", {}).get("message", "")
-        except Exception:
-            message = str(error)
-        raise RuntimeError(
-            "OpenAI API request failed (Phase 1). Verify model name, account access, and billing status. "
-            f"Details: {error.status_code} {message}"
-        ) from error
-
-    if response.status == "failed":
-        error_msg = (
-            f"Response generation failed: {response.error}"
-            if response.error
-            else "Unknown error"
-        )
-        raise RuntimeError(f"Phase 1 AI call failed: {error_msg}")
-    elif response.status != "completed":
-        raise RuntimeError(
-            f"Phase 1: Response has unexpected status: {response.status}"
-        )
-
-    parsed = response.output_parsed
-    if parsed is None:
-        raise RuntimeError("Failed to parse structured output from model (Phase 1)")
+    parsed = parse_structured_or_raise(
+        client,
+        model=model,
+        reasoning_effort=PHASE1_REASONING_EFFORT,
+        input=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": instructions},
+            {"role": "user", "content": prompt},
+        ],
+        text_format=LifePlan,
+        label="Phase 1",
+    )
 
     # Ensure events are sorted chronologically (defensive programming)
     parsed.event_skeletons.sort(key=lambda e: e.date)

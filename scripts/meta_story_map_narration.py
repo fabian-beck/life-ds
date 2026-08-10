@@ -43,7 +43,7 @@ from __future__ import annotations
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, cast
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -53,6 +53,7 @@ from meta_story_map import (
     cluster_located_events,
     collect_located_events,
 )
+from utils.model_calls import parse_structured
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 META_STORIES_DIR = DATA_DIR / "meta_stories"
@@ -201,36 +202,32 @@ is. Rate every event; copy each event_id verbatim.
 EVENTS:
 {listing}"""
 
-        try:
-            response = client.responses.parse(
-                model=model,
-                reasoning={"effort": reasoning_effort},
-                input=[
-                    {
-                        "role": "system",
-                        "content": "You rate how strongly biographical events "
-                        "anchor a story geographically, judging strictly from "
-                        "the given material.",
-                    },
-                    {"role": "user", "content": prompt},
-                ],
-                text_format=MapEventRatings,
-            )
-            parsed = response.output_parsed
-            if parsed is None:
-                print("Warning: map event rating returned no result for a batch")
-                continue
-            valid_ids = {e["id"] for e in batch}
-            for rating in parsed.ratings:
-                if rating.event_id in valid_ids:
-                    weights[rating.event_id] = float(rating.weight)
-                    if verbose:
-                        print(
-                            f"    [{rating.weight}] {rating.event_id}: "
-                            f"{rating.reason}"
-                        )
-        except Exception as e:
-            print(f"Warning: map event rating failed for a batch: {e}")
+        parsed = parse_structured(
+            client,
+            model=model,
+            reasoning_effort=reasoning_effort,
+            input=[
+                {
+                    "role": "system",
+                    "content": "You rate how strongly biographical events "
+                    "anchor a story geographically, judging strictly from "
+                    "the given material.",
+                },
+                {"role": "user", "content": prompt},
+            ],
+            text_format=MapEventRatings,
+            label="Map event rating",
+        )
+        if parsed is None:
+            # One unrated batch leaves its events at their default weight
+            # rather than dropping the whole map narration.
+            continue
+        valid_ids = {e["id"] for e in batch}
+        for rating in parsed.ratings:
+            if rating.event_id in valid_ids:
+                weights[rating.event_id] = float(rating.weight)
+                if verbose:
+                    print(f"    [{rating.weight}] {rating.event_id}: {rating.reason}")
 
     return weights
 
@@ -316,26 +313,23 @@ REQUIREMENTS:
   at the audience, no references to scrolling, zooming, or the map as an
   interface. Write in the third person, about the people and places."""
 
-    try:
-        response = client.responses.parse(
-            model=model,
-            reasoning={"effort": reasoning_effort},
-            input=[
-                {
-                    "role": "system",
-                    "content": "You are a skilled narrative writer turning "
-                    "geographic event data into short, factual story texts, "
-                    "and a careful curator of which places truly matter. "
-                    "Write in American English.",
-                },
-                {"role": "user", "content": prompt},
-            ],
-            text_format=MapNarrationResult,
-        )
-        return cast(Optional[MapNarrationResult], response.output_parsed)
-    except Exception as e:
-        print(f"Warning: map narration failed: {e}")
-        return None
+    return parse_structured(
+        client,
+        model=model,
+        reasoning_effort=reasoning_effort,
+        input=[
+            {
+                "role": "system",
+                "content": "You are a skilled narrative writer turning "
+                "geographic event data into short, factual story texts, "
+                "and a careful curator of which places truly matter. "
+                "Write in American English.",
+            },
+            {"role": "user", "content": prompt},
+        ],
+        text_format=MapNarrationResult,
+        label="Map narration",
+    )
 
 
 def apply_map_narration(

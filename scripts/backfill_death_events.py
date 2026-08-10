@@ -29,7 +29,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
-from typing import Any, Dict, Optional, cast
+from typing import Any, Dict, Optional
 
 from config import (
     BULK_MODEL,
@@ -39,7 +39,7 @@ from config import (
     enable_utf8_console,
 )
 from generate_person_events import DeathClassification, find_death_event_index
-from utils.model_calls import MissingApiKey, get_client
+from utils.model_calls import MissingApiKey, get_client, parse_structured
 from utils.datasets import event_files, person_ids
 from utils.json_io import read_json, write_json
 
@@ -90,27 +90,20 @@ def extract_death_facts(
         print("    ⚠ OPENAI_API_KEY is not set — classifying without a cause")
         return None
 
-    try:
-        response = client.responses.parse(
-            model=model,
-            reasoning=cast(Any, {"effort": LOW_REASONING_EFFORT}),
-            input=[
-                {"role": "system", "content": EXTRACTION_SYSTEM},
-                {
-                    "role": "user",
-                    "content": build_extraction_prompt(person_name, event),
-                },
-            ],
-            text_format=DeathClassification,
-        )
-    except Exception as error:  # noqa: BLE001 - non-fatal by design
-        print(f"    ⚠ Extraction failed ({type(error).__name__}: {error})")
-        return None
-
-    if response.status != "completed" or response.output_parsed is None:
-        print(f"    ⚠ Extraction returned no result (status: {response.status})")
-        return None
-    return response.output_parsed
+    return parse_structured(
+        client,
+        model=model,
+        reasoning_effort=LOW_REASONING_EFFORT,
+        input=[
+            {"role": "system", "content": EXTRACTION_SYSTEM},
+            {
+                "role": "user",
+                "content": build_extraction_prompt(person_name, event),
+            },
+        ],
+        text_format=DeathClassification,
+        label="Death extraction",
+    )
 
 
 def build_death_class(

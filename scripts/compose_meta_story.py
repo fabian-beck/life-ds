@@ -125,6 +125,7 @@ from config import (
 )
 from meta_story_map import MIN_MAP_CLUSTERS
 from utils.json_io import write_json
+from utils.model_calls import parse_structured
 from meta_story_network import derive_clusters
 from meta_story_network_review import build_wikipedia_context
 
@@ -859,46 +860,46 @@ subject of a sentence."""
     if verbose:
         print(f"  Prompt: {len(prompt)} characters")
 
-    try:
-        response = client.responses.parse(
-            model=model,
-            reasoning=cast(Any, {"effort": reasoning_effort}),
-            input=[
-                {
-                    "role": "system",
-                    "content": "You are a journalist composing a biographical "
-                    "data story from the material you are given. You never "
-                    "invent facts, and you write in American English.",
-                },
-                {"role": "user", "content": prompt},
-            ],
-            text_format=CompositionResult,
-        )
-        result = response.output_parsed
-        if result is None:
-            print("Warning: composition returned no parsed result")
-            return None
-        if verbose:
-            print(f"  Throughline: {result.throughline}")
-            print(f"  Composed title: {result.title} — {result.tagline}")
-            print(
-                "  Section headings: "
-                f"{result.section_headings.timeline} / "
-                f"{result.section_headings.network} / "
-                f"{result.section_headings.map or '-'} / "
-                f"{result.section_headings.conclusion}"
-            )
-            print(
-                "  Prose blocks: "
-                + ", ".join(
-                    f"{region}: {len(result.blocks(region))}"
-                    for region in result.reading_order(available_sections(dataset))
-                )
-            )
-        return result
-    except Exception as e:
-        print(f"Warning: composition call failed: {e}")
+    result = parse_structured(
+        client,
+        model=model,
+        reasoning_effort=reasoning_effort,
+        input=[
+            {
+                "role": "system",
+                "content": "You are a journalist composing a biographical "
+                "data story from the material you are given. You never "
+                "invent facts, and you write in American English.",
+            },
+            {"role": "user", "content": prompt},
+        ],
+        text_format=CompositionResult,
+        label="Meta story composition",
+    )
+    if result is None:
         return None
+
+    # Deliberately not guarded: the call's own failures are the wrapper's now,
+    # and the block below only logs. Catching here as well would let a broken
+    # log line throw away a composition the model got right.
+    if verbose:
+        print(f"  Throughline: {result.throughline}")
+        print(f"  Composed title: {result.title} — {result.tagline}")
+        print(
+            "  Section headings: "
+            f"{result.section_headings.timeline} / "
+            f"{result.section_headings.network} / "
+            f"{result.section_headings.map or '-'} / "
+            f"{result.section_headings.conclusion}"
+        )
+        print(
+            "  Prose blocks: "
+            + ", ".join(
+                f"{region}: {len(result.blocks(region))}"
+                for region in result.reading_order(available_sections(dataset))
+            )
+        )
+    return result
 
 
 # ============================================================================
