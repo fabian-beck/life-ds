@@ -2,33 +2,12 @@
   import { mdiWikipedia } from "@mdi/js";
   import { _, currentLanguage } from "../stores/language";
   import { displayName } from "../utils/helpers.js";
-  import { computeYearsLabel } from "../utils/story/dates.js";
-  import { getThumbnailUrl } from "../utils/story/images.js";
-  import SeparatedList from "./SeparatedList.svelte";
+  import PersonCard from "./PersonCard.svelte";
 
   export let conclusion = null;
   export let relatedPersons = [];
   export let allSources = [];
   export let personStylesRegistry = null;
-
-  // Format lifespan for a person. `language` is a parameter rather than a
-  // store read so the template's `{@const}` re-runs when it changes.
-  function formatLifespan(person, language) {
-    if (!person) return "";
-    return computeYearsLabel(person, language);
-  }
-
-  // Get initials from name for fallback
-  function initialsFromName(name) {
-    if (!name) return "?";
-    return name
-      .replace(/_/g, " ")
-      .split(" ")
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((word) => word[0].toUpperCase())
-      .join("");
-  }
 
   // Get style for a specific person
   function getPersonStyle(personId) {
@@ -129,55 +108,12 @@
         <h3 class="related-headline">{$_("conclusion.related_persons")}</h3>
         <div class="related-persons-grid">
           {#each relatedPersons as { person } (person.id)}
-            {@const lifespan = formatLifespan(person, $currentLanguage)}
-            {@const relatedPersonStyle = getPersonStyle(person.id)}
-            {@const roles = Array.isArray(person.primaryRoles)
-              ? person.primaryRoles
-              : []}
-            <a
+            <PersonCard
+              {person}
+              personStyle={getPersonStyle(person.id)}
               href="#/story/{person.id}"
-              class="related-person-card"
-              style="--card-primary: {relatedPersonStyle?.primary ||
-                '#f8fafc'}; --card-secondary: {relatedPersonStyle?.secondary ||
-                '#38bdf8'}; --card-heading-font: {relatedPersonStyle?.headingFont
-                ? `'${relatedPersonStyle.headingFont}', Inter, sans-serif`
-                : 'var(--story-heading-font, Inter, sans-serif)'}; --card-body-font: {relatedPersonStyle?.bodyFont
-                ? `'${relatedPersonStyle.bodyFont}', Inter, sans-serif`
-                : 'var(--story-body-font, Inter, sans-serif)'};"
-              aria-label={`Open life story for ${displayName(person.name)}`}
-            >
-              {#if person?.portrait?.image}
-                <figure class="person-thumb">
-                  <img
-                    src={getThumbnailUrl(person.portrait, 120)}
-                    srcset={`${getThumbnailUrl(person.portrait, 120)} 1x, ${getThumbnailUrl(person.portrait, 240)} 2x`}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </figure>
-              {:else}
-                <figure class="person-thumb">
-                  <div class="thumb-fallback" aria-hidden="true">
-                    {initialsFromName(person.name)}
-                  </div>
-                </figure>
-              {/if}
-              <div class="card-info">
-                <h4 class="card-name">{displayName(person.name)}</h4>
-                {#if lifespan}
-                  <p class="card-years">{lifespan}</p>
-                {/if}
-                {#if roles.length > 0}
-                  <p class="card-roles">
-                    <SeparatedList
-                      items={roles}
-                      styleConfig={relatedPersonStyle}
-                    />
-                  </p>
-                {/if}
-              </div>
-            </a>
+              ariaLabel={`Open life story for ${displayName(person.name)}`}
+            />
           {/each}
         </div>
       </div>
@@ -312,135 +248,12 @@
     gap: 1rem;
     width: 100%;
     max-width: 600px;
-  }
-
-  .related-person-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    padding: 0.375rem 0.75rem 1rem;
-    background: rgba(15, 23, 42, 0.95);
-    border-radius: 0.5rem;
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    text-decoration: none;
-    color: inherit;
-    transition:
-      transform 0.2s ease,
-      background 0.2s ease,
-      border-color 0.2s ease;
-    cursor: pointer;
-    isolation: isolate;
-  }
-
-  .related-person-card:hover,
-  .related-person-card:focus {
-    transform: translateY(-2px);
-    background: rgb(15, 23, 42);
-    outline: none;
-  }
-
-  .person-thumb {
-    width: 130px;
-    aspect-ratio: 2 / 3;
-    overflow: hidden;
-    margin: 0;
-    flex-shrink: 0;
-    mix-blend-mode: lighten;
-  }
-
-  .person-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    mix-blend-mode: lighten;
-    mask-image: radial-gradient(
-      ellipse 45% 55% at center,
-      rgba(0, 0, 0, 1) 35%,
-      rgba(0, 0, 0, 0.95) 50%,
-      rgba(0, 0, 0, 0.7) 65%,
-      rgba(0, 0, 0, 0.35) 78%,
-      rgba(0, 0, 0, 0) 90%
-    );
-    -webkit-mask-image: radial-gradient(
-      ellipse 45% 55% at center,
-      rgba(0, 0, 0, 1) 35%,
-      rgba(0, 0, 0, 0.95) 50%,
-      rgba(0, 0, 0, 0.7) 65%,
-      rgba(0, 0, 0, 0.35) 78%,
-      rgba(0, 0, 0, 0) 90%
-    );
-  }
-
-  .thumb-fallback {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.75rem;
-    font-weight: 600;
-    color: rgba(148, 163, 184, 0.6);
-    background: rgba(15, 23, 42, 0.5);
-  }
-
-  .card-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    align-items: center;
-    text-align: center;
-    margin-top: -1.25rem;
-  }
-
-  .card-name {
-    font-family: var(
-      --card-heading-font,
-      var(--story-heading-font, Inter, sans-serif)
-    );
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.2;
-    color: var(--card-primary, #f8fafc);
-    margin: 0;
-    text-shadow:
-      0 1px 4px rgba(0, 0, 0, 0.8),
-      0 1px 2px rgba(0, 0, 0, 0.9);
-  }
-
-  .card-years {
-    font-family: var(
-      --card-body-font,
-      var(--story-body-font, Inter, sans-serif)
-    );
-    font-size: 0.75rem;
-    line-height: 1.3;
-    color: var(--card-secondary, #38bdf8);
-    margin: 0;
-    font-weight: 500;
-    text-shadow:
-      0 1px 4px rgba(0, 0, 0, 0.8),
-      0 1px 2px rgba(0, 0, 0, 0.9);
-  }
-
-  .card-roles {
-    font-family: var(
-      --card-body-font,
-      var(--story-body-font, Inter, sans-serif)
-    );
-    font-size: 0.75rem;
-    line-height: 1.3;
-    color: rgba(226, 232, 240, 0.8);
-    margin: 0;
-    text-shadow:
-      0 1px 4px rgba(0, 0, 0, 0.8),
-      0 1px 2px rgba(0, 0, 0, 0.9);
-  }
-
-  .card-roles {
-    font-size: 0.6875rem;
-    opacity: 0.7;
-    text-transform: uppercase;
+    /* What the cards below are told about this surface. A card leaves its font
+       variables unset where the person has no face of their own, so these are
+       what stands in: the story's own fonts rather than the page's. */
+    --card-heading-font: var(--story-heading-font, Inter, sans-serif);
+    --card-body-font: var(--story-body-font, Inter, sans-serif);
+    --card-roles-transform: uppercase;
   }
 
   .references-section {
@@ -555,19 +368,6 @@
     .related-persons-grid {
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 0.75rem;
-    }
-
-    .person-thumb {
-      width: 110px;
-    }
-
-    .card-name {
-      font-size: 0.8125rem;
-    }
-
-    .card-years,
-    .card-roles {
-      font-size: 0.6875rem;
     }
 
     .references-section {

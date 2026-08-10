@@ -1,6 +1,11 @@
 <script>
   import { currentLanguage } from "../stores/language";
-  import { displayName, fontStack, styleVars } from "../utils/helpers.js";
+  import {
+    displayName,
+    fontStack,
+    initialsFromName,
+    styleVars,
+  } from "../utils/helpers.js";
   import { computeYearsLabel } from "../utils/story/dates.js";
   import { getThumbnailUrl } from "../utils/story/images.js";
   import SeparatedList from "./SeparatedList.svelte";
@@ -29,26 +34,18 @@
     return computeYearsLabel(person, language);
   }
 
-  // Get initials from name for fallback
-  function initialsFromName(name) {
-    if (!name) return "?";
-    return name
-      .replace(/_/g, " ")
-      .split(" ")
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((word) => word[0].toUpperCase())
-      .join("");
-  }
-
-  // Unlike Landing's card this one names a value for every variable, because
-  // it is dropped into surfaces (a meta story's frame) whose own colors and
-  // fonts would otherwise show through where the person has none.
+  // Unlike Landing's card this one names a value for both colors, because it is
+  // dropped into surfaces (a meta story's frame) whose own palette would
+  // otherwise show through where the person has none. The fonts are the one
+  // exception: leaving the variable unset where the person has no face of their
+  // own lets the surface name what stands in — the story's heading and body
+  // fonts on a conclusion slide — and falls back to `inherit` where, as in a
+  // meta story, nobody does.
   $: cardVars = styleVars([
     ["--card-primary", personStyle?.primary || "#f8fafc"],
     ["--card-secondary", personStyle?.secondary || "#38bdf8"],
-    ["--card-heading-font", fontStack(personStyle?.headingFont, "inherit")],
-    ["--card-body-font", fontStack(personStyle?.bodyFont, "inherit")],
+    ["--card-heading-font", fontStack(personStyle?.headingFont)],
+    ["--card-body-font", fontStack(personStyle?.bodyFont)],
   ]);
 
   $: lifespan = formatLifespan(person, $currentLanguage);
@@ -219,6 +216,10 @@
     color: rgba(226, 232, 240, 0.8);
     margin: 0;
     opacity: 0.7;
+    /* Small caps on a story's conclusion slide, where the roles sit under a
+       headline that is set the same way; plain on a meta story's closing
+       cards, which have no such headline above them. */
+    text-transform: var(--card-roles-transform, none);
     text-shadow:
       0 1px 4px rgba(0, 0, 0, 0.8),
       0 1px 2px rgba(0, 0, 0, 0.9);

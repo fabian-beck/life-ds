@@ -24,6 +24,31 @@ export function displayName(value = "") {
 }
 
 /**
+ * The monogram a card shows in place of a portrait it does not have.
+ *
+ * Three surfaces drew one of these — the landing card, the person card and the
+ * story's conclusion — and two of them read the first letter of the first two
+ * words. That rule reads a name as "given name, surname", which the people in
+ * this collection routinely are not: it turns "Cunigunde of Luxembourg" into
+ * CO, "John von Neumann" into JV and "E. T. A. Hoffmann" into ET. Ten of the
+ * 52 people shipped today come out wrong that way, all of them for a particle,
+ * a middle name or a spelled-out initial standing where a surname was assumed.
+ *
+ * So the surviving rule is the landing card's: the first word and the last,
+ * which gives CL, JN and EH, and two letters of a single-word name so that
+ * "Sappho" is still a monogram rather than one lonely letter.
+ *
+ * @param {string} [name] - A person's name, underscored or spaced
+ * @returns {string} One or two uppercase letters, or "?" for a nameless person
+ */
+export function initialsFromName(name = "") {
+  const parts = displayName(name).split(" ").filter(Boolean);
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+}
+
+/**
  * Join `[name, value]` pairs into an inline `style` string.
  *
  * Four builders write one of these — the person story, the meta story, the
