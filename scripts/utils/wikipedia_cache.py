@@ -615,20 +615,6 @@ def get_cached_wikipedia_summary(
     return summary_data
 
 
-def get_cached_commons_images(
-    person_id: str, person_name: str, limit: int = 30, use_cache: bool = True
-) -> List[Dict[str, Any]]:
-    """Get Commons images, using cache if available."""
-    if use_cache:
-        _, _, commons_images = load_from_cache(person_id)
-        if commons_images is not None:
-            return commons_images
-
-    # Fetch from API
-    commons_images = _fetch_commons_images_direct(person_name, limit)
-    return commons_images
-
-
 def ensure_cache(person_id: str, title: str, person_name: Optional[str] = None) -> None:
     """Ensure cache exists for a person, fetching if necessary."""
     if cache_exists(person_id):

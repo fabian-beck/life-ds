@@ -294,34 +294,3 @@ Most generated styles are already good - focus on genuine problems, not minor tw
 """
 
     return prompt
-
-
-def get_examples_of_good_content() -> str:
-    """Return examples of well-written event content for reference."""
-    return """
-EXAMPLES OF WELL-WRITTEN CONTENT:
-
-**Good Event Title**:
-"Publishes On Computable Numbers"
-- Concise, active voice, clear subject
-
-**Good Event Description** (opening):
-"Turing's 1936 paper introduced the concept of a universal computing machine—an abstract device that could perform any calculation. The Turing machine, as it became known, laid the theoretical foundation for modern computers. This work answered Hilbert's [[Entscheidungsproblem|decision problem]], proving that no algorithm could solve all mathematical questions."
-
-- Starts with impact
-- Uses active voice
-- Includes annotation for technical term
-- Flows naturally
-
-**Good Chapter Headline**:
-"Breaking the Code"
-- Evocative, suggests action/achievement
-- Short and memorable
-- Not a list or summary
-
-**Good Relationship Description**:
-"PhD supervisor who introduced Turing to the Entscheidungsproblem and remained a lifelong collaborator on computer design."
-- Concise (one sentence)
-- Captures relationship essence
-- Mentions key contribution
-"""

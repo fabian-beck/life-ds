@@ -384,28 +384,6 @@ def load_existing_hints(story_id: str) -> Optional[SelectionHints]:
         return None
 
 
-def load_hints_from_file(hints_path: str) -> Optional[SelectionHints]:
-    """Load hints from a text or JSON file."""
-    try:
-        with open(hints_path, "r", encoding="utf-8") as f:
-            content = f.read().strip()
-
-        # Try parsing as JSON first
-        try:
-            hints_data = json.loads(content)
-            if isinstance(hints_data, dict) and "hint" in hints_data:
-                return SelectionHints(**hints_data)
-            else:
-                print("Error: JSON file must contain a 'hint' field")
-                return None
-        except json.JSONDecodeError:
-            # Treat as plain text hint
-            return SelectionHints(hint=content)
-    except Exception as e:
-        print(f"Error loading hints file: {e}")
-        return None
-
-
 def parse_event_date(event: Dict[str, Any]) -> Optional[int]:
     """Extract year from event date for sorting."""
     date_str = event.get("date", "")

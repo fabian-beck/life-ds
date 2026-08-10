@@ -1275,17 +1275,6 @@ STEPS: List[Step] = [
 ]
 
 
-def steps_by_lane(lane: str) -> List[Step]:
-    return [step for step in STEPS if step.lane == lane]
-
-
-def step_by_id(step_id: str) -> Optional[Step]:
-    for step in STEPS:
-        if step.id == step_id:
-            return step
-    return None
-
-
 def group_of(step_id: str) -> Optional[Group]:
     for group in GROUPS:
         if step_id in group.steps:

@@ -250,19 +250,6 @@ def format_icon_categories_for_prompt() -> str:
     return "\n".join(lines)
 
 
-def get_icon_for_event_type(event_type: str) -> str:
-    """
-    Get MDI icon for a given event type.
-
-    Args:
-        event_type: Event type keyword (e.g., "birth", "graduation")
-
-    Returns:
-        MDI icon identifier (e.g., "mdi-candle")
-    """
-    return ICON_CATEGORIES.get(event_type.lower(), ICON_CATEGORIES["default"])
-
-
 # Every icon this project may emit. Each one is a real @mdi/js export;
 # vite.config.js re-verifies that at build time and warns on any that is not.
 VALID_ICONS = frozenset(ICON_CATEGORIES.values())

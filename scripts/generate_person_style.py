@@ -133,16 +133,6 @@ def normalize_bw_color(
     return None
 
 
-def clamp_opacity(value: str | None, default: float = 1.0) -> str:
-    if value is None:
-        return f"{default:.3f}".rstrip("0").rstrip(".")
-    try:
-        parsed = float(value)
-    except ValueError:
-        return f"{default:.3f}".rstrip("0").rstrip(".")
-    return f"{clamp(parsed, 0.0, 1.0):.3f}".rstrip("0").rstrip(".")
-
-
 def parse_style_attribute(value: str) -> Dict[str, str]:
     result: Dict[str, str] = {}
     for part in value.split(";"):

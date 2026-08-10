@@ -1,38 +1,15 @@
 """
 Helper functions for person data review system.
 
-Utilities for applying changes, creating backups, generating logs,
-and preserving JSON structure.
+Utilities for applying changes, generating logs, and preserving JSON
+structure.
 """
 
 import json
-import os
 import re
-import shutil
-from datetime import datetime
 from typing import Dict, Any, Tuple
 
 from .review_models import EventsChanges, NetworkChanges, StyleChanges
-
-
-def create_backup(file_path: str) -> str:
-    """
-    Create timestamped backup of a file.
-
-    Args:
-        file_path: Path to file to backup
-
-    Returns:
-        Path to backup file
-    """
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"Cannot backup non-existent file: {file_path}")
-
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    backup_path = f"{file_path}.backup_{timestamp}"
-
-    shutil.copy2(file_path, backup_path)
-    return backup_path
 
 
 def apply_event_changes(

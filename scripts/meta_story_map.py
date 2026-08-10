@@ -371,23 +371,6 @@ def cluster_located_events(
     return selected
 
 
-def build_geo_map(
-    dataset: Dict[str, Any],
-    registry: Dict[str, Any],
-    weights: Optional[Dict[str, float]] = None,
-) -> Optional[Dict[str, Any]]:
-    """Derive the ``geo_map`` block (clusters only, no narration).
-
-    Returns ``None`` when the story has too few located events for a
-    meaningful map section.
-    """
-    located = collect_located_events(dataset, registry)
-    clusters = cluster_located_events(located, weights)
-    if not clusters:
-        return None
-    return {"clusters": clusters}
-
-
 def main() -> int:
     """CLI: print the derived clusters for an existing meta story (debug)."""
     import argparse
