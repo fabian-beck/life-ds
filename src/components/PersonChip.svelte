@@ -3,7 +3,10 @@
   import { mdiAccountMultipleOutline } from "@mdi/js";
   import { _ } from "../stores/language";
   import { displayName } from "../utils/helpers.js";
-  import { relationshipRoleLabel } from "../utils/relationshipLabels.js";
+  import {
+    relationshipRoleLabel,
+    relationshipMetaValueLabel,
+  } from "../utils/relationshipLabels.js";
   import SeparatedList from "./SeparatedList.svelte";
 
   export let person = {};
@@ -245,26 +248,44 @@
       </p>
     {/if}
     {#if person.strength || person.interaction_frequency || person.influence_direction}
+      <!-- The values are machine tokens ("strong", "daily", "alter_to_ego")
+           in every language, so they are resolved through the locale like the
+           labels next to them. An unknown influence direction says nothing a
+           reader can use, so it does not render. -->
       <div class="tooltip-meta">
         {#if person.strength}
           <span class="meta-item">
             <span class="meta-label">{$_("person.strength")}</span>
             <span class="meta-value strength-{person.strength}"
-              >{person.strength}</span
+              >{relationshipMetaValueLabel(
+                $_,
+                "strength",
+                person.strength
+              )}</span
             >
           </span>
         {/if}
         {#if person.interaction_frequency}
           <span class="meta-item">
             <span class="meta-label">{$_("person.frequency")}</span>
-            <span class="meta-value">{person.interaction_frequency}</span>
+            <span class="meta-value"
+              >{relationshipMetaValueLabel(
+                $_,
+                "frequency",
+                person.interaction_frequency
+              )}</span
+            >
           </span>
         {/if}
-        {#if person.influence_direction}
+        {#if person.influence_direction && person.influence_direction !== "unknown"}
           <span class="meta-item">
             <span class="meta-label">{$_("person.influence")}</span>
             <span class="meta-value"
-              >{displayName(person.influence_direction)}</span
+              >{relationshipMetaValueLabel(
+                $_,
+                "influence",
+                person.influence_direction
+              )}</span
             >
           </span>
         {/if}

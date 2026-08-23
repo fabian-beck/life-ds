@@ -125,3 +125,23 @@ export function relationshipTypeLabel(t, relationshipType) {
   if (subcategory) parts.push(relationshipRoleLabel(t, subcategory, 1));
   return parts.filter(Boolean).join(" · ");
 }
+
+/**
+ * Name a relationship-metadata value — tie strength, interaction frequency,
+ * or influence direction. Like `relationship_type`, these are machine tokens
+ * the localized datasets deliberately keep in English (`strong`, `daily`,
+ * `alter_to_ego`), so the interface resolves them through the locale. The
+ * vocabulary is closed and small, but an unmapped token still falls back to
+ * its humanized form rather than breaking.
+ * @param {Function} t - the translate function from the language store
+ * @param {"strength"|"frequency"|"influence"} family
+ * @param {string} token - e.g. "strong", "occasional", "alter_to_ego"
+ * @returns {string}
+ */
+export function relationshipMetaValueLabel(t, family, token) {
+  if (!token) return "";
+  return (
+    lookup(t, `person.${family}_value.${tokenKey(token)}`) ??
+    humanizeRelationshipToken(token, 1)
+  );
+}
