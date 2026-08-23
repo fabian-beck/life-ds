@@ -224,7 +224,10 @@ class HistoricalContextEvent(BaseModel):
     title: str = Field(
         description="Short event name (1-5 words, e.g. 'World War II', 'Moon Landing')"
     )
-    description: str = Field(description="One-sentence context note")
+    description: str = Field(
+        description="1-2 sentences: first what the event was (who did what, "
+        "at what scale), then how it affected this story's people"
+    )
     date_start: str = Field(description="ISO-8601 date (year, month, or day precision)")
     date_start_precision: str = Field(description="'year', 'month', or 'day'")
     date_end: Optional[str] = Field(
@@ -1413,9 +1416,19 @@ BAD EXAMPLES:
 
 RULES:
 - Titles must be SHORT (1-3 words): "World War II", "Cold War", "Fall of the Wall"
-- Description: ONE sentence explaining how this event affected the people in this story specifically
+- Description: 1-2 sentences. FIRST identify the event concretely — who did what, at what
+  scale — THEN state how it affected the people in this story specifically. A reader who has
+  never heard of the event must learn what it was from the description alone; a short title
+  like "Shays' Rebellion" explains nothing by itself. Only a household name every reader
+  knows (World War II) may skip the identification half.
+  * GOOD: "Indebted Massachusetts farmers under Daniel Shays shut down courts by force until
+    the state militia dispersed them; the uprising alarmed Washington and Hamilton and became
+    a powerful argument for a stronger federal system"
   * GOOD: "The war forced Turing into codebreaking work at Bletchley Park"
-  * BAD: "A global conflict that reshaped the 20th century"
+  * BAD: "The uprising alarmed Washington and Hamilton and became a powerful argument for a
+    stronger federal system" (assumes the reader already knows what the uprising was)
+  * BAD: "A global conflict that reshaped the 20th century" (identifies without connecting
+    to these people)
 - These are background landmarks, NOT field-specific milestones or discoveries
 - AVOID FUZZY EPOCHS: Do not pick gradual processes or long eras that lack a discrete moment
   * NO: "Industrial Revolution", "Age of Enlightenment", "Renaissance", "Digital Age"

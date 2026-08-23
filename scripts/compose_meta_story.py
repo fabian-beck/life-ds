@@ -34,8 +34,17 @@ What the prompt still carries is what the model cannot infer:
 - **The mechanical contract** — ids copied verbatim, quotes verbatim, the
   image budget, third person, no address of the reader, and never the page
   itself as the subject of a sentence.
+- **The weight rule** — the article prose carries tight word budgets, and a
+  fact worth keeping moves into the story element nearest to where the reader
+  will use it. Readers reported reading the event, circle, and stop cards and
+  skimming the prose around them, so the information belongs on the cards.
+- **The craft rules** — name every place, identify a first-mentioned event
+  before building on it, no rhetorical questions, no sentences enumerating
+  abstract categories, and a title delivered by the text beneath it. Each
+  rule is the negative of a pattern readers reported bouncing off: prose that
+  sounds like it says something but leaves nothing behind.
 
-Everything about *craft* is left to the model.
+Craft beyond those rules is left to the model.
 
 That page/material split is load-bearing. A first version rendered the story
 twice — a short page map for placement, plus a brief listing the same story
@@ -63,6 +72,9 @@ Everything it returns is applied deterministically and defensively:
   at most one circle, circles need at least two members, and if the composed
   organization covers less than half of the connected cast it is rejected in
   favor of the previous narration.
+- Composed event texts land only on timeline events whose ``person_id`` and
+  ``event_index`` both match; unknown references are ignored with a warning,
+  and an event the composer skipped keeps its Phase 3 connection.
 - Composed map stops are matched by cluster key, unknown keys are ignored,
   unmentioned stops are kept (carrying their previous narration), and
   discards are honored only while at least ``MIN_MAP_CLUSTERS`` stops
@@ -249,7 +261,19 @@ class ComposedChapter(BaseModel):
     headline: str = Field(
         description="2-5 words, WITHOUT a date range (it is appended automatically)"
     )
-    lead_in: str = Field(description="1-2 sentences")
+    lead_in: str = Field(description="2-3 sentences")
+
+
+class ComposedEvent(BaseModel):
+    """The text printed under one timeline event card."""
+
+    person_id: str = Field(description="Person id, copied verbatim from the input")
+    event_index: int = Field(description="Event index, copied verbatim from the input")
+    text: str = Field(
+        description="1-3 sentences printed under this event on the timeline: "
+        "what happened and why it belongs in this story, carrying the "
+        "concrete detail the reader gets nowhere else"
+    )
 
 
 class ComposedCircle(BaseModel):
@@ -260,7 +284,7 @@ class ComposedCircle(BaseModel):
         "each person in at most one circle across all circles"
     )
     title: str = Field(description="2-5 words")
-    text: str = Field(description="2-4 sentences")
+    text: str = Field(description="2-5 sentences")
 
 
 class ComposedMapStop(BaseModel):
@@ -268,7 +292,7 @@ class ComposedMapStop(BaseModel):
 
     key: str = Field(description="Stop key, copied verbatim from the input")
     title: str = Field(description="2-5 words")
-    text: str = Field(description="2-4 sentences")
+    text: str = Field(description="2-5 sentences")
 
 
 class DiscardedMapStop(BaseModel):
@@ -303,28 +327,43 @@ class CompositionResult(BaseModel):
     )
     title: str = Field(description="2-5 words")
     tagline: str = Field(description="3-10 words")
-    opening: List[StoryBlock] = Field(description="The story's opening prose")
+    opening: List[StoryBlock] = Field(
+        description="The story's opening prose; opening and description "
+        "together stay within roughly 100-150 words of paragraph text"
+    )
     description: List[StoryBlock] = Field(
-        description="The prose following the opening, still in the page header"
+        description="The prose following the opening, still in the page "
+        "header; shares the opening's 100-150 word budget"
     )
     section_headings: ComposedSectionHeadings = Field(
         description="Headings for the four sections"
     )
     timeline_body: List[StoryBlock] = Field(
-        description="Prose between the chronology heading and the timeline"
+        description="Prose between the chronology heading and the timeline: "
+        "one short paragraph that only frames the question the timeline "
+        "answers — the information itself goes on the event texts"
     )
     network_body: List[StoryBlock] = Field(
-        description="Prose between the network heading and the graph"
+        description="Prose between the network heading and the graph: one "
+        "short paragraph that only frames the question the graph answers — "
+        "the information itself goes on the circle cards"
     )
     map_body: List[StoryBlock] = Field(
-        description="Prose between the places heading and the map; empty when "
-        "the story has no map"
+        description="Prose between the places heading and the map: one short "
+        "paragraph that only frames the question the map answers — the "
+        "information itself goes on the stop cards; empty when the story "
+        "has no map"
     )
     conclusion: List[StoryBlock] = Field(
-        description="The closing section's prose — the last prose on the page"
+        description="The closing section's prose — the last prose on the "
+        "page; one short paragraph"
     )
     chapters: List[ComposedChapter] = Field(
         description="One entry per chapter, same order as given"
+    )
+    events: List[ComposedEvent] = Field(
+        description="One entry per timeline event (person_id and event_index "
+        "copied verbatim), same order as given"
     )
     circles: List[ComposedCircle] = Field(
         description="The network's circles, in presentation order"
@@ -603,7 +642,9 @@ def build_page(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
             "  then THE TIMELINE, which gives the reader the sequence itself: what",
             "  happened, dated, era by era. It scrolls sideways and the reader meets",
             "  one era at a time, seeing that chapter's headline and lead-in alone",
-            "  with its events. These texts are on the page and are yours:",
+            "  with its events, each printing its own text beneath it — the texts",
+            "  the reader actually spends time with. All of these are on the page",
+            "  and are yours:",
             "",
         ]
         for chapter in dataset.get("chapters") or []:
@@ -620,11 +661,13 @@ def build_page(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
                     f"      · {event.get('event_date', '')} — "
                     f"{person_name(event.get('person_id', ''))}: "
                     f"{event.get('event_title', '')}"
+                    "   >>> event text YOURS "
+                    f"(events: person_id={event.get('person_id', '')}, "
+                    f"event_index={event.get('event_index')})"
                 )
                 if event.get("theme_connection"):
                     lines.append(
-                        f"          printed under this event: "
-                        f"{event['theme_connection']}"
+                        f"          draft event text: {event['theme_connection']}"
                     )
                 description = event_description(
                     event.get("person_id", ""), event.get("event_index")
@@ -850,6 +893,27 @@ BACKGROUND MATERIAL (Wikipedia excerpts for the main people):
 Write it as a journalist or a good teacher would. Decide for yourself what
 this story is about and how it is best told.
 
+WHERE THE WEIGHT GOES. Readers read the texts on the components — the event
+texts, the circle cards, the stop cards — and tire in the article prose
+around them, so the information lives on the components and the prose stays
+short. Opening and description together: roughly 100-150 words. Each section
+body: one short paragraph that only frames the question its component
+answers. The conclusion: just as short. A fact worth keeping belongs in the
+story element nearest to where the reader will use it — the event text, the
+circle card, the stop card — never in the introductory paragraph above the
+component.
+
+CRAFT. Assume a reader with no prior knowledge: what a sentence does not
+explain, they do not know. Name every place instead of paraphrasing it
+("Paris", not "an Atlantic diplomatic capital"). Give every event, act, or
+term that is not a household name a half-sentence of identification — who did
+what, at what scale — the first time it appears, before building anything on
+it. No rhetorical questions. No summary sentences that enumerate abstract
+categories ("armies, households, and rivalries bound these lives together"
+says nothing a reader can retain). Every title — a card's, a circle's, a
+stop's, a section's — must be delivered by the text beneath it: a title that
+promises a mechanism is followed by text that explains that mechanism.
+
 Ground everything in the material above: no invented events, dates,
 relationships or quotations. Quotes verbatim, with attribution. Copy every id
 and key exactly, never construct one. At most {MAX_IMAGES_PER_STORY} images in
@@ -899,6 +963,7 @@ subject of a sentence."""
                 for region in result.reading_order(available_sections(dataset))
             )
         )
+        print(f"  Composed event texts: {len(result.events)}")
     return result
 
 
@@ -960,15 +1025,21 @@ def collect_prose_slots(composed: CompositionResult) -> List[tuple]:
 def collect_caption_slots(composed: CompositionResult) -> List[tuple]:
     """The caption layer as ``(slot_id, text)`` — the prose's neighbors.
 
-    Event texts are left out on purpose: there are dozens, each one sentence
-    long, and the chapter, circle and stop texts are the ones that sit as
-    blocks of prose right beside the composed paragraphs.
+    Composed event texts are included: since the composer writes them, prose
+    restating an event card is the same defect as prose restating a circle
+    card. (The one-sentence Phase 3 connections it leaves untouched never
+    appear here — only what this composition wrote.)
     """
     slots: List[tuple] = []
     for index, chapter in enumerate(composed.chapters):
         if chapter.lead_in.strip():
             slots.append(
                 (f"chapter:{index}", f"{chapter.headline} — {chapter.lead_in.strip()}")
+            )
+    for event in composed.events:
+        if event.text.strip():
+            slots.append(
+                (f"event:{event.person_id}:{event.event_index}", event.text.strip())
             )
     for index, circle in enumerate(composed.circles):
         if circle.text.strip():
@@ -1026,6 +1097,15 @@ def rank_slot_overlaps(
             score = 2 * len(shared) / (len(words_a) + len(words_b))
             ranked.append((slot_a, slot_b, sent_a, sent_b, score))
     return sorted(ranked, key=lambda r: r[4], reverse=True)
+
+
+def region_word_count(composed: CompositionResult, region: str) -> int:
+    """Words of paragraph prose in one region — the budget diagnostic."""
+    return sum(
+        len((block.text or "").split())
+        for block in composed.blocks(region)
+        if block.type == "paragraph"
+    )
 
 
 def count_anchors(text: str) -> int:
@@ -1438,6 +1518,23 @@ def apply_composition(
     for unknown_id in chapters_by_id:
         print(f"Warning: composed chapter '{unknown_id}' matches no chapter, ignored")
 
+    # Event texts are matched by (person_id, event_index) the way circles and
+    # stops are matched by key; an event the composer skipped keeps its
+    # Phase 3 theme connection.
+    events_by_ref = {(e.person_id, e.event_index): e for e in composed.events}
+    for chapter in dataset.get("chapters") or []:
+        for event in chapter.get("person_events") or []:
+            composed_event = events_by_ref.pop(
+                (event.get("person_id"), event.get("event_index")), None
+            )
+            if composed_event is not None and composed_event.text.strip():
+                event["theme_connection"] = composed_event.text.strip()
+    for person_id, event_index in events_by_ref:
+        print(
+            f"Warning: composed event '{person_id}:{event_index}' matches no "
+            "timeline event, ignored"
+        )
+
     _apply_network_circles(dataset, composed, verbose=verbose)
     _apply_map_composition(dataset, composed, verbose=verbose)
 
@@ -1635,6 +1732,13 @@ def compose_meta_story_dataset(
     )
 
     if verbose:
+        print(
+            "  Prose words: "
+            + ", ".join(
+                f"{region}: {region_word_count(composed, region)}"
+                for region in composed.reading_order(available_sections(working))
+            )
+        )
         slots = collect_prose_slots(composed)
         captions = collect_caption_slots(composed)
         overlaps = rank_slot_overlaps(slots, captions)
@@ -1731,6 +1835,12 @@ def compose_and_save(
             print(f"    Chapter: {chapter.get('title', '')}")
             if chapter.get("lead_in"):
                 print(f"      Lead-in: {chapter['lead_in']}")
+            for event in chapter.get("person_events") or []:
+                if event.get("theme_connection"):
+                    print(
+                        f"      Event {event.get('event_title', '')}: "
+                        f"{_truncate(event['theme_connection'], 140)}"
+                    )
         narration = (composed.get("social_network") or {}).get("narration") or {}
         for circle in narration.get("circles") or []:
             print(

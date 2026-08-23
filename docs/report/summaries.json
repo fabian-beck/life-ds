@@ -71,17 +71,17 @@
       }
     },
     "m_p4": {
-      "fingerprint": "cc18a47ffc1ddca7",
+      "fingerprint": "8986a3343ad36df9",
       "summary": {
         "constraints": [
-          "At most `max_events_per_chapter` events per chapter—default `2`; zero is explicitly valid.",
-          "Each event must directly and specifically affect at least one listed person; generic famous history is excluded.",
-          "Titles are \"1-3 words\" and descriptions are exactly one sentence about the people-specific effect.",
-          "Events must have discrete boundaries, generally span no more than about `15 years`, not duplicate person events, and not overlap across chapters; single moments use a null `date_end`."
+          "At most \"2\" events per chapter by default; zero is explicitly valid.",
+          "Each event must directly and concretely affect at least one selected person—not merely occur in the same era.",
+          "Titles are \"1-3 words\"; descriptions are \"1-2 sentences\" and must identify the event before explaining its person-specific effect.",
+          "Events must be discrete, certain, non-duplicative of listed person events, and non-overlapping across chapters; `date_end` is null for single moments."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a compact biographical brief from the selected people, including roles, lifespans, and relevance notes, then supplies each chapter’s date range and already-selected person events. It requests chapter-grouped historical landmarks that concretely affected the story’s people, then maps returned events by chapter ID into each chapter’s `historical_context`; absent chapter IDs receive an empty list and failures leave chapters unchanged.",
-        "why_this_design": "Providing both people-level relevance notes and chapter-level person events anchors historical context to documented biographical material rather than period trivia, while also giving the selection process a list of events it must not duplicate. The request applies non-overlap across all chapters because timeline labels compete for space later; priorities let defining landmarks survive that decluttering."
+        "what_it_does": "Builds a story-specific historical-context request from the selected people, their roles and lifespans, the meta-story framing, and each chapter’s date range and existing person events. It returns historical events grouped by chapter, then replaces each chapter’s `historical_context` with the returned list; if parsing fails or produces no response, it preserves the chapters without added context.",
+        "why_this_design": "The request supplies already-selected person events so historical landmarks can complement rather than duplicate biographical material. It also requires non-overlapping event ranges across chapters and reserves priority 3 for only a few anchors, preventing repeated or competing timeline labels when the story is rendered."
       }
     },
     "m_p5": {
@@ -169,17 +169,17 @@
       }
     },
     "m_p8": {
-      "fingerprint": "39e9d35aa9dbf87b",
+      "fingerprint": "1cc8b68f2de5d088",
       "summary": {
         "constraints": [
-          "Ground claims in the supplied material; do not invent events, dates, relationships, or quotations.",
-          "Use quotations verbatim and with attribution; copy every supplied ID and key exactly rather than constructing replacements.",
-          "Use third person and American English; do not address the reader or make the page or its components the subject of a sentence.",
-          "Use no more than \"MAX_IMAGES_PER_STORY\" images across the story, and never reuse an image."
+          "Opening and description together stay at roughly \"100-150 words\" of paragraph text; each component section body and the conclusion are one short paragraph.",
+          "`section_order` must include every available component section exactly once; chapters and events remain in their supplied order, and event `person_id` and `event_index` are copied verbatim.",
+          "Map stops may be retained or listed as discarded; retained and discarded stop lists are empty when no map exists.",
+          "No invented facts, dates, relationships, or quotations; quotations must be verbatim and attributed. Use third person, American English, explicit place names, no rhetorical questions, no direct address, and no more than the configured maximum number of nonreused images."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Synthesizes the previously assembled page material into a single top-down narrative about several connected lives. It produces the page’s title, tagline, header and section prose, component order and headings, revised chapter and network-circle copy, and the kept or discarded map stops, all in page reading order. A private 2-4 sentence throughline records the story’s arc without appearing on the published page.",
-        "why_this_design": "The composition sees both the rendered-page structure and the underlying drafted material at once, correcting the earlier bottom-up workflow in which individual items lacked the larger narrative context. Logging is intentionally outside a protective catch: composition-call failures belong to the shared wrapper, while a logging failure must not discard an otherwise valid result."
+        "what_it_does": "Combines the assembled page specification, previously drafted component material, reference excerpts, and image candidates into a single top-down narrative composition. It rewrites the header prose, section framing, conclusion, timeline events, network circles, map stops, captions, titles, and presentation order so several biographies read as one coherent story; it can also remove map stops that do not support that story.",
+        "why_this_design": "The prompt deliberately puts substantive reporting in event, circle, and stop text rather than in surrounding article prose, preserving the reader’s attention for the data-bearing components. The result is requested in a structured form that retains supplied identifiers and event indices, allowing rewritten copy and reordered presentation to be joined back to the existing page data without reconstructing keys."
       }
     },
     "m_save": {
