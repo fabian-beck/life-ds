@@ -353,7 +353,9 @@
                     on:click={(event) =>
                       onSelectPerson(person.id, event.currentTarget)}
                     data-focus-id={`carousel-person-${person.id}`}
-                    aria-label={`View ${displayName(person.name)}'s story`}
+                    aria-label={$_("meta_story.people_open_story", {
+                      name: displayName(person.name),
+                    })}
                   >
                     <span class="portrait-clip">
                       {#if person?.portrait}
@@ -368,6 +370,12 @@
                         />
                       {/if}
                     </span>
+                    <!-- The button's aria-label already announces the name,
+                         so the visible caption is hidden from assistive
+                         technology to avoid a double reading. -->
+                    <span class="portrait-name" aria-hidden="true"
+                      >{displayName(person.name)}</span
+                    >
                   </button>
                 {/each}
               </div>
@@ -682,6 +690,35 @@
     width: 100%;
     margin-inline: 0;
     transform: scale(1.02);
+  }
+
+  /* Each portrait is a click target for that person's story, so hovering or
+     focusing it names who it opens. The caption sits outside .portrait-clip
+     so the slanted mask cannot cut it, and above the clip's lower slant so it
+     stays on the image on both edges of the polygon. */
+  .portrait-name {
+    position: absolute;
+    left: 50%;
+    bottom: 14%;
+    transform: translateX(-50%);
+    max-width: calc(100% - 1rem);
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fff;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .portrait-column:hover .portrait-name,
+  .portrait-column:focus-visible .portrait-name {
+    opacity: 1;
   }
 
   .slide-content {
