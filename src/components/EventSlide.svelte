@@ -741,22 +741,25 @@
               >
                 <path d={mdiBook} />
               </svg>
-              <h3 class="publication-title">{slide.event_class.title}</h3>
-            </div>
-            <div class="publication-meta">
+              <!-- The type badge leads so the role is explicit before the
+                   name: an unfamiliar title set like a heading read as the
+                   box's label. <cite> is the element for work titles, and the
+                   italic body face is the editorial convention for them. -->
               <span class="publication-type-badge"
                 >{publicationTypeLabel(
                   $_,
                   slide.event_class.publication_type
                 )}</span
               >
-              {#if slide.event_class.significance}
-                <span class="publication-separator">·</span>
+              <cite class="publication-title">{slide.event_class.title}</cite>
+            </div>
+            {#if slide.event_class.significance}
+              <div class="publication-meta">
                 <span class="publication-significance"
                   >{slide.event_class.significance}</span
                 >
-              {/if}
-            </div>
+              </div>
+            {/if}
             {#if slide.event_class.impact}
               <div class="publication-impact">
                 <span class="impact-label">{$_("story.impact")}:</span><span
@@ -1054,6 +1057,7 @@
   .publication-header {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
   }
@@ -1065,12 +1069,15 @@
     flex-shrink: 0;
   }
 
+  /* A work title, not a heading: italic body face at body weight, so it
+     cannot be mistaken for the box's label (#121). */
   .publication-title {
     margin: 0;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 500;
+    font-style: italic;
     color: var(--story-primary, #f8fafc);
-    font-family: var(--story-heading-font, Inter, sans-serif);
+    font-family: var(--story-body-font, Inter, sans-serif);
     text-shadow:
       0 2px 8px rgba(0, 0, 0, 0.8),
       0 1px 4px rgba(0, 0, 0, 0.9);
@@ -1103,11 +1110,6 @@
     text-transform: capitalize;
     color: var(--story-secondary, #38bdf8);
     letter-spacing: 0.02em;
-  }
-
-  .publication-separator {
-    color: rgba(148, 163, 184, 0.6);
-    font-size: 0.9em;
   }
 
   .publication-significance {
