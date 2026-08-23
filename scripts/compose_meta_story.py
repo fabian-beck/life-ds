@@ -69,9 +69,10 @@ Everything it returns is applied deterministically and defensively:
   are dropped and forgotten ones appended in default order, so the page can
   never lose a component to a careless list.
 - Composed circles may only contain existing main people, each person joins
-  at most one circle, circles need at least two members, and if the composed
-  organization covers less than half of the connected cast it is rejected in
-  favor of the previous narration.
+  at most one circle, circles need at least two members and at least one tie
+  between them (a joint highlight in a who-knew-whom graph asserts a
+  connection), and if the composed organization covers less than half of the
+  connected cast it is rejected in favor of the previous narration.
 - Composed event texts land only on timeline events whose ``person_id`` and
   ``event_index`` both match; unknown references are ignored with a warning,
   and an event the composer skipped keeps its Phase 3 connection.
@@ -281,7 +282,9 @@ class ComposedCircle(BaseModel):
 
     member_ids: List[str] = Field(
         description="Person ids copied verbatim from the cast: at least two, "
-        "each person in at most one circle across all circles"
+        "each person in at most one circle across all circles, and every "
+        "circle built on the graph's ties — members with no documented tie "
+        "to any other member stay out of the circles"
     )
     title: str = Field(description="2-5 words")
     text: str = Field(description="2-5 sentences")
@@ -699,6 +702,12 @@ def build_page(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
                     f'      draft card: "{circle["title"]}" — {circle["text"]}'
                 )
         lines += [
+            "",
+            "  In a who-knew-whom graph a joint highlight asserts a connection,",
+            "  so a circle is a group of *connected* people: every member shares",
+            "  at least one of the ties below with another member. A cast member",
+            "  with no tie stays out of the circles — the article prose can",
+            "  still name them.",
             "",
             "  [not on the page] the graph's ties — the source your circle cards",
             "  are built from; the reader sees the graph, never these lines:",
@@ -1255,9 +1264,12 @@ def _apply_network_circles(
     """Replace the network narration with the composer's circle organization.
 
     Guardrails: members must be existing main people, each person joins at
-    most one circle, a circle needs >= 2 valid members, and the composed
-    organization must cover at least half of the connected main cast —
-    otherwise it is rejected and the previous narration is kept.
+    most one circle, a circle needs >= 2 valid members and at least one tie
+    between its members — in a who-knew-whom graph a joint highlight asserts
+    a connection, so a "circle" of people the graph shows unconnected is
+    dropped — and the composed organization must cover at least half of the
+    connected main cast — otherwise it is rejected and the previous
+    narration is kept.
     """
     network = dataset.get("social_network")
     if not isinstance(network, dict) or not network.get("nodes"):
@@ -1267,10 +1279,13 @@ def _apply_network_circles(
         n["id"]: n for n in network.get("nodes") or [] if n.get("type") == "main"
     }
     linked_mains = set()
+    link_pairs = []
     for link in network.get("links") or []:
-        for nid in (link.get("source"), link.get("target")):
+        source, target = link.get("source"), link.get("target")
+        for nid in (source, target):
             if nid in main_nodes:
                 linked_mains.add(nid)
+        link_pairs.append((source, target))
 
     used: set = set()
     circles: List[Dict[str, Any]] = []
@@ -1291,6 +1306,15 @@ def _apply_network_circles(
             print(
                 f"Warning: composed circle '{circle.title}' has fewer than 2 "
                 "valid members, dropped"
+            )
+            continue
+        members = set(ids)
+        if not any(
+            source in members and target in members for source, target in link_pairs
+        ):
+            print(
+                f"Warning: composed circle '{circle.title}' has no tie between "
+                "its members, dropped"
             )
             continue
         used.update(ids)

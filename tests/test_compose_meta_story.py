@@ -15,6 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from compose_meta_story import (  # noqa: E402
+    ComposedCircle,
     ComposedEvent,
     CompositionResult,
     ComposedSectionHeadings,
@@ -113,6 +114,32 @@ def test_composed_event_texts_land_on_matching_timeline_events_only():
     events = dataset["chapters"][0]["person_events"]
     assert events[0]["theme_connection"] == "Enriched."
     assert events[1]["theme_connection"] == "Kept."
+
+
+def test_a_circle_with_no_tie_between_its_members_is_dropped():
+    # In a who-knew-whom graph a joint highlight asserts a connection, so a
+    # composed "circle" of people the graph shows unconnected must not reach
+    # the narration (Bamberg once highlighted Noddack + Stauffenberg together
+    # while its own card said no relationship is documented).
+    dataset = make_dataset(
+        social_network={
+            "nodes": [
+                {"id": "a", "type": "main"},
+                {"id": "b", "type": "main"},
+                {"id": "c", "type": "main"},
+                {"id": "d", "type": "main"},
+            ],
+            "links": [{"source": "a", "target": "b", "kind": "main"}],
+        }
+    )
+    composed = make_composition(["network", "timeline", "map"])
+    composed.circles = [
+        ComposedCircle(member_ids=["c", "d"], title="Modern Tests", text="No tie."),
+        ComposedCircle(member_ids=["a", "b"], title="Companions", text="Linked."),
+    ]
+    apply_composition(dataset, composed)
+    circles = dataset["social_network"]["narration"]["circles"]
+    assert [circle["member_ids"] for circle in circles] == [["a", "b"]]
 
 
 def test_bodies_and_headings_are_stored_for_rendered_sections_only():
