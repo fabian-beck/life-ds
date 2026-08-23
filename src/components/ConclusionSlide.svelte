@@ -112,7 +112,9 @@
               {person}
               personStyle={getPersonStyle(person.id)}
               href="#/story/{person.id}"
-              ariaLabel={`Open life story for ${displayName(person.name)}`}
+              ariaLabel={$_("meta_story.people_open_story", {
+                name: displayName(person.name),
+              })}
             />
           {/each}
         </div>

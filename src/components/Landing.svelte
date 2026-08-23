@@ -764,7 +764,9 @@
           style={cardStyleVars(style)}
           on:click={(event) => handleSelect(entry.id, event.currentTarget)}
           data-focus-id={`card-${entry.id}`}
-          aria-label={`Open life story for ${displayName(entry.name)}`}
+          aria-label={$_("meta_story.people_open_story", {
+            name: displayName(entry.name),
+          })}
         >
           {#if anniversary}
             <span
