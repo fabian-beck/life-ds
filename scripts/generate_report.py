@@ -27,10 +27,12 @@ The report is half written and half measured, and the two halves never mix.
 exists, when a model call site is not claimed by any step in `spec.py`, when the
 report cites a fact or mounts a component that no longer resolves, when a
 cached step explanation names a model that step does not resolve, or when one
-was written from source that has since changed. It reads the summary cache
-rather than writing it, so it needs no API key to run—but the last of those
-failures is fixed by a rebuild that does, because the explanation it names has
-to be written again.
+was written from source that has since changed. Finally it rebuilds the page in
+memory and compares it, build stamp aside, with the committed
+`docs/report/index.html`, so a page describing source that has moved fails the
+check instead of shipping. It reads the summary cache rather than writing it,
+so it needs no API key to run—but a stale explanation is fixed by a rebuild
+that does, because the explanation it names has to be written again.
 """
 
 from __future__ import annotations
@@ -186,6 +188,45 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "python scripts/generate_report.py"
             )
             return 1
+
+        # The question a caller asks after editing a generation script is
+        # whether the committed page still matches the source, so the check
+        # rebuilds the page in memory and compares. Only the build stamp is
+        # taken from the stored page: it changes on every run and says nothing
+        # about drift.
+        print(f"Checking {args.out.name} against a rebuild ...")
+        try:
+            stored_text = args.out.read_text(encoding="utf-8")
+        except OSError:
+            print(f"  ERROR: cannot read {args.out}.")
+            print("\nRebuild the page: python scripts/generate_report.py")
+            return 1
+        stored = render.stored_payload(stored_text)
+        if stored is None:
+            print(f"  ERROR: no payload parses in {args.out}.")
+            print("\nRebuild the page: python scripts/generate_report.py")
+            return 1
+        shots = screenshots.payload(screenshots.collect(document))
+        fresh = build_payload(codebase, cached, document, measurements, shots)
+        for key in ("version", "generated_at", "commit"):
+            if key in stored:
+                fresh[key] = stored[key]
+        if render.render(fresh, document) != stored_text:
+            drifted = sorted(
+                key
+                for key in set(stored) | set(fresh)
+                if stored.get(key) != fresh.get(key)
+            )
+            if drifted:
+                print(f"  Stale payload fields: {', '.join(drifted)}.")
+            else:
+                print("  The page shell changed since the page was built.")
+            print(
+                "\nThe committed page no longer matches the source. "
+                "Rebuild it: python scripts/generate_report.py"
+            )
+            return 1
+        print("  The committed page matches a rebuild: no drift.")
         return 0
 
     print("Collecting step summaries ...")

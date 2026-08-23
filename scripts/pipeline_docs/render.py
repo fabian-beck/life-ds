@@ -15,6 +15,7 @@ report therefore means editing the Markdown, never this file.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any, Dict, Optional
 
@@ -231,6 +232,30 @@ def render(payload: Dict[str, Any], document: Optional[Document] = None) -> str:
         .replace("__SOURCE__", _escape(source))
         .replace("__DATA__", data)
     )
+
+
+# The written page carries the payload verbatim inside this tag (see the
+# template above), so the built file can be read back and compared against a
+# fresh introspection of the source.
+_PAYLOAD_TAG = re.compile(
+    r'<script id="payload" type="application/json">(.*?)</script>', re.DOTALL
+)
+
+
+def stored_payload(page_text: str) -> Optional[Dict[str, Any]]:
+    """The payload a built page was rendered from, or None if none parses.
+
+    The `<\\/` escaping `render` applies is plain JSON string escaping, so
+    `json.loads` reverses it without help.
+    """
+    match = _PAYLOAD_TAG.search(page_text)
+    if match is None:
+        return None
+    try:
+        parsed = json.loads(match.group(1))
+    except json.JSONDecodeError:
+        return None
+    return parsed if isinstance(parsed, dict) else None
 
 
 def write(

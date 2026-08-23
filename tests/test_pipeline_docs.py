@@ -659,6 +659,20 @@ class PayloadAndRenderTests(unittest.TestCase):
         data = json.loads(html[start:end].replace("<\\/", "</"))
         self.assertEqual(len(data["steps"]), len(spec.STEPS))
 
+    def test_stored_payload_reads_back_what_render_wrote(self) -> None:
+        """`--check` compares the committed page against a rebuild, which only
+        works if the payload survives the round trip through the page — the
+        `</` escaping included, or a summary quoting a script tag would read
+        back as drift on a page that has none."""
+        payload = dict(self.payload, probe="a summary quoting </script> verbatim")
+        self.assertEqual(render.stored_payload(render.render(payload)), payload)
+        self.assertIsNone(render.stored_payload("<html>no payload here</html>"))
+        self.assertIsNone(
+            render.stored_payload(
+                '<script id="payload" type="application/json">not json</script>'
+            )
+        )
+
     def test_payload_carries_the_report_structure_the_sidebar_needs(self) -> None:
         codebase = scan_codebase()
         facts = facts_module.collect(codebase)
