@@ -306,7 +306,13 @@ class PublicationClassification(BaseModel):
         description="Brief significance note (e.g., 'seminal work', 'controversial', 'bestseller') - 1-4 words",
     )
     impact: Optional[str] = Field(
-        None, description="Historical/intellectual impact (1-2 sentences)"
+        None,
+        description=(
+            "What happened because of the work — documented reception, "
+            "influence, consequences (1-2 sentences). Never a summary of "
+            "what the work depicts or contains. Omit when no impact is "
+            "documented."
+        ),
     )
 
 
@@ -586,7 +592,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "publication_type": "book, paper, article, manuscript, thesis, or essay",
             "publisher": "Optional: Publisher or journal name (e.g., 'Nature', 'Cambridge University Press')",
             "significance": "Optional: e.g., 'seminal work', 'controversial', 'bestseller' (1-4 words)",
-            "impact": "Optional: Historical/intellectual impact (1-2 sentences)",
+            "impact": "Optional: What happened BECAUSE OF the work — reception, influence, consequences (1-2 sentences); NEVER what the work depicts or contains; omit when no impact is documented",
         },
         "phase1_guidance": (
             "- PUBLICATION: Publishing books, papers, articles, manuscripts, theses, or essays\n"
@@ -594,13 +600,18 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "  * MUST be actual publication event (not just writing/working on it)\n"
             "  * title: Title of the work\n"
             "  * publication_type: 'book', 'paper', 'article', 'manuscript', 'thesis', or 'essay'\n"
-            "  * Optional: publisher (e.g., 'Nature', 'Cambridge University Press'), significance (1-4 words), impact (1-2 sentences)\n"
+            "  * Optional: publisher (e.g., 'Nature', 'Cambridge University Press'), significance (1-4 words)\n"
+            "  * Optional: impact (1-2 sentences) — what happened BECAUSE OF the work: reception, influence, consequences, what changed\n"
+            "    - It is shown to readers under the label 'Impact', so it must claim an effect, NEVER summarize what the work depicts or contains\n"
+            "    - GOOD: 'The novella became one of the most analyzed works of twentieth-century fiction and shaped the modern sense of the Kafkaesque.'\n"
+            "    - BAD (content, not impact): 'The novella presented a family crisis through Gregor Samsa's sudden and grotesque transformation.'\n"
+            "    - No documented impact -> omit the field rather than paraphrase the plot\n"
         ),
         "phase2_focus": [
             "DESCRIPTION: Focus on publication context, reception, circumstances",
             "  * DO NOT repeat title, publication type, or publisher (classification has these)",
             "  * DO NOT annotate the work's title (classification provides this)",
-            "  * DO NOT describe the content in detail (classification's impact field covers this)",
+            "  * DO NOT retell the work's content in detail — a sentence on what it is about is enough; the classification's impact field is reserved for reception and influence, never content",
             "  * Good: 'The paper was presented at a mathematics symposium and initially met with skepticism.'",
             "  * Bad: 'Turing published \"On Computable Numbers\", a groundbreaking paper on theoretical computation...'",
             "  * The classification provides publication details - description is narrative context only",

@@ -180,6 +180,13 @@ REVIEW GUIDELINES:
 - **Icons**: Verify event_type_icon matches event semantics, change if more appropriate icon exists
 - Ensure historical accuracy for all metadata
 
+**Classification Impact** (`event_class.impact` on publication and invention events):
+- The field is shown to readers under the label "Impact", so it must state what happened BECAUSE OF the work — documented reception, influence, consequences, what changed — NEVER what the work depicts or contains (content belongs in the event description)
+- GOOD: "The novella became one of the most analyzed works of twentieth-century fiction and shaped the modern sense of the Kafkaesque."
+- BAD (content shipped as impact): "The novella presented a family crisis through Gregor Samsa's sudden and grotesque transformation."
+- When an impact line only summarizes content, rewrite it via `new_impact` with reception or influence the Wikipedia sources actually document
+- When the sources document no impact, set `new_impact` to an empty string to drop the line — this removal is sanctioned despite the no-field-removal constraint, because a plot summary under the label "Impact" misleads the reader
+
 **Source Verification**:
 - All factual claims must be verifiable in the Wikipedia sources
 - If you can't verify a claim, flag it as uncertain (low confidence)

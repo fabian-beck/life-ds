@@ -77,6 +77,29 @@ def apply_event_changes(
                 )
                 skipped += 1
 
+        if event_change.new_impact is not None:
+            # Only publication and invention classifications carry an impact
+            # field; a stored block without one is stored without the key, so
+            # dropping a content-only impact removes the key rather than
+            # leaving a null behind.
+            event_class = event.get("event_class")
+            if isinstance(event_class, dict) and event_class.get("type") in (
+                "publication",
+                "invention",
+            ):
+                new_impact = event_change.new_impact.strip()
+                if new_impact:
+                    event_class["impact"] = new_impact
+                else:
+                    event_class.pop("impact", None)
+                applied += 1
+            else:
+                print(
+                    f"  Skipping impact for event {event_idx}: "
+                    "no publication/invention classification"
+                )
+                skipped += 1
+
         if event_change.new_annotations:
             # Convert Pydantic models to dicts
             event["annotations"] = {

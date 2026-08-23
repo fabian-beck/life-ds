@@ -84,6 +84,16 @@ class EventChanges(BaseModel):
             "proves the span. The event's anchor date is not editable."
         ),
     )
+    new_impact: Optional[str] = Field(
+        None,
+        description=(
+            "Corrected event_class.impact for a publication or invention "
+            "event: documented reception, influence, or consequences of the "
+            "work, never a summary of its content. Pass an empty string to "
+            "drop an impact line that only summarizes content when no "
+            "impact is documented."
+        ),
+    )
     new_annotations: Optional[Dict[str, Annotation]] = None
     new_involved_people: Optional[List[str]] = None
     new_locations: Optional[List[LocationObject]] = None

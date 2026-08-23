@@ -39,6 +39,17 @@ def _events() -> dict:
     }
 
 
+def _publication_events(impact: str | None = None) -> dict:
+    event_class = {
+        "type": "publication",
+        "title": "The Metamorphosis",
+        "publication_type": "book",
+    }
+    if impact is not None:
+        event_class["impact"] = impact
+    return {"events": [{"title": "Publishes The Metamorphosis", "event_class": event_class}]}
+
+
 def _change(**kwargs) -> EventsChanges:
     defaults = {"event_index": 0, "confidence": 5, "rationale": "because"}
     return EventsChanges(events=[EventChanges(**{**defaults, **kwargs})])
@@ -91,6 +102,30 @@ class ApplyEventChangesTests(unittest.TestCase):
         self.assertEqual(
             original["events"][0]["locations"][0]["name_historic"], "Berlin"
         )
+
+    def test_a_content_summary_impact_is_rewritten_in_place(self) -> None:
+        events = _publication_events(impact="The novella presented a family crisis.")
+        updated, applied, _ = apply_event_changes(
+            events, _change(new_impact="The novella became a landmark of modernism.")
+        )
+        self.assertEqual(applied, 1)
+        self.assertEqual(
+            updated["events"][0]["event_class"]["impact"],
+            "The novella became a landmark of modernism.",
+        )
+
+    def test_an_empty_impact_removes_the_key_like_a_fresh_generation(self) -> None:
+        events = _publication_events(impact="The novella presented a family crisis.")
+        updated, applied, _ = apply_event_changes(events, _change(new_impact=""))
+        self.assertEqual(applied, 1)
+        self.assertNotIn("impact", updated["events"][0]["event_class"])
+
+    def test_an_impact_without_a_classification_to_carry_it_is_skipped(self) -> None:
+        updated, applied, skipped = apply_event_changes(
+            _events(), _change(new_impact="Reached a wide readership.")
+        )
+        self.assertEqual((applied, skipped), (0, 1))
+        self.assertNotIn("event_class", updated["events"][0])
 
     def test_a_low_confidence_location_is_skipped(self) -> None:
         changes = _change(

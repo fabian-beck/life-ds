@@ -564,17 +564,17 @@
       }
     },
     "p_review": {
-      "fingerprint": "4305a4cd325609cc",
+      "fingerprint": "f8290fb3b0836dac",
       "summary": {
         "constraints": [
-          "All factual claims must be supported by the supplied Wikipedia sources; unsupported claims are flagged low confidence and should cite the supporting article.",
-          "Event titles must be 5-10 words and no more than 100 characters; descriptions target 500-800 words, use plain text only, and must not repeat title openings.",
-          "Location changes use historical and modern searchable names, designate exactly one primary location, and never supply coordinates; anchor dates cannot change, though a supported `new_date_end` may be proposed.",
-          "Network relationship descriptions are limited to 1-2 sentences and should complement rather than duplicate event descriptions."
+          "Checks claims against the provided Wikipedia sources and flags unverifiable claims as low confidence with supporting article citations.",
+          "Event titles must be \"5-10 words\" and no more than \"100 chars\"; descriptions target \"500-800 words\" and must be plain text with no Markdown.",
+          "Relationship descriptions are limited to \"1-2 sentences\"; chapter headlines must be \"2-5 words.\"",
+          "Location proposals name historic and modern forms, designate exactly one primary location, and never provide coordinates; anchor dates cannot be changed, though a supported `new_date_end` may be proposed."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Runs a single critic pass over the biography timeline and ego network, using the cached biography text and any related Wikipedia articles as the evidence base. It returns a structured assessment plus separate proposed edits for event data and network data, covering prose, metadata, annotations, chaptering, relationships, balance, and cross-file consistency.",
-        "why_this_design": "Reviewing both artifacts in one request lets the critic detect mismatches that separate passes would miss, such as an important collaborator named in an event but absent from the network. The step proposes changes rather than mutating either dataset; the maintainer note indicates that only high-confidence recommendations are later applied automatically."
+        "what_it_does": "Reviews the generated life-event timeline and ego-network data in one pass against the cached Wikipedia extract and any related article summaries. It returns a structured critique covering person metadata, individual events, chapters, conclusion, connections, event/network change sets, balance between the two views, and a concise change summary. The step proposes corrections rather than editing the source data directly; downstream logic can selectively apply the proposed changes.",
+        "why_this_design": "Reviewing both artifacts together is intended to catch cross-file mismatches—such as a consequential person appearing in an event but not the network—while preventing event prose and relationship tooltips from duplicating each other. Structured change objects preserve a critic-pass boundary and support the maintainer's policy that only high-confidence revisions are applied automatically."
       }
     },
     "p_review_style": {
