@@ -8,8 +8,7 @@ import re
 import sys
 from datetime import date
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple, cast
-from urllib.parse import unquote, urlparse
+from typing import Any, Dict, List, Optional, cast
 
 import requests
 from openai import OpenAI
@@ -18,11 +17,13 @@ from pydantic import BaseModel, Field
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
 from utils.model_calls import parse_structured_or_raise
 from utils.registry import Registry
-from utils.text import slugify
+from utils.text import fix_control_characters, slugify
 from utils.wikipedia_cache import (
-    get_cached_wikipedia_page,
-    get_cache_dir,
     ensure_cache,
+    fetch_wikipedia_extract,
+    get_cache_dir,
+    get_cached_wikipedia_page,
+    wikipedia_headers,
 )
 
 # Import from cache_wikipedia_materials for related articles functionality
@@ -46,35 +47,6 @@ DEFAULT_USER_AGENT = (
 # ============================================================================
 
 
-def _fix_control_characters(text: str) -> str:
-    """
-    Replace ASCII control characters with proper Unicode typographic characters.
-
-    OpenAI API sometimes returns control characters instead of proper Unicode:
-    - \\x14 (DC4) should be — (em dash, U+2014)
-    - \\x19 (EM) should be ' (right single quotation mark, U+2019)
-    - \\x1c (FS) should be " (left double quotation mark, U+201C)
-    - \\x1d (GS) should be " (right double quotation mark, U+201D)
-    - \\x13 (DC3) should be – (en dash, U+2013)
-    """
-    if not isinstance(text, str):
-        return text
-
-    replacements = {
-        "\x14": "\u2014",  # DC4 → em dash (—)
-        "\x19": "\u2019",  # EM → right single quotation mark (')
-        "\x1c": "\u201c",  # FS → left double quotation mark (")
-        "\x1d": "\u201d",  # GS → right double quotation mark (")
-        "\x13": "\u2013",  # DC3 → en dash (–)
-    }
-
-    for bad_char, good_char in replacements.items():
-        if bad_char in text:
-            text = text.replace(bad_char, good_char)
-
-    return text
-
-
 def _clean_all_strings(data: Any) -> Any:
     """
     Recursively fix control characters in all strings within a data structure.
@@ -87,7 +59,7 @@ def _clean_all_strings(data: Any) -> Any:
     elif isinstance(data, list):
         return [_clean_all_strings(item) for item in data]
     elif isinstance(data, str):
-        return _fix_control_characters(data)
+        return fix_control_characters(data)
     else:
         return data
 
@@ -177,70 +149,6 @@ class EgoNetwork(BaseModel):
     )
 
 
-def wikipedia_headers() -> Dict[str, str]:
-    """Return headers for Wikipedia API requests."""
-    user_agent = os.getenv("WIKIPEDIA_USER_AGENT", DEFAULT_USER_AGENT)
-    return {"User-Agent": user_agent}
-
-
-def extract_wikipedia_title(url_or_subject: str) -> Optional[Tuple[str, str]]:
-    """
-    Extract Wikipedia article title and language code from a URL, or return None if not a URL.
-
-    Supports URLs like:
-    - https://en.wikipedia.org/wiki/Ada_Lovelace
-    - https://de.wikipedia.org/wiki/Hanna_Nagel
-    - http://en.wikipedia.org/wiki/Ada_Lovelace
-
-    Args:
-        url_or_subject: Either a Wikipedia URL or a regular subject string
-
-    Returns:
-        Tuple of (article_title, language_code) if input is a Wikipedia URL, None otherwise
-    """
-    url_or_subject = url_or_subject.strip()
-
-    # Check if this looks like a URL
-    if not (
-        url_or_subject.startswith("http://") or url_or_subject.startswith("https://")
-    ):
-        return None
-
-    try:
-        parsed = urlparse(url_or_subject)
-
-        # Check if this is a Wikipedia domain
-        if not parsed.netloc or "wikipedia.org" not in parsed.netloc:
-            return None
-
-        # Extract language code from domain (e.g., 'de' from 'de.wikipedia.org')
-        domain_parts = parsed.netloc.split(".")
-        if (
-            len(domain_parts) >= 2
-            and domain_parts[-2] == "wikipedia"
-            and domain_parts[-1] == "org"
-        ):
-            lang_code = domain_parts[0]
-        else:
-            lang_code = "en"  # Default to English
-
-        # Extract the article title from the path
-        # Path should be like /wiki/Article_Title
-        path_parts = parsed.path.split("/")
-        if len(path_parts) >= 3 and path_parts[1] == "wiki":
-            # Get the article title (everything after /wiki/)
-            title = "/".join(path_parts[2:])
-            # URL decode the title
-            title = unquote(title)
-            # Replace underscores with spaces (Wikipedia convention)
-            title = title.replace("_", " ")
-            return (title, lang_code)
-
-        return None
-    except Exception:
-        return None
-
-
 def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, Any]:
     """Fetch Wikipedia page data."""
     # Use English by default
@@ -271,101 +179,6 @@ def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, A
     if "missing" in page:
         raise ValueError(f"Wikipedia page for '{title}' is missing.")
     return cast(Dict[str, Any], page)
-
-
-def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
-    """Search Wikipedia for page titles matching the query."""
-    params = {
-        "action": "query",
-        "format": "json",
-        "list": "search",
-        "srsearch": query,
-        "srlimit": limit,
-        "srnamespace": 0,
-    }
-    response = requests.get(
-        MEDIAWIKI_API,
-        params=params,
-        timeout=30,
-        headers=wikipedia_headers(),
-    )
-    response.raise_for_status()
-    data = response.json()
-    results = data.get("query", {}).get("search", [])
-    titles: List[str] = [item.get("title") for item in results if item.get("title")]
-    suggestion = data.get("query", {}).get("searchinfo", {}).get("suggestion")
-    if suggestion:
-        titles.append(suggestion)
-    return titles
-
-
-def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
-    """Fetch Wikipedia extract with fallback search."""
-    # Check if the input is a Wikipedia URL
-    url_info = extract_wikipedia_title(title)
-    if url_info:
-        # Use the extracted title and language code directly without searching
-        article_title, lang_code = url_info
-        print(
-            f"Detected Wikipedia URL, using article: '{article_title}' (language: {lang_code})"
-        )
-        return _fetch_wikipedia_page(article_title, lang=lang_code)
-
-    candidates: List[str] = []
-    seen: Set[str] = set()
-    attempted: List[str] = []
-
-    def add_candidate(value: str) -> None:
-        candidate = (value or "").strip()
-        if not candidate:
-            return
-        key = candidate.casefold()
-        if key in seen:
-            return
-        seen.add(key)
-        candidates.append(candidate)
-
-    add_candidate(title)
-    normalized_title = title.replace("_", " ")
-    if normalized_title.casefold() != title.casefold():
-        add_candidate(normalized_title)
-    parenthetical = re.sub(r"\s*\([^)]*\)", "", normalized_title).strip()
-    if parenthetical and parenthetical.casefold() not in {
-        title.casefold(),
-        normalized_title.casefold(),
-    }:
-        add_candidate(parenthetical)
-
-    index = 0
-    search_enqueued = False
-    errors: List[str] = []
-
-    while True:
-        while index < len(candidates):
-            candidate = candidates[index]
-            index += 1
-            attempted.append(candidate)
-            try:
-                return _fetch_wikipedia_page(candidate)
-            except ValueError as error:
-                errors.append(str(error))
-
-        if search_enqueued:
-            break
-
-        search_enqueued = True
-        for suggestion in wikipedia_search_titles(title):
-            add_candidate(suggestion)
-
-    attempted_titles = ", ".join(attempted) if attempted else title
-    error_details = "; ".join(dict.fromkeys(errors)) if errors else ""
-    message = (
-        "Unable to locate a Wikipedia page for "
-        f"'{title}'. Tried titles: {attempted_titles}."
-    )
-    if error_details:
-        message = f"{message} Details: {error_details}."
-    raise ValueError(message)
 
 
 def load_existing_dataset(person_id: str) -> Optional[Dict[str, Any]]:
@@ -736,7 +549,7 @@ def generate_person_network(
 ) -> Path:
     """Generate a person network dataset for a person."""
     print(f"[1/6] Fetching Wikipedia article for '{subject}'...")
-    page_data = fetch_wikipedia_extract(subject)
+    page_data = fetch_wikipedia_extract(subject, _fetch_wikipedia_page)
     article_title = page_data.get("title", subject)
     print(f"[1/6] Found article '{article_title}'.")
 

@@ -5,7 +5,7 @@ import argparse
 import json
 import os
 import sys
-from typing import Any, Dict, List, Optional, Set, cast
+from typing import Any, Dict, List, Optional, cast
 
 from openai import OpenAI
 from pydantic import BaseModel, Field
@@ -20,7 +20,9 @@ from utils.wikipedia_cache import (
     get_cache_dir,
     get_cached_wikipedia_page,
     is_url,
+    resolve_wikipedia_page,
     wikipedia_headers,
+    wikipedia_search_titles,
     _fetch_wikipedia_page_direct,
 )
 from utils.deutsche_biographie import ensure_deutsche_biographie_cache
@@ -28,32 +30,6 @@ import requests
 
 MEDIAWIKI_API = "https://en.wikipedia.org/w/api.php"
 MEDIAWIKI_API_DE = "https://de.wikipedia.org/w/api.php"
-
-
-def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
-    """Search Wikipedia for page titles matching the query."""
-    params = {
-        "action": "query",
-        "format": "json",
-        "list": "search",
-        "srsearch": query,
-        "srlimit": limit,
-        "srnamespace": 0,
-    }
-    response = requests.get(
-        MEDIAWIKI_API,
-        params=params,
-        timeout=30,
-        headers=wikipedia_headers(),
-    )
-    response.raise_for_status()
-    data = response.json()
-    results = data.get("query", {}).get("search", [])
-    titles: List[str] = [item.get("title") for item in results if item.get("title")]
-    suggestion = data.get("query", {}).get("searchinfo", {}).get("suggestion")
-    if suggestion:
-        titles.append(suggestion)
-    return titles
 
 
 def find_wikipedia_page(title: str) -> str:
@@ -65,8 +41,6 @@ def find_wikipedia_page(title: str) -> str:
     Hadid' once resolved to 'Neom' — and the wrong article was then cached
     under the right person's id without a word of complaint.
     """
-    import re
-
     url_title = extract_wikipedia_title(title)
     if url_title is not None:
         title = url_title[0]
@@ -77,63 +51,16 @@ def find_wikipedia_page(title: str) -> str:
             "https://en.wikipedia.org/wiki/Article_Title."
         )
 
-    candidates: List[str] = []
-    seen: Set[str] = set()
-    attempted: List[str] = []
+    def fetch_canonical_title(candidate: str) -> str:
+        page = _fetch_wikipedia_page_direct(candidate)
+        return cast(str, page.get("title", candidate))
 
-    def add_candidate(value: str) -> None:
-        candidate = (value or "").strip()
-        if not candidate:
-            return
-        key = candidate.casefold()
-        if key in seen:
-            return
-        seen.add(key)
-        candidates.append(candidate)
-
-    add_candidate(title)
-    normalized_title = title.replace("_", " ")
-    if normalized_title.casefold() != title.casefold():
-        add_candidate(normalized_title)
-    parenthetical = re.sub(r"\s*\([^)]*\)", "", normalized_title).strip()
-    if parenthetical and parenthetical.casefold() not in {
-        title.casefold(),
-        normalized_title.casefold(),
-    }:
-        add_candidate(parenthetical)
-
-    index = 0
-    search_enqueued = False
-    errors: List[str] = []
-
-    while True:
-        while index < len(candidates):
-            candidate = candidates[index]
-            index += 1
-            attempted.append(candidate)
-            try:
-                page = _fetch_wikipedia_page_direct(candidate)
-                # Return the canonical title from the page
-                return cast(str, page.get("title", candidate))
-            except ValueError as error:
-                errors.append(str(error))
-
-        if search_enqueued:
-            break
-
-        search_enqueued = True
-        for suggestion in wikipedia_search_titles(title):
-            add_candidate(suggestion)
-
-    attempted_titles = ", ".join(attempted) if attempted else title
-    error_details = "; ".join(dict.fromkeys(errors)) if errors else ""
-    message = (
-        "Unable to locate a Wikipedia page for "
-        f"'{title}'. Tried titles: {attempted_titles}."
+    return cast(
+        str,
+        resolve_wikipedia_page(
+            title, fetch_canonical_title, search=wikipedia_search_titles
+        ),
     )
-    if error_details:
-        message = f"{message} Details: {error_details}."
-    raise ValueError(message)
 
 
 def fetch_page_links(title: str, limit: int = 500) -> List[str]:

@@ -56,15 +56,15 @@ from utils.model_calls import (
     parse_structured_or_raise,
 )
 from utils.json_io import write_json
-from utils.text import slugify
+from utils.text import fix_control_characters, slugify
 from utils.wikipedia_cache import (
-    MEDIAWIKI_API,
     WIKIPEDIA_SUMMARY_API,
     _fetch_wikipedia_page_from_api,
     _fetch_wikipedia_summary_from_api,
     _strip_html_tags,
     ensure_cache,
     extract_wikipedia_title,
+    fetch_wikipedia_extract,
     get_cache_dir,
     get_cached_wikipedia_page,
     get_cached_wikipedia_summary,
@@ -855,35 +855,6 @@ class LifeEvent(BaseModel):
 # ============================================================================
 
 
-def _fix_control_characters(text: str) -> str:
-    """
-    Replace ASCII control characters with proper Unicode typographic characters.
-
-    OpenAI API sometimes returns control characters instead of proper Unicode:
-    - \\x14 (DC4) should be — (em dash, U+2014)
-    - \\x19 (EM) should be ' (right single quotation mark, U+2019)
-    - \\x1c (FS) should be " (left double quotation mark, U+201C)
-    - \\x1d (GS) should be " (right double quotation mark, U+201D)
-    - \\x13 (DC3) should be – (en dash, U+2013)
-    """
-    if not isinstance(text, str):
-        return text
-
-    replacements = {
-        "\x14": "\u2014",  # DC4 → em dash (—)
-        "\x19": "\u2019",  # EM → right single quotation mark (')
-        "\x1c": "\u201c",  # FS → left double quotation mark (")
-        "\x1d": "\u201d",  # GS → right double quotation mark (")
-        "\x13": "\u2013",  # DC3 → en dash (–)
-    }
-
-    for bad_char, good_char in replacements.items():
-        if bad_char in text:
-            text = text.replace(bad_char, good_char)
-
-    return text
-
-
 def _strip_wrapping_quotes(value: str) -> str:
     trimmed = value.strip()
     quotes = "\"'" "''"
@@ -1109,98 +1080,6 @@ def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, A
     language = lang or _wikipedia_lang or "en"
     api_url = f"https://{language}.wikipedia.org/w/api.php"
     return _fetch_wikipedia_page_from_api(title, api_url)
-
-
-def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
-    params = {
-        "action": "query",
-        "format": "json",
-        "list": "search",
-        "srsearch": query,
-        "srlimit": limit,
-        "srnamespace": 0,
-    }
-    response = requests.get(
-        MEDIAWIKI_API,
-        params=params,
-        timeout=30,
-        headers=wikipedia_headers(),
-    )
-    response.raise_for_status()
-    data = response.json()
-    results = data.get("query", {}).get("search", [])
-    titles: List[str] = [item.get("title") for item in results if item.get("title")]
-    suggestion = data.get("query", {}).get("searchinfo", {}).get("suggestion")
-    if suggestion:
-        titles.append(suggestion)
-    return titles
-
-
-def fetch_wikipedia_extract(title: str) -> Dict[str, Any]:
-    """Fetch Wikipedia article with fallback search."""
-    url_info = extract_wikipedia_title(title)
-    if url_info:
-        article_title, lang_code = url_info
-        print(
-            f"Detected Wikipedia URL, using article: '{article_title}' (language: {lang_code})"
-        )
-        return _fetch_wikipedia_page(article_title, lang=lang_code)
-
-    candidates: List[str] = []
-    seen: Set[str] = set()
-    attempted: List[str] = []
-
-    def add_candidate(value: str) -> None:
-        candidate = (value or "").strip()
-        if not candidate:
-            return
-        key = candidate.casefold()
-        if key in seen:
-            return
-        seen.add(key)
-        candidates.append(candidate)
-
-    add_candidate(title)
-    normalized_title = title.replace("_", " ")
-    if normalized_title.casefold() != title.casefold():
-        add_candidate(normalized_title)
-    parenthetical = re.sub(r"\s*\([^)]*\)", "", normalized_title).strip()
-    if parenthetical and parenthetical.casefold() not in {
-        title.casefold(),
-        normalized_title.casefold(),
-    }:
-        add_candidate(parenthetical)
-
-    index = 0
-    search_enqueued = False
-    errors: List[str] = []
-
-    while True:
-        while index < len(candidates):
-            candidate = candidates[index]
-            index += 1
-            attempted.append(candidate)
-            try:
-                return _fetch_wikipedia_page(candidate)
-            except ValueError as error:
-                errors.append(str(error))
-
-        if search_enqueued:
-            break
-
-        search_enqueued = True
-        for suggestion in wikipedia_search_titles(title):
-            add_candidate(suggestion)
-
-    attempted_titles = ", ".join(attempted) if attempted else title
-    error_details = "; ".join(dict.fromkeys(errors)) if errors else ""
-    message = (
-        "Unable to locate a Wikipedia page for "
-        f"'{title}'. Tried titles: {attempted_titles}."
-    )
-    if error_details:
-        message = f"{message} Details: {error_details}."
-    raise ValueError(message)
 
 
 def fetch_wikipedia_summary(title: str) -> Dict[str, Any]:
@@ -4351,7 +4230,7 @@ def _clean_all_strings(data: Any) -> Any:
     elif isinstance(data, list):
         return [_clean_all_strings(item) for item in data]
     elif isinstance(data, str):
-        return _fix_control_characters(data)
+        return fix_control_characters(data)
     else:
         return data
 
@@ -4785,7 +4664,7 @@ def generate_person_events(
     """
 
     print(f"[Step 1/10] Fetching Wikipedia article for '{subject}'...")
-    page_data = fetch_wikipedia_extract(subject)
+    page_data = fetch_wikipedia_extract(subject, _fetch_wikipedia_page)
     article_title = page_data.get("title", subject)
     print(f"[Step 1/10] Found article '{article_title}'")
 

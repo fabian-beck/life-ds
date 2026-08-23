@@ -26,3 +26,36 @@ def slugify(
         value = value.split("(")[0]
     slug = re.sub(r"[^a-z0-9]+", "_", value.strip().lower())
     return slug.strip("_") or empty
+
+
+def fix_control_characters(text: str) -> str:
+    """Replace ASCII control characters with the typographic characters meant.
+
+    The OpenAI API sometimes returns control characters instead of proper
+    Unicode punctuation. This is a correctness rule about model output, not a
+    per-script convenience — two scripts carried identical copies, and this is
+    the copy most likely to be extended in one file and not the other, so it
+    lives here once.
+
+    - ``\\x14`` (DC4) should be — (em dash, U+2014)
+    - ``\\x19`` (EM) should be ' (right single quotation mark, U+2019)
+    - ``\\x1c`` (FS) should be " (left double quotation mark, U+201C)
+    - ``\\x1d`` (GS) should be " (right double quotation mark, U+201D)
+    - ``\\x13`` (DC3) should be – (en dash, U+2013)
+    """
+    if not isinstance(text, str):
+        return text
+
+    replacements = {
+        "\x14": "—",  # DC4 → em dash (—)
+        "\x19": "’",  # EM → right single quotation mark (')
+        "\x1c": "“",  # FS → left double quotation mark (")
+        "\x1d": "”",  # GS → right double quotation mark (")
+        "\x13": "–",  # DC3 → en dash (–)
+    }
+
+    for bad_char, good_char in replacements.items():
+        if bad_char in text:
+            text = text.replace(bad_char, good_char)
+
+    return text

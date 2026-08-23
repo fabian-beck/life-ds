@@ -5,7 +5,7 @@ import json
 import os
 import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, cast
+from typing import Any, Callable, Dict, List, Optional, Tuple, cast
 from urllib.parse import unquote, urlparse
 
 import requests
@@ -43,6 +43,132 @@ def is_url(value: str) -> bool:
     """Report whether a string is an http(s) URL rather than a subject name."""
     value = (value or "").strip()
     return value.startswith("http://") or value.startswith("https://")
+
+
+def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
+    """Search Wikipedia for page titles matching the query.
+
+    Three generation scripts carried byte-identical copies of this; it lives
+    here so a change to how titles are ranked reaches all of them.
+    """
+    params = {
+        "action": "query",
+        "format": "json",
+        "list": "search",
+        "srsearch": query,
+        "srlimit": limit,
+        "srnamespace": 0,
+    }
+    response = requests.get(
+        MEDIAWIKI_API,
+        params=params,
+        timeout=30,
+        headers=wikipedia_headers(),
+    )
+    response.raise_for_status()
+    data = response.json()
+    results = data.get("query", {}).get("search", [])
+    titles: List[str] = [item.get("title") for item in results if item.get("title")]
+    suggestion = data.get("query", {}).get("searchinfo", {}).get("suggestion")
+    if suggestion:
+        titles.append(suggestion)
+    return titles
+
+
+def resolve_wikipedia_page(
+    title: str,
+    fetch: Callable[[str], Any],
+    search: Optional[Callable[[str], List[str]]] = None,
+) -> Any:
+    """Try title variants, then search suggestions, until ``fetch`` succeeds.
+
+    ``fetch`` receives one candidate title, raises ``ValueError`` on a miss,
+    and whatever it returns for a hit is returned as-is — the callers differ
+    in what they fetch (a page dict, a canonical title), so retrieval stays
+    theirs while the candidate generation and search fallback live here once.
+    ``search`` defaults to :func:`wikipedia_search_titles`.
+    """
+    candidates: List[str] = []
+    seen: set = set()
+    attempted: List[str] = []
+
+    def add_candidate(value: str) -> None:
+        candidate = (value or "").strip()
+        if not candidate:
+            return
+        key = candidate.casefold()
+        if key in seen:
+            return
+        seen.add(key)
+        candidates.append(candidate)
+
+    add_candidate(title)
+    normalized_title = title.replace("_", " ")
+    if normalized_title.casefold() != title.casefold():
+        add_candidate(normalized_title)
+    parenthetical = re.sub(r"\s*\([^)]*\)", "", normalized_title).strip()
+    if parenthetical and parenthetical.casefold() not in {
+        title.casefold(),
+        normalized_title.casefold(),
+    }:
+        add_candidate(parenthetical)
+
+    index = 0
+    search_enqueued = False
+    errors: List[str] = []
+
+    while True:
+        while index < len(candidates):
+            candidate = candidates[index]
+            index += 1
+            attempted.append(candidate)
+            try:
+                return fetch(candidate)
+            except ValueError as error:
+                errors.append(str(error))
+
+        if search_enqueued:
+            break
+
+        search_enqueued = True
+        for suggestion in (search or wikipedia_search_titles)(title):
+            add_candidate(suggestion)
+
+    attempted_titles = ", ".join(attempted) if attempted else title
+    error_details = "; ".join(dict.fromkeys(errors)) if errors else ""
+    message = (
+        "Unable to locate a Wikipedia page for "
+        f"'{title}'. Tried titles: {attempted_titles}."
+    )
+    if error_details:
+        message = f"{message} Details: {error_details}."
+    raise ValueError(message)
+
+
+def fetch_wikipedia_extract(
+    title: str, fetch_page: Callable[..., Dict[str, Any]]
+) -> Dict[str, Any]:
+    """Fetch a Wikipedia article by title or URL, with fallback search.
+
+    ``fetch_page(title, lang=None)`` does the actual retrieval — the callers
+    request different page properties and resolve the default language
+    differently, so the URL detection and the fallback machinery are the
+    shared part.
+    """
+    url_info = extract_wikipedia_title(title)
+    if url_info:
+        # A URL names its article outright, so it is never searched for.
+        article_title, lang_code = url_info
+        print(
+            f"Detected Wikipedia URL, using article: '{article_title}' "
+            f"(language: {lang_code})"
+        )
+        return fetch_page(article_title, lang=lang_code)
+
+    return cast(
+        Dict[str, Any],
+        resolve_wikipedia_page(title, lambda candidate: fetch_page(candidate)),
+    )
 
 
 def extract_wikipedia_title(url_or_subject: str) -> Optional[Tuple[str, str]]:
