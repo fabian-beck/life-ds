@@ -43,6 +43,12 @@ What the prompt still carries is what the model cannot infer:
   abstract categories, and a title delivered by the text beneath it. Each
   rule is the negative of a pattern readers reported bouncing off: prose that
   sounds like it says something but leaves nothing behind.
+- **The voice rules** — every sentence earns its place with a fact or an
+  inference, select rather than compress, no stock rhetoric ("not merely X
+  but Y", "underscores", rhetorical triads), no generic significance claims,
+  and a final pass cutting sentences whose removal loses nothing. The craft
+  rules ban prose that assumes knowledge; these ban prose that simulates
+  meaning.
 
 Craft beyond those rules is left to the model.
 
@@ -922,6 +928,16 @@ categories ("armies, households, and rivalries bound these lives together"
 says nothing a reader can retain). Every title — a card's, a circle's, a
 stop's, a section's — must be delivered by the text beneath it: a title that
 promises a mechanism is followed by text that explains that mechanism.
+
+VOICE. Write as an author with something to say, not as an assistant trying
+to sound helpful or comprehensive. Every sentence contributes a fact, an
+inference, or a necessary step of the argument; within the budgets above,
+that means selecting the strongest material, not compressing everything in.
+No stock rhetoric: no "not merely X but Y", no "highlights" or
+"underscores", no rhetorical triads, no generic claims of significance or
+legacy, and no polished closing sentence that restates what the page already
+said. Before returning, reread every sentence you wrote and cut any whose
+removal would lose nothing — the budgets are ceilings, not targets.
 
 Ground everything in the material above: no invented events, dates,
 relationships or quotations. Quotes verbatim, with attribution. Copy every id

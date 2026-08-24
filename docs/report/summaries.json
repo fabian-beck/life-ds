@@ -169,17 +169,17 @@
       }
     },
     "m_p8": {
-      "fingerprint": "1cc8b68f2de5d088",
+      "fingerprint": "a0db65320854feb4",
       "summary": {
         "constraints": [
-          "Opening and description together stay at roughly \"100-150 words\" of paragraph text; each component section body and the conclusion are one short paragraph.",
-          "`section_order` must include every available component section exactly once; chapters and events remain in their supplied order, and event `person_id` and `event_index` are copied verbatim.",
-          "Map stops may be retained or listed as discarded; retained and discarded stop lists are empty when no map exists.",
-          "No invented facts, dates, relationships, or quotations; quotations must be verbatim and attributed. Use third person, American English, explicit place names, no rhetorical questions, no direct address, and no more than the configured maximum number of nonreused images."
+          "Opening and description share a roughly \"100-150 words\" paragraph-text budget; each component body and the conclusion is one short paragraph.",
+          "`section_order` must include every available `timeline`, `network`, and `map` section exactly once, in reader-facing order; map prose and retained stops are empty when no map exists.",
+          "Events retain supplied `person_id` and `event_index` verbatim and remain in input order; chapters also remain in input order; IDs and keys must be copied rather than constructed.",
+          "All claims must be grounded in supplied material, quotations must be verbatim and attributed, images are limited to `MAX_IMAGES_PER_STORY` with no reuse, and invented facts, dates, relationships, or quotations are forbidden."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Combines the assembled page specification, previously drafted component material, reference excerpts, and image candidates into a single top-down narrative composition. It rewrites the header prose, section framing, conclusion, timeline events, network circles, map stops, captions, titles, and presentation order so several biographies read as one coherent story; it can also remove map stops that do not support that story.",
-        "why_this_design": "The prompt deliberately puts substantive reporting in event, circle, and stop text rather than in surrounding article prose, preserving the reader’s attention for the data-bearing components. The result is requested in a structured form that retains supplied identifiers and event indices, allowing rewritten copy and reordered presentation to be joined back to the existing page data without reconstructing keys."
+        "what_it_does": "Synthesizes the assembled timeline, relationship graph, map, prior item drafts, background excerpts, and image candidates into one coherent biographical data story. It returns all display text and presentation ordering in a single structured result: header prose, section headings and framing, conclusion, rewritten chapter and event text, network circles, retained map stops, and explicitly discarded stops.",
+        "why_this_design": "A single top-down pass lets the composition establish an arc across materials that were drafted independently, while preserving information where it is used: events on the timeline, relationships on circle cards, and place details on stop cards. The call itself is not caught locally after structured parsing, so operational failures remain the wrapper's responsibility; the following branch is deliberately limited to verbose logging."
       }
     },
     "m_save": {
