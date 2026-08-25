@@ -32,6 +32,12 @@ The authoring surface is small on purpose:
     that concept's glyph—the same glyph the figures and the interface use—so a
     reader meets the vocabulary in the sentence that introduces it.
 
+`[[shot.part|phrase]]` / `[[shot.part]]`
+    The same reference into a part of a screenshot figure. The dotted id names
+    a `::: screenshot` block and one of the parts its body declares as
+    `@id x,y,w,h Label` lines, and it resolves at compile time exactly as a
+    teaser id does—a part that was renamed or removed stops the build.
+
 `<<concept|phrase>>` / `<<concept>>`
     A reference from a phrase into an entry of the concept legend, resolved
     against `concepts.CONCEPTS`. It carries the concept's glyph and reads as
@@ -79,9 +85,10 @@ from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple
 
 import markdown
 
-from . import bibliography, concepts, teaser
+from . import bibliography, concepts, screenshots, teaser
 from .bibliography import Bibliography, Reference
 from .facts import Fact
+from .screenshots import ShotPart
 
 MARKDOWN_EXTENSIONS = [
     "tables",
@@ -227,7 +234,10 @@ DIRECTIVE_OPEN = re.compile(r"^:::\s*([a-z][a-z0-9_-]*)\s*(.*)$")
 DIRECTIVE_CLOSE = re.compile(r"^:::\s*$")
 HEADING = re.compile(r"^(#{2,4})\s+(.*?)\s*$")
 CITATION = re.compile(r"(?<!\\)\{\{\s*([a-zA-Z0-9_.]+)\s*\}\}")
-FIGREF = re.compile(r"(?<!\\)\[\[\s*([a-z][a-z0-9-]*)\s*(?:\|\s*([^\]]+?)\s*)?\]\]")
+FIGREF = re.compile(
+    r"(?<!\\)\[\[\s*([a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*)?)\s*"
+    r"(?:\|\s*([^\]]+?)\s*)?\]\]"
+)
 CONCEPTREF = re.compile(r"(?<!\\)<<\s*([a-z][a-z0-9-]*)\s*(?:\|\s*([^>]+?)\s*)?>>")
 PRINCIPLE_REF = re.compile(r"(?<!\\)\(\(\s*([a-z][a-z0-9-]*)\s*\)\)")
 PRINCIPLE_ITEM = re.compile(r"^@([a-z][a-z0-9-]*)\s+(\S.*?)\s*$")
@@ -357,6 +367,8 @@ class Document:
     citations: List[str]
     source_path: str
     figrefs: List[str] = field(default_factory=list)
+    # References into screenshot parts, as dotted `shot.part` ids.
+    shotrefs: List[str] = field(default_factory=list)
     conceptrefs: List[str] = field(default_factory=list)
     notes: List[Note] = field(default_factory=list)
     refcites: List[str] = field(default_factory=list)
@@ -616,7 +628,13 @@ def concept_glyph(concept_id: str, cls: str = "glyph") -> str:
     )
 
 
-def substitute_figrefs(text: str, seen: List[str], line_hint: str = "") -> str:
+def substitute_figrefs(
+    text: str,
+    seen: List[str],
+    line_hint: str = "",
+    shots: Optional[Dict[str, Dict[str, ShotPart]]] = None,
+    shot_seen: Optional[List[str]] = None,
+) -> str:
     """Replace `[[part|phrase]]` with a control that points into the figure.
 
     The phrase stays ordinary prose—the sentence has to read the same with the
@@ -625,6 +643,10 @@ def substitute_figrefs(text: str, seen: List[str], line_hint: str = "") -> str:
     reference into the figure a build-time claim: a part that was renamed or
     removed stops the build instead of leaving a phrase that lights nothing.
 
+    A dotted id, `[[shot.part]]`, points into a screenshot figure instead: the
+    first half names a `::: screenshot` block and the second a part its body
+    declares, resolved against `shots` under exactly the same contract.
+
     A part that carries a concept contributes its glyph, drawn ahead of the
     phrase and hidden from assistive technology, since the words already say
     what the mark repeats. The glyph is the one the application draws for the
@@ -632,9 +654,37 @@ def substitute_figrefs(text: str, seen: List[str], line_hint: str = "") -> str:
     sentence into a figure and from a figure into the product.
     """
 
+    def replace_shot(part_id: str, phrase: Optional[str]) -> str:
+        shot_id, _, region_id = part_id.partition(".")
+        declared = (shots or {}).get(shot_id)
+        if declared is None:
+            known = ", ".join(sorted(shots)) if shots else "none"
+            raise ReportError(
+                f"{line_hint}unknown screenshot '[[{part_id}]]'—blocks with "
+                f"parts: {known}"
+            )
+        region = declared.get(region_id)
+        if region is None:
+            raise ReportError(
+                f"{line_hint}unknown screenshot part '[[{part_id}]]'—"
+                f"'{shot_id}' declares " + (", ".join(sorted(declared)) or "none")
+            )
+        if shot_seen is not None:
+            shot_seen.append(part_id)
+        label = phrase if phrase else region.label
+        return (
+            f'<button type="button" class="figref" '
+            f'data-shot="{_escape(shot_id)}" data-part="{_escape(region_id)}" '
+            f'aria-label="{_escape(label)}—show '
+            f'{_escape(region.label)} in the screenshot">'
+            f"{_escape(label)}</button>"
+        )
+
     def replace(match: re.Match) -> str:
         part_id = match.group(1)
         phrase = match.group(2)
+        if "." in part_id:
+            return replace_shot(part_id, phrase)
         part = teaser.part_by_id(part_id)
         if part is None:
             raise ReportError(
@@ -652,6 +702,32 @@ def substitute_figrefs(text: str, seen: List[str], line_hint: str = "") -> str:
 
     substituted = _outside_fences(text, lambda line: FIGREF.sub(replace, line))
     return substituted.replace("\\[[", "[[")
+
+
+def collect_shot_parts(blocks: Sequence[Block]) -> Dict[str, Dict[str, ShotPart]]:
+    """Every screenshot's declared parts, read before anything is compiled.
+
+    Like the principles, a reference may stand above or below the block that
+    declares its target—the figures sit where the argument wants them—so the
+    part ids have to be known before the first substitution. Only the id and
+    the body are read here; everything else a block may get wrong is parsed
+    and reported with better context by `screenshots.parse` and `validate`.
+    """
+    declared: Dict[str, Dict[str, ShotPart]] = {}
+    for block in blocks:
+        if block.kind != "component" or block.name != "screenshot":
+            continue
+        shot_id = (block.params.get("id") or "").strip()
+        if not shot_id or shot_id in declared:
+            continue
+        _, parts_text = screenshots.split_parts(block.text)
+        hint = f"line {block.line}: " if block.line else ""
+        try:
+            parts = screenshots.parse_parts(parts_text)
+        except screenshots.ScreenshotError as error:
+            raise ReportError(f"{hint}'::: screenshot id={shot_id}': {error}")
+        declared[shot_id] = {part.id: part for part in parts}
+    return declared
 
 
 def substitute_conceptrefs(text: str, seen: List[str], line_hint: str = "") -> str:
@@ -1262,10 +1338,12 @@ def compile_report(
 
     citations: List[str] = []
     figrefs: List[str] = []
+    shotrefs: List[str] = []
     conceptrefs: List[str] = []
     refcites: List[str] = []
     prefs: List[str] = []
     principles = collect_principles(blocks)
+    shot_parts = collect_shot_parts(blocks)
     flat: List[Section] = []
     mounts: List[Mount] = []
     notes: List[Note] = []
@@ -1283,7 +1361,7 @@ def compile_report(
         hint = f"line {block.line}: " if block.line else ""
         # Figure references first: a reference's phrase is plain prose, and a
         # citation inside one should still resolve.
-        text = substitute_figrefs(block.text, figrefs, hint)
+        text = substitute_figrefs(block.text, figrefs, hint, shot_parts, shotrefs)
         text = substitute_conceptrefs(text, conceptrefs, hint)
         text = substitute_citations(text, facts, citations, hint)
         text = substitute_refcites(text, works, refcites, hint)
@@ -1299,7 +1377,12 @@ def compile_report(
             )
             continue
 
-        inner = _render_markdown(_renumber_headings(text, counters, flat, slugs))
+        # A screenshot's part declarations belong to the figure, not to the
+        # authored intro above it, so they are cut before the body is rendered.
+        inner_text = text
+        if block.kind == "component" and block.name == "screenshot":
+            inner_text, _ = screenshots.split_parts(text)
+        inner = _render_markdown(_renumber_headings(inner_text, counters, flat, slugs))
 
         if block.kind == "callout":
             parts.append(_callout_html(block, inner))
@@ -1364,6 +1447,7 @@ def compile_report(
         citations,
         source_path,
         figrefs,
+        shotrefs,
         conceptrefs,
         notes,
         refcites,

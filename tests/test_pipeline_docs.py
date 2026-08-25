@@ -1581,6 +1581,157 @@ class ScreenshotTests(unittest.TestCase):
             )
 
 
+class ShotPartTests(unittest.TestCase):
+    """Named parts of a screenshot, and the prose's references into them.
+
+    A screenshot part is the teaser relation applied to a photograph: a
+    rectangle with an identity, declared beside the capture it annotates, and
+    every `[[shot.part]]` phrase a build-time claim. The checks are the same
+    referential ones—an id that does not resolve fails the build, a part
+    nothing references is flagged, and annotating a figure must not report the
+    capture as stale.
+    """
+
+    HEAD = "---\ntitle: T\n---\n\n## S\n\n"
+
+    BLOCK = (
+        '::: screenshot id=shot-one route=#/en caption="A view"\n'
+        "@hero 10,10,100,50 Hero region\n"
+        "The region at the top.\n"
+        "@side 120,10,60,50 Side region\n"
+        "The panel beside it.\n"
+        ":::\n"
+    )
+
+    def _shot(self, document: report.Document) -> screenshots.Shot:
+        mount = next(
+            mount
+            for mount in document.mounts
+            if mount.component == "screenshot"
+        )
+        return screenshots.parse(mount.params, mount.body_markdown, mount.line)
+
+    def test_part_declarations_become_typed_parts(self) -> None:
+        shot = self._shot(_compile(self.HEAD + self.BLOCK))
+        self.assertEqual(
+            [(part.id, part.label, part.box) for part in shot.parts],
+            [
+                ("hero", "Hero region", (10, 10, 100, 50)),
+                ("side", "Side region", (120, 10, 60, 50)),
+            ],
+        )
+        self.assertEqual(shot.parts[0].blurb, "The region at the top.")
+
+    def test_parts_stay_out_of_the_fingerprint(self) -> None:
+        """Annotating a figure is prose work and must not report it stale."""
+        bare = screenshots.parse({"id": "a", "route": "#/en", "caption": "c"})
+        annotated = screenshots.parse(
+            {"id": "a", "route": "#/en", "caption": "c"},
+            "@hero 0,0,10,10 Hero\nA blurb.\n",
+        )
+        self.assertEqual(len(annotated.parts), 1)
+        self.assertEqual(bare.fingerprint, annotated.fingerprint)
+
+    def test_a_reference_becomes_a_control_naming_shot_and_part(self) -> None:
+        document = _compile(
+            self.HEAD + "See [[shot-one.hero|the hero]].\n\n" + self.BLOCK
+        )
+        self.assertEqual(document.shotrefs, ["shot-one.hero"])
+        self.assertIn(
+            'class="figref" data-shot="shot-one" data-part="hero"',
+            document.html,
+        )
+        self.assertIn("the hero", document.html)
+        # The declaration lines belong to the figure, not to the page's prose.
+        self.assertNotIn("@hero", document.html)
+
+    def test_a_reference_without_a_phrase_uses_the_part_label(self) -> None:
+        document = _compile(
+            self.HEAD + "See [[shot-one.side]].\n\n" + self.BLOCK
+        )
+        self.assertIn("Side region", document.html)
+
+    def test_an_unknown_shot_or_part_fails_the_build(self) -> None:
+        with self.assertRaises(report.ReportError) as unknown_shot:
+            _compile(self.HEAD + "See [[no-shot.hero|x]].\n\n" + self.BLOCK)
+        self.assertIn("no-shot.hero", str(unknown_shot.exception))
+        with self.assertRaises(report.ReportError) as unknown_part:
+            _compile(self.HEAD + "See [[shot-one.nope|x]].\n\n" + self.BLOCK)
+        self.assertIn("hero, side", str(unknown_part.exception))
+
+    def test_a_malformed_part_line_fails_the_build(self) -> None:
+        block = self.BLOCK.replace("@hero 10,10,100,50 Hero region", "@hero Hero")
+        with self.assertRaises(report.ReportError) as caught:
+            _compile(self.HEAD + block)
+        self.assertIn("@id x,y,w,h Label", str(caught.exception))
+
+    def test_part_geometry_is_checked_against_the_capture(self) -> None:
+        block = (
+            '::: screenshot id=shot-one route=#/en caption="A view" '
+            "width=390 height=200\n"
+            "@out 380,190,100,50 Escapes\nA blurb.\n"
+            "@flat 0,0,0,10 Flat\nA blurb.\n"
+            "@mute 0,0,10,10 Mute\n"
+            ":::\n"
+        )
+        document = _compile(self.HEAD + block)
+        problems = validate._check_screenshots(document, Path("nowhere"))
+        messages = [problem.message for problem in problems]
+        self.assertTrue(any("outside the 390x200 capture" in m for m in messages))
+        self.assertTrue(any("no area" in m for m in messages))
+        self.assertTrue(any("no blurb" in m for m in messages))
+
+    def test_a_part_nothing_references_is_a_warning(self) -> None:
+        document = _compile(
+            self.HEAD + "See [[shot-one.hero|the hero]].\n\n" + self.BLOCK
+        )
+        problems = [
+            problem
+            for problem in validate._check_screenshots(document, Path("nowhere"))
+            if "shot-one.side" in problem.message
+        ]
+        self.assertEqual([problem.severity for problem in problems], ["warning"])
+        self.assertIn("no phrase references it", problems[0].message)
+
+    def test_the_payload_carries_the_parts_and_the_density(self) -> None:
+        document = _compile(self.HEAD + self.BLOCK)
+        with tempfile.TemporaryDirectory() as workspace:
+            directory = Path(workspace)
+            shot = self._shot(document)
+            (directory / shot.file_name).write_bytes(b"\xff\xd8\xff")
+            screenshots.save_index(
+                {
+                    shot.id: screenshots.Capture(
+                        id=shot.id,
+                        file=shot.file_name,
+                        fingerprint=shot.fingerprint,
+                        captured="2026-01-01T00:00:00Z",
+                    )
+                },
+                directory,
+            )
+            embedded = screenshots.payload(screenshots.collect(document, directory))
+        entry = embedded["shot-one"]
+        self.assertEqual(entry["scale"], screenshots.DEFAULT_SCALE)
+        self.assertEqual(
+            [(part["id"], part["x"], part["w"]) for part in entry["parts"]],
+            [("hero", 10, 100), ("side", 120, 60)],
+        )
+
+    def test_the_report_references_every_part_it_declares(self) -> None:
+        document = report.compile_report(
+            REPORT_SOURCE.read_text(encoding="utf-8"), _facts()
+        )
+        album = screenshots.collect(document)
+        declared = {
+            f"{shot.id}.{part.id}"
+            for shot in album.shots
+            for part in shot.parts
+        }
+        self.assertTrue(declared, "the report declares no screenshot parts")
+        self.assertEqual(sorted(declared - set(document.shotrefs)), [])
+
+
 class TeaserTests(unittest.TestCase):
     """The teaser figure, and the prose's references into it.
 

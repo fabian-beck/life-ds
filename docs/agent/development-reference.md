@@ -302,7 +302,7 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | Bibliography | `bibliography.py` | Parses `docs/report/references.bib` and prints it in IEEE form with every author named. Every entry needs a DOI; `[@key]` is resolved against it and numbered by first use. |
 | Teaser figure | `teaser.py` | The scene of Figure 1—its parts, their boxes, labels, sentences, and arrows—declared once and drawn by `app.js`. Part ids are what the prose points at. |
 | Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt, and schema. Only changed steps are re-summarized, and each is attributed to the model that wrote it wherever it is shown. |
-| Screenshots | `screenshots.py` | Reads the `::: screenshot` blocks, pairs each with the picture on disk, embeds it as a data URI, and decides whether it is stale. Capture itself is `scripts/capture_report_screenshots.mjs` (Playwright). |
+| Screenshots | `screenshots.py` | Reads the `::: screenshot` blocks—including the `@id x,y,w,h Label` part declarations the prose points into—pairs each with the picture on disk, embeds it as a data URI, and decides whether it is stale. Capture itself is `scripts/capture_report_screenshots.mjs` (Playwright). |
 
 `spec.py`, `report.md`, and `references.bib` are the only hand-maintained inputs.
 
@@ -312,7 +312,7 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 
 It also fails when a **written step explanation names a model the step does not resolve**. Those explanations are generated from each step's own source, so a model name left in a comment reaches the page as a claim—one said `GPT-5.1` while the same drawer printed the resolved model beside it. Model names therefore do not belong in the generation scripts' comments, and the summarizer is told not to repeat one; the drawer and the printed appendix attribute the explanation to the model that wrote it, since it is the one place in the report where prose is generated rather than authored or measured. `--check` reads the cache without writing it, so the rule holds without an API key.
 
-It also fails when the authored report no longer resolves: an unknown `{{ fact }}` citation, an unknown `[[part]]` reference into the teaser figure, an unknown `[@key]` reference or one split across two lines, a bibliography entry with no DOI, a figure whose geometry is inconsistent, an unknown or misconfigured `::: component`, a lane or script that no longer exists, a pipeline that no chart draws, or a declared screenshot with no picture on disk. A fact that is measured but never cited, a reference declared but never cited, a figure part no phrase references, and a screenshot whose declaration moved since it was taken are warnings rather than errors.
+It also fails when the authored report no longer resolves: an unknown `{{ fact }}` citation, an unknown `[[part]]` reference into the teaser figure or `[[shot.part]]` reference into a screenshot, an unknown `[@key]` reference or one split across two lines, a bibliography entry with no DOI, a figure whose geometry is inconsistent—a screenshot part outside its capture included—an unknown or misconfigured `::: component`, a lane or script that no longer exists, a pipeline that no chart draws, or a declared screenshot with no picture on disk. A fact that is measured but never cited, a reference declared but never cited, a figure part no phrase references, and a screenshot whose declaration moved since it was taken are warnings rather than errors.
 
 The check needs no API key, so it is safe to run anywhere. It is deliberately **not** part of `npm run validate`; run it after changing any generation script or the report source.
 
@@ -327,6 +327,7 @@ Nor does an inventory count. How many steps, layers, edges, schemas, or concepts
 | `## Heading`, `### Heading` | Section and subsection. Numbers, ids, the contents, and the sidebar are all derived from document order. Skipping a level is a build error. |
 | `{{ some.fact }}` | A measurement from `facts.py`, rendered with its source as a tooltip. An unknown key fails the build. |
 | `[[part\|phrase]]`, `[[part]]` | A phrase that names a part of the teaser figure (`teaser.PARTS`). An unknown id fails the build; a part no phrase names is a warning. Where the part carries a concept, the phrase is marked with that concept's glyph. |
+| `[[shot.part\|phrase]]`, `[[shot.part]]` | The same reference into a part of a screenshot figure, resolved against the `@id x,y,w,h Label` lines of the named `::: screenshot` block. An unknown id fails the build; a part no phrase names is a warning. |
 | `::: component key=value` … `:::` | A computed block. The block's body is authored prose kept above the computed part. |
 | `::: note` / `aside` / `decision` / `limitation` | An authored callout. Holds prose only. |
 | `::: principles` … `:::` | The design principles, one per `@id Title` line with a paragraph under it. Numbered positionally as `P1`, `P2`, …; declared once, in the introduction. |
@@ -363,6 +364,8 @@ A figure showing the interface is **described in `report.md`, not pasted in**. T
 ```markdown
 ::: screenshot id=person-story route="#/en/story/alan_turing?event=13" width=390 height=844 wait=".story-view" settle=3500 caption="One event slide on a phone"
 Optional authored prose, kept above the figure.
+@timeline 0,794,390,50 Icon timeline
+Every event of the life at its position, marked with its typed icon.
 :::
 ```
 
@@ -390,6 +393,8 @@ python scripts/generate_report.py --shots --shots-base-url http://127.0.0.1:5173
 Capture starts a dev server of its own on port 4177 unless one already answers there or `--shots-base-url` names another. It is **not** part of an ordinary build: a build embeds what is on disk, so `--check` stays runnable without a browser. `docs/report/screenshots/captures.json` records, per shot, the fingerprint of the declaration the picture was taken from. A declaration that has moved since makes the figure *stale*—a warning naming the command that retakes it—and a declaration with no picture at all is a build error.
 
 Staleness is a property of the description, not of the application: nothing here can tell that the interface changed under an unchanged declaration. Retake everything with `--shots all` after a visible change to the application, and commit the pictures along with `captures.json`.
+
+**Parts make a screenshot linkable the way the teaser is.** Lines from the first `@` onward in the block's body each declare one region—`@id x,y,w,h Label` in the capture's CSS pixels, with a blurb under it—and the prose points at one with `[[shot.part|phrase]]`. Hovering or selecting either end lights the other: the region is outlined in place, enlarged in place when it is drawn too small to read (never past the capture's pixel density), or shown in the corner panel when the figure is off screen, exactly as teaser parts behave. Parts stay outside the fingerprint, so annotating a figure never reports it stale; a part outside the capture, without area, or without a blurb is a build error, and a part no phrase references is a warning.
 
 ### The Concept Vocabulary
 

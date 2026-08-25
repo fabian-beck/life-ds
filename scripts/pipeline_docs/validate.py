@@ -635,6 +635,8 @@ def _check_screenshots(
     album = screenshots.Album(parsed, screenshots.load_index(where_dir), where_dir)
     for shot in parsed:
         where = f"report.md line {shot.line} ('::: screenshot id={shot.id}')"
+        for fault in screenshots.check_parts(shot):
+            problems.append(Problem("error", where, fault))
         status = album.status(shot)
         if status == "missing":
             problems.append(
@@ -664,6 +666,20 @@ def _check_screenshots(
                     "into the page—consider format=jpeg or a smaller viewport",
                 )
             )
+
+    # The relation the parts exist for, mirroring the teaser's: an unknown or
+    # dangling reference already fails in the compiler, so what is left is a
+    # part the report declares but never puts to work.
+    declared_parts = {f"{shot.id}.{part.id}" for shot in parsed for part in shot.parts}
+    for part_ref in sorted(declared_parts - set(document.shotrefs)):
+        problems.append(
+            Problem(
+                "warning",
+                "report.md",
+                f"screenshot part '{part_ref}' is declared but no phrase "
+                "references it",
+            )
+        )
 
     for orphan in screenshots.prune(album):
         problems.append(

@@ -2524,6 +2524,122 @@ figure.teaser > .cap {
   line-height: 1.45;
 }
 
+/* ------------------------------------------------ screenshot part linking */
+
+/* A screenshot with declared parts: the picture and its overlay are one
+   canvas inside a clipping box, so a focused region can be enlarged by
+   transforming the canvas—what the box shows changes, the room the figure
+   takes does not. The clip shrink-wraps the picture, which is what makes the
+   transform arithmetic hold at every column width. */
+.shot-clip {
+  display: inline-block;
+  overflow: hidden;
+  max-width: 100%;
+  line-height: 0;
+}
+
+.shot-canvas {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  transform-origin: 0 0;
+  transition: transform 0.24s ease;
+}
+
+.shot-parts {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.shot-parts .spart {
+  cursor: pointer;
+}
+
+/* The browser's focus ring on a focusable <g>, suppressed for the same reason
+   the teaser suppresses it; keyboard focus is marked on the box below. */
+.shot-parts .spart:focus {
+  outline: none;
+}
+
+/* Regions are invisible at rest—the screenshot is the figure—and sketch
+   themselves in faintly while the pointer is over the picture, so a reader
+   learns they are there without the figure wearing boxes. White with a dark
+   seam, because the ground is a photograph rather than paper and the stroke
+   has to read on whatever the application painted there. The stroke keeps its
+   width through the in-place enlargement. */
+.spart-box {
+  fill: transparent;
+  stroke: #ffffff;
+  stroke-opacity: 0;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 1px rgb(0 0 0 / 70%));
+  transition: stroke-opacity 0.16s ease;
+}
+
+.shot-frame:hover .spart-box {
+  stroke-opacity: 0.35;
+}
+
+.spart:hover .spart-box,
+.spart.is-on .spart-box {
+  stroke-opacity: 0.95;
+  stroke-width: 2;
+}
+
+.spart:focus-visible .spart-box {
+  stroke-opacity: 0.95;
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}
+
+/* Everything that is not the subject recedes, as the teaser's parts do—by
+   shading rather than by paling, since what recedes is a picture of a dark
+   interface, not ink on paper. One even-odd path, so the region is a hole in
+   the shade rather than a box drawn over the picture. */
+.spart-scrim {
+  fill: rgb(8 12 18 / 55%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+.shot-parts.has-focus .spart-scrim {
+  opacity: 1;
+}
+
+/* The peeked region of a screenshot: the same panel the teaser uses, with the
+   crop done by positioning the picture inside a window, in percentages of the
+   focus region, so nothing has to be measured. */
+.figpeek-stage {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--surface);
+}
+
+.figpeek-shot {
+  position: absolute;
+  display: block;
+}
+
+.figpeek-mark {
+  position: absolute;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 1px rgb(0 0 0 / 70%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shot-canvas,
+  .spart-box,
+  .spart-scrim {
+    transition: none;
+  }
+}
+
 /* -------------------------------------------------------- print appendix */
 
 /* Built by `app.js` from the same function that fills the drawer, and carried
@@ -2790,6 +2906,21 @@ figure.teaser > .cap {
   .shot-img {
     max-height: 62vh;
     width: auto;
+  }
+
+  /* The part overlay and any in-place enlargement are affordances; on paper
+     the screenshot prints whole and unmarked, and the box that exists to clip
+     the enlargement has nothing left to clip. */
+  .shot-parts {
+    display: none !important;
+  }
+
+  .shot-canvas {
+    transform: none !important;
+  }
+
+  .shot-clip {
+    overflow: visible;
   }
 
   /* A figure and its caption are one object; a widget is not—several of them

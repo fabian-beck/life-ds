@@ -29,6 +29,14 @@ capture records the fingerprint of the spec it was taken from, so moving a shot
 to another route or resizing its viewport marks it stale, while rewording its
 caption does not. Whether the application itself has changed under an unchanged
 description is not knowable from here; that is what `--shots all` is for.
+
+A screenshot may additionally name **parts**: rectangles of the picture, in the
+same CSS pixels the capture is declared in, each with an identity the prose can
+point at—`[[landing.carousel|a carousel]]` is to a screenshot what
+`[[timeline|a chronology]]` is to the teaser figure. Parts are declared in the
+block's body, one `@id x,y,w,h Label` line with a blurb under it, and they stay
+out of the fingerprint for the same reason the caption does: they describe what
+is *said* about the picture, and annotating a figure must not report it stale.
 """
 
 from __future__ import annotations
@@ -38,6 +46,7 @@ import hashlib
 import json
 import mimetypes
 import os
+import re
 import subprocess
 import tempfile
 from dataclasses import dataclass, field
@@ -66,17 +75,50 @@ DEFAULT_QUALITY = 88
 STALE = "stale"
 ALL = "all"
 
+# One declared part: `@id x,y,w,h Label`, in the capture's CSS pixels.
+PART_ITEM = re.compile(
+    r"^@([a-z][a-z0-9-]*)\s+(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s+(\S.*?)\s*$"
+)
+
 
 class ScreenshotError(ValueError):
     """A `::: screenshot` block that does not describe a capture."""
 
 
 @dataclass(frozen=True)
+class ShotPart:
+    """One nameable rectangle of a capture, mirroring `teaser.Part`.
+
+    The box is in the same CSS pixels the shot is declared in—the clip if one
+    is set, the viewport otherwise—so a part can be checked against the picture
+    it annotates and the page can light it without knowing anything about how
+    wide the figure happens to be drawn.
+    """
+
+    id: str
+    label: str
+    blurb: str
+    box: Tuple[int, int, int, int]
+
+    def to_json(self) -> Dict[str, Any]:
+        x, y, w, h = self.box
+        return {
+            "id": self.id,
+            "label": self.label,
+            "blurb": self.blurb,
+            "x": x,
+            "y": y,
+            "w": w,
+            "h": h,
+        }
+
+
+@dataclass(frozen=True)
 class Shot:
     """One declared screenshot: where the picture is taken, and of what.
 
-    Only the fields above `caption` describe the picture. `caption` and `alt`
-    describe what is said about it, which is why they stay out of the
+    Only the fields above `caption` describe the picture. `caption`, `alt`, and
+    `parts` describe what is said about it, which is why they stay out of the
     fingerprint—prose is edited far more often than a viewport is, and an
     editorial pass must not report every figure as stale.
     """
@@ -95,6 +137,7 @@ class Shot:
     quality: int = DEFAULT_QUALITY
     caption: str = ""
     alt: str = ""
+    parts: Tuple[ShotPart, ...] = ()
     line: int = 0
 
     @property
@@ -233,6 +276,81 @@ class Album:
 # ---------------------------------------------------------------------------
 
 
+def split_parts(body: str) -> Tuple[str, str]:
+    """Cut a block body into its prose and its part declarations.
+
+    Anything above the first `@` line is the block's ordinary authored intro
+    and keeps its old meaning; the `@` line and everything under it belong to
+    the parts. Neither side is parsed here—only divided, so the compiler can
+    render one half and hand the other to `parse_parts`.
+    """
+    lines = body.splitlines()
+    for index, line in enumerate(lines):
+        if line.startswith("@"):
+            return "\n".join(lines[:index]), "\n".join(lines[index:])
+    return body, ""
+
+
+def parse_parts(text: str) -> Tuple[ShotPart, ...]:
+    """Read part declarations: `@id x,y,w,h Label`, then the blurb under it.
+
+    The same thin grammar the design principles use, because it is read in the
+    same way: an identity the prose points at, a label short enough for a
+    panel, and a sentence to show when the part is focused.
+    """
+    parts: List[ShotPart] = []
+    blurbs: List[List[str]] = []
+    for raw in text.splitlines():
+        if raw.startswith("@"):
+            match = PART_ITEM.match(raw)
+            if match is None:
+                raise ScreenshotError(
+                    f"part line {raw.strip()!r} is not '@id x,y,w,h Label' "
+                    "with the box in the capture's CSS pixels"
+                )
+            box = (
+                int(match.group(2)),
+                int(match.group(3)),
+                int(match.group(4)),
+                int(match.group(5)),
+            )
+            parts.append(ShotPart(match.group(1), match.group(6), "", box))
+            blurbs.append([])
+            continue
+        if parts and raw.strip():
+            blurbs[-1].append(raw.strip())
+    return tuple(
+        ShotPart(part.id, part.label, " ".join(lines), part.box)
+        for part, lines in zip(parts, blurbs)
+    )
+
+
+def check_parts(shot: Shot) -> List[str]:
+    """What has to be true of the parts for the page to light them honestly.
+
+    The same faults `teaser.check_scene` guards the drawing against: a part
+    outside the picture or with no area would focus a rectangle of nothing, a
+    duplicate id would make a reference ambiguous, and a part with no blurb has
+    nothing to show when it is selected.
+    """
+    faults: List[str] = []
+    width, height = shot.css_size
+    seen: set = set()
+    for part in shot.parts:
+        where = f"part '{part.id}'"
+        if part.id in seen:
+            faults.append(f"{where} is declared twice")
+        seen.add(part.id)
+        x, y, w, h = part.box
+        if w <= 0 or h <= 0:
+            faults.append(f"{where} has no area")
+        if x + w > width or y + h > height:
+            faults.append(f"{where} falls outside the {width}x{height} capture")
+        if not part.blurb.strip():
+            faults.append(f"{where} has no blurb to show when focused")
+    return faults
+
+
 def _int(params: Dict[str, str], key: str, fallback: int) -> int:
     raw = params.get(key)
     if raw is None or raw == "":
@@ -275,6 +393,8 @@ def parse(params: Dict[str, str], body: str = "", line: int = 0) -> Shot:
             f"format={image_format!r} is not one of " + ", ".join(FORMATS)
         )
 
+    prose, parts_text = split_parts(body)
+
     shot = Shot(
         id=shot_id,
         route=route,
@@ -290,13 +410,14 @@ def parse(params: Dict[str, str], body: str = "", line: int = 0) -> Shot:
         quality=_int(params, "quality", DEFAULT_QUALITY),
         caption=(params.get("caption") or "").strip(),
         alt=(params.get("alt") or "").strip(),
+        parts=parse_parts(parts_text),
         line=line,
     )
     if shot.width <= 0 or shot.height <= 0:
         raise ScreenshotError("width and height are the viewport, in CSS pixels")
     if shot.scale < 1 or shot.scale > 4:
         raise ScreenshotError(f"scale={shot.scale} is outside 1–4")
-    if not shot.caption and not body.strip():
+    if not shot.caption and not prose.strip():
         raise ScreenshotError(
             "caption is empty—a figure needs a sentence saying what it shows"
         )
@@ -396,6 +517,10 @@ def payload(album: Album) -> Dict[str, Dict[str, Any]]:
             "alt": shot.alt or shot.caption,
             "width": width,
             "height": height,
+            # How many capture pixels stand behind a CSS pixel, which is how
+            # far the page may enlarge a part before it blurs.
+            "scale": shot.scale,
+            "parts": [part.to_json() for part in shot.parts],
             "declaration": shot.describe(),
             "status": status,
             "captured": capture.captured if capture else "",

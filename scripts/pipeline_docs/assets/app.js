@@ -3132,6 +3132,9 @@
 
   function setTeaserFocus(partId, options) {
     if (!teaserState.view || !teaserPart(partId)) return;
+    // One focus at a time across the linked figures: taking the teaser's
+    // releases any screenshot part, and vice versa.
+    clearShotFocus();
     const opts = options || {};
     teaserState.part = partId;
     teaserState.pinned = !!opts.pinned;
@@ -3303,8 +3306,15 @@
   function bindTeaserRefs() {
     const canHover = hoverCapable();
 
+    // A `.figref` carrying `data-shot` points into a screenshot figure and is
+    // handled by `bindShotRefs`; only the bare ones are the teaser's.
+    function teaserRef(target) {
+      const ref = target.closest ? target.closest(".figref") : null;
+      return ref && !ref.hasAttribute("data-shot") ? ref : null;
+    }
+
     document.addEventListener("click", (event) => {
-      const ref = event.target.closest ? event.target.closest(".figref") : null;
+      const ref = teaserRef(event.target);
       if (!ref) return;
       event.preventDefault();
       const partId = ref.getAttribute("data-part");
@@ -3313,7 +3323,7 @@
     });
 
     document.addEventListener("focusin", (event) => {
-      const ref = event.target.closest ? event.target.closest(".figref") : null;
+      const ref = teaserRef(event.target);
       if (!ref || teaserState.pinned) return;
       setTeaserFocus(ref.getAttribute("data-part"), { fromRef: true });
     });
@@ -3321,7 +3331,7 @@
     if (!canHover) return;
 
     document.addEventListener("mouseover", (event) => {
-      const ref = event.target.closest ? event.target.closest(".figref") : null;
+      const ref = teaserRef(event.target);
       if (!ref || teaserState.pinned) return;
       window.clearTimeout(teaserState.hoverTimer);
       teaserState.hoverTimer = window.setTimeout(() => {
@@ -3330,7 +3340,7 @@
     });
 
     document.addEventListener("mouseout", (event) => {
-      const ref = event.target.closest ? event.target.closest(".figref") : null;
+      const ref = teaserRef(event.target);
       if (!ref || teaserState.pinned) return;
       window.clearTimeout(teaserState.hoverTimer);
       clearTeaserFocus();
@@ -3420,6 +3430,627 @@
       if (pending) window.cancelAnimationFrame(pending);
       pending = window.requestAnimationFrame(() => {
         reflow(true);
+      });
+    });
+  }
+
+  /* ---------------------------------------------- screenshot part linking */
+
+  /* A screenshot with declared parts gets the same two-way relation the
+     teaser has: `[[landing.carousel|a carousel]]` in the Markdown compiles to
+     a `.figref` carrying the shot and the part, and a part is a rectangle of
+     the capture, in the CSS pixels it was declared in.
+
+     The one rule is the teaser's rule, resolved against what the reader can
+     see:
+
+       figure on screen and the part legible  ->  light the part where it is
+       figure on screen but the part small    ->  enlarge the part in place
+       figure off screen                      ->  show the part beside the text
+
+     A drawing enlarges by viewBox; a photograph enlarges by transforming the
+     picture and its overlay together inside a clipping box, which changes
+     what the box shows and never the room the figure takes. Enlargement stops
+     at the capture's own pixel density—a part blown up past the pixels that
+     were taken for it is bigger, not more legible. */
+
+  const SHOT_FOCUS_PAD = 12; // CSS pixels of context kept around a focused part
+  const SHOT_LEGIBLE_PX = 240; // a part displayed narrower than this is enlarged
+
+  const shotViews = {}; // shot id -> the mounted figure, once hydrated
+
+  const shotState = {
+    shot: null,
+    part: null,
+    pinned: false,
+    mention: -1,
+    hoverTimer: 0,
+    peek: null,
+    bound: false,
+  };
+
+  function activeShotView() {
+    return shotState.shot ? shotViews[shotState.shot] || null : null;
+  }
+
+  function shotPartOf(view, partId) {
+    let found = null;
+    view.shot.parts.forEach((part) => {
+      if (part.id === partId) found = part;
+    });
+    return found;
+  }
+
+  /* The rectangle to show for a part: the part, some context, and the aspect
+     of whatever displays it—grown, never cropped, exactly as `focusRegion`
+     grows a teaser part. `minWidth` is the density cap, already resolved to
+     image pixels by the caller. */
+  function shotFocusRegion(view, partId, aspect, minWidth) {
+    const sceneW = view.shot.width;
+    const sceneH = view.shot.height;
+    const part = shotPartOf(view, partId);
+    if (!part) return [0, 0, sceneW, sceneH];
+    let width = Math.max(part.w + SHOT_FOCUS_PAD * 2, minWidth || 0);
+    let height = part.h + SHOT_FOCUS_PAD * 2;
+    if (width / height < aspect) width = height * aspect;
+    else height = width / aspect;
+    width = Math.min(width, sceneW);
+    height = Math.min(height, sceneH);
+    let x = part.x + part.w / 2 - width / 2;
+    let y = part.y + part.h / 2 - height / 2;
+    x = Math.max(0, Math.min(x, sceneW - width));
+    y = Math.max(0, Math.min(y, sceneH - height));
+    return [x, y, width, height];
+  }
+
+  function paintShotFocus(view, partId) {
+    const part = partId ? shotPartOf(view, partId) : null;
+    view.svg.classList.toggle("has-focus", !!part);
+    Array.prototype.forEach.call(
+      view.svg.querySelectorAll(".spart"),
+      (node) => {
+        node.classList.toggle(
+          "is-on",
+          !!part && node.getAttribute("data-part") === partId
+        );
+      }
+    );
+    // One even-odd path dims everything but the subject, so the region reads
+    // as a hole in the shade rather than a box drawn over the picture.
+    view.scrim.setAttribute(
+      "d",
+      part
+        ? "M0 0H" +
+            view.shot.width +
+            "V" +
+            view.shot.height +
+            "H0Z" +
+            "M" +
+            part.x +
+            " " +
+            part.y +
+            "H" +
+            (part.x + part.w) +
+            "V" +
+            (part.y + part.h) +
+            "H" +
+            part.x +
+            "Z"
+        : ""
+    );
+  }
+
+  function shotRefsOf(shotId, partId) {
+    if (!shotId || !partId) return [];
+    return Array.prototype.slice.call(
+      document.querySelectorAll(
+        '.figref[data-shot="' + shotId + '"][data-part="' + partId + '"]'
+      )
+    );
+  }
+
+  function markShotRefs(shotId, partId) {
+    Array.prototype.forEach.call(
+      document.querySelectorAll(".figref[data-shot]"),
+      (node) => {
+        const lit =
+          !!partId &&
+          node.getAttribute("data-shot") === shotId &&
+          node.getAttribute("data-part") === partId;
+        node.classList.toggle("is-lit", lit);
+        node.setAttribute(
+          "aria-expanded",
+          lit && shotState.pinned ? "true" : "false"
+        );
+      }
+    );
+  }
+
+  function applyShotZoom(view, region) {
+    if (!region) {
+      view.zoomed = false;
+      view.canvas.style.transform = "";
+      return;
+    }
+    view.zoomed = true;
+    const scale = view.shot.width / region[2];
+    view.canvas.style.transform =
+      "scale(" +
+      scale +
+      ") translate(" +
+      (-region[0] / view.shot.width) * 100 +
+      "%, " +
+      (-region[1] / view.shot.height) * 100 +
+      "%)";
+  }
+
+  function shotVisibility(view) {
+    const box = view.figure.getBoundingClientRect();
+    const visible =
+      Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0);
+    return box.height ? Math.max(0, visible) / box.height : 0;
+  }
+
+  /* ------------------------------------------- the screenshot detail panel */
+
+  function ensureShotPeek() {
+    if (shotState.peek) return shotState.peek;
+    const kicker = el("span", { class: "figpeek-kicker" });
+    const title = el("span", { class: "figpeek-title" });
+    const jump = el("button", {
+      class: "figpeek-act",
+      type: "button",
+      text: "Show in figure",
+      onclick: function () {
+        const view = activeShotView();
+        if (view) {
+          view.figure.scrollIntoView({
+            block: "center",
+            behavior: reducedMotion() ? "auto" : "smooth",
+          });
+        }
+        closeShotPeek();
+      },
+    });
+    const close = el("button", {
+      class: "figpeek-close",
+      type: "button",
+      "aria-label": "Close the figure detail",
+      html: "&times;",
+      onclick: function () {
+        clearShotFocus();
+      },
+    });
+    const img = el("img", { class: "figpeek-shot", alt: "" });
+    const mark = el("span", { class: "figpeek-mark" });
+    const blurb = el("p", { class: "figpeek-blurb" });
+    const panel = el(
+      "aside",
+      {
+        class: "figpeek",
+        "aria-label": "Detail of a screenshot figure",
+        hidden: "hidden",
+      },
+      [
+        el("div", { class: "figpeek-head" }, [kicker, title, jump, close]),
+        el("div", { class: "figpeek-view" }, [
+          el("div", { class: "figpeek-stage" }, [img, mark]),
+        ]),
+        blurb,
+      ]
+    );
+    document.body.appendChild(panel);
+    shotState.peek = {
+      panel: panel,
+      kicker: kicker,
+      title: title,
+      blurb: blurb,
+      img: img,
+      mark: mark,
+    };
+    return shotState.peek;
+  }
+
+  /* The crop is done by positioning: the picture is set into the panel at the
+     size that fills it with the focus region, all in percentages of the
+     region, so nothing has to be measured. */
+  function openShotPeek(view, partId, keepRefVisible) {
+    const peek = ensureShotPeek();
+    const part = shotPartOf(view, partId);
+    peek.kicker.textContent = view.figureLabel;
+    peek.title.textContent = part.label;
+    peek.blurb.textContent = part.blurb;
+    const region = shotFocusRegion(
+      view,
+      partId,
+      PEEK_ASPECT,
+      MIN_REGION / (view.shot.scale || 1)
+    );
+    peek.img.src = view.shot.src;
+    peek.img.style.width = (view.shot.width / region[2]) * 100 + "%";
+    peek.img.style.left = (-region[0] / region[2]) * 100 + "%";
+    peek.img.style.top = (-region[1] / region[3]) * 100 + "%";
+    peek.mark.style.left = ((part.x - region[0]) / region[2]) * 100 + "%";
+    peek.mark.style.top = ((part.y - region[1]) / region[3]) * 100 + "%";
+    peek.mark.style.width = (part.w / region[2]) * 100 + "%";
+    peek.mark.style.height = (part.h / region[3]) * 100 + "%";
+    peek.panel.removeAttribute("hidden");
+    if (keepRefVisible) keepShotMentionClear(peek.panel);
+  }
+
+  function closeShotPeek() {
+    if (shotState.peek) shotState.peek.panel.setAttribute("hidden", "hidden");
+  }
+
+  // The same courtesy `keepMentionClear` pays: on a phone the panel is a
+  // sheet, and the phrase the reader just touched must not end up behind it.
+  function keepShotMentionClear(panel) {
+    const active = document.activeElement;
+    const ref =
+      active &&
+      active.classList &&
+      active.classList.contains("figref") &&
+      active.hasAttribute("data-shot")
+        ? active
+        : shotRefsOf(shotState.shot, shotState.part)[0];
+    if (!ref) return;
+    window.requestAnimationFrame(() => {
+      const panelBox = panel.getBoundingClientRect();
+      const refBox = ref.getBoundingClientRect();
+      const overlap = refBox.bottom - panelBox.top + 20;
+      if (panelBox.top > window.innerHeight - 8 || overlap <= 0) return;
+      window.scrollBy({
+        top: overlap,
+        behavior: reducedMotion() ? "auto" : "smooth",
+      });
+    });
+  }
+
+  /* ------------------------------------------------ placing a shot focus */
+
+  function placeShotFocus(fromRef) {
+    const view = activeShotView();
+    if (!view || !shotState.part) {
+      closeShotPeek();
+      return;
+    }
+    if (shotVisibility(view) > 0.55) {
+      closeShotPeek();
+      const displayed = view.clip.getBoundingClientRect().width;
+      const part = shotPartOf(view, shotState.part);
+      const shown = (part.w * displayed) / view.shot.width;
+      if (shown < SHOT_LEGIBLE_PX) {
+        applyShotZoom(
+          view,
+          shotFocusRegion(
+            view,
+            shotState.part,
+            view.shot.width / view.shot.height,
+            displayed / (view.shot.scale || 1)
+          )
+        );
+      } else {
+        applyShotZoom(view, null);
+      }
+      return;
+    }
+    applyShotZoom(view, null);
+    openShotPeek(view, shotState.part, fromRef);
+  }
+
+  function setShotFocus(shotId, partId, options) {
+    const view = shotViews[shotId];
+    if (!view || !shotPartOf(view, partId)) return;
+    clearTeaserFocus();
+    if (shotState.shot && shotState.shot !== shotId) clearShotFocus();
+    const opts = options || {};
+    shotState.shot = shotId;
+    shotState.part = partId;
+    shotState.pinned = !!opts.pinned;
+    shotState.mention = -1;
+    paintShotFocus(view, partId);
+    markShotRefs(shotId, partId);
+    placeShotFocus(opts.fromRef);
+    renderShotStatus(view);
+  }
+
+  function clearShotFocus() {
+    const view = activeShotView();
+    shotState.part = null;
+    shotState.pinned = false;
+    shotState.mention = -1;
+    shotState.shot = null;
+    if (!view) return;
+    paintShotFocus(view, null);
+    markShotRefs(view.shot.id, null);
+    closeShotPeek();
+    applyShotZoom(view, null);
+    renderShotStatus(view);
+  }
+
+  /* --------------------------------------------- the shot's status line */
+
+  function showShotMention(view, step) {
+    const mentions = shotRefsOf(shotState.shot, shotState.part);
+    if (!mentions.length) return;
+    shotState.mention =
+      (shotState.mention + step + mentions.length) % mentions.length;
+    const target = mentions[shotState.mention];
+    target.scrollIntoView({
+      block: "center",
+      behavior: reducedMotion() ? "auto" : "smooth",
+    });
+    target.classList.add("is-found");
+    window.setTimeout(() => {
+      target.classList.remove("is-found");
+    }, 1400);
+    renderShotStatus(view);
+  }
+
+  // The same strip the teaser wears, under the same rules; only the sources
+  // differ, so the stylesheet is shared through the same class names.
+  function renderShotStatus(view, overrideId) {
+    const host = view.status;
+    clear(host);
+    const focused = shotState.shot === view.shot.id ? shotState.part : null;
+    const part = shotPartOf(view, overrideId || focused || "");
+    if (!part) {
+      host.appendChild(
+        el("p", { class: "teaser-text teaser-hint" }, [
+          el("span", {
+            text:
+              "Select a marked region for what it is and where the text " +
+              "discusses it. Marked phrases in the text point back.",
+          }),
+        ])
+      );
+      return;
+    }
+
+    host.appendChild(
+      el("p", { class: "teaser-text" }, [
+        el("b", { text: part.label + ". " }),
+        el("span", { text: part.blurb }),
+      ])
+    );
+
+    const controls = el("span", { class: "teaser-controls" });
+    const mentions = shotRefsOf(view.shot.id, part.id);
+    if (mentions.length) {
+      controls.appendChild(
+        el("button", {
+          class: "teaser-act",
+          type: "button",
+          "aria-label": "Previous mention in the text",
+          text: "‹",
+          onclick: function () {
+            showShotMention(view, -1);
+          },
+        })
+      );
+      controls.appendChild(
+        el("span", {
+          class: "teaser-count",
+          text:
+            (shotState.mention < 0 ? mentions.length : shotState.mention + 1) +
+            (shotState.mention < 0
+              ? mentions.length === 1
+                ? " mention"
+                : " mentions"
+              : " of " + mentions.length),
+        })
+      );
+      controls.appendChild(
+        el("button", {
+          class: "teaser-act",
+          type: "button",
+          "aria-label": "Next mention in the text",
+          text: "›",
+          onclick: function () {
+            showShotMention(view, 1);
+          },
+        })
+      );
+    }
+    if (view.zoomed) {
+      controls.appendChild(
+        el("button", {
+          class: "teaser-act",
+          type: "button",
+          text: "Whole figure",
+          onclick: function () {
+            clearShotFocus();
+          },
+        })
+      );
+    }
+    controls.appendChild(
+      el("button", {
+        class: "teaser-act",
+        type: "button",
+        text: "Clear",
+        onclick: function () {
+          clearShotFocus();
+        },
+      })
+    );
+    host.appendChild(controls);
+  }
+
+  function reserveShotStatusHeight(view) {
+    const host = view.status;
+    host.style.minHeight = "";
+    if (!hoverCapable()) {
+      renderShotStatus(view);
+      return;
+    }
+    let longest = view.shot.parts[0];
+    view.shot.parts.forEach((part) => {
+      if (
+        part.label.length + part.blurb.length >
+        longest.label.length + longest.blurb.length
+      ) {
+        longest = part;
+      }
+    });
+    renderShotStatus(view, longest.id);
+    const height = host.getBoundingClientRect().height;
+    host.style.minHeight = Math.ceil(height) + "px";
+    renderShotStatus(view);
+  }
+
+  /* --------------------------------------------------- wiring the shots */
+
+  function buildShotOverlay(shot) {
+    const root = svg("svg", {
+      class: "shot-parts",
+      viewBox: "0 0 " + shot.width + " " + shot.height,
+      // The picture is the geometry; the overlay covers it exactly.
+      preserveAspectRatio: "none",
+    });
+    const scrim = svg("path", {
+      class: "spart-scrim",
+      "fill-rule": "evenodd",
+      d: "",
+    });
+    root.appendChild(scrim);
+    shot.parts.forEach((part) => {
+      const group = svg("g", {
+        class: "spart",
+        "data-part": part.id,
+        tabindex: "0",
+        role: "button",
+        "aria-label": part.label + ". " + part.blurb,
+      });
+      const title = svg("title");
+      title.textContent = part.label;
+      group.appendChild(title);
+      group.appendChild(
+        svg("rect", {
+          x: part.x,
+          y: part.y,
+          width: part.w,
+          height: part.h,
+          class: "spart-box",
+        })
+      );
+      root.appendChild(group);
+    });
+    return { root: root, scrim: scrim };
+  }
+
+  function bindShotParts(view) {
+    Array.prototype.forEach.call(
+      view.svg.querySelectorAll(".spart"),
+      (node) => {
+        const partId = node.getAttribute("data-part");
+        node.addEventListener("click", (event) => {
+          event.stopPropagation();
+          if (
+            shotState.pinned &&
+            shotState.shot === view.shot.id &&
+            shotState.part === partId
+          )
+            clearShotFocus();
+          else setShotFocus(view.shot.id, partId, { pinned: true });
+        });
+        node.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          setShotFocus(view.shot.id, partId, { pinned: true });
+        });
+        if (!hoverCapable()) return;
+        node.addEventListener("mouseenter", () => {
+          if (shotState.pinned) return;
+          setShotFocus(view.shot.id, partId, {});
+        });
+        node.addEventListener("mouseleave", () => {
+          if (shotState.pinned) return;
+          clearShotFocus();
+        });
+      }
+    );
+  }
+
+  function closestShotRef(target) {
+    const ref = target.closest ? target.closest(".figref") : null;
+    return ref && ref.hasAttribute("data-shot") ? ref : null;
+  }
+
+  function bindShotRefs() {
+    if (shotState.bound) return;
+    shotState.bound = true;
+
+    document.addEventListener("click", (event) => {
+      const ref = closestShotRef(event.target);
+      if (!ref) return;
+      event.preventDefault();
+      const shotId = ref.getAttribute("data-shot");
+      const partId = ref.getAttribute("data-part");
+      if (
+        shotState.pinned &&
+        shotState.shot === shotId &&
+        shotState.part === partId
+      )
+        clearShotFocus();
+      else setShotFocus(shotId, partId, { pinned: true, fromRef: true });
+    });
+
+    document.addEventListener("focusin", (event) => {
+      const ref = closestShotRef(event.target);
+      if (!ref || shotState.pinned) return;
+      setShotFocus(
+        ref.getAttribute("data-shot"),
+        ref.getAttribute("data-part"),
+        { fromRef: true }
+      );
+    });
+
+    if (hoverCapable()) {
+      document.addEventListener("mouseover", (event) => {
+        const ref = closestShotRef(event.target);
+        if (!ref || shotState.pinned) return;
+        window.clearTimeout(shotState.hoverTimer);
+        shotState.hoverTimer = window.setTimeout(() => {
+          setShotFocus(
+            ref.getAttribute("data-shot"),
+            ref.getAttribute("data-part"),
+            { fromRef: true }
+          );
+        }, HOVER_DELAY);
+      });
+
+      document.addEventListener("mouseout", (event) => {
+        const ref = closestShotRef(event.target);
+        if (!ref || shotState.pinned) return;
+        window.clearTimeout(shotState.hoverTimer);
+        clearShotFocus();
+      });
+    }
+
+    // Scrolling and resizing can change which of the three behaviors is right
+    // while a focus is held, exactly as they can for the teaser.
+    let pending = 0;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!pending && shotState.pinned) {
+          pending = window.requestAnimationFrame(() => {
+            pending = 0;
+            if (shotState.part) placeShotFocus(false);
+          });
+        }
+      },
+      { passive: true }
+    );
+    window.addEventListener("resize", () => {
+      if (pending) window.cancelAnimationFrame(pending);
+      pending = window.requestAnimationFrame(() => {
+        pending = 0;
+        Object.keys(shotViews).forEach((id) => {
+          reserveShotStatusHeight(shotViews[id]);
+        });
+        if (shotState.part) placeShotFocus(false);
       });
     });
   }
@@ -3520,24 +4151,66 @@
       if (shot.status !== "current") {
         provenance.push("the declaration has changed since—retake it");
       }
-      mount.appendChild(
-        el("figure", { class: "figure shot" }, [
-          figureCaption("Figure", numbers.figure, shot.caption),
-          el("div", { class: "shot-frame" }, [
-            el("img", {
-              class: "shot-img",
-              src: shot.src,
-              alt: shot.alt || shot.caption,
-              // The intrinsic size in CSS pixels, so the page reserves the
-              // right box before the picture decodes—and so no lazy loading is
-              // needed, which on paper would risk printing an undecoded image.
-              width: shot.width,
-              height: shot.height,
-            }),
-          ]),
-          el("p", { class: "shot-meta", text: provenance.join("  ·  ") }),
-        ])
+      const img = el("img", {
+        class: "shot-img",
+        src: shot.src,
+        alt: shot.alt || shot.caption,
+        // The intrinsic size in CSS pixels, so the page reserves the
+        // right box before the picture decodes—and so no lazy loading is
+        // needed, which on paper would risk printing an undecoded image.
+        width: shot.width,
+        height: shot.height,
+      });
+      /* A shot with declared parts is wrapped for the linking machinery: the
+         overlay shares the picture's box, and both transform together inside
+         the clip when a part is enlarged in place. A shot without parts stays
+         a bare image. */
+      const parts = shot.parts || [];
+      let media = img;
+      let overlay = null;
+      let canvas = null;
+      let clip = null;
+      if (parts.length) {
+        overlay = buildShotOverlay(shot);
+        canvas = el("div", { class: "shot-canvas" }, [img, overlay.root]);
+        clip = el("div", { class: "shot-clip" }, [canvas]);
+        media = clip;
+      }
+      const children = [
+        figureCaption("Figure", numbers.figure, shot.caption),
+        el("div", { class: "shot-frame" }, [media]),
+      ];
+      let status = null;
+      if (parts.length) {
+        status = el("div", {
+          class: "teaser-status shot-status",
+          "aria-live": "polite",
+        });
+        children.push(status);
+      }
+      children.push(
+        el("p", { class: "shot-meta", text: provenance.join("  ·  ") })
       );
+      const figure = el("figure", { class: "figure shot" }, children);
+      mount.appendChild(figure);
+      if (parts.length) {
+        const view = {
+          shot: shot,
+          figure: figure,
+          clip: clip,
+          canvas: canvas,
+          svg: overlay.root,
+          scrim: overlay.scrim,
+          status: status,
+          zoomed: false,
+          figureLabel: "Figure " + numbers.figure,
+        };
+        shotViews[shot.id] = view;
+        bindShotParts(view);
+        renderShotStatus(view);
+        reserveShotStatusHeight(view);
+        bindShotRefs();
+      }
     },
 
     /* The figure follows the space it is given: the largest drawing the column
