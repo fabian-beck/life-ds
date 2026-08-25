@@ -50,15 +50,30 @@ test("names a category, and a bare token that is also a role", () => {
   expect(relationshipCategoryLabel(tDe, "colleague", 1)).toBe("Kollege");
 });
 
-test("falls back to the raw token for values with no mapping", () => {
-  // The generator writes an open vocabulary — over two hundred subcategories,
-  // most of them one-offs. An unmapped one has to read as it always did.
-  expect(relationshipRoleLabel(t, "authorship attester")).toBe(
-    "Authorship Attester"
-  );
-  expect(relationshipRoleLabel(tDe, "poetic subject")).toBe("Poetic Subject");
+test("falls back to a visibly generic label for values with no mapping", () => {
+  // The vocabulary is closed, so a token without a locale entry is a gap.
+  // The old fallback title-cased the raw token — fake-English-precise in
+  // every language; now the reader gets an honestly generic label instead.
+  expect(relationshipRoleLabel(t, "authorship attester")).toBe("Connection");
+  expect(relationshipRoleLabel(tDe, "poetic subject")).toBe("Verbindung");
+  expect(relationshipRoleLabel(tDe, "poetic subject", 3)).toBe("Verbindungen");
+  expect(relationshipCategoryLabel(t, "cosmic", 1)).toBe("Other");
+  expect(relationshipCategoryLabel(tDe, "cosmic", 1)).toBe("Weitere");
+  // Known tokens are untouched.
   expect(relationshipRoleLabel(t, "adversary", 2)).toBe("Adversaries");
   expect(relationshipCategoryLabel(t, "innovation", 1)).toBe("Innovation");
+});
+
+test("names the new directional conflict roles in both languages", () => {
+  // Issue #119: the tag itself states that the regime acted against the
+  // subject — Goebbels reads "Censor"/"Zensor", never a neutral role word.
+  expect(relationshipRoleLabel(t, "political/censor")).toBe("Censor");
+  expect(relationshipRoleLabel(tDe, "political/censor")).toBe("Zensor");
+  expect(relationshipRoleLabel(tDe, "persecutor")).toBe("Verfolger");
+  expect(relationshipRoleLabel(t, "banned_by")).toBe("Banned by");
+  expect(relationshipTypeLabel(tDe, "political/banned_by")).toBe(
+    "Politisch · Verboten durch"
+  );
 });
 
 test("joins both segments for the meta story network", () => {

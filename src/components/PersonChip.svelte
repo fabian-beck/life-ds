@@ -188,6 +188,12 @@
   $: isExpanded = visiblePersonInfo === personKey;
   $: truncatedName = truncateName(person.person_name);
   $: isLongName = truncatedName.length > 15;
+  // Only the collective kinds get a label; a person is the default and
+  // needs no announcement.
+  $: entityLabel =
+    person.entity_kind === "organization" || person.entity_kind === "group"
+      ? $_(`network.entity.${person.entity_kind}`)
+      : null;
 </script>
 
 <div class="person-info-wrapper">
@@ -220,6 +226,16 @@
     <p class="tooltip-title">
       {person.person_name}
     </p>
+    {#if entityLabel || person.qualifier}
+      <!-- A connection typed as an organization or a group says so before
+           its relationship metadata, and the qualifier carries the short
+           descriptor that used to hide in a parenthetical of the name. The
+           entity label is localized from the entity_kind token; the
+           qualifier is data and arrives already in the reader's language. -->
+      <p class="tooltip-entity">
+        {[entityLabel, person.qualifier].filter(Boolean).join(" · ")}
+      </p>
+    {/if}
     <p class="tooltip-relationship">
       {person.relationship_description}
     </p>
@@ -519,6 +535,15 @@
     font-size: 0.82rem;
     font-weight: 600;
     color: var(--story-primary, #f8fafc);
+    font-family: var(--story-body-font, Inter, sans-serif);
+  }
+
+  .tooltip-entity {
+    margin: -0.2rem 0 0.35rem 0;
+    font-size: 0.68rem;
+    color: var(--story-secondary, #94a3b8);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
     font-family: var(--story-body-font, Inter, sans-serif);
   }
 

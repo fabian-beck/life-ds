@@ -189,6 +189,10 @@ class TrConnection(BaseModel):
     relationship_description: str
     notes: Optional[str] = None
     shared_activities: List[str]
+    # The short descriptor an organization or group connection carries next
+    # to its name ("secret police", "insurance company"). Optional and only
+    # extracted when present, so documents without one keep their fingerprint.
+    qualifier: Optional[str] = None
 
 
 class TrCategorySummary(BaseModel):
@@ -314,6 +318,24 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
     return payload
 
 
+def _connection_translatables(conn: Dict[str, Any]) -> Dict[str, Any]:
+    """One connection's translatable text as a payload entry.
+
+    The `qualifier` — the short descriptor an organization or group carries
+    next to its name — joins the payload only when present, so connections
+    without one (the overwhelming majority) keep their fingerprint.
+    """
+    entry: Dict[str, Any] = {
+        "relationship_description": conn.get("relationship_description", ""),
+        "notes": conn.get("notes"),
+        "shared_activities": list(conn.get("shared_activities") or []),
+    }
+    qualifier = conn.get("qualifier")
+    if isinstance(qualifier, str) and qualifier.strip():
+        entry["qualifier"] = qualifier
+    return entry
+
+
 def extract_ego_network_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
     """Extract only the translatable text fields from an ego network dataset."""
     ego = data.get("ego", {}) or {}
@@ -321,12 +343,7 @@ def extract_ego_network_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         "ego_summary": ego.get("summary", ""),
         "ego_primary_roles": list(ego.get("primary_roles", []) or []),
         "connections": [
-            {
-                "relationship_description": conn.get("relationship_description", ""),
-                "notes": conn.get("notes"),
-                "shared_activities": list(conn.get("shared_activities") or []),
-            }
-            for conn in data.get("connections", [])
+            _connection_translatables(conn) for conn in data.get("connections", [])
         ],
         "category_summaries": [
             {"summary": cat.get("summary", "")}
@@ -705,6 +722,7 @@ def apply_ego_network_translations(
             conn, "relationship_description", tr_conn.get("relationship_description")
         )
         _set_if_source_has(conn, "notes", tr_conn.get("notes"))
+        _set_if_source_has(conn, "qualifier", tr_conn.get("qualifier"))
         src_activities = conn.get("shared_activities") or []
         tr_activities = tr_conn.get("shared_activities") or []
         _require_same_length(

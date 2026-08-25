@@ -197,6 +197,8 @@ REVIEW GUIDELINES:
   - GOOD: "PhD supervisor who introduced Turing to the Entscheidungsproblem and remained a lifelong collaborator."
   - BAD: "Newman was Turing's PhD supervisor at Cambridge University and supervised Turing's PhD thesis in mathematical logic and also worked with him later on computer design projects."
 - **Cross-References**: People with strong/moderate network connections should appear in life events where relevant
+- **Relationship Types**: `relationship_type` values come from a closed vocabulary; when proposing a new type, keep the `category/role` shape and reuse a role that already appears in the data — an invented role is skipped on apply
+  - For a state or regime official the role must name the action toward the subject (`political/censor`, `political/persecutor`, `political/banned_by`, `political/patron`), never a neutral office word, and never `opponent` or `rival` for one-sided persecution
 - **Balance**: Check for both parents, mix of professional and personal relationships, gender balance
 - **No Redundancy**: Relationship descriptions should complement, not repeat, information in event descriptions
 - **Category Summaries**: Shown as a paragraph beside the labeled person chips of that category, so the names are already on screen

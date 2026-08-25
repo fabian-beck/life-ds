@@ -242,16 +242,13 @@ Social connections with rich relationship metadata:
 }
 ```
 
-**Relationship categories**:
+**Relationship types**:
 
-- `family/{relation}` (e.g., `family/father`, `family/mother`)
-- `professional/{type}` (e.g., `professional/mentor`, `professional/colleague`)
-- `friendship/{type}` (e.g., `friendship/close-friend`)
-- `intellectual/{type}` (e.g., `intellectual/influence`, `intellectual/correspondent`)
-- `romantic/{type}` (e.g., `romantic/fiancé`)
-- `adversarial/{type}` (e.g., `adversarial/legal-opponent`)
+`relationship_type` is always `category/role`, both segments drawn from the closed vocabulary in `scripts/utils/relationship_vocabulary.py` — 13 categories (`family`, `professional`, `social`, `academic`, `artistic`, `political`, …) and about a hundred roles. Both segments are reader-facing text, resolved through the locale files by `src/utils/relationshipLabels.js` — `network.category.{segment}` for the first and `network.role.{segment}_one`/`_other` for the second. The vocabulary used to be open, which left 155 generated types without a locale entry rendering as title-cased English in every language (issue #117); now the generator prompt is constrained to it, generated and review output is folded onto it through `normalize_relationship_type()` (aliases plus spelling folds), and a token that still escapes falls back to a visibly generic label ("Connection"/"Verbindung") and a dev-console warning instead of fake precision. Extending the vocabulary means adding the role to the module **and** its `network.role.*` entries to both locale files; `tests/test_relationship_vocabulary.py` fails on any drift between module, corpus, and locales. `scripts/normalize_network_types.py` is the deterministic corpus sweep that migrated existing data (English, translated copies by index, and the meta-story networks).
 
-The vocabulary is open: the generator writes whatever the source suggests, so the datasets hold a long tail of one-off subcategories. Both segments of the token are reader-facing text, and both are resolved through the locale files by `src/utils/relationshipLabels.js` — `network.category.{segment}` for the first and `network.role.{segment}_one`/`_other` for the second, with the token itself as the fallback when there is no entry. Adding a common relation to the data is therefore a locale change, not a data one, and a new one-off needs nothing.
+The conflict roles are directional (issue #119): for a relationship with a state or regime official the role names the action toward the subject — `political/censor`, `political/persecutor`, `political/banned_by` when the regime acted against the subject, `political/patron` when it protected or promoted them — never a neutral office word, and never `opponent` or `rival` for one-sided persecution; those, with `adversary`, are reserved for genuinely two-sided conflicts.
+
+**Collective connections**: a connection may be an organization or an unnamed group rather than a person. `entity_kind` (`person` | `organization` | `group`, absent means person) types it, and the optional translatable `qualifier` carries the short descriptor that used to hide in a parenthetical of `person_name` ("secret police", "insurance company") — the name itself stays clean. `PersonChip.svelte` shows the localized entity label (`network.entity.*`) and the qualifier in the chip tooltip.
 
 ### Meta Story Social Network
 

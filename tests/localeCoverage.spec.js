@@ -17,6 +17,9 @@ const DYNAMIC_PREFIXES = [
   "network.role.",
   // relationshipLabels.js: `network.category.${token}`
   "network.category.",
+  // PersonChip.svelte: `network.entity.${entity_kind}` over the collective
+  // entity kinds (organization, group)
+  "network.entity.",
   // NetworkModal.svelte: `${box.labelKey}_${one|other}` over the family
   // layer boxes, whose labelKey literals name only the key's stem
   "network.family.",

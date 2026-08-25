@@ -9,13 +9,31 @@
  * `Academic (6)` on the heading no matter what language they had chosen.
  *
  * Both segments of the token are looked up here instead. The vocabulary is
- * open — the generator writes whatever the source suggests, so the datasets
- * hold over two hundred distinct subcategories with a long tail of one-offs
- * ("authorship attester", "poetic subject") — and translating all of it is not
- * the point. Anything without an entry falls back to the humanized token, so a
- * new value from the generator reads exactly as it did before rather than
- * breaking.
+ * closed — `scripts/utils/relationship_vocabulary.py` names the categories
+ * and roles, the generator is held to them, and both locales carry an entry
+ * for each (tests/test_relationship_vocabulary.py). A token from outside the
+ * vocabulary therefore signals a gap, and it falls back to a visibly generic
+ * label ("Connection", "Verbindung") rather than an English title-casing of
+ * the raw token that would fake precision in every language. In dev the gap
+ * is also logged, so it surfaces instead of shipping.
  */
+
+// One warning per unknown token, so a network with twelve chips of the same
+// unmapped role does not flood the console.
+const warnedTokens = new Set();
+
+function warnUnknownToken(kind, token) {
+  // import.meta.env exists under Vite; the Node test runner has neither it
+  // nor a reason to warn.
+  if (!import.meta.env?.DEV) return;
+  const key = `${kind}:${token}`;
+  if (warnedTokens.has(key)) return;
+  warnedTokens.add(key);
+  console.warn(
+    `relationshipLabels: no locale entry for ${kind} "${token}" — ` +
+      "extend the vocabulary and both locale files"
+  );
+}
 
 /**
  * Fold a token to its locale key segment: lower case, one separator.
@@ -45,7 +63,9 @@ function pluralizeWord(word) {
 }
 
 /**
- * The fallback name: the raw token, spaced and capitalized.
+ * The raw token, spaced and capitalized. The relationship labels no longer
+ * fall back to this — it fakes English precision in every language — but the
+ * metadata values below still do, and tests exercise it directly.
  * @param {string} token
  * @param {number} count - 1 for the singular form
  * @returns {string}
@@ -87,8 +107,11 @@ export function relationshipRoleLabel(t, subcategory, count = 1) {
   if (!role) return "";
   const key = tokenKey(role);
   const suffix = count === 1 ? "one" : "other";
+  const named = lookup(t, `network.role.${key}_${suffix}`);
+  if (named) return named;
+  warnUnknownToken("role", role);
   return (
-    lookup(t, `network.role.${key}_${suffix}`) ??
+    lookup(t, `network.role.unknown_${suffix}`) ??
     humanizeRelationshipToken(role, count)
   );
 }
@@ -105,9 +128,13 @@ export function relationshipRoleLabel(t, subcategory, count = 1) {
 export function relationshipCategoryLabel(t, category, count = 2) {
   if (!category) return "";
   const key = tokenKey(category);
-  return (
+  const named =
     lookup(t, `network.category.${key}`) ??
-    lookup(t, `network.role.${key}_${count === 1 ? "one" : "other"}`) ??
+    lookup(t, `network.role.${key}_${count === 1 ? "one" : "other"}`);
+  if (named) return named;
+  warnUnknownToken("category", category);
+  return (
+    lookup(t, "network.category.other") ??
     humanizeRelationshipToken(category, count)
   );
 }

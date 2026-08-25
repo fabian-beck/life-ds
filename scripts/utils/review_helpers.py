@@ -9,6 +9,7 @@ import json
 import re
 from typing import Dict, Any, Tuple
 
+from .relationship_vocabulary import normalize_relationship_type
 from .review_models import EventsChanges, NetworkChanges, StyleChanges
 
 
@@ -194,8 +195,22 @@ def apply_network_changes(
                     applied += 1
 
                 if conn_change.new_relationship_type:
-                    connection["relationship_type"] = conn_change.new_relationship_type
-                    applied += 1
+                    # The vocabulary is closed: a proposed type is folded onto
+                    # it, and one that stays outside is skipped rather than
+                    # let a review reopen the corpus to invented types.
+                    new_type, known = normalize_relationship_type(
+                        conn_change.new_relationship_type
+                    )
+                    if known:
+                        connection["relationship_type"] = new_type
+                        applied += 1
+                    else:
+                        print(
+                            "  Skipping relationship type outside the vocabulary: "
+                            f"{conn_change.new_relationship_type!r} "
+                            f"({conn_change.person_name})"
+                        )
+                        skipped += 1
 
                 if conn_change.new_metadata:
                     for key, value in conn_change.new_metadata.model_dump(

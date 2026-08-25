@@ -8,7 +8,7 @@ import re
 import sys
 from datetime import date
 from pathlib import Path
-from typing import Any, Dict, List, Optional, cast
+from typing import Any, Dict, List, Literal, Optional, cast
 
 import requests
 from openai import OpenAI
@@ -17,6 +17,11 @@ from pydantic import BaseModel, Field
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
 from utils.model_calls import parse_structured_or_raise
 from utils.registry import Registry
+from utils.relationship_vocabulary import (
+    CATEGORIES,
+    ROLES,
+    normalize_relationship_type,
+)
 from utils.text import fix_control_characters, slugify
 from utils.wikipedia_cache import (
     ensure_cache,
@@ -68,13 +73,26 @@ def _clean_all_strings(data: Any) -> Any:
 class Connection(BaseModel):
     """A connection/relationship in the ego network."""
 
-    person_name: str = Field(description="Full name of the connected person")
+    person_name: str = Field(
+        description="Full name of the connected person, organization, or group. "
+        "Never append an explanatory parenthetical — a descriptor belongs in 'qualifier'."
+    )
+    entity_kind: Literal["person", "organization", "group"] = Field(
+        description="What the connection is: 'person' for an individual, "
+        "'organization' for an institution connected as an entity (an employer, "
+        "a club, a university), 'group' for a collective of unnamed people "
+        "('editorial staff', 'programming team', 'committee members')."
+    )
+    qualifier: Optional[str] = Field(
+        None,
+        description="Short reader-facing descriptor for an organization or group "
+        "('secret police', 'insurance company', 'curatorial team'); null for persons.",
+    )
     relationship_type: str = Field(
-        description="Type of relationship with optional subcategory using format 'category/subcategory'. "
-        "Main categories: 'family', 'professional', 'social', 'artistic', 'academic', or 'other'. "
-        "Examples: 'family/father', 'family/sibling', 'family/spouse', 'family/child', "
-        "'professional/colleague', 'professional/mentor', 'professional/patron', 'professional/employee', "
-        "'social/friend', 'social/rival', 'artistic/collaborator', 'academic/student', 'academic/advisor'"
+        description="'category/role' chosen strictly from the closed vocabulary "
+        "given in the instructions. Examples: 'family/father', 'family/spouse', "
+        "'professional/colleague', 'professional/mentor', 'social/friend', "
+        "'academic/student', 'artistic/collaborator', 'political/censor'."
     )
     relationship_description: str = Field(
         description="Brief description of the nature of the relationship"
@@ -125,7 +143,9 @@ class CategorySummary(BaseModel):
     """Summary for a specific relationship category."""
 
     relationship_type: str = Field(
-        description="The main relationship category being summarized (without subcategory): 'family', 'professional', 'social', 'artistic', 'academic', or 'other'"
+        description="The main relationship category being summarized (without the role), "
+        "one of the closed vocabulary's categories, e.g. 'family', 'professional', "
+        "'social', 'artistic', 'academic', 'political'"
     )
     summary: str = Field(
         description="Contextualizing prose about what this circle of relationships meant for the person's "
@@ -262,11 +282,21 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     instructions = (
         "Analyze the provided Wikipedia content and extract an ego network for the subject. "
         "Include 10-25 significant connections/relationships. For each connection provide:\n"
-        "- person_name: Full name of the connected person (IMPORTANT: Each person should appear ONLY ONCE in the network - do not create separate entries for the same person in different roles)\n"
-        "- relationship_type: Use format 'category/subcategory' where you select from 3-5 main categories that best represent the person's network. "
-        "Common categories include 'family', 'professional', 'social', 'artistic', 'academic', but choose only the most relevant 3-5 categories for this person. "
-        "Add specific subcategories like 'family/father', 'family/mother', 'family/sibling', 'family/spouse', 'family/child', "
-        "'professional/colleague', 'professional/mentor', 'social/friend', 'artistic/collaborator', 'academic/student', etc.\n"
+        "- person_name: Full name of the connected person (IMPORTANT: Each person should appear ONLY ONCE in the network - do not create separate entries for the same person in different roles). "
+        "Never put an explanatory parenthetical into the name — that text belongs in 'qualifier'.\n"
+        "- entity_kind: 'person' for an individual; 'organization' for an institution the subject was tied to as an entity (an employer, a club, a university); "
+        "'group' for a collective of unnamed people ('editorial staff', 'programming team'). Prefer named individuals; include an organization or group only when the sources tie the subject to the collective rather than to any one member.\n"
+        "- qualifier: for an organization or group, a short reader-facing descriptor of what it is ('secret police', 'insurance company'); null for persons.\n"
+        "- relationship_type: 'category/role' chosen STRICTLY from this closed vocabulary — never invent a value outside it:\n"
+        f"  Categories (select the 3-5 that best represent this person's network): {', '.join(sorted(CATEGORIES))}\n"
+        f"  Roles: {', '.join(sorted(ROLES))}\n"
+        "  The role names what the other party is or did toward the subject, as the reader's one-word tag for the tie. "
+        "Pick the most specific role that fits; 'family' roles are for family, 'employer'/'colleague'/'collaborator' for work, 'friend'/'acquaintance' for social life.\n"
+        "  CONFLICT DIRECTION: for a relationship with a state or regime official or institution, the role must name the ACTION toward the subject, never the office. "
+        "Use 'political/censor' (banned or suppressed the subject's work), 'political/persecutor' (interrogated, denounced, drove out, or otherwise acted against the subject), "
+        "'political/banned_by' (excluded the subject from a profession, guild, or publication), or 'political/patron' (protected or promoted them). "
+        "Never a neutral role word like 'gatekeeper' or 'authority', and never 'opponent' or 'rival' for one-sided persecution — "
+        "'opponent', 'rival', and 'adversary' are reserved for genuinely two-sided conflicts.\n"
         "- relationship_description: Brief description of the relationship\n"
         "- start_year: When the relationship began (approximate)\n"
         "- end_year: When it ended (null if ongoing or unknown)\n"
@@ -454,6 +484,35 @@ def _deduplicate_connections(connections: List[Dict[str, Any]]) -> List[Dict[str
     return result
 
 
+def _normalize_relationship_types(connections: List[Dict[str, Any]]) -> None:
+    """Fold every relationship type onto the closed vocabulary, in place.
+
+    The prompt constrains the model to the vocabulary, but the field is a
+    free string in the schema, so an invention is still possible. Aliases
+    catch the recurring ones; a type that stays outside the vocabulary is
+    kept and reported, so the gap surfaces in the run log (and in
+    tests/test_relationship_vocabulary.py) instead of shipping silently.
+    """
+    for conn in connections:
+        original = conn.get("relationship_type", "")
+        normalized, known = normalize_relationship_type(original)
+        if normalized and normalized != original:
+            conn["relationship_type"] = normalized
+        if not known:
+            print(
+                f"  Warning: relationship type outside the vocabulary kept as-is: "
+                f"{original!r} ({conn.get('person_name')}) — extend "
+                f"scripts/utils/relationship_vocabulary.py and the locales, "
+                f"or correct the entry."
+            )
+        # The default entity kind and an absent qualifier stay out of the
+        # data, so person connections keep their established shape.
+        if conn.get("entity_kind") == "person":
+            del conn["entity_kind"]
+        if not conn.get("qualifier"):
+            conn.pop("qualifier", None)
+
+
 def enforce_metadata(
     payload: Dict[str, Any],
     page_data: Dict[str, Any],
@@ -472,6 +531,7 @@ def enforce_metadata(
     # Deduplicate connections by person name (case-insensitive, normalized)
     connections = payload.get("connections", [])
     connections = _deduplicate_connections(connections)
+    _normalize_relationship_types(connections)
 
     # Sort connections by start_year (nulls last), then by relationship strength
 
