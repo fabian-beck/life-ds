@@ -493,17 +493,17 @@
       }
     },
     "p_network": {
-      "fingerprint": "45d0a0c4364c5f48",
+      "fingerprint": "e2cbb51afc88a1f1",
       "summary": {
         "constraints": [
-          "Return \"10–25\" significant connections, using only relationships supported by sufficient Wikipedia evidence.",
-          "Use exactly \"3–5\" main categories; relationship types must follow \"category/subcategory,\" and category summaries must cover those categories, with family first when present.",
-          "Represent each connected person only once; include both parents when information is available, and seek gender and work-life balance only where evidence supports it.",
-          "Use American English; connection strength is \"strong,\" \"moderate,\" or \"weak,\" interaction frequency comes from six specified values, and an unknown or ongoing end year is null."
+          "Produce \"10-25\" significant connections and exactly \"3-5\" main relationship categories.",
+          "Use only the supplied closed-vocabulary \"category/role\" values; state or regime ties must encode the action toward the subject, such as \"political/censor\" or \"political/persecutor.\"",
+          "Represent each connected person only once; put explanatory text outside a name in `qualifier`, and use organizations or unnamed groups only when no specific individual is the relevant tie.",
+          "Write all output in American English; category summaries are plain prose, begin with family when present, and must not repeat connection descriptions verbatim."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a structured ego network around the biography subject from the main Wikipedia extract and related-article context. It returns central-person metadata, 10–25 evidence-backed ties with typed and weighted relationship attributes, source URLs, and interpretive summaries for the relationship categories represented.",
-        "why_this_design": "The prompt separates individual tie descriptions from category summaries because the interface already displays each category’s members as name chips; summaries must instead explain the larger social role of the circle. Requiring one record per person prevents the same alter from inflating the graph through multiple roles, while subcategories retain the most salient role label."
+        "what_it_does": "Converts a subject's Wikipedia extract and related-article context into a structured ego-network dataset. It records the central person's metadata, 10-25 evidence-backed ties to people, organizations, or unnamed groups, and interpretive summaries for the relationship categories represented in the graph.",
+        "why_this_design": "The closed category/role vocabulary makes ties comparable across subjects and prevents vague institutional labels from obscuring who acted against or supported the subject. Requiring one record per connected person avoids splitting a single relationship across multiple roles and inflating the graph."
       }
     },
     "p_portrait": {
