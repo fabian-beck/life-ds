@@ -15,7 +15,7 @@
   "connections": [
     {
       "person_name": "Walter Fletcher Murray",
-      "relationship_type": "family",
+      "relationship_type": "family/father",
       "relationship_description": "Vater von Grace Hopper, der ihre Ausbildung und ihr Aufwachsen in New York City unterstützte.",
       "start_year": 1906,
       "end_year": null,
@@ -34,7 +34,7 @@
     },
     {
       "person_name": "Mary Campbell Van Horne",
-      "relationship_type": "family",
+      "relationship_type": "family/mother",
       "relationship_description": "Mutter von Grace Hopper, die zu ihrer schottischen und niederländischen Herkunft sowie zu ihrer religiösen Erziehung gehörte.",
       "start_year": 1906,
       "end_year": null,
@@ -53,7 +53,7 @@
     },
     {
       "person_name": "Alexander Wilson Russell",
-      "relationship_type": "family",
+      "relationship_type": "family/extended_family",
       "relationship_description": "Grace Hoppers Urgroßvater, ein Admiral der US Navy, der in der Schlacht in der Mobile Bay kämpfte und damit eine maritime Familientradition begründete.",
       "start_year": 1906,
       "end_year": null,
@@ -71,7 +71,7 @@
     },
     {
       "person_name": "Vincent Foster Hopper",
-      "relationship_type": "family",
+      "relationship_type": "family/spouse",
       "relationship_description": "Ehemann; Professor an der New York University, den Grace Murray 1930 heiratete und von dem sie sich 1945 scheiden ließ. Seinen Nachnamen behielt sie bei.",
       "start_year": 1930,
       "end_year": 1945,
@@ -90,7 +90,7 @@
     },
     {
       "person_name": "Øystein Ore",
-      "relationship_type": "mentor",
+      "relationship_type": "academic/advisor",
       "relationship_description": "Doktorvater an der Yale University, der Hoppers Promotion in Mathematik betreute und ihre Dissertation über Kriterien der Irreduzibilität leitete.",
       "start_year": 1931,
       "end_year": 1934,
@@ -110,7 +110,7 @@
     },
     {
       "person_name": "Howard H. Aiken",
-      "relationship_type": "colleague",
+      "relationship_type": "professional/superior",
       "relationship_description": "Leiter des Harvard-Mark-I-Projekts; Hopper arbeitete in seinem Programmierteam und verfasste gemeinsam mit ihm drei Aufsätze über den Mark I.",
       "start_year": 1944,
       "end_year": 1949,
@@ -132,7 +132,8 @@
     },
     {
       "person_name": "Harvard Mark II programming team",
-      "relationship_type": "collaborator",
+      "entity_kind": "group",
+      "relationship_type": "professional/collaborator",
       "relationship_description": "Kollegen im Harvard Computation Lab, mit denen Hopper am Aiken Relay Calculator Mark II arbeitete, darunter auch das Team, das den berühmten „bug“ dokumentierte.",
       "start_year": 1947,
       "end_year": 1949,
@@ -152,7 +153,7 @@
     },
     {
       "person_name": "J. Presper Eckert",
-      "relationship_type": "colleague",
+      "relationship_type": "professional/employer",
       "relationship_description": "Mitbegründer der Eckert–Mauchly Computer Corporation, bei der Hopper als leitende Mathematikerin am UNIVAC I arbeitete.",
       "start_year": 1949,
       "end_year": 1959,
@@ -173,7 +174,7 @@
     },
     {
       "person_name": "John Mauchly",
-      "relationship_type": "colleague",
+      "relationship_type": "professional/employer",
       "relationship_description": "Mitbegründer der Eckert–Mauchly Computer Corporation, bei der Hopper am UNIVAC-I-Projekt und an frühen Compilerarbeiten beschäftigt war.",
       "start_year": 1949,
       "end_year": 1959,
@@ -194,7 +195,8 @@
     },
     {
       "person_name": "Members of the CODASYL COBOL Committee",
-      "relationship_type": "collaborator",
+      "entity_kind": "group",
+      "relationship_type": "professional/collaborator",
       "relationship_description": "Computerexperten aus Industrie und Regierung, mit denen Hopper 1959 im Rahmen des CODASYL-Konsortiums die Programmiersprache COBOL entwarf.",
       "start_year": 1959,
       "end_year": 1960,
@@ -215,7 +217,7 @@
     },
     {
       "person_name": "Jean E. Sammet",
-      "relationship_type": "colleague",
+      "relationship_type": "professional/colleague",
       "relationship_description": "Informatikkollegin und Mitglied des COBOL-Ausschusses im CODASYL-Konsortium, in dem Hopper als technische Beraterin tätig war.",
       "start_year": 1959,
       "end_year": 1960,
@@ -236,7 +238,8 @@
     },
     {
       "person_name": "Employees in Hopper’s Navy Programming Languages Group",
-      "relationship_type": "student",
+      "entity_kind": "group",
+      "relationship_type": "academic/student",
       "relationship_description": "Jüngere Programmierer und Mitarbeiter der Navy Programming Languages Group sowie der weiteren Informatikgemeinschaft der US Navy, die Hopper ausbildete und als Mentorin begleitete.",
       "start_year": 1967,
       "end_year": 1977,
@@ -255,7 +258,7 @@
     },
     {
       "person_name": "Elmo R. Zumwalt Jr.",
-      "relationship_type": "colleague",
+      "relationship_type": "professional/superior",
       "relationship_description": "Chief of Naval Operations, der Hopper 1973 während ihrer Tätigkeit als Leiterin der Bemühungen der Navy um Programmiersprachen zum Captain beförderte.",
       "start_year": 1972,
       "end_year": 1973,
@@ -275,7 +278,7 @@
     },
     {
       "person_name": "Philip Crane",
-      "relationship_type": "patron",
+      "relationship_type": "professional/patron",
       "relationship_description": "Republikanischer Abgeordneter im US-Repräsentantenhaus, der nach einem Auftritt Hoppers in der Sendung 60 Minutes 1983 eine gemeinsame Resolution zu ihrer Beförderung zum Commodore auf der Ruhestandsliste unterstützte.",
       "start_year": 1983,
       "end_year": 1983,
@@ -294,7 +297,7 @@
     },
     {
       "person_name": "Ronald Reagan",
-      "relationship_type": "patron",
+      "relationship_type": "professional/patron",
       "relationship_description": "Präsident der Vereinigten Staaten, der Hopper im Dezember 1983 kraft der Ernennungsklausel zum Commodore beförderte.",
       "start_year": 1983,
       "end_year": 1983,
@@ -313,7 +316,7 @@
     },
     {
       "person_name": "Rita Yavinsky",
-      "relationship_type": "colleague",
+      "relationship_type": "professional/employer",
       "relationship_description": "Manager der Digital Equipment Corporation (DEC), der Hopper nach ihrem Ausscheiden aus der Navy zunächst eine Stelle anbot und damit ihre Tätigkeit als Principal Corporate Consulting Engineer ermöglichte.",
       "start_year": 1986,
       "end_year": 1986,
@@ -332,7 +335,8 @@
     },
     {
       "person_name": "Young engineers and computer professionals at Digital Equipment Corporation",
-      "relationship_type": "student",
+      "entity_kind": "group",
+      "relationship_type": "academic/student",
       "relationship_description": "Ingenieure an den verschiedenen Standorten von DEC, die Hoppers Vorträge besuchten und im Rahmen ihrer Tätigkeit als Principal Corporate Consulting Engineer von ihr Anleitung und Inspiration erhielten.",
       "start_year": 1986,
       "end_year": 1992,
@@ -351,7 +355,8 @@
     },
     {
       "person_name": "Digital Equipment Corporation (DEC) industry committees and forums peers",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "professional/peer",
       "relationship_description": "Kollegen aus der Industrie und Ausschussmitglieder, mit denen Hopper in ihrer Tätigkeit nach dem Ruhestand bei Foren und in Standardisierungsgremien als Vertreterin von DEC zu tun hatte.",
       "start_year": 1986,
       "end_year": 1992,
@@ -370,7 +375,7 @@
     },
     {
       "person_name": "Barack Obama",
-      "relationship_type": "patron",
+      "relationship_type": "professional/patron",
       "relationship_description": "Präsident der Vereinigten Staaten, der Hopper 2016 posthum mit der Presidential Medal of Freedom auszeichnete.",
       "start_year": 2016,
       "end_year": 2016,

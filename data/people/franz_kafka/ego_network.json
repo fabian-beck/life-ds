@@ -8,14 +8,14 @@
     "primary_roles": [
       "writer"
     ],
-    "summary": "Franz Kafka (1883\u20131924) was a Prague-born, German-language Jewish writer whose novels and stories\u2014such as The Metamorphosis, The Trial, and The Castle\u2014explore alienation, bureaucracy, and existential anxiety. Trained as a lawyer and employed in insurance, he wrote largely in private; most major works were published posthumously. His complex family ties, intense friendships, and conflicted romantic relationships deeply shaped both his life and writing.",
+    "summary": "Franz Kafka (1883–1924) was a Prague-born, German-language Jewish writer whose novels and stories—such as The Metamorphosis, The Trial, and The Castle—explore alienation, bureaucracy, and existential anxiety. Trained as a lawyer and employed in insurance, he wrote largely in private; most major works were published posthumously. His complex family ties, intense friendships, and conflicted romantic relationships deeply shaped both his life and writing.",
     "wikipedia": "https://en.wikipedia.org/wiki/Franz_Kafka"
   },
   "connections": [
     {
       "person_name": "Hermann Kafka",
-      "relationship_type": "family",
-      "relationship_description": "Father; authoritarian, overbearing businessman whose personality and expectations profoundly shaped Kafka\u2019s psyche and writing, as documented in Letter to His Father.",
+      "relationship_type": "family/father",
+      "relationship_description": "Father; authoritarian, overbearing businessman whose personality and expectations profoundly shaped Kafka’s psyche and writing, as documented in Letter to His Father.",
       "start_year": 1883,
       "end_year": 1924,
       "strength": "strong",
@@ -30,11 +30,11 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Kafka described their relationship as troubled and felt deeply intimidated by Hermann\u2019s dominance; he wrote a more than 100-page Letter to His Father analyzing this relationship."
+      "notes": "Kafka described their relationship as troubled and felt deeply intimidated by Hermann’s dominance; he wrote a more than 100-page Letter to His Father analyzing this relationship."
     },
     {
-      "person_name": "Julie Kafka (n\u00e9e L\u00f6wy)",
-      "relationship_type": "family",
+      "person_name": "Julie Kafka (née Löwy)",
+      "relationship_type": "family/mother",
       "relationship_description": "Mother; quiet and shy co-manager of the family business, often absent due to long working hours; emotionally important but less dominant than Hermann.",
       "start_year": 1883,
       "end_year": 1924,
@@ -53,8 +53,8 @@
     },
     {
       "person_name": "Gabriele \"Elli\" Kafka",
-      "relationship_type": "family",
-      "relationship_description": "Older sister; part of Kafka\u2019s immediate family network in Prague, later business partner through her husband Karl Hermann in the asbestos factory.",
+      "relationship_type": "family/sister",
+      "relationship_description": "Older sister; part of Kafka’s immediate family network in Prague, later business partner through her husband Karl Hermann in the asbestos factory.",
       "start_year": 1883,
       "end_year": 1942,
       "strength": "moderate",
@@ -72,7 +72,7 @@
     },
     {
       "person_name": "Valerie \"Valli\" Kafka",
-      "relationship_type": "family",
+      "relationship_type": "family/sister",
       "relationship_description": "Sister whose former apartment Kafka later moved into, giving him his first experience of living alone and a quieter space for writing.",
       "start_year": 1883,
       "end_year": 1942,
@@ -82,17 +82,17 @@
       "shared_activities": [
         "Shared childhood home",
         "Family co-residence before and during early WWI",
-        "Use of her former apartment as Kafka\u2019s first solitary residence"
+        "Use of her former apartment as Kafka’s first solitary residence"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Valli and her husband also briefly moved back in with the family during WWI; she was later deported to the \u0141\u00f3d\u017a Ghetto and did not survive the Holocaust."
+      "notes": "Valli and her husband also briefly moved back in with the family during WWI; she was later deported to the Łódź Ghetto and did not survive the Holocaust."
     },
     {
       "person_name": "Jakob Kafka",
-      "relationship_type": "family",
-      "relationship_description": "Paternal grandfather, a shochet (kosher butcher) in Osek, representing Kafka\u2019s roots in traditional Jewish society.",
+      "relationship_type": "family/grandparent",
+      "relationship_description": "Paternal grandfather, a shochet (kosher butcher) in Osek, representing Kafka’s roots in traditional Jewish society.",
       "start_year": 1883,
       "end_year": 1897,
       "strength": "weak",
@@ -108,9 +108,9 @@
       "notes": "Though not a close personal relationship in adulthood, his role underscores the traditional Jewish background from which Hermann and thus Franz emerged."
     },
     {
-      "person_name": "Jakob L\u00f6wy",
-      "relationship_type": "family",
-      "relationship_description": "Maternal grandfather, a cloth-maker in Humpolec; source of Kafka\u2019s maternal line in provincial Bohemian Jewry.",
+      "person_name": "Jakob Löwy",
+      "relationship_type": "family/grandparent",
+      "relationship_description": "Maternal grandfather, a cloth-maker in Humpolec; source of Kafka’s maternal line in provincial Bohemian Jewry.",
       "start_year": 1883,
       "end_year": 1895,
       "strength": "weak",
@@ -122,11 +122,11 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Mentioned as Julie\u2019s father; symbolizes the small-town Jewish mercantile milieu behind Kafka\u2019s family."
+      "notes": "Mentioned as Julie’s father; symbolizes the small-town Jewish mercantile milieu behind Kafka’s family."
     },
     {
       "person_name": "Ottilie \"Ottla\" Kafka",
-      "relationship_type": "family",
+      "relationship_type": "family/sister",
       "relationship_description": "Youngest and favourite sister; emotionally closest sibling, with whom Kafka had a particularly strong bond.",
       "start_year": 1892,
       "end_year": 1924,
@@ -141,11 +141,11 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "The article specifies Ottla was Kafka\u2019s favourite sister, suggesting distinctive emotional closeness compared to his other siblings."
+      "notes": "The article specifies Ottla was Kafka’s favourite sister, suggesting distinctive emotional closeness compared to his other siblings."
     },
     {
       "person_name": "Felix Weltsch",
-      "relationship_type": "friend",
+      "relationship_type": "social/friend",
       "relationship_description": "Friend from university; philosopher and member of the Close Prague Circle, sharing literary and intellectual interests with Kafka and Brod.",
       "start_year": 1901,
       "end_year": 1924,
@@ -160,12 +160,12 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Listed among Kafka\u2019s friends at university; later described as part of the Close Prague Circle by Brod."
+      "notes": "Listed among Kafka’s friends at university; later described as part of the Close Prague Circle by Brod."
     },
     {
-      "person_name": "Yitzchak L\u00f6wy",
-      "relationship_type": "friend",
-      "relationship_description": "Actor friend from an orthodox Hasidic Warsaw family whose Yiddish theatre performances helped spark Kafka\u2019s deep interest in Yiddish culture and Judaism.",
+      "person_name": "Yitzchak Löwy",
+      "relationship_type": "social/friend",
+      "relationship_description": "Actor friend from an orthodox Hasidic Warsaw family whose Yiddish theatre performances helped spark Kafka’s deep interest in Yiddish culture and Judaism.",
       "start_year": 1901,
       "end_year": 1912,
       "strength": "moderate",
@@ -179,12 +179,12 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Kafka\u2019s immersion in Yiddish theatre and literature after seeing a troupe in 1911 overlaps with his friendship with L\u00f6wy, reinforcing his exploration of Jewish identity."
+      "notes": "Kafka’s immersion in Yiddish theatre and literature after seeing a troupe in 1911 overlaps with his friendship with Löwy, reinforcing his exploration of Jewish identity."
     },
     {
       "person_name": "Ludwig Winder",
-      "relationship_type": "friend",
-      "relationship_description": "Writer friend from Kafka\u2019s university circle, associated with the German-speaking Jewish literary milieu in Prague.",
+      "relationship_type": "social/friend",
+      "relationship_description": "Writer friend from Kafka’s university circle, associated with the German-speaking Jewish literary milieu in Prague.",
       "start_year": 1901,
       "end_year": 1924,
       "strength": "moderate",
@@ -197,12 +197,12 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Named among Kafka\u2019s early friends at the university; part of his writerly peer group, though less central than Brod."
+      "notes": "Named among Kafka’s early friends at the university; part of his writerly peer group, though less central than Brod."
     },
     {
       "person_name": "Oskar Baum",
-      "relationship_type": "friend",
-      "relationship_description": "Writer and member of Kafka\u2019s friendship and literary circle in Prague.",
+      "relationship_type": "social/friend",
+      "relationship_description": "Writer and member of Kafka’s friendship and literary circle in Prague.",
       "start_year": 1901,
       "end_year": 1924,
       "strength": "moderate",
@@ -219,8 +219,8 @@
     },
     {
       "person_name": "Franz Werfel",
-      "relationship_type": "friend",
-      "relationship_description": "Writer friend from Kafka\u2019s university years; part of the German-speaking literary circles in Prague.",
+      "relationship_type": "social/friend",
+      "relationship_description": "Writer friend from Kafka’s university years; part of the German-speaking literary circles in Prague.",
       "start_year": 1901,
       "end_year": 1914,
       "strength": "moderate",
@@ -233,11 +233,13 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Listed explicitly among Kafka\u2019s friends at the university, indicating regular literary contact."
+      "notes": "Listed explicitly among Kafka’s friends at the university, indicating regular literary contact."
     },
     {
-      "person_name": "Lese- und Redehalle der Deutschen Studenten (student club peers)",
-      "relationship_type": "colleague",
+      "person_name": "Lese- und Redehalle der Deutschen Studenten",
+      "entity_kind": "organization",
+      "qualifier": "student club",
+      "relationship_type": "social/association",
       "relationship_description": "Literary student club at the university where Kafka interacted with German-speaking students through readings, lectures, and cultural events.",
       "start_year": 1901,
       "end_year": 1906,
@@ -252,33 +254,35 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "This association broadened Kafka\u2019s literary social circle beyond his closest friends and fostered his engagement with public literary life."
+      "notes": "This association broadened Kafka’s literary social circle beyond his closest friends and fostered his engagement with public literary life."
     },
     {
       "person_name": "Max Brod",
-      "relationship_type": "friend",
-      "relationship_description": "Closest lifelong friend, fellow law student, literary confidant, and later editor and preserver of Kafka\u2019s manuscripts; central figure in the Close Prague Circle.",
+      "relationship_type": "social/friend",
+      "relationship_description": "Closest lifelong friend, fellow law student, literary confidant, and later editor and preserver of Kafka’s manuscripts; central figure in the Close Prague Circle.",
       "start_year": 1902,
       "end_year": 1924,
       "strength": "strong",
       "interaction_frequency": "weekly",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Studied law at Deutsche Karl-Ferdinands-Universit\u00e4t",
+        "Studied law at Deutsche Karl-Ferdinands-Universität",
         "Belonged to the Close Prague Circle of German-Jewish writers",
         "Joint reading of classical and modern literature (e.g., Plato, Flaubert)",
         "Literary discussions, readings, and socializing",
-        "Brod later edited and published Kafka\u2019s works posthumously"
+        "Brod later edited and published Kafka’s works posthumously"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Brod recognized Kafka\u2019s talent early and ignored Kafka\u2019s request to destroy his manuscripts, ensuring their survival and publication."
+      "notes": "Brod recognized Kafka’s talent early and ignored Kafka’s request to destroy his manuscripts, ensuring their survival and publication."
     },
     {
-      "person_name": "Assicurazioni Generali (managers and co-workers)",
-      "relationship_type": "colleague",
-      "relationship_description": "Kafka\u2019s first major employer, an insurance company in Prague where he worked long hours, leaving little time for writing.",
+      "person_name": "Assicurazioni Generali",
+      "entity_kind": "organization",
+      "qualifier": "insurance company",
+      "relationship_type": "professional/employer",
+      "relationship_description": "Kafka’s first major employer, an insurance company in Prague where he worked long hours, leaving little time for writing.",
       "start_year": 1907,
       "end_year": 1908,
       "strength": "weak",
@@ -291,12 +295,14 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Kafka\u2019s dissatisfaction with this job and schedule influenced his decision to seek more accommodating employment for his literary ambitions."
+      "notes": "Kafka’s dissatisfaction with this job and schedule influenced his decision to seek more accommodating employment for his literary ambitions."
     },
     {
-      "person_name": "Workers' Accident Insurance Institute for the Kingdom of Bohemia (supervisors and colleagues)",
-      "relationship_type": "colleague",
-      "relationship_description": "Kafka\u2019s main workplace from 1908 until his pensioning in 1918, where he worked with legal and administrative colleagues and superiors who valued his reports.",
+      "person_name": "Workers' Accident Insurance Institute for the Kingdom of Bohemia",
+      "entity_kind": "organization",
+      "qualifier": "insurance institute",
+      "relationship_type": "professional/employer",
+      "relationship_description": "Kafka’s main workplace from 1908 until his pensioning in 1918, where he worked with legal and administrative colleagues and superiors who valued his reports.",
       "start_year": 1908,
       "end_year": 1918,
       "strength": "moderate",
@@ -311,12 +317,12 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Though individuals are not named, the institutional environment and colleagues formed Kafka\u2019s primary professional network, which he both resented and used as material for his writing."
+      "notes": "Though individuals are not named, the institutional environment and colleagues formed Kafka’s primary professional network, which he both resented and used as material for his writing."
     },
     {
       "person_name": "Karl Hermann",
-      "relationship_type": "colleague",
-      "relationship_description": "Kafka\u2019s brother-in-law (Elli\u2019s husband) and business partner in the Prager Asbestwerke Hermann & Co. asbestos factory in Prague.",
+      "relationship_type": "professional/business_partner",
+      "relationship_description": "Kafka’s brother-in-law (Elli’s husband) and business partner in the Prager Asbestwerke Hermann & Co. asbestos factory in Prague.",
       "start_year": 1911,
       "end_year": 1914,
       "strength": "moderate",
@@ -324,8 +330,8 @@
       "influence_direction": "bidirectional",
       "shared_activities": [
         "Co-ownership and management of asbestos factory",
-        "Use of Hermann Kafka\u2019s dowry money as capital",
-        "Balancing business demands with Kafka\u2019s writing schedule"
+        "Use of Hermann Kafka’s dowry money as capital",
+        "Balancing business demands with Kafka’s writing schedule"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
@@ -333,8 +339,10 @@
       "notes": "Kafka initially showed enthusiasm for the factory but later resented how it encroached on his writing time."
     },
     {
-      "person_name": "Unnamed Yiddish theatre troupe (via director and actors, including Yitzchak L\u00f6wy)",
-      "relationship_type": "other",
+      "person_name": "Yiddish theatre troupe",
+      "entity_kind": "group",
+      "qualifier": "travelling ensemble around Yitzchak Löwy",
+      "relationship_type": "artistic/influence",
       "relationship_description": "Group of Yiddish performers whose shows in Prague around 1911 captivated Kafka and led to months of immersion in Yiddish language and literature.",
       "start_year": 1911,
       "end_year": 1912,
@@ -350,19 +358,19 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Kafka\u2019s six-month immersion in Yiddish culture following their arrival marked a turning point in his engagement with Judaism."
+      "notes": "Kafka’s six-month immersion in Yiddish culture following their arrival marked a turning point in his engagement with Judaism."
     },
     {
       "person_name": "Felice Bauer",
-      "relationship_type": "friend",
-      "relationship_description": "Berlin-based office worker and relative of Brod; Kafka\u2019s most significant romantic partner, with whom he had a long, intense epistolary relationship and two broken engagements.",
+      "relationship_type": "social/romantic_partner",
+      "relationship_description": "Berlin-based office worker and relative of Brod; Kafka’s most significant romantic partner, with whom he had a long, intense epistolary relationship and two broken engagements.",
       "start_year": 1912,
       "end_year": 1917,
       "strength": "strong",
       "interaction_frequency": "daily",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Met at Max Brod\u2019s home in Prague (13 August 1912)",
+        "Met at Max Brod’s home in Prague (13 August 1912)",
         "Extensive letter-writing over five years",
         "Two engagements and intermittent visits",
         "Inspiration for intense periods of writing (e.g., \"The Judgment\", work on The Man Who Disappeared and The Metamorphosis)"
@@ -370,19 +378,19 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Kafka\u2019s Letters to Felice document their relationship in detail; the period following their meeting coincided with a major creative surge."
+      "notes": "Kafka’s Letters to Felice document their relationship in detail; the period following their meeting coincided with a major creative surge."
     },
     {
       "person_name": "Margarethe \"Grete\" Bloch",
-      "relationship_type": "friend",
-      "relationship_description": "Friend of Felice Bauer with whom Kafka is said to have had an affair during his engagement; biographers report that she bore a son believed to be Kafka\u2019s.",
+      "relationship_type": "social/romantic_partner",
+      "relationship_description": "Friend of Felice Bauer with whom Kafka is said to have had an affair during his engagement; biographers report that she bore a son believed to be Kafka’s.",
       "start_year": 1913,
       "end_year": 1915,
       "strength": "moderate",
       "interaction_frequency": "occasional",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Personal meetings during Kafka\u2019s relationship with Felice Bauer",
+        "Personal meetings during Kafka’s relationship with Felice Bauer",
         "Private correspondence and an affair"
       ],
       "sources": [
@@ -392,8 +400,8 @@
     },
     {
       "person_name": "Julie Wohryzek",
-      "relationship_type": "friend",
-      "relationship_description": "Hotel chambermaid and third fianc\u00e9e with whom Kafka became engaged around 1920; they rented a flat and set a wedding date, but never married.",
+      "relationship_type": "social/fiancée",
+      "relationship_description": "Hotel chambermaid and third fiancée with whom Kafka became engaged around 1920; they rented a flat and set a wedding date, but never married.",
       "start_year": 1920,
       "end_year": 1922,
       "strength": "moderate",
@@ -407,8 +415,8 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Franz_Kafka"
       ],
-      "notes": "Kafka\u2019s father objected to the match, partly because of her Zionist beliefs; Kafka drafted Letter to His Father during this period."
+      "notes": "Kafka’s father objected to the match, partly because of her Zionist beliefs; Kafka drafted Letter to His Father during this period."
     }
   ],
-  "network_summary": "Kafka\u2019s ego network centers on a small but intense set of relationships. Family ties\u2014especially with his domineering father Hermann and favourite sister Ottla\u2014are emotionally powerful and often conflictual, shaping his self-conception and themes of authority and guilt. His closest external bond is with Max Brod, whose friendship is intellectually rich and crucial for the survival of Kafka\u2019s work. Around them coalesces a modest literary circle of German-speaking Jewish friends in Prague. Romantic ties, particularly with Felice Bauer, are long, complicated, and highly mediated by letters, intertwining emotional turmoil with creative productivity. Professionally, Kafka maintains regular but largely functional ties to colleagues in insurance and a joint business venture with his brother-in-law. Cultural connections, notably to Yiddish theatre and Jewish intellectual life, provide an important but more diffuse sphere of influence. Overall, the network is relatively small, with a few very strong, high-impact relationships amid a broader set of moderate literary and professional contacts."
+  "network_summary": "Kafka’s ego network centers on a small but intense set of relationships. Family ties—especially with his domineering father Hermann and favourite sister Ottla—are emotionally powerful and often conflictual, shaping his self-conception and themes of authority and guilt. His closest external bond is with Max Brod, whose friendship is intellectually rich and crucial for the survival of Kafka’s work. Around them coalesces a modest literary circle of German-speaking Jewish friends in Prague. Romantic ties, particularly with Felice Bauer, are long, complicated, and highly mediated by letters, intertwining emotional turmoil with creative productivity. Professionally, Kafka maintains regular but largely functional ties to colleagues in insurance and a joint business venture with his brother-in-law. Cultural connections, notably to Yiddish theatre and Jewish intellectual life, provide an important but more diffuse sphere of influence. Overall, the network is relatively small, with a few very strong, high-impact relationships amid a broader set of moderate literary and professional contacts."
 }

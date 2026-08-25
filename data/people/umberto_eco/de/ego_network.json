@@ -70,7 +70,7 @@
     },
     {
       "person_name": "Thomas von Aquin",
-      "relationship_type": "academic/intellectual_influence",
+      "relationship_type": "academic/influence",
       "relationship_description": "Theologe und Philosoph des 13. Jahrhunderts, der Gegenstand von Ecos Laurea-Arbeit und seines frühen Buches über mittelalterliche Ästhetik war und Ecos Zugang zum mittelalterlichen Denken und zur Symbolik nachhaltig prägte.",
       "start_year": 1952,
       "end_year": 1960,
@@ -127,7 +127,7 @@
     },
     {
       "person_name": "Mike Bongiorno",
-      "relationship_type": "professional/critic_subject",
+      "relationship_type": "professional/subject",
       "relationship_description": "Beliebter italienischer Quizshow-Moderator, dessen öffentliche Figur und Fernsehpräsenz Eco in seinem Essay „Phänomenologie des Mike Bongiorno“ von 1961 kritisch analysierte – einem frühen Meilenstein seiner Medienkritik.",
       "start_year": 1961,
       "end_year": 1965,
@@ -146,7 +146,7 @@
     },
     {
       "person_name": "Nanni Balestrini",
-      "relationship_type": "artistic/movement_colleague",
+      "relationship_type": "artistic/colleague",
       "relationship_description": "Italienischer Schriftsteller und führendes Mitglied der Neoavanguardia beziehungsweise des Gruppo ’63, an dem Eco als Theoretiker und Kritiker der avantgardistischen Literatur beteiligt war.",
       "start_year": 1963,
       "end_year": 1970,
@@ -164,7 +164,7 @@
     },
     {
       "person_name": "Edoardo Sanguineti",
-      "relationship_type": "artistic/movement_colleague",
+      "relationship_type": "artistic/colleague",
       "relationship_description": "Dichter und Kritiker aus dem Umfeld der Neoavanguardia und des Gruppo ’63, der mit Eco das Bekenntnis zu radikalen Formexperimenten und zur theoretischen Reflexion über Sprache teilte.",
       "start_year": 1963,
       "end_year": 1975,
@@ -183,7 +183,7 @@
     },
     {
       "person_name": "Michel Foucault",
-      "relationship_type": "artistic/intellectual_peer",
+      "relationship_type": "artistic/peer",
       "relationship_description": "Französischer Philosoph und Freund, auf dessen Namen der Titel „Das Foucaultsche Pendel“ anspielt. Eco beschäftigte sich mit ähnlichen Fragen nach Diskurs und Macht und spielte zugleich mit den Erwartungen an einen direkten Bezug.",
       "start_year": 1970,
       "end_year": 1984,
@@ -239,7 +239,7 @@
     },
     {
       "person_name": "Stanley Kubrick",
-      "relationship_type": "artistic/potential_collaborator",
+      "relationship_type": "artistic/acquaintance",
       "relationship_description": "Amerikanischer Filmregisseur, der die Rechte zur Verfilmung von „Das Foucaultsche Pendel“ erwerben wollte. Eco lehnte ab, weil er mit der früheren Verfilmung von „Der Name der Rose“ unzufrieden war und Kubrick nicht bereit war, Eco als Drehbuchautor zu akzeptieren.",
       "start_year": 1989,
       "end_year": 1990,
@@ -348,8 +348,10 @@
       "notes": "Seine Anwesenheit bei Ecos Konferenzen stand beispielhaft für Ecos Bemühen, Recht und Naturwissenschaften in den kulturellen und philosophischen Dialog einzubeziehen."
     },
     {
-      "person_name": "Harvard University (Charles Eliot Norton Professorship)",
-      "relationship_type": "academic/institutional_affiliation",
+      "person_name": "Harvard University",
+      "entity_kind": "organization",
+      "qualifier": "Charles-Eliot-Norton-Professur",
+      "relationship_type": "academic/institution",
       "relationship_description": "Eco war 1992 und 1993 Charles Eliot Norton Professor of Poetry an der Harvard University und hielt dort die Norton Lectures, die später unter dem Titel „Sechs Spaziergänge durch die fiktionalen Wälder“ veröffentlicht wurden.",
       "start_year": 1992,
       "end_year": 1993,
@@ -367,7 +369,7 @@
     },
     {
       "person_name": "Carlo Maria Martini",
-      "relationship_type": "academic/dialogue_partner",
+      "relationship_type": "academic/correspondent",
       "relationship_description": "Katholischer Kardinal, der gemeinsam mit Eco das Buch „Glauben oder Nichtglauben?“ verfasste und mit ihm einen veröffentlichten Dialog über Religion, Ethik und säkularen Glauben führte.",
       "start_year": 1995,
       "end_year": 1996,
@@ -386,7 +388,7 @@
     },
     {
       "person_name": "Raúl Padilla López",
-      "relationship_type": "professional/cultural_partner",
+      "relationship_type": "professional/collaborator",
       "relationship_description": "Präsident der Internationalen Buchmesse von Guadalajara, auf der Eco als bedeutender internationaler Autor auftrat und zu deren Profil als führendes literarisches Ereignis der spanischsprachigen Welt beitrug.",
       "start_year": 2000,
       "end_year": 2015,
@@ -405,7 +407,8 @@
     },
     {
       "person_name": "St Anne’s College, Oxford",
-      "relationship_type": "academic/institutional_affiliation",
+      "entity_kind": "organization",
+      "relationship_type": "academic/institution",
       "relationship_description": "Eco war von 2001 bis 2002 Weidenfeld Visiting Professor für vergleichende europäische Literatur am St Anne’s College in Oxford und vertiefte dadurch seine Verbindungen zur britischen Wissenschaft.",
       "start_year": 2001,
       "end_year": 2002,
@@ -462,7 +465,7 @@
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "dad0cb7c674030ef",
+    "source_fingerprint": "47d0cc93fc09983b",
     "translated_on": "2026-08-02T12:23:25.154302+00:00",
     "translator": "openai:gpt-5.6-luna"
   }

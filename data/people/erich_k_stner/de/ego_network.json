@@ -15,7 +15,7 @@
   "connections": [
     {
       "person_name": "Ida Amalia Kästner (geb. Augustin)",
-      "relationship_type": "family",
+      "relationship_type": "family/mother",
       "relationship_description": "Mutter von Erich Kästner, zu der er zeitlebens eine außergewöhnlich enge Beziehung hatte, die sein Leben und Schreiben nachhaltig prägte.",
       "start_year": 1899,
       "end_year": 1960,
@@ -35,7 +35,7 @@
     },
     {
       "person_name": "Emil Richard Kästner",
-      "relationship_type": "family",
+      "relationship_type": "family/father",
       "relationship_description": "Vater von Erich Kästner, ein Dresdner Sattlermeister, der den kleinbürgerlichen familiären Hintergrund verkörperte, der Kästners gesellschaftliche Perspektive häufig prägte.",
       "start_year": 1899,
       "end_year": 1930,
@@ -54,7 +54,7 @@
     },
     {
       "person_name": "Franz Augustin",
-      "relationship_type": "family",
+      "relationship_type": "family/uncle",
       "relationship_description": "Onkel von Erich Kästner und Besitzer der Villa Augustin in Dresden, in der später das dem Leben des Autors gewidmete Erich-Kästner-Museum eingerichtet wurde.",
       "start_year": 1899,
       "end_year": 1945,
@@ -72,7 +72,7 @@
     },
     {
       "person_name": "Emil Zimmermann",
-      "relationship_type": "other",
+      "relationship_type": "professional/physician",
       "relationship_description": "Jüdischer Hausarzt der Familie; das Gerücht, er sei Kästners leiblicher Vater gewesen, ist unbelegt und gehört zur Familienüberlieferung und späteren biografischen Spekulation.",
       "start_year": 1899,
       "end_year": 1953,
@@ -89,7 +89,8 @@
     },
     {
       "person_name": "Redaktion der Neuen Leipziger Zeitung",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "professional/colleague",
       "relationship_description": "Redakteure und Kollegen der Leipziger Zeitung, bei der Kästner als Journalist und Kritiker arbeitete und die ihn schließlich wegen kritischer Besprechungen und eines erotischen Gedichts entließen.",
       "start_year": 1923,
       "end_year": 1927,
@@ -108,7 +109,7 @@
     },
     {
       "person_name": "Erich Ohser",
-      "relationship_type": "collaborator",
+      "relationship_type": "artistic/illustrator",
       "relationship_description": "Illustrator, der mit Kästner an Werken wie dem erotischen Gedicht „Abendlied des Kammervirtuosen“ und an Buchgestaltungen zusammenarbeitete und damit Kästners visuelles Profil als Autor mitprägte.",
       "start_year": 1927,
       "end_year": 1933,
@@ -126,7 +127,8 @@
     },
     {
       "person_name": "Redakteure des Berliner Tageblatts, der Vossischen Zeitung und der Weltbühne",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "professional/editor",
       "relationship_description": "Redakteure großer Berliner Zeitungen und Zeitschriften der Weimarer Zeit, die Kästners Gedichte, Kolumnen und Essays regelmäßig veröffentlichten und ihn so zu einer bedeutenden öffentlichen Stimme machten.",
       "start_year": 1927,
       "end_year": 1933,
@@ -145,7 +147,7 @@
     },
     {
       "person_name": "Walter Trier",
-      "relationship_type": "collaborator",
+      "relationship_type": "artistic/illustrator",
       "relationship_description": "Illustrator, dessen Zeichnungen zu Emil und die Detektive und späteren Kinderbüchern maßgeblich zu deren Popularität und internationalem Erfolg beitrugen.",
       "start_year": 1928,
       "end_year": 1933,
@@ -163,8 +165,8 @@
       "notes": "Der Artikel stellt fest, dass Triers Illustrationen wesentlich zur überwältigenden Beliebtheit der Bücher beitrugen. Damit war er einer von Kästners wichtigsten kreativen Partnern."
     },
     {
-      "person_name": "Edith Jacobsohn (Verlegerin)",
-      "relationship_type": "collaborator",
+      "person_name": "Edith Jacobsohn",
+      "relationship_type": "professional/publisher",
       "relationship_description": "Besitzerin des Verlags Die Weltbühne, die Kästner vorschlug, eine Detektivgeschichte für Kinder zu schreiben. Daraus ging unmittelbar sein Durchbruch Emil und die Detektive hervor.",
       "start_year": 1928,
       "end_year": 1933,
@@ -182,7 +184,7 @@
     },
     {
       "person_name": "Edmund Nick",
-      "relationship_type": "collaborator",
+      "relationship_type": "artistic/collaborator",
       "relationship_description": "Komponist, der mehr als 60 Lieder Kästners vertonte und mit ihm Rundfunk- und Kabarettstücke schuf. Nach dem Zweiten Weltkrieg wurde er zu Kästners wichtigstem musikalischem Partner.",
       "start_year": 1929,
       "end_year": 1965,
@@ -201,7 +203,7 @@
     },
     {
       "person_name": "Gerhard Lamprecht",
-      "relationship_type": "collaborator",
+      "relationship_type": "artistic/collaborator",
       "relationship_description": "Filmregisseur, der 1931 die erfolgreiche Verfilmung von Emil und die Detektive inszenierte und Kästner dadurch dazu brachte, selbst Drehbuchautor zu werden.",
       "start_year": 1930,
       "end_year": 1932,
@@ -220,7 +222,7 @@
     },
     {
       "person_name": "Joseph Goebbels",
-      "relationship_type": "rival",
+      "relationship_type": "political/censor",
       "relationship_description": "Nationalsozialistischer Propagandaminister, der 1933 die Verbrennung von Kästners Büchern inszenierte und später den Ufa-Prestigefilm Münchhausen unterstützte, für den Kästner unter einem Pseudonym das Drehbuch schrieb.",
       "start_year": 1933,
       "end_year": 1945,
@@ -237,8 +239,10 @@
       "notes": "Goebbels bezeichnete Kästners Werke als „wider den deutschen Geist“ und ließ sie verbrennen. Später ermöglichte er indirekt Kästners Mitarbeit an Münchhausen, einer vom Regime getragenen Prestigeproduktion – eine zutiefst gegensätzliche und zugleich strukturell verflochtene Beziehung."
     },
     {
-      "person_name": "Gestapo (Geheimpolizei, als institutioneller Akteur)",
-      "relationship_type": "rival",
+      "person_name": "Gestapo",
+      "entity_kind": "organization",
+      "qualifier": "Geheimpolizei",
+      "relationship_type": "political/persecutor",
       "relationship_description": "Gestapo (Geheimpolizei, als institutioneller Akteur), die Kästner wiederholt verhörte und seine berufliche Ausgrenzung unterstützte, während er in Deutschland blieb.",
       "start_year": 1933,
       "end_year": 1945,
@@ -256,7 +260,8 @@
     },
     {
       "person_name": "Funktionäre des Reichsverbands deutscher Schriftsteller",
-      "relationship_type": "rival",
+      "entity_kind": "group",
+      "relationship_type": "political/banned_by",
       "relationship_description": "Funktionäre des Reichsverbands deutscher Schriftsteller, die Kästner ausschlossen und ihm wegen seiner „kulturb bolschewistischen“ Haltung die Mitgliedschaft verweigerten.",
       "start_year": 1933,
       "end_year": 1945,
@@ -274,7 +279,8 @@
     },
     {
       "person_name": "Führung der UFA (Universum Film AG)",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "professional/employer",
       "relationship_description": "Führungskräfte und Produzenten der UFA, die den Prestige film Münchhausen in Auftrag gaben und mit Kästner als Drehbuchautor unter dem Pseudonym Berthold Bürger arbeiteten.",
       "start_year": 1941,
       "end_year": 1943,
@@ -293,7 +299,8 @@
     },
     {
       "person_name": "Kabarettensemble Schaubude",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "artistic/collaborator",
       "relationship_description": "Künstler und Produzenten des Münchner Kabaretts Schaubude, für das Kästner Sketche und Lieder schrieb und eng mit den auftretenden Künstlern, darunter dem musikalischen Leiter Edmund Nick, zusammenarbeitete.",
       "start_year": 1945,
       "end_year": 1948,
@@ -311,7 +318,8 @@
     },
     {
       "person_name": "Redaktion der Neuen Zeitung",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "professional/colleague",
       "relationship_description": "Redaktion der Neuen Zeitung, der in München erscheinenden Zeitung, bei der Kästner nach dem Zweiten Weltkrieg als Feuilletonredakteur arbeitete.",
       "start_year": 1945,
       "end_year": 1950,
@@ -330,7 +338,7 @@
     },
     {
       "person_name": "Curt Linda",
-      "relationship_type": "collaborator",
+      "relationship_type": "artistic/collaborator",
       "relationship_description": "Filmregisseur, der die Trickfilmfassung von Kästners pazifistischem Bilderbuch Die Konferenz der Tiere schuf.",
       "start_year": 1949,
       "end_year": 1960,
@@ -348,7 +356,7 @@
     },
     {
       "person_name": "Konrad Adenauer",
-      "relationship_type": "rival",
+      "relationship_type": "political/opponent",
       "relationship_description": "Erster Bundeskanzler der Geschichte der Bundesrepublik Deutschland, dessen Politik der Wiederbewaffnung und NATO-Integration der pazifistische Kästner immer wieder öffentlich kritisierte.",
       "start_year": 1949,
       "end_year": 1963,
@@ -366,7 +374,8 @@
     },
     {
       "person_name": "Gründer der Internationalen Jugendbibliothek",
-      "relationship_type": "collaborator",
+      "entity_kind": "group",
+      "relationship_type": "professional/co_founder",
       "relationship_description": "Gründer der Internationalen Jugendbibliothek, mit denen Kästner die Internationale Jugendbibliothek in München ins Leben rief, eine bedeutende Bibliothek für Kinder- und Jugendliteratur.",
       "start_year": 1949,
       "end_year": 1960,
@@ -384,7 +393,8 @@
     },
     {
       "person_name": "Kabarettensemble Die kleine Freiheit",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "artistic/collaborator",
       "relationship_description": "Kabarettensemble Die kleine Freiheit, mit dem Kästner nach 1951 arbeitete und sein Engagement für literarisches Kabarett und politische Satire fortsetzte.",
       "start_year": 1951,
       "end_year": 1965,
@@ -402,7 +412,8 @@
     },
     {
       "person_name": "Mitglieder des PEN-Zentrums der Bundesrepublik Deutschland",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "professional/colleague",
       "relationship_description": "Mitglieder des PEN-Zentrums der Bundesrepublik Deutschland, dessen Präsident Kästner von 1951 bis 1961 war und mit denen er sich nach dem Krieg für Literatur und Meinungsfreiheit einsetzte.",
       "start_year": 1951,
       "end_year": 1965,
@@ -421,7 +432,8 @@
     },
     {
       "person_name": "Gründer des International Board on Books for Young People (IBBY)",
-      "relationship_type": "collaborator",
+      "entity_kind": "group",
+      "relationship_type": "professional/co_founder",
       "relationship_description": "Gründer des International Board on Books for Young People (IBBY), mit denen Kästner als Gründungsmitglied die internationale Kinderliteratur förderte.",
       "start_year": 1953,
       "end_year": 1965,
@@ -439,7 +451,7 @@
     },
     {
       "person_name": "Thomas Kästner",
-      "relationship_type": "family",
+      "relationship_type": "family/child",
       "relationship_description": "Sohn von Erich Kästner, für den er seine letzten beiden Kinderbücher Der kleine Mann und Der kleine Mann und die kleine Miss schrieb.",
       "start_year": 1957,
       "end_year": 1974,
@@ -461,7 +473,7 @@
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "aa172cc9ea10d5ce",
+    "source_fingerprint": "df19ec4ad0aaa7e1",
     "translated_on": "2026-08-02T12:01:18.219789+00:00",
     "translator": "openai:gpt-5.6-luna"
   }

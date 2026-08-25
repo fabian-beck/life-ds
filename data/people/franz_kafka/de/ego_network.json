@@ -14,7 +14,7 @@
   "connections": [
     {
       "person_name": "Hermann Kafka",
-      "relationship_type": "family",
+      "relationship_type": "family/father",
       "relationship_description": "Vater; autoritärer, dominanter Geschäftsmann, dessen Persönlichkeit und Erwartungen Kafkas Psyche und Schreiben tief prägten, wie der Brief an den Vater dokumentiert.",
       "start_year": 1883,
       "end_year": 1924,
@@ -34,7 +34,7 @@
     },
     {
       "person_name": "Julie Kafka (née Löwy)",
-      "relationship_type": "family",
+      "relationship_type": "family/mother",
       "relationship_description": "Mutter; stille, schüchterne Mitinhaberin des Familienbetriebs, die wegen ihrer langen Arbeitstage oft abwesend war; emotional wichtig, aber weit weniger dominant als Hermann.",
       "start_year": 1883,
       "end_year": 1924,
@@ -53,7 +53,7 @@
     },
     {
       "person_name": "Gabriele \"Elli\" Kafka",
-      "relationship_type": "family",
+      "relationship_type": "family/sister",
       "relationship_description": "Ältere Schwester; Teil von Kafkas engstem Familienkreis in Prag, später durch ihren Mann Karl Hermann Geschäftspartnerin in der Asbestfabrik.",
       "start_year": 1883,
       "end_year": 1942,
@@ -72,7 +72,7 @@
     },
     {
       "person_name": "Valerie \"Valli\" Kafka",
-      "relationship_type": "family",
+      "relationship_type": "family/sister",
       "relationship_description": "Schwester, in deren frühere Wohnung Kafka später einzog und so erstmals allein lebte und einen ruhigeren Raum zum Schreiben fand.",
       "start_year": 1883,
       "end_year": 1942,
@@ -91,7 +91,7 @@
     },
     {
       "person_name": "Jakob Kafka",
-      "relationship_type": "family",
+      "relationship_type": "family/grandparent",
       "relationship_description": "Großvater väterlicherseits, Schochet (koscherer Schlachter) in Osek; er verkörpert Kafkas Wurzeln im traditionellen jüdischen Milieu.",
       "start_year": 1883,
       "end_year": 1897,
@@ -109,7 +109,7 @@
     },
     {
       "person_name": "Jakob Löwy",
-      "relationship_type": "family",
+      "relationship_type": "family/grandparent",
       "relationship_description": "Großvater mütterlicherseits, Tuchfabrikant in Humpolec; Ursprung von Kafkas mütterlicher Linie im böhmisch-jüdischen Provinzmilieu.",
       "start_year": 1883,
       "end_year": 1895,
@@ -126,7 +126,7 @@
     },
     {
       "person_name": "Ottilie \"Ottla\" Kafka",
-      "relationship_type": "family",
+      "relationship_type": "family/sister",
       "relationship_description": "Jüngste und liebste Schwester; Kafkas emotional engste Geschwisterbeziehung, die durch eine besonders starke Bindung geprägt war.",
       "start_year": 1892,
       "end_year": 1924,
@@ -145,7 +145,7 @@
     },
     {
       "person_name": "Felix Weltsch",
-      "relationship_type": "friend",
+      "relationship_type": "social/friend",
       "relationship_description": "Freund aus der Studienzeit; Philosoph und Mitglied des engen Prager Kreises, der mit Kafka und Brod literarische und intellektuelle Interessen teilte.",
       "start_year": 1901,
       "end_year": 1924,
@@ -164,7 +164,7 @@
     },
     {
       "person_name": "Yitzchak Löwy",
-      "relationship_type": "friend",
+      "relationship_type": "social/friend",
       "relationship_description": "Schauspielerfreund aus einer orthodoxen chassidischen Warschauer Familie, dessen jiddische Theateraufführungen Kafkas tiefes Interesse an jiddischer Kultur und am Judentum mitweckten.",
       "start_year": 1901,
       "end_year": 1912,
@@ -183,7 +183,7 @@
     },
     {
       "person_name": "Ludwig Winder",
-      "relationship_type": "friend",
+      "relationship_type": "social/friend",
       "relationship_description": "Schriftstellerfreund aus Kafkas Universitätskreis, der dem deutschsprachig-jüdischen Literaturmilieu Prags verbunden war.",
       "start_year": 1901,
       "end_year": 1924,
@@ -201,7 +201,7 @@
     },
     {
       "person_name": "Oskar Baum",
-      "relationship_type": "friend",
+      "relationship_type": "social/friend",
       "relationship_description": "Schriftsteller und Mitglied von Kafkas Freundes- und Literaturkreis in Prag.",
       "start_year": 1901,
       "end_year": 1924,
@@ -219,7 +219,7 @@
     },
     {
       "person_name": "Franz Werfel",
-      "relationship_type": "friend",
+      "relationship_type": "social/friend",
       "relationship_description": "Schriftstellerfreund aus Kafkas Universitätsjahren; Teil der deutschsprachigen literarischen Kreise in Prag.",
       "start_year": 1901,
       "end_year": 1914,
@@ -236,8 +236,10 @@
       "notes": "Er wird ausdrücklich unter Kafkas Universitätsfreunden aufgeführt, was auf regelmäßigen literarischen Austausch schließen lässt."
     },
     {
-      "person_name": "Lese- und Redehalle der Deutschen Studenten (student club peers)",
-      "relationship_type": "colleague",
+      "person_name": "Lese- und Redehalle der Deutschen Studenten",
+      "entity_kind": "organization",
+      "qualifier": "Studentenverein",
+      "relationship_type": "social/association",
       "relationship_description": "Literarischer Studentenverein an der Universität, in dem Kafka bei Lesungen, Vorträgen und Kulturveranstaltungen mit deutschsprachigen Studierenden in Kontakt stand.",
       "start_year": 1901,
       "end_year": 1906,
@@ -256,7 +258,7 @@
     },
     {
       "person_name": "Max Brod",
-      "relationship_type": "friend",
+      "relationship_type": "social/friend",
       "relationship_description": "Engster lebenslanger Freund, Mitstudent der Rechtswissenschaft, literarischer Vertrauter und späterer Herausgeber und Bewahrer von Kafkas Manuskripten; zentrale Figur des engen Prager Kreises.",
       "start_year": 1902,
       "end_year": 1924,
@@ -276,8 +278,10 @@
       "notes": "Brod erkannte Kafkas Talent früh und missachtete dessen Bitte, die Manuskripte zu vernichten, wodurch er ihr Überleben und ihre Veröffentlichung sicherte."
     },
     {
-      "person_name": "Assicurazioni Generali (managers and co-workers)",
-      "relationship_type": "colleague",
+      "person_name": "Assicurazioni Generali",
+      "entity_kind": "organization",
+      "qualifier": "Versicherungsgesellschaft",
+      "relationship_type": "professional/employer",
       "relationship_description": "Kafkas erster bedeutender Arbeitgeber, eine Prager Versicherungsgesellschaft, bei der er lange Arbeitstage leistete und kaum Zeit zum Schreiben fand.",
       "start_year": 1907,
       "end_year": 1908,
@@ -294,8 +298,10 @@
       "notes": "Kafkas Unzufriedenheit mit dieser Stelle und ihrem Arbeitsrhythmus beeinflusste seinen Entschluss, eine Beschäftigung zu suchen, die seinen literarischen Ambitionen eher entgegenkam."
     },
     {
-      "person_name": "Workers' Accident Insurance Institute for the Kingdom of Bohemia (supervisors and colleagues)",
-      "relationship_type": "colleague",
+      "person_name": "Arbeiter-Unfall-Versicherungs-Anstalt für das Königreich Böhmen",
+      "entity_kind": "organization",
+      "qualifier": "Versicherungsanstalt",
+      "relationship_type": "professional/employer",
       "relationship_description": "Kafkas wichtigster Arbeitsplatz von 1908 bis zu seiner Pensionierung 1918, an dem er mit juristischen und administrativen Kollegen sowie Vorgesetzten arbeitete, die seine Berichte schätzten.",
       "start_year": 1908,
       "end_year": 1918,
@@ -315,7 +321,7 @@
     },
     {
       "person_name": "Karl Hermann",
-      "relationship_type": "colleague",
+      "relationship_type": "professional/business_partner",
       "relationship_description": "Kafkas Schwager (Ellis Ehemann) und Geschäftspartner in der Prager Asbestwerke Hermann & Co., einer Asbestfabrik in Prag.",
       "start_year": 1911,
       "end_year": 1914,
@@ -333,8 +339,10 @@
       "notes": "Kafka zeigte sich zunächst begeistert von der Fabrik, ärgerte sich später jedoch darüber, wie sehr sie in seine Schreibzeit eingriff."
     },
     {
-      "person_name": "Unnamed Yiddish theatre troupe (via director and actors, including Yitzchak Löwy)",
-      "relationship_type": "other",
+      "person_name": "Jiddische Theatertruppe",
+      "entity_kind": "group",
+      "qualifier": "Wandertruppe um Jizchak Löwy",
+      "relationship_type": "artistic/influence",
       "relationship_description": "Gruppe jiddischer Darsteller, deren Aufführungen in Prag um 1911 Kafka in ihren Bann zogen und ihn dazu brachten, sich monatelang in jiddische Sprache und Literatur zu vertiefen.",
       "start_year": 1911,
       "end_year": 1912,
@@ -354,7 +362,7 @@
     },
     {
       "person_name": "Felice Bauer",
-      "relationship_type": "friend",
+      "relationship_type": "social/romantic_partner",
       "relationship_description": "In Berlin tätige Büroangestellte und Verwandte Brods; Kafkas wichtigste Liebespartnerin, mit der ihn ein langer, intensiver Briefwechsel und zwei gelöste Verlobungen verbanden.",
       "start_year": 1912,
       "end_year": 1917,
@@ -374,7 +382,7 @@
     },
     {
       "person_name": "Margarethe \"Grete\" Bloch",
-      "relationship_type": "friend",
+      "relationship_type": "social/romantic_partner",
       "relationship_description": "Freundin von Felice Bauer, mit der Kafka während seiner Verlobung angeblich eine Affäre hatte; Biografen zufolge bekam sie einen Sohn, der vermutlich von Kafka stammte.",
       "start_year": 1913,
       "end_year": 1915,
@@ -392,7 +400,7 @@
     },
     {
       "person_name": "Julie Wohryzek",
-      "relationship_type": "friend",
+      "relationship_type": "social/fiancée",
       "relationship_description": "Hotelzimmermädchen und dritte Verlobte, mit der Kafka sich um 1920 verlobte; sie mieteten eine Wohnung und setzten einen Hochzeitstermin fest, heirateten jedoch nie.",
       "start_year": 1920,
       "end_year": 1922,
@@ -414,7 +422,7 @@
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "e3247daa4ec84fee",
+    "source_fingerprint": "1b10c3d1de67e775",
     "translated_on": "2026-08-10T08:41:08.543685+00:00",
     "translator": "openai:gpt-5.6-terra"
   }

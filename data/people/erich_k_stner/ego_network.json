@@ -15,7 +15,7 @@
   "connections": [
     {
       "person_name": "Ida Amalia Kästner (née Augustin)",
-      "relationship_type": "family",
+      "relationship_type": "family/mother",
       "relationship_description": "Mother of Erich Kästner, with whom he had an exceptionally close lifelong relationship that strongly influenced his life and writing.",
       "start_year": 1899,
       "end_year": 1960,
@@ -35,7 +35,7 @@
     },
     {
       "person_name": "Emil Richard Kästner",
-      "relationship_type": "family",
+      "relationship_type": "family/father",
       "relationship_description": "Father of Erich Kästner, a master saddlemaker in Dresden who provided lower-middle-class family background often reflected in Kästner’s social perspective.",
       "start_year": 1899,
       "end_year": 1930,
@@ -54,7 +54,7 @@
     },
     {
       "person_name": "Franz Augustin",
-      "relationship_type": "family",
+      "relationship_type": "family/uncle",
       "relationship_description": "Uncle of Erich Kästner, owner of Villa Augustin in Dresden, later the site of the Erich Kästner Museum commemorating the author’s life.",
       "start_year": 1899,
       "end_year": 1945,
@@ -72,7 +72,7 @@
     },
     {
       "person_name": "Emil Zimmermann",
-      "relationship_type": "other",
+      "relationship_type": "professional/physician",
       "relationship_description": "Family’s Jewish doctor, rumored but unsubstantiated to be Kästner’s natural father; part of family lore and later biographical speculation.",
       "start_year": 1899,
       "end_year": 1953,
@@ -89,7 +89,8 @@
     },
     {
       "person_name": "Neue Leipziger Zeitung editorial staff",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "professional/colleague",
       "relationship_description": "Editors and colleagues at the Leipzig newspaper where Kästner worked as journalist and critic, who ultimately dismissed him over critical reviews and an erotic poem.",
       "start_year": 1923,
       "end_year": 1927,
@@ -108,7 +109,7 @@
     },
     {
       "person_name": "Erich Ohser",
-      "relationship_type": "collaborator",
+      "relationship_type": "artistic/illustrator",
       "relationship_description": "Illustrator who collaborated with Kästner on works such as the erotic poem \"Abendlied des Kammervirtuosen\" and on book designs, contributing to his visual literary profile.",
       "start_year": 1927,
       "end_year": 1933,
@@ -126,7 +127,8 @@
     },
     {
       "person_name": "Editors of Berliner Tageblatt, Vossische Zeitung, and Die Weltbühne",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "professional/editor",
       "relationship_description": "Editors at major Weimar Berlin newspapers and magazines who regularly published Kästner’s poems, columns, and essays, making him a prominent public intellectual of the period.",
       "start_year": 1927,
       "end_year": 1933,
@@ -145,7 +147,7 @@
     },
     {
       "person_name": "Walter Trier",
-      "relationship_type": "collaborator",
+      "relationship_type": "artistic/illustrator",
       "relationship_description": "Illustrator whose drawings for Emil und die Detektive and later children’s books played a major role in their popularity and international success.",
       "start_year": 1928,
       "end_year": 1933,
@@ -163,8 +165,8 @@
       "notes": "The article states that Trier’s illustrations significantly contributed to the overwhelming popularity of the books, making him one of Kästner’s key creative partners."
     },
     {
-      "person_name": "Edith Jacobsohn (publisher)",
-      "relationship_type": "collaborator",
+      "person_name": "Edith Jacobsohn",
+      "relationship_type": "professional/publisher",
       "relationship_description": "Owner of the Weltbühne publishing house who suggested that Kästner write a children’s detective story, leading directly to his breakthrough book Emil und die Detektive.",
       "start_year": 1928,
       "end_year": 1933,
@@ -182,7 +184,7 @@
     },
     {
       "person_name": "Edmund Nick",
-      "relationship_type": "collaborator",
+      "relationship_type": "artistic/collaborator",
       "relationship_description": "Composer who set more than 60 of Kästner’s songs to music and co-created radio and cabaret pieces, becoming his primary musical partner after World War II.",
       "start_year": 1929,
       "end_year": 1965,
@@ -201,7 +203,7 @@
     },
     {
       "person_name": "Gerhard Lamprecht",
-      "relationship_type": "collaborator",
+      "relationship_type": "artistic/collaborator",
       "relationship_description": "Film director who made the successful 1931 film adaptation of Emil und die Detektive, which motivated Kästner to become a screenwriter.",
       "start_year": 1930,
       "end_year": 1932,
@@ -220,7 +222,7 @@
     },
     {
       "person_name": "Joseph Goebbels",
-      "relationship_type": "rival",
+      "relationship_type": "political/censor",
       "relationship_description": "Nazi Propaganda Minister who orchestrated the burning of Kästner’s books in 1933 and later backed the Ufa prestige film Münchhausen for which Kästner wrote the screenplay under a pseudonym.",
       "start_year": 1933,
       "end_year": 1945,
@@ -237,8 +239,10 @@
       "notes": "Goebbels labeled his works \"contrary to the German spirit\" and had them burned, yet later indirectly enabled his work on Münchhausen as a regime-backed prestige production; a deeply antagonistic yet structurally entangled relationship."
     },
     {
-      "person_name": "Gestapo (secret police, as institutional actor)",
-      "relationship_type": "rival",
+      "person_name": "Gestapo",
+      "entity_kind": "organization",
+      "qualifier": "secret police",
+      "relationship_type": "political/persecutor",
       "relationship_description": "Nazi secret police who repeatedly interrogated Kästner and helped enforce his professional marginalization while he remained in Germany.",
       "start_year": 1933,
       "end_year": 1945,
@@ -256,7 +260,8 @@
     },
     {
       "person_name": "Reichsverband deutscher Schriftsteller officials",
-      "relationship_type": "rival",
+      "entity_kind": "group",
+      "relationship_type": "political/banned_by",
       "relationship_description": "Officials of the Nazi-controlled national writers’ guild who expelled Kästner and denied him membership due to his \"culturally Bolshevist\" stance.",
       "start_year": 1933,
       "end_year": 1945,
@@ -274,7 +279,8 @@
     },
     {
       "person_name": "UFA (Universum Film AG) leadership",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "professional/employer",
       "relationship_description": "Executives and producers at Ufa Studios who commissioned the prestige film Münchhausen and worked with Kästner as screenwriter under the pseudonym Berthold Bürger.",
       "start_year": 1941,
       "end_year": 1943,
@@ -293,7 +299,8 @@
     },
     {
       "person_name": "Schaubude cabaret ensemble",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "artistic/collaborator",
       "relationship_description": "Artists and producers at the Munich cabaret Schaubude where Kästner wrote skits and songs and worked closely with performers including musical director Edmund Nick.",
       "start_year": 1945,
       "end_year": 1948,
@@ -311,7 +318,8 @@
     },
     {
       "person_name": "Neue Zeitung editorial staff",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "professional/colleague",
       "relationship_description": "Editorial team of the Munich-based newspaper Neue Zeitung, where Kästner served as culture editor after World War II.",
       "start_year": 1945,
       "end_year": 1950,
@@ -330,7 +338,7 @@
     },
     {
       "person_name": "Curt Linda",
-      "relationship_type": "collaborator",
+      "relationship_type": "artistic/collaborator",
       "relationship_description": "Film director who created the animated adaptation of Kästner’s pacifist picture book Die Konferenz der Tiere (The Animals’ Conference).",
       "start_year": 1949,
       "end_year": 1960,
@@ -348,7 +356,7 @@
     },
     {
       "person_name": "Konrad Adenauer",
-      "relationship_type": "rival",
+      "relationship_type": "political/opponent",
       "relationship_description": "First Chancellor of West Germany whose policies of remilitarization and NATO integration drew persistent public criticism from pacifist Kästner.",
       "start_year": 1949,
       "end_year": 1963,
@@ -366,7 +374,8 @@
     },
     {
       "person_name": "Founders of Internationale Jugendbibliothek",
-      "relationship_type": "collaborator",
+      "entity_kind": "group",
+      "relationship_type": "professional/co_founder",
       "relationship_description": "Group of children’s literature specialists and activists with whom Kästner helped found the Internationale Jugendbibliothek in Munich, a major library for youth literature.",
       "start_year": 1949,
       "end_year": 1960,
@@ -384,7 +393,8 @@
     },
     {
       "person_name": "Die kleine Freiheit cabaret ensemble",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "artistic/collaborator",
       "relationship_description": "Munich cabaret troupe with whom Kästner worked after 1951, continuing his engagement with literary cabaret and political satire.",
       "start_year": 1951,
       "end_year": 1965,
@@ -402,7 +412,8 @@
     },
     {
       "person_name": "PEN Center of West Germany members",
-      "relationship_type": "colleague",
+      "entity_kind": "group",
+      "relationship_type": "professional/colleague",
       "relationship_description": "Fellow writers in the PEN Center of West Germany, of which Kästner was President (1951–1961), engaging in post-war literary and freedom-of-expression advocacy.",
       "start_year": 1951,
       "end_year": 1965,
@@ -421,7 +432,8 @@
     },
     {
       "person_name": "International Board on Books for Young People (IBBY) founders",
-      "relationship_type": "collaborator",
+      "entity_kind": "group",
+      "relationship_type": "professional/co_founder",
       "relationship_description": "Co-founders of IBBY, with whom Kästner worked as a founding member to promote international children’s literature.",
       "start_year": 1953,
       "end_year": 1965,
@@ -439,7 +451,7 @@
     },
     {
       "person_name": "Thomas Kästner",
-      "relationship_type": "family",
+      "relationship_type": "family/child",
       "relationship_description": "Son of Erich Kästner, for whom he wrote his last two children’s books, Der kleine Mann and Der kleine Mann und die kleine Miss.",
       "start_year": 1957,
       "end_year": 1974,

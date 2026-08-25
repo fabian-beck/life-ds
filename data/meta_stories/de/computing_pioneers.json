@@ -685,7 +685,7 @@
         "source": "ada_lovelace",
         "target": "charles_babbage",
         "kind": "main",
-        "relationship_type": "social/intellectual_collaborator",
+        "relationship_type": "intellectual/collaborator",
         "relationship_description": "Mathematician and writer who became a long-term friend and collaborator after meeting Babbage at his 1833 soirée; produced influential notes on the Analytical Engine via translation and commentary on Menabrea's paper.",
         "strength": "strong",
         "endpoints": {
@@ -695,7 +695,7 @@
             "strength": "strong"
           },
           "charles_babbage": {
-            "relationship_type": "social/intellectual_collaborator",
+            "relationship_type": "intellectual/collaborator",
             "relationship_description": "Mathematician and writer who became a long-term friend and collaborator after meeting Babbage at his 1833 soirée; produced influential notes on the Analytical Engine via translation and commentary on Menabrea's paper.",
             "strength": "strong"
           }
@@ -735,12 +735,12 @@
         "source": "charles_babbage",
         "target": "konrad_zuse",
         "kind": "main",
-        "relationship_type": "other/intellectual_influence",
+        "relationship_type": "intellectual/influence",
         "relationship_description": "19th‑century English mathematician and inventor of the Analytical Engine, which Zuse later acknowledged as anticipating his own work and called Babbage the ‘real father of the computer’.",
         "strength": "moderate",
         "endpoints": {
           "konrad_zuse": {
-            "relationship_type": "other/intellectual_influence",
+            "relationship_type": "intellectual/influence",
             "relationship_description": "19th‑century English mathematician and inventor of the Analytical Engine, which Zuse later acknowledged as anticipating his own work and called Babbage the ‘real father of the computer’.",
             "strength": "moderate"
           }
@@ -780,12 +780,12 @@
         "source": "charles_babbage",
         "target": "sec:mary_somerville",
         "kind": "secondary",
-        "relationship_type": "social/scientific_contact",
+        "relationship_type": "social/connector",
         "relationship_description": "Prominent scientific author and network connector; attended Babbage's soirées and introduced Ada Lovelace into Babbage's circle (as Lovelace's tutor and mutual friend).",
         "strength": "moderate",
         "endpoints": {
           "charles_babbage": {
-            "relationship_type": "social/scientific_contact",
+            "relationship_type": "social/connector",
             "relationship_description": "Prominent scientific author and network connector; attended Babbage's soirées and introduced Ada Lovelace into Babbage's circle (as Lovelace's tutor and mutual friend).",
             "strength": "moderate"
           }
@@ -795,12 +795,12 @@
         "source": "grace_hopper",
         "target": "sec:j_presper_eckert",
         "kind": "secondary",
-        "relationship_type": "colleague",
+        "relationship_type": "professional/colleague",
         "relationship_description": "Co-founder of Eckert–Mauchly Computer Corporation where Hopper worked as a senior mathematician on UNIVAC I.",
         "strength": "moderate",
         "endpoints": {
           "grace_hopper": {
-            "relationship_type": "colleague",
+            "relationship_type": "professional/colleague",
             "relationship_description": "Co-founder of Eckert–Mauchly Computer Corporation where Hopper worked as a senior mathematician on UNIVAC I.",
             "strength": "moderate"
           }
@@ -825,12 +825,12 @@
         "source": "grace_hopper",
         "target": "sec:john_mauchly",
         "kind": "secondary",
-        "relationship_type": "colleague",
+        "relationship_type": "professional/colleague",
         "relationship_description": "Co-founder of Eckert–Mauchly Computer Corporation, employer of Hopper on the UNIVAC I project and early compiler work.",
         "strength": "moderate",
         "endpoints": {
           "grace_hopper": {
-            "relationship_type": "colleague",
+            "relationship_type": "professional/colleague",
             "relationship_description": "Co-founder of Eckert–Mauchly Computer Corporation, employer of Hopper on the UNIVAC I project and early compiler work.",
             "strength": "moderate"
           }
@@ -855,17 +855,17 @@
         "source": "konrad_zuse",
         "target": "heinz_nixdorf",
         "kind": "main",
-        "relationship_type": "professional/business_associate",
+        "relationship_type": "business/business_partner",
         "relationship_description": "Zuse was repeatedly a guest of Nixdorf in Paderborn, and their companies pursued a proposed arrangement to transfer Zuse software to Nixdorf computers, although the deal failed.",
         "strength": "moderate",
         "endpoints": {
           "konrad_zuse": {
-            "relationship_type": "professional/business_associate",
+            "relationship_type": "business/business_partner",
             "relationship_description": "Zuse was repeatedly a guest of Nixdorf in Paderborn, and their companies pursued a proposed arrangement to transfer Zuse software to Nixdorf computers, although the deal failed.",
             "strength": "moderate"
           },
           "heinz_nixdorf": {
-            "relationship_type": "professional/business_associate",
+            "relationship_type": "business/business_partner",
             "relationship_description": "Zuse was repeatedly a guest of Nixdorf in Paderborn, and their companies pursued a proposed arrangement to transfer Zuse software to Nixdorf computers, although the deal failed.",
             "strength": "moderate"
           }

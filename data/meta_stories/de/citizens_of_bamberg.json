@@ -445,12 +445,12 @@
         "source": "henry_ii",
         "target": "sec:willigis",
         "kind": "secondary",
-        "relationship_type": "religious/archbishop_ally",
+        "relationship_type": "religious/ally",
         "relationship_description": "Archbishop of Mainz who crowned Henry II king at Mainz and Cunigunde queen at Paderborn (1002), and played a central role in early legitimization ceremonies for the new reign.",
         "strength": "moderate",
         "endpoints": {
           "henry_ii": {
-            "relationship_type": "religious/archbishop_ally",
+            "relationship_type": "religious/ally",
             "relationship_description": "Archbishop of Mainz who crowned Henry II king at Mainz and Cunigunde queen at Paderborn (1002), and played a central role in early legitimization ceremonies for the new reign.",
             "strength": "moderate"
           }
@@ -460,12 +460,12 @@
         "source": "cunigunde_of_luxembourg",
         "target": "sec:willigis",
         "kind": "secondary",
-        "relationship_type": "professional/archbishop_ally",
+        "relationship_type": "religious/ally",
         "relationship_description": "Powerful archbishop of Mainz and imperial archchancellor who crowned Henry II at Mainz and Cunigunde as queen at Paderborn, lending crucial ecclesiastical legitimacy to their rule.",
         "strength": "strong",
         "endpoints": {
           "cunigunde_of_luxembourg": {
-            "relationship_type": "professional/archbishop_ally",
+            "relationship_type": "religious/ally",
             "relationship_description": "Powerful archbishop of Mainz and imperial archchancellor who crowned Henry II at Mainz and Cunigunde as queen at Paderborn, lending crucial ecclesiastical legitimacy to their rule.",
             "strength": "strong"
           }
@@ -490,12 +490,12 @@
         "source": "cunigunde_of_luxembourg",
         "target": "sec:pope_benedict_viii",
         "kind": "secondary",
-        "relationship_type": "professional/papal_ally",
+        "relationship_type": "religious/ally",
         "relationship_description": "Pope who allied with Henry II and Cunigunde, crowned them emperor and empress in Rome, and cooperated with them in ecclesiastical reform.",
         "strength": "moderate",
         "endpoints": {
           "cunigunde_of_luxembourg": {
-            "relationship_type": "professional/papal_ally",
+            "relationship_type": "religious/ally",
             "relationship_description": "Pope who allied with Henry II and Cunigunde, crowned them emperor and empress in Rome, and cooperated with them in ecclesiastical reform.",
             "strength": "moderate"
           }
@@ -505,12 +505,12 @@
         "source": "henry_ii",
         "target": "sec:hedwig",
         "kind": "secondary",
-        "relationship_type": "family/in-law",
+        "relationship_type": "family/in_law",
         "relationship_description": "Mother-in-law of Henry II (named Hedwig in Cunigunde's biography); part of Cunigunde's parental household background referenced in genealogical discussions.",
         "strength": "weak",
         "endpoints": {
           "henry_ii": {
-            "relationship_type": "family/in-law",
+            "relationship_type": "family/in_law",
             "relationship_description": "Mother-in-law of Henry II (named Hedwig in Cunigunde's biography); part of Cunigunde's parental household background referenced in genealogical discussions.",
             "strength": "weak"
           }
@@ -550,12 +550,12 @@
         "source": "cunigunde_of_luxembourg",
         "target": "sec:otto_iii",
         "kind": "secondary",
-        "relationship_type": "professional/overlord_predecessor",
+        "relationship_type": "professional/predecessor",
         "relationship_description": "Henry II’s cousin and predecessor as emperor; his death without heirs in 1002 opened the contested succession in which Henry and Cunigunde rose to the kingship.",
         "strength": "weak",
         "endpoints": {
           "cunigunde_of_luxembourg": {
-            "relationship_type": "professional/overlord_predecessor",
+            "relationship_type": "professional/predecessor",
             "relationship_description": "Henry II’s cousin and predecessor as emperor; his death without heirs in 1002 opened the contested succession in which Henry and Cunigunde rose to the kingship.",
             "strength": "weak"
           }

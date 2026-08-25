@@ -398,12 +398,12 @@
         "source": "alexander_hamilton",
         "target": "george_washington",
         "kind": "main",
-        "relationship_type": "professional/commander-and-patron",
+        "relationship_type": "professional/commander",
         "relationship_description": "Continental Army commander-in-chief who selected Hamilton as an aide-de-camp in 1777 and later appointed him secretary of the treasury. Their relationship combined close professional trust, intermittent tension, and lasting political influence.",
         "strength": "strong",
         "endpoints": {
           "alexander_hamilton": {
-            "relationship_type": "professional/commander-and-patron",
+            "relationship_type": "professional/commander",
             "relationship_description": "Continental Army commander-in-chief who selected Hamilton as an aide-de-camp in 1777 and later appointed him secretary of the treasury. Their relationship combined close professional trust, intermittent tension, and lasting political influence.",
             "strength": "strong"
           },
@@ -418,17 +418,17 @@
         "source": "benjamin_franklin",
         "target": "george_washington",
         "kind": "main",
-        "relationship_type": "professional/revolutionary-and-constitutional collaborator",
+        "relationship_type": "professional/collaborator",
         "relationship_description": "Franklin proposed reforms that Washington adopted for the Continental Army and nominated Washington to preside over the Constitutional Convention, which Washington chaired.",
         "strength": "moderate",
         "endpoints": {
           "benjamin_franklin": {
-            "relationship_type": "professional/revolutionary-and-constitutional collaborator",
+            "relationship_type": "professional/collaborator",
             "relationship_description": "Franklin proposed reforms that Washington adopted for the Continental Army and nominated Washington to preside over the Constitutional Convention, which Washington chaired.",
             "strength": "moderate"
           },
           "george_washington": {
-            "relationship_type": "professional/revolutionary-and-constitutional collaborator",
+            "relationship_type": "professional/collaborator",
             "relationship_description": "Franklin proposed reforms that Washington adopted for the Continental Army and nominated Washington to preside over the Constitutional Convention, which Washington chaired.",
             "strength": "moderate"
           }
@@ -439,12 +439,12 @@
         "source": "george_washington",
         "target": "phillis_wheatley",
         "kind": "main",
-        "relationship_type": "artistic/correspondent and admirer",
+        "relationship_type": "artistic/correspondent",
         "relationship_description": "Continental Army commander to whom Wheatley sent her 1775 poem To His Excellency, George Washington; he praised her poetic talent and invited her to visit his Cambridge headquarters.",
         "strength": "moderate",
         "endpoints": {
           "phillis_wheatley": {
-            "relationship_type": "artistic/correspondent and admirer",
+            "relationship_type": "artistic/correspondent",
             "relationship_description": "Continental Army commander to whom Wheatley sent her 1775 poem To His Excellency, George Washington; he praised her poetic talent and invited her to visit his Cambridge headquarters.",
             "strength": "moderate"
           }
@@ -454,12 +454,12 @@
         "source": "abigail_adams",
         "target": "sec:thomas_jefferson",
         "kind": "secondary",
-        "relationship_type": "professional/political correspondent",
+        "relationship_type": "professional/correspondent",
         "relationship_description": "A major political contemporary whose relationship with Abigail was shaped by family losses and the later reconciliation between John Adams and Jefferson.",
         "strength": "moderate",
         "endpoints": {
           "abigail_adams": {
-            "relationship_type": "professional/political correspondent",
+            "relationship_type": "professional/correspondent",
             "relationship_description": "A major political contemporary whose relationship with Abigail was shaped by family losses and the later reconciliation between John Adams and Jefferson.",
             "strength": "moderate"
           }
@@ -469,12 +469,12 @@
         "source": "alexander_hamilton",
         "target": "sec:thomas_jefferson",
         "kind": "secondary",
-        "relationship_type": "professional/cabinet rivals",
+        "relationship_type": "professional/political_rival",
         "relationship_description": "As Washington's treasury secretary and secretary of state, Hamilton and Jefferson led opposing camps in the administration and fought over federal finance, federal power, and foreign policy.",
         "strength": "strong",
         "endpoints": {
           "alexander_hamilton": {
-            "relationship_type": "professional/cabinet rivals",
+            "relationship_type": "professional/political_rival",
             "relationship_description": "As Washington's treasury secretary and secretary of state, Hamilton and Jefferson led opposing camps in the administration and fought over federal finance, federal power, and foreign policy.",
             "strength": "strong"
           }
@@ -500,12 +500,12 @@
         "source": "george_washington",
         "target": "sec:thomas_jefferson",
         "kind": "secondary",
-        "relationship_type": "professional/cabinet member",
+        "relationship_type": "professional/colleague",
         "relationship_description": "Washington appointed Jefferson as the first secretary of state. Their cabinet relationship was strained by Jefferson's conflicts with Treasury Secretary Hamilton and by disagreements over federal power and foreign policy.",
         "strength": "moderate",
         "endpoints": {
           "george_washington": {
-            "relationship_type": "professional/cabinet member",
+            "relationship_type": "professional/colleague",
             "relationship_description": "Washington appointed Jefferson as the first secretary of state. Their cabinet relationship was strained by Jefferson's conflicts with Treasury Secretary Hamilton and by disagreements over federal power and foreign policy.",
             "strength": "moderate"
           }
@@ -530,12 +530,12 @@
         "source": "alexander_hamilton",
         "target": "sec:john_adams",
         "kind": "secondary",
-        "relationship_type": "professional/political rival",
+        "relationship_type": "professional/political_rival",
         "relationship_description": "Federalist president whose handling of the Quasi-War Hamilton criticized. Adams appointed Hamilton major general, but Hamilton later opposed Adams's 1800 reelection.",
         "strength": "moderate",
         "endpoints": {
           "alexander_hamilton": {
-            "relationship_type": "professional/political rival",
+            "relationship_type": "professional/political_rival",
             "relationship_description": "Federalist president whose handling of the Quasi-War Hamilton criticized. Adams appointed Hamilton major general, but Hamilton later opposed Adams's 1800 reelection.",
             "strength": "moderate"
           }
@@ -560,12 +560,12 @@
         "source": "alexander_hamilton",
         "target": "sec:marquis_de_lafayette",
         "kind": "secondary",
-        "relationship_type": "professional/fellow officer",
+        "relationship_type": "professional/colleague",
         "relationship_description": "French-born Continental Army general and a close Revolutionary War correspondent of Hamilton. They worked within Washington’s command network and during the Yorktown campaign.",
         "strength": "strong",
         "endpoints": {
           "alexander_hamilton": {
-            "relationship_type": "professional/fellow officer",
+            "relationship_type": "professional/colleague",
             "relationship_description": "French-born Continental Army general and a close Revolutionary War correspondent of Hamilton. They worked within Washington’s command network and during the Yorktown campaign.",
             "strength": "strong"
           }
@@ -575,12 +575,12 @@
         "source": "george_washington",
         "target": "sec:marquis_de_lafayette",
         "kind": "secondary",
-        "relationship_type": "professional/military collaborator",
+        "relationship_type": "professional/collaborator",
         "relationship_description": "Lafayette was a French volunteer major general in the Continental Army who developed a close relationship with Washington. He commanded troops under Washington during the Yorktown campaign and later remained a prominent transatlantic ally and friend.",
         "strength": "strong",
         "endpoints": {
           "george_washington": {
-            "relationship_type": "professional/military collaborator",
+            "relationship_type": "professional/collaborator",
             "relationship_description": "Lafayette was a French volunteer major general in the Continental Army who developed a close relationship with Washington. He commanded troops under Washington during the Yorktown campaign and later remained a prominent transatlantic ally and friend.",
             "strength": "strong"
           }
@@ -605,12 +605,12 @@
         "source": "benjamin_franklin",
         "target": "sec:william_smith",
         "kind": "secondary",
-        "relationship_type": "academic/civic_colleague",
+        "relationship_type": "academic/colleague",
         "relationship_description": "Smith was an educator and the first provost of the College of Philadelphia. Franklin helped establish and became first president of the Academy and College of Philadelphia, placing the two men at the center of its early governance and educational mission.",
         "strength": "moderate",
         "endpoints": {
           "benjamin_franklin": {
-            "relationship_type": "academic/civic_colleague",
+            "relationship_type": "academic/colleague",
             "relationship_description": "Smith was an educator and the first provost of the College of Philadelphia. Franklin helped establish and became first president of the Academy and College of Philadelphia, placing the two men at the center of its early governance and educational mission.",
             "strength": "moderate"
           }
@@ -635,12 +635,12 @@
         "source": "benjamin_franklin",
         "target": "sec:john_jay",
         "kind": "secondary",
-        "relationship_type": "professional/diplomatic_colleague",
+        "relationship_type": "professional/colleague",
         "relationship_description": "Jay and Franklin were American peace commissioners in Paris who helped negotiate the Treaty of Paris ending the Revolutionary War. Together with John Adams, they participated in the negotiations that secured British recognition of American independence.",
         "strength": "moderate",
         "endpoints": {
           "benjamin_franklin": {
-            "relationship_type": "professional/diplomatic_colleague",
+            "relationship_type": "professional/colleague",
             "relationship_description": "Jay and Franklin were American peace commissioners in Paris who helped negotiate the Treaty of Paris ending the Revolutionary War. Together with John Adams, they participated in the negotiations that secured British recognition of American independence.",
             "strength": "moderate"
           }
@@ -650,12 +650,12 @@
         "source": "alexander_hamilton",
         "target": "sec:james_madison",
         "kind": "secondary",
-        "relationship_type": "professional/collaborator-and-rival",
+        "relationship_type": "professional/collaborator",
         "relationship_description": "Early collaborator in the movement for constitutional reform and co-author of The Federalist Papers, who later became one of Hamilton's principal ideological opponents over finance, federal power, and party politics.",
         "strength": "moderate",
         "endpoints": {
           "alexander_hamilton": {
-            "relationship_type": "professional/collaborator-and-rival",
+            "relationship_type": "professional/collaborator",
             "relationship_description": "Early collaborator in the movement for constitutional reform and co-author of The Federalist Papers, who later became one of Hamilton's principal ideological opponents over finance, federal power, and party politics.",
             "strength": "moderate"
           }
@@ -665,12 +665,12 @@
         "source": "george_washington",
         "target": "sec:james_madison",
         "kind": "secondary",
-        "relationship_type": "professional/political collaborator",
+        "relationship_type": "professional/collaborator",
         "relationship_description": "Madison worked with Washington during the Constitutional Convention, where Washington presided, and later served in the first Congress. Their collaboration weakened as Madison joined Jefferson in opposition to Hamilton's policies and the Federalist coalition.",
         "strength": "moderate",
         "endpoints": {
           "george_washington": {
-            "relationship_type": "professional/political collaborator",
+            "relationship_type": "professional/collaborator",
             "relationship_description": "Madison worked with Washington during the Constitutional Convention, where Washington presided, and later served in the first Congress. Their collaboration weakened as Madison joined Jefferson in opposition to Hamilton's policies and the Federalist coalition.",
             "strength": "moderate"
           }
@@ -680,12 +680,12 @@
         "source": "george_washington",
         "target": "sec:john_hancock",
         "kind": "secondary",
-        "relationship_type": "professional/political colleague",
+        "relationship_type": "professional/colleague",
         "relationship_description": "Hancock presided over the Second Continental Congress when it appointed Washington commander in chief of the Continental Army in June 1775. Their connection linked congressional civilian authority with Washington's military command.",
         "strength": "moderate",
         "endpoints": {
           "george_washington": {
-            "relationship_type": "professional/political colleague",
+            "relationship_type": "professional/colleague",
             "relationship_description": "Hancock presided over the Second Continental Congress when it appointed Washington commander in chief of the Continental Army in June 1775. Their connection linked congressional civilian authority with Washington's military command.",
             "strength": "moderate"
           }
@@ -695,12 +695,12 @@
         "source": "phillis_wheatley",
         "target": "sec:john_hancock",
         "kind": "secondary",
-        "relationship_type": "professional/authorship attester",
+        "relationship_type": "professional/endorser",
         "relationship_description": "Boston political leader who was among the prominent men attesting in 1772 that they believed Wheatley had written the poems attributed to her, countering racist doubts about her authorship.",
         "strength": "weak",
         "endpoints": {
           "phillis_wheatley": {
-            "relationship_type": "professional/authorship attester",
+            "relationship_type": "professional/endorser",
             "relationship_description": "Boston political leader who was among the prominent men attesting in 1772 that they believed Wheatley had written the poems attributed to her, countering racist doubts about her authorship.",
             "strength": "weak"
           }
@@ -710,12 +710,12 @@
         "source": "george_washington",
         "target": "sec:john_adams",
         "kind": "secondary",
-        "relationship_type": "professional/revolutionary-and-executive colleague",
+        "relationship_type": "professional/colleague",
         "relationship_description": "John Adams nominated Washington to command the Continental Army in 1775, then served as vice president throughout Washington's two presidential terms.",
         "strength": "strong",
         "endpoints": {
           "george_washington": {
-            "relationship_type": "professional/revolutionary-and-executive colleague",
+            "relationship_type": "professional/colleague",
             "relationship_description": "John Adams nominated Washington to command the Continental Army in 1775, then served as vice president throughout Washington's two presidential terms.",
             "strength": "strong"
           }
@@ -726,17 +726,17 @@
         "source": "george_washington",
         "target": "joseph_brant",
         "kind": "main",
-        "relationship_type": "professional/diplomatic adversaries",
+        "relationship_type": "professional/adversary",
         "relationship_description": "Washington's Revolutionary War strategy included the Sullivan expedition against Haudenosaunee communities associated with Brant, and Brant later met Washington and his cabinet in Philadelphia in 1792 to discuss Indigenous affairs.",
         "strength": "moderate",
         "endpoints": {
           "george_washington": {
-            "relationship_type": "professional/diplomatic adversaries",
+            "relationship_type": "professional/adversary",
             "relationship_description": "Washington's Revolutionary War strategy included the Sullivan expedition against Haudenosaunee communities associated with Brant, and Brant later met Washington and his cabinet in Philadelphia in 1792 to discuss Indigenous affairs.",
             "strength": "moderate"
           },
           "joseph_brant": {
-            "relationship_type": "professional/diplomatic adversaries",
+            "relationship_type": "professional/adversary",
             "relationship_description": "Washington's Revolutionary War strategy included the Sullivan expedition against Haudenosaunee communities associated with Brant, and Brant later met Washington and his cabinet in Philadelphia in 1792 to discuss Indigenous affairs.",
             "strength": "moderate"
           }

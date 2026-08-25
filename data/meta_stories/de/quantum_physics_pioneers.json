@@ -194,17 +194,17 @@
         "source": "albert_einstein",
         "target": "john_von_neumann",
         "kind": "main",
-        "relationship_type": "friendship/close-friend",
+        "relationship_type": "social/friend",
         "relationship_description": "Einstein and von Neumann were colleagues at the Institute for Advanced Study in Princeton and were described as good friends.",
         "strength": "strong",
         "endpoints": {
           "albert_einstein": {
-            "relationship_type": "friendship/close-friend",
+            "relationship_type": "social/friend",
             "relationship_description": "Einstein and von Neumann were colleagues at the Institute for Advanced Study in Princeton and were described as good friends.",
             "strength": "strong"
           },
           "john_von_neumann": {
-            "relationship_type": "friendship/close-friend",
+            "relationship_type": "social/friend",
             "relationship_description": "Einstein and von Neumann were colleagues at the Institute for Advanced Study in Princeton and were described as good friends.",
             "strength": "strong"
           }
@@ -296,17 +296,17 @@
         "source": "albert_einstein",
         "target": "marie_curie",
         "kind": "main",
-        "relationship_type": "friendship/colleague",
+        "relationship_type": "professional/colleague",
         "relationship_description": "Einstein supported Curie, visited her in March 1913, and joined her on a summer excursion in the Swiss Engadin.",
         "strength": "moderate",
         "endpoints": {
           "albert_einstein": {
-            "relationship_type": "friendship/colleague",
+            "relationship_type": "professional/colleague",
             "relationship_description": "Einstein supported Curie, visited her in March 1913, and joined her on a summer excursion in the Swiss Engadin.",
             "strength": "moderate"
           },
           "marie_curie": {
-            "relationship_type": "friendship/colleague",
+            "relationship_type": "professional/colleague",
             "relationship_description": "Einstein supported Curie, visited her in March 1913, and joined her on a summer excursion in the Swiss Engadin.",
             "strength": "moderate"
           }

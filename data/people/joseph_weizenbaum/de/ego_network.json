@@ -132,7 +132,7 @@
     },
     {
       "person_name": "Norbert Wiener (symbolic precursor)",
-      "relationship_type": "professional/intellectual_predecessor",
+      "relationship_type": "professional/predecessor",
       "relationship_description": "Pionier der Kybernetik, dessen frühe ethische Warnungen vor Automatisierung und Kriegsführung Themen vorwegnahmen, die Weizenbaum später weiterentwickelte und bekannt machte.",
       "start_year": 1960,
       "end_year": 1964,
@@ -170,7 +170,8 @@
       "notes": "Auch wenn keine einzelnen Namen genannt werden, prägte seine Lehrtätigkeit am MIT die Perspektiven vieler späterer Informatiker maßgeblich."
     },
     {
-      "person_name": "Massachusetts Institute of Technology (MIT) colleagues (collective)",
+      "person_name": "Kollegen am Massachusetts Institute of Technology (MIT)",
+      "entity_kind": "group",
       "relationship_type": "professional/colleague",
       "relationship_description": "Kollegen aus der Informatik und den Ingenieurwissenschaften am MIT, mit denen er Programmiersprachen, ARPANET-Komponenten und frühe Arbeiten zur künstlichen Intelligenz entwickelte.",
       "start_year": 1963,
@@ -193,7 +194,8 @@
     },
     {
       "person_name": "ELIZA users and early interactive‑computing community",
-      "relationship_type": "social/participant",
+      "entity_kind": "group",
+      "relationship_type": "social/acquaintance",
       "relationship_description": "Frühe Nutzer – darunter Mitarbeiter und Studierende des MIT sowie seine eigene Sekretärin –, die mit seinem Programm ELIZA interagierten und dabei unbewusst den „ELIZA-Effekt“ demonstrierten.",
       "start_year": 1964,
       "end_year": 1970,
@@ -213,6 +215,7 @@
     },
     {
       "person_name": "Computer Professionals for Social Responsibility leadership and members",
+      "entity_kind": "group",
       "relationship_type": "professional/colleague",
       "relationship_description": "Mitbegründer und Aktivisten bei Computer Professionals for Social Responsibility (CPSR), einer Organisation, die er mit ins Leben rief, um eine ethisch und gesellschaftlich verantwortungsvolle Computertechnik zu fördern.",
       "start_year": 1980,
@@ -252,6 +255,7 @@
     },
     {
       "person_name": "University of Bremen computer science faculty",
+      "entity_kind": "group",
       "relationship_type": "academic/collaborator",
       "relationship_description": "Deutsche Informatikwissenschaftler, mit denen er vor allem durch Gastvorträge und gemeinsame Arbeiten zu Informatik und Gesellschaft zusammenarbeitete.",
       "start_year": 1980,
@@ -270,7 +274,7 @@
     },
     {
       "person_name": "Horst‑Eberhard Richter",
-      "relationship_type": "social/intellectual_peer",
+      "relationship_type": "intellectual/peer",
       "relationship_description": "Deutscher Psychoanalytiker und Gesellschaftskritiker, der über Moral in Krisenzeiten schrieb und sich mit Weizenbaums Gedanken zu Technik und Verantwortung auseinandersetzte.",
       "start_year": 1980,
       "end_year": 2008,
@@ -288,6 +292,7 @@
     },
     {
       "person_name": "Institute of Electronic Business (Berlin) scientific council",
+      "entity_kind": "group",
       "relationship_type": "professional/colleague",
       "relationship_description": "Kollegen im wissenschaftlichen Beirat des Institute of Electronic Business in Berlin, dessen Vorsitz Weizenbaum innehatte.",
       "start_year": 2000,
@@ -362,7 +367,7 @@
     },
     {
       "person_name": "Ray Kurzweil",
-      "relationship_type": "artistic/intellectual_foil",
+      "relationship_type": "artistic/peer",
       "relationship_description": "Zukunftsforscher auf dem Gebiet der künstlichen Intelligenz, der in „Plug & Pray“ als optimistischer Gegenpol zu Weizenbaums Skepsis gegenüber intelligenten Maschinen erscheint.",
       "start_year": 2006,
       "end_year": 2009,
@@ -381,7 +386,7 @@
     },
     {
       "person_name": "Stanislav Grof",
-      "relationship_type": "artistic/indirect_association",
+      "relationship_type": "artistic/peer",
       "relationship_description": "Psychiater und Bewusstseinsforscher, dessen Arbeiten über LSD und nichtalltägliche Bewusstseinszustände in „Plug & Pray“ thematisiert werden. Dadurch wird Weizenbaums Kritik in breitere Debatten über das menschliche Wesen und die Technik eingeordnet.",
       "start_year": 2006,
       "end_year": 2010,
@@ -400,7 +405,8 @@
     },
     {
       "person_name": "Weizenbaum‑Institut für die vernetzte Gesellschaft researchers",
-      "relationship_type": "professional/legacy_network",
+      "entity_kind": "group",
+      "relationship_type": "professional/legacy",
       "relationship_description": "Interdisziplinäre Forscher am nach ihm benannten Deutschen Internet-Institut, die im Geist seines kritischen Erbes zu Digitalisierung, Demokratie und Gesellschaft arbeiten.",
       "start_year": 2017,
       "end_year": null,

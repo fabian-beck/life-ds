@@ -16,7 +16,7 @@
   "connections": [
     {
       "person_name": "Christoph Ludwig Hoffmann",
-      "relationship_type": "family",
+      "relationship_type": "family/father",
       "relationship_description": "Vater; Rechtsanwalt, Dichter und Hobbymusiker in Königsberg, der sich von Hoffmanns Mutter trennte, als Hoffmann noch ein Kind war, und mit dem älteren Sohn fortging.",
       "start_year": 1776,
       "end_year": 1797,
@@ -34,7 +34,7 @@
     },
     {
       "person_name": "Lovisa Albertina Doerffer",
-      "relationship_type": "family",
+      "relationship_type": "family/mother",
       "relationship_description": "Mutter; blieb nach der Trennung der Eltern in Königsberg, woraufhin Hoffmann im pietistischen Haushalt ihrer erweiterten Familie aufwuchs.",
       "start_year": 1776,
       "end_year": 1796,
@@ -52,7 +52,7 @@
     },
     {
       "person_name": "Johanna Sophie Doerffer",
-      "relationship_type": "family",
+      "relationship_type": "family/aunt",
       "relationship_description": "Tante mütterlicherseits; eines der drei unverheirateten Doerffer-Geschwister, die Hoffmann nach der Trennung seiner Eltern in Königsberg aufzogen.",
       "start_year": 1778,
       "end_year": 1803,
@@ -71,7 +71,7 @@
     },
     {
       "person_name": "Charlotte Wilhelmine Doerffer",
-      "relationship_type": "family",
+      "relationship_type": "family/aunt",
       "relationship_description": "Jüngere Tante mütterlicherseits; Hoffmann besonders innig verbunden, gab er ihr den Spitznamen „Tante Füßchen“ und gedachte ihrer später in seinem literarischen Werk.",
       "start_year": 1778,
       "end_year": 1779,
@@ -89,7 +89,7 @@
     },
     {
       "person_name": "Otto Wilhelm Doerffer",
-      "relationship_type": "family",
+      "relationship_type": "family/uncle",
       "relationship_description": "Onkel mütterlicherseits; Oberhaupt des pietistischen Haushalts, in dem Hoffmann aufwuchs und der seine Kindheit beherrschte.",
       "start_year": 1778,
       "end_year": 1811,
@@ -108,7 +108,7 @@
     },
     {
       "person_name": "Theodor Gottlieb von Hippel der Jüngere",
-      "relationship_type": "friend",
+      "relationship_type": "social/friend",
       "relationship_description": "Lebenslanger enger Freund aus Schul- und Universitätszeiten; Mitstudent der Rechtswissenschaft, der später mit Hoffmann reiste und arbeitete und ihn nach seiner Zeit am Theater zur juristischen Laufbahn zurückführte.",
       "start_year": 1787,
       "end_year": 1822,
@@ -129,7 +129,7 @@
     },
     {
       "person_name": "Immanuel Kant",
-      "relationship_type": "mentor",
+      "relationship_type": "academic/teacher",
       "relationship_description": "Philosoph, dessen Vorlesungen Hoffmann 1792 gemeinsam mit Hippel besuchte und die zu seiner geistigen Prägung beitrugen.",
       "start_year": 1792,
       "end_year": 1792,
@@ -146,7 +146,7 @@
     },
     {
       "person_name": "Dora Hatt",
-      "relationship_type": "other",
+      "relationship_type": "social/muse",
       "relationship_description": "Verheiratete Frau und Musikschülerin, in die sich Hoffmann in Königsberg leidenschaftlich verliebte; der Skandal führte zu seiner Versetzung auf eine Stelle in Głogów.",
       "start_year": 1794,
       "end_year": 1796,
@@ -164,7 +164,7 @@
     },
     {
       "person_name": "Johann Ludwig Doerffer",
-      "relationship_type": "family",
+      "relationship_type": "family/uncle",
       "relationship_description": "Onkel und Vormund; stellte Hoffmann als Schreiber ein, zog mit ihm nach Berlin und war für dessen frühe juristische Laufbahn und sein häusliches Leben von zentraler Bedeutung.",
       "start_year": 1796,
       "end_year": 1802,
@@ -184,7 +184,7 @@
     },
     {
       "person_name": "Mischa (Maria/Marianna Thekla Michalina Rorer, geb. Trzcińska)",
-      "relationship_type": "family",
+      "relationship_type": "family/spouse",
       "relationship_description": "Ehefrau; eine Polin, die Hoffmann in Posen heiratete und die ihn durch seine Dienstorte in der Provinz, in Warschau und später auch in Bamberg sowie Dresden und Leipzig begleitete.",
       "start_year": 1802,
       "end_year": 1822,
@@ -205,7 +205,7 @@
     },
     {
       "person_name": "Julius Eduard Itzig (Julius Eduard Hitzig)",
-      "relationship_type": "friend",
+      "relationship_type": "social/friend",
       "relationship_description": "Nachbar, Jurist und späterer Biograf, den Hoffmann in Warschau kennenlernte; er führte ihn in den Kreis wichtiger romantischer Schriftsteller ein und gehörte zu seinem literarischen Umfeld.",
       "start_year": 1804,
       "end_year": 1822,
@@ -225,7 +225,7 @@
     },
     {
       "person_name": "Zacharias Werner",
-      "relationship_type": "friend",
+      "relationship_type": "social/friend",
       "relationship_description": "Dichter und Dramatiker, mit dem Hoffmann in Warschau seine Bekanntschaft erneuerte und gemeinsam am deutsch-polnischen Kulturleben der Stadt teilnahm.",
       "start_year": 1804,
       "end_year": 1813,
@@ -244,7 +244,7 @@
     },
     {
       "person_name": "Novalis",
-      "relationship_type": "other",
+      "relationship_type": "intellectual/influence",
       "relationship_description": "Früher Dichter der deutschen Romantik, dessen Werke Hoffmann in Warschau von Itzig/Hitzig erhielt und die sein späteres Schreiben nachhaltig prägten.",
       "start_year": 1804,
       "end_year": 1806,
@@ -262,7 +262,7 @@
     },
     {
       "person_name": "Ludwig Tieck",
-      "relationship_type": "other",
+      "relationship_type": "intellectual/influence",
       "relationship_description": "Bedeutender Schriftsteller der Romantik, dessen Werke Hoffmann in Warschau las und dessen erzählerische und fantastische Verfahren seine eigenen Geschichten beeinflussten.",
       "start_year": 1804,
       "end_year": 1822,
@@ -280,7 +280,7 @@
     },
     {
       "person_name": "Achim von Arnim",
-      "relationship_type": "other",
+      "relationship_type": "intellectual/influence",
       "relationship_description": "Schriftsteller der Romantik, mit dessen Werken Hoffmann über seinen Warschauer Bekanntenkreis in Berührung kam, was seine Hinwendung zur Hochromantik förderte.",
       "start_year": 1804,
       "end_year": 1822,
@@ -298,7 +298,7 @@
     },
     {
       "person_name": "Clemens Brentano",
-      "relationship_type": "other",
+      "relationship_type": "intellectual/influence",
       "relationship_description": "Dichter und Schriftsteller der Romantik, dessen Werke Hoffmann über seine Warschauer Verbindungen las und die seinen literarischen Stil und seine Themen prägten.",
       "start_year": 1804,
       "end_year": 1822,
@@ -316,7 +316,7 @@
     },
     {
       "person_name": "Julia Marc",
-      "relationship_type": "other",
+      "relationship_type": "social/muse",
       "relationship_description": "Junge Gesangsschülerin in Bamberg, in die Hoffmann sich heftig verliebte und deren Gegenwart eine offenkundige emotionale Bindung und das Eingreifen ihrer Familie auslöste.",
       "start_year": 1809,
       "end_year": 1813,
@@ -334,7 +334,7 @@
     },
     {
       "person_name": "Jean Paul",
-      "relationship_type": "other",
+      "relationship_type": "intellectual/influence",
       "relationship_description": "Zeitgenössischer Schriftsteller, der Hoffmann stark beeinflusste und zu seinen frühesten Bewunderern gehörte, nachdem Hoffmanns Erzählung „Ritter Gluck“ erschienen war; zugleich prägte er Hoffmanns Verwendung des Doppelgänger-Motivs auf konzeptioneller Ebene.",
       "start_year": 1809,
       "end_year": 1822,
@@ -353,7 +353,7 @@
     },
     {
       "person_name": "Ludwig van Beethoven",
-      "relationship_type": "colleague",
+      "relationship_type": "professional/subject",
       "relationship_description": "Komponist, für dessen Musik Hoffmann in einer Reihe einflussreicher Besprechungen für die Allgemeine musikalische Zeitung eintrat und die Beethoven selbst sehr schätzte.",
       "start_year": 1809,
       "end_year": 1814,
@@ -372,7 +372,7 @@
     },
     {
       "person_name": "Wolfgang Amadeus Mozart",
-      "relationship_type": "other",
+      "relationship_type": "intellectual/inspiration",
       "relationship_description": "Komponist, dem Hoffmann ausdrücklich seine Reverenz erwies, indem er „Amadeus“ als zweiten Vornamen in seinem veröffentlichten Pseudonym annahm.",
       "start_year": 1809,
       "end_year": 1822,
@@ -390,7 +390,7 @@
     },
     {
       "person_name": "Joseph Seconda",
-      "relationship_type": "colleague",
+      "relationship_type": "professional/employer",
       "relationship_description": "Leiter einer Operngesellschaft, für die Hoffmann während der Napoleonischen Kriege in Dresden und Leipzig als musikalischer Leiter arbeitete.",
       "start_year": 1813,
       "end_year": 1814,
@@ -410,7 +410,7 @@
     },
     {
       "person_name": "Karl Albert von Kamptz",
-      "relationship_type": "rival",
+      "relationship_type": "political/persecutor",
       "relationship_description": "Preußischer Kommissar, dessen illiberale Einmischung in politische Prozesse mit Hoffmanns juristischem Gewissen kollidierte; Hoffmann karikierte ihn in „Meister Floh“, woraufhin ein Verfahren gegen ihn eingeleitet wurde.",
       "start_year": 1819,
       "end_year": 1822,
@@ -430,7 +430,7 @@
     },
     {
       "person_name": "König Friedrich Wilhelm III. von Preußen",
-      "relationship_type": "other",
+      "relationship_type": "political/superior",
       "relationship_description": "Monarch, unter dem Hoffmann als Jurist am höchsten Gericht tätig war; seine Einsetzung von Kommissionen zur Untersuchung politischer Abweichler brachte Hoffmann in ethisch heikle Rechtsfälle.",
       "start_year": 1819,
       "end_year": 1822,
@@ -449,7 +449,7 @@
     },
     {
       "person_name": "Friedrich Ludwig Jahn („Turnvater“ Jahn)",
-      "relationship_type": "other",
+      "relationship_type": "political/subject",
       "relationship_description": "Gründer der nationalistischen Turnbewegung, dessen Hochverratsprozess Hoffmann mitbeurteilte und der ihn dadurch in Konflikt mit Kamptz und dem illiberalen Staatsapparat brachte.",
       "start_year": 1819,
       "end_year": 1822,
