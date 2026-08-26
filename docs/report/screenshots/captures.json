@@ -1,15 +1,55 @@
 {
   "note": "Written by scripts/generate_report.py --shots. Each entry records the fingerprint of the '::: screenshot' declaration the picture was taken from, which is how a build knows a figure is stale.",
   "shots": {
+    "gaudi-overview": {
+      "file": "gaudi-overview.jpg",
+      "fingerprint": "367b56bf8f57",
+      "captured": "2026-08-25T13:33:20Z",
+      "bytes": 196918,
+      "css_width": 390,
+      "css_height": 844,
+      "scale": 2,
+      "route": "#/en/story/antoni_gaud"
+    },
+    "gaudi-relationship-card": {
+      "file": "gaudi-relationship-card.jpg",
+      "fingerprint": "2527403b8895",
+      "captured": "2026-08-25T15:20:08Z",
+      "bytes": 266611,
+      "css_width": 390,
+      "css_height": 844,
+      "scale": 2,
+      "route": "#/en/story/antoni_gaud?slide=10"
+    },
     "landing": {
       "file": "landing.jpg",
-      "fingerprint": "d11d87325e16",
-      "captured": "2026-08-01T04:44:18Z",
-      "bytes": 572686,
+      "fingerprint": "46ebf02cc34a",
+      "captured": "2026-08-25T14:55:06Z",
+      "bytes": 872324,
       "css_width": 1280,
-      "css_height": 820,
+      "css_height": 1300,
       "scale": 2,
       "route": "#/en"
+    },
+    "meta-map": {
+      "file": "meta-map.jpg",
+      "fingerprint": "89ae22cdbe64",
+      "captured": "2026-08-25T15:03:52Z",
+      "bytes": 119603,
+      "css_width": 390,
+      "css_height": 874,
+      "scale": 2,
+      "route": "#/en/meta/organic_shapes_in_architecture"
+    },
+    "meta-network": {
+      "file": "meta-network.jpg",
+      "fingerprint": "c8b222b659bd",
+      "captured": "2026-08-25T14:55:17Z",
+      "bytes": 174016,
+      "css_width": 390,
+      "css_height": 844,
+      "scale": 2,
+      "route": "#/en/meta/organic_shapes_in_architecture"
     },
     "meta-timeline": {
       "file": "meta-timeline.jpg",
@@ -20,6 +60,16 @@
       "css_height": 820,
       "scale": 2,
       "route": "#/en/meta/computing_pioneers"
+    },
+    "meta-timeline-environment": {
+      "file": "meta-timeline-environment.jpg",
+      "fingerprint": "4950f09f000a",
+      "captured": "2026-08-25T14:55:12Z",
+      "bytes": 281692,
+      "css_width": 1280,
+      "css_height": 820,
+      "scale": 2,
+      "route": "#/en/meta/organic_shapes_in_architecture"
     },
     "person-story": {
       "file": "person-story.jpg",
