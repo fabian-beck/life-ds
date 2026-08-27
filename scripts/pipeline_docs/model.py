@@ -63,16 +63,6 @@ def _git(*args: str) -> Optional[str]:
     return value or None
 
 
-def _column_of(step: spec.Step) -> str:
-    """Which pipeline column a step is drawn in.
-
-    Lane records *ownership*—several shared subsystems (sourcing, review,
-    translation) are their own scripts—but the reader wants to see them at the
-    point in the flow where they run, so the drawn column comes from the step id.
-    """
-    return spec.PERSON if step.id.startswith("p_") else spec.META
-
-
 def _cli_model_default(codebase: Codebase, script: str) -> Optional[str]:
     """The resolved `--model` default of a script, for steps that inherit it."""
     facts = codebase.scripts.get(script.rsplit("/", 1)[-1])
@@ -240,7 +230,7 @@ def build_payload(
             {
                 "id": step.id,
                 "label": step.label,
-                "column": _column_of(step),
+                "column": spec.column_of(step),
                 "lane": step.lane,
                 "group": group.id if group else None,
                 "kind": step.kind,

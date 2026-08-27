@@ -38,6 +38,15 @@ The authoring surface is small on purpose:
     `@id x,y,w,h Label` lines, and it resolves at compile time exactly as a
     teaser id does—a part that was renamed or removed stops the build.
 
+`[[step:id|phrase]]`
+    A reference from a phrase into one step of a pipeline figure, resolved
+    against `spec.STEPS`. The phrase is ordinary prose; pressing it selects that
+    step in the figure its pipeline is drawn as and opens the drawer on it, so
+    an account of what the pipeline does can name a step without repeating what
+    the figure and the drawer already hold. Prose that walks a pipeline names
+    many steps, and a report that also explained each of them in the sentence
+    would say everything twice.
+
 `<<concept|phrase>>` / `<<concept>>`
     A reference from a phrase into an entry of the concept legend, resolved
     against `concepts.CONCEPTS`. It carries the concept's glyph and reads as
@@ -85,7 +94,7 @@ from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple
 
 import markdown
 
-from . import bibliography, concepts, screenshots, teaser
+from . import bibliography, concepts, screenshots, spec as pipeline_spec, teaser
 from .bibliography import Bibliography, Reference
 from .facts import Fact
 from .screenshots import ShotPart
@@ -235,7 +244,7 @@ DIRECTIVE_CLOSE = re.compile(r"^:::\s*$")
 HEADING = re.compile(r"^(#{2,4})\s+(.*?)\s*$")
 CITATION = re.compile(r"(?<!\\)\{\{\s*([a-zA-Z0-9_.]+)\s*\}\}")
 FIGREF = re.compile(
-    r"(?<!\\)\[\[\s*([a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*)?)\s*"
+    r"(?<!\\)\[\[\s*(step:[a-z][a-z0-9_]*|[a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*)?)\s*"
     r"(?:\|\s*([^\]]+?)\s*)?\]\]"
 )
 CONCEPTREF = re.compile(r"(?<!\\)<<\s*([a-z][a-z0-9-]*)\s*(?:\|\s*([^>]+?)\s*)?>>")
@@ -369,6 +378,8 @@ class Document:
     figrefs: List[str] = field(default_factory=list)
     # References into screenshot parts, as dotted `shot.part` ids.
     shotrefs: List[str] = field(default_factory=list)
+    # References into pipeline steps, as bare step ids.
+    steprefs: List[str] = field(default_factory=list)
     conceptrefs: List[str] = field(default_factory=list)
     notes: List[Note] = field(default_factory=list)
     refcites: List[str] = field(default_factory=list)
@@ -634,6 +645,7 @@ def substitute_figrefs(
     line_hint: str = "",
     shots: Optional[Dict[str, Dict[str, ShotPart]]] = None,
     shot_seen: Optional[List[str]] = None,
+    step_seen: Optional[List[str]] = None,
 ) -> str:
     """Replace `[[part|phrase]]` with a control that points into the figure.
 
@@ -646,6 +658,11 @@ def substitute_figrefs(
     A dotted id, `[[shot.part]]`, points into a screenshot figure instead: the
     first half names a `::: screenshot` block and the second a part its body
     declares, resolved against `shots` under exactly the same contract.
+
+    A `step:` id points into a pipeline figure, at one step of it, resolved
+    against the spec the figure is drawn from. Which figure follows from the
+    step, since a step is drawn in exactly one pipeline column, so the prose
+    names the step and nothing else.
 
     A part that carries a concept contributes its glyph, drawn ahead of the
     phrase and hidden from assistive technology, since the words already say
@@ -680,9 +697,31 @@ def substitute_figrefs(
             f"{_escape(label)}</button>"
         )
 
+    def replace_step(step_id: str, phrase: Optional[str]) -> str:
+        step = pipeline_spec.step_by_id(step_id)
+        if step is None:
+            raise ReportError(
+                f"{line_hint}unknown pipeline step '[[step:{step_id}]]'—the "
+                "spec declares " + ", ".join(item.id for item in pipeline_spec.STEPS)
+            )
+        if step_seen is not None:
+            step_seen.append(step_id)
+        label = phrase if phrase else step.label
+        column = pipeline_spec.column_of(step)
+        return (
+            f'<button type="button" class="figref stepref" '
+            f'data-step="{_escape(step_id)}" data-lane="{_escape(column)}" '
+            f'aria-label="{_escape(label)}—show the step '
+            f"'{_escape(step.label)}' in the "
+            f'{_escape(pipeline_spec.LANES[column]["label"].lower())} pipeline">'
+            f"{_escape(label)}</button>"
+        )
+
     def replace(match: re.Match) -> str:
         part_id = match.group(1)
         phrase = match.group(2)
+        if part_id.startswith("step:"):
+            return replace_step(part_id[len("step:") :], phrase)
         if "." in part_id:
             return replace_shot(part_id, phrase)
         part = teaser.part_by_id(part_id)
@@ -1339,6 +1378,7 @@ def compile_report(
     citations: List[str] = []
     figrefs: List[str] = []
     shotrefs: List[str] = []
+    steprefs: List[str] = []
     conceptrefs: List[str] = []
     refcites: List[str] = []
     prefs: List[str] = []
@@ -1361,7 +1401,9 @@ def compile_report(
         hint = f"line {block.line}: " if block.line else ""
         # Figure references first: a reference's phrase is plain prose, and a
         # citation inside one should still resolve.
-        text = substitute_figrefs(block.text, figrefs, hint, shot_parts, shotrefs)
+        text = substitute_figrefs(
+            block.text, figrefs, hint, shot_parts, shotrefs, steprefs
+        )
         text = substitute_conceptrefs(text, conceptrefs, hint)
         text = substitute_citations(text, facts, citations, hint)
         text = substitute_refcites(text, works, refcites, hint)
@@ -1448,6 +1490,7 @@ def compile_report(
         source_path,
         figrefs,
         shotrefs,
+        steprefs,
         conceptrefs,
         notes,
         refcites,

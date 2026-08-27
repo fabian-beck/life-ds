@@ -1311,3 +1311,20 @@ def artifact_by_id(artifact_id: str) -> Optional[Artifact]:
         if artifact.id == artifact_id:
             return artifact
     return None
+
+
+def step_by_id(step_id: str) -> Optional[Step]:
+    for step in STEPS:
+        if step.id == step_id:
+            return step
+    return None
+
+
+def column_of(step: Step) -> str:
+    """Which pipeline column a step is drawn in.
+
+    Lane records *ownership*—several shared subsystems (sourcing, review,
+    translation) are their own scripts—but the reader wants to see them at the
+    point in the flow where they run, so the drawn column comes from the step id.
+    """
+    return PERSON if step.id.startswith("p_") else META

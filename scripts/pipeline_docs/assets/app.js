@@ -1747,8 +1747,10 @@
     /* ------------------------------------------------------------- mount */
 
     function select(stepId) {
+      if (!stepById[stepId]) return;
       state.selected = stepId;
       openDrawer(stepById[stepId], instance);
+      markStepRefs(stepId);
       draw();
     }
 
@@ -1809,9 +1811,16 @@
 
     draw();
 
+    // Prose points into the figure: `[[step:id]]` compiles to a control that
+    // selects a node this chart owns, exactly as pressing the node does.
+    instance.select = select;
+    instance.selected = function () {
+      return state.selected;
+    };
     instance.clearSelection = function () {
       if (state.selected === null) return;
       state.selected = null;
+      markStepRefs(null);
       draw();
     };
     // Re-fitting is not re-drawing: the layout is unchanged, only the size the
@@ -1827,6 +1836,85 @@
     };
     charts.push(instance);
     return instance;
+  }
+
+  /* --------------------------------------------------- references into a chart */
+
+  /* A `[[step:id]]` in the prose compiles to a `.figref` carrying the step and
+     the pipeline it is drawn in, and pressing it does what pressing the node
+     does: the step is selected in the figure and the drawer opens on it. This
+     is what lets an account of what a pipeline does name its steps without
+     restating them—the sentence says why the step is there, and the figure and
+     the drawer keep what it is, which model it calls and what it reads. */
+
+  function chartForLane(laneId) {
+    let inline = null;
+    let inModal = null;
+    const modal = document.getElementById("chart-modal");
+    charts.forEach((chart) => {
+      if (chart.lane !== laneId || !chart.host) return;
+      if (modal && modal.contains(chart.host)) inModal = chart;
+      else if (!inline) inline = chart;
+    });
+    // The full-screen chart covers the page while it is open, so a reference
+    // pressed there has to point into the drawing the reader is looking at.
+    return chartModalIsOpen() && inModal ? inModal : inline;
+  }
+
+  /* Bring the selected node into view. Two scrolls, because a chart sits in two
+     of them: the page, which the figure may be off, and the figure's own
+     horizontal scroller, which the full chart is wider than. */
+  function revealStep(chart) {
+    const node = chart.host && chart.host.querySelector(".node.selected");
+    if (!node) return;
+    const scroller = node.closest ? node.closest(".chart-scroll") : null;
+    if (scroller) {
+      const box = node.getBoundingClientRect();
+      const frame = scroller.getBoundingClientRect();
+      const dx = box.left + box.width / 2 - (frame.left + frame.width / 2);
+      if (Math.abs(dx) > 4) scroller.scrollLeft += dx;
+    }
+    const figure = chart.host.closest ? chart.host.closest(".widget") : null;
+    const target = figure || chart.host;
+    const box = target.getBoundingClientRect();
+    const viewport =
+      window.innerHeight || document.documentElement.clientHeight;
+    if (box.top < 0 || box.bottom > viewport) {
+      target.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+  }
+
+  function markStepRefs(stepId) {
+    Array.prototype.forEach.call(
+      document.querySelectorAll(".figref[data-step]"),
+      (node) => {
+        const lit = !!stepId && node.getAttribute("data-step") === stepId;
+        node.classList.toggle("is-lit", lit);
+        node.setAttribute("aria-expanded", lit ? "true" : "false");
+      }
+    );
+  }
+
+  function bindStepRefs() {
+    document.addEventListener("click", (event) => {
+      const ref = event.target.closest
+        ? event.target.closest(".figref[data-step]")
+        : null;
+      if (!ref) return;
+      event.preventDefault();
+      const chart = chartForLane(ref.getAttribute("data-lane"));
+      // No chart on the page—a viewport too narrow to mount one, or a build
+      // that drew the other pipeline only—leaves the phrase as the prose it
+      // already reads as.
+      if (!chart) return;
+      const stepId = ref.getAttribute("data-step");
+      if (chart.selected() === stepId) {
+        closeDrawer();
+        return;
+      }
+      chart.select(stepId);
+      revealStep(chart);
+    });
   }
 
   /* ------------------------------------------------------------- drawer */
@@ -2958,7 +3046,7 @@
 
   function markRefs(partId) {
     Array.prototype.forEach.call(
-      document.querySelectorAll(".figref"),
+      document.querySelectorAll(".figref:not([data-shot]):not([data-step])"),
       (node) => {
         const lit = !!partId && node.getAttribute("data-part") === partId;
         node.classList.toggle("is-lit", lit);
@@ -3310,7 +3398,10 @@
     // handled by `bindShotRefs`; only the bare ones are the teaser's.
     function teaserRef(target) {
       const ref = target.closest ? target.closest(".figref") : null;
-      return ref && !ref.hasAttribute("data-shot") ? ref : null;
+      if (!ref) return null;
+      if (ref.hasAttribute("data-shot") || ref.hasAttribute("data-step"))
+        return null;
+      return ref;
     }
 
     document.addEventListener("click", (event) => {
@@ -4952,6 +5043,7 @@
   renderTocButton();
   renderPopovers();
   bindPrintDisclosure();
+  bindStepRefs();
 
   // The page is fully built. `scripts/export_report_pdf.mjs` waits for this
   // before printing, so a PDF can never catch the report half-hydrated.

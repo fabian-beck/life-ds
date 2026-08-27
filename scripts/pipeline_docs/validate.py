@@ -436,6 +436,7 @@ def check_report(
             )
         )
 
+    problems.extend(_check_steprefs(document, lanes_drawn))
     problems.extend(_check_teaser(document, facts))
     problems.extend(_check_conceptlegend(document))
     problems.extend(_check_screenshots(document))
@@ -459,6 +460,32 @@ def check_report(
     if not document.front.get("title"):
         problems.append(Problem("error", "report.md", "front matter has no 'title'"))
 
+    return problems
+
+
+def _check_steprefs(document: Document, lanes_drawn: Set[str]) -> List[Problem]:
+    """A phrase pointing at a step needs the figure that step is drawn in.
+
+    Unknown step ids already fail in the compiler; what is left is the relation
+    the reference exists for. Pressing the phrase selects a node of a pipeline
+    figure, so prose that names a step of a pipeline the report never draws
+    compiles to a control with nothing to select.
+    """
+    problems: List[Problem] = []
+    for step_id in sorted(set(document.steprefs)):
+        step = spec.step_by_id(step_id)
+        if step is None:  # already reported by the compiler
+            continue
+        column = spec.column_of(step)
+        if column not in lanes_drawn:
+            problems.append(
+                Problem(
+                    "error",
+                    "report.md",
+                    f"the prose points at step '{step_id}', but no "
+                    f"'::: pipeline lane={column}' block draws it",
+                )
+            )
     return problems
 
 
