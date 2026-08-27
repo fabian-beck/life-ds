@@ -333,7 +333,7 @@ Nor does an inventory count. How many steps, layers, edges, schemas, or concepts
 | `::: principles` … `:::` | The design principles, one per `@id Title` line with a paragraph under it. Numbered positionally as `P1`, `P2`, …; declared once, in the introduction. |
 | `((id))` | A reference to a design principle, rendered as its number and opened in a popover. An unknown id fails the build; a principle no sentence references is a warning. |
 | `^[an explanation]` | An inline note. Brackets nest, `\^[` escapes the syntax, and the body is collapsed to one line, so a note is inline-level by construction. |
-| `[@key]`, `[@key; @other]` | A citation of published work from `docs/report/references.bib`, numbered by first use. An unknown key fails the build, and the whole bracket has to sit on one line. |
+| `[@key]`, `[@key; @other]` | A citation of published work from `docs/report/references.bib`, numbered by first use. An unknown key fails the build, and the whole bracket has to sit on one line. Place the bracket directly after the name it credits—`Segel and Heer [1]`, `VisKonnect [2]`—rather than at the end of the sentence. |
 | `::: toc` | The table of contents. |
 | `::: references` | The list of cited works, in citation order. |
 
