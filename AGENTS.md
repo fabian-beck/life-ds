@@ -169,6 +169,7 @@ An exploratory user test is the exception. Its report is its deliverable, and it
 - Write English prose in American English—the report, documentation, comments, code identifiers, and generated English text alike (color, artifact, labeled).
 - Use the serial comma in English prose: `a, b, and c`.
 - Write each Markdown paragraph, list item, and table row as one line. Do not hard-wrap prose; let the editor wrap it.
+- Write prose in a plain, concise academic register. Every sentence carries part of the argument, a concept keeps one term throughout, and a claim is stated exactly as far as it holds. Cut what only restates, announces, or decorates.
 - Write new components, and components extracted out of existing ones, with runes. Leave the components that are in legacy mode there rather than migrating them in passing; see [Svelte 5 modes](docs/agent/project-structure-and-ui.md#svelte-5-modes).
 - Reuse the shared stores rather than deriving their state again inside a component.
 - Keep person data synchronized across its registries and localized files.

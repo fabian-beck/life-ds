@@ -60,11 +60,12 @@ class Concept:
     legend, so this never reaches the payload.
 
     `legend` says whether the data model section lists the concept as one of the
-    perspectives a biography is turned into. The input is excluded because that
-    section is about what the system derives; the theme and the languages are
-    excluded because they are second-order—a theme is derived from finished
-    stories rather than from a biography, and a language is every one of these
-    perspectives again rather than another one.
+    perspectives a story is turned into. The input is excluded because that
+    section is about what the system derives, and the languages are excluded
+    because a language is every one of these perspectives again rather than
+    another one. The theme is listed, because the section covers the
+    second-order story as well, and the theme is the perspective a meta story
+    adds to the ones a biography already carries.
     """
 
     id: str
@@ -151,7 +152,6 @@ CONCEPTS: Tuple[Concept, ...] = (
         "An idea traced across several finished biographies—the second-order "
         "story, and the only one whose inputs are this system’s own output.",
         "The meta stories on the landing page and the lives they link into.",
-        legend=False,
     ),
     Concept(
         "languages",
