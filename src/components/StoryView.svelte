@@ -2476,6 +2476,15 @@
     z-index: 3;
   }
 
+  /* Event images are the exception to the slide's in-flow children. Keep the
+     image container out of the padded content flow and pin it to the actual
+     slide corner; deep slides apply the same edge correction to their fold. */
+  .slide > :global(.event-images) {
+    position: absolute;
+    top: 0;
+    right: -1.5rem;
+  }
+
   .slide > .content {
     align-self: center;
     width: min(54rem, 100%);
