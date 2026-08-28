@@ -149,10 +149,11 @@ If the primary worktree contains uncommitted changes, do not switch branches, pu
 
 Sessions notice defects that have little to do with their own task—a broken control on an adjacent screen, a script that fails on a case nobody asked about, data that contradicts itself. Do not widen the session to fix them, and do not let them vanish when the session ends. Open a GitHub issue in `fabian-beck/life-ds` instead, using whatever GitHub access the session has, such as the `gh` CLI or the GitHub MCP tools.
 
-File an issue only when both of these hold:
+File an issue only when all of these hold:
 
 - **The bug is verified.** Reproduce it in the running application, run the failing command, or trace the code path and the data that make the failure inevitable. A suspicion, a line that merely looks wrong on reading, or a failure you cannot trigger is not enough. When verification is inconclusive, say so in the session summary and file nothing.
 - **It is clearly a bug.** Something crashes, produces a wrong result, contradicts documented behavior, or leaves inconsistent data. Refactoring ideas, style preferences, and improvement wishes are not bugs; keep them in the session summary unless the user asks for an issue.
+- **It holds in the current data.** The datasets under `data/` are corrected and regenerated continually, so a finding about data content is re-verified against the latest `origin/main` immediately before filing, not against the session's starting snapshot. An issue recorded from outdated data—a stale worktree, an old branch, or a superseded generation—documents a state that no longer exists; when the finding does not reproduce on current `main`, file nothing.
 
 Search open and closed issues before filing so no duplicate is created. When an open issue already covers the finding, add a comment only if the session contributes new evidence, and leave a closed issue alone unless the bug demonstrably returned—then say so and reference the old issue number.
 
