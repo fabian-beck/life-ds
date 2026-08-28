@@ -27,8 +27,8 @@
     getValidImages,
   } from "../utils/story/images.js";
   import {
-    findPersonInNetwork,
     getBirthParents,
+    getMarriagePartner,
     getRelevantPeople,
     getSubcategory,
   } from "../utils/story/personMatching.js";
@@ -62,6 +62,7 @@
 
   $: validImages = getValidImages(slide.images);
   $: birthParents = getBirthParents(slide, egoNetwork);
+  $: partnerPerson = getMarriagePartner(slide, egoNetwork);
   // A birth whose parents and household the sources leave out has nothing to
   // put in a box; it keeps the plain badge the other classes get.
   $: showBirthLineage =
@@ -640,10 +641,6 @@
           </div>
         {/if}
         {#if slide.event_class?.type === "marriage_partnership"}
-          {@const partnerPerson = findPersonInNetwork(
-            slide.event_class.partner,
-            egoNetwork
-          )}
           <div class="marriage-pretext">
             <div class="marriage-meta-line">
               <svg
@@ -803,10 +800,6 @@
     {/if}
     <div class="event-details">
       {#if slide.event_class?.type === "marriage_partnership" && relevantPeople.length > 0}
-        {@const partnerPerson = findPersonInNetwork(
-          slide.event_class.partner,
-          egoNetwork
-        )}
         {@const otherPeople = partnerPerson
           ? relevantPeople.filter(
               (p) => p.person_name !== partnerPerson.person_name

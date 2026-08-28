@@ -405,6 +405,51 @@ export function getChapterPeople(chapter, egoNetwork) {
     return true;
   });
 }
+
+const PARTNER_ROLES_BY_SUBTYPE = {
+  marriage: new Set(["spouse"]),
+  partnership: new Set(["partner", "romantic-partner"]),
+};
+const ALL_PARTNER_ROLES = new Set(["spouse", "partner", "romantic-partner"]);
+
+/**
+ * Resolve the partner named by a marriage or partnership event. The event's
+ * name remains the primary evidence. When titles or name changes defeat that
+ * match, one unambiguous partner-role connection can supply the same person;
+ * multiple candidates are never guessed between.
+ * @param {Object} event - Event with a marriage_partnership classification
+ * @param {Object} egoNetwork - Ego network with connections array
+ * @returns {Object|null} A connection-shaped partner, or null
+ */
+export function getMarriagePartner(event, egoNetwork) {
+  if (event?.event_class?.type !== "marriage_partnership") return null;
+
+  const partnerName = event.event_class.partner;
+  if (!partnerName) return null;
+
+  const nameMatch = findPersonInNetwork(partnerName, egoNetwork);
+  if (nameMatch) return nameMatch;
+
+  const acceptedRoles =
+    PARTNER_ROLES_BY_SUBTYPE[event.event_class.subtype] ?? ALL_PARTNER_ROLES;
+  const roleMatches = (egoNetwork?.connections ?? []).filter((connection) => {
+    const role = getSubcategory(connection.relationship_type)
+      ?.toLowerCase()
+      .replace(/[\s_]+/g, "-");
+    return acceptedRoles.has(role);
+  });
+  if (roleMatches.length === 1) return roleMatches[0];
+
+  return {
+    person_name: partnerName,
+    relationship_type:
+      event.event_class.subtype === "marriage"
+        ? "family/spouse"
+        : "social/partner",
+    relationship_description: "",
+  };
+}
+
 /**
  * Check if an event is the subject's own birth.
  * @param {Object} event - Event object
