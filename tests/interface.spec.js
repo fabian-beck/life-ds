@@ -949,6 +949,77 @@ test("a wheel that wanders sideways scrolls into the event, not past it", async 
   expect(await page.evaluate(() => window.__slideDrift)).toBe(0);
 });
 
+/* A trackpad keeps sending momentum events after the fingers have lifted, so a
+   wheel run regularly straddles a key press: the reader scrolls, presses an
+   arrow key, and the tail of the dead gesture arrives while the slide change
+   is still animating. Each tail event used to retarget that scroll to wherever
+   it happened to be, and the snap then carried the reader back to the slide
+   they had just left — the press looked like it undid itself. A run that began
+   before the navigation has nothing left to say; only a fresh gesture steers.
+   The events are dispatched from inside the page so their spacing does not
+   depend on the driver: a run is a run by its gaps, and a driven wheel arrives
+   too slowly to make one. */
+test("an arrow key pressed over the tail of a wheel run still switches the slide", async ({
+  page,
+}) => {
+  await page.goto("en#/en/story/alan_turing?slide=3");
+  const active = page.locator("section.slide:not([inert])");
+  await expect(active).toBeVisible();
+  // The story arrives at slide 3 by a scroll of its own; the gesture below has
+  // to find it at rest, or the tail would land in the wrong animation.
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const slides = document.querySelector("main.slides");
+        return slides.scrollLeft === 3 * slides.clientWidth;
+      })
+    )
+    .toBe(true);
+  const labels = await page
+    .locator("main.slides > section")
+    .evaluateAll((sections) =>
+      sections.map((section) => section.getAttribute("aria-label"))
+    );
+
+  await page.evaluate(async () => {
+    const view = document.querySelector(".story-view");
+    const wheel = (deltaY) =>
+      view.dispatchEvent(
+        new WheelEvent("wheel", { bubbles: true, cancelable: true, deltaY })
+      );
+    // A morsel of a gesture, too small for the axis lock to answer, but enough
+    // to open the run the tail below belongs to. The press follows in the same
+    // task: whether one run straddles the press is decided by wall-clock gaps,
+    // and a loaded test browser must not be able to stretch this one apart.
+    wheel(8);
+    view.dispatchEvent(
+      new KeyboardEvent("keydown", {
+        key: "ArrowRight",
+        bubbles: true,
+        cancelable: true,
+      })
+    );
+    // One turn of the event loop, so the press's scroll is in flight when the
+    // decaying tail of the same run arrives.
+    await new Promise((resolve) => {
+      setTimeout(resolve, 0);
+    });
+    wheel(-30);
+    wheel(-18);
+    wheel(-9);
+  });
+
+  await expect(active).toHaveAttribute("aria-label", labels[4]);
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const slides = document.querySelector("main.slides");
+        return slides.scrollLeft === 4 * slides.clientWidth;
+      })
+    )
+    .toBe(true);
+});
+
 /* A person's context is given by their chip, on every slide, including the ones
    that carry a depth layer. The layer briefly took the people for itself — the
    chips were suppressed to avoid saying a name twice — which made the one slide
