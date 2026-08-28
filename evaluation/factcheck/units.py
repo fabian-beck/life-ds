@@ -234,12 +234,13 @@ def _event_payload(event: Dict[str, Any]) -> Dict[str, Any]:
     it is written by a different phase, and keeping it apart lets a round say
     how the depth layer compares with the slide it sits behind.
 
-    The ``sources`` list is left out for a different reason. It is provenance
-    rather than assertion: extracting "this URL is listed as a source" yields a
-    claim about the file, and checking it against the article the URL points at
-    establishes nothing. Whether a listed source exists and resolves is already
-    checked by ``scripts/validate_source_links.py``. The list still travels in
-    the unit's context, so an evaluator sees what the event cites.
+    Three fields are left out as provenance rather than assertion: the
+    ``sources`` list, an annotation's ``wikipedia_url``, and an image's
+    ``creator``. Each yields a claim about a link or a credit — "this URL is
+    listed as a source" — that the biographical materials cannot settle either
+    way, and whether a listed source resolves is already checked by
+    ``scripts/validate_source_links.py``. The sources still travel in the
+    unit's context, so an evaluator sees what the event cites.
     """
     payload: Dict[str, Any] = {}
     for key in (
@@ -255,16 +256,22 @@ def _event_payload(event: Dict[str, Any]) -> Dict[str, Any]:
         "locations",
         "involved_people",
         "event_class",
-        "annotations",
     ):
         value = event.get(key)
         if value not in (None, [], {}, ""):
             payload[key] = value
 
+    annotations = {
+        term: {
+            key: value for key, value in (entry or {}).items() if key != "wikipedia_url"
+        }
+        for term, entry in (event.get("annotations") or {}).items()
+    }
+    if annotations:
+        payload["annotations"] = annotations
+
     captions = [
-        {"caption": image.get("caption"), "creator": image.get("creator")}
-        for image in event.get("images") or []
-        if image.get("caption")
+        image["caption"] for image in event.get("images") or [] if image.get("caption")
     ]
     if captions:
         payload["image_captions"] = captions
@@ -315,7 +322,7 @@ def _background_payload(event: Dict[str, Any]) -> Dict[str, Any]:
         return {}
     payload: Dict[str, Any] = {"background": background}
     captions = [
-        {"caption": image.get("caption"), "creator": image.get("creator")}
+        image["caption"]
         for image in event.get("background_images") or []
         if image.get("caption")
     ]
