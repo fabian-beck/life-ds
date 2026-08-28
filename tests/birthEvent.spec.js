@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import {
   getBirthParents,
+  getRelevantPeople,
   isBirthEvent,
   normalizeFamilyRole,
 } from "../src/utils/story/personMatching.js";
@@ -50,6 +51,47 @@ test("resolves the named parents against the ego network", () => {
   ]);
   expect(parents[0].relationship_description).toBe(
     "Physiologist and first teacher"
+  );
+});
+
+test("resolves a differently labeled parent through a unique family role", () => {
+  const titledFather = {
+    person_name: "The Duke of Northbridge",
+    relationship_type: "family/biological_father",
+    strength: "strong",
+  };
+  const event = {
+    date: "1900-01-01",
+    involved_people: ["The Duke of Northbridge"],
+    event_class: { type: "birth", father: "Alexander Rowan" },
+  };
+  const roleNetwork = { connections: [titledFather] };
+
+  expect(getBirthParents(event, roleNetwork)).toEqual([titledFather]);
+  expect(getRelevantPeople(event, roleNetwork)[0].person_name).toBe(
+    getBirthParents(event, roleNetwork)[0].person_name
+  );
+});
+
+test("does not guess between multiple people with the same parent role", () => {
+  const event = {
+    event_class: { type: "birth", father: "Alexander Rowan" },
+  };
+  const roleNetwork = {
+    connections: [
+      {
+        person_name: "The Duke of Northbridge",
+        relationship_type: "family/biological_father",
+      },
+      {
+        person_name: "Morgan Rowan",
+        relationship_type: "family/adoptive_father",
+      },
+    ],
+  };
+
+  expect(getBirthParents(event, roleNetwork)[0].person_name).toBe(
+    "Alexander Rowan"
   );
 });
 

@@ -434,6 +434,25 @@ const PARENT_ROLES = ["father", "mother"];
 // …"). That is a placeholder rather than a name, and a chip carrying it says
 // less than no chip at all.
 const PLACEHOLDER_NAME = /^\s*(unnamed|unknown|unidentified)\b/i;
+
+/**
+ * Resolve a parent by role when their name and network label use unrelated
+ * forms, such as a personal name and a title. A role is identity evidence only
+ * when exactly one connection has it; otherwise choosing would conflate
+ * distinct people.
+ * @param {string} role - Canonical parent role
+ * @param {Object} egoNetwork - Ego network with connections array
+ * @returns {Object|null} The uniquely identified parent, or null
+ */
+function findUniqueParentByRole(role, egoNetwork) {
+  const matches = (egoNetwork?.connections ?? []).filter(
+    (connection) =>
+      (connection.relationship_type || "").split("/")[0] === "family" &&
+      normalizeFamilyRole(connection.relationship_type) === role
+  );
+  return matches.length === 1 ? matches[0] : null;
+}
+
 /**
  * The parents to show on a birth slide, father first.
  *
@@ -454,11 +473,12 @@ export function getBirthParents(event, egoNetwork) {
     const name = event.event_class[role];
     if (!name || PLACEHOLDER_NAME.test(name)) continue;
     named.push(
-      findPersonInNetwork(name, egoNetwork) ?? {
-        person_name: name,
-        relationship_type: `family/${role}`,
-        relationship_description: "",
-      }
+      findPersonInNetwork(name, egoNetwork) ??
+        findUniqueParentByRole(role, egoNetwork) ?? {
+          person_name: name,
+          relationship_type: `family/${role}`,
+          relationship_description: "",
+        }
     );
   }
   if (named.length > 0) return named;
