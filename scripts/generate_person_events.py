@@ -2482,7 +2482,11 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "The year in an event's description must be the year the event is dated to; "
         "when the sources put the event in a different year than you first assumed, "
         "move the date, do not leave the disagreement in the prose. "
-        "All output must be in American English only, regardless of source language."
+        "All output must be in American English only, regardless of source language. "
+        "Every text field is plain text rendered verbatim by the interface: never "
+        "write Markdown in it — no *emphasis* or **bold**, no `code`, no [links](url), "
+        "no headings. A title of a work stands plain in the sentence, without "
+        "asterisks or underscores around it."
     )
 
     instructions = (
@@ -3058,7 +3062,11 @@ def research_event_details(
         "You are a research assistant specializing in biographical event details. "
         "Provide specific, factual information for the given event. "
         "Ensure descriptions are chronologically confined, concise, and balanced. "
-        "All output must be in American English only. Be precise with locations and people."
+        "All output must be in American English only. Be precise with locations and people. "
+        "Every text field is plain text rendered verbatim by the interface: apart from "
+        "the [[term|display]] annotation markers, never write Markdown — no *emphasis* "
+        "or **bold**, no `code`, no [links](url). A title of a work stands plain in "
+        "the sentence, without asterisks or underscores around it."
     )
 
     details = parse_structured(
@@ -3264,7 +3272,8 @@ def call_openai_chapter_generation(
         "You are a skilled biographer crafting a compelling narrative from life events. "
         "Your task is to organize events into engaging chapters that read like a well-told story. "
         "Write with energy and insight, making each chapter feel like part of a coherent journey. "
-        "All output must be in American English only."
+        "All output must be in American English only. Every text field is plain text "
+        "rendered verbatim by the interface: never write Markdown in it."
     )
 
     instructions = (

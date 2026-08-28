@@ -958,7 +958,11 @@ subject of a sentence."""
                 "role": "system",
                 "content": "You are a journalist composing a biographical "
                 "data story from the material you are given. You never "
-                "invent facts, and you write in American English.",
+                "invent facts, and you write in American English. Every "
+                "text field is plain text rendered verbatim by the "
+                "interface: never write Markdown in it — no *emphasis*, "
+                "no **bold**, no `code`, no [links](url). A title of a "
+                "work stands plain in the sentence.",
             },
             {"role": "user", "content": prompt},
         ],

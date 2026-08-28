@@ -43,17 +43,17 @@
       }
     },
     "m_p3": {
-      "fingerprint": "6c1ba7d831ee2a53",
+      "fingerprint": "2df89fe1d17c9190",
       "summary": {
         "constraints": [
-          "An event is relevant only when it has direct impact, landmark status, a concrete lasting output, and is irreplaceable in the story.",
-          "Uncertainty defaults to `is_relevant=false`; background, career moves, routine work, vague participation, and non-breakthrough applications are rejected.",
-          "Select only \"1-3\" essential events per person, representing absolute best contributions; an entirely empty batch is valid.",
-          "Each returned decision is keyed as `person_id:event_index` and includes `is_relevant` plus `theme_connection`."
+          "An event is relevant only when it has direct impact, landmark status, a concrete lasting output, and is irreplaceable to the meta-story.",
+          "Reject uncertainty and any background, routine work, generic career milestone, vague collaboration, or non-groundbreaking application.",
+          "Keep only \"1-3\" essential events per person across the overall candidate pool; zero qualifying events in an individual batch is valid.",
+          "Return a decision for each event with `is_relevant` and plain-text `theme_connection`; event descriptions are truncated to 300 characters."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a compact review record for each biographical event in a batch, then returns a decision keyed by `person_id:event_index`. Each decision says whether the event is essential to the meta-story's theme and supplies a short explanation connecting a landmark contribution to the theme—or explaining the rejection.",
-        "why_this_design": "The prompt permits zero selections per person in a batch because a person's required representation is enforced across the full meta-story, not locally; this avoids promoting weak events merely to fill chapter coverage. Descriptions are clipped to 300 characters to control prompt size, while repeated call failures raise `FilteringFailed` rather than treating unreviewed events as relevant."
+        "what_it_does": "Packages a batch of biographical events into compact review records, then asks for one structured relevance decision per event in the context of the meta-story theme. Each decision preserves the event identifier, a Boolean inclusion judgment, and a plain-text explanation of either the landmark contribution or the reason for rejection; the results are returned as an event-ID-keyed mapping for later selection.",
+        "why_this_design": "The prompt deliberately makes exclusion the default so chapters are built from defensible thematic claims rather than chronological or biographical coverage. Descriptions are capped before review to control prompt size, while a failed batch raises an error instead of treating all unjudged events as relevant—a fallback that would reverse the phase's selectivity."
       }
     },
     "m_p3b": {
@@ -99,31 +99,31 @@
       }
     },
     "m_p5b": {
-      "fingerprint": "d02095581542415e",
+      "fingerprint": "b21d72ec10ed1a4d",
       "summary": {
         "constraints": [
-          "Requires at least 2 main nodes; otherwise returns the network unchanged.",
-          "May use only existing node IDs and may not introduce people; bridge-node ties may be edited or pruned.",
-          "Modifications must repeat the existing source/target pair, while unchanged ties must not be restated.",
-          "Strength must be \"weak,\" \"moderate,\" or \"strong\"; relationship category and role must come from the schema’s closed vocabulary."
+          "Skips review and returns the network unchanged when fewer than \"2\" main nodes exist.",
+          "May use only existing node IDs; no new people may be introduced.",
+          "Modifications must repeat the same source/target pair as an existing tie; unchanged ties must not be listed.",
+          "Relationship category and role must come from the schema’s closed vocabulary, and strength must be \"weak,\" \"moderate,\" or \"strong.\""
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews a derived biographical social graph after ego-network extraction and before clustering. It uses article leads and sentences about main people, the current ties, and the current main-node density to propose three kinds of edits: missing direct ties, corrections to existing ties, and removal of indirect or vague ties. The returned review is applied to the network only when structured output parses successfully; otherwise the original graph is retained.",
-        "why_this_design": "Density-dependent guidance calibrates how aggressively the review adds or prunes edges, preventing an already dense main-person graph from accumulating speculative connections while allowing sparse graphs to recover well-supported omissions. Running before clustering ensures that circles are computed from reviewed rather than merely extracted relationships."
+        "what_it_does": "Reviews a previously derived biographical social graph before clustering. It supplies the current nodes, ties, density of the main-person subgraph, and relevant article evidence, then requests only supported additions, corrections to existing ties, and removals of indirect or vague ties. The resulting structured review is applied to the graph; if review generation fails or produces no parseable result, the original graph is retained.",
+        "why_this_design": "Density-aware guidance calibrates how aggressively missing ties are added or questionable ties are pruned, preventing an already dense main-person graph from becoming indiscriminately connected. Running this pass before clustering ensures that circles are computed from reviewed rather than merely ego-derived relationships."
       }
     },
     "m_p6": {
-      "fingerprint": "c4bdebdd8617f568",
+      "fingerprint": "66c241555b36484d",
       "summary": {
         "constraints": [
-          "Exactly one returned entry per derived circle; each `key` must match the source key exactly.",
-          "Titles are \"2-5 words,\" evocative, and must not list people’s names.",
-          "Each text is \"2-4 sentences\" of prose, grounded only in supplied tie descriptions; bullets, relationship lists, and invented facts are forbidden.",
-          "Narration must use American English and third-person biographical prose, with no audience address, interface references, or reader-directed imperatives."
+          "Exactly one returned entry for every derived circle; each `key` must match exactly, and output is saved in deterministic cluster order.",
+          "Titles are evocative, name-free chapter headlines of \"2-5 words.\"",
+          "Each text is \"2-4 sentences\" of flowing prose grounded only in supplied tie descriptions; relationship lists and invented facts are forbidden.",
+          "Output is American English plain text with no Markdown, written in third person; audience address, interface references, and reader-directed imperatives are forbidden."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Derives social-network clusters deterministically, then builds a factual brief for each one from its principal members, secondary bridging acquaintances, and relationship descriptions. It requests a chapter-like title and 2-4 sentences of prose per circle, then stores the resulting keyed cards under `social_network.narration` for the network presentation.",
-        "why_this_design": "The code validates that every derived circle has a returned key and reconstructs the saved list in deterministic cluster order, rather than trusting response order. Narration is optional: any parse failure, exception, or missing circle leaves the network usable with its tie-list fallback."
+        "what_it_does": "Builds a brief for every deterministically derived social-network circle, including its main people, secondary bridging acquaintances, and the descriptions, types, and strengths of links within the circle. It generates a short chapter-like title and 2-4 sentences of factual narration per circle, then stores the results under `social_network.narration.circles` in the cluster order used by the interface.",
+        "why_this_design": "The step keys generated text back to the deterministic cluster list rather than trusting returned order, so narration remains aligned with the client’s circle layout. It is non-fatal: if generation fails or omits any circle, no partial narration is written and the interface can fall back to tie listings; Phase 8 may later rewrite successful narration."
       }
     },
     "m_p7a": {
@@ -155,31 +155,31 @@
       }
     },
     "m_p7c": {
-      "fingerprint": "954d74c4f35cdf41",
+      "fingerprint": "10468d25af31d789",
       "summary": {
         "constraints": [
-          "Returns one stop entry per candidate, in the original chronological order, with `key` copied exactly.",
-          "Keeps usually no more than about \"FIVE\" stops, but must retain at least a few; discarded stops require `keep=false` and a `discard_reason`.",
-          "Kept titles are \"2-5 words,\" evocative rather than place-name or person-name lists; kept text is \"2-4 sentences\" of prose with no bullets.",
-          "Narration must be factual and grounded only in supplied events, name people and places naturally, use American English and third person, and exclude audience address or map-interface references."
+          "Returns exactly one ordered result entry per input cluster, copying its `key` exactly.",
+          "Usually retains no more than about \"FIVE\" stops; discarded entries must set `keep=false` and provide `discard_reason`.",
+          "Kept titles are evocative \"2-5 words,\" cannot repeat the place name, and cannot list people’s names.",
+          "Kept prose is \"2-4 sentences,\" factual and grounded in the supplied events, with no Markdown, bullets, audience address, or map-interface references."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Turns the chronologically ordered geographic event clusters into the short narrative cards for the meta story’s map sequence. It also curates the candidate clusters, returning one stop record for every input cluster while marking weak, accidental, or redundant places for removal so later map construction can prune them.",
-        "why_this_design": "Curation and narration occur in the same call so the selection decision reflects each place’s narrative significance relative to the complete ordered arc, rather than treating every geocoded grouping as inherently worth a stop. Requiring an entry for every candidate, including discarded ones, preserves the key-based correspondence needed to safely cascade pruning downstream."
+        "what_it_does": "Turns each chronological geographic event cluster into a candidate map-card narrative for the meta story. In the same structured response, it curates the candidate set by marking weak, accidental, or redundant locations for removal, so downstream map construction can retain only the stops that carry the story's arc.",
+        "why_this_design": "Curation and narration occur in one call so the selection decision is made with the full ordered set of places in view, rather than treating every geographic grouping as inherently significant. The prompt explicitly frames excessive stops as a gazetteer failure and preserves a nontrivial map by requiring at least a few survivors."
       }
     },
     "m_p8": {
-      "fingerprint": "a0db65320854feb4",
+      "fingerprint": "bd95bcc9df220fcc",
       "summary": {
         "constraints": [
-          "Opening and description share a roughly \"100-150 words\" paragraph-text budget; each component body and the conclusion is one short paragraph.",
-          "`section_order` must include every available `timeline`, `network`, and `map` section exactly once, in reader-facing order; map prose and retained stops are empty when no map exists.",
-          "Events retain supplied `person_id` and `event_index` verbatim and remain in input order; chapters also remain in input order; IDs and keys must be copied rather than constructed.",
-          "All claims must be grounded in supplied material, quotations must be verbatim and attributed, images are limited to `MAX_IMAGES_PER_STORY` with no reuse, and invented facts, dates, relationships, or quotations are forbidden."
+          "Opening and description together stay at roughly \"100-150 words\"; each section body and the conclusion is one short paragraph.",
+          "Every timeline event is returned once, with its person ID and event index copied verbatim and in input order; chapters also remain in input order.",
+          "Section order names each available timeline, network, and map section exactly once; map body and kept stops are empty when no map exists.",
+          "No invented facts, dates, relationships, or quotations; text is third-person American English, plain text only, with no Markdown, rhetorical questions, stock rhetoric, or reader address."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Synthesizes the assembled timeline, relationship graph, map, prior item drafts, background excerpts, and image candidates into one coherent biographical data story. It returns all display text and presentation ordering in a single structured result: header prose, section headings and framing, conclusion, rewritten chapter and event text, network circles, retained map stops, and explicitly discarded stops.",
-        "why_this_design": "A single top-down pass lets the composition establish an arc across materials that were drafted independently, while preserving information where it is used: events on the timeline, relationships on circle cards, and place details on stop cards. The call itself is not caught locally after structured parsing, so operational failures remain the wrapper's responsibility; the following branch is deliberately limited to verbose logging."
+        "what_it_does": "Produces the complete, page-ordered editorial layer for a multi-person biographical story after earlier stages have drafted individual components. It selects the story’s throughline and section order, then rewrites header prose, component headings, timeline events, network circles, map stops, and conclusion into a single voice; it can remove map stops that do not support that argument.",
+        "why_this_design": "The prompt gives factual weight to the cards and stops nearest to their use, preserving scarce article-prose space for orientation rather than duplicating component facts. Composition happens after the page, source material, background excerpts, and image candidates have been assembled, so ordering and omissions can reflect the whole story rather than isolated records."
       }
     },
     "m_save": {
@@ -211,31 +211,31 @@
       }
     },
     "m_translate": {
-      "fingerprint": "f4582b60bc67a08c",
+      "fingerprint": "988935ed44045d9c",
       "summary": {
         "constraints": [
-          "Skips processing when every translation-status value is \"current\", unless `force` is enabled.",
-          "Returns the input JSON structure with every array at exactly the same length and order.",
-          "Preserves Markdown exactly, including links, emphasis, and line breaks.",
-          "Keeps each existing `[[term|display]]` marker exactly once, leaves its term and annotation keys unchanged, and never invents markers."
+          "Skip work unless forced when every meta-story translation status is \"current\".",
+          "Return the extracted payload's structure with every array at exactly the same length and order.",
+          "Preserve each [[term|display]] marker exactly once; keep term keys unchanged, translate only display text, and never invent markers.",
+          "Preserve plain-text formatting and line breaks; translate background paragraphs and headings separately without merging paragraphs or adding headings."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Loads a meta-story JSON detail file, translates its extracted text fields into the target language through the shared translation routine, and writes the translated detail file under the language-specific meta-stories directory. It then updates the target-language meta-story registry, so the translated story remains discoverable alongside its detail content; missing source data, translation failure, or save failure stops the update.",
-        "why_this_design": "Translation freshness is checked before any work, avoiding unnecessary rewrites unless forced. Event titles and person names are synchronized with the corresponding translated person data, preventing chapter and slide text from diverging across related documents."
+        "what_it_does": "Loads a meta-story JSON detail file, checks whether its translation and corresponding language-registry entry are current, and translates the story when needed. The translation uses the same extract–translate–merge contract as person data: only translatable fields are sent, while event titles and person-name spellings are reused from the settled person translations so story slides, chapters, and biographies use identical localized forms. It saves the translated detail JSON and then updates the target-language meta-story registry.",
+        "why_this_design": "Reusing event titles and names from person translations prevents independently translated copies of the same label from drifting apart. The prompt also treats annotation markers as fixed table identifiers, since an added, removed, or duplicated marker makes the assembled document invalid."
       }
     },
     "p_backgrounds": {
-      "fingerprint": "14f499dddcf82149",
+      "fingerprint": "722c2eb8acb580a6",
       "summary": {
         "constraints": [
-          "Events with missing numeric weights abort the run; they must be regenerated rather than backfilled here.",
-          "Only selected deep events are targets, and existing nonblank backgrounds are skipped unless \"overwrite\" is set.",
-          "A passage must be \"350-550 words\" in \"3-5 paragraphs\"; null is allowed only when sources add nothing beyond the description.",
-          "Sources are limited to \"1-3\" event-specific Wikipedia URLs, and illustration queries are \"3-4\" distinct \"2-5 words\" Commons searches for non-portrait objects or places named in the report."
+          "Aborts without writing anything if any event lacks a numeric weight, directing the dataset to be regenerated instead.",
+          "Writes only selected deep events; skips events with nonblank backgrounds unless `overwrite` is set, and `dry_run` prints targets without calling the generator.",
+          "Backgrounds must be \"350-550\" words in \"3-5\" blank-line-separated paragraphs; `## ` headings are the only allowed markup, with at most two and none above the opening paragraph.",
+          "Sources must be \"1-3\" supplied Wikipedia URLs that document this event; image queries must contain \"3-4\" different, report-named, non-portrait subjects, or be empty rather than guessed."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Selects the story’s deep events from the current event list and ego network, then writes a long-form background passage only for selected events that lack one unless overwrite is enabled. For each successful passage, it reselects event-level Wikipedia sources from the material supplied to the call, generates Commons illustration searches, saves the updated event data, and propagates the revised URLs to translated copies.",
-        "why_this_design": "The deep-event selector is shared with the story logic, so no report is generated for an event the interface cannot expose. Source URLs are filtered against an allowlist of URLs actually provided to the call, guarding against plausible but nonexistent or unsupported citations; the existing source list remains unchanged if no allowed replacement is returned."
+        "what_it_does": "Selects the story’s deep events using the same event-and-ego-network rule as the interface, then generates a standalone background passage only for selected events that do not already have one unless overwrite is enabled. For each completed passage, it also reselects event-specific Wikipedia sources from the URLs supplied to the call and produces Commons search queries for non-portrait illustrations; accepted source URLs are propagated to translated copies after the updated event file is written.",
+        "why_this_design": "Restricting work to the interface’s deep-event selection prevents unreachable reports from accumulating and preserves existing passages by default. Citation filtering is deliberately post-generation: it rejects plausible-but-unseen or malformed URLs while allowing the depth layer to replace pooled, irrelevant citations with sources that actually document the event."
       }
     },
     "p_chapter_art": {
@@ -267,17 +267,17 @@
       }
     },
     "p_chapters": {
-      "fingerprint": "1d1b6a07f99cd4dd",
+      "fingerprint": "7aed113e0014d02b",
       "summary": {
         "constraints": [
-          "Produce \"3–6\" chapters; start at or before the first event and end at or after the last.",
-          "Assign every event to exactly one chronologically ordered, non-overlapping chapter.",
-          "Use lowercase snake_case IDs and 2–5-word, single-concept headlines; forbid \"Other,\" \"Miscellaneous,\" \"Additional,\" and \"Various,\" as well as list-like punctuation or \"and.\"",
-          "Aggregate only significant non-subject people under one canonical name each; summarize location as the broadest appropriate region, and write the conclusion in \"1–2 sentences\" in American English."
+          "Produce \"3-6\" chronologically ordered, non-overlapping chapters; every event belongs to exactly one chapter, and the first and last chapters cover the first and last events.",
+          "Use lowercase snake_case IDs; headlines are \"2-5 words,\" vary in length, express one theme, and cannot use \"and,\" commas, list-making punctuation, or \"Other,\" \"Miscellaneous,\" \"Additional,\" or \"Various.\"",
+          "Aggregate only significant non-subject people, using each canonical name once; summarize location as the broadest appropriate region rather than a city list.",
+          "Return plain-text American English fields and a memorable \"1-2 sentences\" conclusion about legacy or the life journey."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Transforms the chronologically ordered, researched event record into a narrative scaffold of 3–6 life chapters. Each chapter supplies a thematic headline, bounded dates and ages, a deduplicated set of significant associated people, and one broad regional location; it also produces a 1–2 sentence legacy conclusion for the completed personal story.",
-        "why_this_design": "The chapter boundaries must cover every event exactly once while remaining chronological and non-overlapping, preventing narrative gaps and duplicate placement. Failure is fatal rather than degradable because later story construction depends on having a complete chapter structure."
+        "what_it_does": "Transforms the chronologically ordered, established life events into a structured narrative arc of life chapters. Each chapter supplies a thematic headline, bounded dates and age range, deduplicated significant associates, and a broad regional location; it also produces a one-to-two-sentence legacy conclusion.",
+        "why_this_design": "The chapter boundaries must partition the full event timeline without overlap, preventing attractive narrative labels from leaving events uncovered or assigning them twice. This phase raises an error after its configured retry attempts instead of returning a partial result, because downstream story presentation has no usable structure without chapters."
       }
     },
     "p_db": {
@@ -295,31 +295,31 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "5c26f2d094cd7ce7",
+      "fingerprint": "ec5ac39e3662cee2",
       "summary": {
         "constraints": [
-          "Produce exactly \"12–16\" events, in strict chronological order, about the target subject only.",
-          "Use \"day\" precision only when a day is stated, \"month\" only when a month is stated, and otherwise \"year\"; the description’s year must match the assigned date.",
-          "Titles must be \"2–6\" words; descriptions must be \"2–4\" direct, factual sentences in American English, without hindsight, meta-commentary, annotations, or exact-location/source detail.",
-          "Exclude post-death and legacy events; keep death factual, reserve retrospective impact for the separate \"1–2\" sentence conclusion, and never create an \"Other Events\" grouping."
+          "Produces exactly \"12–16\" events, in strict chronological order, with no \"Other Events\" or miscellaneous grouping.",
+          "Each event uses a 2–6-word active title, a direct 2–4-sentence plain-text description, an ISO-8601 date, and date precision limited to \"day,\" \"month,\" or \"year.\"",
+          "Events concern only the target subject; related articles are context only. Post-death events and legacy-focused events are excluded.",
+          "Descriptions remain in the event’s time period, avoid hindsight and meta-commentary, and death entries contain factual immediate circumstances only; retrospective interpretation belongs in the 1–2-sentence conclusion."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a structured life plan from the target subject’s main article, an optional biographical text, and related articles supplied only as background. It returns dataset and person metadata plus a strictly chronological set of 12–16 minimal event skeletons, each with an ISO-8601 date and justified precision, a concise title, a 2–4-sentence narrative description, a relative significance weight, and optional event classification. The event set serves as the narrative spine for later enrichment rather than supplying locations, images, sources, or annotations.",
-        "why_this_design": "The full article set is evaluated in one pass so event significance can be scored comparatively across the entire life; the weight measures how much an event changes this particular life, not its general historical fame. Separating skeleton selection from later research protects the initial chronology and significance ranking from being crowded by source, location, and media details."
+        "what_it_does": "Builds the first-pass LifePlan from the target person’s main article, an optional biographical text, and related articles supplied only as context. It selects a strictly chronological set of 12–16 life-event skeletons, assigning each a date and calibrated within-life weight while also returning dataset, creation-date, and person metadata. The result is a narrative spine rather than a sourced or geocoded timeline: descriptions can naturally mention people and places, but later phases supply exact location records, images, sources, and annotations.",
+        "why_this_design": "The whole article set is considered in one call because event significance is relative: assigning a weight requires comparing accomplishments, turning points, and personal episodes across the entire life. Date precision is explicitly treated as an evidentiary claim, preventing unsupported day-level dates from entering downstream records."
       }
     },
     "p_events_p2": {
-      "fingerprint": "1f8a2a39a86f69d2",
+      "fingerprint": "08283906a21a9393",
       "summary": {
         "constraints": [
-          "Related articles are filtered for the specific event before prompting, with a configured maximum count.",
-          "Locations must be city or region level at most; addresses, buildings, and exact venues are forbidden, and multi-location events may return multiple locations with one marked primary.",
-          "Sources are limited to \"1-3\" Wikipedia URLs or references that actually document the event; the subject article is the fallback, and padding is prohibited.",
-          "Annotations are limited to \"0-3 per event,\" only for obscure, non-obvious terms; each term may be marked once, and classified-event subjects must not be annotated."
+          "Descriptions must remain in the event's chronological moment, use plain American English, and contain no Markdown except [[term|display]] annotation markers.",
+          "Locations must be city or region level at most; each uses historic and modern names, with exactly one primary location when a single location is known.",
+          "Sources are limited to \"1-3\" Wikipedia URLs or references that actually document the specific event; the list must not be padded with merely related articles.",
+          "Annotations are limited to \"0-3\" per event, usually none; each term may appear only once, and classified events must not annotate the classification subject."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Takes one Phase 1 event skeleton and a filtered set of related articles, then produces structured research details for that event: a refined, chronologically bounded description, city-level historic and modern locations, directly involved people, supporting sources, a semantic icon, and conservative explanatory annotations. It also requests three to four Wikimedia Commons search queries tied to event objects, places, documents, or settings rather than portraits, so illustration research is derived while the event material is in context. If all parsing attempts fail, the event remains in the story with empty research fields and the neutral `mdi-calendar` icon.",
-        "why_this_design": "Classified events use a dedicated prompt path and must omit technical detail about the classified subject, preventing narrative prose and structured classification metadata from duplicating one another. Failure is isolated per event: an unresearchable event is retained rather than aborting the full personal-story run."
+        "what_it_does": "Enriches one biographical event at a time using event-filtered related articles and optional Deutsche Biographie material. It returns a chronologically bounded, concise description with conservative inline annotations, city-level historic and modern locations, directly involved people other than the subject, event-specific documentary sources, Commons-oriented image search queries, and a semantic icon. Classified events are routed through a class-specific prompt so their narrative descriptions do not duplicate metadata already captured by the classification.",
+        "why_this_design": "Research is deliberately isolated per event while the relevant source material is still in context, preventing details, sources, and image searches from drifting across nearby life events. Failed structured calls are retried, but a persistent failure preserves the event with empty research fields and a neutral calendar icon rather than aborting the story."
       }
     },
     "p_geocode": {
@@ -451,17 +451,17 @@
       }
     },
     "p_network": {
-      "fingerprint": "f529522f2c745b24",
+      "fingerprint": "78db5798cb991a3b",
       "summary": {
         "constraints": [
-          "Use exactly \"3-5\" main relationship categories and provide one category summary for each; place family first when present.",
-          "Include \"10-25\" significant, evidence-supported connections; each named person may appear only once, even if they held multiple roles.",
-          "Represent individuals as `person`; use `organization` or `group` only when the evidence concerns the collective itself, with a null qualifier for people and a short descriptor for collectives.",
-          "For state or regime ties, encode the action toward the subject—such as `political/censor`, `political/persecutor`, `political/banned_by`, or `political/patron`—rather than an official title or a falsely mutual conflict."
+          "Include \"10-25\" significant, sufficiently documented connections; list each connected person only once.",
+          "Use exactly \"3-5\" main relationship categories, with family first in category summaries when present.",
+          "Use American English and plain text only—no Markdown, parenthetical explanations in person_name, or links rendered as text.",
+          "Prefer named people; classify collective alters as organization or group only when sources support a tie to the collective rather than an identifiable individual."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a structured ego network from a subject's Wikipedia extract and related Wikipedia articles, identifying 10-25 well-supported ties around the person. It returns central-person metadata, typed and weighted connection records, source URLs, and interpretive summaries for the relationship categories that will support later personal-story assembly.",
-        "why_this_design": "The step separates relationship category and role in the output schema, then joins them into the interface token after validation. This keeps every tie within the controlled vocabulary while preserving a compact localized type for downstream display. Related articles supplement the truncated 15,000-character main extract, broadening coverage without relying on unsupported inference."
+        "what_it_does": "Extracts a structured ego network from a subject’s Wikipedia article and related Wikipedia articles, producing central-person metadata, 10-25 evidence-backed ties, and summaries of the relationship categories represented. Each tie records the alter’s entity type, role, description, approximate timing, strength, interaction frequency, influence direction, shared contexts, source URLs, and optional notes; the code then joins the separately validated category and role into the interface-facing relationship_type token.",
+        "why_this_design": "Separating relationship_category and relationship_role in the schema prevents ties from drifting outside the closed vocabulary before they are joined for storage and localization. The prompt also treats state or regime ties as directed actions against or in support of the subject, avoiding misleadingly neutral office-based labels and false symmetry in persecution cases."
       }
     },
     "p_portrait": {
@@ -550,17 +550,17 @@
       }
     },
     "p_translate": {
-      "fingerprint": "6668e74a774982a7",
+      "fingerprint": "613a0b3a3dbd00d2",
       "summary": {
         "constraints": [
-          "Return the same JSON structure; every array must retain exactly the source length and order.",
-          "Preserve Markdown exactly, including links, emphasis, and line breaks; background paragraphs and headings remain separate entries.",
-          "For every `[[term|display]]` marker, keep `term` and syntax unchanged, translate only `display`, retain each source marker exactly once, and add none.",
-          "Apply the supplied person-name glossary consistently; use established target-language place names when available, but keep foreign names without an established form unchanged."
+          "Arrays must retain exactly the input length and order; output item N translates input item N.",
+          "The response must preserve the payload structure, line breaks, plain-text formatting, and existing annotation syntax; no new Markdown or headings.",
+          "Each [[term|display]] marker must occur exactly once where it appeared: its term key remains unchanged, only its display text is translated, and no markers may be added.",
+          "Use glossary forms for listed people and established target-language place names, but preserve all other person names; supplied reference spellings take precedence."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Translates only the text fields extracted from a larger person document into the target language and returns them in the requested structured format. The translated fields are later overlaid onto an English-document copy, leaving nontranslatable values such as dates, coordinates, URLs, and IDs outside the translation path. It supplies a person-name glossary, language-specific style guidance, optional extra rules, and source-derived naming evidence for people, places, and institutions.",
-        "why_this_design": "Sending an extract rather than the whole record narrows the mutation surface: structured factual fields cannot be altered during translation. Source-derived naming evidence overrides general place-name rules and memory, preventing invented localized forms while preserving qualifiers when evidence matches only part of a place string."
+        "what_it_does": "Translates only the text fields extracted from a person-related document into the target language, returning the same structured payload for later merging back into the unchanged English document. It supplies a person-name glossary, language-specific style and extra rules, and—when available—target-language reference evidence for established person, place, and institution spellings.",
+        "why_this_design": "Sending an extracted payload rather than the full document limits translation to fields that may change; the later overlay therefore leaves dates, coordinates, URLs, IDs, and other nontext data intact. Reference evidence outranks the general place-name rule and recalled knowledge, preventing prose from inventing localized-looking names or losing qualifiers in partial matches."
       }
     },
     "p_wiki_fetch": {

@@ -323,7 +323,8 @@ REQUIREMENTS:
                 "content": "You are a skilled narrative writer turning "
                 "geographic event data into short, factual story texts, "
                 "and a careful curator of which places truly matter. "
-                "Write in American English.",
+                "Write in American English, as plain text with no "
+                "Markdown — the interface renders it verbatim.",
             },
             {"role": "user", "content": prompt},
         ],

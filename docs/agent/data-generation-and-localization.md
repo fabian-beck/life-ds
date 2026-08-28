@@ -178,6 +178,14 @@ python scripts/validate_scripts.py            # exit 1 on any finding
 
 The translator has twice spliced another alphabet into a German word — "Zwillინგstöchter" with three Georgian letters, "лекtionierte" opening in Cyrillic — and the defect is invisible in a diff of correct-looking JSON. This scans every data file for a word mixing Latin letters with another script's. A pure Cyrillic name in an image credit passes, one Greek letter beside Latin passes (that is how physics writes "hν"), and sub-/superscript digits are not letters; there is no `ACCEPTED` list because no legitimate word has this shape. `translate_person.py` runs the same scan on every document it saves and prints the corrupt words while the run is still on screen.
 
+**Check the prose for stray Markdown** (no API key, no model):
+
+```bash
+python scripts/validate_markdown.py            # exit 1 on any finding
+```
+
+The interface renders every text field verbatim; its only markup is the `[[term|display]]` annotation marker and the `## ` heading line inside a `background` report. A model that writes Markdown anyway — the generator setting a work's title as `*Childe Harold's Pilgrimage*`, the translator adding `*Philosophical Magazine*` where the English was plain — ships literal asterisks onto the slide. This flags asterisks, backticks, `__bold__` pairs, `[text](url)` links, and a heading line outside a `background` field; single-underscore emphasis is not checked, because Commons file names are full of underscores and models write emphasis with asterisks. There is no `ACCEPTED` list because no field legitimately carries these characters. `translate_person.py` runs the same scan on every document it saves.
+
 **Check the English event titles** (no API key, no model):
 
 ```bash

@@ -96,8 +96,10 @@ class BackgroundOnly(BaseModel):
             "concrete specifics, a scene or episode told at length, and what "
             "came of it. One or two '## Section heading' lines may divide it "
             "where it turns to a different thing, never above the first "
-            "paragraph. Prose for a reader, not a list. Null when the sources "
-            "give nothing beyond the description."
+            "paragraph; that heading line is the only markup allowed — the "
+            "prose is plain text with no other Markdown. Prose for a reader, "
+            "not a list. Null when the sources give nothing beyond the "
+            "description."
         ),
     )
     sources: List[str] = Field(
@@ -149,6 +151,11 @@ THE BACKGROUND REPORT:
   and is set in sentence case: the first word and proper nouns, nothing else
   * GOOD: '## The bombe on the floor', '## What Bletchley kept quiet'
   * BAD: '## Background', '## Aftermath', '## A Cover Kafka Rejected'
+- The '## ' heading line is the ONLY markup the interface understands here. The
+  prose itself is rendered verbatim, so never write Markdown in it: no *emphasis*
+  or **bold**, no `code`, no [links](url). A title of a work stands plain in the
+  sentence — 'after Childe Harold's Pilgrimage', not 'after *Childe Harold's
+  Pilgrimage*' — and any asterisks you write will show on screen as asterisks
 - BUILD IT LIKE A REPORT, roughly in this order, as the material allows:
   1. THE SITUATION. What was going on around the event — the institution, the field,
      the war, the politics, the household. Open here, not on the subject's name

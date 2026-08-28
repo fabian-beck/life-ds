@@ -550,7 +550,8 @@ def review_social_network(
                 "content": "You are a careful biographical network editor. "
                 "You add, refine, and prune social-network ties strictly from "
                 "the evidence provided, never inventing people or unsupported "
-                "connections. You write in American English.",
+                "connections. You write in American English, as plain text "
+                "with no Markdown — the interface renders it verbatim.",
             },
             {"role": "user", "content": prompt},
         ],

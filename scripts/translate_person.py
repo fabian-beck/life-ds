@@ -90,8 +90,10 @@ LANGUAGE_STYLE_NOTES = {
         "for genuinely German phrasing rather than anglicisms or loan-translated "
         "idioms. Vary sentence length so the prose does not feel mechanical. "
         "Use the informal 'Du' form if the reader is ever addressed. Apply correct "
-        "German typography (e.g. „quotes“ where quoting), but keep Markdown and "
-        "[[term|display]] markers intact."
+        "German typography (e.g. „quotes“ where quoting), but keep "
+        "[[term|display]] markers intact and stay in plain text: never add "
+        "Markdown emphasis (*...*) the English does not have — German sets a "
+        "work's title plain, not in asterisks."
     ),
 }
 
@@ -1189,17 +1191,23 @@ def load_json_file(file_path: Path) -> Optional[Dict[str, Any]]:
 def save_json_file(data: Dict[str, Any], file_path: Path, indent: int = 2) -> bool:
     """Save data to a JSON file (LF newlines, UTF-8, same style as generation).
 
-    Every document is scanned for words that mix writing systems on the way
-    out — the translator has returned "Zwillინგstöchter" and "лекtionierte"
-    before, and the defect is invisible in a diff of correct-looking JSON.
-    The save still succeeds; the warning names the words so the operator can
-    fix or re-translate them while the run is still on screen.
+    Every document is scanned on the way out for words that mix writing
+    systems — the translator has returned "Zwillინგstöchter" and
+    "лекtionierte" before — and for stray Markdown, which the translator has
+    added where the English was plain ("*Philosophical Magazine*") and the
+    interface renders verbatim. Both defects are invisible in a diff of
+    correct-looking JSON. The save still succeeds; the warnings name the
+    findings so the operator can fix or re-translate them while the run is
+    still on screen.
     """
-    from validate_scripts import mixed_script_words, strings_in
+    from validate_markdown import markdown_findings, strings_in
+    from validate_scripts import mixed_script_words
 
-    for field, text in strings_in(data):
+    for field, key, text in strings_in(data):
         for word in mixed_script_words(text):
             print(f'  ⚠ mixed-script word in {file_path.name}{field}: "{word}"')
+        for finding in markdown_findings(text, key):
+            print(f"  ⚠ Markdown in {file_path.name}{field}: {finding}")
     try:
         file_path.parent.mkdir(parents=True, exist_ok=True)
         with open(file_path, "w", encoding="utf-8", newline="") as f:
@@ -1274,7 +1282,11 @@ GENERAL RULES:
      or foreign in {lang_name}, rewrite it until it sounds native.
    - Preserve the full meaning, tone, and register faithfully; do not summarize,
      extend, or omit — but likeness of wording to the English is NOT a goal.
-3. Preserve Markdown formatting exactly (links, emphasis, line breaks).
+3. The corpus is plain text: the interface renders every field verbatim, so
+   never introduce Markdown the source does not have — no *emphasis* or
+   **bold** around work titles or names, no `code`, no [links](url), no
+   headings. Preserve line breaks, and preserve the little markup that does
+   exist ([[term|display]] markers, rule 4) exactly.
    A background report arrives taken apart: "background_paragraphs" is one
    entry per paragraph and "background_headings" is its section headings, as
    short phrases. Translate both, keep both the same length and order as the

@@ -279,7 +279,11 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "Focus on identifying significant relationships in a person's life, including family members, colleagues, mentors, "
         "students, collaborators, friends, rivals, and other important connections. "
         "IMPORTANT: All output text must be in American English only, regardless of the source language. "
-        "IMPORTANT: Use only 3-5 main relationship categories maximum to keep the network organized and focused."
+        "IMPORTANT: Use only 3-5 main relationship categories maximum to keep the network organized and focused. "
+        "Every text field is plain text rendered verbatim by the interface: never write "
+        "Markdown in it — no *emphasis* or **bold**, no `code`, no [links](url). A "
+        "person's name or a work's title stands plain in the sentence, without "
+        "asterisks around it."
     )
 
     instructions = (

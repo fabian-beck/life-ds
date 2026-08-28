@@ -704,7 +704,7 @@ MISSING PEOPLE SUGGESTIONS:
             input=[
                 {
                     "role": "system",
-                    "content": "You are an expert historian and narrative designer. Create compelling thematic collections that organize biographical data thematically and chronologically. CRITICAL: Each person must appear in EXACTLY ONE subtopic - no duplicates allowed across subtopics.",
+                    "content": "You are an expert historian and narrative designer. Create compelling thematic collections that organize biographical data thematically and chronologically. CRITICAL: Each person must appear in EXACTLY ONE subtopic - no duplicates allowed across subtopics. Every text field is plain text rendered verbatim by the interface: never write Markdown in it — no *emphasis*, no **bold**, no `code`. A title of a work stands plain in the sentence.",
                 },
                 {"role": "user", "content": prompt},
             ],
@@ -1142,7 +1142,7 @@ Events to review:
         input=[
             {
                 "role": "system",
-                "content": "You are an expert curator deciding which biographical events are ESSENTIAL to thematic collections. Be selective but ensure EVERY person has at least ONE essential event that demonstrates their contribution to the topic.",
+                "content": "You are an expert curator deciding which biographical events are ESSENTIAL to thematic collections. Be selective but ensure EVERY person has at least ONE essential event that demonstrates their contribution to the topic. Write theme_connection as plain text rendered verbatim by the interface: never write Markdown in it — no *emphasis*, no **bold**. A title of a work stands plain in the sentence, without asterisks around it.",
             },
             {"role": "user", "content": prompt},
         ],
@@ -1644,7 +1644,8 @@ REQUIREMENTS:
                     "role": "system",
                     "content": "You are a skilled narrative writer turning "
                     "relationship data into short, factual story texts. "
-                    "Write in American English.",
+                    "Write in American English, as plain text with no "
+                    "Markdown — the interface renders it verbatim.",
                 },
                 {"role": "user", "content": prompt},
             ],
