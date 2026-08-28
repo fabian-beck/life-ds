@@ -14,8 +14,32 @@ import { Protocol } from "pmtiles";
 import { layers, namedFlavor } from "@protomaps/basemaps";
 import { assetUrl } from "./assetUrl.js";
 
+/**
+ * A `public/` asset path as an absolute URL against the page it is loaded on.
+ * @param {string} path - Site-absolute path, placeholders and all
+ * @returns {string} Absolute URL
+ */
+function absoluteAssetUrl(path) {
+  return new URL(assetUrl(path), window.location.href).href;
+}
+
 // Local basemap (zoom 0-5) extracted from Protomaps v4 demo bucket.
 const DEFAULT_PM_TILES_URL = assetUrl("/basemap.pmtiles");
+
+// The letterforms and icons the style draws with, vendored next to the tiles
+// by scripts/vendor_basemap_assets.mjs. Pointing these at protomaps.github.io,
+// as the upstream style does, sent every visitor's IP to a US CDN on every map
+// view and left the map missing its icons whenever that host was unreachable.
+// MapLibre fills in {fontstack} and {range}, and appends .json/.png and @2x to
+// the sprite path.
+//
+// The sprite URL has to be absolute — MapLibre rejects a site-absolute one
+// outright ("Invalid sprite URL … must be absolute") and the map then loads
+// with no icons at all. The glyphs URL must stay site-absolute for the
+// opposite reason: resolving it through URL() percent-encodes the braces, and
+// MapLibre then reports the {fontstack} and {range} tokens as missing.
+const GLYPHS_URL = assetUrl("/basemap-assets/fonts/{fontstack}/{range}.pbf");
+const SPRITE_URL = absoluteAssetUrl("/basemap-assets/sprites/v4/dark");
 const PRIMARY_PM_TILES_URL =
   import.meta.env.VITE_PROTOMAPS_PM_TILES_URL ?? DEFAULT_PM_TILES_URL;
 const FALLBACK_PM_TILES_URL =
@@ -91,9 +115,8 @@ export function createBasemapStyle({ url, lang = "en", labelMode = "full" }) {
       key,
       JSON.stringify({
         version: 8,
-        glyphs:
-          "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
-        sprite: "https://protomaps.github.io/basemaps-assets/sprites/v4/dark",
+        glyphs: GLYPHS_URL,
+        sprite: SPRITE_URL,
         sources: {
           protomaps: {
             type: "vector",

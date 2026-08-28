@@ -10,6 +10,7 @@
     "preview:card": "node scripts/capture_social_preview.mjs",
     "report:pdf": "node scripts/export_report_pdf.mjs",
     "report:shots": "python scripts/generate_report.py --shots",
+    "basemap:assets": "node scripts/vendor_basemap_assets.mjs",
     "test:interface": "playwright test",
     "test:core": "npm run test:interface && python -m pytest",
     "test:interface:report": "playwright show-report",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@mapbox/vector-tile": "^3.0.0",
     "@playwright/test": "^1.61.1",
     "@sveltejs/vite-plugin-svelte": "^7.2.0",
     "eslint": "^10.7.0",
@@ -33,6 +35,7 @@
     "eslint-plugin-svelte": "^3.20.0",
     "globals": "^17.7.0",
     "lint-staged": "^17.0.8",
+    "pbf": "^5.1.2",
     "prettier": "3.9.5",
     "prettier-plugin-svelte": "^4.1.1",
     "stylelint": "^17.14.0",
