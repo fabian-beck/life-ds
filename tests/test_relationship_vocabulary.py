@@ -20,7 +20,6 @@ from utils.relationship_vocabulary import (  # noqa: E402
     CATEGORIES,
     ENTITY_KINDS,
     ROLES,
-    TYPE_ALIASES,
     is_canonical,
     normalize_relationship_type,
 )
@@ -85,14 +84,6 @@ class VocabularyLocaleParity(unittest.TestCase):
             for lang, locale in LOCALES.items():
                 self.assertIn(f"network.entity.{kind}", locale, f"{kind} ({lang})")
 
-    def test_every_alias_lands_inside_the_vocabulary(self):
-        stray = {
-            source: target
-            for source, target in TYPE_ALIASES.items()
-            if not is_canonical(target)
-        }
-        self.assertEqual(stray, {})
-
 
 class CorpusStaysCanonical(unittest.TestCase):
     def test_every_ego_network_type_is_in_the_vocabulary(self):
@@ -147,20 +138,14 @@ class CorpusStaysCanonical(unittest.TestCase):
 
 
 class Normalization(unittest.TestCase):
-    def test_folds_spelling_variants_without_an_alias(self):
+    def test_folds_spelling_variants(self):
         self.assertEqual(
             normalize_relationship_type("family/mother-in-law"),
             ("family/mother_in_law", True),
         )
-
-    def test_maps_known_inventions_onto_the_vocabulary(self):
         self.assertEqual(
-            normalize_relationship_type("other/political_gatekeeper"),
-            ("political/censor", True),
-        )
-        self.assertEqual(
-            normalize_relationship_type("colleague"),
-            ("professional/colleague", True),
+            normalize_relationship_type("Professional/Political Rival"),
+            ("professional/political_rival", True),
         )
 
     def test_reports_a_token_it_cannot_place(self):

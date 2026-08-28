@@ -167,15 +167,6 @@ python scripts/validate_involved_names.py max_planck
 
 The story matches `involved_people` against `ego_network.json` by name to draw the person chips, without folding diacritics or ß/ss — so "Marga von Hößlin Planck" against "Marga von Hösslin" silently lost its chip, and nothing reported it because a failed match is also the correct outcome for people who are not in the network. This flags the near miss: a pair that folds to one person (diacritics collapsed, particles dropped, token subsets allowed) and that the interface's scoring — ported from `src/utils/story/personMatching.js`, keep the two in sync — nonetheless rejects. Its first corpus run surfaced seven shipped misses, from "Leó Szilárd"/"Leo Szilard" to a control-character corruption of "Lazović". The fix is to spell both sides identically; a pair that is genuinely two people belongs in the script's `ACCEPTED` list with the reason.
 
-**Normalize network relationship types** (no API key, no model):
-
-```bash
-python scripts/normalize_network_types.py            # apply; exit 1 on tokens outside the vocabulary
-python scripts/normalize_network_types.py --dry-run
-```
-
-The relationship vocabulary is closed (`scripts/utils/relationship_vocabulary.py`; see [Domain and data models](domain-and-data-models.md)). This is the deterministic sweep that folds every `relationship_type` in the corpus onto it — English files, translated copies by connection index, meta-story networks — applying the alias map plus a per-entry table for the tokens a name alone cannot decide (the bare-token legacy files, the issue #119 perpetrator class, organizations typed as `entity_kind` with their parenthetical moved into `qualifier`). Idempotent; translated copies whose payload gains a qualifier get their fingerprint restamped only when they were current before. A token it cannot place is reported and left, and `tests/test_relationship_vocabulary.py` keeps it visible.
-
 **Check the words for mixed writing systems** (no API key, no model):
 
 ```bash

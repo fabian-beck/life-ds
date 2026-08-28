@@ -488,9 +488,9 @@ def _normalize_relationship_types(connections: List[Dict[str, Any]]) -> None:
     """Fold every relationship type onto the closed vocabulary, in place.
 
     The prompt constrains the model to the vocabulary, but the field is a
-    free string in the schema, so an invention is still possible. Aliases
-    catch the recurring ones; a type that stays outside the vocabulary is
-    kept and reported, so the gap surfaces in the run log (and in
+    free string in the schema, so an invention is still possible. Folding
+    collapses spelling variants; a type that stays outside the vocabulary
+    is kept and reported, so the gap surfaces in the run log (and in
     tests/test_relationship_vocabulary.py) instead of shipping silently.
     """
     for conn in connections:
