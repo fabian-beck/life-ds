@@ -2709,12 +2709,23 @@ def filter_related_articles_for_event(
 RELATED_ARTICLE_CHARS = 6000
 RELATED_ARTICLE_COUNT = 8
 
+# How much of the subject's own article Phase 2 and the background writer are
+# shown. The article is the primary source of the whole dataset and was, until
+# this constant existed, not in either prompt at all — every location name,
+# involved person, and source rested on model recall, with the related
+# articles as the only text in front of it (#77). The cap keeps a long article
+# from dwarfing the eight related excerpts; the events of a life cluster in
+# its article's middle sections, so a front-truncated slice this size still
+# carries most of them.
+SUBJECT_ARTICLE_CHARS = 30000
+
 
 def build_phase2_prompt_base(
     event_skeleton: EventSkeleton,
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
     deutsche_biographie_text: Optional[str] = None,
+    subject_article: Optional[Dict[str, Any]] = None,
 ) -> str:
     """
     Build base Phase 2 prompt (common sections for all event types).
@@ -2925,29 +2936,41 @@ def build_phase2_prompt_base(
     if deutsche_biographie_text:
         prompt += "\n" + deutsche_biographie_text + "\n"
 
-    # Add filtered related articles
-    if filtered_related_articles and len(filtered_related_articles) > 0:
-        prompt += "\n" + "=" * 60 + "\n"
-        prompt += f"RELATED ARTICLES (filtered for this event, top {len(filtered_related_articles)}):\n"
-        prompt += "=" * 60 + "\n\n"
-        for idx, article in enumerate(filtered_related_articles, 1):
-            prompt += f"\nARTICLE {idx}: {article.get('title', 'Unknown')}\n"
-            prompt += f"URL: {article.get('url', '')}\n"
-            prompt += "-" * 60 + "\n"
+    prompt += _subject_article_prompt_section(subject_article)
 
-            full_text = article.get("fullText", "")
-            if full_text:
-                truncated = full_text[:RELATED_ARTICLE_CHARS]
-                prompt += f"{truncated}...\n\n"
-            else:
-                summary = article.get("summary", "")
-                if summary:
-                    prompt += f"{summary}\n\n"
-
-    return prompt
+    return prompt + _related_articles_prompt_section(filtered_related_articles)
 
 
-def _add_related_articles_section(
+def _subject_article_prompt_section(subject_article: Optional[Dict[str, Any]]) -> str:
+    """The subject's own article as the primary source, ahead of the related ones."""
+    extract = (subject_article or {}).get("extract", "")
+    if not extract:
+        return ""
+
+    section = "\n" + "=" * 60 + "\n"
+    section += "SUBJECT'S OWN WIKIPEDIA ARTICLE (primary source):\n"
+    section += "=" * 60 + "\n"
+    section += (
+        "This is the article the whole story is drawn from. Ground every field "
+        "above in it before reaching for recall or for the related articles: "
+        "historic and modern location names, involved people, sources, and any "
+        "prose you write. Where it and your memory disagree, the article wins.\n\n"
+    )
+    title = subject_article.get("title", "") if subject_article else ""
+    if title:
+        section += f"TITLE: {title}\n"
+    url = subject_article.get("fullurl", "") if subject_article else ""
+    if url:
+        section += f"URL: {url}\n"
+    section += "-" * 60 + "\n"
+    truncated = extract[:SUBJECT_ARTICLE_CHARS]
+    section += f"{truncated}"
+    if len(extract) > SUBJECT_ARTICLE_CHARS:
+        section += "..."
+    return section + "\n"
+
+
+def _related_articles_prompt_section(
     filtered_related_articles: List[Dict[str, Any]],
 ) -> str:
     """Helper to add related articles section to Phase 2 prompts."""
@@ -2980,6 +3003,7 @@ def build_phase2_prompt_classified(
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
     deutsche_biographie_text: Optional[str] = None,
+    subject_article: Optional[Dict[str, Any]] = None,
 ) -> str:
     """
     Generic Phase 2 prompt builder for classified events.
@@ -2991,6 +3015,7 @@ def build_phase2_prompt_classified(
         person_name,
         [],
         deutsche_biographie_text=deutsche_biographie_text,
+        subject_article=subject_article,
     )
 
     # event_class is None for standard events. The only caller checks before
@@ -2999,7 +3024,7 @@ def build_phase2_prompt_classified(
     class_type = event_skeleton.event_class.type if event_skeleton.event_class else None
     if class_type not in EVENT_CLASS_CONFIG:
         # Fallback to base prompt if config not found
-        return base + _add_related_articles_section(filtered_related_articles)
+        return base + _related_articles_prompt_section(filtered_related_articles)
 
     config = EVENT_CLASS_CONFIG[class_type]
 
@@ -3017,7 +3042,7 @@ def build_phase2_prompt_classified(
         prompt += f"{focus_item}\n"
     prompt += "\n"
 
-    return prompt + _add_related_articles_section(filtered_related_articles)
+    return prompt + _related_articles_prompt_section(filtered_related_articles)
 
 
 def research_event_details(
@@ -3027,6 +3052,7 @@ def research_event_details(
     model: str = PHASE2_MODEL,
     retry_count: int = 2,
     deutsche_biographie_text: Optional[str] = None,
+    subject_article: Optional[Dict[str, Any]] = None,
 ) -> EventDetails:
     """
     Research details for a single event with retry logic.
@@ -3048,6 +3074,7 @@ def research_event_details(
             person_name,
             filtered_articles,
             deutsche_biographie_text=deutsche_biographie_text,
+            subject_article=subject_article,
         )
     else:
         # Standard event (no classification)
@@ -3056,6 +3083,7 @@ def research_event_details(
             person_name,
             filtered_articles,
             deutsche_biographie_text=deutsche_biographie_text,
+            subject_article=subject_article,
         )
 
     system = (
@@ -3101,6 +3129,7 @@ def research_all_event_details(
     all_related_articles: List[Dict[str, Any]],
     model: str = PHASE2_MODEL,
     deutsche_biographie_text: Optional[str] = None,
+    subject_article: Optional[Dict[str, Any]] = None,
 ) -> List[EventDetails]:
     """Research details for all events sequentially (NO images - Phase 3)."""
     # Log classification routing info
@@ -3128,6 +3157,7 @@ def research_all_event_details(
             all_related_articles,
             model,
             deutsche_biographie_text=deutsche_biographie_text,
+            subject_article=subject_article,
         )
         details.append(detail)
 
@@ -4326,6 +4356,7 @@ def generate_person_events(
         person_name=life_plan.person.name,
         all_related_articles=related_articles or [],
         deutsche_biographie_text=db_prompt_text,
+        subject_article=page_data,
     )
     print(f"[Step 5/12] Researched details for {len(event_details_list)} events")
 

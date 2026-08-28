@@ -461,15 +461,21 @@ STEPS: List[Step] = [
         "research_event_details",
         phase_label="Phase 2",
         summary=(
-            "One call per event, given the articles relevant to that event at "
-            "6000 characters each: historic and modern place names, the people "
-            "involved, sources, a semantic icon, the terms the description leans "
-            "on—together with the Commons searches that would illustrate the "
-            "event, written while its material is still in front of the call. "
-            "Individual failures do not abort the run."
+            "One call per event, given the subject's own article at 30000 "
+            "characters as the primary source and the articles relevant to "
+            "that event at 6000 characters each: historic and modern place "
+            "names, the people involved, sources, a semantic icon, the terms "
+            "the description leans on—together with the Commons searches that "
+            "would illustrate the event, written while its material is still "
+            "in front of the call. Individual failures do not abort the run."
         ),
         depends_on=[Dep("p_events_p1", "one event skeleton per call")],
         prompts=[
+            # The section helpers come first: the joined prompt block is cut at
+            # MAX_PROMPT_CHARS, and the base builder alone overruns it, so
+            # anything listed after the base builder is never seen.
+            "_subject_article_prompt_section",
+            "_related_articles_prompt_section",
             "build_phase2_prompt_base",
             "build_phase2_prompt_classified",
             "research_event_details",
@@ -858,12 +864,13 @@ STEPS: List[Step] = [
             "and writes a 350-550 word background report exactly for the "
             "events the story will offer one on; a report for any other event "
             "could never be reached. It runs after review, so the report is "
-            "grounded in the reviewed text, and it is shown what the slide "
-            "already tells the reader — the popups, the chips, the rest of the "
-            "story as an outline — so it writes around them rather than into "
-            "them. It re-decides the event's citations in the same call, "
-            "accepting only URLs it was shown, and syncs them to the "
-            "translated copies since a URL is not prose."
+            "grounded in the reviewed text; its material is the subject's own "
+            "article at 30000 characters, the event's related articles, and "
+            "what the slide already tells the reader — the popups, the chips, "
+            "the rest of the story as an outline — so it writes around them "
+            "rather than into them. It re-decides the event's citations in "
+            "the same call, accepting only URLs it was shown, and syncs them "
+            "to the translated copies since a URL is not prose."
         ),
         depends_on=[
             Dep(
@@ -871,7 +878,11 @@ STEPS: List[Step] = [
                 "the reviewed events and network, as the dataset holds them",
             ),
         ],
-        prompts=["build_report_prompt", "REPORT_INSTRUCTIONS"],
+        prompts=[
+            "build_report_prompt",
+            "_subject_article_prompt_section",
+            "REPORT_INSTRUCTIONS",
+        ],
         inputs=["life_events", "ego_network", "wiki_cache", "db_cache"],
         outputs=["life_events", "person_de"],
         calls_per_run="one per deep event — roughly one per chapter",

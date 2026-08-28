@@ -50,7 +50,8 @@ from generate_person_events import (
     RELATED_ARTICLE_COUNT,
     STAND_IN_REJECTION_INSTRUCTIONS,
     EventSkeleton,
-    _add_related_articles_section,
+    _related_articles_prompt_section,
+    _subject_article_prompt_section,
     filter_images_by_quality,
     filter_related_articles_for_event,
     search_wikimedia_commons,
@@ -545,6 +546,22 @@ def _related_articles(person_id: str) -> List[Dict[str, Any]]:
         return []
 
 
+def _wikipedia_page(person_id: str) -> Optional[Dict[str, Any]]:
+    """The cached subject article, or nothing — the report degrades to the
+    related articles alone, which is all it had before the article joined the
+    prompt."""
+    try:
+        path = get_cache_dir(person_id) / "wikipedia_page.json"
+    except Exception:  # noqa: BLE001 — an absent cache is a normal state here
+        return None
+    if not path.exists():
+        return None
+    try:
+        return cast(Dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
+    except json.JSONDecodeError:
+        return None
+
+
 def _deutsche_biographie_text(person_id: str) -> Optional[str]:
     """The cached Deutsche Biographie context, formatted as Phase 2 saw it."""
     try:
@@ -654,6 +671,7 @@ def build_report_prompt(
     person_summary: Optional[str] = None,
     network: Optional[Dict[str, Any]] = None,
     deutsche_biographie_text: Optional[str] = None,
+    subject_article: Optional[Dict[str, Any]] = None,
 ) -> str:
     """The whole prompt for one report: the event, the rules, the material."""
     skeleton = _skeleton(event)
@@ -705,7 +723,8 @@ def build_report_prompt(
     if deutsche_biographie_text:
         prompt += "\n" + deutsche_biographie_text + "\n"
 
-    prompt += _add_related_articles_section(filtered)
+    prompt += _subject_article_prompt_section(subject_article)
+    prompt += _related_articles_prompt_section(filtered)
     return prompt
 
 
@@ -845,6 +864,7 @@ def generate_event_backgrounds(
 
     related = _related_articles(person_id)
     db_text = _deutsche_biographie_text(person_id)
+    subject_article = _wikipedia_page(person_id)
 
     written = 0
     for index in targets:
@@ -869,6 +889,7 @@ def generate_event_backgrounds(
                         person_summary=person_summary,
                         network=network,
                         deutsche_biographie_text=db_text,
+                        subject_article=subject_article,
                     ),
                 },
             ],

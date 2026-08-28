@@ -225,17 +225,17 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "722c2eb8acb580a6",
+      "fingerprint": "3f19f97da88a73be",
       "summary": {
         "constraints": [
-          "Aborts without writing anything if any event lacks a numeric weight, directing the dataset to be regenerated instead.",
-          "Writes only selected deep events; skips events with nonblank backgrounds unless `overwrite` is set, and `dry_run` prints targets without calling the generator.",
-          "Backgrounds must be \"350-550\" words in \"3-5\" blank-line-separated paragraphs; `## ` headings are the only allowed markup, with at most two and none above the opening paragraph.",
-          "Sources must be \"1-3\" supplied Wikipedia URLs that document this event; image queries must contain \"3-4\" different, report-named, non-portrait subjects, or be empty rather than guessed."
+          "Aborts without writing if any event lacks a numeric weight, directing regeneration instead.",
+          "Writes only selected deep events; preserves an existing nonblank background unless `overwrite` is set.",
+          "Backgrounds must be \"350-550\" words in \"3-5\" blank-line-separated paragraphs; null is permitted only when sources add nothing beyond the description.",
+          "Allows only one or two `## ` section headings, never before the opening paragraph; requires \"1-3\" event-documenting Wikipedia URLs and \"3-4\" distinct Commons queries for nonportrait things named in the report."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Selects the story’s deep events using the same event-and-ego-network rule as the interface, then generates a standalone background passage only for selected events that do not already have one unless overwrite is enabled. For each completed passage, it also reselects event-specific Wikipedia sources from the URLs supplied to the call and produces Commons search queries for non-portrait illustrations; accepted source URLs are propagated to translated copies after the updated event file is written.",
-        "why_this_design": "Restricting work to the interface’s deep-event selection prevents unreachable reports from accumulating and preserves existing passages by default. Citation filtering is deliberately post-generation: it rejects plausible-but-unseen or malformed URLs while allowing the depth layer to replace pooled, irrelevant citations with sources that actually document the event."
+        "what_it_does": "Selects the same high-weight, deep-link events the story interface can expose, then generates a reader-facing background passage only for selected events that lack one unless overwrite is enabled. For each completed passage, it also reselects event-specific Wikipedia citations from the supplied material, requests illustration searches, saves the event data, and propagates the revised URLs to translated copies.",
+        "why_this_design": "Selection is computed from the current event set and ego network rather than from a separate report list, preventing unreachable reports from being written. Citation filtering accepts only normalized URLs provided to the generation call, guarding against plausible but nonexistent or event-irrelevant URLs; source updates are propagated because URLs are shared metadata rather than translated prose."
       }
     },
     "p_chapter_art": {
@@ -309,17 +309,17 @@
       }
     },
     "p_events_p2": {
-      "fingerprint": "08283906a21a9393",
+      "fingerprint": "78ead896a8be544f",
       "summary": {
         "constraints": [
-          "Descriptions must remain in the event's chronological moment, use plain American English, and contain no Markdown except [[term|display]] annotation markers.",
-          "Locations must be city or region level at most; each uses historic and modern names, with exactly one primary location when a single location is known.",
-          "Sources are limited to \"1-3\" Wikipedia URLs or references that actually document the specific event; the list must not be padded with merely related articles.",
-          "Annotations are limited to \"0-3\" per event, usually none; each term may appear only once, and classified events must not annotate the classification subject."
+          "The subject article is the primary source; related articles qualify as sources only when they specifically recount the event.",
+          "Locations must be city or region level at most, include historic and modern names, and mark one primary location; unknown or non-geographic events use an empty array.",
+          "Sources are limited to \"1-3\" Wikipedia URLs, with no padding; involved people exclude the main subject.",
+          "Annotations are \"0-3\" and usually absent; classified events cannot repeat technical classification details or annotate the classification subject. All prose is American English plain text, except [[term|display]] markers."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Enriches one biographical event at a time using event-filtered related articles and optional Deutsche Biographie material. It returns a chronologically bounded, concise description with conservative inline annotations, city-level historic and modern locations, directly involved people other than the subject, event-specific documentary sources, Commons-oriented image search queries, and a semantic icon. Classified events are routed through a class-specific prompt so their narrative descriptions do not duplicate metadata already captured by the classification.",
-        "why_this_design": "Research is deliberately isolated per event while the relevant source material is still in context, preventing details, sources, and image searches from drifting across nearby life events. Failed structured calls are retried, but a persistent failure preserves the event with empty research fields and a neutral calendar icon rather than aborting the story."
+        "what_it_does": "Builds a separate research request for each biographical event, grounding it first in up to 30,000 characters of the subject’s article and then in event-filtered related articles capped at 6,000 characters each. It returns a refined, chronologically bounded description; city-level historic and modern locations; directly involved people other than the subject; tightly relevant Wikipedia sources; a semantic icon; conservative inline annotations; and 3-4 Commons image-search queries for later illustration work.",
+        "why_this_design": "Per-event article filtering keeps unrelated biographical context from being promoted into evidence, while the subject article is explicitly authoritative when it conflicts with recall or related material. Failures are isolated: after all retry attempts, the event remains in the timeline with empty research fields and the neutral \"mdi-calendar\" icon rather than aborting the run."
       }
     },
     "p_geocode": {
