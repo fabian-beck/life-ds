@@ -259,6 +259,7 @@
     // it, since they stack in one column.
     const imagesContainerEl = img.closest(".event-images");
     const slideRoot = imagesContainerEl?.parentElement ?? null;
+    const slideRect = slideRoot?.getBoundingClientRect();
     const headerRect = slideRoot
       ?.querySelector(".event-header")
       ?.getBoundingClientRect();
@@ -272,22 +273,27 @@
     );
 
     const headroom = headerRect
-      ? Math.max(0, headerRect.top)
+      ? Math.max(0, headerRect.top - (slideRect?.top ?? 0))
       : viewportHeight * 0.15;
     const sideRoom = descriptionRect
-      ? Math.max(0, viewportWidth - descriptionRect.right)
+      ? Math.max(0, (slideRect?.right ?? viewportWidth) - descriptionRect.right)
       : viewportWidth * 0.25;
 
-    // Above the text: nearly the whole width, down to the first line.
+    // Above the text: nearly the whole width, down to the first line. The
+    // faded lower edge may enter the text's first lines, which lets a genuinely
+    // open upper half carry a substantial landscape image without covering the
+    // prose with its opaque center.
     const above = fitBudget(
-      viewportWidth * 0.92,
-      Math.min(headroom + viewportHeight * 0.08, viewportHeight * 0.66) /
+      viewportWidth * 0.96,
+      Math.min(headroom + viewportHeight * 0.12, viewportHeight * 0.76) /
         imageCount
     );
-    // Beside the text: the free column, stopping short of the map band.
+    // Beside the text: the free column, stopping short of the map band. A tall
+    // side column should be allowed to make a portrait visibly tall; its width
+    // still limits the result when the prose occupies more of the slide.
     const beside = fitBudget(
-      Math.min(sideRoom + viewportWidth * 0.1, viewportWidth * 0.75),
-      (viewportHeight * 0.58) / imageCount
+      Math.min(sideRoom + viewportWidth * 0.14, viewportWidth * 0.82),
+      (viewportHeight * 0.72) / imageCount
     );
     // The floor keeps the corner presence a slide full of text always had.
     const floor = fitBudget(viewportWidth * 0.45, viewportHeight * 0.3);

@@ -66,6 +66,7 @@ async function expectNoSidewaysScroll(page, where) {
 // host is a test that fails for reasons of its own. This serves a local file in
 // their place, so the layout the picture drives is measured offline and always.
 const LOCAL_IMAGE = readFileSync("public/preview.png");
+const LOCAL_PORTRAIT_IMAGE = readFileSync("public/portraits/ada_lovelace.png");
 
 async function serveImagesLocally(page) {
   await page.route(/upload\.wikimedia\.org/, (route) =>
@@ -178,6 +179,44 @@ test("an event picture is anchored to the slide corner", async ({ page }) => {
     measured.thumbnail.right,
     "the intentional image offset no longer clears the right edge"
   ).toBeGreaterThanOrEqual(measured.slide.right);
+});
+
+test("an event picture grows into an open side column", async ({ page }) => {
+  test.skip(
+    test.info().project.name !== "desktop-chromium",
+    "geometry is checked once at a wide landscape viewport"
+  );
+  const openEvent = lovelaceEvents.events
+    .map((event, index) => ({ event, index }))
+    .filter(({ event }) => (event.images ?? []).length > 0)
+    .sort(
+      (left, right) =>
+        (left.event.description?.length ?? 0) -
+        (right.event.description?.length ?? 0)
+    )[0];
+  expect(openEvent, "no Lovelace event carries a picture").toBeTruthy();
+
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.route(/upload\.wikimedia\.org/, (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "image/png",
+      body: LOCAL_PORTRAIT_IMAGE,
+    })
+  );
+  await page.goto(`en#/en/story/ada_lovelace?event=${openEvent.index}`);
+  const slide = page.locator("section.slide:not([inert])");
+  const picture = slide.locator(".image-thumbnail.image-visible");
+  await expect(picture).toBeVisible();
+
+  const measured = await picture.evaluate((element) => ({
+    height: element.getBoundingClientRect().height,
+    viewportHeight: window.innerHeight,
+  }));
+  expect(
+    measured.height / measured.viewportHeight,
+    "a portrait stays a small corner accent despite an open side column"
+  ).toBeGreaterThanOrEqual(0.7);
 });
 
 // The report is a separate page published next to the app, so a broken link
