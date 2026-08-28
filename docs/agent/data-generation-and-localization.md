@@ -4,6 +4,8 @@
 
 ## Data Generation
 
+Generated data is never repaired in place. When a generator or schema change leaves shipped datasets behind, flag them in `data/outdated.md` with the reason and regenerate them with the current pipeline (see the no-repair rule in `AGENTS.md`).
+
 ### Python Environment
 
 The generation scripts run from a project-local virtual environment. The `openai` dependency must be >= 2.0.0 — the pre-1.0 SDK exposes a different client and the scripts will fail to import against it.
@@ -24,7 +26,7 @@ Run scripts with the venv interpreter, e.g. `.venv/Scripts/python.exe scripts/ge
 - `OPENAI_REASONING_EFFORT` / `OPENAI_BULK_REASONING_EFFORT` / `OPENAI_LOW_REASONING_EFFORT` — reasoning effort levels (`medium` / `low` / `none`)
 - Portrait scripts take `--model` separately (default: `gpt-image-2`)
 
-A phase runs on `OPENAI_BULK_MODEL` when a wrong answer cannot quietly become part of the corpus — its output is validated against existing entities afterwards, rewritten by a later phase, or backed by a deterministic fallback. That covers related-article selection, Phase 2 event research, image search and matching, both style generators, meta-story event curation, circle narration, the map branch, and translation. Everything else keeps `OPENAI_MODEL`: Phase 1, chapters, the ego network, story planning, historical context, all three review passes, and the name glossary, whose decisions every other document then matches on by exact name. The report's step drawer shows the model and effort each call site actually resolves to; it is generated from the source, so consult it rather than this list when they disagree.
+A phase runs on `OPENAI_BULK_MODEL` when a wrong answer cannot quietly become part of the corpus — its output is validated against existing entities afterwards, rewritten by a later phase, or backed by a deterministic fallback. That covers related-article selection, Phase 2 event research, image search and matching, both style generators, meta-story event curation, circle narration, the map branch, and translation. Everything else keeps `OPENAI_MODEL`: Phase 1, chapters, the ego network, story planning, historical context, the depth-layer background reports and their illustration critic, all three review passes, and the name glossary, whose decisions every other document then matches on by exact name. The report's step drawer shows the model and effort each call site actually resolves to; it is generated from the source, so consult it rather than this list when they disagree.
 
 `generate_meta_story.py` exposes the tier as `--bulk-model`, alongside `--model` and `--composer-model`. `cache_wikipedia_materials.py`, `generate_person_style.py`, `generate_meta_story_style.py`, and `meta_story_map_narration.py` do all their AI work at this tier, so their own `--model` flag defaults to it.
 
@@ -40,11 +42,12 @@ Image models that support the dual-image editing path are allowlisted in `genera
 python scripts/generate_person.py "Albert Einstein"
 ```
 
-This runs all three generators:
+This runs the whole pipeline: the three generators, the portrait and chapter art, review, the depth-layer background reports, and translation.
 
 1. `generate_person_events.py` - Life events via two-phase AI
 2. `generate_person_style.py` - Visual design
 3. `generate_person_network.py` - Ego network
+4. `generate_event_backgrounds.py` - Background reports for the deep events (after review, before translation)
 
 **Disambiguate with Wikipedia URL** (for ambiguous names):
 
@@ -104,6 +107,17 @@ This script acts as an AI-powered constructive critic to review and improve the 
 - `--reasoning-effort {low,medium,high}` - Override reasoning effort levels
 - `--verbose` - Enable detailed logging
 
+**Write the depth-layer background reports**:
+
+```bash
+python scripts/generate_event_backgrounds.py alan_turing
+python scripts/generate_event_backgrounds.py                # every person
+python scripts/generate_event_backgrounds.py --dry-run
+python scripts/generate_event_backgrounds.py --overwrite    # rewrite existing reports
+```
+
+The story offers a depth layer on roughly one event per chapter, and the layer is a written background report plus the pictures that illustrate it. This step computes the story's own deep-event selection (`scripts/utils/event_depth.py`, a port of `src/utils/story/eventDepth.js` — keep the two in sync) and writes a 350-550 word report exactly for the events the story will offer one on; it re-decides the event's citations in the same call and illustrates the report from Commons through a critic on the default model. Inside `generate_person.py` it runs after review and before translation; standalone it fills the same events for the persons named. A dataset whose events carry no `weight` predates Phase 1 weighting — the step refuses it and points to `data/outdated.md`.
+
 **Remove a person**:
 
 ```bash
@@ -119,17 +133,6 @@ python scripts/validate_source_links.py --fix      # repair what search resolves
 ```
 
 Phase 2 asks a model for the sources behind each event, and the annotations it writes carry article links of their own; both are rendered as links the reader can follow. This asks the MediaWiki API — 50 titles per request, redirects followed — whether each one is a real article. `--fix` rewrites a link only when search returns the same title respelled ("Kunst Haus Wien" → "KunstHausWien", "Austrian Postal Savings Bank Building" → "Austrian Postal Savings Bank"); a result that names a different subject is reported for a human, because search answers every query with something.
-
-**Restore image attribution** (no API key, no model):
-
-```bash
-python scripts/backfill_image_attribution.py --report    # what the data holds, no network
-python scripts/backfill_image_attribution.py             # every person
-python scripts/backfill_image_attribution.py hans_fallada --dry-run
-python scripts/backfill_image_attribution.py --force     # ask again, replace existing
-```
-
-The image search reads the creator, the license, and the license URL off every candidate, and `ImageViewer.svelte` renders all three, but `ImageMetadata` declared no fields for them, so the model dump discarded them on the way to disk—and for the CC BY-SA material here the attribution is a license condition rather than a nicety. The schema now carries them. This repairs what already shipped, from the same file pages the search read: Commons answers 50 titles per request through `iiprop=extmetadata`, needs no key, and returns `Artist`, `LicenseShortName`, and `LicenseUrl`. Attribution is technical rather than prose, so the values are written to the English document and to every translated copy, the way `backfill_birth_events.py` writes a classification. Images sourced from Openverse and Flickr are outside its reach and keep whatever they already carried.
 
 **Check the people who lived the same events** (no API key, no model):
 
@@ -417,14 +420,6 @@ python scripts/translate_meta_story.py --all --target-lang de
 ```
 
 Meta story `event_title`s are copied verbatim from the person's translated life events (matched by `event_index`) whenever that translation exists, so meta story chapters and story slides always show identical titles.
-
-**Migrate legacy translation files** (deterministic, no API):
-
-```bash
-python scripts/migrate_translations.py --lang de [--dry-run]
-```
-
-Rebases old-schema translated files onto the current English structure, carries over matched translated text, and flags them as stale for retranslation.
 
 **CLI Options**:
 

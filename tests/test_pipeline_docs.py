@@ -56,15 +56,17 @@ class IntrospectionTests(unittest.TestCase):
         self.assertIn("gpt-", phase1.model_value or "")
         self.assertIn("OPENAI_MODEL", phase1.model_value or "")
         self.assertIn("medium", phase1.reasoning_value or "")
-        # Phase 2 is back on the larger model, and stays there while it writes
-        # the background passage: what qualified it for the small one was that
-        # every field it returned was checked afterwards — icons against the
-        # catalog, places against the geocoder — and a paragraph of prose is
-        # checked by nobody.
+        # Phase 2 is on the small model: every field it returns is checked
+        # afterwards — icons against the catalog, places against the geocoder.
+        # The background report, the one output checked by nobody, is written
+        # in its own step on the larger model.
         research = calls[("generate_person_events.py", "research_event_details")]
         self.assertIn("gpt-", research.model_value or "")
-        self.assertIn("OPENAI_MODEL", research.model_value or "")
-        self.assertIn("medium", research.reasoning_value or "")
+        self.assertIn("OPENAI_BULK_MODEL", research.model_value or "")
+        self.assertIn("low", research.reasoning_value or "")
+        report = calls[("generate_event_backgrounds.py", "generate_event_backgrounds")]
+        self.assertIn("OPENAI_MODEL", report.model_value or "")
+        self.assertIn("medium", report.reasoning_value or "")
         # The steps working from what those two settled do run on the small
         # model, which resolves through its own environment variable.
         matching = calls[("generate_person_events.py", "match_images_to_events")]

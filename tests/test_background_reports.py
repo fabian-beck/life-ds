@@ -1,10 +1,11 @@
-"""Tests for the background report's two additions: headings and pictures.
+"""Tests for the background reports: which events get one, and their pictures.
 
-Both are cheap to get subtly wrong in ways no schema catches. A heading pass
-that rewrites prose, or places a label over the opening paragraph, damages a
-report that was already good; an illustration pass that lets the slide's own
-photograph through prints the same picture twice, one screen apart, which is
-the failure the whole layer was designed around.
+The deep-event selection is a port of the story's own rule in
+``src/utils/story/eventDepth.js``, and a port that drifts writes reports the
+story never shows or leaves a selected event with no way down. The
+illustration pass is cheap to get subtly wrong in ways no schema catches: one
+that lets the slide's own photograph through prints the same picture twice,
+one screen apart, which is the failure the whole layer was designed around.
 """
 
 from __future__ import annotations
@@ -12,144 +13,90 @@ from __future__ import annotations
 import sys
 import unittest
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-import backfill_event_backgrounds as backfill  # noqa: E402
-import generate_person_events as pipeline  # noqa: E402
+import generate_event_backgrounds as backgrounds  # noqa: E402
 import translate_person as translate  # noqa: E402
-
-REPORT = (
-    "Bletchley ran on shifts.\n\n"
-    "Two hundred bombes by 1943.\n\n"
-    "The huts were huts.\n\n"
-    "It ended with the war."
-)
+from utils.event_depth import select_deep_event_indexes  # noqa: E402
 
 
-def answer(headings: List[Dict[str, Any]]) -> backfill.ReportHeadings:
-    return backfill.ReportHeadings(
-        headings=[backfill.ReportHeading(**heading) for heading in headings]
-    )
+def event(
+    title: str,
+    chapter: str = "one",
+    weight: Optional[float] = 0.5,
+    places: int = 1,
+    sources: int = 2,
+    **extra: Any,
+) -> Dict[str, Any]:
+    """An event with enough material behind the fold, unless told otherwise."""
+    built: Dict[str, Any] = {
+        "date": "1940-01-01",
+        "title": title,
+        "description": "Something happened.",
+        "chapter": chapter,
+        "locations": [{"name_historic": f"Place {i}"} for i in range(places)],
+        "sources": [f"https://en.wikipedia.org/wiki/S{i}" for i in range(sources)],
+    }
+    if weight is not None:
+        built["weight"] = weight
+    built.update(extra)
+    return built
 
 
-def divided(headings: Optional[backfill.ReportHeadings], report: str = REPORT) -> str:
-    with mock.patch.object(backfill, "parse_structured", return_value=headings):
-        return backfill._with_headings(mock.MagicMock(), report)
+class DeepEventSelectionTests(unittest.TestCase):
+    """Keep in step with ``selectDeepEventIndexes`` in eventDepth.js."""
 
+    def test_each_chapter_offers_its_heaviest_event(self) -> None:
+        events = [
+            event("A", "one", 0.5),
+            event("B", "one", 0.8),
+            event("C", "two", 0.6),
+        ]
+        self.assertEqual(select_deep_event_indexes(events, {}), {1, 2})
 
-class HeadingTests(unittest.TestCase):
-    def test_a_heading_becomes_a_line_above_its_paragraph(self) -> None:
-        self.assertEqual(
-            divided(answer([{"before_paragraph": 3, "heading": "The huts"}])),
-            "Bletchley ran on shifts.\n\n"
-            "Two hundred bombes by 1943.\n\n"
-            "## The huts\n\n"
-            "The huts were huts.\n\n"
-            "It ended with the war.",
+    def test_below_the_floor_a_chapter_offers_nothing(self) -> None:
+        events = [event("A", "one", 0.3), event("B", "two", 0.34)]
+        self.assertEqual(select_deep_event_indexes(events, {}), set())
+
+    def test_too_little_material_passes_to_the_next_event_down(self) -> None:
+        events = [
+            event("Heavy but bare", "one", 0.9, places=0, sources=1),
+            event("Lighter but documented", "one", 0.5),
+        ]
+        self.assertEqual(select_deep_event_indexes(events, {}), {1})
+
+    def test_ties_go_to_the_earlier_event(self) -> None:
+        events = [event("First", "one", 0.6), event("Second", "one", 0.6)]
+        self.assertEqual(select_deep_event_indexes(events, {}), {0})
+
+    def test_an_unweighted_event_scores_zero(self) -> None:
+        # The interface still derives a fallback for datasets that predate
+        # Phase 1 weighting; the pipeline never sees one — such a dataset is
+        # flagged in data/outdated.md and regenerated instead.
+        events = [event("Old data", "one", None)]
+        self.assertEqual(select_deep_event_indexes(events, {}), set())
+
+    def test_a_chip_counts_toward_the_material(self) -> None:
+        network = {
+            "connections": [
+                {"person_name": "Joan Clarke", "start_year": 1939, "end_year": 1954}
+            ]
+        }
+        thin = event(
+            "Engagement",
+            "one",
+            0.5,
+            places=1,
+            sources=1,
+            involved_people=["Joan Clarke"],
         )
-
-    def test_the_prose_itself_is_never_touched(self) -> None:
-        result = divided(answer([{"before_paragraph": 2, "heading": "The bombes"}]))
-        for paragraph in REPORT.split("\n\n"):
-            self.assertIn(paragraph, result)
-
-    def test_a_report_that_runs_as_one_argument_is_left_whole(self) -> None:
-        self.assertEqual(divided(answer([])), REPORT)
-        self.assertEqual(divided(None), REPORT)
-
-    def test_nothing_stands_above_the_opening_paragraph(self) -> None:
-        # The reader has just arrived from the event; a label is not what they
-        # came down for.
-        self.assertEqual(
-            divided(answer([{"before_paragraph": 1, "heading": "Bletchley"}])),
-            REPORT,
-        )
-
-    def test_a_paragraph_the_report_does_not_have_is_dropped(self) -> None:
-        self.assertEqual(
-            divided(answer([{"before_paragraph": 9, "heading": "Nowhere"}])),
-            REPORT,
-        )
-
-    def test_a_heading_per_paragraph_is_held_to_two(self) -> None:
-        result = divided(
-            answer(
-                [
-                    {"before_paragraph": 2, "heading": "The bombes"},
-                    {"before_paragraph": 3, "heading": "The huts"},
-                    {"before_paragraph": 4, "heading": "The end"},
-                ]
-            )
-        )
-        self.assertEqual(result.count("\n## "), 2)
-        self.assertNotIn("## The end", result)
-
-    def test_a_report_already_divided_is_re_divided_not_re_labeled(self) -> None:
-        # --overwrite reads a report that carries headings already. A '## '
-        # line survives the paragraph split as a paragraph of its own, so
-        # without taking them off first the pass stands a heading over a
-        # heading and counts the labels as prose.
-        divided_once = (
-            "Bletchley ran on shifts.\n\n"
-            "## The old label\n\n"
-            "Two hundred bombes by 1943.\n\n"
-            "The huts were huts.\n\n"
-            "It ended with the war."
-        )
-        result = divided(
-            answer([{"before_paragraph": 4, "heading": "The end"}]), divided_once
-        )
-        self.assertNotIn("The old label", result)
-        self.assertEqual(result.count("## "), 1)
-        self.assertEqual(
-            result,
-            "Bletchley ran on shifts.\n\n"
-            "Two hundred bombes by 1943.\n\n"
-            "The huts were huts.\n\n"
-            "## The end\n\n"
-            "It ended with the war.",
-        )
-
-    def test_a_report_of_two_paragraphs_is_too_short_to_divide(self) -> None:
-        short = "One paragraph.\n\nAnd a second."
-        headings = answer([{"before_paragraph": 2, "heading": "The second"}])
-        self.assertEqual(divided(headings, short), short)
-
-
-class SelectionTests(unittest.TestCase):
-    """Which events each pass has work to do on."""
-
-    written = {"background": "A report.", "images": []}
-    divided_already = {"background": "A report.\n\n## A turn\n\nMore of it."}
-    empty: Dict[str, Any] = {}
-
-    def wanted(self, event: Dict[str, Any], **flags: bool) -> bool:
-        return backfill._wanted_here(
-            event,
-            overwrite=flags.get("overwrite", False),
-            images_only=flags.get("images_only", False),
-            headings_only=flags.get("headings_only", False),
-        )
-
-    def test_the_writing_pass_fills_what_is_empty(self) -> None:
-        self.assertTrue(self.wanted(self.empty))
-        self.assertFalse(self.wanted(self.written))
-        self.assertTrue(self.wanted(self.written, overwrite=True))
-
-    def test_the_picture_pass_wants_a_report_to_read(self) -> None:
-        self.assertTrue(self.wanted(self.written, images_only=True))
-        self.assertFalse(self.wanted(self.empty, images_only=True))
-
-    def test_the_heading_pass_leaves_a_divided_report_alone(self) -> None:
-        self.assertTrue(self.wanted(self.written, headings_only=True))
-        self.assertFalse(self.wanted(self.divided_already, headings_only=True))
-        self.assertFalse(self.wanted(self.empty, headings_only=True))
-        self.assertTrue(
-            self.wanted(self.divided_already, headings_only=True, overwrite=True)
-        )
+        # One place and one source are two sections but two items; the matched
+        # chip is the third item, exactly as the interface counts it.
+        self.assertEqual(select_deep_event_indexes([thin], network), {0})
+        self.assertEqual(select_deep_event_indexes([thin], {}), set())
 
 
 class IllustrationTests(unittest.TestCase):
@@ -160,21 +107,27 @@ class IllustrationTests(unittest.TestCase):
             ]
         }
         with mock.patch.object(
-            pipeline, "fetch_background_images", return_value=[]
+            backgrounds, "fetch_background_images", return_value=[]
         ) as fetch:
-            pipeline.illustrate_event(mock.MagicMock(), event, "A report.", ["hut 8"])
+            backgrounds.illustrate_event(
+                mock.MagicMock(), event, "A report.", ["hut 8"]
+            )
         self.assertEqual(fetch.call_args.args[3], {"hut_8.jpg"})
 
     def test_a_report_with_no_pictures_loses_the_ones_it_had(self) -> None:
         event = {"background_images": [{"url": "https://example.org/stale.jpg"}]}
-        with mock.patch.object(pipeline, "fetch_background_images", return_value=[]):
-            pipeline.illustrate_event(mock.MagicMock(), event, "A report.", ["query"])
+        with mock.patch.object(
+            backgrounds, "fetch_background_images", return_value=[]
+        ):
+            backgrounds.illustrate_event(
+                mock.MagicMock(), event, "A report.", ["query"]
+            )
         self.assertNotIn("background_images", event)
 
     def test_nothing_is_searched_for_a_report_that_named_nothing(self) -> None:
         event: Dict[str, Any] = {}
-        with mock.patch.object(pipeline, "fetch_background_images") as fetch:
-            pipeline.illustrate_event(mock.MagicMock(), event, "A report.", [])
+        with mock.patch.object(backgrounds, "fetch_background_images") as fetch:
+            backgrounds.illustrate_event(mock.MagicMock(), event, "A report.", [])
         fetch.assert_not_called()
         self.assertNotIn("background_images", event)
 
@@ -184,7 +137,7 @@ class CaptionTests(unittest.TestCase):
 
     def test_an_uploader_s_paperwork_gives_way_to_the_filename(self) -> None:
         self.assertEqual(
-            pipeline.background_caption(
+            backgrounds.background_caption(
                 {
                     "caption": "Author: Schadel Source: own work",
                     "filename": "Zuse_Z3_replica.jpg",
@@ -196,7 +149,7 @@ class CaptionTests(unittest.TestCase):
 
     def test_a_real_description_is_printed_as_it_stands(self) -> None:
         self.assertEqual(
-            pipeline.background_caption(
+            backgrounds.background_caption(
                 {"caption": "A rebuilt bombe at Bletchley Park", "filename": "b.jpg"},
                 "bombe",
             ),
@@ -204,11 +157,7 @@ class CaptionTests(unittest.TestCase):
         )
 
     def test_with_neither_the_query_is_the_caption(self) -> None:
-        self.assertEqual(pipeline.background_caption({}, "Hut 8"), "Hut 8")
-
-
-if __name__ == "__main__":
-    unittest.main()
+        self.assertEqual(backgrounds.background_caption({}, "Hut 8"), "Hut 8")
 
 
 class TranslatedHeadingTests(unittest.TestCase):
@@ -300,3 +249,7 @@ class TranslatedHeadingTests(unittest.TestCase):
             ),
             "Erster.\n\nZweiter.\n\nDritter.",
         )
+
+
+if __name__ == "__main__":
+    unittest.main()

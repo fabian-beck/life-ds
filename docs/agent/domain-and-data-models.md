@@ -176,7 +176,7 @@ A few kinds of event carry more than prose, and an optional `event_class` block 
 | `invention` | `title`, `description`, `impact` |
 | `publication` | `title`, `publication_type`, `publisher`, `significance`, `impact` |
 
-The block splits in two for localization. Its **prose** — a cause, a characterization, an invention's description — is translated with the rest of the document (`EVENT_CLASS_TEXT_FIELDS` in `scripts/translate_person.py`; a new prose field has to be added there or it stays English in every translated copy). Its **tokens** — `type`, `subtype`, `publication_type` — are machine values the datasets keep in every language, named by the interface through `src/utils/eventClassLabels.js`. A backfill that adds prose to the block therefore leaves the translations stale by fingerprint; `python scripts/translate_all_persons.py --target-lang de` is what closes that.
+The block splits in two for localization. Its **prose** — a cause, a characterization, an invention's description — is translated with the rest of the document (`EVENT_CLASS_TEXT_FIELDS` in `scripts/translate_person.py`; a new prose field has to be added there or it stays English in every translated copy). Its **tokens** — `type`, `subtype`, `publication_type` — are machine values the datasets keep in every language, named by the interface through `src/utils/eventClassLabels.js`. A change that adds prose to the block therefore leaves the translations stale by fingerprint; `python scripts/translate_all_persons.py --target-lang de` is what closes that.
 
 The two life boundaries are the classifications a run does not leave to the model. `ensure_birth_classification()` and `ensure_death_classification()` run right after Phase 1 and decide from the dates which events they are; each classifies that event when the model didn't and strips its class from any other event (a child's birth, a spouse's death). The model's own classification is consulted only when no event is dated at the boundary at all — which is how a medieval life whose events carry no ages still finds one.
 
@@ -185,30 +185,9 @@ The two life boundaries are the classifications a run does not leave to the mode
 
 The birth slide shows the parents in the same generational representation the network view uses for a family: a labeled parents box of `PersonChip`s over a link line down to the person's portrait (`getBirthParents()` in `src/utils/story/personMatching.js`). The names come from the classification and are resolved against `ego_network.json`, so each chip carries the network's own relationship metadata; when the classification names nobody the parents are read from the network directly (`family/father`, `family/mother`, qualifiers like `step-`/`adoptive-` stripped). Placeholder names ("Unnamed mother of …") are dropped rather than shown, and a birth with no parents, birth name, or characterization keeps the plain class badge instead of an empty box. The parents are removed from the slide's other people so they appear once.
 
-Datasets generated before the classification existed are repaired without an AI call:
-
-```bash
-python scripts/backfill_birth_events.py            # every person
-python scripts/backfill_birth_events.py niels_bohr
-python scripts/backfill_birth_events.py --dry-run
-```
-
-It detects the birth event with the same function the generator uses, reads the parents from the person's `ego_network.json`, keeps any values already stored, and writes the block to the English file and every translated copy — parent names are language-independent, so nothing there needs translating. Re-running it changes nothing.
+A dataset generated before the classification existed carries none; flag it in `data/outdated.md` and regenerate it — there is no repair path.
 
 The death slide is the birth's mirror: the same frame and label, boxing the **cause of death** where the birth boxes the parents, with the circumstances beside the "Died" label and the resting place beneath. A death whose sources give none of the three keeps the plain class badge.
-
-Its backfill needs one small model call per person, because unlike the parents there is no second document to read a cause out of:
-
-```bash
-python scripts/backfill_death_events.py             # every person
-python scripts/backfill_death_events.py niels_bohr
-python scripts/backfill_death_events.py --dry-run
-python scripts/backfill_death_events.py --skip-cause  # classify only, no AI
-```
-
-The call is shown **only the death event the dataset already holds** and is forbidden to add anything from its own knowledge: a cause nobody wrote down is exactly the plausible-looking detail that must not enter the corpus unsourced. Of the 50 people in `data/`, 23 have a cause their own event text states; the rest are classified without one until a regeneration researches it. Stored values always win over extracted ones, so a researched cause survives a re-run.
-
-Unlike the birth's, this block is prose, so the translated copies it is written into hold the English text until they are re-translated — run `python scripts/translate_all_persons.py --target-lang de` after the backfill.
 
 ### Ego Network Schema
 
@@ -297,7 +276,7 @@ A circle's `key` is its cluster key — the cluster's main person ids in cluster
 - **Secondary nodes** (`type: "secondary"`, id prefixed `sec:`) are bridging people — not in the story, but present in the ego networks of **two or more** main people. They are drawn clearly smaller and capped at `MAX_SECONDARY_NODES` (14) so the graph stays readable.
 - Graph derivation is **deterministic, no AI** (`scripts/meta_story_network.py`), run as Phase 5 of `generate_meta_story.py`. Nodes/links are **not** part of the translation payload, so the same graph is copied verbatim into translated files: node labels are person names (kept in the original language) and `relationship_type` is localized by the UI; `relationship_description` (used by the tie-list fallback and link tooltips) falls back to English. Only the `narration` texts are translated (see above).
 - **Phase 5b — AI network review** (`scripts/meta_story_network_review.py`, one AI call, runs after derivation and **before** clustering/narration; non-fatal, opt out with `--skip-network-review`). The ego networks were each generated per person without seeing the meta story's people as a group, so the derived union misses direct ties, over-states vague ones, or carries stale wording. Given the derived graph plus **focused Wikipedia excerpts** for the main people (each article's lead plus the sentences that mention another main person — kept small so the prompt stays affordable), the model may **add** links between existing nodes, **modify** a link's type/description/strength, and **delete** rather indirect ties (e.g. a vague "influence" with no documented contact). How aggressively it enriches vs. prunes is scaled by the **density of the main↔main subgraph**: a sparse graph invites generous, well-supported additions and keeps documented influence (only truly unsupported ties are cut); a dense graph invites strict pruning of indirect ties. Application is deterministic and defensive — node ids are validated, unordered pairs matched regardless of orientation, self-loops skipped, and secondary nodes that no longer bridge ≥2 main people are pruned — so a bad response can only edit links between existing nodes, never invent people. Added/modified links carry an `origin` (`review_added` / `reviewed`) marker; like the rest of the graph they are not translated (copied verbatim into translated files).
-- Adding/removing people or regenerating ego networks changes the derived network. Rebuild every meta story (including translated copies) with `python scripts/backfill_meta_story_networks.py` (no API key needed), then `npx prettier --write "data/meta_stories/**/*.json"`. The backfill carries each file's existing narration over: composed circles (with `member_ids`) survive as long as every member is still a main node, key-matched circles are dropped when their cluster key no longer exists — it warns when that happens, and the dropped circles need re-narration (Phase 6) or hand-written texts. **Note:** the backfill is a pure re-derivation, so it discards Phase 5b review edits (added/modified/deleted ties) just as it can orphan narration — re-run the full pipeline (or Phase 5b + 6) when you need the reviewed graph back.
+- Adding/removing people or regenerating ego networks changes the derived network. A meta story whose networks no longer match its people's ego networks is outdated data: flag it in `data/outdated.md` and re-run its pipeline (`generate_meta_story.py`, or Phase 5 + 5b + 6 for the network alone), which re-derives the graph, reviews it, and re-narrates the circles.
 
 ### Meta Story Map ("Places" section)
 

@@ -15,7 +15,6 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-import backfill_death_events as backfill  # noqa: E402
 from generate_person_events import (  # noqa: E402
     BirthClassification,
     DeathClassification,
@@ -120,43 +119,6 @@ class EnsureDeathClassificationTests(unittest.TestCase):
         ensure_death_classification(events, "1962-11-18")
         self.assertIsNone(events[0].event_class)
         self.assertEqual(events[1].event_class.type, "death")
-
-
-class BackfillTests(unittest.TestCase):
-    def test_the_prompt_shows_the_event_without_its_markup(self) -> None:
-        prompt = backfill.build_extraction_prompt(
-            "Marie Curie",
-            {
-                "date": "1934-07-04",
-                "title": "Dies at Sancellemoz",
-                "description": "She died at [[Sancellemoz|the Sancellemoz sanatorium]].",
-            },
-        )
-        self.assertIn("the Sancellemoz sanatorium", prompt)
-        self.assertNotIn("[[", prompt)
-
-    def test_stored_values_win_over_extracted_ones(self) -> None:
-        built = backfill.build_death_class(
-            {"type": "death", "cause": "aplastic anemia"},
-            DeathClassification(cause="radiation exposure", place_of_rest="Panthéon"),
-        )
-        self.assertEqual(
-            built,
-            {"type": "death", "cause": "aplastic anemia", "place_of_rest": "Panthéon"},
-        )
-
-    def test_an_empty_extraction_leaves_a_bare_classification(self) -> None:
-        self.assertEqual(
-            backfill.build_death_class(None, DeathClassification()), {"type": "death"}
-        )
-        self.assertEqual(backfill.build_death_class(None, None), {"type": "death"})
-
-    def test_replaces_a_classification_of_another_type(self) -> None:
-        built = backfill.build_death_class(
-            {"type": "migration", "from_location": "Denmark"},
-            DeathClassification(cause="heart failure"),
-        )
-        self.assertEqual(built, {"type": "death", "cause": "heart failure"})
 
 
 if __name__ == "__main__":

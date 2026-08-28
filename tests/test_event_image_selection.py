@@ -56,7 +56,9 @@ class StandInRejectionTests(unittest.TestCase):
     """One rule, reached by both calls that choose a picture."""
 
     def test_both_prompts_carry_the_same_rejections(self) -> None:
-        source = Path(pipeline.__file__).read_text(encoding="utf-8")
+        import generate_event_backgrounds as backgrounds
+
+        source = Path(backgrounds.__file__).read_text(encoding="utf-8")
         chooser = source[source.index("def fetch_background_images") :]
         chooser = chooser[: chooser.index("\ndef ")]
         self.assertIn("STAND_IN_REJECTION_INSTRUCTIONS", chooser)

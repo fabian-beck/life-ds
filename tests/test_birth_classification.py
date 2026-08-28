@@ -14,7 +14,6 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-import backfill_birth_events as backfill  # noqa: E402
 from generate_person_events import (  # noqa: E402
     BirthClassification,
     EventSkeleton,
@@ -118,36 +117,6 @@ class EnsureBirthClassificationTests(unittest.TestCase):
         ]
         ensure_birth_classification(events, "1885-10-07")
         self.assertIs(events[1].event_class, marriage)
-
-
-class BackfillTests(unittest.TestCase):
-    def test_reads_a_qualified_parent_role(self) -> None:
-        self.assertEqual(backfill.family_role("family/step_father"), "father")
-        self.assertEqual(backfill.family_role("family/adoptive-mother"), "mother")
-        self.assertIsNone(backfill.family_role("academic/mentor"))
-        self.assertIsNone(backfill.family_role("family"))
-
-    def test_stored_values_win_over_derived_ones(self) -> None:
-        built = backfill.build_birth_class(
-            {"type": "birth", "father": "Christian Bohr", "birth_name": "Niels Henrik"},
-            {"father": "C. Bohr", "mother": "Ellen Adler Bohr"},
-        )
-        self.assertEqual(
-            built,
-            {
-                "type": "birth",
-                "father": "Christian Bohr",
-                "birth_name": "Niels Henrik",
-                "mother": "Ellen Adler Bohr",
-            },
-        )
-
-    def test_replaces_a_classification_of_another_type(self) -> None:
-        built = backfill.build_birth_class(
-            {"type": "migration", "from_location": "Denmark"},
-            {"mother": "Ellen Adler Bohr"},
-        )
-        self.assertEqual(built, {"type": "birth", "mother": "Ellen Adler Bohr"})
 
 
 if __name__ == "__main__":

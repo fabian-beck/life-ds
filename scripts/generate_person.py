@@ -21,6 +21,7 @@ from generate_person_portrait import (
     is_direct_image_url,
 )
 from generate_chapter_illustrations import generate_chapter_illustrations
+from generate_event_backgrounds import generate_event_backgrounds
 from review_person import review_person_data
 
 STEP_OK = "ok"
@@ -155,6 +156,11 @@ def parse_args(argv: Any) -> argparse.Namespace:
         help="Skip fetching Deutsche Biographie data as additional source.",
     )
     parser.add_argument(
+        "--skip-backgrounds",
+        action="store_true",
+        help="Skip writing the depth-layer background reports.",
+    )
+    parser.add_argument(
         "--skip-translate",
         action="store_true",
         help="Skip automatic translation after generation.",
@@ -204,7 +210,7 @@ def main(argv: Any = None) -> int:
 
     # Step 1: Generate life events dataset
     if run_dataset:
-        banner("STEP 1/7: Generating life events dataset")
+        banner("STEP 1/8: Generating life events dataset")
         try:
             dataset_path, person_id = generate_dataset(
                 subject_for_fetch,
@@ -224,7 +230,7 @@ def main(argv: Any = None) -> int:
 
     # Step 2: Generate interface style
     if run_style:
-        banner("STEP 2/7: Generating interface style")
+        banner("STEP 2/8: Generating interface style")
         try:
             style_result = generate_style(
                 subject_for_fetch,
@@ -242,7 +248,7 @@ def main(argv: Any = None) -> int:
 
     # Step 3: Generate ego network
     if run_network:
-        banner("STEP 3/7: Generating ego network")
+        banner("STEP 3/8: Generating ego network")
         try:
             network_path = generate_person_network(
                 subject_for_fetch,
@@ -261,7 +267,7 @@ def main(argv: Any = None) -> int:
 
     # Step 4: Generate portrait (if not skipped)
     if not args.skip_portrait:
-        banner("STEP 4/7: Generating stylized portrait")
+        banner("STEP 4/8: Generating stylized portrait")
         try:
             from pathlib import Path
 
@@ -321,7 +327,7 @@ def main(argv: Any = None) -> int:
     # colors they are drawn in, and after the dataset, whose chapters they
     # illustrate — a person with neither simply has nothing to draw.
     if not args.skip_chapter_art:
-        banner("STEP 5/7: Generating chapter illustrations")
+        banner("STEP 5/8: Generating chapter illustrations")
         try:
             if not person_id:
                 raise ValueError(
@@ -351,7 +357,7 @@ def main(argv: Any = None) -> int:
     # Step 6: Review (if not skipped)
     if not args.skip_review:
         print("\n" + "=" * 60)
-        print("STEP 6/7: REVIEWING GENERATED DATA")
+        print("STEP 6/8: REVIEWING GENERATED DATA")
         print("=" * 60)
         print("Running quality review and polish...")
         print("(Only high-confidence changes will be applied)")
@@ -376,7 +382,28 @@ def main(argv: Any = None) -> int:
         print("\n⊘ Skipping review step (--skip-review flag)")
         run_log.record("Review", STEP_SKIPPED, "--skip-review")
 
-    # Step 6: Translate (if not skipped). Runs last so translations are
+    # Step 7: Depth-layer background reports. After review, so the reports
+    # build on the reviewed English text and its annotations; before
+    # translation, so the translator sees them. The step computes the story's
+    # own deep-event selection and writes a report only where the story will
+    # offer one.
+    if args.skip_backgrounds:
+        print("\n⊘ Skipping background reports (--skip-backgrounds flag)")
+        run_log.record("Background reports", STEP_SKIPPED, "--skip-backgrounds")
+    elif not person_id:
+        print("\n⊘ Skipping background reports (no person_id resolved)")
+        run_log.record("Background reports", STEP_SKIPPED, "no person ID resolved")
+    else:
+        banner("STEP 7/8: Writing depth-layer background reports")
+        try:
+            written = generate_event_backgrounds(person_id)
+            print(f"\n✓ Wrote {written} background report(s)")
+            run_log.record("Background reports", STEP_OK)
+        except Exception as error:
+            print(f"\n✗ Background reports failed: {error}")
+            run_log.record("Background reports", STEP_FAILED, str(error))
+
+    # Step 8: Translate (if not skipped). Runs last so translations are
     # derived from the final (reviewed) English data. The English reference is
     # complete either way, and `translate_all_persons.py --check` reports the
     # gap, but a failure still counts against the run.
@@ -390,7 +417,7 @@ def main(argv: Any = None) -> int:
         print("\n⊘ Skipping translation step (no person_id resolved)")
         run_log.record("Translation", STEP_SKIPPED, "no person ID resolved")
     else:
-        banner("STEP 7/7: Translating generated data")
+        banner("STEP 8/8: Translating generated data")
         try:
             import os
 

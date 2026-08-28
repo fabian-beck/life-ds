@@ -1,6 +1,9 @@
 /**
  * Event weighting and the depth layer: how much of a life an event turns on,
  * and which events carry enough material for a fold beneath the slide.
+ *
+ * The generation side selects the events to write background reports for with
+ * a port of these rules (scripts/utils/event_depth.py) — keep the two in sync.
  */
 import { getBackgroundImages, getValidImages } from "./images.js";
 import { getRelevantPeople } from "./personMatching.js";
@@ -57,8 +60,8 @@ const CLASS_WEIGHTS = {
  * leaves behind — a classification, a milestone icon, a picture, annotations,
  * people, length — which is to say it reads the documentation rather than the
  * life. It ranks a well-attended ceremony above a quiet paper that founded a
- * field. Backfilling the weights is what fixes that; see
- * `scripts/backfill_event_weights.py`.
+ * field. Such a dataset is outdated data — flagged in `data/outdated.md` and
+ * regenerated, which is what retires this fallback.
  * @param {Object} event - Event object
  * @returns {number} Weight between 0 and 1
  */
@@ -221,8 +224,8 @@ export function selectDeepEventIndexes(events, egoNetwork) {
  * Whether an event actually has a layer to open.
  *
  * `selectDeepEventIndexes` picks the events a layer is *worth* writing for,
- * which is what the backfill script asks it for. The reader's question is a
- * different one: the layer is the generated report and nothing else, so an
+ * which is what `generate_event_backgrounds.py` computes through its port of
+ * these rules. The reader's question is a different one: the layer is the generated report and nothing else, so an
  * event whose report has not been written yet must not advertise a second
  * screen and then show an empty one. A corpus fills in one life at a time, and
  * the invitation down appears exactly where there is something down there.

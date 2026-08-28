@@ -208,7 +208,7 @@
   $: deepEventIndexes = selectDeepEventIndexes(eventSlides, egoNetwork);
 
   // Selected as a landmark AND carrying the report that is the whole of the
-  // layer. The selection is what the backfill script fills against, so it names
+  // layer. The selection is what the report writer fills against, so it names
   // the events worth a report; a life whose reports are not written yet simply
   // offers no way down. Both the markup and the measurement below ask here, so
   // the two cannot drift apart. The selection is passed in rather than read

@@ -15,7 +15,7 @@ What this flags is the near miss the matcher cannot see: an involved name
 that folds to the same person as a connection — diacritics and ß/ss
 collapsed, particles dropped, parentheticals stripped, token subsets and
 one-letter slips allowed — and that the interface's own scoring nonetheless
-rejects. The scoring is ported from ``personMatching.js`` below; keep the two
+rejects. The scoring is the port in ``scripts/utils/person_matching.py``; keep it
 in sync when the matcher changes. Findings are one person spelled two ways,
 and the fix is to spell them identically; which spelling wins is the
 editor's call, not this script's.
@@ -37,15 +37,13 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 
 from config import PEOPLE_DIR
 from utils.json_io import read_json
+from utils.person_matching import PARENTHETICAL, interface_would_match
 from utils.validation import run_dataset_check
 
 # Pairs that look like one person spelled two ways and are nonetheless two
 # people. Keyed by person id, the involved name, and the connection's name.
 ACCEPTED: Dict[Tuple[str, str, str], str] = {}
 
-MATCH_THRESHOLD = 0.6
-
-PARENTHETICAL = re.compile(r"\s*\([^)]*\)")
 PARTICLES = {
     "von",
     "van",
@@ -126,124 +124,6 @@ def same_person_folded(involved: str, connection: str) -> bool:
     # The given name must survive the comparison: a shared surname alone
     # ("Karl Planck" against "Grete Planck") is a family, not a spelling.
     return tokens_subsume(smaller, larger) and within_one_edit(smaller[0], larger[0])
-
-
-# ---------------------------------------------------------------------------
-# The interface side: a faithful port of personMatching.js name matching.
-# ---------------------------------------------------------------------------
-
-HYPHENS = re.compile(r"[‐‑‒–—−]")
-MAIDEN = re.compile(r"\(\s*(?:née|nee|born|geborene|geb\.?)\s+([^)]+)\)", re.I)
-BRACKETED = re.compile(r"\s*\[[^\]]*\]")
-COMMA_TITLE = re.compile(
-    r",\s*(Holy Roman Emperor|Holy Roman Empress|King|Queen|Emperor|Empress"
-    r"|Duke|Duchess|Count|Countess|Prince|Princess|Bishop|Archbishop|Pope"
-    r"|Saint|Dr\.|Prof\.).*$",
-    re.I,
-)
-SUFFIX = re.compile(r"\s+(Jr|Sr)\.?$", re.I)
-TITLE_OF_PLACE = re.compile(
-    r",?\s*(Count|Duke|Duchess|Bishop|Archbishop|King|Queen|Prince|Princess"
-    r"|Emperor|Empress|Lord|Lady|Earl|Baron|Baroness|Margrave|Landgrave"
-    r"|Elector)\s+of\s+[\w\s-]+$",
-    re.I,
-)
-OF_PLACE = re.compile(r"^(.+?)\s+of\s+([\w\s-]+)$", re.I)
-ROMAN = re.compile(r"^(I{1,3}|IV|V|VI{0,3}|IX|X|XI{0,3}|XIV|XV)$", re.I)
-NAME_PARTICLES = ["von", "van", "de", "del", "della", "di"]
-
-
-def normalize_person_name(name: str) -> Optional[Dict[str, Any]]:
-    normalized = HYPHENS.sub("-", name.strip())
-    maiden_match = MAIDEN.search(normalized)
-    maiden = maiden_match.group(1).strip() if maiden_match else None
-    normalized = PARENTHETICAL.sub("", normalized)
-    normalized = BRACKETED.sub("", normalized)
-    normalized = COMMA_TITLE.sub("", normalized)
-    normalized = SUFFIX.sub("", normalized)
-    normalized = TITLE_OF_PLACE.sub("", normalized)
-    of_place = OF_PLACE.match(normalized)
-    tokens = normalized.split()
-    if not tokens:
-        return None
-    particle_index = next(
-        (i for i, t in enumerate(tokens) if t.lower() in NAME_PARTICLES), -1
-    )
-    if of_place:
-        name_tokens = of_place.group(1).split()
-        if not name_tokens:
-            return None
-        last_name = name_tokens[-1]
-        first_names = name_tokens[:-1]
-    elif 0 <= particle_index < len(tokens) - 1:
-        last_name = " ".join(tokens[particle_index:])
-        first_names = tokens[:particle_index]
-    else:
-        last_name = tokens[-1]
-        first_names = tokens[:-1]
-    return {
-        "fullName": normalized,
-        "firstName": first_names[0] if first_names else "",
-        "lastName": last_name,
-        "maidenName": maiden,
-        "tokens": [t.lower() for t in tokens],
-    }
-
-
-def interface_score(
-    name1: Optional[Dict[str, Any]], name2: Optional[Dict[str, Any]]
-) -> float:
-    if not name1 or not name2:
-        return 0.0
-    if name1["fullName"].lower() == name2["fullName"].lower():
-        return 1.0
-    score = 0.0
-    first1, first2 = name1["firstName"].lower(), name2["firstName"].lower()
-    first_match = bool(first1) and first1 == first2
-    last1, last2 = name1["lastName"].lower(), name2["lastName"].lower()
-    last1_roman, last2_roman = bool(ROMAN.match(last1)), bool(ROMAN.match(last2))
-    last_match = bool(last1) and not last1_roman and not last2_roman and last1 == last2
-    last_contained = (
-        bool(last1)
-        and bool(last2)
-        and not last1_roman
-        and not last2_roman
-        and (last1 in last2 or last2 in last1)
-    )
-    roman1 = next((t for t in name1["tokens"] if ROMAN.match(t)), None)
-    roman2 = next((t for t in name2["tokens"] if ROMAN.match(t)), None)
-    if roman1 and roman2:
-        if roman1.upper() != roman2.upper():
-            return 0.0
-        if not first_match:
-            return 0.0
-        score += 0.5
-    if first_match:
-        score += 0.4
-    if last_match:
-        score += 0.4
-    elif last_contained and len(last1) > 3 and len(last2) > 3:
-        score += 0.2
-    full1, full2 = name1["fullName"].lower(), name2["fullName"].lower()
-    if full1 in full2 or full2 in full1:
-        score += 0.2
-    maiden1 = (name1["maidenName"] or "").lower()
-    maiden2 = (name2["maidenName"] or "").lower()
-    if first_match:
-        if maiden1 and last2 == maiden1:
-            score += 0.4
-        elif maiden2 and last1 == maiden2:
-            score += 0.4
-    return min(score, 0.95)
-
-
-def interface_would_match(involved: str, connection: str) -> bool:
-    return (
-        interface_score(
-            normalize_person_name(involved), normalize_person_name(connection)
-        )
-        >= MATCH_THRESHOLD
-    )
 
 
 # ---------------------------------------------------------------------------

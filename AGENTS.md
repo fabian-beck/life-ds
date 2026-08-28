@@ -175,6 +175,7 @@ An exploratory user test is the exception. Its report is its deliverable, and it
 - Reuse the shared stores rather than deriving their state again inside a component.
 - Keep person data synchronized across its registries and localized files.
 - Do not edit generated output when the source data or generator is the proper place for a change.
+- Do not write legacy-data repair code. Generated data is never edited by hand, so any dataset can be regenerated from scratch by the current pipeline. When a schema or generator changes, fix the generator, flag the datasets it leaves behind in `data/outdated.md` with the reason, and regenerate them — never write a backfill, migration, or fix-up script; deterministic validators that only report are fine.
 - Preserve source attribution for biographical data and images.
 
 Consult the relevant reference document before changing schemas, translation generation, maps, networks, timelines, or meta-story composition.

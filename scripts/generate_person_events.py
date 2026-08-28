@@ -30,10 +30,9 @@ from typing import (
     Literal,
     cast,
 )
-from urllib.parse import quote, unquote
+from urllib.parse import quote
 
 import requests
-from openai import OpenAI
 from pydantic import BaseModel, Field
 
 from config import (
@@ -63,7 +62,6 @@ from utils.wikipedia_cache import (
     _fetch_wikipedia_summary_from_api,
     _strip_html_tags,
     ensure_cache,
-    extract_wikipedia_title,
     fetch_wikipedia_extract,
     get_cache_dir,
     get_cached_wikipedia_page,
@@ -88,17 +86,13 @@ enable_utf8_console()
 
 PHASE1_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Event skeleton generation (medium)
 
-# Event detail research. Back on the larger model since the phase began writing
-# the background passage: every other field it returns is checked afterwards —
-# icons against the catalog, people against known entities, places against the
-# geocoder — which is what qualified it for the small model, and a passage of
-# prose is checked by nobody. The small model is also weakest exactly where this
-# passage is won or lost, at recalling detail out of a long context, and a
-# background that recalls nothing is a background that restates the event.
-PHASE2_MODEL = DEFAULT_MODEL
-# Low rather than none for the extraction; the passage is the part that needs
-# the deliberation, and it is written in the same call.
-PHASE2_REASONING_EFFORT = DEFAULT_REASONING_EFFORT
+# Event detail research. Every field it returns is checked afterwards — icons
+# against the catalog, people against known entities, places against the
+# geocoder — which is what qualifies it for the small model. The background
+# passage, the one output checked by nobody, is written in a step of its own
+# (generate_event_backgrounds.py) on the default model.
+PHASE2_MODEL = BULK_MODEL
+PHASE2_REASONING_EFFORT = BULK_REASONING_EFFORT
 
 # Image search string generation: writing Commons queries, which the search
 # itself judges by returning something or nothing.
@@ -791,12 +785,12 @@ class EventDetails(BaseModel):
         default_factory=list,
         description="Array of Wikipedia URLs or references supporting this event",
     )
-    background_image_queries: List[str] = Field(
+    image_search_queries: List[str] = Field(
         default_factory=list,
         description=(
             "3-4 Wikimedia Commons search queries for pictures that illustrate "
-            "the BACKGROUND report — the machine, the building, the document, "
-            "the place it describes. Not portraits of the subject."
+            "THIS event — the machine, the building, the document, the place "
+            "it names. Not portraits of the subject."
         ),
     )
     event_type_icon: Optional[str] = Field(
@@ -804,18 +798,6 @@ class EventDetails(BaseModel):
     )
     annotations: Optional[Dict[str, Annotation]] = Field(
         None, description="Dictionary mapping term keys to their explanations"
-    )
-    background: Optional[str] = Field(
-        None,
-        description=(
-            "A background report for this event, 350-550 words in 3-5 "
-            "paragraphs separated by blank lines: the situation it sat in, the "
-            "concrete specifics, a scene or episode told at length, and what "
-            "came of it. One or two '## Section heading' lines may divide it "
-            "where it turns to a different thing, never above the first "
-            "paragraph. Prose for a reader, not a list. Null when the sources "
-            "give nothing beyond the description."
-        ),
     )
 
 
@@ -2233,240 +2215,6 @@ def verify_portrait_depicts_person(
 
 
 # ============================================================================
-# BACKGROUND ILLUSTRATIONS
-# ============================================================================
-
-# Three per report: the layer deals them out between the paragraphs, so a
-# report of four or five paragraphs can carry three without turning into a
-# gallery — and one picture on a page this long reads as a token.
-BACKGROUND_IMAGE_LIMIT = 3
-
-
-class ChosenImages(BaseModel):
-    """Which candidates, if any, actually illustrate the report."""
-
-    keep: List[int] = Field(
-        default_factory=list,
-        description=(
-            "Indexes of candidates that genuinely depict what the report "
-            "describes, best first, at most three. Empty when none do."
-        ),
-    )
-
-
-CHOOSER_SYSTEM = (
-    "You decide whether a picture illustrates a text. You are strict: a picture "
-    "that merely shares a word with the text illustrates nothing, and an "
-    "irrelevant picture printed beside a report is worse than no picture."
-)
-
-
-# A Commons description field is whatever the uploader typed there, and often
-# what they typed was their own paperwork. The layer prints the caption under
-# the picture, where "Author: Schadel URL: http://turing.izt.uam.mx Made by me
-# on..." reads as a bug.
-_CAPTION_JUNK = re.compile(
-    r"(author\s*:|source\s*:|https?://|own work|made by me|permission\s*:"
-    r"|other[_ ]versions|photographer[,:]|owner of|\{\{|\[\[)",
-    re.IGNORECASE,
-)
-
-
-def background_image_key(url: str) -> str:
-    """A Commons file identified by its filename, not by the size asked for."""
-    name = unquote(str(url or "")).split("/")[-1].split("?")[0]
-    return re.sub(r"^\d+px-", "", name).lower()
-
-
-def background_caption(candidate: Dict[str, Any], query: str) -> str:
-    """A line fit to print under the picture.
-
-    The uploader's description when it reads like one, the filename when it
-    does not — a filename is at least always about the thing — and the query
-    when there is neither.
-    """
-    caption = " ".join(str(candidate.get("caption") or "").split())
-    if caption and not _CAPTION_JUNK.search(caption):
-        if len(caption) > 160:
-            head = caption[:160].rsplit(". ", 1)[0]
-            caption = (head + ".") if len(head) > 40 else caption[:157].rstrip() + "…"
-        return caption
-    filename = str(candidate.get("filename") or "")
-    stem = re.sub(r"\.[A-Za-z0-9]+$", "", filename).replace("_", " ").strip()
-    return stem or query
-
-
-def _background_candidates(
-    queries: List[str], already_shown: Set[str]
-) -> List[Dict[str, Any]]:
-    """What Commons returns for the call's own queries, deduplicated.
-
-    The event's own pictures are excluded: the slide above is already showing
-    them, and an illustration the reader has just scrolled past illustrates
-    nothing. Only images carrying a license are kept, because the layer prints
-    a credit under every picture and one with no credit cannot be published.
-    """
-    found: List[Dict[str, Any]] = []
-    seen = set(already_shown)
-    for query in queries[:4]:
-        # Commons ranks by keyword match, and the thing itself is often a few
-        # places down behind a map, a modern plaque, and somebody's holiday
-        # photograph. The critic reads all of them and mostly says no, so a
-        # deeper pool costs one longer prompt and is the difference between a
-        # report with one illustration and one with three.
-        results = filter_images_by_quality(search_wikimedia_commons(query, limit=12))
-        for candidate in results[:6]:
-            url = candidate.get("url")
-            if not url or background_image_key(url) in seen:
-                continue
-            if not candidate.get("license"):
-                continue
-            found.append(
-                {
-                    "url": url,
-                    "caption": background_caption(candidate, query),
-                    "source": candidate.get("source"),
-                    "creator": candidate.get("creator"),
-                    "license": candidate.get("license"),
-                    "licenseUrl": candidate.get("licenseUrl"),
-                    "query": query,
-                    # Not stored — the filename is shown to the critic and then
-                    # dropped. Commons captions are often a sentence about the
-                    # upload rather than about the subject, and the filename is
-                    # the one field that always names the thing.
-                    "_filename": candidate.get("filename") or "",
-                }
-            )
-            seen.add(background_image_key(url))
-    return found
-
-
-def fetch_background_images(
-    client: OpenAI,
-    report: str,
-    queries: List[str],
-    already_shown: Set[str],
-    wanted: int = BACKGROUND_IMAGE_LIMIT,
-) -> List[Dict[str, Any]]:
-    """Pictures for the report: searched by its own queries, then read.
-
-    A Commons keyword search is a keyword search. Asking it for "On Computable
-    Numbers manuscript" returned a 16th-century Mexican codex, and asking after
-    Christopher Morcom returned a steam engine built by Belliss & Morcom.
-    Roughly half of what came back shared a word with the report and nothing
-    else, so what comes back is now read against the report before any of it is
-    kept, and keeping none is a normal outcome.
-    """
-    candidates = _background_candidates(queries, already_shown)
-    if not candidates:
-        return []
-
-    listing = "\n".join(
-        f"[{index}] {candidate['_filename'] or '(no filename)'} — {candidate['caption']}"
-        for index, candidate in enumerate(candidates)
-    )
-    parsed = parse_structured(
-        client,
-        # A critic, and config.py is explicit that a critic weaker than the
-        # generator is worse than no critic. On the small model this one kept
-        # letting the Belliss & Morcom steam engine through, which is the exact
-        # confusion its instructions name.
-        model=DEFAULT_MODEL,
-        reasoning_effort=DEFAULT_REASONING_EFFORT,
-        input=[
-            {"role": "system", "content": CHOOSER_SYSTEM},
-            {
-                "role": "user",
-                "content": (
-                    "Which of these pictures illustrate the report below?\n\n"
-                    "Each candidate is given as its Commons filename and its "
-                    "caption. Read both: a caption is often about the upload, "
-                    "and the filename is what names the thing.\n\n"
-                    "KEEP a picture that shows a thing the report actually "
-                    "names: the machine, the building, the room, the document, "
-                    "the instrument, the place. Ask of each one: could this "
-                    "picture be printed beside this paragraph with a straight "
-                    "face? If you have to explain the connection, the answer "
-                    "is no.\n"
-                    "REJECT, without exception:\n"
-                    + STAND_IN_REJECTION_INSTRUCTIONS
-                    + "- a map, plan, chart, or diagram of somewhere, unless the "
-                    "report is about that ground itself\n"
-                    "- a montage, collage, poster, book cover, film still, or "
-                    "'events of the year' composite: it depicts nothing in "
-                    "particular, and a film the report merely alludes to is "
-                    "not an illustration of the report\n"
-                    "- a portrait of any person, and any picture of the "
-                    "subject: the slide above already carries those\n"
-                    "- a picture of a different subject from the same era or "
-                    "field, however evocative\n"
-                    "- a reenactment standing in for the thing itself\n"
-                    "- a picture whose caption is about some later incident at "
-                    "the place (building works, a protest, a fire) rather than "
-                    "the place in the role the report gives it\n"
-                    "Keep at most three, and every one you keep must show a "
-                    "DIFFERENT thing: two photographs of the same machine are "
-                    "one illustration printed twice, so keep the better one "
-                    "and move on. Best first.\n"
-                    "THREE IS A CEILING, NOT A TARGET. Do not reach for it. "
-                    "One picture that plainly shows what the report describes "
-                    "beats three that gesture at it, and keeping none is a "
-                    "normal answer.\n\n"
-                    f"REPORT:\n{report}\n\n"
-                    f"CANDIDATES:\n{listing}\n"
-                ),
-            },
-        ],
-        text_format=ChosenImages,
-        label="Illustrations for a background report",
-    )
-    if parsed is None:
-        return []
-
-    # One picture per query, enforced here rather than asked for: the two
-    # queries are the two things the report wanted illustrated, so taking two
-    # answers to the same one prints the same thing twice — which is what kept
-    # happening with the Manchester Mark I no matter how the instruction was
-    # worded.
-    kept: List[Dict[str, Any]] = []
-    used_queries = set()
-    for index in parsed.keep:
-        if not 0 <= index < len(candidates) or len(kept) >= wanted:
-            continue
-        candidate = candidates[index]
-        if candidate["query"] in used_queries:
-            continue
-        used_queries.add(candidate["query"])
-        kept.append({k: v for k, v in candidate.items() if not k.startswith("_")})
-    return kept
-
-
-def illustrate_event(
-    client: OpenAI,
-    event: Dict[str, Any],
-    report: str,
-    queries: List[str],
-) -> List[Dict[str, Any]]:
-    """Put the report's illustrations on the event, or take them off."""
-    shown = {
-        background_image_key(image.get("url", ""))
-        for image in (event.get("images") or [])
-        if isinstance(image, dict)
-    }
-    pictures = (
-        fetch_background_images(client, report, queries, shown) if queries else []
-    )
-    if pictures:
-        event["background_images"] = pictures
-        for picture in pictures:
-            print(f"    image: {picture['query']} -> {picture['caption'][:60]}")
-    else:
-        event.pop("background_images", None)
-        print("    no illustrations found for the report")
-    return pictures
-
-
-# ============================================================================
 # PHASE 1: EVENT SKELETON GENERATION
 # ============================================================================
 
@@ -2949,100 +2697,13 @@ def filter_related_articles_for_event(
 # How much of each related article Phase 2 is shown, and how many it sees. The
 # budget was 1000 characters of five articles — a lead paragraph each, enough to
 # place a term and not enough to say what changed because of an event. The
-# background report is written from this material and from nothing else, so this
-# is the number that decides whether it can carry a detail at all. A lead
-# paragraph is also the part of an article a model already knows; the specifics
-# that make a report worth reading are further down.
+# background writer (generate_event_backgrounds.py) reads the same material
+# through the same numbers, and its report is written from it and from nothing
+# else, so this is the number that decides whether a report can carry a detail
+# at all. A lead paragraph is also the part of an article a model already
+# knows; the specifics that make a report worth reading are further down.
 RELATED_ARTICLE_CHARS = 6000
 RELATED_ARTICLE_COUNT = 8
-
-
-def build_background_avoidance(
-    known_annotations: Optional[Dict[str, str]] = None,
-    story_outline: Optional[List[str]] = None,
-    person_summary: Optional[str] = None,
-    known_people: Optional[Dict[str, str]] = None,
-    cited_sources: Optional[List[str]] = None,
-) -> str:
-    """What the background must be steered around, when it is already known.
-
-    In a generation run the annotations are written by the same call that writes
-    the passage, so section 5's rule is all there is to go on. In a backfill they
-    are on disk, and so is the rest of the story, and a passage written without
-    being shown them repeats them — which is what the reader sees, because the
-    annotations are the popups under the very description this sits below.
-
-    The outline is the whole story, not just the two events either side. A
-    report shown only its neighbours wanders into whatever is a slide or two
-    further along: Turing's death opened on the Manchester laboratory and spent
-    two paragraphs on the morphogenesis paper, which is its own slide, two
-    events back.
-    """
-    if not (
-        known_annotations
-        or story_outline
-        or person_summary
-        or known_people
-        or cited_sources
-    ):
-        return ""
-
-    section = "\n" + "=" * 60 + "\n"
-    section += "WHAT THE READER ALREADY HAS — DO NOT SAY IT AGAIN:\n"
-    section += "=" * 60 + "\n"
-
-    if person_summary:
-        section += f"\nWho the subject is (assume this is known):\n{person_summary}\n"
-
-    if known_annotations:
-        section += (
-            "\nTerms already explained ON THIS SLIDE. A tap opens each of these, "
-            "word for word, under the description your passage follows. Explaining "
-            "any of them again is the most visible way to waste this passage — "
-            "write past them, and where one is relevant, USE it as known ground "
-            "rather than defining it:\n"
-        )
-        for term, explanation in known_annotations.items():
-            section += f"  - {term}: {explanation}\n"
-
-    if known_people:
-        section += (
-            "\nPeople already introduced ON THIS SLIDE. Each is a chip the reader "
-            "can open, carrying exactly this description of who they were to the "
-            "subject. Name them freely where the story needs them, but do not "
-            "introduce them — that is the chip's job, and doing it again here is "
-            "the same words twice:\n"
-        )
-        for name, described in known_people.items():
-            section += f"  - {name}: {described}\n"
-
-    if story_outline:
-        section += (
-            "\nThe rest of this life as the story tells it — every other slide the "
-            "reader can swipe to. Each of these gets its own description and its own "
-            "background report, so a paragraph about one of them is a paragraph "
-            "stolen from a slide that already has it. Stay on YOUR event: mention "
-            "another only as the thing yours led to or came out of, in a clause, "
-            "never as a subject to be told:\n"
-        )
-        for entry in story_outline:
-            section += f"  - {entry}\n"
-
-    if cited_sources:
-        section += (
-            "\nWhat this event cites today. Keep any that genuinely documents it "
-            "and drop any that does not; an article about a different episode of "
-            "the same life is not one:\n"
-        )
-        for url in cited_sources:
-            section += f"  - {url}\n"
-
-    section += (
-        "\nWhat is left is what you are for: the situation around the event that "
-        "neither the description, nor these explanations, nor the other slides "
-        "supply.\n"
-    )
-    return section
 
 
 def build_phase2_prompt_base(
@@ -3050,7 +2711,6 @@ def build_phase2_prompt_base(
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
     deutsche_biographie_text: Optional[str] = None,
-    background_avoidance: str = "",
 ) -> str:
     """
     Build base Phase 2 prompt (common sections for all event types).
@@ -3236,89 +2896,19 @@ def build_phase2_prompt_base(
     prompt += "   - Optional: Include wikipedia_url for further reading\n"
     prompt += "   - DEFAULT to 0 annotations - when in doubt, DO NOT annotate\n\n"
 
-    # The slide already carries the event. This is the one part of the run
-    # asked to write rather than to extract, and every rule here exists to keep
-    # it from restating what the reader has just read: the description is given
-    # as the thing to go beyond, and the questions name what the reader cannot
-    # get from it.
-    prompt += "6. BACKGROUND (a background chapter, prose):\n"
-    prompt += "   - Write 350-550 words, in 3-5 paragraphs, for a curious reader who has finished the\n"
-    prompt += "     description above and wants the story behind it. This is by far the longest thing\n"
-    prompt += "     you write here and the only one addressed to a reader rather than to a schema.\n"
-    prompt += "     Aim for the upper end whenever the sources support it: a reader who has chosen to\n"
-    prompt += "     scroll down here has asked for depth, and three thin paragraphs are a let-down\n"
-    prompt += "   - Prose. Complete sentences, no bullets, no lists\n"
-    prompt += "   - Separate paragraphs with a blank line\n"
-    prompt += "   - HEADINGS, where the report turns to a genuinely different thing: a line of its\n"
-    prompt += "     own beginning with '## ', two to five words, naming what the paragraphs under it\n"
-    prompt += "     are about. Use one or two in a report of this length, never one per paragraph,\n"
-    prompt += "     and never above the opening paragraph — the reader has just arrived from the\n"
-    prompt += "     event and wants prose, not a table of contents. A report that runs as a single\n"
-    prompt += "     argument takes none at all\n"
-    prompt += "   - A heading names the thing it is about, not the part of the report it is,\n"
-    prompt += "     and is set in sentence case: the first word and proper nouns, nothing else\n"
-    prompt += (
-        "     * GOOD: '## The bombe on the floor', '## What Bletchley kept quiet'\n"
-    )
-    prompt += (
-        "     * BAD: '## Background', '## Aftermath', '## A Cover Kafka Rejected'\n"
-    )
-    prompt += (
-        "   - BUILD IT LIKE A REPORT, roughly in this order, as the material allows:\n"
-    )
-    prompt += "     1. THE SITUATION. What was going on around the event — the institution, the field,\n"
-    prompt += "        the war, the politics, the household. Open here, not on the subject's name\n"
-    prompt += "     2. THE SPECIFICS. The concrete detail that makes it real: who else was working on\n"
-    prompt += "        it, what the state of the art was, how long it took, what it cost, what it was\n"
-    prompt += "        competing against, the machine, the room, the number, the rule\n"
-    prompt += "     3. ONE THING AT LENGTH. Pick the single most telling episode, object, argument or\n"
-    prompt += "        obstacle the sources describe and give it a paragraph of its own — how it\n"
-    prompt += "        actually worked, how it actually went, what was actually said. A whole paragraph\n"
-    prompt += "        on one thing beats a sentence each on five\n"
-    prompt += "     4. WHAT CAME OF IT. What changed, what it enabled or foreclosed, how it was received,\n"
-    prompt += "        what it is remembered for or misremembered as, and where the trail leads next\n"
-    prompt += "   - DETAIL IS THE POINT. A sentence that could be written about any event of this kind\n"
-    prompt += (
-        "     is a wasted sentence. Prefer the specific over the general every time:\n"
-    )
-    prompt += (
-        "     * WEAK: 'The work was important for the development of computing.'\n"
-    )
-    prompt += "     * STRONG: 'The bombe reduced a search of 159 quintillion settings to a few hours,\n"
-    prompt += "       and by 1943 more than two hundred of them were running.'\n"
-    prompt += "   - Name names, places, institutions, machines, titles, quantities and dates that the\n"
-    prompt += "     sources give you. A background report with no proper nouns in it is not a report\n"
-    prompt += "   - Say what is contested, surprising, or easily misunderstood where the sources do\n"
-    prompt += "   - HARD RULE - ADD, NEVER RESTATE:\n"
-    prompt += "     * The reader has just read the description. Repeating any of it is a failure\n"
-    prompt += "     * Do not re-tell what happened, who was there, when, or where\n"
-    prompt += "     * Every sentence must carry a fact, a consequence, or a tension the description lacks\n"
-    prompt += "   - GROUNDING: the articles below are your material — use them. Read past their first\n"
-    prompt += "     paragraph. Do not speculate, and do not invent numbers, names, or dates. Where the\n"
-    prompt += (
-        "     sources are thin, write less rather than padding with generalities\n"
-    )
-    prompt += "   - Do NOT use [[term|display]] markers here - they belong in the description only\n"
-    prompt += "   - Write for someone who does not know the field. Name what an insider would assume\n"
-    prompt += (
-        "   - American English. No bullet points, no meta-commentary about sources\n"
-    )
-    prompt += "   - Return null only if the sources give you nothing beyond the description\n\n"
-
-    prompt += "7. BACKGROUND_IMAGE_QUERIES (3-4 short Commons searches):\n"
-    prompt += "   - What would ILLUSTRATE the background report you just wrote: the machine, the\n"
-    prompt += "     building, the document, the instrument, the place, the diagram\n"
-    prompt += "   - Name the thing, not the person. The slide already carries the subject's own\n"
+    prompt += "6. IMAGE_SEARCH_QUERIES (3-4 short Commons searches):\n"
+    prompt += "   - What would ILLUSTRATE this event: the machine, the building, the document,\n"
+    prompt += "     the instrument, the place, the diagram\n"
+    prompt += "   - Name the thing, not the person. The story already carries the subject's own\n"
     prompt += "     pictures, and a second portrait of them illustrates nothing\n"
     prompt += "   - 2-5 words each, the words a photograph of it would be filed under\n"
     prompt += "     * GOOD: 'Bombe machine Bletchley Park', 'Enigma machine naval four-rotor'\n"
     prompt += "     * BAD: 'Alan Turing portrait', 'cryptanalysis', 'World War II'\n"
-    prompt += "   - Each query names a DIFFERENT thing, drawn from a different part of the report.\n"
-    prompt += "     Four searches for four angles on one machine return the same photograph four times\n"
-    prompt += "   - Only things the report actually mentions. Return an empty list rather than\n"
-    prompt += "     guessing at something that might exist\n\n"
-
-    prompt += background_avoidance
+    prompt += "   - Each query names a DIFFERENT thing the event's material mentions. Four searches\n"
+    prompt += (
+        "     for four angles on one machine return the same photograph four times\n"
+    )
+    prompt += "   - Return an empty list rather than guessing at something that might exist\n\n"
 
     # Add icon categories
     prompt += "\n" + "=" * 60 + "\n"
@@ -3386,7 +2976,6 @@ def build_phase2_prompt_classified(
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
     deutsche_biographie_text: Optional[str] = None,
-    background_avoidance: str = "",
 ) -> str:
     """
     Generic Phase 2 prompt builder for classified events.
@@ -3398,7 +2987,6 @@ def build_phase2_prompt_classified(
         person_name,
         [],
         deutsche_biographie_text=deutsche_biographie_text,
-        background_avoidance=background_avoidance,
     )
 
     # event_class is None for standard events. The only caller checks before
@@ -3435,7 +3023,6 @@ def research_event_details(
     model: str = PHASE2_MODEL,
     retry_count: int = 2,
     deutsche_biographie_text: Optional[str] = None,
-    background_avoidance: str = "",
 ) -> EventDetails:
     """
     Research details for a single event with retry logic.
@@ -3457,7 +3044,6 @@ def research_event_details(
             person_name,
             filtered_articles,
             deutsche_biographie_text=deutsche_biographie_text,
-            background_avoidance=background_avoidance,
         )
     else:
         # Standard event (no classification)
@@ -3466,17 +3052,13 @@ def research_event_details(
             person_name,
             filtered_articles,
             deutsche_biographie_text=deutsche_biographie_text,
-            background_avoidance=background_avoidance,
         )
 
     system = (
         "You are a research assistant specializing in biographical event details. "
         "Provide specific, factual information for the given event. "
         "Ensure descriptions are chronologically confined, concise, and balanced. "
-        "All output must be in American English only. Be precise with locations and people. "
-        "One field, the background, is written prose rather than extracted data: "
-        "it is read by someone who has just read the event and wants to know what "
-        "surrounded it, so it must add to the description rather than restate it."
+        "All output must be in American English only. Be precise with locations and people."
     )
 
     details = parse_structured(
@@ -3511,7 +3093,6 @@ def research_all_event_details(
     all_related_articles: List[Dict[str, Any]],
     model: str = PHASE2_MODEL,
     deutsche_biographie_text: Optional[str] = None,
-    person_summary: Optional[str] = None,
 ) -> List[EventDetails]:
     """Research details for all events sequentially (NO images - Phase 3)."""
     # Log classification routing info
@@ -3539,18 +3120,6 @@ def research_all_event_details(
             all_related_articles,
             model,
             deutsche_biographie_text=deutsche_biographie_text,
-            # The background report is the one field written for a reader, and
-            # the reader can swipe to every other event in this list. Phase 1
-            # has already proposed all of them, so Phase 2 can be told which
-            # ground is taken before it writes a word.
-            background_avoidance=build_background_avoidance(
-                story_outline=[
-                    f"{other.date or '?'} — {other.title}"
-                    for position, other in enumerate(event_skeletons)
-                    if position != idx - 1
-                ],
-                person_summary=person_summary,
-            ),
         )
         details.append(detail)
 
@@ -3605,7 +3174,6 @@ def merge_event_skeleton_and_details(
         event_type_icon=normalize_icon(details.event_type_icon),
         chapter=None,  # Chapter assigned in Chapter generation phase
         annotations=annotations,
-        background=details.background,
         weight=skeleton.weight,  # From Phase 1, which sees the whole life
         event_class=skeleton.event_class,  # From Phase 1, not Phase 2
     )
@@ -4025,7 +3593,7 @@ def research_images_for_all_events(
     print(f"    Generated {len(search_strings)} search strings")
 
     event_queries = plan_event_image_searches(
-        [details.background_image_queries or [] for details in event_details_list]
+        [details.image_search_queries or [] for details in event_details_list]
     )
     print(f"    Plus searches for {len(event_queries)} event(s) from Phase 2")
 
@@ -4098,62 +3666,7 @@ def research_images_for_all_events(
 
         enriched_events.append(LifeEvent(**event_dict))
 
-    enriched_events = illustrate_background_reports(enriched_events, event_details_list)
-
     return enriched_events, portrait
-
-
-def illustrate_background_reports(
-    events: List[LifeEvent],
-    event_details_list: List[EventDetails],
-) -> List[LifeEvent]:
-    """Phase 3d: give each background report the pictures it asked for.
-
-    Phase 2 names three or four things worth a picture while it still has the
-    report in front of it — the machine, the building, the document — and those
-    searches used to be dropped on the floor here. Every dataset generated
-    after the report existed therefore arrived with reports and no
-    illustrations, and the layer under the fold read as a wall of text. The
-    searches run now, at the one point in the run where the event's own picture
-    is already known and can be kept out of them.
-    """
-    illustratable = [
-        idx
-        for idx, event in enumerate(events)
-        if (event.background or "").strip()
-        and idx < len(event_details_list)
-        and (event_details_list[idx].background_image_queries or [])
-    ]
-    if not illustratable:
-        return events
-
-    try:
-        client = get_client()
-    except RuntimeError:
-        # No key: the reports stand as prose, which is what a run without a
-        # picture search has always produced.
-        return events
-
-    print(f"  [Phase 3d] Illustrating {len(illustratable)} background report(s)...")
-    illustrated = []
-    for idx, event in enumerate(events):
-        if idx not in illustratable:
-            illustrated.append(event)
-            continue
-        event_dict = event.model_dump()
-        safe_title = event.title.encode("ascii", "replace").decode("ascii")
-        print(f"    [{idx}] {safe_title}")
-        illustrate_event(
-            client,
-            event_dict,
-            (event.background or "").strip(),
-            list(event_details_list[idx].background_image_queries or []),
-        )
-        illustrated.append(LifeEvent(**event_dict))
-
-    pictures = sum(len(event.background_images or []) for event in illustrated)
-    print(f"  [Phase 3d] Kept {pictures} illustration(s)")
-    return illustrated
 
 
 # ============================================================================
@@ -4804,7 +4317,6 @@ def generate_person_events(
         person_name=life_plan.person.name,
         all_related_articles=related_articles or [],
         deutsche_biographie_text=db_prompt_text,
-        person_summary=life_plan.person.summary,
     )
     print(f"[Step 5/12] Researched details for {len(event_details_list)} events")
 
@@ -4950,11 +4462,6 @@ def parse_args(argv: Any) -> argparse.Namespace:
         help="Skip using cached Wikipedia materials and fetch directly from APIs.",
     )
     parser.add_argument(
-        "--images-only",
-        action="store_true",
-        help="Only re-run image search and assignment using existing life_events.json data.",
-    )
-    parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
         help=(
@@ -5071,183 +4578,6 @@ def image_assignment_block(img: Dict[str, Any]) -> Dict[str, Any]:
     return block
 
 
-def regenerate_images_only(subject: str) -> Tuple[Path, str]:
-    """
-    Re-run only Phase 3 (image search and assignment) using existing life_events.json.
-
-    Returns:
-        Tuple of (file_path, person_id)
-    """
-    # Resolve person_id from subject
-    url_info = extract_wikipedia_title(subject)
-    if url_info:
-        article_title = url_info[0]
-    else:
-        article_title = subject.replace("_", " ")
-
-    person_id = slugify(article_title)
-
-    # Check if life_events.json exists
-    person_dir = PEOPLE_DIR / person_id
-    events_path = person_dir / "life_events.json"
-
-    if not events_path.exists():
-        raise FileNotFoundError(
-            f"No existing data found for '{person_id}'. "
-            f"Run without --images-only first to generate initial data."
-        )
-
-    print(f"[Step 1/4] Loading existing data for '{person_id}'...")
-    payload = json.loads(events_path.read_text(encoding="utf-8"))
-
-    person_data = payload.get("person", {})
-    person_name = person_data.get("name", article_title)
-    events = payload.get("events", [])
-
-    print(f"[Step 1/4] Loaded {len(events)} events for {person_name}")
-
-    # Convert events to EventSkeleton objects for the image search
-    event_skeletons = []
-    for event in events:
-        skeleton = EventSkeleton(
-            date=event.get("date", ""),
-            date_precision=event.get("date_precision", "year"),
-            date_end=event.get("date_end"),
-            date_end_precision=event.get("date_end_precision"),
-            date_note=event.get("date_note"),
-            age=event.get("age"),
-            title=event.get("title", ""),
-            description=event.get("description", ""),
-            annotations=event.get("annotations"),
-        )
-        event_skeletons.append(skeleton)
-
-    # Run Phase 3: Image search and assignment
-    print(
-        f"[Step 2/4] PHASE 3: Discovering and assigning images (model: {PHASE3_IMAGE_SEARCH_MODEL})..."
-    )
-
-    print("  [Phase 3a] Generating image search strings...")
-    search_strings = generate_image_search_strings(event_skeletons, person_name)
-    print(f"    Generated {len(search_strings)} search strings")
-    for ss in search_strings:
-        safe_ss = ss.encode("ascii", "replace").decode("ascii")
-        print(f"      • {safe_ss}")
-
-    # The searches Phase 2 wrote are not stored on the event, but the pictures
-    # they found are, and each one remembers the query that found it. A rerun
-    # therefore recovers the named things for every event that carries a
-    # background illustration, and searches the whole life for the rest.
-    event_queries = plan_event_image_searches(
-        [
-            [
-                image.get("query") or ""
-                for image in (event.get("background_images") or [])
-            ]
-            for event in events
-        ]
-    )
-    if event_queries:
-        print(f"    Plus recovered searches for {len(event_queries)} event(s)")
-
-    print("  [Phase 3b] Searching image sources (Commons + Openverse)...")
-    candidate_images = execute_batch_image_search(
-        search_strings, images_per_query=10, event_queries=event_queries
-    )
-
-    if not candidate_images:
-        print("    No images found")
-        return events_path, person_id
-
-    print(f"    Found {len(candidate_images)} candidate images")
-
-    # Quality pre-filtering (permissive - AI makes final decisions)
-    print("  [Phase 3b+] Applying quality pre-filtering...")
-    filtered_images = filter_images_by_quality(
-        candidate_images,
-        person_name=person_name,
-        min_score=10.0,  # Permissive threshold (out of 45 possible)
-    )
-
-    if not filtered_images:
-        print("    No images passed quality filters")
-        return events_path, person_id
-
-    filtered_count = len(candidate_images) - len(filtered_images)
-    print(
-        f"    Filtered out {filtered_count} low-quality images ({len(filtered_images)} remaining)"
-    )
-
-    # Show quality score distribution
-    if filtered_images:
-        scores = [img.get("quality_score", 0) for img in filtered_images]
-        avg_score = sum(scores) / len(scores)
-        max_score = max(scores)
-        min_score = min(scores)
-        print(
-            f"    Quality scores: avg={avg_score:.1f}, range={min_score:.1f}-{max_score:.1f}"
-        )
-
-    print(
-        f"  [Phase 3c] AI matching {len(filtered_images)} images to {len(event_skeletons)} events..."
-    )
-    assignments, portrait = match_images_to_events(
-        filtered_images, event_skeletons, person_name
-    )
-    print(f"    Assigned images to {len(assignments)} events")
-    if portrait:
-        verdict = verify_portrait_depicts_person(portrait, person_name)
-        if verdict is False:
-            print("    ✗ Portrait rejected on sight; leaving the pick empty")
-            portrait = None
-        elif verdict is None:
-            print("    ! Portrait unverified (the check did not run); keeping it")
-        else:
-            print("    ✓ Portrait selected and verified")
-
-    # Apply portrait to person data
-    print("[Step 3/4] Updating events with new image assignments...")
-
-    portrait_block = resolve_portrait(
-        portrait,
-        find_existing_generated_portrait(person_id, indent="    "),
-        indent="    ",
-    )
-    if portrait_block:
-        payload["person"]["portrait"] = portrait_block
-    else:
-        # AI found no suitable portrait and no generated portrait exists
-        payload["person"].pop("portrait", None)
-        print("    No suitable portrait found - removed existing portrait")
-
-    # Apply assignments to events
-    for idx, event in enumerate(events):
-        if idx in assignments:
-            event["images"] = [image_assignment_block(assignments[idx])]
-            safe_title = (
-                event.get("title", "").encode("ascii", "replace").decode("ascii")
-            )
-            print(f"    ✓ Event {idx}: {safe_title}")
-        else:
-            # Remove old images
-            event.pop("images", None)
-
-    payload["events"] = events
-
-    # Write updated file
-    print("[Step 4/4] Writing updated dataset...")
-    write_json(events_path, payload)
-
-    images_assigned = sum(1 for e in events if e.get("images"))
-    print(f"\nDone! Assigned images to {images_assigned} / {len(events)} events")
-
-    # Update persons.json registry with updated portrait (or removed portrait)
-    update_register(person_id, payload, events_path)
-    print(f"Register updated at {REGISTER_PATH}")
-
-    return events_path, person_id
-
-
 def main(argv: Any = None) -> int:
     args = parse_args(argv)
     try:
@@ -5259,22 +4589,18 @@ def main(argv: Any = None) -> int:
             subject_for_fetch = args.subject
             person_id_override = None
 
-        if args.images_only:
-            file_path, person_id = regenerate_images_only(subject_for_fetch)
-            print(f"\nDataset updated at {file_path}")
+        file_path, person_id = generate_person_events(
+            subject_for_fetch,
+            person_id=person_id_override,
+            update_registry=not args.no_register,
+            model=args.model,
+            use_cache=not args.no_cache,
+        )
+        print(f"\nDataset written to {file_path}")
+        if args.no_register:
+            print("Register update skipped by request.")
         else:
-            file_path, person_id = generate_person_events(
-                subject_for_fetch,
-                person_id=person_id_override,
-                update_registry=not args.no_register,
-                model=args.model,
-                use_cache=not args.no_cache,
-            )
-            print(f"\nDataset written to {file_path}")
-            if args.no_register:
-                print("Register update skipped by request.")
-            else:
-                print(f"Register updated at {REGISTER_PATH}")
+            print(f"Register updated at {REGISTER_PATH}")
     except Exception as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
