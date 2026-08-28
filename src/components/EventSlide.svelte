@@ -306,18 +306,6 @@
     img.parentElement.style.width = `${containerWidth}vw`;
     img.parentElement.style.height = `${containerHeight}vh`;
 
-    // Shift the image's visual center away from the gradient's faded left and
-    // bottom edges. The offset scales with its rendered shorter edge so it
-    // remains proportional for portrait, landscape, and square images.
-    const shortEdgePx = Math.min(
-      (containerWidth / 100) * viewportWidth,
-      (containerHeight / 100) * viewportHeight
-    );
-    img.parentElement.style.setProperty(
-      "--image-edge-offset",
-      `${shortEdgePx * 0.2}px`
-    );
-
     // Calculate mask ellipse based on aspect ratio
     let horizontalRadius, verticalRadius;
 
@@ -1523,18 +1511,10 @@
     flex-direction: column;
     gap: 0.5rem;
     z-index: 3;
-    /* The picture is shifted up and out by `--image-edge-offset` below, which
-       carries its faded corner past this box — and past the slide's own edge,
-       since this box ends there. The slide scrolls vertically, so a sideways
-       overflow it can see turns into a sideways scroll: the reader drags the
-       event off center by the width of the bleed. Cropping the bleed here, at
-       the one element that creates it, keeps the slide exactly one screen wide
-       instead of leaving the slide to clip a strip it can still scroll to. */
     overflow: clip;
   }
 
   .image-thumbnail {
-    --image-edge-offset: 0px;
     appearance: none;
     border: none;
     padding: 0;
@@ -1551,10 +1531,6 @@
     overflow: hidden;
     background: transparent;
     box-shadow: none;
-    transform: translate(
-      var(--image-edge-offset),
-      calc(-1 * var(--image-edge-offset))
-    );
   }
 
   .image-thumbnail:focus {
@@ -1632,11 +1608,6 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s ease;
-    /* Counteract the button's horizontal --image-edge-offset shift so the icon
-       stays anchored to the viewport edge instead of being pushed off-screen.
-       Only X is countered: the button's vertical shift moves it up (icon stays
-       visible), and countering Y would push the icon below the clipped edge. */
-    transform: translate(calc(-1 * var(--image-edge-offset)), 0);
   }
 
   .image-thumbnail.image-visible .enlarge-icon {
