@@ -1020,6 +1020,71 @@ test("an arrow key pressed over the tail of a wheel run still switches the slide
     .toBe(true);
 });
 
+/* A smooth scroll can be killed on its way — a layout jolt, an image decoding
+   into place, a scrollend arriving early — and the container's mandatory snap
+   then carries the strip back to the nearest slide: the one the reader just
+   left. The state machine used to take that rest for the reader's choice, so
+   an arrow-key slide change visibly undid itself halfway through. A
+   programmatic scroll now knows the slide it was sent to and is sent again
+   when it comes to rest anywhere else. The interruption below is the smallest
+   one there is — a one-pixel instant scroll — which stands in for them all,
+   since every one of them ends the same way: animation gone, snap deciding. */
+test("a slide change interrupted mid-flight still reaches the slide the key asked for", async ({
+  page,
+}) => {
+  await page.goto("en#/en/story/alan_turing?slide=3");
+  const active = page.locator("section.slide:not([inert])");
+  await expect(active).toBeVisible();
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const slides = document.querySelector("main.slides");
+        return slides.scrollLeft === 3 * slides.clientWidth;
+      })
+    )
+    .toBe(true);
+  const labels = await page
+    .locator("main.slides > section")
+    .evaluateAll((sections) =>
+      sections.map((section) => section.getAttribute("aria-label"))
+    );
+
+  await page.evaluate(async () => {
+    const view = document.querySelector(".story-view");
+    const slides = document.querySelector("main.slides");
+    const start = slides.scrollLeft;
+    const width = slides.clientWidth;
+    view.dispatchEvent(
+      new KeyboardEvent("keydown", {
+        key: "ArrowRight",
+        bubbles: true,
+        cancelable: true,
+      })
+    );
+    // Wait for the first frame that shows the scroll clearly under way — the
+    // animation's opening frames, so well short of halfway: the snap after
+    // the interruption must have no reason to go anywhere but back.
+    await new Promise((resolve) => {
+      const check = () => {
+        if (slides.scrollLeft - start > width * 0.05) resolve();
+        else requestAnimationFrame(check);
+      };
+      requestAnimationFrame(check);
+    });
+    slides.scrollLeft -= 1;
+  });
+
+  await expect(active).toHaveAttribute("aria-label", labels[4]);
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const slides = document.querySelector("main.slides");
+        return slides.scrollLeft === 4 * slides.clientWidth;
+      })
+    )
+    .toBe(true);
+});
+
 /* A person's context is given by their chip, on every slide, including the ones
    that carry a depth layer. The layer briefly took the people for itself — the
    chips were suppressed to avoid saying a name twice — which made the one slide

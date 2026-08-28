@@ -502,6 +502,76 @@
   let scrollHandlerTimeout = null;
   let scrollendSupported = null;
 
+  // The slide the current programmatic scroll was sent to, how often it has
+  // been sent again, and the position the settle check last saw. The target
+  // outlives the scroll call because the animation can be killed on the way —
+  // see settleProgrammaticScroll below.
+  let programmaticTargetIndex = null;
+  let programmaticRetries = 0;
+  let settleCheckLeft = null;
+
+  // How long the settle check waits between looks at a container still moving.
+  const SETTLE_RECHECK_MS = 150;
+  // How often a scroll found at rest off its target is sent again before the
+  // position is accepted as it stands.
+  const PROGRAMMATIC_RETRY_LIMIT = 2;
+
+  // Declares a programmatic scroll finished only once the container is really
+  // at rest — and on the slide the scroll was sent to. Neither is guaranteed
+  // by the events alone: scrollend can arrive while the animation still runs,
+  // a browser without scrollend leaves only a timer that knows nothing of the
+  // animation's length, and any mid-flight interruption — a layout jolt, an
+  // image decoding into place — cancels the animation outright, whereupon the
+  // mandatory snap carries the strip back to the slide the reader just left.
+  // Sampling any of those moments wrote the abandoned position into
+  // activeIndex and the URL, which is how an arrow-key slide change visibly
+  // undid itself halfway through. So: still moving, look again; at rest off
+  // target, send the scroll again; at rest on target, or out of retries,
+  // settle and sync.
+  function settleProgrammaticScroll(delayMs) {
+    if (scrollStateTimeout) {
+      clearTimeout(scrollStateTimeout);
+    }
+    settleCheckLeft = slidesContainer ? slidesContainer.scrollLeft : null;
+    scrollStateTimeout = setTimeout(() => {
+      scrollStateTimeout = null;
+      // A reader's own gesture claims the scroll wherever it is; the check
+      // stands down rather than steering against a finger or a wheel.
+      if (
+        scrollState !== SCROLL_STATE.PROGRAMMATIC &&
+        scrollState !== SCROLL_STATE.SETTLING
+      ) {
+        return;
+      }
+      if (!slidesContainer) return;
+      const { scrollLeft, clientWidth } = slidesContainer;
+      if (scrollLeft !== settleCheckLeft) {
+        settleProgrammaticScroll(SETTLE_RECHECK_MS);
+        return;
+      }
+      const restIndex = clientWidth
+        ? clamp(Math.round(scrollLeft / clientWidth), 0, totalPanels - 1)
+        : null;
+      if (
+        restIndex !== null &&
+        programmaticTargetIndex !== null &&
+        restIndex !== programmaticTargetIndex &&
+        programmaticRetries < PROGRAMMATIC_RETRY_LIMIT
+      ) {
+        programmaticRetries += 1;
+        scrollState = SCROLL_STATE.PROGRAMMATIC;
+        slidesContainer.scrollTo({
+          left: programmaticTargetIndex * clientWidth,
+          behavior: "smooth",
+        });
+        settleProgrammaticScroll(SETTLE_RECHECK_MS);
+        return;
+      }
+      scrollState = SCROLL_STATE.IDLE;
+      syncActiveIndexFromScroll();
+    }, delayMs);
+  }
+
   // Detect scrollend event support (lazy check)
   function detectScrollendSupport() {
     if (scrollendSupported !== null) return scrollendSupported;
@@ -520,17 +590,9 @@
   function handleScrollEnd() {
     if (scrollState === SCROLL_STATE.PROGRAMMATIC) {
       scrollState = SCROLL_STATE.SETTLING;
-      // Allow snap to finish. Kept in scrollStateTimeout so that a scroll
-      // starting inside this window cancels it — an untracked timer would
-      // outlive its own scroll and sample the next one halfway through.
-      if (scrollStateTimeout) {
-        clearTimeout(scrollStateTimeout);
-      }
-      scrollStateTimeout = setTimeout(() => {
-        scrollStateTimeout = null;
-        scrollState = SCROLL_STATE.IDLE;
-        syncActiveIndexFromScroll();
-      }, 100);
+      // Allow snap to finish, then hand the verdict to the settle check —
+      // this scrollend may be premature, and the rest position wrong.
+      settleProgrammaticScroll(100);
     } else if (scrollState === SCROLL_STATE.USER_SCROLLING) {
       scrollState = SCROLL_STATE.IDLE;
       syncActiveIndexFromScroll();
@@ -598,6 +660,8 @@
     // Update state machine
     scrollState = SCROLL_STATE.PROGRAMMATIC;
     currentNavigationSource = source; // Track the source of this navigation
+    programmaticTargetIndex = clampedIndex;
+    programmaticRetries = 0;
 
     // Every source but "prop-change" is a reader's own command, and marks the
     // moment for the wheel handler's staleness check. "prop-change" is the
@@ -648,13 +712,11 @@
       behavior: immediate ? "instant" : "smooth",
     });
 
-    // Fallback timeout if scrollend not supported
+    // Without scrollend the settle check is the only finish line. Its first
+    // look waits out the typical animation; a container still moving then is
+    // simply looked at again, so a slow animation is never sampled mid-flight.
     if (!detectScrollendSupport()) {
-      const duration = immediate ? 50 : 600;
-      scrollStateTimeout = setTimeout(() => {
-        scrollState = SCROLL_STATE.IDLE;
-        syncActiveIndexFromScroll();
-      }, duration);
+      settleProgrammaticScroll(immediate ? 50 : 600);
     }
   }
 
