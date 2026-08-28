@@ -2187,13 +2187,6 @@
     min-height: calc(100% + var(--slide-bottom-base));
   }
 
-  /* The fold is the containing block for what the event paints over the whole
-     slide, so the picture has to be given back the horizontal padding the fold
-     sits inside; it bleeds to the slide's own edge. */
-  .slide-fold > :global(.event-images) {
-    right: -1.5rem;
-  }
-
   .slide-fold > :global(.content) {
     flex-shrink: 0;
     align-self: center;
@@ -2476,13 +2469,22 @@
     z-index: 3;
   }
 
-  /* Event images are the exception to the slide's in-flow children. Keep the
-     image container out of the padded content flow and pin it to the actual
-     slide corner; deep slides apply the same edge correction to their fold. */
-  .slide > :global(.event-images) {
+  /* A fold lays out the first screen of a deep event, but it must not become
+     the containing block for the event picture: the fold occupies the slide's
+     padded content box, which leaves the picture inset from the real corner.
+     The slide itself is the stable containing block at every breakpoint. */
+  .slide > .slide-fold {
+    position: static;
+  }
+
+  /* Event images are the exception to the slide's in-flow children. This
+     covers ordinary events and events wrapped in a fold without compensating
+     for either of the slide's breakpoint-dependent padding values. */
+  .slide > :global(.event-images),
+  .slide-fold > :global(.event-images) {
     position: absolute;
     top: 0;
-    right: -1.5rem;
+    right: 0;
   }
 
   .slide > .content {

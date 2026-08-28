@@ -135,7 +135,7 @@ test("an event picture is anchored to the slide corner", async ({ page }) => {
     "no death event carries a picture"
   ).toBeGreaterThanOrEqual(0);
 
-  await page.setViewportSize({ width: 630, height: 558 });
+  await page.setViewportSize({ width: 570, height: 430 });
   await serveImagesLocally(page);
   await page.goto(`en#/en/story/ada_lovelace?event=${withDeathImage}`);
   const slide = page.locator("section.slide:not([inert])");
@@ -151,11 +151,17 @@ test("an event picture is anchored to the slide corner", async ({ page }) => {
     return {
       slide: rect(section),
       container: rect(container),
+      thumbnail: rect(container.querySelector(".image-thumbnail")),
       position: getComputedStyle(container).position,
+      anchoredToSlide: container.offsetParent === section,
     };
   });
 
   expect(measured.position).toBe("absolute");
+  expect(
+    measured.anchoredToSlide,
+    "the padded event fold, rather than the slide, anchors the image"
+  ).toBe(true);
   expect(
     Math.abs(measured.container.top - measured.slide.top),
     "the image container has a top inset"
@@ -164,6 +170,14 @@ test("an event picture is anchored to the slide corner", async ({ page }) => {
     Math.abs(measured.container.right - measured.slide.right),
     "the image container has a right inset"
   ).toBeLessThanOrEqual(1);
+  expect(
+    measured.thumbnail.top,
+    "the intentional image offset no longer clears the top edge"
+  ).toBeLessThanOrEqual(measured.slide.top);
+  expect(
+    measured.thumbnail.right,
+    "the intentional image offset no longer clears the right edge"
+  ).toBeGreaterThanOrEqual(measured.slide.right);
 });
 
 // The report is a separate page published next to the app, so a broken link
