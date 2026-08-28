@@ -313,9 +313,11 @@ test("core visitor journey", async ({ page }, testInfo) => {
 
   await search.fill("Ada Lovelace");
   await expect(page).toHaveURL(/\/en\?q=Ada(?:\+|%20)Lovelace$/);
-  const adaCard = page.getByRole("button", {
-    name: "Open life story for Ada Lovelace",
-  });
+  // The collections carousel announces its portraits with the same string, so
+  // the accessible name alone does not single out a result card.
+  const adaCard = page
+    .getByRole("button", { name: "Open the life story of Ada Lovelace" })
+    .and(page.locator(".person-card"));
   await expect(adaCard).toBeVisible();
   await expect(page.getByRole("status")).toContainText("1");
   await expect(page.locator(".header-container")).toBeVisible();
@@ -455,7 +457,7 @@ test("core visitor journey", async ({ page }, testInfo) => {
   // The two ways out of a story have to agree. Back already restored the
   // search; the close button used to rebuild a bare landing route and drop it,
   // so the reader watched their filter vanish.
-  await page.getByRole("button", { name: "Open life story for Ada" }).click();
+  await adaCard.click();
   await expect(page).toHaveURL(/\/en\/story\/ada_lovelace/);
   await page
     .getByRole("button", {
