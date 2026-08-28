@@ -8,6 +8,7 @@ import metaStoriesDe from "../data/meta_stories_de.json" with { type: "json" };
 // Which event carries a picture is data too, and the one test that needs a
 // picture on screen asks rather than assumes.
 import turingEvents from "../data/people/alan_turing/life_events.json" with { type: "json" };
+import lovelaceEvents from "../data/people/ada_lovelace/life_events.json" with { type: "json" };
 
 function metaStoryTitle(registry, id) {
   const entry = (registry.meta_stories ?? []).find((story) => story.id === id);
@@ -118,6 +119,51 @@ test("an event slide with a picture is exactly as wide as the screen", async ({
     "the event slide reaches past its own right edge"
   ).toBeLessThanOrEqual(measured.clientWidth + 1);
   expect(measured.reached, "the event slide scrolls sideways").toBe(0);
+});
+
+test("an event picture is anchored to the slide corner", async ({ page }) => {
+  test.skip(
+    test.info().project.name !== "desktop-chromium",
+    "geometry is checked once at the reported landscape viewport"
+  );
+  const withDeathImage = lovelaceEvents.events.findIndex(
+    (event) =>
+      event.event_class?.type === "death" && (event.images ?? []).length > 0
+  );
+  expect(
+    withDeathImage,
+    "no death event carries a picture"
+  ).toBeGreaterThanOrEqual(0);
+
+  await page.setViewportSize({ width: 630, height: 558 });
+  await serveImagesLocally(page);
+  await page.goto(`en#/en/story/ada_lovelace?event=${withDeathImage}`);
+  const slide = page.locator("section.slide:not([inert])");
+  await expect(slide.locator(".image-thumbnail.image-visible")).toBeVisible();
+
+  const measured = await slide.evaluate((section) => {
+    const container = section.querySelector(".event-images");
+    const rect = (element) => {
+      const { top, right, bottom, left, width, height } =
+        element.getBoundingClientRect();
+      return { top, right, bottom, left, width, height };
+    };
+    return {
+      slide: rect(section),
+      container: rect(container),
+      position: getComputedStyle(container).position,
+    };
+  });
+
+  expect(measured.position).toBe("absolute");
+  expect(
+    Math.abs(measured.container.top - measured.slide.top),
+    "the image container has a top inset"
+  ).toBeLessThanOrEqual(1);
+  expect(
+    Math.abs(measured.container.right - measured.slide.right),
+    "the image container has a right inset"
+  ).toBeLessThanOrEqual(1);
 });
 
 // The report is a separate page published next to the app, so a broken link
