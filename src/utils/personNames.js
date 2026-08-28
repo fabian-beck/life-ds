@@ -35,7 +35,9 @@
  *
  * - a surname-only slice preceded by another capitalized token is rejected,
  *   because that token is almost certainly a *different* given name
- *   ("John Adams" ≠ Abigail Adams);
+ *   ("John Adams" ≠ Abigail Adams) — unless that token is itself a mention of
+ *   somebody else, which makes the two names merely adjacent ("besuchte Otto
+ *   Wright" is Frei Otto followed by Frank Lloyd Wright);
  * - a slice that does not reach the surname is rejected when a capitalized
  *   token follows it, unless the match itself carries a genitive ending
  *   ("George III" ≠ George Washington, but "Heinrichs Mutter" is Henry II);
@@ -597,7 +599,9 @@ function alignSlice(runTokens, from, to, spec) {
  * Collect every acceptable (person, span) candidate inside one run.
  * @param {Object} run - Name run
  * @param {Array} compiled - Compiled people
- * @returns {Array<Object>} Candidates
+ * @returns {{candidates: Array<Object>, held: Array<Object>}} Candidates that
+ *   stand on their own, and candidates held back behind a capitalized word
+ *   whose own `heldBy` range decides them
  */
 function candidatesInRun(run, compiled) {
   const tokens = run.tokens;
@@ -614,6 +618,7 @@ function candidatesInRun(run, compiled) {
     )
     .map((token) => fold(token.text).replace(/\.$/, ""));
   const candidates = [];
+  const held = [];
 
   for (const { person, specs, isRelative } of compiled) {
     for (const spec of specs) {
@@ -673,6 +678,7 @@ function candidatesInRun(run, compiled) {
           // anyone who has a surname, which is what separates "King George"
           // from Henry II.
           const before = tokens[from - 1];
+          let heldBy = null;
           if (before && isCapitalized(before.text)) {
             const folded = fold(before.text);
             const allowed =
@@ -681,7 +687,12 @@ function candidatesInRun(run, compiled) {
               introducedAsRelative ||
               (PERSON_TITLE_WORDS.has(folded) &&
                 (alignment.hasSurname || !spec.hasSurname));
-            if (!allowed) continue;
+            // A fifth case cannot be decided here, because it depends on the
+            // other people in the text: the word in front may be a mention of
+            // someone else, in which case the two names are merely adjacent
+            // ("besuchte Otto Wright"). The candidate is held back for
+            // findPersonMentions to reconsider once the other matches are in.
+            if (!allowed) heldBy = { start: before.start, end: before.end };
           }
 
           // "George III" is not George Washington: a match that stops short
@@ -702,19 +713,24 @@ function candidatesInRun(run, compiled) {
           const end = tokens[to - 1].end - alignment.trimEnd;
           if (end <= start) continue;
 
-          candidates.push({
+          const candidate = {
             person,
             start,
             end,
             score: (to - from) * 2 + (alignment.hasSurname ? 1 : 0),
-          });
+          };
+          if (heldBy) {
+            held.push({ ...candidate, heldBy });
+            continue; // a shorter slice may still qualify outright
+          }
+          candidates.push(candidate);
           break; // longest slice starting here wins; shorter ones are subsets
         }
       }
     }
   }
 
-  return candidates;
+  return { candidates, held };
 }
 
 /**
@@ -738,42 +754,75 @@ export function findPersonMentions(text, people, options = {}) {
 
   const exclude = options.exclude ?? [];
   const candidates = [];
+  const held = [];
   for (const run of scanNameRuns(text)) {
-    candidates.push(...candidatesInRun(run, compiled));
+    const found = candidatesInRun(run, compiled);
+    candidates.push(...found.candidates);
+    held.push(...found.held);
   }
 
   const overlaps = (a, b) => a.start < b.end && b.start < a.end;
-  const usable = candidates.filter(
-    (candidate) => !exclude.some((range) => overlaps(candidate, range))
-  );
-
-  // Best matches first; a longer, surname-bearing span beats a shorter one.
-  usable.sort(
-    (a, b) => b.score - a.score || a.start - b.start || b.end - a.end
-  );
+  const usable = (pool) =>
+    pool
+      .filter(
+        (candidate) => !exclude.some((range) => overlaps(candidate, range))
+      )
+      // Best matches first; a longer, surname-bearing span beats a shorter one.
+      .sort((a, b) => b.score - a.score || a.start - b.start || b.end - a.end);
 
   const taken = [];
   const accepted = [];
-  for (const candidate of usable) {
-    if (taken.some((range) => overlaps(candidate, range))) continue;
 
-    // Two people fit the same words equally well: leave the text plain rather
-    // than link to the wrong story.
-    const ambiguous = usable.some(
-      (rival) =>
-        rival.person !== candidate.person &&
-        rival.score === candidate.score &&
-        overlaps(rival, candidate) &&
-        !taken.some((range) => overlaps(rival, range))
-    );
-    if (ambiguous) {
+  /**
+   * Take the best non-overlapping matches out of one pool of candidates.
+   * @param {Array<Object>} pool - Candidates, best first
+   * @returns {void}
+   */
+  const admit = (pool) => {
+    for (const candidate of pool) {
+      if (taken.some((range) => overlaps(candidate, range))) continue;
+
+      // Two people fit the same words equally well: leave the text plain
+      // rather than link to the wrong story.
+      const ambiguous = pool.some(
+        (rival) =>
+          rival.person !== candidate.person &&
+          rival.score === candidate.score &&
+          overlaps(rival, candidate) &&
+          !taken.some((range) => overlaps(rival, range))
+      );
       taken.push({ start: candidate.start, end: candidate.end });
-      continue;
-    }
+      if (ambiguous) continue;
 
-    taken.push({ start: candidate.start, end: candidate.end });
-    accepted.push(candidate);
-  }
+      accepted.push({
+        person: candidate.person,
+        start: candidate.start,
+        end: candidate.end,
+        score: candidate.score,
+      });
+    }
+  };
+
+  admit(usable(candidates));
+
+  // The candidates held back in candidatesInRun sit behind a capitalized word
+  // that is usually a different person's given name. Where that word is itself
+  // a mention just accepted, the two names are merely adjacent — "besuchte
+  // Otto Wright" is Frei Otto followed by Frank Lloyd Wright — and the
+  // objection falls away. This runs second so the deciding matches are in
+  // place, and so an outright candidate always wins the same span.
+  admit(
+    usable(
+      held.filter((candidate) =>
+        accepted.some(
+          (match) =>
+            match.person !== candidate.person &&
+            match.start <= candidate.heldBy.start &&
+            candidate.heldBy.end <= match.end
+        )
+      )
+    )
+  );
 
   return accepted.sort((a, b) => a.start - b.start);
 }

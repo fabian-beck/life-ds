@@ -119,6 +119,19 @@ test("does not hand another person's full name to a shared surname", () => {
   ).toBe("⟦Adams|abigail_adams⟧’s letters mixed household and politics.");
 });
 
+test("two names in a row are two people, not one blocking the other", () => {
+  // German word order puts the object straight behind the subject, so the
+  // capitalized word in front of "Wright" is Frei Otto rather than a stranger's
+  // given name — the case the guard above exists for.
+  expect(render("Später besuchte Otto Wright in Taliesin.", architects)).toBe(
+    "Später besuchte ⟦Otto|frei_otto⟧ ⟦Wright|wright⟧ in Taliesin."
+  );
+  // The guard still holds when nothing in front of the surname is a mention.
+  expect(render("Später besuchte Ernst Wright in Taliesin.", architects)).toBe(
+    "Später besuchte Ernst Wright in Taliesin."
+  );
+});
+
 test("reads through an apposition and a title", () => {
   expect(
     render("Die Politikerin Abigail Adams schrieb Briefe.", revolutionaries)
