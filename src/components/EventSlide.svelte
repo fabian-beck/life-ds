@@ -480,44 +480,120 @@
     {/if}
   </div>
   <div class="event-body">
-    <div class="event-description">
-      <p class="description">
-        {#each descriptionSegments as segment}{#if segment.type === "text"}{segment.content}{:else if segment.type === "annotation"}<span
-              role="button"
-              tabindex="0"
-              class="annotated-term"
-              data-term-key={segment.termKey}
-              on:click|stopPropagation={() =>
-                handleAnnotationClick(segment.termKey, segment)}
-              on:keydown={(e) =>
-                (e.key === "Enter" || e.key === " ") &&
-                handleAnnotationClick(segment.termKey, segment)}
-              aria-expanded={annotationVisibilityMap[segment.termKey]}
-              aria-label={$_("story.show_explanation")}
-              >{segment.displayText}<span
-                class="annotation-indicator"
-                aria-hidden="true">?</span
-              ></span
-            >{:else if segment.type === "person"}<strong class="person-mention"
-              >{segment.content}</strong
-            >{/if}{/each}
-      </p>
-      {#each descriptionSegments.filter((s) => s.type === "annotation" && annotationVisibilityMap[s.termKey]) as segment (segment.termKey)}
-        <div class="annotation-popup-container">
-          <div class="annotation-popup">
-            <span class="annotation-term-label">{segment.displayText}:</span>
-            {segment.annotation.explanation}
-            {#if segment.annotation.wikipedia_url}
-              <a
-                href={segment.annotation.wikipedia_url}
-                target="_blank"
-                rel="noreferrer"
-                class="annotation-link">{$_("story.read_more")}</a
-              >
-            {/if}
+    <div class="event-text-col">
+      <div class="event-description">
+        <p class="description">
+          {#each descriptionSegments as segment}{#if segment.type === "text"}{segment.content}{:else if segment.type === "annotation"}<span
+                role="button"
+                tabindex="0"
+                class="annotated-term"
+                data-term-key={segment.termKey}
+                on:click|stopPropagation={() =>
+                  handleAnnotationClick(segment.termKey, segment)}
+                on:keydown={(e) =>
+                  (e.key === "Enter" || e.key === " ") &&
+                  handleAnnotationClick(segment.termKey, segment)}
+                aria-expanded={annotationVisibilityMap[segment.termKey]}
+                aria-label={$_("story.show_explanation")}
+                >{segment.displayText}<span
+                  class="annotation-indicator"
+                  aria-hidden="true">?</span
+                ></span
+              >{:else if segment.type === "person"}<strong
+                class="person-mention">{segment.content}</strong
+              >{/if}{/each}
+        </p>
+        {#each descriptionSegments.filter((s) => s.type === "annotation" && annotationVisibilityMap[s.termKey]) as segment (segment.termKey)}
+          <div class="annotation-popup-container">
+            <div class="annotation-popup">
+              <span class="annotation-term-label">{segment.displayText}:</span>
+              {segment.annotation.explanation}
+              {#if segment.annotation.wikipedia_url}
+                <a
+                  href={segment.annotation.wikipedia_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="annotation-link">{$_("story.read_more")}</a
+                >
+              {/if}
+            </div>
           </div>
-        </div>
-      {/each}
+        {/each}
+      </div>
+      <div class="event-details">
+        {#if slide.event_class?.type === "marriage_partnership" && relevantPeople.length > 0}
+          {@const otherPeople = partnerPerson
+            ? relevantPeople.filter(
+                (p) => p.person_name !== partnerPerson.person_name
+              )
+            : relevantPeople}
+          {#if otherPeople.length > 0}
+            <ul class="details">
+              <li>
+                <span class="label" aria-label={$_("story.people")}>
+                  <svg
+                    class="icon icon-inline"
+                    viewBox="0 0 24 24"
+                    role="presentation"
+                    aria-hidden="true"
+                  >
+                    <path d={mdiAccountOutline} />
+                  </svg>
+                </span>
+                <div class="people-list">
+                  {#each otherPeople as person, idx (person.person_name)}
+                    {@const personKey = `${slide.eventIndex}-other-${idx}`}
+                    {@const subcategory = getSubcategory(
+                      person.relationship_type
+                    )}
+                    <PersonChip
+                      {person}
+                      {personKey}
+                      {visiblePersonInfo}
+                      {subcategory}
+                      {styleConfig}
+                      onToggle={onTogglePersonInfo}
+                      {onOpenNetwork}
+                    />
+                  {/each}
+                </div>
+              </li>
+            </ul>
+          {/if}
+        {:else if relevantPeople.length > 0}
+          <ul class="details">
+            <li>
+              <span class="label" aria-label={$_("story.people")}>
+                <svg
+                  class="icon icon-inline"
+                  viewBox="0 0 24 24"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <path d={mdiAccountOutline} />
+                </svg>
+              </span>
+              <div class="people-list">
+                {#each relevantPeople as person, idx (person.person_name)}
+                  {@const personKey = `${slide.eventIndex}-${idx}`}
+                  {@const subcategory = getSubcategory(
+                    person.relationship_type
+                  )}
+                  <PersonChip
+                    {person}
+                    {personKey}
+                    {visiblePersonInfo}
+                    {subcategory}
+                    {styleConfig}
+                    onToggle={onTogglePersonInfo}
+                    {onOpenNetwork}
+                  />
+                {/each}
+              </div>
+            </li>
+          </ul>
+        {/if}
+      </div>
     </div>
     {#if hasClassBox}
       <div class="event-class-col" class:leads={classBoxLeads}>
@@ -798,78 +874,6 @@
         {/if}
       </div>
     {/if}
-    <div class="event-details">
-      {#if slide.event_class?.type === "marriage_partnership" && relevantPeople.length > 0}
-        {@const otherPeople = partnerPerson
-          ? relevantPeople.filter(
-              (p) => p.person_name !== partnerPerson.person_name
-            )
-          : relevantPeople}
-        {#if otherPeople.length > 0}
-          <ul class="details">
-            <li>
-              <span class="label" aria-label={$_("story.people")}>
-                <svg
-                  class="icon icon-inline"
-                  viewBox="0 0 24 24"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <path d={mdiAccountOutline} />
-                </svg>
-              </span>
-              <div class="people-list">
-                {#each otherPeople as person, idx (person.person_name)}
-                  {@const personKey = `${slide.eventIndex}-other-${idx}`}
-                  {@const subcategory = getSubcategory(
-                    person.relationship_type
-                  )}
-                  <PersonChip
-                    {person}
-                    {personKey}
-                    {visiblePersonInfo}
-                    {subcategory}
-                    {styleConfig}
-                    onToggle={onTogglePersonInfo}
-                    {onOpenNetwork}
-                  />
-                {/each}
-              </div>
-            </li>
-          </ul>
-        {/if}
-      {:else if relevantPeople.length > 0}
-        <ul class="details">
-          <li>
-            <span class="label" aria-label={$_("story.people")}>
-              <svg
-                class="icon icon-inline"
-                viewBox="0 0 24 24"
-                role="presentation"
-                aria-hidden="true"
-              >
-                <path d={mdiAccountOutline} />
-              </svg>
-            </span>
-            <div class="people-list">
-              {#each relevantPeople as person, idx (person.person_name)}
-                {@const personKey = `${slide.eventIndex}-${idx}`}
-                {@const subcategory = getSubcategory(person.relationship_type)}
-                <PersonChip
-                  {person}
-                  {personKey}
-                  {visiblePersonInfo}
-                  {subcategory}
-                  {styleConfig}
-                  onToggle={onTogglePersonInfo}
-                  {onOpenNetwork}
-                />
-              {/each}
-            </div>
-          </li>
-        </ul>
-      {/if}
-    </div>
   </div>
 </div>
 
@@ -941,12 +945,21 @@
     position: relative;
   }
 
+  /* In the stacked layout these children remain peers of the class box so its
+     lead/follow ordering stays intact. Landscape turns them into the left
+     column, where people can follow the narrative independently of the box's
+     height. */
+  .event-text-col {
+    display: contents;
+  }
+
   /* The column the classified event's box stands in. Stacked (portrait), it
      keeps the reading order the boxes always had: a box that introduces the
      event — birth, death, marriage — steps in front of the description, one
      that elaborates — invention, publication — stays behind it. */
   .event-class-col {
     min-width: 0;
+    order: 1;
   }
 
   .event-class-col.leads {
@@ -1473,6 +1486,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    order: 2;
   }
 
   @media (orientation: landscape) {
@@ -1483,27 +1497,21 @@
       align-items: start;
     }
 
-    .event-description {
+    .event-text-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
       grid-column: 1;
+      min-width: 0;
     }
 
-    /* On a wide screen the classified event's box stands beside the
-       description instead of above or below it, so the text starts directly
-       under the headline and the box fills the room to its right. Rows are
-       left to auto-placement: the box takes the first row of the column and
-       the people list follows beneath it — or takes the first row itself on
-       an event without a box. The stacked `order: -1` must not survive here:
-       auto-placement's cursor follows order, and a box placed first parks the
-       cursor in the second column, which bumps the description to the row
-       below and leaves the first row of the text column empty. */
+    /* The classified box occupies the right column independently. Reset its
+       stacked ordering so introductory boxes do not move ahead of the left
+       column in grid placement. */
     .event-class-col,
     .event-class-col.leads {
       grid-column: 2;
       order: 0;
-    }
-
-    .event-details {
-      grid-column: 2;
     }
   }
 
