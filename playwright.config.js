@@ -9,11 +9,13 @@ const devServerOrigin = "http://127.0.0.1:4173";
 export default defineConfig({
   testDir: "./tests",
   outputDir: "test-results",
-  timeout: 60_000,
+  // The suite is a smoke check and a set of pure functions; nothing here is
+  // allowed to take long enough for the old minute-scale budgets to matter.
+  timeout: 30_000,
   expect: {
-    timeout: 10_000,
+    timeout: 5_000,
   },
-  fullyParallel: false,
+  fullyParallel: true,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL: `${devServerOrigin}${basePath}`,
@@ -23,30 +25,23 @@ export default defineConfig({
   webServer: {
     command: "npm run dev -- --host 127.0.0.1 --port 4173",
     url: `${devServerOrigin}${basePath}en`,
-    reuseExistingServer: false,
+    reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },
   projects: [
+    // Browser-free pure functions. They cost a few seconds for the whole set,
+    // so they stay; anything that needs a page belongs in the smoke test.
     {
       name: "logic",
-      testMatch:
-        /(depthLayer|eventWeight|personNames|personInitials|historicalDates|relationshipLabels|descriptionSegments|birthEvent|marriageEvent|publicationSource|eventClassLabels|gestureAxis|metaStorySections|styleVars|storyModel|localizedData|localeCoverage)\.spec\.js/,
+      testIgnore: /smoke\.spec\.js/,
       use: {},
     },
+    // The single browser pass, at the phone viewport the application is
+    // designed for. Everything else the interface can get wrong is found by AI
+    // exploration rather than by a script; see docs/testing-strategy.md.
     {
-      name: "desktop-chromium",
-      // personMentions asserts rendered text, not layout, so it runs at one
-      // viewport rather than both: the meta story it opens loads a map, and
-      // paying for that twice only lengthens the run.
-      testMatch: /(interface|personMentions|localeSwitching)\.spec\.js/,
-      use: {
-        ...devices["Desktop Chrome"],
-        viewport: { width: 1440, height: 900 },
-      },
-    },
-    {
-      name: "mobile-chromium",
-      testMatch: /interface\.spec\.js/,
+      name: "smoke",
+      testMatch: /smoke\.spec\.js/,
       use: {
         ...devices["Pixel 7"],
       },

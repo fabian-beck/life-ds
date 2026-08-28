@@ -1,6 +1,6 @@
 # Testing Strategy
 
-This prototype uses a deliberately small deterministic core and AI-led exploratory testing. The goal is fast feedback while the product changes, not exhaustive scripted regression coverage.
+This prototype uses a smoke test, a set of pure-function checks, and AI-led exploratory testing. The goal is fast feedback while the product changes, not exhaustive scripted regression coverage. The interface is reviewed by an agent that looks at it, not by a script that asserts selectors, so the automated suite is held to a few seconds and the product review is the exploratory run.
 
 ## Deterministic core
 
@@ -10,20 +10,21 @@ Run the complete core with:
 npm run test:core
 ```
 
-It contains only safeguards for high-value failures:
+The whole run finishes in about ten seconds and contains three things:
 
-- one Playwright visitor journey in desktop and mobile Chromium, covering the landing page, search, opening and navigating a person story, the network modal, returning home, and entering and leaving a collection;
-- a handful of further interface tests for layout and interaction that the journey cannot assert in passing — the slide fold, the depth layer, the timeline morph — plus two boot checks for a browser that refuses site data, where an unguarded storage access takes the whole application down with no error on screen;
+- one Playwright smoke test at a phone viewport, `tests/smoke.spec.js`: the landing page, the search, opening a person story, moving from the chapter slide to the first event, and returning to the filtered landing page, with any script error or same-origin 404 along the way failing the run;
 - the browser-independent pure functions — the person-name matcher, the date and label helpers, the description and depth-prose builders — in a `logic` project with no browser at all; and
 - focused Python regression checks for the generation scripts and for the data they write: portrait file validation, keeping curated meta-story references synchronized with person events, holding the person registries, per-person directories, and style registry to the same set of people, and the technical report's own build.
 
-Do not add a deterministic test merely to increase coverage. Add one only for a costly, repeatable regression that is difficult to notice through exploration, or for a silent data-integrity failure. Prefer extending the one core journey over adding another UI scenario. Remove obsolete regression tests when their risk is no longer material.
+The smoke test answers one question: does the application still run. Everything a screen decides — layout, gestures, animation, localization, accessibility — is reviewed by AI exploration, which sees the page instead of a selector and finds what no assertion was written for.
 
-### Each test earns the passes it costs
+### What not to add
 
-The browser projects are the slow part of the run, so nothing is checked twice for one answer. A pure function belongs in the `logic` project rather than in a browser. An interface test that pins its own viewport, or that reads something no viewport decides — a route, a document title, the served meta tags — declares which project keeps it; `tests/interface.spec.js` has the two helpers and says how they are shared out. Only what the two screen sizes can genuinely disagree about runs in both.
+Do not add a browser test to increase coverage. A second scripted scenario costs every future run its seconds and pins the markup it reads, and this interface changes faster than such a test pays for itself — explore the change instead. A pure function belongs in the `logic` project, where it costs milliseconds and no browser.
 
-Two habits are worth avoiding, because both read as coverage and neither is:
+Add a browser assertion only when a regression is costly, silent, and repeatable — something exploration would plausibly walk past twice — and then extend the smoke journey rather than starting a second file. Anything that needs its own viewport, a map, a timed race, or seconds of waiting does not go in it. Remove a check when its risk is no longer material.
+
+Two habits are worth avoiding wherever a test does land, because both read as coverage and neither is:
 
 - **Restating the source.** A test that greps a file for a string it should not contain, asserts the words of a prompt constant, or re-parses a module the test file already imported fails only when someone edits the line it copies. Assert the behavior the line produces, or let it go.
 - **Sampling a value that is still moving.** Opacities, scroll positions, and anything mid-transition need `expect.poll` or a web-first assertion. A single sample of an animating value passes locally and fails on a loaded runner.
@@ -60,5 +61,7 @@ Tests and exploration ask whether the application works. Whether its stories are
 | Portrait or meta-story synchronization scripts | focused Python tests, then core suite |
 | Broad release candidate | validation, build, core suite, and release AI exploration |
 | Generation prompts or data quality | a fact-checking round on the affected people |
+
+The core suite is cheap enough to run on every change; it is never the evidence that an interface change works. That evidence is an exploratory run.
 
 Real Mobile Safari and physical touch hardware remain manual checks when a change depends on browser- or device-specific behavior; Chromium emulation is not evidence that those environments work.

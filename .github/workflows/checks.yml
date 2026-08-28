@@ -104,8 +104,8 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
-      # Only Chromium: playwright.config.js runs the logic project headless and
-      # the interface project against Desktop Chrome and a Pixel 7.
+      # Only Chromium: playwright.config.js runs the logic project without a
+      # browser at all and the smoke test against a Pixel 7.
       - name: Install Chromium for Playwright
         run: npx playwright install --with-deps chromium
 

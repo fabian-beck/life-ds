@@ -48,7 +48,7 @@ python -m pytest
 npm run type-check:py
 ```
 
-The intentionally small automated suite and the Codex/Claude exploratory user testing skill are documented in [Testing strategy](docs/testing-strategy.md).
+The automated suite is a smoke test plus pure-function and Python checks, and it runs in seconds; interface work is reviewed by the Codex/Claude exploratory user testing skill rather than by new browser tests. Both are documented in [Testing strategy](docs/testing-strategy.md).
 
 The development server is normally already running in this environment.
 
@@ -187,7 +187,7 @@ Before reporting completion:
 
 1. Review the diff for scope and accidental generated or unrelated changes.
 2. Run validation proportional to the change.
-3. Confirm new behavior has tests when practical.
+3. Cover new behavior the way [Testing strategy](docs/testing-strategy.md) prescribes: a pure function in the `logic` project or a Python check, and exploration rather than a new browser test for anything on screen.
 4. Report checks run and any checks not run.
 5. Report incidental bugs noticed along the way, naming the issue filed for each or why none was.
 6. End every summary with an explicit merge status line, described below.

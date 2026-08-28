@@ -32,7 +32,7 @@ Published by **Netlify** from the `deploy` branch, which Netlify watches and bui
 
 `netlify.toml` holds the build and is read from the branch being built, so a change to it takes effect once it reaches `deploy`. It builds with `VITE_BASE_PATH=/` because Netlify serves the site from the domain root, while `vite.config.js` defaults to `base: "/life-ds/"` for the dev server and the interface tests. The build writes a `404.html` copy of `index.html` (`notFoundFallbackPlugin`) so path-style entry URLs survive on a host without rewrite rules.
 
-`technicalReportPlugin` publishes the generated technical report alongside the app: the build copies `docs/report/index.html` to `dist/report/index.html`, and the dev server answers `/life-ds/report/` with the same file ahead of the SPA fallback. The landing page and the AI-generated modal link there through `assetUrl("/report/")`, and `tests/interface.spec.js` follows that link.
+`technicalReportPlugin` publishes the generated technical report alongside the app: the build copies `docs/report/index.html` to `dist/report/index.html`, and the dev server answers `/life-ds/report/` with the same file ahead of the SPA fallback. The landing page and the AI-generated modal link there through `assetUrl("/report/")`.
 
 **Consequence for application code**: every site-absolute path that becomes a URL—portrait paths from the generated data, assets in `public/`—must go through `assetUrl()` in `src/utils/assetUrl.js`. A raw `"/portraits/…"` string in markup works on the published site and 404s in dev and in the interface tests. The data files and the Python generators keep writing site-absolute paths; the prefixing happens at render time only.
 
