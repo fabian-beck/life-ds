@@ -273,6 +273,8 @@
   function scrollSlideTo(target) {
     const section = slidesContainer?.children?.[activeIndex];
     if (!(section instanceof HTMLElement)) return;
+    // A command like any other: the wheel run it may have interrupted is done.
+    explicitNavAt = Date.now();
     if (target === "fold") {
       section.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -597,6 +599,15 @@
     scrollState = SCROLL_STATE.PROGRAMMATIC;
     currentNavigationSource = source; // Track the source of this navigation
 
+    // Every source but "prop-change" is a reader's own command, and marks the
+    // moment for the wheel handler's staleness check. "prop-change" is the
+    // component reacting to state it already has — most often the no-op scroll
+    // after a wheel navigation — and marking it would date the very wheel run
+    // that is still steering.
+    if (source !== "prop-change") {
+      explicitNavAt = Date.now();
+    }
+
     // Optionally update activeIndex immediately (optimistic update)
     if (updateStateImmediately) {
       activeIndex = clampedIndex;
@@ -613,6 +624,21 @@
 
     // Perform scroll
     const scrollLeft = clampedIndex * clientWidth;
+
+    // A container already on target does not scroll, and a scroll that never
+    // starts fires no scrollend — the state machine would wait for one
+    // forever, stuck in PROGRAMMATIC and deaf to every scroll the reader
+    // makes next. This is the everyday case, not a corner: an arrow key
+    // pressed at either end of the story lands here, and so does the
+    // "prop-change" scroll that follows every user navigation. The instant
+    // scrollTo cancels whatever animation might still be in flight; the state
+    // settles here instead of waiting.
+    if (Math.abs(slidesContainer.scrollLeft - scrollLeft) < 1) {
+      slidesContainer.scrollTo({ left: scrollLeft, behavior: "instant" });
+      scrollState = SCROLL_STATE.IDLE;
+      return;
+    }
+
     slidesContainer.scrollTo({
       left: scrollLeft,
       // "instant", not "auto": the container sets `scroll-behavior: smooth`, and
@@ -785,17 +811,48 @@
 
   let lastVerticalWheelAt = 0;
 
+  // A quiet spell longer than this ends a wheel run — shared by the axis lock
+  // and the staleness check below, so the two cannot disagree about where one
+  // run ends and the next begins.
+  const WHEEL_GAP_MS = 150;
+
   // One turn of a wheel and one push of a trackpad both arrive as a run of
   // events, and the run is what the reader meant — a single event out of it
   // that happens to point sideways is not an instruction to leave the slide.
   // A wheel has no equivalent of a finger lifting, so a pause ends the run.
-  const wheelLock = createAxisLock({ threshold: 12, gapMs: 150 });
+  const wheelLock = createAxisLock({ threshold: 12, gapMs: WHEEL_GAP_MS });
+
+  // When the run now arriving began, and when the last explicit navigation —
+  // a key, a button, the timeline — started. Comparing the two is what tells
+  // a live gesture from the momentum tail of one that already ended.
+  let wheelRunStartedAt = 0;
+  let lastWheelEventAt = null;
+  let explicitNavAt = 0;
 
   function handleWheel(event) {
     if (event.ctrlKey) return;
     if (!slidesContainer || totalPanels === 0) return;
 
-    const wheelAxis = wheelLock.move(event.deltaX, event.deltaY, Date.now());
+    const now = Date.now();
+    if (lastWheelEventAt === null || now - lastWheelEventAt > WHEEL_GAP_MS) {
+      wheelRunStartedAt = now;
+    }
+    lastWheelEventAt = now;
+    // A trackpad keeps sending momentum events after the fingers have lifted,
+    // so a run regularly straddles a key press: the reader scrolls, presses an
+    // arrow key, and the tail of the dead gesture arrives while the slide
+    // change is still animating. Each tail event retargets the scroll to
+    // wherever it happens to be, the snap then carries the reader back to the
+    // slide they just left, and the press looks like it undid itself. The tail
+    // is recognizable by its age — the run began before the navigation did —
+    // and a stale run has nothing left to say. A fresh gesture starts a new
+    // run and steers as before.
+    if (wheelRunStartedAt <= explicitNavAt) {
+      event.preventDefault();
+      return;
+    }
+
+    const wheelAxis = wheelLock.move(event.deltaX, event.deltaY, now);
     // Too little of the gesture has arrived to say which way it leans. The
     // story waits rather than guessing: the slide under the pointer scrolls on
     // its own in the meantime, which is the answer a short gesture down wanted
