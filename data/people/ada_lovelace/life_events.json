@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia-biography-timeline",
-  "created_on": "2025-12-09",
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-08-28",
   "person": {
     "name": "Ada_Lovelace",
     "birth_date": "1815-12-10",
@@ -10,181 +10,256 @@
       "writer",
       "computer scientist"
     ],
-    "tagline": "Visionary pioneer of computing",
-    "summary": "Ada Lovelace (Augusta Ada King, Countess of Lovelace) was an English mathematician and writer best known for her work on Charles Babbage's proposed Analytical Engine. Educated intensively in mathematics and science by her mother to counteract the perceived 'poetic madness' of her father, Lord Byron, she combined rigorous analysis with an imaginative, philosophical outlook she called 'poetical science'. In 1842–1843 she translated Luigi Menabrea’s article on the Analytical Engine and added extensive Notes that included a detailed algorithm for computing Bernoulli numbers and a far‑reaching vision of machines manipulating symbols to create music, graphics, and more. Although often ill and constrained by Victorian society, she maintained an active network with leading scientists and tried to apply mathematics even to gambling, before dying at 36 from uterine cancer.",
+    "tagline": "Visionary of the Analytical Engine",
+    "summary": "Ada Lovelace was an English mathematician and writer who collaborated with Charles Babbage on the proposed Analytical Engine. Her notes on the machine included an algorithm for calculating Bernoulli numbers and explored the possibility of processing information beyond arithmetic.",
     "wikipedia": "https://en.wikipedia.org/wiki/Ada_Lovelace",
     "portrait": {
       "image": "/portraits/ada_lovelace_thumbnail.webp",
-      "source": "https://en.wikipedia.org/wiki/Ada_Lovelace",
+      "source": "https://commons.wikimedia.org/wiki/File:Ada_Byron_daguerreotype_by_Antoine_Claudet_1843_or_1850.jpg",
       "caption": "Stylized portrait based on historical photograph",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Ada_Byron_daguerreotype_by_Antoine_Claudet_1843_or_1850.jpg",
       "thumbnail": "/portraits/ada_lovelace_thumbnail.webp",
       "medium": "/portraits/ada_lovelace_medium.webp",
-      "full": "/portraits/ada_lovelace_full.webp"
+      "full": "/portraits/ada_lovelace_full.webp",
+      "originalCreator": "Antoine Claudet",
+      "originalLicense": "Public domain"
     }
   },
   "chapters": [
     {
-      "id": "byron_legacy_and_formative_years",
-      "headline": "Byron Legacy and Formative Years",
+      "id": "restless_origins",
+      "headline": "Restless Origins",
       "date_start": "1815-12-10",
       "date_start_precision": "day",
-      "date_end": "1832",
+      "date_end": "1831",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 17,
+      "age_end": 15,
       "involved_people": [
         "Lord Byron",
-        "Anne Isabella Milbanke (Lady Byron)",
-        "Lady Byron"
+        "Lady Byron",
+        "Augusta Leigh"
       ],
       "location": "England",
       "illustration": {
-        "image": "/chapter_art/ada_lovelace/byron_legacy_and_formative_years_medium.webp",
-        "medium": "/chapter_art/ada_lovelace/byron_legacy_and_formative_years_medium.webp",
-        "full": "/chapter_art/ada_lovelace/byron_legacy_and_formative_years_full.webp",
-        "concept": "A delicate feather-and-wire lattice floats at the center of deep charcoal darkness, one side lifting toward a thin blue glow while the other is pinned by a translucent sheet of ice. Loose filaments tremble in opposing currents.",
+        "image": "/chapter_art/ada_lovelace/restless_origins_medium.webp",
+        "medium": "/chapter_art/ada_lovelace/restless_origins_medium.webp",
+        "full": "/chapter_art/ada_lovelace/restless_origins_full.webp",
+        "concept": "Against deep charcoal, a delicate pair of translucent feather-like planes rises from a nest of copper wire, one edge dissolving into rain-bright droplets. Below, a thin crescent of pale light suggests slow recovery and an unquiet pull toward air.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-08-09"
+        "generated_on": "2026-08-28"
       }
     },
     {
-      "id": "society_marriage_and_motherhood",
-      "headline": "Society Marriage and Motherhood",
-      "date_start": "1833-06-05",
-      "date_start_precision": "day",
-      "date_end": "1839-12",
-      "date_end_precision": "month",
+      "id": "a_dangerous_awakening",
+      "headline": "A Dangerous Awakening",
+      "date_start": "1833",
+      "date_start_precision": "year",
+      "date_end": "1833",
+      "date_end_precision": "year",
       "age_start": 17,
-      "age_end": 23,
+      "age_end": 17,
       "involved_people": [
-        "Charles Babbage",
         "Lady Byron",
         "Mary Somerville",
-        "William King-Noel, 1st Earl of Lovelace",
-        "Byron King-Noel, Viscount Ockham",
-        "Anne Blunt",
-        "Ralph Gordon King-Noel, 2nd Earl of Lovelace"
+        "Charles Babbage"
+      ],
+      "location": "England",
+      "illustration": {
+        "image": "/chapter_art/ada_lovelace/a_dangerous_awakening_medium.webp",
+        "medium": "/chapter_art/ada_lovelace/a_dangerous_awakening_medium.webp",
+        "full": "/chapter_art/ada_lovelace/a_dangerous_awakening_full.webp",
+        "concept": "A single dark prism floats in blackness, split by a fierce seam of electric blue light. Fine amber dust streams outward through the fracture, as though a sealed chamber has suddenly released an unstable new current.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-28"
+      }
+    },
+    {
+      "id": "countess_in_a_cage",
+      "headline": "Countess in a Cage",
+      "date_start": "1835-07-08",
+      "date_start_precision": "day",
+      "date_end": "1839-07-02",
+      "date_end_precision": "day",
+      "age_start": 19,
+      "age_end": 22,
+      "involved_people": [
+        "William King-Noel, 1st Earl of Lovelace"
       ],
       "location": "United Kingdom",
       "illustration": {
-        "image": "/chapter_art/ada_lovelace/society_marriage_and_motherhood_medium.webp",
-        "medium": "/chapter_art/ada_lovelace/society_marriage_and_motherhood_medium.webp",
-        "full": "/chapter_art/ada_lovelace/society_marriage_and_motherhood_full.webp",
-        "concept": "Three pearl-like spheres orbit within a broad ring of dark velvet, each casting a faint silver halo. Beyond the ring, fine copper arcs slowly weave outward into an intricate, balanced web against midnight blue.",
+        "image": "/chapter_art/ada_lovelace/countess_in_a_cage_medium.webp",
+        "medium": "/chapter_art/ada_lovelace/countess_in_a_cage_medium.webp",
+        "full": "/chapter_art/ada_lovelace/countess_in_a_cage_full.webp",
+        "concept": "At the center of velvet darkness, a luminous pearl rests inside an open orb of gold filaments. The filaments curve inward like a protective cage, while tiny green shoots press delicately through gaps in the enclosing structure.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-08-09"
+        "generated_on": "2026-08-28"
       }
     },
     {
-      "id": "intellectual_maturity_and_analytical_engine",
-      "headline": "Intellectual Maturity with Analytical Engine",
-      "date_start": "1840",
-      "date_start_precision": "year",
-      "date_end": "1844",
+      "id": "the_engine_speaks",
+      "headline": "The Engine Speaks",
+      "date_start": "1841-02-27",
+      "date_start_precision": "day",
+      "date_end": "1843",
       "date_end_precision": "year",
-      "age_start": 24,
-      "age_end": 29,
+      "age_start": 25,
+      "age_end": 27,
       "involved_people": [
-        "Augustus De Morgan",
-        "Charles Babbage",
+        "Medora Leigh",
         "Lady Byron",
-        "Mary Somerville",
-        "Charles Wheatstone",
-        "Luigi Federico Menabrea"
-      ],
-      "location": "Western Europe",
-      "illustration": {
-        "image": "/chapter_art/ada_lovelace/intellectual_maturity_and_analytical_engine_medium.webp",
-        "medium": "/chapter_art/ada_lovelace/intellectual_maturity_and_analytical_engine_medium.webp",
-        "full": "/chapter_art/ada_lovelace/intellectual_maturity_and_analytical_engine_full.webp",
-        "concept": "A luminous field of interlocking brass geometry hovers in darkness: rotating discs, stepped planes, and slender channels align around a single glowing spiral. Pale currents travel through the arrangement in precise, branching sequences.",
-        "creator": "AI generated artwork",
-        "generated_on": "2026-08-09"
-      }
-    },
-    {
-      "id": "risk_passion_and_applied_calculation",
-      "headline": "Risk Passion with Applied Calculation",
-      "date_start": "1845",
-      "date_start_precision": "year",
-      "date_end": "1852-11-27",
-      "date_end_precision": "day",
-      "age_start": 29,
-      "age_end": 36,
-      "involved_people": [
-        "William King-Noel, 1st Earl of Lovelace",
-        "Lady Byron",
-        "Lord Byron"
+        "Lord Byron",
+        "Luigi Federico Menabrea",
+        "Charles Babbage"
       ],
       "location": "England",
       "illustration": {
-        "image": "/chapter_art/ada_lovelace/risk_passion_and_applied_calculation_medium.webp",
-        "medium": "/chapter_art/ada_lovelace/risk_passion_and_applied_calculation_medium.webp",
-        "full": "/chapter_art/ada_lovelace/risk_passion_and_applied_calculation_full.webp",
-        "concept": "A polished black surface tilts above an unseen void, scattered with amber glass beads rolling toward its lower edge. At the center, a fragile golden thread tries to bind their erratic paths into one tightening coil.",
+        "image": "/chapter_art/ada_lovelace/the_engine_speaks_medium.webp",
+        "medium": "/chapter_art/ada_lovelace/the_engine_speaks_medium.webp",
+        "full": "/chapter_art/ada_lovelace/the_engine_speaks_full.webp",
+        "concept": "A radiant spiral of ivory threads unfurls across a midnight field, each strand branching into precise interlocking loops before flowing back to a bright central kernel. Flecks of indigo light travel through the lattice like ideas discovering new forms.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-08-09"
+        "generated_on": "2026-08-28"
+      }
+    },
+    {
+      "id": "the_final_reckoning",
+      "headline": "The Final Reckoning",
+      "date_start": "1851",
+      "date_start_precision": "year",
+      "date_end": "1852-11-27",
+      "date_end_precision": "day",
+      "age_start": 35,
+      "age_end": 36,
+      "involved_people": [
+        "William King-Noel, 1st Earl of Lovelace",
+        "Charles Babbage"
+      ],
+      "location": "England",
+      "illustration": {
+        "image": "/chapter_art/ada_lovelace/the_final_reckoning_medium.webp",
+        "medium": "/chapter_art/ada_lovelace/the_final_reckoning_medium.webp",
+        "full": "/chapter_art/ada_lovelace/the_final_reckoning_full.webp",
+        "concept": "A ring of black glass tilts over a dark void, its outer edge shedding silver fragments into a pool of muted crimson light. One small white ember remains suspended above the broken circle, quiet and gradually dimming.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-28"
       }
     }
   ],
+  "conclusion": "Ada Lovelace transformed a fascination with flight, mathematics, and machines into a visionary account of computation before the computer existed. Her life was brief and turbulent, but her Notes articulated possibilities in the Analytical Engine that later generations recognized as foundational to the history of computing.",
   "events": [
     {
       "date": "1815-12-10",
       "date_precision": "day",
       "age": 0,
-      "title": "Birth into Byron family",
-      "description": "Ada Lovelace was born Augusta Ada Byron on 10 December 1815, the only legitimate child of the poet Lord Byron and his wife Anne Isabella Milbanke (Lady Byron). Her birth fulfilled Byron's hope for a 'glorious boy' only in part, and his disappointment at having a daughter coloured his brief married life. From the outset Ada’s existence was entangled with literary fame and scandal, placing her at the intersection of aristocratic privilege and intense public scrutiny.",
+      "title": "Ada Lovelace Is Born in London",
+      "description": "She was born in London into the troubled marriage of a celebrated poet and a mathematically educated heiress.",
+      "locations": [
+        {
+          "name_historic": "16 St James's Square, London",
+          "name_modern": "16 St James's Square, London, UK",
+          "primary": true,
+          "centroid": [
+            -0.1348522,
+            51.5067211
+          ]
+        }
+      ],
+      "involved_people": [
+        "George Gordon Byron, Lord Byron",
+        "Anne Isabella Milbanke, Lady Byron",
+        "Augusta Leigh"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Lady_Byron",
+        "https://en.wikipedia.org/wiki/Lord_Byron"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "restless_origins",
+      "weight": 0.5,
+      "event_class": {
+        "type": "birth",
+        "father": "George Gordon Byron, 6th Baron Byron",
+        "mother": "Anne Isabella Milbanke",
+        "birth_name": "Augusta Ada Byron",
+        "characterization": "aristocratic literary family"
+      }
+    },
+    {
+      "date": "1816-01-16",
+      "date_precision": "day",
+      "date_end": "1816-04",
+      "date_end_precision": "month",
+      "age": 0,
+      "title": "Her Parents Separate After Her Birth",
+      "description": "On January 16, Lady Byron left London with five-week-old Ada for her parents’ home in Kirkby Mallory, amid the couple’s marital separation.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, UK",
           "centroid": [
             -0.1276,
-            51.5074
+            51.5072
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Kirkby Mallory",
+          "name_modern": "Kirkby Mallory, Leicestershire, UK",
+          "centroid": [
+            -1.274,
+            52.586
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Lord Byron",
-        "Anne Isabella Milbanke (Lady Byron)"
+        "Anne Isabella Noel Byron (Lady Byron)",
+        "George Gordon Byron (Lord Byron)"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Lord_Byron",
         "https://en.wikipedia.org/wiki/Lady_Byron",
         "https://en.wikipedia.org/wiki/Ada_Lovelace"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/Ada_Lovelace_child_portrait_Somerville_College.jpg",
-          "caption": "Childhood portrait of Ada Byron, later Ada Lovelace",
-          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_child_portrait_Somerville_College.jpg",
-          "creator": "Alfred d'Orsay",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-candle",
-      "chapter": "byron_legacy_and_formative_years",
-      "annotations": {
-        "Lord Byron": {
-          "explanation": "Famous Romantic poet George Gordon Byron, Ada's father.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Lord_Byron"
-        }
-      },
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "restless_origins",
+      "weight": 0.65,
       "event_class": {
-        "type": "birth",
-        "mother": "Anne Isabella Noel Byron (Lady Byron)",
-        "father": "George Gordon Byron, 6th Baron Byron (Lord Byron)"
-      }
+        "type": "migration",
+        "from_location": "London, England",
+        "to_location": "Kirkby Mallory, Leicestershire, England",
+        "characterization": "family separation"
+      },
+      "background": "The Byron marriage had collapsed against a backdrop of debt, suspicion, and public notoriety. Lord Byron was already one of Britain’s most celebrated poets after *Childe Harold’s Pilgrimage*, but his literary fame did not settle his finances: he was struggling to sell Newstead Abbey and his Rochdale property, while rejecting payment for some of his writing because he regarded commercial dealings as beneath a gentleman. The couple had lived at Piccadilly Terrace, where, during 1815, his moods grew darker, he drank heavily, and he directed anger and hostility toward his wife. He also began an affair with the Drury Lane actress Susan Boyce while serving as a theater director.\n\nLady Byron had entered the marriage believing she might support and morally reform a man she had frankly described as “a very bad, very good man.” Her own background made the contrast especially sharp. Anne Isabella Milbanke had received an unusually rigorous education from the former Cambridge professor William Frend, including science and mathematics, and Byron teasingly called her his “princess of parallelograms.” She was also an heiress connected to the politically influential Lamb family. But her strict religious convictions and his increasingly volatile conduct left little common ground. In the last stage of her pregnancy, she feared that he might be losing his mind.\n\n## The separation scandal\n\nThe break became one of the great scandals attached to Byron’s name. Lady Byron’s later reminiscences, published after her death by Harriet Beecher Stowe, disclosed that she had come to fear an incestuous relationship between Byron and his half-sister, Augusta Leigh. Those fears were allegations rather than established fact, but their later circulation intensified the sense of mystery around the marriage and helped speed Byron’s decision to leave England for the Mediterranean. The couple’s marriage had lasted less than a year.\n\nThe immediate stakes were unusually high because English law generally gave fathers sole custody of children. Yet Lady Byron retained custody, a result that ensured her daughter’s upbringing would be directed by the Milbanke-Noel side of the family rather than by Byron, who would never see his legitimate child again. He departed England later in 1816 and did not return before his death in Greece in 1824. Lady Byron, meanwhile, built a public life far removed from his: she became an educational reformer, an abolitionist, and the founder of England’s first industrial school. The household rupture therefore did more than end an unhappy marriage; it fixed the separate worlds in which Byron’s only legitimate daughter and her famous father would thereafter exist.\n\nThe episode also acquired a literary afterlife. Lady Byron and the circumstances of her marriage have been identified as possible inspirations for Helen Graham and the plot of Anne Brontë’s *The Tenant of Wildfell Hall*, a novel centered on a woman escaping an abusive marriage. Its continuing resonance reflects the unresolved character of the Byron separation: a private crisis shaped by legal inequality, family influence, and allegations that were debated long after the people at its center had died.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Newstead_Abbey_%284974019812%29.jpg/960px-Newstead_Abbey_%284974019812%29.jpg",
+          "caption": "Westfassade von Newstead Abbey",
+          "source": "https://commons.wikimedia.org/wiki/File:Newstead_Abbey_(4974019812).jpg",
+          "creator": "brianfagan from Nottingham, United Kingdom",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "query": "Newstead Abbey"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/85/The_Theatre_Royal%2C_Drury_Lane_-_geograph.org.uk_-_543440.jpg",
+          "caption": "The Theatre Royal, Drury Lane The building standing today was built in 1812 and is the most recent in a line of four theatres at the same location dating back t.",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Theatre_Royal,_Drury_Lane_-_geograph.org.uk_-_543440.jpg",
+          "creator": "Sue Adair",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+          "query": "Drury Lane Theatre"
+        }
+      ]
     },
     {
-      "date": "1816-01-16",
-      "date_precision": "day",
-      "age": 0,
-      "title": "Parental separation and strict upbringing",
-      "description": "When Ada was five weeks old, Lady Byron left Lord Byron and took the infant to her parents’ home, beginning an acrimonious separation that soon drove Byron from England for life. English law still favoured fathers, but Byron chose not to claim custody, and Ada grew up without knowing him. Anxious that her daughter might inherit Byron’s supposed instability, Lady Byron oversaw a rigorous education in mathematics, logic, and disciplined study, shaping Ada’s intellectual trajectory.",
+      "date": "1828-02",
+      "date_precision": "month",
+      "age": 12,
+      "title": "Ada Designs a Flying Machine",
+      "description": "At age twelve, Ada began a systematic project she called \"Flyology,\" investigating bird anatomy and the materials and proportions needed for wings. She planned illustrations, considered paper, oilskin, wire, and feathers, and imagined combining flight with steam power.",
       "locations": [
         {
           "name_historic": "London",
@@ -196,102 +271,31 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Lady Byron",
-        "Lord Byron"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Lady_Byron",
-        "https://en.wikipedia.org/wiki/Lord_Byron"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Ada_Lovelace_blue_plaque%2C_Mallory_Park_01.jpg",
-          "caption": "Kirkby Hall, Mallory Park, Ada Lovelace’s childhood home",
-          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_blue_plaque,_Mallory_Park_01.jpg",
-          "creator": "SMacB",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/NIE_1905_Bird_-_anatomy.jpg/960px-NIE_1905_Bird_-_anatomy.jpg",
+          "caption": "Bird anatomy chart relevant to Ada Lovelace’s Flyology",
+          "source": "https://commons.wikimedia.org/wiki/File:NIE_1905_Bird_-_anatomy.jpg",
+          "creator": "artist not specified; Ernest Ingersoll is the author of the article.",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-home-switch-outline",
-      "chapter": "byron_legacy_and_formative_years"
-    },
-    {
-      "date": "1824-04-19",
-      "date_precision": "day",
-      "age": 8,
-      "title": "Death of Lord Byron",
-      "description": "In April 1824 Lord Byron died in Greece while supporting the Greek War of Independence, when Ada was eight years old. She had never met him since infancy and was not even shown his portrait until her twentieth birthday, yet his fame and the scandal of his private life hovered over her childhood. His death fixed him in her imagination as a distant, romantic figure; later she would name her sons Byron and Gordon and request burial beside him.",
-      "locations": [
-        {
-          "name_historic": "Missolonghi",
-          "name_modern": "Mesolongi, Greece",
-          "centroid": [
-            21.4294,
-            38.3714
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Lord Byron"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lord_Byron"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Byron_1813_by_Phillips.jpg",
-          "caption": "Portrait of Lord Byron, British poet (1788–1824)",
-          "source": "https://commons.wikimedia.org/wiki/File:Byron_1813_by_Phillips.jpg",
-          "creator": "Thomas Phillips",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-cross",
-      "chapter": "byron_legacy_and_formative_years",
-      "annotations": {
-        "Greek_War_of_Independence": {
-          "explanation": "A war (1821–1830) in which Greek revolutionaries fought to gain independence from the Ottoman Empire.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Greek_War_of_Independence"
-        }
-      }
-    },
-    {
-      "date": "1828-02",
-      "date_precision": "month",
-      "date_note": "Month approximate, based on her description of beginning the project in February 1828 at age twelve",
-      "age": 12,
-      "title": "\"Flyology\" and dream of flight",
-      "description": "At about twelve Ada launched an elaborate project to learn how to fly, which she whimsically called 'Flyology'. She studied bird anatomy, experimented with materials like paper, oilsilk, wire, and feathers to design wings, and planned equipment such as a compass for cross‑country navigation. The project revealed a methodical, engineering mindset—integrating observation, calculation, and imagination—that foreshadowed her later approach to machines.",
-      "locations": [
-        {
-          "name_historic": "London",
-          "name_modern": "London, UK",
-          "centroid": [
-            -0.1276,
-            51.5074
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lady_Byron"
-      ],
-      "event_type_icon": "mdi-microscope",
-      "chapter": "byron_legacy_and_formative_years"
+      "event_type_icon": "mdi-drawing",
+      "chapter": "restless_origins",
+      "weight": 0.25
     },
     {
       "date": "1829-06",
       "date_precision": "month",
       "date_end": "1831",
       "date_end_precision": "year",
-      "date_note": "Start date reflects her measles attack in June 1829; end date marks her reported ability to walk with crutches by 1831",
       "age": 13,
-      "title": "Severe illness and long recovery",
-      "description": "In June 1829 Ada contracted measles and was left temporarily paralysed, confined to bed for nearly a year and walking only with crutches by 1831. Chronic headaches and other ailments plagued her from childhood, yet she pursued studies in mathematics and the emerging technologies of the day throughout her convalescence. This period of enforced stillness deepened her commitment to intellectual work as a primary outlet.",
+      "title": "Ada Recovers From Severe Measles",
+      "description": "A severe bout of measles left Ada temporarily unable to walk and confined to bed for nearly a year. She gradually regained mobility, using crutches by 1831 while continuing her studies.",
       "locations": [
         {
           "name_historic": "London",
@@ -304,95 +308,198 @@
         }
       ],
       "involved_people": [
-        "Lady Byron"
+        "Anne Isabella Noel Byron"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Lady_Byron",
         "https://en.wikipedia.org/wiki/Ada_Lovelace"
       ],
-      "event_type_icon": "mdi-hospital",
-      "chapter": "byron_legacy_and_formative_years"
+      "event_type_icon": "mdi-heart-pulse",
+      "chapter": "restless_origins",
+      "weight": 0.45
     },
     {
       "date": "1833-06-05",
       "date_precision": "day",
       "age": 17,
-      "title": "First meeting with Charles Babbage",
-      "description": "On 5 June 1833 Ada and her mother attended one of Charles Babbage’s celebrated Saturday evening [[scientific soirée|soirées]], introduced by their friend and Ada’s tutor Mary Somerville. There Babbage demonstrated a small portion of his Difference Engine, thrilling the mathematically talented teenager. This encounter sparked a long intellectual friendship between Ada and Babbage and gave her first direct exposure to the idea of programmable calculating machines.",
+      "title": "Meets Charles Babbage",
+      "description": "Ada attended one of [[scientific soirée|Charles Babbage's Saturday evening gatherings]] with her mother and her tutor and friend Mary Somerville. There she encountered Babbage and his work on mechanical calculating machines.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, UK",
           "centroid": [
             -0.1276,
-            51.5074
+            51.5072
           ],
           "primary": true
         }
       ],
       "involved_people": [
         "Charles Babbage",
-        "Lady Byron",
+        "Anne Isabella Noel Byron (Lady Byron)",
         "Mary Somerville"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es",
-        "https://en.wikipedia.org/wiki/Charles_Babbage",
-        "https://en.wikipedia.org/wiki/Mary_Somerville"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Charles-babbage.jpg",
-          "caption": "Portrait of Charles Babbage, computing pioneer",
-          "source": "https://commons.wikimedia.org/wiki/File:Charles-babbage.jpg",
-          "creator": "The original uploader was Enslin at German Wikipedia .",
-          "license": "Public domain"
+          "url": "https://live.staticflickr.com/3939/15350660389_4bab429567_b.jpg",
+          "caption": "Ada Lovelace and Charles Babbage",
+          "source": "https://www.flickr.com/photos/61340363@N05/15350660389",
+          "creator": "catherinecronin",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/"
         }
       ],
       "event_type_icon": "mdi-account-group",
-      "chapter": "society_marriage_and_motherhood",
+      "chapter": "a_dangerous_awakening",
       "annotations": {
         "scientific soirée": {
-          "explanation": "A semi-formal social gathering in 19th‑century elite circles where guests discussed and observed scientific demonstrations, blending salon culture with emerging scientific practice.",
+          "explanation": "A formal evening gathering centered on scientific discussion and demonstrations, a format Babbage helped popularize in London society.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
         }
-      }
+      },
+      "weight": 0.8,
+      "background": "By the early 1830s, scientific work in London moved through drawing rooms as well as learned societies. After returning to England in 1828, with an inheritance following the deaths of his wife and father, Babbage established his Saturday nights at his Dorset Street home in Marylebone. They became a durable meeting place for people who might otherwise have belonged to separate worlds: experimental investigators such as Michael Faraday, writers including Charles Dickens and Harriet Martineau, inventors such as Charles Wheatstone and Henry Fox Talbot, and political or cultural celebrities. James A. Secord has described these occasions as a French-inspired form of scientific discussion conducted within polite society; as many as 200 to 300 guests could reportedly attend an evening.\n\n## Machines and audiences\n\nThe centerpiece was often an unfinished portion of Babbage’s Difference Engine, a machine intended to calculate and print mathematical tables mechanically. Such tables—used in navigation, astronomy, engineering, and insurance—were normally compiled by human calculators and could carry costly copying or arithmetic errors. The Difference Engine was designed to avoid repeated multiplication by using the mathematical method of finite differences: after initial values had been set, linked columns of numbered wheels could produce successive values through addition. A small working section existed by 1832, but the full machine was not built in Babbage’s lifetime. Its elaborate gears, carry mechanisms, and columns made visible the unusual claim that a machine could execute a fixed mathematical procedure reliably.\n\nOne revealing feature of the gatherings was the competition for attention between that demanding apparatus and a mechanical dancer. Martineau later remembered Babbage’s patience in explaining his machine as “really exemplary,” but also recorded his disappointment that visitors were more fascinated by the dancing doll than by the calculating mechanism. The contrast was not trivial. The doll offered an immediately legible spectacle, while the engine required guests to understand why a procession of turning metal wheels mattered. Babbage’s evenings made advanced devices accessible to a fashionable audience, but they also exposed the difficulty of making the public care about an instrument whose achievement lay in invisible sequences of calculation.\n\n## A longer trail\n\nThe personal connection formed in this milieu endured, eventually leading to the 1843 notes that accompanied Luigi Menabrea’s account of the proposed Analytical Engine. That later machine was a different and more ambitious design: it would have used instructions on punched cards, a principle Babbage openly borrowed from the Jacquard loom, rather than merely follow the single built-in process of the Difference Engine. The early display therefore matters not because it revealed a finished computer—it did not—but because it offered a direct encounter with the physical ambitions behind Babbage’s designs. The engineering was difficult enough that critics have sometimes treated the engines as impractical fantasies. Yet in 1991, a functioning Difference Engine constructed from Babbage’s original plans and to nineteenth-century tolerances demonstrated that the design could have worked, even if its original project had foundered.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Life_of_a_Philosopher_Difference_Engine_Illustration.jpg/960px-Life_of_a_Philosopher_Difference_Engine_Illustration.jpg",
+          "caption": "An illustration of a portion of the difference engine in Charles Babbage's Life of a Philosopher, as seen in the University of Chicago Library Special Collectio.",
+          "source": "https://commons.wikimedia.org/wiki/File:Life_of_a_Philosopher_Difference_Engine_Illustration.jpg",
+          "creator": "Yaoshiiscool",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Babbage Difference Engine"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/A_Jacquard_loom_showing_information_punchcards%2C_National_Museum_of_Scotland.jpg/960px-A_Jacquard_loom_showing_information_punchcards%2C_National_Museum_of_Scotland.jpg",
+          "caption": "A Jacquard loom showing information punchcards, National Museum of Scotland",
+          "source": "https://commons.wikimedia.org/wiki/File:A_Jacquard_loom_showing_information_punchcards,_National_Museum_of_Scotland.jpg",
+          "creator": "Stephencdickson",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Jacquard loom punched cards"
+        }
+      ]
     },
     {
-      "date": "1835-07-08",
-      "date_precision": "day",
-      "age": 19,
-      "title": "Marriage to William King",
-      "description": "On 8 July 1835 Ada married William, [[Baron King|8th Baron King]], becoming Lady King and entering the higher ranks of the British aristocracy. The couple divided their time between country estates in Surrey and Scotland and a London house, and Ada gained the social standing that later helped her move in scientific and literary circles. Despite periods of ill health after childbirth, she continued to seek advanced mathematical instruction within the constraints of her new domestic role.",
+      "date": "1833",
+      "date_precision": "year",
+      "date_note": "The attempted elopement occurred early in 1833",
+      "age": 17,
+      "title": "An Attempted Elopement Is Exposed",
+      "description": "In 1833, Ada formed a relationship with a tutor and attempted to elope after the affair was discovered. The tutor’s relatives alerted Lady Byron, who arranged to keep the episode from becoming a public scandal.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, UK",
           "centroid": [
-            -0.1277653,
-            51.5074456
+            -0.1276,
+            51.5072
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Surrey",
-          "name_modern": "Surrey, UK",
-          "centroid": [
-            -0.3414524,
-            51.2715316
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Scotland",
-          "name_modern": "Scotland, UK",
-          "centroid": [
-            -4.1140518,
-            56.7861112
-          ],
-          "primary": false
         }
       ],
+      "involved_people": [
+        "Anne Isabella Noel Byron (Lady Byron)",
+        "Ada Lovelace’s tutor (identity uncertain)",
+        "The tutor’s relatives (identities not documented)"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
+      ],
+      "event_type_icon": "mdi-heart-broken",
+      "chapter": "a_dangerous_awakening",
+      "weight": 0.3
+    },
+    {
+      "date": "1835-07-08",
+      "date_precision": "day",
+      "age": 19,
+      "title": "Marries William King",
+      "description": "Ada married William King at Kirkby Mallory, Leicestershire, on 8 July 1835. Their marriage later gave her the title Countess of Lovelace when he was created Earl of Lovelace in 1838.",
+      "locations": [
+        {
+          "name_historic": "Kirkby Mallory, Leicestershire",
+          "name_modern": "Kirkby Mallory, Leicestershire, UK",
+          "primary": true,
+          "centroid": [
+            -1.3296824,
+            52.6024421
+          ]
+        }
+      ],
+      "involved_people": [
+        "William King, 8th Baron King"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/William_King-Noel,_1st_Earl_of_Lovelace"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "countess_in_a_cage",
+      "weight": 0.6,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "William King, 8th Baron King",
+        "duration": "until her death",
+        "children": 3
+      },
+      "background": "The King household into which Ada entered belonged to the upper reaches of Britain’s landed political world, but it was not merely ceremonial. The family’s head had inherited his barony only two years earlier, following the death of his father, Peter King, 7th Baron King. On his mother’s side, he was descended from George Grenville, the former prime minister; his younger brother, Peter John Locke King, was a politician. Such connections put the new household at the intersection of inherited property, parliamentary influence, and the social expectations imposed on aristocratic families. Ada also brought the unusually charged public inheritance of Lord Byron’s name and the Milbanke and Noel lines, whose claims and titles would continue to shape the family’s identity.\n\n## A cultivated household\n\nThe new head of the family had been educated at Eton and Trinity College, Cambridge, then entered the diplomatic service, where he served as secretary to Lord Nugent. His interests extended beyond the conventional pursuits of a country peer: he was known as a scientist and undertook architectural work on his own houses. That combination gave the household an intellectual dimension that was unusual but not alien to Ada’s existing world. Mary Somerville, a mathematician and scientific writer in Ada’s circle, was recognized in the same year as one of the first women elected an honorary member of the Royal Astronomical Society, alongside Caroline Herschel. Science in this period was pursued through correspondence, books, learned societies, salons, and private patronage as much as through universities or professional laboratories; a well-connected home could be an important setting for serious study.\n\nThe family’s Surrey seat, Ockham Park, and its London house provided the contrasting settings expected of an aristocratic life: country estate management and a foothold in the capital’s social and political world. The latter mattered because London was where scientific lectures, publishers, and influential acquaintances could be reached. The family name itself carried a historical argument. “Lovelace” was selected for the later earldom because Ada descended, through the Byron, Milbanke, Noel, and Lovelace families, from the extinct Barons Lovelace. It was therefore not simply a newly chosen honor, but an attempt to preserve and display a web of maternal inheritances.\n\n## Building at Horsley\n\nHis later work at Horsley Towers in East Horsley makes concrete the practical, design-minded side of the family’s world. He became patron of the parish church and financed rebuilding its chancel and nave in 1869, as well as reconstructing the churchyard wall with a gazebo and crest-bearing features. On the estate he had fifteen bridges built where timber tracks crossed roads or bridleways, allowing horse-drawn carts to move wood; ten survive. These projects show a peer using land, money, and engineering-minded supervision to remake a local landscape. They also help explain why Ada’s intellectual ambitions did not have to be confined to a purely literary or fashionable domestic sphere, even though the institutions that formally recognized mathematics and science remained overwhelmingly male.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Ockham_Park_1850.jpg",
+          "caption": "Engraving of Ockham Park Surrey, c. 1850, seat of William King-Noel, 1st Earl of Lovelace and Ada Lovelace.",
+          "source": "https://commons.wikimedia.org/wiki/File:Ockham_Park_1850.jpg",
+          "creator": "E,W. Brayley, \"A topographical history of Surrey\", Willis, London, 1850. Engraving is Thomas Abiel Prior from an original study by Thomas Allom.",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Ockham Park Surrey"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Dorking_Arch_-_geograph.org.uk_-_51375.jpg",
+          "caption": "Dorking Arch. This substantial structure, a Lovelace Bridge built in the 1860's and known as the Dorking Arch, carries a carriageway, now only used as a foot…",
+          "source": "https://commons.wikimedia.org/wiki/File:Dorking_Arch_-_geograph.org.uk_-_51375.jpg",
+          "creator": "Andrew Longton",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+          "query": "Horsley Towers bridges"
+        }
+      ]
+    },
+    {
+      "date": "1836-05-12",
+      "date_precision": "day",
+      "date_end": "1839-07-02",
+      "date_end_precision": "day",
+      "age": 20,
+      "title": "Becomes a Mother",
+      "description": "Between 1836 and 1839, Ada and William had three children: Byron, born on 12 May 1836; Anne Isabella, born on 22 September 1837; and Ralph Gordon, born on 2 July 1839.",
+      "locations": [],
+      "involved_people": [
+        "William King-Noel, 1st Earl of Lovelace",
+        "Byron King-Noel, Viscount Ockham",
+        "Anne Blunt",
+        "Ralph King-Milbanke, 2nd Earl of Lovelace"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Byron_King-Noel,_Viscount_Ockham"
+      ],
+      "event_type_icon": "mdi-candle",
+      "chapter": "countess_in_a_cage",
+      "weight": 0.55
+    },
+    {
+      "date": "1838",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Becomes Countess of Lovelace",
+      "description": "William King was created Viscount Ockham and Earl of Lovelace in 1838. Through her marriage to him, Ada became Countess of Lovelace, a title chosen to recognize her descent from the extinct Barons Lovelace.",
+      "locations": [],
       "involved_people": [
         "William King-Noel, 1st Earl of Lovelace"
       ],
@@ -402,220 +509,132 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Ada_Countess_of_Lovelace_computer_pioneer_1815-1852_green_plaque_-_5_Station_Parade_Uxbridge_Road_Ealing_W5_3LD.jpg",
-          "caption": "Green plaque noting Ada Lovelace’s 1835 marriage",
-          "source": "https://commons.wikimedia.org/wiki/File:Ada_Countess_of_Lovelace_computer_pioneer_1815-1852_green_plaque_-_5_Station_Parade_Uxbridge_Road_Ealing_W5_3LD.jpg",
-          "creator": "Spudgun67",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-ring",
-      "chapter": "society_marriage_and_motherhood",
-      "annotations": {
-        "Baron King": {
-          "explanation": "A hereditary title in the Peerage of Great Britain held by William King before he was later created Earl of Lovelace; as 8th Baron King he sat in the House of Lords and belonged to the landed aristocracy.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Baron_King"
-        }
-      }
-    },
-    {
-      "date": "1836-01",
-      "date_precision": "month",
-      "date_end": "1839",
-      "date_end_precision": "year",
-      "date_note": "Covers the births of her three children between 1836 and 1839",
-      "age": 20,
-      "title": "Motherhood and continuing studies",
-      "description": "Between 1836 and 1839 Ada gave birth to three children—Byron, Anne (Lady Anne Blunt), and Ralph Gordon—while suffering episodes of serious illness, including a prolonged recovery after her daughter’s birth. Even amid pregnancies and moves among family estates, she persisted with mathematical reading and correspondence, maintaining links to figures such as Mary Somerville. Balancing aristocratic duties, motherhood, and private study sharpened her awareness of the social limits placed on women’s scientific work.",
-      "locations": [
-        {
-          "name_historic": "London",
-          "name_modern": "London, UK",
-          "centroid": [
-            -0.1276,
-            51.5074
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Ockham",
-          "name_modern": "Ockham, Surrey, UK",
-          "centroid": [
-            -0.418,
-            51.278
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "East Horsley",
-          "name_modern": "East Horsley, Surrey, UK",
-          "centroid": [
-            -0.431,
-            51.28
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "William King-Noel, 1st Earl of Lovelace",
-        "Byron King-Noel, Viscount Ockham",
-        "Anne Blunt",
-        "Ralph Gordon King-Noel, 2nd Earl of Lovelace",
-        "Mary Somerville"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Anne_Blunt,_15th_Baroness_Wentworth",
-        "https://en.wikipedia.org/wiki/Mary_Somerville"
-      ],
-      "event_type_icon": "mdi-hospital",
-      "chapter": "society_marriage_and_motherhood",
-      "annotations": {
-        "Anne_Blunt": {
-          "explanation": "Ada’s daughter Anne Isabella, later 15th Baroness Wentworth, known for her Arabian horse breeding and travels in the Middle East.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Anne_Blunt,_15th_Baroness_Wentworth"
-        }
-      }
-    },
-    {
-      "date": "1838",
-      "date_precision": "year",
-      "date_note": "Year her husband was created Earl of Lovelace, making Ada Countess",
-      "age": 22,
-      "title": "Created Countess of Lovelace",
-      "description": "In 1838 [[William King-Noel, 1st Earl of Lovelace|William King]] was elevated to Viscount Ockham and 1st Earl of Lovelace, titles chosen in part to reflect Ada’s descent from the extinct Barons Lovelace. Ada thereby became the Countess of Lovelace, acquiring the name by which she is now best known. The status reinforced her position at the nexus of court life and scientific society, giving her greater access to leading thinkers whom she could question and learn from.",
-      "locations": [
-        {
-          "name_historic": "London",
-          "name_modern": "London, UK",
-          "centroid": [
-            -0.1276,
-            51.5074
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "William King-Noel, 1st Earl of Lovelace"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/William_King-Noel,_1st_Earl_of_Lovelace",
-        "https://en.wikipedia.org/wiki/Ralph_King-Milbanke,_2nd_Earl_of_Lovelace"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Ockham_Park_1850.jpg",
-          "caption": "Ockham Park, seat of William King-Noel and Ada",
-          "source": "https://commons.wikimedia.org/wiki/File:Ockham_Park_1850.jpg",
-          "creator": "E,W. Brayley, \"A topographical history of Surrey\", Willis, London, 1850. Engraving is Thomas Abiel Prior from an original study by Thomas Allom.",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Lovelace_Coats-of-Arms_-_geograph.org.uk_-_565486.jpg",
+          "caption": "Lovelace coats of arms in East Horsley",
+          "source": "https://commons.wikimedia.org/wiki/File:Lovelace_Coats-of-Arms_-_geograph.org.uk_-_565486.jpg",
+          "creator": "Colin Smith",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
         }
       ],
       "event_type_icon": "mdi-seal",
-      "chapter": "society_marriage_and_motherhood",
-      "annotations": {
-        "William King-Noel, 1st Earl of Lovelace": {
-          "explanation": "William King-Noel was a British peer and scientist who, in 1838, was created Viscount Ockham and 1st Earl of Lovelace, thereby conferring on his wife Ada the courtesy title Countess of Lovelace.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/William_King-Noel,_1st_Earl_of_Lovelace"
-        }
-      }
+      "chapter": "countess_in_a_cage",
+      "weight": 0.4
     },
     {
-      "date": "1840",
-      "date_precision": "year",
-      "date_note": "Year she began serious advanced study under Augustus De Morgan and others",
-      "age": 24,
-      "title": "Advanced mathematical training",
-      "description": "Around 1840 Ada undertook systematic advanced mathematical studies, working through [[calculus|calculus]] and [[higher analysis|higher analysis]] under the guidance of prominent logician Augustus De Morgan. She grappled with topics such as functional equations and abstract algebraic reasoning that were then cutting‑edge. This training gave her the technical foundation to follow and extend Charles Babbage’s designs for the Analytical Engine beyond mere enthusiasm into informed critique and innovation.",
-      "locations": [
-        {
-          "name_historic": "London",
-          "name_modern": "London, UK",
-          "centroid": [
-            -0.1276,
-            51.5074
-          ],
-          "primary": true
-        }
-      ],
+      "date": "1841-02-27",
+      "date_precision": "day",
+      "age": 25,
+      "title": "Ada Learns a Family Secret",
+      "description": "Ada and Medora Leigh were told that Lord Byron might also have been Medora's father. Ada wrote to her mother that the disclosure confirmed a suspicion she had held for years.",
+      "locations": [],
       "involved_people": [
-        "Augustus De Morgan",
-        "Charles Babbage",
-        "Lady Byron",
-        "Mary Somerville"
+        "Medora Leigh",
+        "Anne Isabella Byron",
+        "George Gordon Byron"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Augustus_De_Morgan",
-        "https://en.wikipedia.org/wiki/Lady_Byron"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
       ],
-      "event_type_icon": "mdi-school",
-      "chapter": "intellectual_maturity_and_analytical_engine",
-      "annotations": {
-        "calculus": {
-          "explanation": "A branch of mathematics studying continuous change, using concepts such as limits, derivatives, and integrals.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Calculus"
-        },
-        "higher analysis": {
-          "explanation": "A 19th‑century term for advanced mathematical analysis beyond elementary calculus, including topics like infinite series and complex functions.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Mathematical_analysis"
-        }
-      }
+      "event_type_icon": "mdi-email",
+      "chapter": "the_engine_speaks",
+      "weight": 0.35
     },
     {
-      "date": "1842-09",
-      "date_precision": "month",
-      "date_note": "Approximate date in 1842 when she was asked to translate Menabrea’s paper on the Analytical Engine",
-      "age": 26,
-      "title": "Undertakes Menabrea translation",
-      "description": "In 1842 Charles Wheatstone asked Ada to translate from French an article by Italian engineer Luigi Federico Menabrea describing Babbage's [[Analytical Engine|Analytical Engine]]. She agreed on condition that she could add her own extensive Notes, drawing on years of correspondence and discussion with Babbage about his evolving designs. The project offered her a rare chance, as a woman, to publish serious technical work under her own name in a respected scientific venue.",
+      "date": "1843",
+      "date_precision": "year",
+      "age": 27,
+      "title": "Lovelace Publishes Her Analytical Engine Notes",
+      "description": "Lovelace translated Luigi Menabrea’s account of Babbage’s [[Analytical Engine]], then added seven extensive notes for its London publication. The notes included a method for calculating [[Bernoulli numbers]] and argued that the machine could manipulate symbols representing information other than numbers.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, UK",
           "centroid": [
             -0.1276,
-            51.5074
+            51.5072
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Turin",
-          "name_modern": "Turin, Italy",
-          "centroid": [
-            7.6869,
-            45.0703
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Charles Wheatstone",
         "Luigi Federico Menabrea",
-        "Charles Babbage"
+        "Charles Babbage",
+        "Charles Wheatstone"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
         "https://en.wikipedia.org/wiki/Luigi_Federico_Menabrea",
         "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
-      "event_type_icon": "mdi-file-document",
-      "chapter": "intellectual_maturity_and_analytical_engine",
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Houghton_AC85.Su662.Zz843m.jpg/960px-Houghton_AC85.Su662.Zz843m.jpg",
+          "caption": "1843 publication containing Ada Lovelace’s analytical-engine notes",
+          "source": "https://commons.wikimedia.org/wiki/File:Houghton_AC85.Su662.Zz843m.jpg",
+          "creator": "Charles Sumner",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "the_engine_speaks",
+      "weight": 1.0,
+      "event_class": {
+        "type": "publication",
+        "title": "Sketch of the Analytical Engine Invented by Charles Babbage, Esq., with Notes by the Translator",
+        "publication_type": "article",
+        "publisher": "Scientific Memoirs",
+        "significance": "seminal computing notes",
+        "impact": "Her Bernoulli-number method is often called the first published computer program, and her notes became central to her later recognition as a computing pioneer."
+      },
       "annotations": {
         "Analytical Engine": {
-          "explanation": "A proposed 19th‑century general-purpose mechanical computer designed by Charles Babbage, featuring a stored program and many core elements of modern computer architecture.",
+          "explanation": "Babbage’s proposed general-purpose mechanical computer. It was never completed in Lovelace’s lifetime.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Analytical_Engine"
+        },
+        "Bernoulli numbers": {
+          "explanation": "A sequence of rational numbers used in number theory and mathematical analysis; calculating them supplied a demanding test for the proposed machine.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Bernoulli_number"
         }
-      }
+      },
+      "background": "By the early 1840s, ambitious machines for calculation had become entangled with the limits of Victorian engineering and government patronage. Charles Babbage’s earlier Difference Engine had consumed years of work and public money before its official support ended in 1842; no complete machine emerged. His newer design was still more radical, but existed chiefly as drawings, descriptions, and a small demonstrational section of the earlier engine. The material culture of the project was brass gearwork, precision machining, and hand-prepared instructions—not the electrical circuitry later associated with computers.\n\n## Turin and London\n\nThe immediate intellectual route ran through Turin. During a visit there in 1840, Babbage explained the planned machine to a group of Italian engineers and scientists, and Menabrea’s French account grew out of that presentation. His article was concise, only 23 pages when it appeared in the Bibliothèque universelle de Genève in 1842. Its journey into an English scientific periodical was therefore also an instance of knowledge moving among European mathematical and engineering circles, rather than a purely private collaboration in London.\n\nBabbage’s project drew a crucial practical analogy from the Jacquard loom. That loom used punched cards to determine a woven pattern; the Engine’s cards were intended to direct operations and supply quantities. The proposed design separated a “store,” where quantities could be held, from a “mill,” where arithmetic would be performed. It was meant to follow ordered instructions, repeat sequences, and choose between alternative courses according to results. Those features made the scheme far more than an elaborate calculator, while also making it extraordinarily difficult to build with the manufacturing tolerances of the period.\n\n## An unfinished machine\n\nThe most revealing tension was that the argument for the Engine’s capacities had to be made without the completed object itself. Babbage could show visitors parts of the Difference Engine at his Dorset Street soirées, yet guests were sometimes more captivated by a mechanical dancing doll than by the calculating apparatus. The unbuilt Analytical Engine had to be understood through tables, diagrams, and imagined runs of its cards. That gap between conceptual clarity and physical realization shaped its reception: the design was admired by a small scientific audience but did not become an operating instrument or a continuing research program in its own day.\n\nThe document’s early readership was correspondingly limited, and Babbage died in 1871 with the larger machine still unbuilt. Later computing historians returned to the surviving account because it preserved an unusually detailed way of discussing operations, sequences, and the possible scope of a machine. Its modern fame has also encouraged simplifications: calling the work the beginning of computing can obscure its nineteenth-century setting, in which the decisive technical problem was still how to turn an intricate paper design into reliable mechanical hardware. In 1991, the Science Museum in London completed a working Difference Engine from Babbage’s original plans, demonstrating that at least that earlier design could have functioned using nineteenth-century tolerances.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Diagram_for_the_computation_of_Bernoulli_numbers.jpg/960px-Diagram_for_the_computation_of_Bernoulli_numbers.jpg",
+          "caption": "Diagram of an algorithm for the Analytical Engine for the computation of Bernoulli numbers, from Sketch of The Analytical Engine Invented by Charles Babbage by .",
+          "source": "https://commons.wikimedia.org/wiki/File:Diagram_for_the_computation_of_Bernoulli_numbers.jpg",
+          "creator": "Ada Lovelace",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Analytical Engine diagram"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Charles_Babbage_Difference_Engine_No1.jpg/960px-Charles_Babbage_Difference_Engine_No1.jpg",
+          "caption": "Difference Engine No.1 (Partial Model) Charles Babbage. Science Museum, London.",
+          "source": "https://commons.wikimedia.org/wiki/File:Charles_Babbage_Difference_Engine_No1.jpg",
+          "creator": "Marcin Wichary",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "query": "Difference Engine Science Museum"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/A_Jacquard_loom_showing_information_punchcards%2C_National_Museum_of_Scotland.jpg/960px-A_Jacquard_loom_showing_information_punchcards%2C_National_Museum_of_Scotland.jpg",
+          "caption": "A Jacquard loom showing information punchcards, National Museum of Scotland",
+          "source": "https://commons.wikimedia.org/wiki/File:A_Jacquard_loom_showing_information_punchcards,_National_Museum_of_Scotland.jpg",
+          "creator": "Stephencdickson",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Jacquard loom punched cards"
+        }
+      ]
     },
     {
-      "date": "1843-08",
-      "date_precision": "month",
-      "date_note": "Month approximate; her translation and Notes appeared in 1843 in Taylor’s Scientific Memoirs",
-      "age": 27,
-      "title": "Publishes Notes on the Analytical Engine",
-      "description": "In 1843 Ada’s English translation of [[Sketch of the Analytical Engine Invented by Charles Babbage, Esq.|Menabrea’s article]], accompanied by her own Notes that were three times longer than the original text, was published in Taylor’s Scientific Memoirs. In Note G she outlined a detailed procedure for the Engine to compute [[Bernoulli numbers|Bernoulli numbers]], often cited as the first published computer program. More radically, she argued that the machine could manipulate symbols according to rules and thus compose music or create graphics, anticipating modern ideas of general‑purpose computing and human‑technology collaboration.",
+      "date": "1851",
+      "date_precision": "year",
+      "age": 35,
+      "title": "Her Gambling Scheme Collapses",
+      "description": "Ada joined male friends in an attempt to devise a mathematical system for profitable horse-racing bets. The scheme failed, leaving her heavily indebted to the syndicate and forcing her to disclose the debts to her husband.",
       "locations": [
         {
           "name_historic": "London",
@@ -628,52 +647,29 @@
         }
       ],
       "involved_people": [
-        "Luigi Federico Menabrea",
+        "William King-Noel, 1st Earl of Lovelace",
         "Charles Babbage"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Luigi_Federico_Menabrea",
-        "https://en.wikipedia.org/wiki/Analytical_Engine"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/0/05/Houghton_AC85.Su662.Zz843m.jpg",
-          "caption": "1843 publication including Ada Lovelace’s translated article",
-          "source": "https://commons.wikimedia.org/wiki/File:Houghton_AC85.Su662.Zz843m.jpg",
-          "creator": "Charles Sumner",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-book",
-      "chapter": "intellectual_maturity_and_analytical_engine",
-      "annotations": {
-        "Sketch of the Analytical Engine Invented by Charles Babbage, Esq.": {
-          "explanation": "An 1842 French-language paper by Luigi Federico Menabrea summarizing Charles Babbage’s design for the Analytical Engine, which Ada Lovelace translated into English and extensively annotated.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Analytical_Engine#Sketch_of_the_Analytical_Engine"
-        },
-        "Bernoulli numbers": {
-          "explanation": "A sequence of rational numbers that arise in number theory and analysis, used in formulas for sums of powers of integers and in series expansions, making them a classic test case for complex calculations.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Bernoulli_number"
-        }
-      }
+      "event_type_icon": "mdi-currency-usd-off",
+      "chapter": "the_final_reckoning",
+      "weight": 0.55
     },
     {
-      "date": "1845",
-      "date_precision": "year",
-      "date_end": "1851",
-      "date_end_precision": "year",
-      "date_note": "Covers a series of personal entanglements and her mathematical gambling scheme, culminating in 1851",
-      "age": 29,
-      "title": "Scandals, gambling and applied mathematics",
-      "description": "In the mid‑1840s Ada’s life became entangled with rumours of extra‑marital flirtations and, more significantly, an intense involvement in horse‑race gambling. Fascinated by probability and calculation, she formed a betting syndicate and in 1851 attempted to devise a mathematical model to secure large winnings on the turf. The scheme failed disastrously, leaving her in debt and forcing painful confessions to her husband, but it shows her urge to apply mathematical reasoning to complex, uncertain real‑world systems.",
+      "date": "1852-11-27",
+      "date_precision": "day",
+      "age": 36,
+      "title": "Ada Lovelace Dies in London",
+      "description": "Ada Lovelace died in London on 27 November 1852, aged 36, after suffering from uterine cancer. Following an August confession, William King-Noel left her bedside and did not see her again before her death. At her request, she was buried beside her father at St Mary Magdalene Church in Hucknall.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, UK",
           "centroid": [
             -0.1276,
-            51.5074
+            51.5072
           ],
           "primary": true
         }
@@ -682,64 +678,57 @@
         "William King-Noel, 1st Earl of Lovelace"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Lady_Byron"
-      ],
-      "event_type_icon": "mdi-currency-usd-off",
-      "chapter": "risk_passion_and_applied_calculation"
-    },
-    {
-      "date": "1852-11-27",
-      "date_precision": "day",
-      "age": 36,
-      "title": "Final illness and death",
-      "description": "Ada Lovelace died on 27 November 1852, aged thirty‑six, after a painful illness from uterine cancer compounded by bloodletting and other contemporary treatments. During her last months she was attended closely by her mother, with whom she had often had a strained relationship, and underwent a pronounced religious turn. Honouring her own request, she was buried at St. Mary Magdalene Church in Hucknall, Nottinghamshire, in a grave beside the father she had never known in life.",
-      "locations": [
-        {
-          "name_historic": "Hucknall",
-          "name_modern": "Hucknall, Nottinghamshire, England, UK",
-          "centroid": [
-            -1.21,
-            53.04
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "London",
-          "name_modern": "London, England, UK",
-          "centroid": [
-            -0.1276,
-            51.5072
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Lady Byron",
-        "Lord Byron"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Lady_Byron",
-        "https://en.wikipedia.org/wiki/Lord_Byron"
+        "https://en.wikipedia.org/wiki/Ada_Lovelace"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Ada_Lovelace_in_1852.jpg",
-          "caption": "Ada Lovelace at the piano in 1852",
-          "source": "https://commons.wikimedia.org/wiki/File:Ada_Lovelace_in_1852.jpg",
-          "creator": "Henry Phillips (1820–1868), son of Thomas Phillips , tratto dalla fotografia di Antoine Claudet",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Hucknall_Church_St_Mary_Magdalene.jpg",
+          "caption": "St Mary Magdalene Church, final resting place",
+          "source": "https://commons.wikimedia.org/wiki/File:Hucknall_Church_St_Mary_Magdalene.jpg",
+          "creator": "Phil Evans",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
         }
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "risk_passion_and_applied_calculation",
+      "chapter": "the_final_reckoning",
+      "weight": 0.7,
       "event_class": {
         "type": "death",
         "cause": "uterine cancer",
-        "characterization": "after painful illness",
-        "place_of_rest": "St. Mary Magdalene Church in Hucknall, Nottinghamshire"
-      }
+        "characterization": "after prolonged illness",
+        "place_of_rest": "Church of St Mary Magdalene, Hucknall"
+      },
+      "background": "In the early 1850s, the Lovelace household was under strains that were both private and financial. The family’s rank brought homes, servants, and public expectations, but it did not insulate it from debt or from the authority husbands exercised over married women’s property and public standing. Three children—Byron, Anne, and Ralph—were still minors. Ada’s mother, Lady Byron, remained an imposing presence in the family circle, and the reputation of Ada’s estranged father continued to shape how contemporaries understood her, often more readily than they understood her mathematical work.\n\n## Byron’s shadow\n\nThe choice of a resting place in Hucknall belonged to a larger, uneasy family history. St Mary Magdalene was the church associated with the Byron family vault, where Lord Byron had been interred after his body was returned from Greece in 1824. Westminster Abbey had refused him burial, a decision bound up with the poet’s notoriety as much as with his literary fame. For Ada, the church was therefore not simply a country parish church: it was the physical site of a father she had never known and whose public legend had been both a burden and a source of fascination throughout her life. Her mother’s long campaign to distinguish Ada from Byron’s character made that association especially charged.\n\nWhat remained of Ada’s intellectual work was a slim but unusually ambitious publication. Her 1843 translation of Luigi Menabrea’s account of Charles Babbage’s Analytical Engine appeared in Richard Taylor’s Scientific Memoirs, accompanied by seven signed notes, A through G, that were more than three times as long as Menabrea’s original article. The machine itself existed only as a formidable design: a proposed general-purpose calculating engine with a “mill” to perform operations, a “store” for numbers, and instructions to be supplied on punched cards, adapting a method used in Jacquard looms. The notes treated the device not merely as a faster calculator but as a machine that could manipulate symbols according to rules. That distinction was remarkable in an age when computation generally meant tables produced by human clerks or by specialized mechanical calculators.\n\nThe paper did not immediately create a computing discipline. Babbage never completed the Analytical Engine, and Ada’s notes spent much of the next century in relative obscurity. They were republished in B. V. Bowden’s 1953 collection Faster than Thought, helping to make them newly visible as electronic computing emerged. Her later reputation as the “first computer programmer” is powerful but not entirely straightforward: Babbage had devised programs for the engine, and historians differ over how to assign authorship and practical significance to the published sequence of operations. The durable achievement is less a simple priority claim than the clarity with which her notes imagined a programmable machine as something capable of acting on forms of information beyond calculation alone.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Diagram_for_the_computation_of_Bernoulli_numbers.jpg/960px-Diagram_for_the_computation_of_Bernoulli_numbers.jpg",
+          "caption": "Diagram of an algorithm for the Analytical Engine for the computation of Bernoulli numbers, from Sketch of The Analytical Engine Invented by Charles Babbage by .",
+          "source": "https://commons.wikimedia.org/wiki/File:Diagram_for_the_computation_of_Bernoulli_numbers.jpg",
+          "creator": "Ada Lovelace",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Analytical Engine diagram"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/StMaryHucknall.JPG/960px-StMaryHucknall.JPG",
+          "caption": "Church of St. Mary Magdalene, Hucknall, Nottinghamshire.",
+          "source": "https://commons.wikimedia.org/wiki/File:StMaryHucknall.JPG",
+          "creator": "Own work by Andrewrabbott",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "St Mary Magdalene Hucknall church"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/A_Jacquard_loom_showing_information_punchcards%2C_National_Museum_of_Scotland.jpg/960px-A_Jacquard_loom_showing_information_punchcards%2C_National_Museum_of_Scotland.jpg",
+          "caption": "A Jacquard loom showing information punchcards, National Museum of Scotland",
+          "source": "https://commons.wikimedia.org/wiki/File:A_Jacquard_loom_showing_information_punchcards,_National_Museum_of_Scotland.jpg",
+          "creator": "Stephencdickson",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Jacquard loom punched cards"
+        }
+      ]
     }
   ]
 }

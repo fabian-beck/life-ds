@@ -188,6 +188,26 @@ def death_years_for(name: str, spans: Dict[str, Set[Tuple[int, int]]]) -> Set[in
     return set()
 
 
+def network_death_years_for(
+    name: str,
+    relationship: str,
+    spans: Dict[str, Set[Tuple[int, int]]],
+) -> Set[int]:
+    """Resolve only evidence specific enough for a network connection.
+
+    Non-family connections require an exact name. A simple two-part family
+    name may fall back to its first name because source prose often names a
+    child that way. Longer unmatched names carry titles, particles, or extra
+    given names, so a shared first name is not specific enough evidence.
+    """
+    exact = {death for _, death in spans.get(name, set())}
+    if exact or not relationship.startswith("family/"):
+        return exact
+    if len(name.split()) != 2:
+        return set()
+    return death_years_for(name, spans)
+
+
 def check_network(
     person_id: str, spans: Dict[str, Set[Tuple[int, int]]]
 ) -> List[SpanFinding]:
@@ -208,10 +228,7 @@ def check_network(
         # shared across generations (mother and daughter Emma) offers the
         # wrong birth far more readily than the wrong death.
         relationship = connection.get("relationship_type") or ""
-        if relationship.startswith("family/"):
-            deaths = death_years_for(name, spans)
-        else:
-            deaths = {death for _, death in spans.get(name, set())}
+        deaths = network_death_years_for(name, relationship, spans)
         end_year = connection.get("end_year")
         if (
             deaths
@@ -262,6 +279,7 @@ def check_death_sentence(
     event: Dict[str, Any],
     sentence: str,
     spans: Dict[str, Set[Tuple[int, int]]],
+    subject_names: Optional[Set[str]] = None,
 ) -> List[SpanFinding]:
     years = {int(y) for y in YEAR.findall(sentence)}
     if not years:
@@ -270,7 +288,7 @@ def check_death_sentence(
     seen: Set[str] = set()
     for verb in DEATH_VERB.finditer(sentence):
         for name in named_before(verb.start(), sentence):
-            if name in seen:
+            if name in seen or name in (subject_names or set()):
                 continue
             seen.add(name)
             candidates = death_years_for(name, spans)
@@ -295,6 +313,13 @@ def check_events(
     spans: Dict[str, Set[Tuple[int, int]]],
 ) -> List[SpanFinding]:
     findings: List[SpanFinding] = []
+    person = data.get("person") or {}
+    person_name = person.get("name") if isinstance(person, dict) else None
+    subject_names = (
+        set(NAME_TOKEN.findall(person_name.replace("_", " ")))
+        if isinstance(person_name, str)
+        else set()
+    )
     for event in data.get("events") or []:
         if (person_id, str(event.get("date"))) in ACCEPTED:
             continue
@@ -303,7 +328,15 @@ def check_events(
             continue
         plain = ANNOTATION.sub(lambda m: m.group(2) or m.group(3), description)
         for sentence in SENTENCE_BREAK.split(plain):
-            findings.extend(check_death_sentence(person_id, event, sentence, spans))
+            findings.extend(
+                check_death_sentence(
+                    person_id,
+                    event,
+                    sentence,
+                    spans,
+                    subject_names,
+                )
+            )
     return findings
 
 

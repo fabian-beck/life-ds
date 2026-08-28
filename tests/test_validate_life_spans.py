@@ -118,6 +118,12 @@ class ProseTests(unittest.TestCase):
         )
         self.assertEqual(findings, [])
 
+    def test_the_subjects_own_surname_is_not_treated_as_another_person(self) -> None:
+        data = dataset("Planck died in 1947.")
+        data["person"] = {"name": "Max Planck"}
+        findings = spans_check.check_events("max_planck", data, self.spans)
+        self.assertEqual(findings, [])
+
 
 class NetworkResolutionTests(unittest.TestCase):
     """check_network reads from disk, so its resolution rules are exercised
@@ -132,6 +138,16 @@ class NetworkResolutionTests(unittest.TestCase):
         # A bare "Emma" span must not stand in for a professional contact
         # named Emma Noether; only family resolves through first names.
         self.assertEqual(self.spans.get("Emma Noether"), None)
+
+    def test_a_long_family_name_does_not_resolve_through_a_shared_first_name(
+        self,
+    ) -> None:
+        self.assertEqual(
+            spans_check.network_death_years_for(
+                "Karl Friedrich Other Planck", "family/son", self.spans
+            ),
+            set(),
+        )
 
     def test_no_cache_means_no_findings(self) -> None:
         self.assertEqual(spans_check.check_person("no_such_person", {"events": []}), [])

@@ -1,6 +1,6 @@
 {
-  "dataset": "wiki-egonetwork-ada-lovelace",
-  "created_on": "2025-11-27",
+  "dataset": "Wikipedia ego network: Ada Lovelace",
+  "created_on": "2026-08-28",
   "ego": {
     "name": "Ada Lovelace",
     "birth_year": 1815,
@@ -9,440 +9,304 @@
       "Mathematikerin",
       "Schriftstellerin"
     ],
-    "summary": "Augusta Ada King, Countess of Lovelace (Ada Lovelace) war eine englische Mathematikerin und Schriftstellerin, die für ihre Arbeit an Charles Babbages Analytical Engine bekannt ist. Ihre Anmerkungen von 1843 zu Luigi Menabreas Artikel über die Maschine, darunter ein Algorithmus zur Berechnung von Bernoulli-Zahlen, gelten weithin als das erste veröffentlichte Computerprogramm.",
+    "summary": "Englische Mathematikerin und Schriftstellerin, bekannt für ihre Arbeit an Charles Babbages Entwurf der Analytical Engine. Ihre Anmerkungen zu Luigi Menabreas Artikel von 1843 enthielten einen Algorithmus zur Berechnung von Bernoulli-Zahlen und erläuterten, dass eine Maschine Informationen auch über rein arithmetische Vorgänge hinaus verarbeiten könne.",
     "wikipedia": "https://en.wikipedia.org/wiki/Ada_Lovelace"
   },
   "connections": [
     {
-      "person_name": "Anne Isabella Noel Byron (Lady Byron)",
-      "relationship_type": "family/mother",
-      "relationship_description": "Adas Mutter, eine Reformerin und Bildungsphilanthropin, die ihre Erziehung bestimmte und sie nachdrücklich auf Mathematik und „moralische“ Vervollkommnung ausrichtete.",
+      "person_name": "Anne Isabella Milbanke",
+      "relationship_description": "Anne Noel, 11. Baroness Wentworth, prägte Adas Erziehung, indem sie ihre Bildung auf Mathematik und Naturwissenschaften ausrichtete und zugleich ihr Verhalten und gesellschaftliches Leben streng überwachte.",
       "start_year": 1815,
       "end_year": 1852,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Kindererziehung und Bildung",
-        "Betreuung der Hauslehrer, darunter Mary Somerville, William Frend, William Benjamin Carpenter und Augustus De Morgan",
-        "Gesellschaftsbesuche und Briefwechsel",
-        "Begleitung von Adas letzter Krankheit und Regelung ihres Nachlasses"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Lady_Byron"
-      ],
-      "notes": "Anne Noel, 11. Baroness Wentworth, trennte sich wenige Wochen nach Adas Geburt von George Gordon Byron und wurde zur maßgeblichen Bezugsperson in ihrer Erziehung. Sie förderte Adas intensive Beschäftigung mit Mathematik, um das abzuwenden, was sie als die „Geisteskrankheit“ ihres Mannes wahrnahm, ließ Adas Verhalten heimlich von Freundinnen überwachen und kontrollierte später während Adas tödlicher Krankheit den Zugang zu deren Freunden."
-    },
-    {
-      "person_name": "Judith, Hon. Lady Milbanke",
-      "relationship_type": "family/grandmother",
-      "relationship_description": "Adas Großmutter mütterlicherseits, die sich in ihrer Kindheit häufig um sie kümmerte und ihr Zuneigung und Stabilität schenkte – im Gegensatz zur emotionalen Distanziertheit von Anne Noel, 11. Baroness Wentworth.",
-      "start_year": 1815,
-      "end_year": 1840,
       "strength": "strong",
       "interaction_frequency": "weekly",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Kinderbetreuung",
-        "Haushaltsleben in Kirkby Mallory und anderen Familienhäusern",
-        "Briefwechsel über Adas Wohlergehen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace"
-      ],
-      "notes": "Ada wurde oft Judiths Obhut anvertraut und von ihr „verwöhnt“, während Anne Noel, 11. Baroness Wentworth, aus Sorge um ihre Tochter Briefe schrieb, die zugleich als Beleg mütterlicher Fürsorge für rechtliche und gesellschaftliche Zwecke dienten."
-    },
-    {
-      "person_name": "Lady Anne Isabella Noel Byron (as educational manager)",
-      "relationship_type": "academic/guardian",
-      "relationship_description": "Über ihre mütterliche Rolle hinaus fungierte Anne Noel, 11. Baroness Wentworth, als Adas faktische Bildungsmanagerin und formte beharrlich einen Lehrplan, der Vernunft fördern und „byronische“ Wesenszüge unterdrücken sollte.",
-      "start_year": 1815,
-      "end_year": 1835,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Auswahl und Überwachung der Hauslehrer (Frend, Somerville, De Morgan, Carpenter)",
-        "Vorgabe eines strukturierten Programms aus Mathematik, Sprachen und moralischer Unterweisung",
-        "Überwachung Adas durch Freundinnen („die Furien“) auf jedes Anzeichen „moralischer Abweichung“"
+        "Privatunterricht",
+        "Familienkorrespondenz",
+        "Besuch wissenschaftlicher Zusammenkünfte"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
         "https://en.wikipedia.org/wiki/Lady_Byron"
       ],
-      "notes": "Die Besessenheit von Anne Noel, 11. Baroness Wentworth, jeden Anflug von Byrons „Geisteskrankheit“ oder Unmoral in Ada auszumerzen, prägte Adas geistige Entwicklung und ihr Gefühlsleben tiefgreifend. Sie eröffnete ihr dadurch sowohl Möglichkeiten – etwa eine ernsthafte mathematische Ausbildung – als auch einen erheblichen psychischen Druck."
+      "notes": "Trotz des nachhaltigen Einflusses von Anne Noel, 11. Baroness Wentworth, auf Adas Erziehung und letzte Krankheit stand ihr Verhältnis einander nicht besonders nahe.",
+      "relationship_type": "family/biological_mother"
     },
     {
-      "person_name": "George Gordon Byron, 6. Baron Byron (Lord Byron)",
-      "relationship_type": "family/father",
-      "relationship_description": "Adas Vater, der romantische Dichter George Gordon Byron, der sich kurz nach ihrer Geburt von Anne Noel, 11. Baroness Wentworth, trennte und Ada nie begegnete, ihre Vorstellungskraft und Identität jedoch tief prägte.",
+      "person_name": "George Gordon Byron",
+      "relationship_description": "Ihr Vater war der Dichter George Gordon Byron. Kurz nach Adas Geburt trennte er sich von ihrer Mutter, verließ England und starb, als Ada acht Jahre alt war; sie hatte keine unmittelbare Beziehung zu ihm, blieb jedoch tief von seiner Erinnerung bewegt.",
       "start_year": 1815,
       "end_year": 1824,
       "strength": "weak",
       "interaction_frequency": "rare",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Keine persönlichen Begegnungen; posthumer literarischer und symbolischer Einfluss",
-        "Benennung von Adas Sohn Byron und ihres Sohnes Ralph Gordon",
-        "Auf Adas Wunsch Bestattung neben ihm"
+        "familiäre Abstammung",
+        "literarisches und persönliches Nachwirken nach dem Tod"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
         "https://en.wikipedia.org/wiki/Lord_Byron"
       ],
-      "notes": "Byron verließ England wenige Monate nach Adas Geburt endgültig und starb 1824 in Griechenland. Ada blieb von ihm fasziniert, studierte seine Werke und pflegte eine symbolische Verbindung zu ihm, die in ihrem Wunsch gipfelte, in Hucknall an seiner Seite bestattet zu werden."
+      "notes": "Sie wünschte, neben ihm bestattet zu werden, und nannte zwei ihrer Söhne Byron und Gordon.",
+      "relationship_type": "family/biological_father"
     },
     {
-      "person_name": "Allegra Byron",
-      "relationship_type": "family/half_sibling",
-      "relationship_description": "Adas jüngere Halbschwester, die Tochter von George Gordon Byron und Claire Clairmont, der Ada nie begegnete, weil Allegra im Alter von fünf Jahren in einem italienischen Kloster starb.",
-      "start_year": 1817,
-      "end_year": 1822,
-      "strength": "weak",
-      "interaction_frequency": "rare",
+      "person_name": "Judith Noel, Lady Milbanke",
+      "relationship_description": "Adas Großmutter mütterlicherseits kümmerte sich während ihrer Kindheit häufig um sie und soll sie sehr verwöhnt haben, während Adas Mutter die Folgen der Trennung ihrer Eltern bewältigte.",
+      "start_year": 1816,
+      "end_year": 1837,
+      "strength": "strong",
+      "interaction_frequency": "daily",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Keine persönlichen Begegnungen; Allegra existierte in Adas erweiterter Familiengeschichte vor allem als tragische Gestalt"
+        "häusliche Betreuung in der Kindheit",
+        "Familienleben in Kirkby Mallory"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Allegra_Byron"
+        "https://en.wikipedia.org/wiki/Lady_Byron"
       ],
-      "notes": "Obwohl Allegra starb, als Ada noch ein Kind war, wurde ihr Schicksal – als uneheliche Tochter Byrons, die in ein Kloster gegeben wurde und jung starb – Teil der Mythologie der Familie Byron, die Adas Vorstellungskraft bedrückte."
-    },
-    {
-      "person_name": "William Frend",
-      "relationship_type": "academic/teacher",
-      "relationship_description": "Mathematiker und Sozialreformer, der Ada in ihrer Jugend in Mathematik und Naturwissenschaften unterrichtete.",
-      "start_year": 1830,
-      "end_year": 1840,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Private mathematische Ausbildung",
-        "Verbindungen zu radikalen und unitarischen Intellektuellenkreisen im Umfeld von Adas Familie"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/William_Frend_(reformer)"
-      ],
-      "notes": "Frend war zuvor ein umstrittener Reformer in Cambridge gewesen. Als einer von Adas frühen Lehrern legte er die Grundlagen für die anspruchsvolleren Studien, die sie später bei De Morgan und Somerville betrieb."
-    },
-    {
-      "person_name": "Andrew Crosse",
-      "relationship_type": "social/acquaintance",
-      "relationship_description": "Experimenteller Elektriker, dessen wissenschaftlicher Ruf und dessen Familie später mit Adas gesellschaftlichem und emotionalem Leben verbunden waren.",
-      "start_year": 1830,
-      "end_year": 1842,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Teilnahme an sich überschneidenden wissenschaftlichen und gesellschaftlichen Kreisen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace"
-      ],
-      "notes": "Ada lernte Crosse als einen von mehreren Wissenschaftlern in ihrem Bekanntenkreis kennen. Bedeutender war ihre spätere „schattenhafte Beziehung“ zu seinem Sohn John Crosse, der nach ihrem Tod aufgrund einer rechtlichen Vereinbarung einen Großteil ihres Briefwechsels vernichtete."
+      "notes": "In Adas frühen Jahren war sie eine wichtige Bezugsperson, die sich ganz praktisch um sie kümmerte.",
+      "relationship_type": "family/grandmother"
     },
     {
       "person_name": "Mary Somerville",
-      "relationship_type": "academic/teacher",
-      "relationship_description": "Schottische Mathematikerin und Wissenschaftsautorin, die Ada privat unterrichtete und zu ihrer engen Freundin und wissenschaftlichen Leitfigur wurde.",
+      "relationship_description": "Somerville war Lovelaces Mathematiklehrerin, Freundin und Briefpartnerin und verband ihr privates Studium mit der wissenschaftlichen Welt Londons.",
       "start_year": 1832,
       "end_year": 1852,
       "strength": "strong",
       "interaction_frequency": "monthly",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Private mathematische und naturwissenschaftliche Unterweisung",
-        "Gemeinsame Besuche wissenschaftlicher Soireen und Salons",
-        "Langjähriger Briefwechsel"
+        "mathematisches Studium",
+        "wissenschaftliche Zusammenkünfte",
+        "Briefwechsel",
+        "Bekanntschaft mit Charles Babbage"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
         "https://en.wikipedia.org/wiki/Mary_Somerville"
       ],
-      "notes": "Somerville machte Ada 1833 mit Charles Babbage bekannt und blieb eine hochgeschätzte Mentorin. Ada bezeichnete sich selbst als „Analystin (und Metaphysikerin)“ und übernahm Somervilles Ideal, Mathematik mit umfassenderen wissenschaftlichen und philosophischen Einsichten zu verbinden."
-    },
-    {
-      "person_name": "Mary Somerville (als soziale Verbündete)",
-      "relationship_type": "social/friend",
-      "relationship_description": "Über den formalen Unterricht hinaus wurde Somerville zu Adas enger Freundin und geistiger Gefährtin; beide teilten wissenschaftliche Interessen und gesellschaftliche Netzwerke.",
-      "start_year": 1832,
-      "end_year": 1852,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Regelmäßiger Briefwechsel über Wissenschaft und Mathematik",
-        "Gemeinsame Besuche wissenschaftlicher Soireen, darunter Babbages Soireen",
-        "Gegenseitige Unterstützung in einer von Männern dominierten Wissenschaftswelt"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Mary_Somerville"
-      ],
-      "notes": "Somerville beschrieb Ada als „gefeierte Schönheit der Saison“ mit glänzendem Verstand. Sie blieben viele Jahre in Kontakt, und Somervilles eigener Erfolg als Wissenschaftsautorin bot Ada ein Vorbild weiblicher wissenschaftlicher Autorschaft."
+      "notes": "Berichten zufolge zog Ada Somerville zu Rate, wenn sie auf schwierige mathematische Probleme stieß.",
+      "relationship_type": "academic/mentor"
     },
     {
       "person_name": "Charles Babbage",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Englischer Universalgelehrter und Schöpfer der Difference Engine und der Analytical Engine, mit dem Ada eine langjährige geistige Zusammenarbeit und Freundschaft verband.",
+      "relationship_description": "Babbage war Lovelaces langjähriger Freund und ihr Mitarbeiter an der Analytical Engine; ihr Austausch verhalf ihren mathematischen Interessen zu einer eigenständigen Vision des Rechnens.",
       "start_year": 1833,
       "end_year": 1852,
       "strength": "strong",
       "interaction_frequency": "monthly",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Regelmäßige Gespräche über die Analytical Engine und mathematische Themen",
-        "Zusammenarbeit an der Übersetzung und den Anmerkungen zu Menabreas Aufsatz 1842–43",
-        "Geselliges Beisammensein bei Babbages Samstagssoireen",
-        "Gemeinsames öffentliches Eintreten für die Maschine"
+        "Forschung zur Analytical Engine",
+        "wissenschaftlicher Briefwechsel",
+        "Verfassen und Überarbeiten erläuternder Anmerkungen",
+        "Babbages wissenschaftliche Soireen"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
         "https://en.wikipedia.org/wiki/Charles_Babbage",
         "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
       ],
-      "notes": "Ada lernte Babbage im Juni 1833 bei einer seiner Soireen kennen, setzte sich intensiv mit seiner Analytical Engine auseinander und verfasste umfangreiche Anmerkungen – länger als Menabreas Aufsatz –, darunter einen Algorithmus zur Berechnung von Bernoulli-Zahlen. Babbage nannte sie liebevoll „die Zauberin der Zahlen“ und „Lady Fairy“ und hielt sie für einzigartig befähigt, seine Maschine zu verstehen und zu erklären."
+      "notes": "Babbage nannte sie liebevoll „Lady Fairy“.",
+      "relationship_type": "professional/collaborator"
     },
     {
       "person_name": "William King-Noel, 1. Earl of Lovelace",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Adas Ehemann, zunächst William, 8. Baron King, später zum Earl of Lovelace erhoben, mit dem sie drei Kinder hatte und mehrere Güter teilte.",
+      "relationship_description": "William King-Noel, 1. Earl of Lovelace, war seit 1835 Lovelaces Ehemann und der Vater ihrer drei Kinder; mit ihm teilte sie Haushalt und Titel, durch den sie Countess of Lovelace wurde.",
       "start_year": 1835,
       "end_year": 1852,
-      "strength": "moderate",
+      "strength": "strong",
       "interaction_frequency": "daily",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Ehe und Familienleben",
-        "Verwaltung und Neugestaltung von Gütern, darunter Ockham Park und Horsley Towers",
-        "Gesellschaftsleben im Adel"
+        "Ehe",
+        "Kindererziehung",
+        "Verwaltung der Familiensitze"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
         "https://en.wikipedia.org/wiki/William_King-Noel,_1st_Earl_of_Lovelace"
       ],
-      "notes": "Sie heirateten 1835; 1838 wurde er zum Earl of Lovelace erhoben und Ada damit zur Countess. In den späteren Jahren war ihre Beziehung belastet, insbesondere nach Adas Spielschulden und einem rätselhaften Geständnis im Jahr 1852, woraufhin er ihr Krankenbett verließ."
+      "notes": "Nach einem Geständnis im August 1852 verließ er ihr Krankenbett; worum es dabei ging, ist nicht bekannt.",
+      "relationship_type": "family/spouse"
     },
     {
       "person_name": "Byron King-Noel, Viscount Ockham",
-      "relationship_type": "family/child",
-      "relationship_description": "Adas ältester Sohn, später 12. Baron Wentworth und Erbe der Verbindungen zu Lovelace und Byron.",
+      "relationship_description": "Lovelaces ältestes Kind wurde 1836 geboren und nach ihrem Vater Byron genannt.",
       "start_year": 1836,
       "end_year": 1852,
-      "strength": "moderate",
+      "strength": "strong",
       "interaction_frequency": "daily",
       "influence_direction": "ego_to_alter",
       "shared_activities": [
-        "Familienleben in mehreren Wohnsitzen",
-        "Von Anne Noel, 11. Baroness Wentworth, und Hauslehrern wie William Benjamin Carpenter beaufsichtigte Ausbildung"
+        "Elternschaft",
+        "aristokratisches Familienleben"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://de.wikipedia.org/wiki/Byron_King-Noel,_Viscount_Ockham"
+        "https://en.wikipedia.org/wiki/Byron_King-Noel,_Viscount_Ockham"
       ],
-      "notes": "Er wurde nach Adas Vater „Byron“ genannt. 1860 erbte er die Baronie Wentworth, starb jedoch 1862 unverheiratet; über seine persönliche Beziehung zu Ada ist über die übliche aristokratische Kindererziehung hinaus nur wenig bekannt."
+      "notes": "Später erbte er von Anne Noel, 11. Baroness Wentworth, die Baronie Wentworth.",
+      "relationship_type": "family/son"
     },
     {
-      "person_name": "Anne Blunt (Anne Isabella King-Noel)",
-      "relationship_type": "family/child",
-      "relationship_description": "Adas Tochter Annabella (Anne Isabella), später Anne Blunt, eine bekannte Pferdezüchterin und 15. Baroness Wentworth.",
+      "person_name": "Anne Blunt",
+      "relationship_description": "Lovelaces Tochter, 1837 als Anne Isabella geboren und später als Lady Anne Blunt bekannt.",
       "start_year": 1837,
       "end_year": 1852,
-      "strength": "moderate",
+      "strength": "strong",
       "interaction_frequency": "daily",
       "influence_direction": "ego_to_alter",
       "shared_activities": [
-        "Familienleben",
-        "Frühe Ausbildung durch von der Familie ausgewählte Hauslehrer"
+        "Elternschaft",
+        "Familienleben"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Anne_Blunt"
+        "https://en.wikipedia.org/wiki/Anne_Blunt,_15th_Baroness_Wentworth"
       ],
-      "notes": "Sie wurde nach Adas Mutter (Anne Isabella) benannt. Später erlangte sie Bekanntheit, weil sie in England Araberpferde einführte und züchtete; Adas unmittelbarer Einfluss auf ihre Ausbildung ist nicht gut dokumentiert."
+      "notes": "Ihr späteres Leben führte die Verbundenheit der Familie mit intellektuellen und künstlerischen Bestrebungen fort.",
+      "relationship_type": "family/daughter"
     },
     {
-      "person_name": "Ralph Gordon King-Milbanke, 2. Earl of Lovelace",
-      "relationship_type": "family/child",
-      "relationship_description": "Adas jüngerer Sohn Ralph Gordon, der als 2. Earl of Lovelace erbte und später eine umstrittene Studie über George Gordon Byron verfasste.",
+      "person_name": "Ralph King-Milbanke, 2. Earl of Lovelace",
+      "relationship_description": "Lovelaces jüngstes Kind, Ralph Gordon, wurde 1839 geboren und war noch ein Kind, als sie starb.",
       "start_year": 1839,
       "end_year": 1852,
-      "strength": "moderate",
+      "strength": "strong",
       "interaction_frequency": "daily",
       "influence_direction": "ego_to_alter",
       "shared_activities": [
-        "Familienleben",
-        "Kindheitserziehung im Haushalt der Lovelaces"
+        "Elternschaft",
+        "Familienleben"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
         "https://en.wikipedia.org/wiki/Ralph_King-Milbanke,_2nd_Earl_of_Lovelace"
       ],
-      "notes": "Seinen zweiten Vornamen „Gordon“ erhielt er nach Adas Vater. 1905 veröffentlichte er „Astarte“, worin er anhand von Familienpapieren nachdrücklich für die Wahrheit von Byrons Inzest mit Augusta Leigh argumentierte – ein Ausdruck der anhaltenden Beschäftigung der Familie mit Byrons Vermächtnis."
+      "notes": "Als Ada starb, war er noch ein Kind.",
+      "relationship_type": "family/son"
     },
     {
       "person_name": "Augustus De Morgan",
-      "relationship_type": "academic/teacher",
-      "relationship_description": "Bedeutender Mathematiker, der Ada in den 1840er-Jahren brieflich umfassend in höherer Mathematik unterstützte, auch bei Themen, die unmittelbar für ihre Anmerkungen zur Analytical Engine relevant waren.",
+      "relationship_description": "De Morgan unterstützte Ada in den 1840er Jahren umfassend beim Studium höherer Mathematik, darunter Differential- und Integralrechnung sowie Bernoulli-Zahlen, und hielt sie für fähig, eine originelle mathematische Forscherin zu werden.",
       "start_year": 1840,
       "end_year": 1852,
       "strength": "strong",
-      "interaction_frequency": "weekly",
+      "interaction_frequency": "monthly",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Briefliche Unterweisung in höherer Mathematik",
-        "Studium der Differentialrechnung, der Bernoulli-Zahlen und formaler Reihen",
-        "Briefwechsel mit Anne Noel, 11. Baroness Wentworth, über Adas Fähigkeiten"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Augustus_De_Morgan"
-      ],
-      "notes": "De Morgan sagte Anne Noel, 11. Baroness Wentworth, voraus, Ada könne „eine eigenständige mathematische Forscherin werden, vielleicht von herausragender Bedeutung“. Seine Unterweisung zu Bernoulli-Zahlen floss unmittelbar in den berühmten Algorithmus in Adas Note G zur Analytical Engine von Babbage ein."
-    },
-    {
-      "person_name": "Charles Dickens",
-      "relationship_type": "social/acquaintance",
-      "relationship_description": "Berühmter Romanautor, den Ada in der wissenschaftlichen und literarischen Gesellschaft Londons kennenlernte und den sie während ihrer letzten Krankheit um eine Lesung bat.",
-      "start_year": 1840,
-      "end_year": 1852,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Besuch gemeinsamer gesellschaftlicher Kreise von Wissenschaftlern und Schriftstellern",
-        "Begegnungen bei Babbages Soireen und Hofveranstaltungen"
+        "Studium höherer Mathematik",
+        "Unterricht in Differential- und Integralrechnung",
+        "mathematischer Briefwechsel"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace"
       ],
-      "notes": "Adas Bildungs- und Gesellschaftsleben brachte sie mit Dickens ebenso wie mit führenden Wissenschaftlern in Kontakt. Einige biografische Darstellungen, die nicht zum Ausgangsmaterial gehören, berichten, dass er ihr kurz vor ihrem Tod aus „Dombey und Sohn“ vorlas."
-    },
-    {
-      "person_name": "Medora Leigh",
-      "relationship_type": "family/extended_family",
-      "relationship_description": "Tochter von George Gordon Byrons Halbschwester Augusta Leigh, die Ada in der Gesellschaft vorgestellt wurde und von der Anne Noel, 11. Baroness Wentworth, später enthüllte, dass sie möglicherweise ebenfalls Byrons Tochter war – damit wahrscheinlich sowohl Adas Halbschwester als auch ihre Cousine.",
-      "start_year": 1841,
-      "end_year": 1852,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Gesellschaftliche Begegnungen bei Hof und in den 1840er-Jahren",
-        "Brieflicher Austausch über Skandale in der Familie Byron"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Lord_Byron"
-      ],
-      "notes": "1841 teilte Anne Noel, 11. Baroness Wentworth, Ada und Medora mit, dass Byron wahrscheinlich Medoras Vater sei. Ada schrieb, sie sei „kaum erstaunt“, da sie dies schon lange vermutet habe. Diese Enthüllung vertiefte Adas komplexe Sicht auf ihren Vater und seine Beziehungen."
+      "notes": "Seine Einschätzung ihres mathematischen Potenzials teilte er Anne Noel, 11. Baroness Wentworth, mit.",
+      "relationship_type": "academic/mentor"
     },
     {
       "person_name": "Luigi Federico Menabrea",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Italienischer Ingenieur und Mathematiker, dessen französischen Aufsatz über die Analytical Engine Ada ins Englische übersetzte und durch ihre berühmten Anmerkungen erweiterte.",
+      "relationship_description": "Menabrea verfasste den französischen Artikel von 1842 über die Analytical Engine, den Lovelace übersetzte und um sieben Anmerkungen erweiterte.",
       "start_year": 1842,
       "end_year": 1843,
       "strength": "moderate",
       "interaction_frequency": "rare",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Indirekte Zusammenarbeit durch seinen Aufsatz von 1842 über die Analytical Engine",
-        "Veröffentlichung von Adas englischer Übersetzung mit ihren ausführlichen Anmerkungen"
+        "Übersetzung und Kommentierung von Menabreas Artikel zur Analytical Engine"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
         "https://en.wikipedia.org/wiki/Luigi_Federico_Menabrea"
       ],
-      "notes": "Menabrea nahm 1840 an Babbages Vorlesungen über die Analytical Engine in Turin teil und veröffentlichte seinen Bericht auf Französisch. Adas Übersetzung und Erweiterung machte aus seinem vergleichsweise knappen Artikel eine weit umfassendere Vision programmierbarer Rechenmaschinen."
+      "notes": "Ihre Verbindung beruhte auf Menabreas veröffentlichtem Artikel; eine enge persönliche Beziehung oder wechselseitige Zusammenarbeit ist nicht belegt.",
+      "relationship_type": "professional/collaborator"
     },
     {
       "person_name": "Charles Wheatstone",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Physiker und Erfinder, der Ada bat, Menabreas Aufsatz zu übersetzen, und die Veröffentlichung mit vorbereitete.",
+      "relationship_description": "Wheatstone bat Lovelace, Menabreas Artikel über die Analytical Engine zu übersetzen, und gab damit den Anstoß zu der Veröffentlichung, die zu ihrem bekanntesten Werk wurde.",
       "start_year": 1842,
       "end_year": 1843,
       "strength": "moderate",
       "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
+      "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Wissenschaftlicher Briefwechsel",
-        "Anstoß zu Adas Übersetzung von Menabreas Aufsatz über die Analytical Engine",
-        "Einbindung in Londons wissenschaftliche Netzwerke"
+        "Auftrag zur Übersetzung von Menabreas Artikel zur Analytical Engine",
+        "wissenschaftlicher Kreis in London"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
         "https://en.wikipedia.org/wiki/Charles_Wheatstone"
       ],
-      "notes": "Berichten über Babbages italienische Anhänger zufolge wandte sich Wheatstone 1842 an Ada mit der Bitte, Menabreas Turiner Aufsatz zu übersetzen. Babbage drängte sie anschließend, eigenes Material hinzuzufügen, woraus die berühmten Anmerkungen hervorgingen, die ihr einen festen Platz in der Geschichte des Rechnens sichern."
+      "notes": "Anschließend drängte Babbage Lovelace dazu, die Übersetzung um eigene Beiträge zu ergänzen.",
+      "relationship_type": "professional/connector"
     },
     {
       "person_name": "William Benjamin Carpenter",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Arzt und Physiologe, den Anne Noel, 11. Baroness Wentworth, beauftragte, Adas Kinder zu unterrichten und Ada als „moralischer Erzieher“ zur Seite zu stehen; mit ihm entwickelte Ada eine komplizierte, beinahe skandalöse persönliche Beziehung.",
+      "relationship_description": "Carpenter wurde 1843–1844 von Anne Noel, 11. Baroness Wentworth, angestellt, um Lovelaces Kinder zu unterrichten und im Haushalt als moralischer Erzieher zu wirken.",
       "start_year": 1843,
-      "end_year": 1845,
+      "end_year": 1844,
       "strength": "moderate",
       "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
+      "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Unterricht von Adas Kindern",
-        "Moralische und geistige Gespräche mit Ada",
-        "Flirt und versuchte emotionale Affäre"
+        "Unterricht für Lovelaces Kinder",
+        "Unterweisung im Haushalt"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace"
       ],
-      "notes": "Carpenter „verliebte sich schnell in sie“ und ermunterte Ada, ihm ihre „unerfüllten Gefühle“ anzuvertrauen, wobei er beteuerte, seine eigene Ehe werde ein unsittliches Verhältnis verhindern. Als Ada erkannte, dass er eine Affäre anzubahnen versuchte, brach sie die Beziehung entschlossen ab."
+      "notes": "Er versuchte, eine Affäre mit Lovelace anzubahnen, doch sie beendete die Beziehung.",
+      "relationship_type": "professional/teacher"
     },
     {
       "person_name": "John Crosse",
-      "relationship_type": "social/friend",
-      "relationship_description": "Sohn von Andrew Crosse, zu dem Ada in den 1840er-Jahren eine emotional intensive und möglicherweise romantische „schattenhafte Beziehung“ hatte.",
+      "relationship_description": "Seit 1844 unterhielt Lovelace eine private, nur unzureichend dokumentierte Beziehung zu John Crosse, dem Sohn des Wissenschaftlers Andrew Crosse.",
       "start_year": 1844,
       "end_year": 1852,
       "strength": "moderate",
       "interaction_frequency": "occasional",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Privater Briefwechsel (später vernichtet)",
-        "Beteiligung an Adas Spielgemeinschaft und gesellschaftlichem Leben"
+        "private Korrespondenz",
+        "persönliche Beziehung"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Ada_Lovelace"
       ],
-      "notes": "Ada vermachte John Crosse die einzigen Erbstücke, die George Gordon Byron ihr persönlich hinterlassen hatte. Während ihrer letzten Krankheit geriet sie in Panik bei dem Gedanken, man könnte ihn von einem Besuch bei ihr abhalten – ein Hinweis auf die starke emotionale Bindung zwischen ihnen."
+      "notes": "Nach ihrem Tod vernichtete er den Großteil ihrer Korrespondenz und erhielt Erbstücke von George Gordon Byron vermacht.",
+      "relationship_type": "social/romantic_partner"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Familienbeziehungen prägten Adas Gefühlswelt: ein abwesender, idealisierter Vater (George Gordon Byron), eine kontrollierende und intellektuell fordernde Mutter (Anne Noel, 11. Baroness Wentworth), eine liebevolle Großmutter, ihr aristokratischer Ehemann William King-Noel, 1. Earl of Lovelace, und drei Kinder, deren Erziehung weitgehend von Anne Noel, 11. Baroness Wentworth, und Hauslehrern gelenkt wurde. Die Verwandten aus dem Umfeld der Familie Byron, etwa Medora Leigh, sowie die tragische Gestalt Allegras vertieften ihre lebenslange Beschäftigung mit ihrem väterlichen Erbe."
+      "summary": "Ihr Familienleben war von den nachhaltigen Folgen der Trennung ihrer Eltern geprägt: Ihre Mutter bestimmte Erziehung und Bildung, während ihr abwesender Vater in ihrer Vorstellung eine starke Präsenz blieb. Die Fürsorge ihrer Großmutter mütterlicherseits gab ihr in der Kindheit Halt, und mit ihrer Heirat im Jahr 1835 entstand der Haushalt, in dem sie drei Kinder großzog. Zugleich schränkte der Familienkreis ihre Eigenständigkeit ein, insbesondere durch die Überwachung durch ihre Mutter und deren Kontrolle über den Zugang zu Lovelace während ihrer letzten Krankheit."
     },
     {
       "relationship_type": "academic",
-      "summary": "Adas formale und informelle Bildung war für eine Frau ihrer Zeit ungewöhnlich anspruchsvoll. Geprägt wurde sie von Lehrern wie William Frend, Mary Somerville und Augustus De Morgan, die ihre Mutter engagiert hatte, um in ihr strenge mathematische und naturwissenschaftliche Fähigkeiten zu entwickeln. Diese Mentoren erkannten und förderten ihre analytische Begabung und legten damit unmittelbar den Grund für ihre theoretische Arbeit an der Analytical Engine."
+      "summary": "Lovelaces mathematische Entwicklung beruhte auf privatem Unterricht, denn die regulären Zugänge zur Wissenschaft waren ihr weitgehend verschlossen. Mary Somerville verband ihr Studium mit dem wissenschaftlich-geselligen Leben Londons, während Augustus De Morgans Anleitung in höherer Mathematik Lovelaces fachliche Sicherheit vor und während ihrer Arbeit an der Analytical Engine vertiefte."
     },
     {
       "relationship_type": "professional",
-      "summary": "Beruflich war Adas zentrale Zusammenarbeit die mit Charles Babbage an seiner Analytical Engine, vermittelt durch Persönlichkeiten wie Luigi Federico Menabrea und Charles Wheatstone. Durch die Übersetzung und umfassende Erweiterung von Menabreas Aufsatz entwickelte sie eine visionäre Vorstellung universell einsetzbarer Rechenmaschinen und verfasste einen detaillierten Algorithmus. Damit begründete sie ihren historischen Ruf als erste Computerprogrammiererin."
+      "summary": "Die Analytical Engine führte Lovelace aus dem wissenschaftlich-gesellschaftlichen Leben der Oberschicht zu einer eigenständigen Form technischer Autorschaft. Ihre dauerhafte Zusammenarbeit mit Babbage begann bei der Soiree von 1833 und entwickelte sich im Zuge des Übersetzungsprojekts zu Menabreas Text von 1842–1843 weiter. Wheatstones ursprüngliche Bitte und Babbages Ermunterung führten zu Anmerkungen, die die Engine als universelle Maschine zur Manipulation von Symbolen neu deuteten. Auch die Organisation des Haushalts und Auftragsarbeiten prägten die Bedingungen, unter denen sie diese Arbeit verfolgen konnte."
     },
     {
       "relationship_type": "social",
-      "summary": "Ada bewegte sich in den vornehmen wissenschaftlichen und literarischen Kreisen ihrer Zeit und begegnete Persönlichkeiten wie Charles Dickens und Andrew Crosse bei Soireen und Hofveranstaltungen. Zugleich ging sie engere und bisweilen riskante Bindungen ein, etwa ihre spätere Beziehung zu John Crosse und ihre beinahe skandalöse Verstrickung mit William Benjamin Carpenter. Diese gesellschaftlichen Netzwerke bereicherten ihr geistiges Leben, überschnitten sich jedoch auch mit persönlichen Verwundbarkeiten wie Spielsucht und emotionalen Abhängigkeiten."
+      "summary": "Lovelaces gesellschaftliches Umfeld umfasste private Beziehungen, die ihre öffentliche Rolle als aristokratische Ehefrau und wissenschaftliche Autorin verkomplizierten. Ihre Verbindung zu John Crosse war bedeutsam genug, dass er Erbstücke der Familie Byron erhielt; doch die Vernichtung ihrer Korrespondenz lässt Charakter und Umfang dieser Beziehung nur teilweise erkennen."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "007dad23e3f16713",
-    "translated_on": "2026-08-02T11:48:06.313057+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "a7873195f9a59737",
+    "translated_on": "2026-08-28T08:02:45.938324+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }
