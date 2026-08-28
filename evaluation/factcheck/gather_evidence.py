@@ -34,6 +34,7 @@ from .evidence import (
 )
 from .materials import MaterialsMissing, describe, require_materials
 from .models import EvidenceOutput
+from .package_round import write_round
 from .paths import BUNDLES_DIR, FACTS_DIR, ensure_out_dirs
 from .sampling import stratified_sample
 from .text import collapse, digest
@@ -319,12 +320,15 @@ def main(argv: Optional[List[str]] = None) -> int:
         json.dump(bundle, handle, indent=2, ensure_ascii=False)
         handle.write("\n")
 
+    round_page = write_round(bundle)
+
     quotes = [quote for item in bundle["items"] for quote in item["evidence"]["quotes"]]
     verified = sum(1 for quote in quotes if quote["verified"])
     print(
         f"Bundle {bundle['bundle_id']} -> {path}\n"
         f"{len(bundle['items'])} facts, {len(quotes)} quotes, "
-        f"{verified} of them found verbatim in the sources."
+        f"{verified} of them found verbatim in the sources.\n"
+        f"Open {round_page} to judge them. It needs no server."
     )
     return 0
 

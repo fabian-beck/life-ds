@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Life Data Stories — Fact Check</title>
+    <!--
+      A packaged round replaces the contents of this tag with its bundle, so
+      that one file can be opened from disk with nothing to load and nothing
+      to serve. Left as null, the page asks for a bundle instead.
+    -->
+    <script id="embedded-bundle" type="application/json">null</script>
     <style>
       :root {
         --bg: #f6f6f4;
@@ -183,7 +189,9 @@
           <input id="file" type="file" accept="application/json,.json" class="hidden" />
           <p class="small muted">
             Bundles are written by <code>evaluation/factcheck/gather_evidence.py</code>
-            into <code>evaluation/out/bundles/</code>. Judgments are kept in this
+            into <code>evaluation/out/bundles/</code>, which also packages each
+            round as a single page under <code>evaluation/out/rounds/</code> that
+            opens from disk with no bundle to drop. Judgments are kept in this
             browser's local storage until you download them.
           </p>
         </div>
@@ -794,13 +802,28 @@
 
       window.addEventListener("beforeunload", chargeTime);
 
-      /* A bundle can also be named in the query string when the folder is
-         served (python -m http.server), which spares the drop step on reload. */
+      /* Three ways in, in order of convenience: a round packaged into this
+         page, a bundle named in the query string when the folder is served,
+         and the file picker above. The first needs no server and no second
+         file, which is how a round is normally handed to an evaluator. */
       (function start() {
         const stored = readStore(`${STORE_PREFIX}/last-evaluator`);
         if (typeof stored === "string") {
           state.evaluator = stored;
           $("evaluator").value = stored;
+        }
+        const embedded = $("embedded-bundle");
+        if (embedded) {
+          try {
+            const parsed = JSON.parse(embedded.textContent || "null");
+            if (parsed) {
+              loadBundle(parsed);
+              return;
+            }
+          } catch (error) {
+            $("load-error").textContent = "The bundle packaged into this page could not be read.";
+            $("load-error").classList.remove("hidden");
+          }
         }
         const requested = new URLSearchParams(window.location.search).get("bundle");
         if (!requested) return;

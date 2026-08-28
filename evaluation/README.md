@@ -7,7 +7,7 @@ The round has four stages. The first two call a model, the third is a page an ev
 ```powershell
 python -m evaluation.factcheck.extract_facts alan_turing ada_lovelace
 python -m evaluation.factcheck.gather_evidence --sample 40 --seed 7 --name round-1
-python -m http.server 8000 --directory evaluation   # then open /app/index.html
+# open evaluation/out/rounds/round-1.html, judge, download the results
 python -m evaluation.factcheck.merge_results --bundle evaluation/out/bundles/round-1.json
 ```
 
@@ -43,9 +43,11 @@ Output: one bundle, `evaluation/out/bundles/<name>.json`, holding the sampled fa
 
 ## 3. Judge the claims
 
-`app/index.html` is a standalone page — no build step, no network, no dependencies. Open it directly, or serve the folder and pass `?bundle=../out/bundles/round-1.json`. Drop a bundle onto it, type your initials, and judge.
+Stage two also writes `evaluation/out/rounds/<name>.html`: the evaluator page with the round inside it. Open that file — double-click it, or send it to whoever is judging — type your initials, and judge. There is no server to run, no second file to keep beside it, and the page makes no network request at any point.
 
-Each evaluator sees the facts in their own order, derived from their initials and the bundle id, so that fatigue and anchoring do not fall on the same claims for everyone. Judgments are saved to the browser's local storage as they are made and survive a reload; **Download results** writes the result file the merge reads. Nothing leaves the browser until then.
+`app/index.html` is the same page unpackaged, for the two other ways in: drop a bundle onto it, or serve the folder and pass `?bundle=../out/bundles/round-1.json`. Repackage an existing bundle with `python -m evaluation.factcheck.package_round evaluation/out/bundles/round-1.json`.
+
+Each evaluator sees the facts in their own order, derived from their initials and the bundle id, so that fatigue and anchoring do not fall on the same claims for everyone. Judgments are saved to the browser's local storage as they are made and survive a reload, from `file://` as much as from a served page; **Download results** writes the result file the merge reads. Nothing leaves the browser until then.
 
 The verdicts:
 
@@ -94,6 +96,7 @@ Result files that name a different bundle are refused. The same fact id under a 
 | `factcheck/evidence.py` | Retrieval and quote verification. |
 | `factcheck/sampling.py` | Seeded, stratified sampling. |
 | `factcheck/agreement.py` | Majority verdicts, percent agreement, Krippendorff's α. |
+| `factcheck/package_round.py` | Bundle plus page as one file to open from disk. |
 | `factcheck/report.py` | The HTML report. |
 | `factcheck/prompts.py` | The two prompts, kept apart so a change to them is visible. |
 | `app/index.html` | The evaluator page. |

@@ -28,6 +28,7 @@ FACTS_DIR = OUT_DIR / "facts"
 BUNDLES_DIR = OUT_DIR / "bundles"
 RESULTS_DIR = OUT_DIR / "results"
 REPORTS_DIR = OUT_DIR / "reports"
+ROUNDS_DIR = OUT_DIR / "rounds"
 
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
@@ -40,5 +41,5 @@ def cache_dir(person_id: str) -> Path:
 
 def ensure_out_dirs() -> None:
     """Create the output tree on first use."""
-    for directory in (FACTS_DIR, BUNDLES_DIR, RESULTS_DIR, REPORTS_DIR):
+    for directory in (FACTS_DIR, BUNDLES_DIR, RESULTS_DIR, REPORTS_DIR, ROUNDS_DIR):
         directory.mkdir(parents=True, exist_ok=True)

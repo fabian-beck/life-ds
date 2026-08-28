@@ -384,6 +384,55 @@ class MergeTests(unittest.TestCase):
         self.assertIn("&lt;script&gt;", html)
 
 
+class PackagingTests(unittest.TestCase):
+    """A packaged round is the file an evaluator actually opens."""
+
+    def packaged(self, bundle: dict) -> str:
+        from evaluation.factcheck.package_round import package
+
+        return package(bundle)
+
+    def embedded(self, page: str) -> dict:
+        from evaluation.factcheck.package_round import (
+            PLACEHOLDER_CLOSE,
+            PLACEHOLDER_OPEN,
+        )
+
+        start = page.index(PLACEHOLDER_OPEN) + len(PLACEHOLDER_OPEN)
+        end = page.index(PLACEHOLDER_CLOSE, start)
+        return json.loads(page[start:end])
+
+    def test_the_bundle_survives_the_round_trip(self) -> None:
+        bundle = _bundle([_item("f1", "Turing was born in 1912.", "supported")])
+        self.assertEqual(self.embedded(self.packaged(bundle)), bundle)
+
+    def test_quoted_source_text_cannot_close_the_script_element(self) -> None:
+        """A bundle quotes text it did not write, and a source can contain markup."""
+        bundle = _bundle(
+            [
+                _item(
+                    "f1",
+                    "The page carried </script><script>alert(1)</script>.",
+                    "supported",
+                )
+            ]
+        )
+        page = self.packaged(bundle)
+        embedded_start = page.index('<script id="embedded-bundle"')
+        embedded_end = page.index("</script>", embedded_start)
+        self.assertNotIn("<", page[embedded_start + 60 : embedded_end])
+        self.assertEqual(
+            self.embedded(page)["items"][0]["claim"],
+            "The page carried </script><script>alert(1)</script>.",
+        )
+
+    def test_an_unpackaged_page_still_asks_for_a_bundle(self) -> None:
+        source = EVALUATOR_PAGE.read_text(encoding="utf-8")
+        self.assertIn(
+            '<script id="embedded-bundle" type="application/json">null</script>', source
+        )
+
+
 class VocabularyTests(unittest.TestCase):
     """The page and the merge must name the verdicts identically.
 
