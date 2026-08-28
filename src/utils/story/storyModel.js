@@ -13,8 +13,8 @@
  * Build the slide list: an overview, the events, a chapter slide in front of
  * each chapter's first event, and a conclusion when there is one.
  *
- * @param {Object} model - The story's parts
- * @param {Array<Object>} model.events - Events, already sorted and indexed
+ * @param {Object} [model] - The story's parts
+ * @param {Array<Object>} [model.events] - Events, already sorted and indexed
  * @param {Array<Object>} [model.chapters] - Chapter definitions
  * @param {string|null} [model.conclusion] - Closing statement
  * @param {Array<Object>} [model.relatedPersons] - People for the closing slide

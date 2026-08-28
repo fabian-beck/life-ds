@@ -1,0 +1,19 @@
+{
+  // Verifies the JSDoc contracts in the browser-free logic modules (#98).
+  // Scope is deliberately limited to src/utils/ and src/stores/; widening to
+  // the Svelte components is a separate decision that needs svelte-check.
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    // Verify the annotations the code has instead of demanding new ones:
+    // strict would flag every unannotated parameter across these modules.
+    "strict": false,
+    "noEmit": true,
+    "target": "es2022",
+    // "preserve" keeps import attributes (`with { type: "json" }`) legal and
+    // resolves modules the way Vite's bundler does.
+    "module": "preserve",
+    "types": ["vite/client"]
+  },
+  "include": ["src/utils/**/*.js", "src/stores/**/*.js"]
+}

@@ -105,7 +105,6 @@ export function createBasemapStyle({ url, lang = "en", labelMode = "full" }) {
         layers: layers("protomaps", namedFlavor("dark"), {
           lang,
           labelsOnly: false,
-          landOnly: false,
         }).filter((layer) => {
           const id = layer?.id ?? "";
           if (typeof id !== "string") return true;
@@ -128,7 +127,6 @@ export function basemapLabelExpressions(lang) {
   return layers("protomaps", namedFlavor("dark"), {
     lang,
     labelsOnly: true,
-    landOnly: false,
   })
     .filter((layer) => layer?.type === "symbol" && layer.layout?.["text-field"])
     .map((layer) => ({ id: layer.id, textField: layer.layout["text-field"] }));

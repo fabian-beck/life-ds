@@ -484,9 +484,11 @@ export function getBirthParents(event, egoNetwork) {
  * again. Someone with no role in common is not offered at all, which is why
  * the list can come back empty.
  *
- * @param {Object} inputs - What the scoring reads
- * @param {Object} inputs.person - The story's subject
- * @param {Object} inputs.registry - `persons.json`, as `{ people: [...] }`
+ * @param {Object} [inputs] - What the scoring reads
+ * @param {Object} [inputs.person] - The story's subject; without one the
+ *   list is empty
+ * @param {Object} [inputs.registry] - `persons.json`, as `{ people: [...] }`;
+ *   without it the list is empty
  * @param {Object} [inputs.egoNetwork] - The subject's network, if loaded
  * @param {number} [inputs.limit] - How many to return
  * @returns {Array<{person: Object, overlapCount: number, score: number,

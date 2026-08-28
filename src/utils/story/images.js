@@ -22,6 +22,7 @@ function snapToWikimediaWidth(width) {
   const sizes = WIKIMEDIA_STANDARD_THUMB_WIDTHS;
   return sizes.find((size) => size >= width) ?? sizes[sizes.length - 1];
 }
+/** @type {Array<[number, string]>} */
 const FLICKR_SIZE_SUFFIXES = [
   [100, "t"],
   [240, "m"],

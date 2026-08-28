@@ -21,7 +21,8 @@
     "format": "prettier --write \"**/*.{js,svelte,json,css,md}\" --ignore-path .prettierignore && black scripts/",
     "format:check": "prettier --check \"**/*.{js,svelte,json,css,md}\" --ignore-path .prettierignore && black --check scripts/",
     "type-check:py": "mypy scripts/",
-    "validate": "npm run format:check && npm run lint"
+    "type-check:js": "tsc -p jsconfig.json",
+    "validate": "npm run format:check && npm run lint && npm run type-check:js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -38,6 +39,7 @@
     "stylelint-config-standard": "^40.0.0",
     "svelte": "^5.56.5",
     "svelte-eslint-parser": "^1.8.0",
+    "typescript": "^7.0.2",
     "vite": "^8.1.5"
   },
   "dependencies": {

@@ -27,7 +27,7 @@ export function createAxisLock({
   threshold,
   dominance = AXIS_DOMINANCE,
   gapMs = Infinity,
-} = {}) {
+}) {
   let axis = null;
   let travelX = 0;
   let travelY = 0;

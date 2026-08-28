@@ -35,8 +35,10 @@ let pendingFocusId = null;
  */
 export function rememberFocusTrigger(element) {
   const trigger = element ?? document.activeElement;
+  const holder =
+    trigger instanceof Element ? trigger.closest("[data-focus-id]") : null;
   pendingFocusId =
-    trigger?.closest?.("[data-focus-id]")?.dataset?.focusId ?? null;
+    holder instanceof HTMLElement ? (holder.dataset.focusId ?? null) : null;
 }
 
 /**
@@ -76,7 +78,7 @@ export function restoreFocusTrigger(fallbackSelector) {
       // the reader was away leaves its slide `inert`. Verifying the focus took
       // is what keeps that case falling through to the landmark below rather
       // than leaving focus on `<body>`.
-      if (target && !target.closest("[inert]")) {
+      if (target instanceof HTMLElement && !target.closest("[inert]")) {
         target.focus();
         if (document.activeElement === target) return;
       }
@@ -89,7 +91,8 @@ export function restoreFocusTrigger(fallbackSelector) {
     const fallback = fallbackSelector
       ? document.querySelector(fallbackSelector)
       : null;
-    fallback?.focus({ preventScroll: true });
+    if (fallback instanceof HTMLElement)
+      fallback.focus({ preventScroll: true });
   };
   setTimeout(attempt, 0);
 }

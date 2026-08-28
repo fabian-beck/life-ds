@@ -43,7 +43,7 @@ export function humanizeEventClassToken(token) {
  * A marriage_partnership is named by its subtype, because "Marriage" and
  * "Partnership" are what the reader is told the union was.
  * @param {Function} t - the translate function from the language store
- * @param {object} eventClass
+ * @param {{type?: string, subtype?: string}} [eventClass]
  * @returns {string}
  */
 export function eventClassLabel(t, eventClass) {
