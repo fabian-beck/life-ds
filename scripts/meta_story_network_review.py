@@ -36,6 +36,7 @@ from typing import Any, Dict, List, Literal, Optional, Tuple
 from pydantic import BaseModel, Field
 
 from utils.model_calls import parse_structured
+from utils.relationship_vocabulary import RelationshipCategory, RelationshipRole
 
 try:  # Package-style import (scripts/ on sys.path)
     from utils.wikipedia_cache import load_from_cache
@@ -69,9 +70,11 @@ class ReviewLink(BaseModel):
     target: str = Field(
         description="Node id of the other endpoint (must already exist)"
     )
-    relationship_type: str = Field(
-        description="Category/subcategory, e.g. 'professional/colleague', "
-        "'intellectual/influence', 'family/spouse'"
+    relationship_category: RelationshipCategory = Field(
+        description="The category half of the closed vocabulary, e.g. 'professional'"
+    )
+    relationship_role: RelationshipRole = Field(
+        description="The role half of the closed vocabulary, e.g. 'colleague'"
     )
     relationship_description: str = Field(
         description="One concrete sentence describing the tie and its basis"
@@ -80,6 +83,11 @@ class ReviewLink(BaseModel):
     rationale: str = Field(
         description="Why this tie is direct enough to add/keep (for the log; not stored)"
     )
+
+    @property
+    def relationship_type(self) -> str:
+        """The stored 'category/role' token the interface localizes."""
+        return f"{self.relationship_category}/{self.relationship_role}"
 
 
 class ReviewDeletion(BaseModel):
@@ -318,9 +326,10 @@ well-established facts:
 - deletions: existing ties that are too indirect/vague to belong in a social
   network (a documented mentorship stays; a one-line "was influenced by" with no
   contact goes).
-- relationship_type must follow the "category/subcategory" convention, e.g.
+- relationship_category and relationship_role come from the closed vocabulary
+  the schema offers; together they form the stored type, e.g.
   professional/colleague, professional/mentor, intellectual/influence,
-  intellectual/correspondent, family/spouse, friendship/close-friend.
+  social/correspondent, family/spouse, social/friend.
 - strength is one of: weak, moderate, strong.
 - Do not restate ties that should stay unchanged. Only list real edits.
 - Ties are undirected; order of source/target does not matter."""

@@ -20,6 +20,8 @@ from utils.registry import Registry
 from utils.relationship_vocabulary import (
     CATEGORIES,
     ROLES,
+    RelationshipCategory,
+    RelationshipRole,
     normalize_relationship_type,
 )
 from utils.text import fix_control_characters, slugify
@@ -88,11 +90,13 @@ class Connection(BaseModel):
         description="Short reader-facing descriptor for an organization or group "
         "('secret police', 'insurance company', 'curatorial team'); null for persons.",
     )
-    relationship_type: str = Field(
-        description="'category/role' chosen strictly from the closed vocabulary "
-        "given in the instructions. Examples: 'family/father', 'family/spouse', "
-        "'professional/colleague', 'professional/mentor', 'social/friend', "
-        "'academic/student', 'artistic/collaborator', 'political/censor'."
+    relationship_category: RelationshipCategory = Field(
+        description="The circle this connection belongs to. Stored joined with "
+        "the role as 'category/role', e.g. 'family/father' or 'political/censor'."
+    )
+    relationship_role: RelationshipRole = Field(
+        description="What the other party is or did toward the subject — the "
+        "reader's one-word tag for the tie. Pick the most specific role that fits."
     )
     relationship_description: str = Field(
         description="Brief description of the nature of the relationship"
@@ -142,10 +146,9 @@ class EgoNetworkMetadata(BaseModel):
 class CategorySummary(BaseModel):
     """Summary for a specific relationship category."""
 
-    relationship_type: str = Field(
+    relationship_type: RelationshipCategory = Field(
         description="The main relationship category being summarized (without the role), "
-        "one of the closed vocabulary's categories, e.g. 'family', 'professional', "
-        "'social', 'artistic', 'academic', 'political'"
+        "e.g. 'family', 'professional', 'social', 'artistic', 'academic', 'political'"
     )
     summary: str = Field(
         description="Contextualizing prose about what this circle of relationships meant for the person's "
@@ -287,7 +290,8 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "- entity_kind: 'person' for an individual; 'organization' for an institution the subject was tied to as an entity (an employer, a club, a university); "
         "'group' for a collective of unnamed people ('editorial staff', 'programming team'). Prefer named individuals; include an organization or group only when the sources tie the subject to the collective rather than to any one member.\n"
         "- qualifier: for an organization or group, a short reader-facing descriptor of what it is ('secret police', 'insurance company'); null for persons.\n"
-        "- relationship_type: 'category/role' chosen STRICTLY from this closed vocabulary — never invent a value outside it:\n"
+        "- relationship_category and relationship_role: the two halves of the closed vocabulary; "
+        "the stored type is 'category/role':\n"
         f"  Categories (select the 3-5 that best represent this person's network): {', '.join(sorted(CATEGORIES))}\n"
         f"  Roles: {', '.join(sorted(ROLES))}\n"
         "  The role names what the other party is or did toward the subject, as the reader's one-word tag for the tie. "
@@ -355,7 +359,15 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         text_format=EgoNetwork,
         label="Ego network",
     )
-    return parsed.model_dump()
+    payload = parsed.model_dump()
+    # The schema carries the two vocabulary segments separately, so the model
+    # cannot leave the closed vocabulary; the stored token is the joined form
+    # the interface localizes.
+    for conn in payload.get("connections", []):
+        conn["relationship_type"] = (
+            f"{conn.pop('relationship_category')}/{conn.pop('relationship_role')}"
+        )
+    return payload
 
 
 def _normalize_person_name(name: str) -> str:
@@ -485,13 +497,14 @@ def _deduplicate_connections(connections: List[Dict[str, Any]]) -> List[Dict[str
 
 
 def _normalize_relationship_types(connections: List[Dict[str, Any]]) -> None:
-    """Fold every relationship type onto the closed vocabulary, in place.
+    """Hold every relationship type to the closed vocabulary, in place.
 
-    The prompt constrains the model to the vocabulary, but the field is a
-    free string in the schema, so an invention is still possible. Folding
-    collapses spelling variants; a type that stays outside the vocabulary
-    is kept and reported, so the gap surfaces in the run log (and in
-    tests/test_relationship_vocabulary.py) instead of shipping silently.
+    The generation schema types the two segments as Literals, so a fresh run
+    cannot leave the vocabulary and this pass is a no-op there. It stays as
+    the belt-and-braces check for anything that reaches this code around the
+    schema; a token outside the vocabulary is kept and reported, so the gap
+    surfaces in the run log (and in tests/test_relationship_vocabulary.py)
+    instead of shipping silently.
     """
     for conn in connections:
         original = conn.get("relationship_type", "")
