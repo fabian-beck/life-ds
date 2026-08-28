@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia-biographical-timeline",
-  "created_on": "2025-12-16",
+  "dataset": "biographical-timelines",
+  "created_on": "2026-08-28",
   "person": {
     "name": "Hedy_Lamarr",
     "birth_date": "1914-11-09",
@@ -9,170 +9,230 @@
       "actress",
       "inventor"
     ],
-    "tagline": "Hollywood star, wireless pioneer",
-    "summary": "Hedy Lamarr (born Hedwig Eva Maria Kiesler) was an Austrian-born American film star whose MGM career peaked from the late 1930s through the 1950s. During World War II she co-invented, with composer George Antheil, a frequency-hopping “secret communication system” intended to prevent jamming of radio-guided torpedoes—an early spread-spectrum concept. In later decades she withdrew from public life but received belated recognition for her inventive work while still alive.",
+    "tagline": "Hollywood star, wireless innovator",
+    "summary": "Hedy Lamarr was an Austrian-born American actor whose Hollywood career included Algiers and Samson and Delilah. With composer George Antheil, she developed and patented a frequency-hopping radio-guidance system during World War II.",
     "wikipedia": "https://en.wikipedia.org/wiki/Hedy_Lamarr",
     "portrait": {
       "image": "/portraits/hedy_lamarr_thumbnail.webp",
-      "source": "https://en.wikipedia.org/wiki/Hedy_Lamarr",
-      "caption": "Stylized portrait based on historical photograph",
-      "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/8/83/Hedy_Lamarr_Publicity_Photo_for_The_Heavenly_Body_1944.jpg",
-      "originalCaption": "AI-generated stylized portrait based on historical photograph",
       "thumbnail": "/portraits/hedy_lamarr_thumbnail.webp",
       "medium": "/portraits/hedy_lamarr_medium.webp",
-      "full": "/portraits/hedy_lamarr_full.webp"
+      "full": "/portraits/hedy_lamarr_full.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr,_1939.jpg",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Hedy_Lamarr%2C_1939.jpg/960px-Hedy_Lamarr%2C_1939.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "viennese_sparks",
-      "headline": "Viennese Sparks",
+      "id": "forbidden_beginnings",
+      "headline": "Forbidden Beginnings",
       "date_start": "1914-11-09",
       "date_start_precision": "day",
-      "date_end": "1932",
+      "date_end": "1933",
       "date_end_precision": "year",
       "age_start": 0,
       "age_end": 18,
       "involved_people": [
         "Emil Kiesler",
-        "Gertrud \"Trude\" Kiesler"
-      ],
-      "location": "Central Europe"
-    },
-    {
-      "id": "scandalous_fame_gilded_cage",
-      "headline": "Scandalous Fame Gilded Cage",
-      "date_start": "1933",
-      "date_start_precision": "year",
-      "date_end": "1937",
-      "date_end_precision": "year",
-      "age_start": 18,
-      "age_end": 22,
-      "involved_people": [
+        "Gertrud Kiesler",
+        "Georg Jacoby",
         "Gustav Machatý",
-        "Friedrich Mandl",
-        "Louis B. Mayer"
+        "Friedrich Mandl"
       ],
-      "location": "Central Europe"
+      "location": "Central Europe",
+      "illustration": {
+        "image": "/chapter_art/hedy_lamarr/forbidden_beginnings_medium.webp",
+        "medium": "/chapter_art/hedy_lamarr/forbidden_beginnings_medium.webp",
+        "full": "/chapter_art/hedy_lamarr/forbidden_beginnings_full.webp",
+        "concept": "A glossy obsidian sphere hangs in darkness, split by a thin incandescent seam; around it, translucent amber veils press inward like layers of lacquer, while a single bright fragment slips free from the fracture.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-28"
+      }
     },
     {
-      "id": "hollywood_mystique_machine_age",
-      "headline": "Hollywood Mystique Machine Age",
-      "date_start": "1938",
+      "id": "flight_into_hollywood",
+      "headline": "Flight Into Hollywood",
+      "date_start": "1937",
       "date_start_precision": "year",
-      "date_end": "1942-08-11",
-      "date_end_precision": "day",
-      "age_start": 23,
-      "age_end": 27,
+      "date_end": "1940",
+      "date_end_precision": "year",
+      "age_start": 22,
+      "age_end": 25,
       "involved_people": [
         "Louis B. Mayer",
-        "Gene Markey",
+        "Charles Boyer",
+        "Walter Wanger",
+        "Gene Markey"
+      ],
+      "location": "Transatlantic",
+      "illustration": {
+        "image": "/chapter_art/hedy_lamarr/flight_into_hollywood_medium.webp",
+        "medium": "/chapter_art/hedy_lamarr/flight_into_hollywood_medium.webp",
+        "full": "/chapter_art/hedy_lamarr/flight_into_hollywood_full.webp",
+        "concept": "A long silver ribbon surges diagonally through a deep blue void, passing cleanly through a narrow oval of warm light and unfurling into broad, luminous folds on the far side.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-28"
+      }
+    },
+    {
+      "id": "signals_beneath_the_glamour",
+      "headline": "Signals Beneath the Glamour",
+      "date_start": "1941-06-10",
+      "date_start_precision": "day",
+      "date_end": "1942-08-11",
+      "date_end_precision": "day",
+      "age_start": 26,
+      "age_end": 27,
+      "involved_people": [
         "George Antheil"
       ],
-      "location": "United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/hedy_lamarr/signals_beneath_the_glamour_medium.webp",
+        "medium": "/chapter_art/hedy_lamarr/signals_beneath_the_glamour_medium.webp",
+        "full": "/chapter_art/hedy_lamarr/signals_beneath_the_glamour_full.webp",
+        "concept": "At the center of blackness, hundreds of tiny cobalt sparks leap between concentric invisible paths, never occupying the same route twice; their shifting pattern forms a precise halo around a quiet golden core.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-28"
+      }
     },
     {
-      "id": "domestic_tides_epic_glory",
-      "headline": "Domestic Tides Epic Glory",
-      "date_start": "1943",
-      "date_start_precision": "year",
-      "date_end": "1953",
+      "id": "hollywoods_biblical_crown",
+      "headline": "Hollywood's Biblical Crown",
+      "date_start": "1943-03-27",
+      "date_start_precision": "day",
+      "date_end": "1949",
       "date_end_precision": "year",
       "age_start": 28,
-      "age_end": 38,
+      "age_end": 34,
       "involved_people": [
         "John Loder",
-        "Cecil B. DeMille",
-        "Victor Mature"
+        "Victor Mature",
+        "Cecil B. DeMille"
       ],
-      "location": "United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/hedy_lamarr/hollywoods_biblical_crown_medium.webp",
+        "medium": "/chapter_art/hedy_lamarr/hollywoods_biblical_crown_medium.webp",
+        "full": "/chapter_art/hedy_lamarr/hollywoods_biblical_crown_full.webp",
+        "concept": "A monumental arc of burnished gold hovers above a pool of velvet-black shadow, its surface rippled by molten crimson reflections. Loose gold flakes rise from the arc as though lifted by heat, creating a regal but unstable radiance.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-28"
+      }
     },
     {
-      "id": "quiet_exit_late_reckoning",
-      "headline": "Quiet Exit Late Reckoning",
+      "id": "life_beyond_the_fading_spotlight",
+      "headline": "Beyond the Spotlight",
       "date_start": "1958",
+      "date_start_precision": "year",
+      "date_end": "1966",
+      "date_end_precision": "year",
+      "age_start": 43,
+      "age_end": 51,
+      "involved_people": [
+        "Leo Guild",
+        "Cy Rice"
+      ],
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/hedy_lamarr/life_beyond_the_fading_spotlight_medium.webp",
+        "medium": "/chapter_art/hedy_lamarr/life_beyond_the_fading_spotlight_medium.webp",
+        "full": "/chapter_art/hedy_lamarr/life_beyond_the_fading_spotlight_full.webp",
+        "concept": "A dense square of midnight-blue pigment slowly disperses at its edges into smoky violet dust, revealing a small untouched field of pale ivory beneath. The drifting granules feel like an image releasing its fixed shape.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-28"
+      }
+    },
+    {
+      "id": "legacy_returns_home",
+      "headline": "Legacy Returns Home",
+      "date_start": "1997",
       "date_start_precision": "year",
       "date_end": "2000-01-19",
       "date_end_precision": "day",
-      "age_start": 43,
+      "age_start": 82,
       "age_end": 85,
       "involved_people": [
         "George Antheil"
       ],
-      "location": "United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/hedy_lamarr/legacy_returns_home_medium.webp",
+        "medium": "/chapter_art/hedy_lamarr/legacy_returns_home_medium.webp",
+        "full": "/chapter_art/hedy_lamarr/legacy_returns_home_full.webp",
+        "concept": "A pale spiral of ash-colored particles curls through darkness toward a cluster of moss-green mineral forms, then settles into their crevices. One restrained thread of copper light follows the spiral, suggesting recognition arriving after a long orbit.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-28"
+      }
     }
   ],
-  "conclusion": "Hedy Lamarr lived like a double exposure: a studio-era icon in the foreground, a restless inventor in the shadows. Long after the spotlight dimmed, the world finally caught up to the signal she helped set free.",
+  "conclusion": "Hedy Lamarr remade herself from a controversial European screen performer into a Hollywood star and, with George Antheil, patented a wartime radio-guidance concept based on frequency hopping. Recognition late in her life helped restore the inventive work to the public story of a career long defined by glamour.",
   "events": [
     {
       "date": "1914-11-09",
       "date_precision": "day",
       "age": 0,
       "title": "Birth in Vienna",
-      "description": "Hedwig Eva Maria Kiesler was born in Vienna to Emil Kiesler and Gertrud “Trude” Kiesler. An only child, she grew up in a city where theater, music, and modern life pressed close together. Her father encouraged her curiosity about how things worked—talking through everyday devices on walks—planting an interest in technology alongside her early pull toward performance.",
+      "description": "She was born in Vienna and grew up as the only child in a culturally affluent household with Jewish family roots. Her father worked as a bank director, while her mother was a pianist.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
       ],
       "involved_people": [
         "Emil Kiesler",
-        "Gertrud \"Trude\" Kiesler"
+        "Gertrud “Trude” Kiesler"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Hedy_Lamarr"
       ],
-      "event_type_icon": "mdi-candle",
-      "chapter": "viennese_sparks",
+      "event_type_icon": "mdi-baby-face-outline",
+      "chapter": "forbidden_beginnings",
+      "weight": 0.2,
       "event_class": {
-        "type": "birth"
+        "type": "birth",
+        "father": "Emil Kiesler",
+        "mother": "Gertrud \"Trude\" Kiesler (née Lichtwitz)",
+        "birth_name": "Hedwig Eva Maria Kiesler",
+        "characterization": "affluent Jewish family"
       }
     },
     {
       "date": "1930",
       "date_precision": "year",
-      "date_end": "1932",
-      "date_end_precision": "year",
       "age": 15,
-      "title": "Breaks into European films",
-      "description": "As a teenager taking acting classes in Vienna, she forced her way into the film world—famously forging a note from her mother and turning up at [[Sascha-Film|Sascha-Film]] until she was hired as a script girl. From there came small parts, including work as an extra and then speaking roles, as she moved between Vienna and Berlin. A turning point arrived when producer Max Reinhardt cast her for the stage and brought her to Berlin, widening her ambitions beyond local roles and setting up her leap into major continental films.",
+      "title": "Enters Austrian Film",
+      "description": "While taking acting classes in Vienna, Kiesler used a forged note in her mother’s name to get hired as a script girl at [[Sascha-Film|Sascha-Film]], an Austrian production company. She then appeared as an extra in Money on the Street, beginning her screen career.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Berlin",
-          "name_modern": "Berlin, Germany",
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Max Reinhardt"
+        "Gertrud Kiesler",
+        "Georg Jacoby"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Hedy_Lamarr"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sascha-Film_Wien_Ansicht_2009.jpg",
-          "caption": "Former Sascha-Film headquarters building in Vienna (2009)",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Sascha-Film_Wien_Ansicht_2009.jpg/960px-Sascha-Film_Wien_Ansicht_2009.jpg",
+          "caption": "Former Sascha-Film headquarters in Vienna",
           "source": "https://commons.wikimedia.org/wiki/File:Sascha-Film_Wien_Ansicht_2009.jpg",
           "creator": "Otto Normalverbraucher",
           "license": "CC BY-SA 2.0 at",
@@ -180,27 +240,28 @@
         }
       ],
       "event_type_icon": "mdi-movie",
-      "chapter": "viennese_sparks",
+      "chapter": "forbidden_beginnings",
       "annotations": {
         "Sascha-Film": {
-          "explanation": "A major Austrian film production company based in Vienna, prominent in the 1920s–1930s and a key entry point to the Austrian film industry.",
+          "explanation": "An Austrian film production company active in Vienna during the silent and early sound-film eras.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Sascha-Film"
         }
-      }
+      },
+      "weight": 0.35
     },
     {
       "date": "1933-08-10",
       "date_precision": "day",
       "age": 18,
       "title": "Marries Friedrich Mandl",
-      "description": "She married Austrian armaments manufacturer Friedrich Mandl, entering a wealthy but restrictive world tied to the era’s authoritarian politics. In later accounts, she described the marriage as controlling and professionally stifling, including attempts to suppress the film [[Ecstasy (1933 film)|Ecstasy]]. At the same time, being pulled into Mandl’s dinners and business circles exposed her to conversations about weapons and communications—knowledge that would resurface years later in a very different context.",
+      "description": "Kiesler married Friedrich Mandl, an Austrian arms manufacturer, in Vienna. Her parents opposed the marriage because of Mandl's connections with European fascist leaders, and Lamarr later described him as controlling and possessive.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
@@ -209,17 +270,19 @@
         "Friedrich Mandl"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Fritz_Mandl",
         "https://en.wikipedia.org/wiki/Hedy_Lamarr",
-        "https://en.wikipedia.org/wiki/Ecstasy_(1933_film)"
+        "https://en.wikipedia.org/wiki/Fritz_Mandl"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "scandalous_fame_gilded_cage",
-      "annotations": {
-        "Ecstasy (1933 film)": {
-          "explanation": "A 1933 Czechoslovak romantic-drama film starring Hedy Lamarr that became notorious for its nude scenes and was controversial and banned in several places.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Ecstasy_(1933_film)"
-        }
+      "chapter": "forbidden_beginnings",
+      "weight": 0.65,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Friedrich Mandl",
+        "duration": "until 1937",
+        "children": 0,
+        "characterization": "controlling marriage"
       }
     },
     {
@@ -227,14 +290,14 @@
       "date_precision": "year",
       "age": 18,
       "title": "Stars in Ecstasy",
-      "description": "In early 1933, at age 18, she became internationally famous as the lead in Gustav Machatý’s film Ecstasy. The movie was celebrated and notorious at once, drawing attention for its erotic elements and brief nudity. It won recognition at the Venice Film Festival, yet in the United States it was treated as scandalous and received harsh publicity, and it was banned in both the U.S. and Germany. The result was a strange kind of fame: impossible to ignore, but hard to escape.",
+      "description": "Kiesler played the neglected young wife in Gustav Machatý's [[Ecstasy|Ecstasy]]. Its nude scenes and depiction of female sexual pleasure generated international controversy, while the film later received recognition at the Venice Film Festival.",
       "locations": [
         {
           "name_historic": "Prague",
           "name_modern": "Prague, Czech Republic",
           "centroid": [
-            14.4212535,
-            50.0874654
+            14.4378,
+            50.0755
           ],
           "primary": true
         },
@@ -242,17 +305,8 @@
           "name_historic": "Venice",
           "name_modern": "Venice, Italy",
           "centroid": [
-            12.3345898,
-            45.4371908
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "New York City",
-          "name_modern": "New York City, United States",
-          "centroid": [
-            -74.0060152,
-            40.7127281
+            12.3155,
+            45.4408
           ],
           "primary": false
         }
@@ -261,34 +315,34 @@
         "Gustav Machatý"
       ],
       "sources": [
-        "https://de.wikipedia.org/wiki/Gustav_Machat%C3%BD",
-        "https://en.wikipedia.org/wiki/Ecstasy_(1933_film)"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/af/Hedy_Kiesler_1933.jpg",
-          "caption": "Hedy Kiesler in the film Extase (1933)",
-          "source": "https://commons.wikimedia.org/wiki/File:Hedy_Kiesler_1933.jpg",
-          "creator": "Anonymous Unknown author",
-          "license": "Public domain"
-        }
+        "https://en.wikipedia.org/wiki/Ecstasy_(1933_film)",
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr",
+        "https://de.wikipedia.org/wiki/Gustav_Machat%C3%BD"
       ],
       "event_type_icon": "mdi-movie",
-      "chapter": "scandalous_fame_gilded_cage"
+      "chapter": "forbidden_beginnings",
+      "annotations": {
+        "Ecstasy": {
+          "explanation": "A 1933 Czech-Austrian film directed by Gustav Machatý that became internationally controversial for its nude scenes and sexual subject matter.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Ecstasy_(1933_film)"
+        }
+      },
+      "weight": 0.75,
+      "background": "European filmmakers were testing what sound cinema could do without surrendering the visual daring of the silent era. Machatý had already run into censors with his 1929 Erotikon, whose kisses and caresses were unusually frank for the period. His new Czech-Austrian production was nevertheless built less like a dialogue-heavy scandal than like a romantic melodrama: expressive faces, landscape, music, and a camera that lingered on bodies and gestures carried much of the story. The cast paired Kiesler with Aribert Mog as Adam, a young engineer, and Zvonimir Rogoz as Emil, the wealthy, much older husband.\n\nThe marriage at the film’s center is deliberately shown as emotionally and physically barren. Emil has brought Eva into a luxurious household but cannot meet her desire for intimacy; the film treats that failure as the source of its crisis rather than as a joke or a moral warning. After leaving him, Eva swims in a lake while her horse bolts. Adam recovers the horse, and their encounter develops into a love affair. Machatý made the lovers’ union largely through montage rather than explicit action: close views of faces and hands, racing images of nature, and the famous cutaway to flowers. That approach made the film’s treatment of a woman’s desire central even where it was not graphically shown.\n\n## Censors and alternate cuts\n\nThe uproar was international, but the picture did not circulate everywhere in one stable form. In Germany it was released as Symphonie der Liebe, and censors required cuts to reduce the scenes that had provoked objections. Other countries also demanded alterations. The film’s notoriety made its young star recognizable far beyond the Central European industry, but it also fixed a reductive public image around a few minutes of screen time. Accounts associated with Lamarr’s later autobiography say that Machatý persuaded her that distant filming would conceal more than it did; that frequently repeated anecdote should be treated as a personal recollection rather than a production record independently established by the film itself.\n\nThe picture also belonged to a new international festival system that was beginning to confer artistic prestige on cinema. Venice had held its first festival in 1932, but it did not return in 1933; when the event became annual in 1934, it introduced official prizes, including the Mussolini Cups and other awards. Machatý received the City of Venice Cup for Best Direction for this film, an especially striking distinction because its censorship battles could have overshadowed its formal craft. The combination of cuts, fascination, and festival recognition ensured that the film endured not merely as a sensational artifact, but as the work most closely associated with Machatý’s reputation as a director."
     },
     {
       "date": "1937",
       "date_precision": "year",
       "age": 22,
-      "title": "Escapes to Paris and London",
-      "description": "After the marriage became untenable, she left Mandl and fled Austria, secretly making her way first to Paris and then to London. In London she encountered MGM’s Louis B. Mayer, who was scouting European talent. Escaping a tightening political environment became the turning point that redirected her life toward Hollywood—and gave her a chance to rebuild her name on her own terms.",
+      "title": "Escapes Mandl and Austria",
+      "description": "In 1937, Lamarr secretly left Friedrich Mandl and moved to Paris, ending a marriage she later described as oppressive. During the marriage, she had attended gatherings involving military engineers and government officials in Mandl’s arms-industry orbit.",
       "locations": [
         {
           "name_historic": "Vienna",
           "name_modern": "Vienna, Austria",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": false
         },
@@ -296,297 +350,357 @@
           "name_historic": "Paris",
           "name_modern": "Paris, France",
           "centroid": [
-            2.3483915,
-            48.8534951
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "London",
-          "name_modern": "London, United Kingdom",
-          "centroid": [
-            -0.1277653,
-            51.5074456
+            2.3522,
+            48.8566
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Friedrich Mandl",
-        "Louis B. Mayer"
+        "Friedrich Mandl"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Fritz_Mandl",
-        "https://en.wikipedia.org/wiki/Louis_B._Mayer"
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr",
+        "https://en.wikipedia.org/wiki/Fritz_Mandl"
       ],
-      "event_type_icon": "mdi-map-marker",
-      "chapter": "scandalous_fame_gilded_cage"
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "flight_into_hollywood",
+      "weight": 0.85,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Austria",
+        "to_location": "France",
+        "characterization": "escape from marriage"
+      }
     },
     {
       "date": "1938",
       "date_precision": "year",
       "age": 23,
-      "title": "Reinvents herself in Hollywood",
-      "description": "Louis B. Mayer brought her to the United States, secured a studio contract, and promoted her under the new name “Hedy Lamarr.” The reinvention was meant to distance her from the Ecstasy scandal and present her as a fresh MGM discovery. The gamble paid off quickly: loaned to producer Walter Wanger, she broke through in Algiers (1938) opposite Charles Boyer, a performance that made her a Hollywood star and set the tone for the mystique MGM would keep selling for years.",
-      "locations": [
-        {
-          "name_historic": "Hollywood",
-          "name_modern": "Hollywood, Los Angeles, California, United States",
-          "centroid": [
-            -118.329523,
-            34.0980031
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Louis B. Mayer",
-        "Walter Wanger",
-        "Charles Boyer"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Louis_B._Mayer"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Hedy_Lamarr_in_a_1940_MGM_publicity_still.jpg",
-          "caption": "Hedy Lamarr in a 1940 MGM publicity still",
-          "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr_in_a_1940_MGM_publicity_still.jpg",
-          "creator": "Employee(s) of MGM",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "hollywood_mystique_machine_age"
-    },
-    {
-      "date": "1939",
-      "date_precision": "year",
-      "date_end": "1941",
-      "date_end_precision": "year",
-      "age": 24,
-      "title": "Marries Gene Markey",
-      "description": "Lamarr married screenwriter Gene Markey, linking her to Hollywood’s social and professional networks beyond MGM. During this period she used the name “Hedy Kiesler Markey,” which later appeared on her wartime patent. The marriage ended after a short time, but it coincided with her consolidation as a prominent American screen star.",
+      "title": "Joins MGM in Hollywood",
+      "description": "After meeting MGM chief Louis B. Mayer in London, she secured a Hollywood contract and adopted the screen name Hedy Lamarr. She relocated to the United States and entered the MGM studio system at a salary of $500 a week.",
       "locations": [
         {
           "name_historic": "London",
-          "name_modern": "London, United Kingdom",
+          "name_modern": "London, UK",
           "centroid": [
-            -0.1277653,
-            51.5074456
+            -0.1276,
+            51.5072
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Hollywood",
+          "name_modern": "Los Angeles, California, USA",
+          "centroid": [
+            -118.3287,
+            34.0983
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Gene Markey"
+        "Louis B. Mayer"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Gene_Markey"
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
       ],
-      "event_type_icon": "mdi-ring",
-      "chapter": "hollywood_mystique_machine_age"
-    },
-    {
-      "date": "1940",
-      "date_precision": "year",
-      "date_end": "1942",
-      "date_end_precision": "year",
-      "age": 25,
-      "title": "Leads major MGM hits",
-      "description": "She strengthened her box-office standing in high-profile [[Metro-Goldwyn-Mayer|MGM]] productions during the early 1940s. In Boom Town (1940), she was paired with marquee stars Clark Gable and Spencer Tracy, and the studio continued casting her in glossy, often typecast roles—including the drama White Cargo (1942). The fame was real, but the parts could feel narrow, and she later suggested that the monotony of her screen image helped push her toward more ambitious thinking off-camera.",
-      "locations": [
-        {
-          "name_historic": "Los Angeles",
-          "name_modern": "Los Angeles, California, United States",
-          "centroid": [
-            -118.242766,
-            34.0536909
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Louis B. Mayer",
-        "Clark Gable",
-        "Spencer Tracy"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Louis_B._Mayer",
-        "https://en.wikipedia.org/wiki/George_Antheil"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/6/61/Hedy_lamarr_-_1940.jpg",
-          "caption": "Publicity photo for the film Comrade X (1940)",
-          "source": "https://commons.wikimedia.org/wiki/File:Hedy_lamarr_-_1940.jpg",
-          "creator": "MGM / Clarence Bull",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-movie",
-      "chapter": "hollywood_mystique_machine_age",
-      "annotations": {
-        "Metro-Goldwyn-Mayer": {
-          "explanation": "Major Hollywood film studio (commonly known as MGM) that employed Lamarr and shaped her star image through its studio system in the 1940s.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Metro-Goldwyn-Mayer"
-        }
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "flight_into_hollywood",
+      "weight": 0.85,
+      "event_class": {
+        "type": "migration",
+        "from_location": "United Kingdom",
+        "to_location": "United States",
+        "characterization": "film career move"
       }
     },
     {
-      "date": "1941",
+      "date": "1938",
       "date_precision": "year",
-      "date_end": "1942-08-11",
-      "date_end_precision": "day",
-      "age": 26,
-      "title": "Creates frequency-hopping system",
-      "description": "With composer and inventor George Antheil, Lamarr developed a “secret communication system” intended to prevent Axis jamming of radio-guided torpedoes by rapidly switching frequencies in sync. Their concept drew on mechanical synchronization ideas, including an approach resembling coordinated player-piano rolls. The work culminated in a U.S. patent granted on August 11, 1942, though the U.S. Navy did not adopt it at the time.",
+      "age": 23,
+      "title": "Breaks Through in Algiers",
+      "description": "Lamarr starred opposite Charles Boyer in Algiers, an American remake of Pépé le Moko. Her appearance in the film created intense public interest and established her as a Hollywood leading lady.",
       "locations": [
         {
-          "name_historic": "Hollywood",
-          "name_modern": "Hollywood, Los Angeles, California, United States",
+          "name_historic": "Hollywood, California",
+          "name_modern": "Hollywood, Los Angeles, California, USA",
           "centroid": [
-            -118.329523,
-            34.0980031
+            -118.3287,
+            34.0983
           ],
           "primary": true
         },
         {
-          "name_historic": "United States",
-          "name_modern": "United States",
+          "name_historic": "Algiers",
+          "name_modern": "Algiers, Algeria",
           "centroid": [
-            -100.445882,
-            39.7837304
+            3.0588,
+            36.7538
           ],
           "primary": false
+        }
+      ],
+      "involved_people": [
+        "Charles Boyer",
+        "Walter Wanger"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Algiers_(film)",
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr",
+        "https://en.wikipedia.org/wiki/Charles_Boyer"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Algiers_1938_%283%29.jpg/960px-Algiers_1938_%283%29.jpg",
+          "caption": "Hedy Lamarr and Charles Boyer in Algiers",
+          "source": "https://commons.wikimedia.org/wiki/File:Algiers_1938_(3).jpg",
+          "creator": "unknown (Walter Wanger Productions - United Artists)",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-movie",
+      "chapter": "flight_into_hollywood",
+      "weight": 0.9,
+      "background": "In late-1930s Hollywood, foreign films were a source of stories that American producers could refashion for English-speaking audiences. Walter Wanger acquired the rights to Julien Duvivier’s 1937 French crime drama Pépé le Moko, which had made Jean Gabin famous as a fugitive gangster concealed in Algiers’s Casbah, the densely built old quarter. The remake retained the basic premise: a thief protected by the maze-like neighborhood, police unable to seize him there, and a glamorous visitor whose arrival threatens the equilibrium. John Cromwell directed the American version from a screenplay by John Howard Lawson.\n\n## The Casbah on screen\n\nThe French original was an unusually immediate rival. Wanger’s production was so close to it that it preserved much of its atmosphere and narrative machinery while converting a French popular success into a Hollywood star vehicle. The Casbah was essential to the story not merely as exotic scenery but as a refuge with its own rules: Pépé could move through its narrow, confusing streets and rely on residents’ loyalty, while Inspector Slimane could wait outside and manipulate circumstances rather than mount a straightforward arrest. The film contrasted that enclosed world with the polished, mobile life represented by the visitor from Paris.\n\nCharles Boyer had already developed a screen persona built around a resonant voice and romantic intensity, and his Pépé became one of his defining parts. The line most closely attached to him—“Come with me to the Casbah”—is a Hollywood misquotation. He does not say it to Lamarr in the film; it appeared in the trailer and then survived through impressions and parodies. Chuck Jones later used Boyer’s manner and the Pépé character as the basis for Pepé Le Pew, the amorous skunk introduced in 1945. Tom and Jerry cartoons also spoofed Boyer’s distinctive romantic delivery, turning a crime melodrama into a durable piece of American cartoon shorthand.\n\n## A carefully made image\n\nThe production gave special weight to the contrast between the Casbah’s danger and its visitor’s immaculate elegance. Lamarr’s appearance had already been closely managed by MGM after her arrival in the United States, and the Wanger loan-out placed her in a production designed to foreground her rather than bury her in a large ensemble. The result was commercially successful enough to make her an immediate focus of Hollywood publicity. It also left a lasting imbalance in the film’s memory: its reputation rests at once on its Casbah setting, Boyer’s stylized romantic criminal, and the image created around Lamarr. The next major step in her screen career would remain within the studio system, but this picture showed that another producer could use her image to sell a film on a national scale.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Algiers_-_Street_in_the_Casbah.jpg/960px-Algiers_-_Street_in_the_Casbah.jpg",
+          "caption": "Photomechanical print (postcard) : collotype Divided back No. 311",
+          "source": "https://commons.wikimedia.org/wiki/File:Algiers_-_Street_in_the_Casbah.jpg",
+          "creator": "Lévy Fils et Cie (publisher)",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Casbah of Algiers"
+        }
+      ]
+    },
+    {
+      "date": "1939",
+      "date_precision": "year",
+      "age": 24,
+      "title": "Marries Gene Markey",
+      "description": "Lamarr married writer and producer Gene Markey in 1939. During their short marriage, Markey adopted her son, James Lamarr Loder; the couple divorced the following year.",
+      "locations": [],
+      "involved_people": [
+        "Gene Markey",
+        "James Lamarr Loder"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr",
+        "https://en.wikipedia.org/wiki/Gene_Markey"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Hedy_Lamarr_and_her_new_husband_Gene_Markey%2C_March_1939.jpg/960px-Hedy_Lamarr_and_her_new_husband_Gene_Markey%2C_March_1939.jpg",
+          "caption": "Hedy Lamarr with Gene Markey, March 1939",
+          "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr_and_her_new_husband_Gene_Markey,_March_1939.jpg",
+          "creator": "Acme",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "flight_into_hollywood",
+      "weight": 0.3,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Gene Markey",
+        "duration": "until 1940",
+        "children": 1
+      }
+    },
+    {
+      "date": "1941-06-10",
+      "date_precision": "day",
+      "age": 26,
+      "title": "Develops Frequency-Hopping System",
+      "description": "In Los Angeles during the wartime period, Lamarr and composer George Antheil applied for a patent on a radio-guidance system intended to keep Allied torpedo signals from being jammed. Their design used [[frequency hopping]]: a transmitter and receiver changing channels together in a coded pattern.",
+      "locations": [
+        {
+          "name_historic": "Los Angeles",
+          "name_modern": "Los Angeles, California, USA",
+          "centroid": [
+            -118.2437,
+            34.0522
+          ],
+          "primary": true
         }
       ],
       "involved_people": [
         "George Antheil"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr",
         "https://en.wikipedia.org/wiki/George_Antheil"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Hedy_Lamarr_and_George_Antheil%27s_patent.webp",
-          "caption": "Lamarr and Antheil patent for secret communication system",
-          "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr_and_George_Antheil's_patent.webp",
-          "creator": "Hedy Lamarr and George Antheil’s patent for a “Secret Communication System”",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
-        }
-      ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "hollywood_mystique_machine_age"
-    },
-    {
-      "date": "1943",
-      "date_precision": "year",
-      "date_end": "1947",
-      "date_end_precision": "year",
-      "age": 28,
-      "title": "Marries John Loder",
-      "description": "Lamarr married British actor John Loder in 1943, and the relationship brought a different kind of spotlight: family life, children, and the strain of maintaining a public image while the world was at war. They had two children together, Denise and Anthony, before divorcing in 1947. During this same period she also pushed for more control over her career, including an attempt at independent production with producer Jack Chertok—an effort that showed how badly she wanted to be more than a face on a studio poster.",
-      "locations": [],
-      "involved_people": [
-        "John Loder",
-        "Jack Chertok"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_Loder_(actor)"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Hedy_Lamarr_and_John_Loder.jpg",
-          "caption": "Hedy Lamarr and John Loder in Los Angeles, 1946",
-          "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr_and_John_Loder.jpg",
-          "creator": "Los Angeles Times",
-          "license": "CC BY 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+      "chapter": "signals_beneath_the_glamour",
+      "weight": 0.98,
+      "event_class": {
+        "type": "invention",
+        "title": "Secret Communication System",
+        "description": "A radio-guidance system synchronizes transmitter and torpedo frequency changes through coded sequences, making a control signal far harder to jam.",
+        "impact": "The Navy did not adopt the system during World War II. Similar spread-spectrum technology entered operational use only in 1962, after the patent had expired."
+      },
+      "annotations": {
+        "frequency hopping": {
+          "explanation": "A communication method in which linked devices rapidly switch among radio frequencies according to the same pattern, making interference more difficult.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Frequency-hopping_spread_spectrum"
         }
-      ],
-      "event_type_icon": "mdi-ring",
-      "chapter": "domestic_tides_epic_glory",
-      "location_coordinates": [
+      },
+      "background": "By 1941, submarine warfare had made the problem of guiding a torpedo at a distance urgently military rather than merely theoretical. Radio-controlled weapons could be defeated if an enemy located and overwhelmed the control channel with interference. In Hollywood, civilian participation in the war effort ranged from bond drives to technical proposals submitted through the National Inventors Council, the federal body created to collect and assess such ideas. Lamarr initially sought a place on that council, but was told that her public profile would be more useful for selling war bonds.\n\nHer familiarity with weapons was not wholly a Hollywood curiosity. During her marriage to Friedrich Mandl, an Austrian arms manufacturer, she had attended dinners and business meetings at which military technology was discussed. Antheil, meanwhile, had long been interested in machinery and automated music. His 1924 work Ballet Mécanique called for player pianos, percussion, and other mechanically driven instruments; its difficult coordination of multiple player-piano parts gave him a practical frame of reference for a problem that otherwise belonged to naval engineering.\n\n## Piano-roll control\n\nThe proposal’s most distinctive physical feature was its use of perforated paper rolls like those used in player pianos. Matching rolls at the control station and in the weapon were meant to advance together, selecting from 88 possible channels—the same number as the keys on a piano. Rather than requiring a new radio part for every change, this imagined a familiar mechanical medium as the shared “score” that kept two distant devices in step. Antheil later described the system as built around a punched tape carrying the code. It was an ingenious attempt to translate musical synchronization into a military setting, but the use of delicate mechanical rolls also made the design difficult to adapt to the Navy’s existing torpedo equipment.\n\nThe wartime Navy set the idea aside, and neither inventor profited from it. Its later reputation rests partly on hindsight: the underlying family of spread-spectrum methods became central to secure and reliable wireless communication, and the pair were eventually celebrated as early contributors to that lineage. That recognition should not obscure the gap between a patent proposal and an operational weapon. Their work was not a direct ancestor of any single modern device, but it preserved an unusually clear early example of a communications problem being approached through both engineering and musical timing. In 2014, Lamarr and Antheil were inducted into the National Inventors Hall of Fame, long after the immediate wartime need that had prompted their work.",
+      "background_images": [
         {
-          "label": "United States",
-          "name": "United States",
-          "primary": true,
-          "centroid": [
-            -100.445882,
-            39.7837304
-          ],
-          "source": "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Inner_player_piano.jpg/960px-Inner_player_piano.jpg",
+          "caption": "Seen at a museum of mechanical musical instruments in Northleach, England (a village in Gloucestershire, between Cirencester and Stow-on-the-Wold).",
+          "source": "https://commons.wikimedia.org/wiki/File:Inner_player_piano.jpg",
+          "creator": "Tim Walker from United Kingdom",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "query": "player piano paper roll"
         }
       ]
     },
     {
-      "date": "1949",
-      "date_precision": "year",
-      "age": 34,
-      "title": "Triumphs in Samson and Delilah",
-      "description": "Lamarr reached a major peak with the biblical epic Samson and Delilah (1949), directed by Cecil B. DeMille, which became her most commercially successful film. The production leveraged her star image on an epic scale and brought renewed public attention at the end of the 1940s. It effectively defined her lasting identity as a classic Hollywood leading lady.",
+      "date": "1942-08-11",
+      "date_precision": "day",
+      "age": 27,
+      "title": "Receives Communications Patent",
+      "description": "On August 11, 1942, the United States granted Patent No. 2,292,387 to Hedy Kiesler Markey and George Antheil for their Secret Communication System. The U.S. Navy did not adopt it during World War II.",
       "locations": [
         {
-          "name_historic": "Hollywood",
-          "name_modern": "Hollywood, Los Angeles, California, USA",
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., USA",
           "centroid": [
-            -118.329523,
-            34.0980031
+            -77.0365,
+            38.8951
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Cecil B. DeMille",
-        "Victor Mature"
+        "George Antheil"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Cecil_B._DeMille",
-        "https://en.wikipedia.org/wiki/Victor_Mature"
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr",
+        "https://en.wikipedia.org/wiki/George_Antheil"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Patent_Case_File_No._2%2C292%2C387%2C_Secret_Communication_System%2C_Inventors_Hedy_Kiesler_Markey_and_George_Antheil_-_DPLA_-_128f022cfd9421aa10de72958a7edf90_%28page_10%29.jpg/960px-thumbnail.jpg",
+          "caption": "Secret Communication System patent case file",
+          "source": "https://commons.wikimedia.org/wiki/File:Patent_Case_File_No._2,292,387,_Secret_Communication_System,_Inventors_Hedy_Kiesler_Markey_and_George_Antheil_-_DPLA_-_128f022cfd9421aa10de72958a7edf90_(page_10).jpg",
+          "creator": "Department of Commerce. Patent and Trademark Office. (1975)",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "signals_beneath_the_glamour",
+      "weight": 0.8,
+      "event_class": {
+        "type": "invention",
+        "title": "Secret Communication System patent",
+        "description": "The patent covered coordinated frequency hopping between a remote transmitter and torpedo receiver, directed by matching coded frequency sequences.",
+        "impact": "The Navy did not use the patented system during World War II. Similar technology entered operational use beginning in 1962, after the Lamarr–Antheil patent had expired."
+      }
+    },
+    {
+      "date": "1943-03-27",
+      "date_precision": "day",
+      "age": 28,
+      "title": "Marries John Loder",
+      "description": "Lamarr married British-American actor John Loder in Los Angeles on March 27, 1943. They had two children, Denise and Anthony, before divorcing in 1947.",
+      "locations": [
+        {
+          "name_historic": "Los Angeles",
+          "name_modern": "Los Angeles, California, USA",
+          "centroid": [
+            -118.2437,
+            34.0522
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "John Loder",
+        "Denise Loder",
+        "Anthony Loder"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "hollywoods_biblical_crown",
+      "weight": 0.4,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "John Loder",
+        "duration": "until 1947",
+        "children": 2
+      }
+    },
+    {
+      "date": "1949",
+      "date_precision": "year",
+      "age": 34,
+      "title": "Stars in Samson and Delilah",
+      "description": "Lamarr played Delilah opposite Victor Mature's Samson in Cecil B. DeMille's biblical epic Samson and Delilah. The film became Paramount's highest-grossing production to that point.",
+      "locations": [
+        {
+          "name_historic": "Hollywood, California",
+          "name_modern": "Los Angeles, California, USA",
+          "centroid": [
+            -118.2437,
+            34.0522
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Victor Mature",
+        "Cecil B. DeMille"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Samson_and_Delilah_(1949_film)",
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Hedy_Lamarr_by_A._L._Whitey_Schafer%2C_1949.jpg",
-          "caption": "Hedy Lamarr as Delilah in Samson and Delilah (1949)",
+          "caption": "Hedy Lamarr as Delilah in Samson and Delilah",
           "source": "https://commons.wikimedia.org/wiki/File:Hedy_Lamarr_by_A._L._Whitey_Schafer,_1949.jpg",
           "creator": "Whitey Schafer",
-          "license": "Public domain"
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-movie",
-      "chapter": "domestic_tides_epic_glory"
-    },
-    {
-      "date": "1953",
-      "date_precision": "year",
-      "age": 38,
-      "title": "Becomes U.S. citizen",
-      "description": "After years working in the American studio system, Lamarr became a [[naturalization|naturalized citizen]] of the United States in 1953. The change formalized her long-term shift from European celebrity to American public figure, and reflected the permanence of her postwar life in the United States.",
-      "locations": [],
-      "involved_people": [],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
-      ],
-      "event_type_icon": "mdi-certificate",
-      "chapter": "domestic_tides_epic_glory",
-      "annotations": {
-        "naturalization": {
-          "explanation": "The legal process by which a non-citizen voluntarily becomes a citizen of a country, typically after meeting residency and other eligibility requirements.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Naturalization"
-        }
-      },
-      "location_coordinates": [
+      "chapter": "hollywoods_biblical_crown",
+      "weight": 0.8,
+      "background": "Paramount’s wager on ancient spectacle came at a moment when Cecil B. DeMille’s earlier biblical productions still represented an unusually durable commercial benchmark. His silent 1923 version of *The Ten Commandments* had held Paramount’s revenue record for a quarter century. For the new production, he assembled a large studio unit around a screenplay credited to Jesse L. Lasky Jr., Fredric M. Frank, and Harold Lamb, with George Barnes photographing in Technicolor and Victor Young writing the score. The project treated the Book of Judges as the basis for an adult melodrama as much as a religious pageant: it enlarged the conflict between Israelites and Philistines, gave the villainous Saran of Gaza a major role, and built its drama around temptation, power, and revenge.\n\n## A studio-made antiquity\n\nThe scale was carefully engineered rather than left to location scenery. Hans Dreier and Walter H. Tyler led the art direction, while Samuel M. Comer and Ray Moyer handled set decoration; their work had to create a lavish Philistine world that could stand beside the film’s desert landscapes and Israelite villages. Costume designers Edith Head, Dorothy Jeakins, Gile Steele, and Gwen Wakeling made the color design part of the storytelling, contrasting the Philistines’ ornate clothing and architecture with the plainer visual world of the Israelites. The film’s look was thus a collaborative Paramount construction, shaped by departments that normally remained less visible than its stars or director.\n\nThe decisive piece of movie engineering was the Temple of Dagon finale. In the biblical account, Samson is brought to the Philistine temple after his capture and pulls down its supporting pillars; the film turned that brief episode into its climactic spectacle. DeMille’s production had to make the audience believe that a monumental crowded interior could collapse around the worshippers while keeping the action intelligible in wide Technicolor compositions. Gordon Jennings’s special-effects department helped supply the destruction, allowing the film to conclude not with a private confrontation but with the physical annihilation of the setting that had displayed Philistine wealth and authority throughout the story.\n\n## The return of the epic\n\nContemporary notices were not uniformly admiring. Bosley Crowther of *The New York Times* found the picture impressive as spectacle but questioned its dramatic and religious depth. Audiences, however, responded on a scale that changed Paramount’s calculations: the picture became the studio’s most successful release to that time and the top-grossing film of 1950. The Academy Awards recognized precisely the departments that had transformed antiquity into a studio event, giving Oscars for color art direction and color costume design, while Barnes received a nomination for color cinematography. Its commercial performance helped re-establish the biblical epic as a major Hollywood form in the 1950s, a cycle that would culminate for DeMille in his 1956 remake of *The Ten Commandments*.",
+      "background_images": [
         {
-          "label": "United States",
-          "name": "United States",
-          "primary": true,
-          "centroid": [
-            -100.445882,
-            39.7837304
-          ],
-          "source": "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Dagon_Temple_Set_from_Samson_and_Delilah.jpg",
+          "caption": "A set constructed to represent the temple of Dagon for the film Samson and Delilah (1949).",
+          "source": "https://commons.wikimedia.org/wiki/File:Dagon_Temple_Set_from_Samson_and_Delilah.jpg",
+          "creator": "Paramount",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Samson and Delilah Temple Dagon set"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Debbie_Reynolds_Auction_-_Hedy_Lamarr_%22Delilah%22_peacock_gown_from_%22Samson_and_Delilah%22_%285851596985%29.jpg/960px-Debbie_Reynolds_Auction_-_Hedy_Lamarr_%22Delilah%22_peacock_gown_from_%22Samson_and_Delilah%22_%285851596985%29.jpg",
+          "caption": "Hedy Lamarr \"Delilah\" peacock gown from the 1949 film Samson and Delilah at the Debbie Reynolds Auction Breaks Up Historic Hollywood Collection (The Paley Cente.",
+          "source": "https://commons.wikimedia.org/wiki/File:Debbie_Reynolds_Auction_-_Hedy_Lamarr_\"Delilah\"_peacock_gown_from_\"Samson_and_Delilah\"_(5851596985).jpg",
+          "creator": "pop culture geek from Los Angeles, CA, USA",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "query": "Samson and Delilah 1949 costumes"
         }
       ]
     },
@@ -594,92 +708,139 @@
       "date": "1958",
       "date_precision": "year",
       "age": 43,
-      "title": "Releases final film",
-      "description": "Lamarr’s final film, The Female Animal, was released in 1958, closing out a screen career that had stretched from European cinema to MGM stardom. She also appeared on television, but her presence in mainstream acting steadily diminished as the decade turned. Soon afterward, she was honored with a star on the Hollywood Walk of Fame in 1960—a reminder that the industry could still celebrate her image even as her life moved further out of view.",
-      "locations": [],
-      "involved_people": [],
+      "title": "Completes Final Film",
+      "description": "Lamarr appeared in [[The Female Animal|The Female Animal]], her final feature film, after making television appearances as her major studio career receded.",
+      "locations": [
+        {
+          "name_historic": "Hollywood",
+          "name_modern": "Los Angeles, California, USA",
+          "centroid": [
+            -118.2437,
+            34.0522
+          ],
+          "primary": true
+        }
+      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Hedy_Lamarr"
       ],
       "event_type_icon": "mdi-movie",
-      "chapter": "quiet_exit_late_reckoning",
-      "location_coordinates": [
-        {
-          "label": "Hollywood",
-          "name": "Hollywood, Los Angeles, California, United States",
-          "primary": true,
-          "centroid": [
-            -118.329523,
-            34.0980031
-          ],
-          "source": "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      "chapter": "life_beyond_the_fading_spotlight",
+      "annotations": {
+        "The Female Animal": {
+          "explanation": "A 1958 American drama directed by Harry Keller.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/The_Female_Animal"
         }
-      ]
+      },
+      "weight": 0.35,
+      "background": "By the late 1950s, the star system that had made Hollywood’s major studios so powerful was giving way to smaller productions, television work, and more precarious careers for performers who had once been contract players. Universal-International, the company behind this picture, was making commercially modest dramas alongside its larger genre films. The project’s story turned that changing business inward: its setting is a Hollywood world in which glamour, money, and professional usefulness can disappear abruptly, especially for women whose public identities had been built around youth and desirability.\n\n## A Hollywood melodrama\n\nProducer Albert Zugsmith and director Harry Keller built the film around Vanessa Windsor, an alcoholic screen celebrity played by Lamarr. Jane Powell plays Vanessa’s daughter, Penny; George Nader plays Chris Farley, the young man whose presence exposes conflict within the household; and Jan Sterling plays Lily Frayne. Those names mattered to the picture’s particular atmosphere. Powell had been identified with polished MGM musicals, while Sterling was known for tougher, often unsentimental roles. Nader, a Universal-International leading man, supplied the carefully groomed masculine appeal that the drama treats as both an attraction and a threat.\n\nThe choice of material gave Lamarr something more pointed than a decorative supporting assignment. Vanessa is a movie star, but neither the role nor the film asks the audience to accept stardom as protection. Her drinking, insecurity, and dependence on the people around her make the mansion less a refuge than a battleground. The drama repeatedly places glamour beside humiliation: the woman who has been accustomed to commanding attention cannot reliably command affection, loyalty, or even the story others tell about her. That premise could invite viewers to read the role as a comment on Lamarr’s own career, but it was a constructed melodrama, not an autobiographical account.\n\n## The screen’s closing door\n\nThe picture did not restore Lamarr to the level of prestige and box-office centrality associated with her earlier studio years. Instead, it became the endpoint against which the rest of her public life has often been measured: later accounts tend to move quickly from her screen career to her inventions, legal disputes, and the disputed 1966 autobiography Ecstasy and Me. That shorthand can obscure the oddness of Vanessa Windsor as a last major character—a fictional Hollywood icon confronting decline, played by an actor whose own image had long been treated as an emblem of classical Hollywood. The film therefore survives less as a canonical 1950s release than as a revealing artifact of an industry and a star image both in transition."
+    },
+    {
+      "date": "1966",
+      "date_precision": "year",
+      "age": 51,
+      "title": "Publishes Ecstasy and Me",
+      "description": "Lamarr's ghostwritten autobiography, Ecstasy and Me, was published in 1966. It recounted her European years, marriages, film work, and inventive interests, though she later disputed aspects of it.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, USA",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Leo Guild",
+        "Cy Rice"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/3869/14813277720_bb1c06d90c_b.jpg",
+          "caption": "Ecstasy and Me autobiography cover",
+          "source": "https://www.flickr.com/photos/43181281@N05/14813277720",
+          "creator": "samhsloan@gmail.com",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "life_beyond_the_fading_spotlight",
+      "weight": 0.25,
+      "event_class": {
+        "type": "publication",
+        "title": "Ecstasy and Me",
+        "publication_type": "book",
+        "significance": "ghostwritten autobiography",
+        "source_link": {
+          "url": "https://en.wikipedia.org/wiki/Ecstasy_and_Me",
+          "kind": "wikipedia",
+          "site": "Wikipedia",
+          "entity": "Q16874920",
+          "resolved_by": "wikidata",
+          "resolved_on": "2026-08-28"
+        }
+      }
     },
     {
       "date": "1997",
       "date_precision": "year",
       "age": 82,
-      "title": "Receives inventor recognition",
-      "description": "Late in life, Lamarr received prominent public recognition for her role in the [[frequency-hopping|frequency-hopping]] invention, including the Electronic Frontier Foundation’s Pioneer Award in 1997. The acknowledgment reframed her public narrative beyond glamour and film stardom, emphasizing her World War II collaboration with Antheil. For Lamarr, it represented a rare moment of validation for work that had spent decades in the background.",
+      "title": "Receives EFF Pioneer Award",
+      "description": "In 1997, the Electronic Frontier Foundation gave Lamarr and George Antheil its Pioneer Award for their frequency-hopping work. The honor brought their wartime patent public recognition during Lamarr’s lifetime.",
       "locations": [],
       "involved_people": [
         "George Antheil"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/George_Antheil"
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
       ],
       "event_type_icon": "mdi-medal",
-      "chapter": "quiet_exit_late_reckoning",
-      "annotations": {
-        "frequency-hopping": {
-          "explanation": "A spread-spectrum radio technique in which transmitter and receiver rapidly switch among many frequencies in a synchronized pattern, helping resist jamming and interception; Lamarr and Antheil proposed it for torpedo guidance.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Frequency-hopping_spread_spectrum"
-        }
-      }
+      "chapter": "legacy_returns_home",
+      "weight": 0.4
     },
     {
       "date": "2000-01-19",
       "date_precision": "day",
       "age": 85,
-      "title": "Dies in Casselberry, Florida",
-      "description": "Hedy Lamarr died at age 85 in Florida after decades that increasingly unfolded away from the spotlight. Her death closed a life that had moved from Vienna to the height of Hollywood’s studio era, alongside a parallel history of inventive ambition. She left behind a dual reputation as both a screen icon and an early contributor to secure, jam-resistant wireless communication ideas.",
+      "title": "Death in Florida",
+      "description": "Lamarr died in Casselberry, Florida, on January 19, 2000, at age 85. Her remains were cremated, and some of her ashes were later scattered in the Vienna Woods.",
       "locations": [
         {
-          "name_historic": "Florida",
-          "name_modern": "Florida, United States",
+          "name_historic": "Casselberry",
+          "name_modern": "Casselberry, Florida, USA",
           "centroid": [
-            -81.4639835,
-            27.7567667
+            -81.3278,
+            28.6617
           ],
           "primary": true
-        }
-      ],
-      "involved_people": [],
-      "sources": [
-        "https://en.wikipedia.org/wiki/George_Antheil"
-      ],
-      "images": [
+        },
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/be/Wiener_Zentralfriedhof_-_Gruppe_33_G_-_Grab_von_Hedy_Lamarr.jpg",
-          "caption": "Grave of Hedy Lamarr at Vienna Central Cemetery",
-          "source": "https://commons.wikimedia.org/wiki/File:Wiener_Zentralfriedhof_-_Gruppe_33_G_-_Grab_von_Hedy_Lamarr.jpg",
-          "creator": "Haeferl",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+          "name_historic": "Vienna Woods",
+          "name_modern": "Vienna, Austria",
+          "centroid": [
+            16.25,
+            48.2
+          ],
+          "primary": false
         }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hedy_Lamarr"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "quiet_exit_late_reckoning",
-      "annotations": {
-        "Florida": {
-          "explanation": "U.S. state where Lamarr died on January 19, 2000; Wikipedia gives the place as Casselberry, near Orlando.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Florida"
-        }
-      },
+      "chapter": "legacy_returns_home",
+      "weight": 0.5,
       "event_class": {
-        "type": "death"
-      }
+        "type": "death",
+        "place_of_rest": "Vienna Woods, Austria"
+      },
+      "background": "By the late 1990s, the glamorous public image that had long defined the old Hollywood star system sat uneasily beside a much more private reality. Lamarr had spent her final two decades largely withdrawn from public view, communicating with friends and interviewers chiefly by telephone and declining most invitations to appear in person. Her isolation followed years in which her career had faded, her autobiography had generated controversy, and highly publicized shoplifting cases had subjected her to unwanted attention. Yet the same period brought a belated shift in how she was discussed: technology writers and inventors increasingly treated the wartime work she had done with George Antheil as more than an eccentric footnote to a film career.\n\n## A belated recognition\n\nThat reassessment was helped by the growth of wireless communications. Their 1942 patent described a system in which a transmitting station and a receiver changed radio frequencies together according to a synchronized pattern. Antheil’s familiarity with player-piano rolls suggested the original mechanical means of synchronization: punched paper tapes, like those used to control a piano, would direct both ends of the signal. The immediate military application did not go into production during the war, and the patent expired in 1959, well before spread-spectrum methods became common in civilian communications. It is therefore misleading to say that Lamarr single-handedly “invented Wi-Fi” or every later wireless technology. The lasting importance is more specific: the patent anticipated a central idea of spread-spectrum communication, in which rapidly changing frequencies make a radio signal harder to detect or jam.\n\nIn 1997, the Electronic Frontier Foundation gave Lamarr and Antheil its Pioneer Award, one of the first major public honors to recognize their collaboration. Antheil had been dead since 1959, and Lamarr did not attend the ceremony. Her reported response to the news—“It’s about time”—captured both the satisfaction and the lateness of the recognition. The award came amid a broader recovery of her reputation, aided by writers who emphasized that she had been an active participant in the invention rather than merely a celebrity name attached to it. The account remains complicated by the scarcity of surviving documentation about exactly how the pair divided their technical work, but the patent itself names both as inventors.\n\n## The image that endured\n\nEven in the last years of her life, Lamarr’s likeness became the subject of a dispute that showed the continuing commercial power of her screen image. In 1998 she sued Corel Corporation after the company used a stylized image of her on CorelDRAW packaging without permission; the case was settled the following year for an undisclosed sum. That episode contrasted sharply with the renewed attention to the wartime patent: one legacy involved a face that companies could market, the other an idea that had been overlooked for decades. Subsequent recognition has continued to join, and sometimes oversimplify, those two histories. Lamarr and Antheil were inducted into the National Inventors Hall of Fame in 2014, confirming that the technical work had acquired an institutional standing it had lacked during her lifetime."
     }
   ]
 }
