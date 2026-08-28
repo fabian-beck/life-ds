@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Life Data Stories — Fact Check</title>
+    <style>
+      :root {
+        --bg: #f6f6f4;
+        --panel: #ffffff;
+        --ink: #16181d;
+        --muted: #61656e;
+        --line: #dcdcd6;
+        --accent: #2f5eea;
+        --good: #1f7a4d;
+        --warn: #a2661a;
+        --bad: #b0342c;
+        --shadow: 0 1px 2px rgb(20 24 33 / 6%), 0 8px 24px rgb(20 24 33 / 6%);
+        --radius: 10px;
+        font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #14161a;
+          --panel: #1c1f25;
+          --ink: #eceef2;
+          --muted: #9aa0ab;
+          --line: #2e333c;
+          --accent: #7d9bff;
+          --good: #63c894;
+          --warn: #e0ab5c;
+          --bad: #ef8279;
+          --shadow: none;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      button, input, textarea, select { font: inherit; color: inherit; }
+      a { color: var(--accent); }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: var(--panel);
+        border-bottom: 1px solid var(--line);
+        padding: 10px 20px;
+      }
+      .bar { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+      .bar h1 { font-size: 16px; margin: 0; font-weight: 650; letter-spacing: 0.01em; }
+      .grow { flex: 1 1 auto; }
+      .muted { color: var(--muted); }
+      .small { font-size: 13px; }
+      .tiny { font-size: 12px; }
+      .progress {
+        height: 6px;
+        border-radius: 3px;
+        background: var(--line);
+        overflow: hidden;
+        margin-top: 8px;
+      }
+      .progress span { display: block; height: 100%; background: var(--accent); width: 0; }
+      main { max-width: 1080px; margin: 0 auto; padding: 22px 20px 120px; }
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px;
+        margin-bottom: 18px;
+      }
+      .drop {
+        border: 2px dashed var(--line);
+        border-radius: var(--radius);
+        padding: 40px 20px;
+        text-align: center;
+        background: var(--panel);
+      }
+      .drop.over { border-color: var(--accent); }
+      .claim { font-size: 23px; line-height: 1.35; margin: 6px 0 14px; font-weight: 600; }
+      .tags { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+      .tag {
+        font-size: 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 2px 10px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .tag.strong { color: var(--ink); border-color: var(--ink); }
+      .tag.good { color: var(--good); border-color: var(--good); }
+      .tag.bad { color: var(--bad); border-color: var(--bad); }
+      .tag.warn { color: var(--warn); border-color: var(--warn); }
+      blockquote {
+        margin: 0;
+        padding: 10px 14px;
+        border-left: 3px solid var(--line);
+        background: color-mix(in srgb, var(--bg) 60%, transparent);
+        border-radius: 0 6px 6px 0;
+      }
+      .quote { margin-bottom: 12px; }
+      .quote .meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 4px; }
+      .context { display: none; margin-top: 6px; padding: 8px 12px; border-radius: 6px; background: var(--bg); }
+      .context.open { display: block; }
+      h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 10px; }
+      .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+      .choice {
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+        text-align: left;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        cursor: pointer;
+      }
+      .choice:hover { border-color: var(--accent); }
+      .choice[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--panel)); }
+      .choice kbd {
+        font-size: 11px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 0 5px;
+        color: var(--muted);
+      }
+      .row { display: flex; gap: 8px; flex-wrap: wrap; }
+      .pill {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 999px;
+        padding: 5px 12px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .pill[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--panel)); }
+      textarea { width: 100%; min-height: 62px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: var(--bg); resize: vertical; }
+      .actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+      .btn { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 7px 14px; cursor: pointer; }
+      .btn:hover { border-color: var(--accent); }
+      .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+      .btn:disabled { opacity: 0.45; cursor: default; }
+      input[type="text"] { border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; background: var(--bg); }
+      table { width: 100%; border-collapse: collapse; font-size: 14px; }
+      th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+      tr.done td:first-child { border-left: 3px solid var(--good); }
+      .clickable { cursor: pointer; }
+      .clickable:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+      .hidden { display: none !important; }
+      dl.facts { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 0; font-size: 14px; }
+      dl.facts dt { color: var(--muted); }
+      dl.facts dd { margin: 0; }
+      footer.keys { position: fixed; bottom: 0; left: 0; right: 0; background: var(--panel); border-top: 1px solid var(--line); padding: 6px 20px; font-size: 12px; color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="bar">
+        <h1>Fact check</h1>
+        <span id="bundle-label" class="small muted">no bundle loaded</span>
+        <span class="grow"></span>
+        <label class="small muted" for="evaluator">Evaluator</label>
+        <input id="evaluator" type="text" size="12" placeholder="initials" autocomplete="off" />
+        <button id="view-toggle" class="btn hidden">Overview</button>
+        <button id="download" class="btn primary hidden">Download results</button>
+        <button id="reset" class="btn hidden">Reset</button>
+      </div>
+      <div class="progress"><span id="progress-fill"></span></div>
+      <div id="progress-text" class="tiny muted" style="margin-top: 4px"></div>
+    </header>
+
+    <main>
+      <section id="loader" class="panel">
+        <h2>Load an evaluation bundle</h2>
+        <div id="drop" class="drop">
+          <p>Drop a bundle JSON here, or <label class="btn" for="file">choose a file</label>.</p>
+          <input id="file" type="file" accept="application/json,.json" class="hidden" />
+          <p class="small muted">
+            Bundles are written by <code>evaluation/factcheck/gather_evidence.py</code>
+            into <code>evaluation/out/bundles/</code>. Judgments are kept in this
+            browser's local storage until you download them.
+          </p>
+        </div>
+        <p id="load-error" class="small hidden" style="color: var(--bad)"></p>
+      </section>
+
+      <section id="judge" class="hidden">
+        <div class="panel">
+          <div class="tags" id="claim-tags"></div>
+          <p class="claim" id="claim-text"></p>
+          <dl class="facts" id="claim-origin"></dl>
+        </div>
+
+        <div class="panel">
+          <h2 id="evidence-heading">Evidence found in the source materials</h2>
+          <p id="evidence-status" class="small"></p>
+          <div id="quotes"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Does the source material support the claim?</h2>
+          <div class="choices" id="verdicts"></div>
+
+          <div id="followups" class="hidden" style="margin-top: 18px">
+            <h2>How good was the evidence the search returned?</h2>
+            <div class="row" id="evidence-quality"></div>
+
+            <div id="severity-block" class="hidden" style="margin-top: 16px">
+              <h2>How much would this mislead a reader?</h2>
+              <div class="row" id="severity"></div>
+            </div>
+
+            <h2 style="margin-top: 16px">Confidence in your judgment</h2>
+            <div class="row" id="confidence"></div>
+
+            <h2 style="margin-top: 16px">Note (optional)</h2>
+            <textarea id="note" placeholder="What is wrong, what the sources actually say, anything the next reader needs."></textarea>
+          </div>
+
+          <div class="actions" style="margin-top: 18px">
+            <button id="prev" class="btn">← Previous</button>
+            <button id="next" class="btn primary">Next →</button>
+            <span id="position" class="small muted"></span>
+          </div>
+        </div>
+      </section>
+
+      <section id="overview" class="panel hidden">
+        <h2>All facts in this bundle</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Claim</th>
+              <th>Person</th>
+              <th>Evidence</th>
+              <th>Verdict</th>
+            </tr>
+          </thead>
+          <tbody id="overview-body"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <footer class="keys">
+      Keys: <b>1–7</b> verdict · <b>Q W E R</b> evidence quality · <b>N</b> or <b>→</b> next ·
+      <b>P</b> or <b>←</b> previous · <b>C</b> show quote in context · <b>O</b> overview
+    </footer>
+
+    <script>
+      "use strict";
+
+      // The vocabularies below must stay identical to evaluation/factcheck/models.py.
+      // The merge script groups by these exact keys, so a rename here silently
+      // splits one category into two in every report.
+      const VERDICTS = [
+        { key: "supported", label: "Supported", hint: "The materials establish the whole claim." },
+        { key: "partly_supported", label: "Partly supported", hint: "The core holds; a detail is off, overstated, or unconfirmed." },
+        { key: "unsupported", label: "Unsupported", hint: "Nothing in the materials establishes it. Not necessarily false." },
+        { key: "contradicted", label: "Contradicted", hint: "The materials say something incompatible." },
+        { key: "not_a_claim", label: "Not a factual claim", hint: "Interpretation or framing, so nothing to verify." },
+        { key: "misextracted", label: "Misextracted", hint: "The story does not assert this. Stage one got it wrong." },
+        { key: "unclear", label: "Cannot decide", hint: "The materials are ambiguous, or the claim is." },
+      ];
+      const EVIDENCE_QUALITY = [
+        { key: "conclusive", label: "Quotes settle it" },
+        { key: "partial", label: "Quotes help" },
+        { key: "irrelevant", label: "Quotes miss the point" },
+        { key: "none", label: "No quotes offered" },
+      ];
+      const SEVERITY = [
+        { key: "none", label: "No consequence" },
+        { key: "minor", label: "Minor" },
+        { key: "moderate", label: "Moderate" },
+        { key: "serious", label: "Serious" },
+      ];
+      const CONFIDENCE = [
+        { key: "low", label: "Low" },
+        { key: "medium", label: "Medium" },
+        { key: "high", label: "High" },
+      ];
+      const PROBLEM_VERDICTS = ["partly_supported", "unsupported", "contradicted"];
+      const RESULT_SCHEMA = "life-ds-factcheck-results/1";
+      const STORE_PREFIX = "lifeds-factcheck";
+
+      const state = {
+        bundle: null,
+        order: [],
+        index: 0,
+        evaluator: "",
+        judgments: {},
+        started: null,
+        shownAt: 0,
+        view: "judge",
+      };
+
+      const $ = (id) => document.getElementById(id);
+
+      /* Storage is per browser and can be unavailable — a private window, a
+         browser set to block site data. The page must still work in that
+         session rather than fail on the first write, so every access is
+         guarded and a failure only costs the resume. */
+      function readStore(key) {
+        try {
+          const raw = window.localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : null;
+        } catch (error) {
+          return null;
+        }
+      }
+      function writeStore(key, value) {
+        try {
+          window.localStorage.setItem(key, JSON.stringify(value));
+        } catch (error) {
+          /* nothing to do: the round continues, unsaved */
+        }
+      }
+
+      function slug(value) {
+        return (value || "anonymous").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-") || "anonymous";
+      }
+      function storeKey() {
+        if (!state.bundle) return null;
+        return `${STORE_PREFIX}/${state.bundle.bundle_id}/${slug(state.evaluator)}`;
+      }
+
+      /* A different presentation order per evaluator, so that fatigue and
+         anchoring do not land on the same facts for everyone, and the same
+         order every time one evaluator returns to their round. */
+      function hashString(value) {
+        let hash = 2166136261;
+        for (let i = 0; i < value.length; i += 1) {
+          hash ^= value.charCodeAt(i);
+          hash = Math.imul(hash, 16777619) >>> 0;
+        }
+        return hash >>> 0;
+      }
+      function shuffledOrder(items, seedText) {
+        let seed = hashString(seedText) || 1;
+        const random = () => {
+          seed ^= seed << 13; seed >>>= 0;
+          seed ^= seed >> 17;
+          seed ^= seed << 5; seed >>>= 0;
+          return seed / 4294967296;
+        };
+        const order = items.map((_, index) => index);
+        for (let i = order.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(random() * (i + 1));
+          [order[i], order[j]] = [order[j], order[i]];
+        }
+        return order;
+      }
+
+      function escapeHtml(value) {
+        return String(value == null ? "" : value).replace(/[&<>"']/g, (char) => (
+          { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]
+        ));
+      }
+
+      function currentItem() {
+        if (!state.bundle) return null;
+        return state.bundle.items[state.order[state.index]] || null;
+      }
+      function judgmentFor(item) {
+        return item ? state.judgments[item.id] : null;
+      }
+
+      function loadBundle(bundle) {
+        if (!bundle || bundle.schema !== "life-ds-factcheck-bundle/1" || !Array.isArray(bundle.items)) {
+          throw new Error("That file is not a fact-check bundle.");
+        }
+        state.bundle = bundle;
+        const people = Object.keys(bundle.persons || {}).length;
+        $("bundle-label").textContent =
+          `${bundle.name} · ${bundle.items.length} facts · ` +
+          `${people} ${people === 1 ? "person" : "people"} · bundle ${bundle.bundle_id}`;
+        $("loader").classList.add("hidden");
+        $("judge").classList.remove("hidden");
+        ["view-toggle", "download", "reset"].forEach((id) => $(id).classList.remove("hidden"));
+        restoreSession();
+      }
+
+      function restoreSession() {
+        if (!state.bundle) return;
+        state.order = shuffledOrder(state.bundle.items, `${state.bundle.bundle_id}:${slug(state.evaluator)}`);
+        const stored = readStore(storeKey());
+        state.judgments = (stored && stored.judgments) || {};
+        state.started = (stored && stored.started) || new Date().toISOString();
+        state.index = 0;
+        const firstOpen = state.order.findIndex((position) => !state.judgments[state.bundle.items[position].id]);
+        if (firstOpen >= 0) state.index = firstOpen;
+        render();
+      }
+
+      function persist() {
+        const key = storeKey();
+        if (!key) return;
+        writeStore(key, {
+          schema: RESULT_SCHEMA,
+          bundle_id: state.bundle.bundle_id,
+          bundle_name: state.bundle.name,
+          evaluator: state.evaluator || "anonymous",
+          started: state.started,
+          updated: new Date().toISOString(),
+          judgments: state.judgments,
+        });
+      }
+
+      function setJudgment(id, patch) {
+        const previous = state.judgments[id] || {
+          fact_id: id,
+          verdict: null,
+          evidence_quality: null,
+          severity: null,
+          confidence: null,
+          note: "",
+          seconds: 0,
+          position: state.index + 1,
+        };
+        state.judgments[id] = Object.assign(previous, patch, {
+          decided_at: new Date().toISOString(),
+        });
+        persist();
+      }
+
+      function chargeTime() {
+        const item = currentItem();
+        if (!item || !state.shownAt) return;
+        const spent = (Date.now() - state.shownAt) / 1000;
+        state.shownAt = Date.now();
+        const judgment = state.judgments[item.id];
+        if (judgment) {
+          judgment.seconds = Math.round(((judgment.seconds || 0) + spent) * 10) / 10;
+          persist();
+        }
+      }
+
+      function renderTags(item) {
+        const person = (state.bundle.persons || {})[item.person_id] || {};
+        const tags = [
+          `<span class="tag strong">${escapeHtml(person.name || item.person_id)}</span>`,
+          `<span class="tag">${escapeHtml(item.claim_type)}</span>`,
+          `<span class="tag">${escapeHtml(item.unit_label || item.unit_id)}</span>`,
+        ];
+        if (item.checkable === false) {
+          tags.push('<span class="tag warn">extractor: interpretation</span>');
+        }
+        $("claim-tags").innerHTML = tags.join(" ");
+      }
+
+      function renderOrigin(item) {
+        const rows = [];
+        rows.push(["Story text", `<blockquote>${escapeHtml(item.source_text)}</blockquote>`]);
+        rows.push(["Field", escapeHtml(item.source_field || "—")]);
+        if (item.source_text_found === false) {
+          rows.push(["Provenance", '<span class="tag bad">not found verbatim in the dataset</span>']);
+        }
+        const sources = ((item.context || {}).sources) || [];
+        if (sources.length) {
+          rows.push([
+            "Story sources",
+            sources.map((url) => `<a href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${escapeHtml(url.replace(/^https?:\/\//, ""))}</a>`).join("<br />"),
+          ]);
+        }
+        if (item.story_link) {
+          rows.push(["Slide", `<a href="${escapeHtml(item.story_link)}" target="_blank" rel="noreferrer">open in the application</a>`]);
+        }
+        $("claim-origin").innerHTML = rows
+          .map(([term, value]) => `<dt>${escapeHtml(term)}</dt><dd>${value}</dd>`)
+          .join("");
+      }
+
+      function renderEvidence(item) {
+        const evidence = item.evidence || { status: "absent", quotes: [] };
+        const labels = {
+          supported: ["good", "The search reports the materials establish the claim."],
+          partial: ["warn", "The search reports the materials establish part of the claim."],
+          contradicted: ["bad", "The search reports the materials contradict the claim."],
+          absent: ["warn", "The search found nothing in the materials that bears on the claim."],
+          error: ["bad", "The evidence call failed for this fact."],
+        };
+        const [tone, sentence] = labels[evidence.status] || ["", ""];
+        $("evidence-status").innerHTML =
+          `<span class="tag ${tone}">${escapeHtml(evidence.status)}</span> ` +
+          `${escapeHtml(sentence)} ${escapeHtml(evidence.notes || "")}`;
+
+        const materials = ((state.bundle.persons || {})[item.person_id] || {}).materials || [];
+        const byId = {};
+        materials.forEach((material) => { byId[material.id] = material; });
+
+        if (!evidence.quotes.length) {
+          $("quotes").innerHTML = '<p class="small muted">No quotes were returned for this claim.</p>';
+        } else {
+          $("quotes").innerHTML = evidence.quotes
+            .map((quote, position) => {
+              const material = byId[quote.material_id] || {};
+              const title = quote.title || material.title || quote.material_id;
+              const url = quote.url || material.url || "";
+              const stanceTone = quote.stance === "supports" ? "good" : quote.stance === "contradicts" ? "bad" : "";
+              const verified = quote.verified
+                ? '<span class="tag good">found in source</span>'
+                : '<span class="tag bad">not found in any source</span>';
+              const link = url
+                ? `<a href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${escapeHtml(title)}</a>`
+                : escapeHtml(title);
+              const context = quote.context
+                ? `<div class="context" id="ctx-${position}"><span class="tiny muted">In context:</span><br />${escapeHtml(quote.context)}</div>`
+                : "";
+              return `<div class="quote">
+                <div class="meta tiny">
+                  <span class="tag ${stanceTone}">${escapeHtml(quote.stance)}</span>
+                  ${verified}
+                  <span class="muted">${link}</span>
+                  <span class="muted">${escapeHtml(quote.covers || "")}</span>
+                  ${quote.context ? `<button class="pill tiny" data-context="${position}">context</button>` : ""}
+                </div>
+                <blockquote>${escapeHtml(quote.quote)}</blockquote>
+                ${context}
+              </div>`;
+            })
+            .join("");
+        }
+        $("evidence-heading").textContent =
+          `Evidence from ${evidence.materials_searched ? evidence.materials_searched.length : 0} materials` +
+          (evidence.excerpts_searched ? ` (${evidence.excerpts_searched} excerpts searched)` : "");
+      }
+
+      function renderChoices(item) {
+        const judgment = judgmentFor(item) || {};
+        $("verdicts").innerHTML = VERDICTS.map((verdict, position) => `
+          <button class="choice" data-verdict="${verdict.key}" aria-pressed="${judgment.verdict === verdict.key}">
+            <kbd>${position + 1}</kbd>
+            <span><b>${escapeHtml(verdict.label)}</b><br /><span class="tiny muted">${escapeHtml(verdict.hint)}</span></span>
+          </button>`).join("");
+
+        $("evidence-quality").innerHTML = EVIDENCE_QUALITY.map((option, position) => `
+          <button class="pill" data-quality="${option.key}" aria-pressed="${judgment.evidence_quality === option.key}">
+            ${escapeHtml(option.label)} <span class="tiny muted">${"QWER"[position]}</span>
+          </button>`).join("");
+
+        $("severity").innerHTML = SEVERITY.map((option) => `
+          <button class="pill" data-severity="${option.key}" aria-pressed="${judgment.severity === option.key}">
+            ${escapeHtml(option.label)}
+          </button>`).join("");
+
+        $("confidence").innerHTML = CONFIDENCE.map((option) => `
+          <button class="pill" data-confidence="${option.key}" aria-pressed="${judgment.confidence === option.key}">
+            ${escapeHtml(option.label)}
+          </button>`).join("");
+
+        $("note").value = judgment.note || "";
+        $("followups").classList.toggle("hidden", !judgment.verdict);
+        $("severity-block").classList.toggle("hidden", !PROBLEM_VERDICTS.includes(judgment.verdict));
+      }
+
+      function renderProgress() {
+        const total = state.bundle ? state.bundle.items.length : 0;
+        const done = Object.values(state.judgments).filter((judgment) => judgment.verdict).length;
+        $("progress-fill").style.width = total ? `${(done / total) * 100}%` : "0";
+        $("progress-text").textContent = total
+          ? `${done} of ${total} judged${state.evaluator ? ` · evaluator ${state.evaluator}` : " · set your initials to keep results apart"}`
+          : "";
+      }
+
+      function renderOverview() {
+        const rows = state.order.map((position, ordinal) => {
+          const item = state.bundle.items[position];
+          const judgment = state.judgments[item.id];
+          const verdict = judgment && judgment.verdict
+            ? (VERDICTS.find((entry) => entry.key === judgment.verdict) || {}).label
+            : "—";
+          const person = (state.bundle.persons || {})[item.person_id] || {};
+          return `<tr class="clickable ${judgment && judgment.verdict ? "done" : ""}" data-goto="${ordinal}">
+            <td>${ordinal + 1}</td>
+            <td>${escapeHtml(item.claim)}</td>
+            <td>${escapeHtml(person.name || item.person_id)}</td>
+            <td>${escapeHtml((item.evidence || {}).status || "—")}</td>
+            <td>${escapeHtml(verdict)}</td>
+          </tr>`;
+        });
+        $("overview-body").innerHTML = rows.join("");
+      }
+
+      function render() {
+        if (!state.bundle) return;
+        renderProgress();
+        if (state.view === "overview") {
+          $("judge").classList.add("hidden");
+          $("overview").classList.remove("hidden");
+          renderOverview();
+          return;
+        }
+        $("overview").classList.add("hidden");
+        $("judge").classList.remove("hidden");
+
+        const item = currentItem();
+        if (!item) return;
+        $("claim-text").textContent = item.claim;
+        renderTags(item);
+        renderOrigin(item);
+        renderEvidence(item);
+        renderChoices(item);
+        $("position").textContent = `Fact ${state.index + 1} of ${state.order.length}`;
+        $("prev").disabled = state.index === 0;
+        $("next").disabled = state.index >= state.order.length - 1;
+        state.shownAt = Date.now();
+        window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+      }
+
+      function move(delta) {
+        chargeTime();
+        const next = state.index + delta;
+        if (next < 0 || next >= state.order.length) return;
+        state.index = next;
+        render();
+      }
+
+      function download() {
+        const judgments = state.order
+          .map((position) => state.bundle.items[position].id)
+          .map((id) => state.judgments[id])
+          .filter(Boolean);
+        const payload = {
+          schema: RESULT_SCHEMA,
+          bundle_id: state.bundle.bundle_id,
+          bundle_name: state.bundle.name,
+          evaluator: state.evaluator || "anonymous",
+          started: state.started,
+          updated: new Date().toISOString(),
+          facts_in_bundle: state.bundle.items.length,
+          judgments,
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2) + "\n"], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `factcheck-${slug(state.bundle.name)}-${slug(state.evaluator)}.json`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+
+      /* Wiring */
+      $("file").addEventListener("change", (event) => {
+        const file = event.target.files && event.target.files[0];
+        if (file) readFile(file);
+      });
+      function readFile(file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            loadBundle(JSON.parse(String(reader.result)));
+            $("load-error").classList.add("hidden");
+          } catch (error) {
+            $("load-error").textContent = error.message;
+            $("load-error").classList.remove("hidden");
+          }
+        };
+        reader.readAsText(file);
+      }
+      const drop = $("drop");
+      ["dragenter", "dragover"].forEach((name) =>
+        drop.addEventListener(name, (event) => {
+          event.preventDefault();
+          drop.classList.add("over");
+        })
+      );
+      ["dragleave", "drop"].forEach((name) =>
+        drop.addEventListener(name, () => drop.classList.remove("over"))
+      );
+      drop.addEventListener("drop", (event) => {
+        event.preventDefault();
+        const file = event.dataTransfer.files && event.dataTransfer.files[0];
+        if (file) readFile(file);
+      });
+
+      $("evaluator").addEventListener("change", (event) => {
+        chargeTime();
+        state.evaluator = event.target.value.trim();
+        writeStore(`${STORE_PREFIX}/last-evaluator`, state.evaluator);
+        // Leave the field, so the number keys reach the verdict shortcuts
+        // rather than being typed into the name.
+        event.target.blur();
+        restoreSession();
+      });
+
+      $("verdicts").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-verdict]");
+        if (!button) return;
+        chargeTime();
+        const item = currentItem();
+        setJudgment(item.id, { verdict: button.dataset.verdict, position: state.index + 1 });
+        renderChoices(item);
+        renderProgress();
+      });
+      $("evidence-quality").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-quality]");
+        if (!button) return;
+        const item = currentItem();
+        setJudgment(item.id, { evidence_quality: button.dataset.quality });
+        renderChoices(item);
+      });
+      $("severity").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-severity]");
+        if (!button) return;
+        const item = currentItem();
+        setJudgment(item.id, { severity: button.dataset.severity });
+        renderChoices(item);
+      });
+      $("confidence").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-confidence]");
+        if (!button) return;
+        const item = currentItem();
+        setJudgment(item.id, { confidence: button.dataset.confidence });
+        renderChoices(item);
+      });
+      $("note").addEventListener("input", (event) => {
+        const item = currentItem();
+        if (item) setJudgment(item.id, { note: event.target.value });
+      });
+      $("quotes").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-context]");
+        if (!button) return;
+        const box = document.getElementById(`ctx-${button.dataset.context}`);
+        if (box) box.classList.toggle("open");
+      });
+      $("overview-body").addEventListener("click", (event) => {
+        const row = event.target.closest("[data-goto]");
+        if (!row) return;
+        state.index = Number(row.dataset.goto);
+        state.view = "judge";
+        $("view-toggle").textContent = "Overview";
+        render();
+      });
+
+      $("prev").addEventListener("click", () => move(-1));
+      $("next").addEventListener("click", () => move(1));
+      $("download").addEventListener("click", download);
+      $("view-toggle").addEventListener("click", () => {
+        chargeTime();
+        state.view = state.view === "judge" ? "overview" : "judge";
+        $("view-toggle").textContent = state.view === "judge" ? "Overview" : "Back to judging";
+        render();
+      });
+      $("reset").addEventListener("click", () => {
+        if (!window.confirm("Discard every judgment stored in this browser for this bundle and evaluator?")) return;
+        try {
+          window.localStorage.removeItem(storeKey());
+        } catch (error) {
+          /* nothing stored to remove */
+        }
+        state.judgments = {};
+        state.index = 0;
+        render();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.target.matches("input, textarea") || event.metaKey || event.ctrlKey) return;
+        if (!state.bundle) return;
+        const key = event.key.toLowerCase();
+        const digit = Number(event.key);
+        if (digit >= 1 && digit <= VERDICTS.length) {
+          const item = currentItem();
+          if (!item) return;
+          chargeTime();
+          setJudgment(item.id, { verdict: VERDICTS[digit - 1].key, position: state.index + 1 });
+          renderChoices(item);
+          renderProgress();
+          event.preventDefault();
+          return;
+        }
+        const qualityIndex = ["q", "w", "e", "r"].indexOf(key);
+        if (qualityIndex >= 0) {
+          const item = currentItem();
+          if (!item) return;
+          setJudgment(item.id, { evidence_quality: EVIDENCE_QUALITY[qualityIndex].key });
+          renderChoices(item);
+          return;
+        }
+        if (key === "n" || event.key === "ArrowRight") { move(1); event.preventDefault(); }
+        else if (key === "p" || event.key === "ArrowLeft") { move(-1); event.preventDefault(); }
+        else if (key === "c") {
+          const box = document.querySelector(".context");
+          if (box) box.classList.toggle("open");
+        } else if (key === "o") { $("view-toggle").click(); }
+      });
+
+      window.addEventListener("beforeunload", chargeTime);
+
+      /* A bundle can also be named in the query string when the folder is
+         served (python -m http.server), which spares the drop step on reload. */
+      (function start() {
+        const stored = readStore(`${STORE_PREFIX}/last-evaluator`);
+        if (typeof stored === "string") {
+          state.evaluator = stored;
+          $("evaluator").value = stored;
+        }
+        const requested = new URLSearchParams(window.location.search).get("bundle");
+        if (!requested) return;
+        fetch(requested)
+          .then((response) => {
+            if (!response.ok) throw new Error(`Could not load ${requested} (${response.status}).`);
+            return response.json();
+          })
+          .then(loadBundle)
+          .catch((error) => {
+            $("load-error").textContent = error.message;
+            $("load-error").classList.remove("hidden");
+          });
+      })();
+    </script>
+  </body>
+</html>

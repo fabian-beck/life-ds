@@ -18,6 +18,10 @@ python_version = "3.10"
 # understand that `Field(None, ...)` supplies a default, and reports every such
 # field as a missing required argument at each construction site.
 plugins = ["pydantic.mypy"]
+# The generation scripts are not a package: they and the fact-checking
+# evaluation import config and utils by bare name, having put scripts/ on
+# sys.path. mypy needs the same search path to resolve those imports.
+mypy_path = "scripts"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = false

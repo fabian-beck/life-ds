@@ -14,6 +14,8 @@ data/people/**/*.json
 data/people/**/_cache/
 # Geocoder answers, written by the generation scripts and not committed.
 data/_cache/
+# Written by the fact-checking evaluation stages.
+evaluation/out/
 *.md
 package-lock.json
 pmtiles.exe

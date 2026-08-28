@@ -46,6 +46,10 @@ The modes are:
 
 The agent uses charters rather than a fixed script, samples stories that fit the risk, and saves evidence under `test-results/exploratory/<timestamp>/`. It reports confirmed bugs separately from usability and improvement ideas and does not change application code unless asked in a later step.
 
+## Fact-checking evaluation
+
+Tests and exploration ask whether the application works. Whether its stories are *true* is a separate question, and it is answered by measurement rather than by assertion: an AI stage extracts every claim a person story makes, a second stage samples those claims and searches the sources the story was generated from for verbatim supporting or contradicting quotes, evaluators judge the sampled claims against that evidence in a standalone page, and a merge script reports the verdicts, the defect rate, and the agreement between evaluators. It is internal, deployed nowhere, and run when a number for the corpus is wanted, not on every change. See [evaluation/README.md](../evaluation/README.md).
+
 ## Choosing the right check
 
 | Change | Required feedback |
@@ -55,5 +59,6 @@ The agent uses charters rather than a fixed script, samples stories that fit the
 | Person-name matching | core suite |
 | Portrait or meta-story synchronization scripts | focused Python tests, then core suite |
 | Broad release candidate | validation, build, core suite, and release AI exploration |
+| Generation prompts or data quality | a fact-checking round on the affected people |
 
 Real Mobile Safari and physical touch hardware remain manual checks when a change depends on browser- or device-specific behavior; Chromium emulation is not evidence that those environments work.

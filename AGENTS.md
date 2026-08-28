@@ -12,6 +12,7 @@ Important locations:
 - `data/`: person registries, life events, networks, and meta stories
 - `scripts/`: Python data-generation and maintenance tools
 - `tests/`: Python and Playwright tests
+- `evaluation/`: internal fact-checking evaluation of generated stories, deployed nowhere
 - `public/`: static assets and generated portraits
 
 Detailed project information is intentionally kept out of this always-loaded file. Read only the references relevant to the current task:
