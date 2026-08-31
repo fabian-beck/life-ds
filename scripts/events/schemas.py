@@ -5,8 +5,8 @@ Two families live here. The dataset models—`Person`, `LifeChapter`,
 hand each other and what the written file is a dump of, so a field this module
 does not name is a field the corpus cannot carry. The classification models are
 the structured blocks a few kinds of event carry instead of prose; the rubric
-that tells the phases how to detect and research them lives in
-`events/event_classes.py`, which imports them from here.
+that tells the phases how to detect and research them is a table of plain data
+in `events/event_classes.py`.
 """
 
 from typing import Any, Dict, List, Literal, Optional, Union

@@ -165,7 +165,7 @@ Markup wins where both could apply, and a name that is already emphasized as a p
 
 ### Event Classifications
 
-A few kinds of event carry more than prose, and an optional `event_class` block holds that structure so the slide can render it instead of burying it in the description. The vocabulary lives in one place — `EVENT_CLASS_CONFIG` in `scripts/generate_person_events.py`, which drives the Phase 1 detection guidelines, the Phase 2 research focus ("do not repeat what the classification already holds"), and the logging. Adding a kind means a Pydantic model, an entry in the `EventClassification` union, a config entry, and the matching branch in `EventSlide.svelte` and `Timeline.svelte`. Phase 1 classifies; Phase 2 never adds or edits a classification.
+A few kinds of event carry more than prose, and an optional `event_class` block holds that structure so the slide can render it instead of burying it in the description. The vocabulary lives in one place — `EVENT_CLASS_CONFIG` in `scripts/events/event_classes.py`, which drives the Phase 1 detection guidelines, the Phase 2 research focus ("do not repeat what the classification already holds"), and the logging. Adding a kind means a Pydantic model in `scripts/events/schemas.py`, an entry in the `EventClassification` union there, a config entry, and the matching branch in `EventSlide.svelte` and `Timeline.svelte`. Phase 1 classifies; Phase 2 never adds or edits a classification.
 
 | type | fields |
 | --- | --- |
