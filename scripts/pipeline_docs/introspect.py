@@ -842,19 +842,33 @@ def scan_script(path: Path, shared_constants: Dict[str, str]) -> ScriptFacts:
 
 
 def scan_codebase(scripts_dir: Path = SCRIPTS_DIR) -> Codebase:
-    """Scan every generation script plus `scripts/utils`."""
+    """Scan every generation script plus `scripts/utils` and `scripts/events`.
+
+    Steps are keyed by file name alone—`spec.py` writes a path, everything
+    downstream looks the last segment up—so two modules of the same name in
+    different packages would document each other's step. That was impossible
+    while the scan read two flat directories; it is not now that `events/`
+    nests, so the collision is refused here rather than resolved silently.
+    """
     shared: Dict[str, str] = {}
     config_path = scripts_dir / "config.py"
     if config_path.exists():
         shared = _module_constants(ast.parse(config_path.read_text(encoding="utf-8")))
 
-    paths = sorted(scripts_dir.glob("*.py")) + sorted(
-        (scripts_dir / "utils").glob("*.py")
+    paths = (
+        sorted(scripts_dir.glob("*.py"))
+        + sorted((scripts_dir / "utils").glob("*.py"))
+        + sorted((scripts_dir / "events").rglob("*.py"))
     )
     scripts: Dict[str, ScriptFacts] = {}
     for path in paths:
         if path.name == "__init__.py" or "pipeline_docs" in path.parts:
             continue
+        if path.name in scripts:
+            raise ValueError(
+                f"two scanned modules are named {path.name}: "
+                f"{scripts[path.name].path} and {path}"
+            )
         facts = scan_script(path, shared)
         if path.name == TRANSPORT_MODULE:
             facts.ai_calls.clear()

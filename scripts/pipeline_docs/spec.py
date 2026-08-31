@@ -542,7 +542,7 @@ STEPS: List[Step] = [
         "Score and rank the candidates",
         SHARED,
         CODE,
-        "generate_person_events.py",
+        "events/images/scoring.py",
         "filter_images_by_quality",
         summary=(
             "Scores every hit on resolution, file efficiency, and how "

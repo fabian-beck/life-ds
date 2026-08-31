@@ -41,6 +41,7 @@ life-ds/
 ├── scripts/                 # Python data generators
 │   ├── generate_person.py           # Full person workflow
 │   ├── generate_person_events.py    # Life events (two-phase AI)
+│   ├── events/                      # Modules split out of generate_person_events.py (images/scoring.py)
 │   ├── generate_person_style.py     # Visual style only
 │   ├── generate_person_network.py   # Ego network only
 │   ├── generate_person_portrait.py  # Stylized portrait generation

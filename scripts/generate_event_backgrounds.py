@@ -45,6 +45,7 @@ from config import (
     DEFAULT_REASONING_EFFORT,
     enable_utf8_console,
 )
+from events.images.scoring import filter_images_by_quality
 from generate_person_events import (
     CLASSIFICATION_MODELS,
     PEOPLE_DIR,
@@ -53,7 +54,6 @@ from generate_person_events import (
     EventSkeleton,
     _related_articles_prompt_section,
     _subject_article_prompt_section,
-    filter_images_by_quality,
     filter_related_articles_for_event,
     search_wikimedia_commons,
 )

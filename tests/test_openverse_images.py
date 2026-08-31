@@ -20,10 +20,8 @@ from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from generate_person_events import (  # noqa: E402
-    calculate_image_quality_score,
-    search_openverse,
-)
+from events.images.scoring import calculate_image_quality_score  # noqa: E402
+from generate_person_events import search_openverse  # noqa: E402
 
 # The response shape the Openverse API actually returns, one item per case the
 # search must handle: a Commons duplicate, a Flickr photograph without size or
