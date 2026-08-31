@@ -10,8 +10,8 @@
       "Programmiererin",
       "Forscherin"
     ],
-    "tagline": "Pionierin der Compileroptimierung",
-    "summary": "Frances Elizabeth Allen war eine amerikanische Informatikerin, deren Forschung grundlegende Methoden für optimierende Compiler und die automatische Parallelisierung begründete. In ihrer 45-jährigen Laufbahn bei IBM wurde sie als erste Frau IBM Fellow und erhielt als erste Frau den ACM Turing Award.",
+    "tagline": "Pionierin der Optimierung von Compilern",
+    "summary": "Frances Elizabeth Allen war eine amerikanische Informatikerin, deren Forschung grundlegende Verfahren für optimierende Compiler und automatische Parallelisierung hervorbrachte. In ihrer 45-jährigen Laufbahn bei IBM wurde sie zum ersten weiblichen IBM Fellow und zur ersten Frau, die den ACM Turing Award erhielt.",
     "wikipedia": "https://en.wikipedia.org/wiki/Frances_Allen",
     "portrait": {
       "image": "/portraits/frances_allen_thumbnail.webp",
@@ -30,7 +30,7 @@
   "chapters": [
     {
       "id": "from_farm_to_fortran",
-      "headline": "Vom Hof zu FORTRAN",
+      "headline": "Vom Bauernhof zu FORTRAN",
       "date_start": "1932-08-04",
       "date_start_precision": "day",
       "date_end": "1958",
@@ -50,7 +50,7 @@
     },
     {
       "id": "compiler_foundations",
-      "headline": "Grundlagen der Compiler",
+      "headline": "Grundlagen der Compilertechnik",
       "date_start": "1959",
       "date_start_precision": "year",
       "date_end": "1971",
@@ -72,7 +72,7 @@
     },
     {
       "id": "opening_parallel_frontiers",
-      "headline": "Wege zur Parallelität",
+      "headline": "Neue Horizonte der Parallelität",
       "date_start": "1972",
       "date_start_precision": "year",
       "date_end": "2001",
@@ -94,7 +94,7 @@
     },
     {
       "id": "legacy_beyond_the_machine",
-      "headline": "Vermächtnis jenseits der Maschine",
+      "headline": "Vermächtnis über die Maschine hinaus",
       "date_start": "2002",
       "date_start_precision": "year",
       "date_end": "2020-08-04",
@@ -115,7 +115,7 @@
       }
     }
   ],
-  "conclusion": "Frances Allen machte aus der jungen Kunst der Compileroptimierung eine tragfähige Grundlage der modernen Informatik. Ihre bahnbrechende Arbeit zur Parallelverarbeitung und ihr historischer Turing Award eröffneten nicht nur Maschinen, sondern auch dem Fachgebiet selbst neue Möglichkeiten.",
+  "conclusion": "Frances Allen machte aus der Optimierung von Compilern, die zunächst noch eine junge Kunst war, eine strenge Grundlage moderner Datenverarbeitung. Ihre wegweisende Arbeit zur Parallelisierung und ihr historischer Turing Award eröffneten sowohl den Maschinen als auch dem Fach selbst neue Möglichkeiten.",
   "events": [
     {
       "date": "1932-08-04",
@@ -147,8 +147,8 @@
     {
       "date": "1954",
       "date_precision": "year",
-      "title": "Mathematikabschluss erworben",
-      "description": "Allen erwarb am New York State College for Teachers, das heute zur University at Albany gehört, einen Bachelorabschluss in Mathematik. Anschließend kehrte sie nach Peru, New York, zurück und unterrichtete Mathematik von Algebra bis Trigonometrie.",
+      "title": "Mathematikstudium abgeschlossen",
+      "description": "Allen erwarb am New York State College for Teachers, das heute zur University at Albany gehört, den Bachelor of Science in Mathematik. Danach kehrte sie nach Peru, New York, zurück und unterrichtete Mathematik – von Algebra bis Trigonometrie.",
       "locations": [
         {
           "name_historic": "Albany",
@@ -175,7 +175,7 @@
       "images": [
         {
           "url": "https://live.staticflickr.com/6236/6875828256_843e826638_b.jpg",
-          "caption": "New York State College for Teachers, Albany",
+          "caption": "New York State College for Teachers in Albany",
           "source": "https://www.flickr.com/photos/24029425@N06/6875828256",
           "creator": "Boston Public Library",
           "license": "CC BY 2.0",
@@ -196,7 +196,7 @@
       "date": "1957",
       "date_precision": "year",
       "title": "Masterabschluss in Michigan",
-      "description": "Nach zwei Jahren als Lehrerin schrieb sich Allen an der University of Michigan ein, um die für die Lehramtszulassung erforderliche Qualifikation zu erwerben. 1957 erhielt sie einen Master of Science in Mathematik, obwohl sie erheblich mit Studiendarlehen verschuldet war.",
+      "description": "Nach zwei Jahren als Lehrerin schrieb sich Allen an der University of Michigan ein, um den für ihre Lehrzertifizierung erforderlichen Abschluss zu erwerben. 1957 erhielt sie den Master of Science in Mathematik – und hatte zugleich erhebliche Studienschulden.",
       "locations": [
         {
           "name_historic": "Ann Arbor",
@@ -229,7 +229,7 @@
       "date": "1957",
       "date_precision": "year",
       "title": "Beginn bei IBM Research",
-      "description": "Um ihre Studiendarlehen zurückzuzahlen, trat Allen als Programmiererin in Poughkeepsie, New York, in IBM Research ein. Sie unterrichtete neue Beschäftigte in der kurz zuvor angekündigten [[Fortran|Programmiersprache FORTRAN]] und studierte den Quellcode des Fortran-Compilers, um ihre Unterrichtsstunden vorzubereiten.",
+      "description": "Um ihre Studienschulden zurückzuzahlen, trat Allen als Programmiererin bei IBM Research in Poughkeepsie, New York, ein. Sie brachte neuen Mitarbeitern die erst kurz zuvor angekündigte [[Fortran|Programmiersprache FORTRAN]] bei und studierte den Quellcode des Fortran-Compilers, um ihren Unterricht vorzubereiten.",
       "locations": [
         {
           "name_historic": "Poughkeepsie",
@@ -248,18 +248,18 @@
       "chapter": "from_farm_to_fortran",
       "annotations": {
         "Fortran": {
-          "explanation": "FORTRAN war eine frühe Programmiersprache höherer Ebene, die bei IBM für wissenschaftliche und ingenieurtechnische Berechnungen entwickelt wurde. Sie ermöglichte Programmierern, besser lesbare Anweisungen statt Maschinen- oder Assemblercode zu verwenden.",
+          "explanation": "FORTRAN war eine frühe höhere Programmiersprache, die bei IBM für wissenschaftliche und technische Berechnungen entwickelt wurde. Sie ermöglichte es Programmierern, lesbarere Anweisungen statt Maschinen- oder Assemblersprache zu verwenden.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Fortran"
         }
       },
       "weight": 0.75,
-      "background": "Die frühe Programmierarbeit von IBM sollte verändern, wer einen wissenschaftlichen Computer nutzen konnte. John Backus hatte 1954 ein Team zusammengestellt, um FORTRAN für den IBM 704 zu konzipieren und zu entwickeln – zu einer Zeit, als ein Programm meist bedeutete, Abläufe in maschinennaher Assemblersprache festzulegen. Die Sprache sollte Wissenschaftlern und Ingenieuren ermöglichen, Berechnungen zu formulieren, ohne diese Technik beherrschen zu müssen. Sie wurde zur ersten Programmiersprache höherer Ebene, die breite Anwendung fand. Doch 1957 war sie noch so neu, dass ihre Einführung bei IBM ein konkretes Problem des Arbeitsalltags war, kein gesichertes technisches Wissen: Ihre Ankündigung lag erst zwei Monate zurück.\n\n## Ein umstrittener Compiler\n\nDas Hindernis bestand nicht allein darin, Menschen von einer neuen Notation zu überzeugen. An Assemblersprache gewöhnte Forscher bezweifelten, dass ein Compiler ein Programm höherer Ebene in Maschinencode übersetzen könne, der mit dem unmittelbar von Fachleuten geschriebenen Code konkurrieren konnte. Damals galt es als selbstverständlich, dass kompilierte Sprachen keine Programme mit ausreichender Leistung hervorbringen könnten. Diese Skepsis machte den Compiler für die Glaubwürdigkeit von FORTRAN zentral. Seine Aufgabe war es, die Anweisungen eines Programmierers in die präzisen maschinennahen Befehle zu überführen, die ein Computer ausführt, und zugleich verschwenderische Entscheidungen zu vermeiden, die Programme verlangsamten.\n\nDie Unterrichtsorganisation zeigt, wie rasch sich die Technik entwickelte. Bisweilen musste Stoff nur wenige Tage, bevor er an andere IBM-Forscher weitergegeben wurde, erst selbst erlernt werden. Die Lektüre des Compiler-Quellcodes bot mehr als einen Weg, die Regeln der Sprache zu verstehen: Sie legte die Abfolge von Entscheidungen offen, durch die ein Programm analysiert und übersetzt wird. Diese praktische Begegnung eröffnete einen unmittelbaren Blick auf die Frage, die einen Großteil der folgenden Arbeit prägen sollte: Wie kann ein Compiler automatisch eine bessere, aber gleichwertige Form eines Programms finden, statt es nur mechanisch von einer Notation in eine andere zu übertragen?\n\nDiese Frage erwies sich als dauerhaft, weil der frühe Einwand gegen FORTRAN eine echte technische Herausforderung enthielt. Programmiersprachen höherer Ebene würden nur dann breite Akzeptanz finden, wenn die Technik unter ihrer Oberfläche effizienten Code erzeugen konnte. Die spätere Forschung bei IBM zu Compilern behandelte Optimierung als systematische Disziplin: Anhand der Programmstruktur wurden Transformationen bestimmt, die das Ergebnis eines Programms bewahrten und zugleich seinen Aufwand verringerten. Der Weg begann daher nicht mit einem abstrakten Theorieprojekt, sondern mit dem unmittelbaren praktischen Druck, Kollegen eine unerprobte Sprache zu erklären, die guten Grund hatten, Belege dafür zu verlangen, dass sie mit handgeschriebener Assemblersprache mithalten konnte.\n\nDie Episode veranschaulicht auch einen umfassenderen Wandel in der Arbeitsteilung der Informatik. Statt von jedem wissenschaftlichen Nutzer zu erwarten, dass er den Befehlssatz einer bestimmten Maschine beherrschte, verlagerte IBMs Arbeit an Sprachen und Compilern einen Teil dieses Fachwissens in die Software. Programmierer konnten auf einer verständlicheren Ebene arbeiten; dem Compiler fiel die anspruchsvolle Aufgabe zu, das daraus entstehende Programm effizient laufen zu lassen. Diese Vereinbarung wurde grundlegend für die moderne Programmierung, und die frühe Begegnung mit der Umsetzung von FORTRAN machte daraus ein langfristiges Forschungsproblem statt einer vorübergehenden Lehrtätigkeit.",
+      "background": "1957 forderte IBM Wissenschaftler und Programmierer auf, einer neuen Arbeitsweise zu vertrauen – in einer Zeit, in der Assemblersprache noch als Maßstab galt. Forscher, die daran gewöhnt waren, Anweisungen direkt für eine Maschine zu schreiben, bezweifelten, dass ein Compiler Programme schnell genug erzeugen konnte, um den möglichen Verlust an Leistung zu rechtfertigen. Diese Skepsis war nicht bloß eine Frage des Stils: Davon, wie effizient die teure Rechenzeit genutzt werden konnte, hing viel ab. FORTRAN war erst zwei Monate vor Allens Eintritt angekündigt worden. Selbst diejenigen, die es innerhalb von IBM einführen sollten, arbeiteten also mit einer Sprache, deren Arbeitsweisen und Werkzeuge noch ganz neu waren.\n\nDer Quellcode des FORTRAN-Compilers bot einen ungewöhnlich unmittelbaren Einblick in die unsichere Grenze zwischen den schriftlichen Anweisungen eines Programmierers und den Befehlen einer Maschine. Ihn zu lesen war weit mehr als Unterrichtsvorbereitung: Allen sah dabei, welche Entscheidungen ein Compiler beim Übersetzen eines Programms traf und an welchen Stellen diese Entscheidungen die Effizienz beeinflussen konnten. Aus einer vorübergehenden Tätigkeit wurde so eine Forschungslaufbahn. Zugleich begegnete Allen früh dem Kernproblem ihrer späteren Arbeit: Wie lässt sich die Übersetzung einer Hochsprache so gestalten, dass Maschinencode entsteht, den Programmierer als konkurrenzfähig gegenüber handgeschriebener Assemblersprache ansehen können?\n\nIhre unmittelbare Aufgabe im Unterricht war somit Teil von IBMs Bemühungen, eine Sprache im Unternehmen zu verbreiten und zugleich den Widerstand der eigenen Forscher zu überwinden. Allens spätere Arbeit an der Compileroptimierung erwuchs aus diesem Umfeld, nicht aus einem abstrakten akademischen Problem. Ihre späteren Veröffentlichungen sollten die Frage nach effizienter Übersetzung in ein systematisches Feld der Analyse und Transformation überführen. Praktisch begann alles jedoch an einem Arbeitsplatz, an dem eine brandneue Sprache erst noch beweisen musste, dass sie auf ernstzunehmenden technischen Rechnern ihren Platz hatte.",
       "background_images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/IBM_Electronic_Data_Processing_Machine_-_GPN-2000-001881.jpg/960px-IBM_Electronic_Data_Processing_Machine_-_GPN-2000-001881.jpg",
-          "caption": "Mann und Frau bei der Arbeit an einer elektronischen Datenverarbeitungsanlage IBM Type 704 für Berechnungen in der Luftfahrtforschung. Langley NACA",
-          "source": "https://commons.wikimedia.org/wiki/File:IBM_Electronic_Data_Processing_Machine_-_GPN-2000-001881.jpg",
-          "creator": "NASA",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/IBM_704_Computer_Operations_%28LRC-1957-B701_P-05391%29.tiff/lossy-page1-960px-IBM_704_Computer_Operations_%28LRC-1957-B701_P-05391%29.tiff.jpg",
+          "caption": "IBM-704-Rechnerbetrieb. Auf dem Foto sind folgende Personen zu sehen: Die Frau im Vordergrund mit dem Rücken zur Kamera ist Jean Ruddle Migneault.",
+          "source": "https://commons.wikimedia.org/wiki/File:IBM_704_Computer_Operations_(LRC-1957-B701_P-05391).tiff",
+          "creator": "NASA Langley Research Center / NACA, Taub",
           "license": "Public domain",
           "licenseUrl": null,
           "query": "IBM 704 computer"
@@ -269,8 +269,8 @@
     {
       "date": "1959",
       "date_precision": "year",
-      "title": "Arbeit an Harvest",
-      "description": "Allen wurde dem vertraulichen Harvest-Projekt von IBM zugeteilt, das gemeinsam mit der National Security Agency zur Kryptoanalyse durchgeführt wurde. Während sie die Programmiersprache Alpha entwickelte, leitete sie die Arbeiten zur Compileroptimierung für Harvest und für das frühere Stretch-Projekt von IBM.",
+      "title": "Arbeit am Projekt Harvest",
+      "description": "Allen wurde dem vertraulichen IBM-Projekt Harvest zugeteilt, das gemeinsam mit der National Security Agency zur Entschlüsselung von Geheimcodes durchgeführt wurde. Sie leitete die mit Harvest und dem früheren IBM-Projekt Stretch verbundene Arbeit an der Compileroptimierung und entwickelte zugleich die Programmiersprache Alpha.",
       "locations": [
         {
           "name_historic": "Poughkeepsie",
@@ -303,7 +303,7 @@
       "date": "1962",
       "date_precision": "year",
       "title": "Wechsel zum Watson Center",
-      "description": "1962 versetzte IBM Allen an das Thomas J. Watson Research Center. Dort wirkte sie am Projekt Advanced Computing System mit und arbeitete mit John Cocke an der Compilerforschung sowie an einem optimierenden Compiler für Fortran.",
+      "description": "IBM versetzte Allen 1962 an das Thomas J. Watson Research Center. Dort arbeitete sie am Projekt Advanced Computing System mit und forschte gemeinsam mit John Cocke an Compilern und einem optimierenden Fortran-Compiler.",
       "locations": [
         {
           "name_historic": "Yorktown Heights",
@@ -324,7 +324,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/IBM_Watson_Research_Center_entrance.jpg/960px-IBM_Watson_Research_Center_entrance.jpg",
-          "caption": "Eingang des IBM Watson Research Center, Yorktown Heights",
+          "caption": "Eingang des IBM Watson Research Center in Yorktown Heights",
           "source": "https://commons.wikimedia.org/wiki/File:IBM_Watson_Research_Center_entrance.jpg",
           "creator": "Autopilot",
           "license": "CC BY-SA 4.0",
@@ -339,7 +339,7 @@
       "date": "1966",
       "date_precision": "year",
       "title": "Program Optimization veröffentlicht",
-      "description": "Während ihrer Tätigkeit bei IBM veröffentlichte Allen Program Optimization und eröffnete damit eine Reihe von Aufsätzen, in denen sie ihren sich entwickelnden Ansatz zur Compilerforschung mit der breiteren Informatikgemeinschaft teilte. Die Arbeit schuf eine Grundlage für die systematische Analyse und Transformation von Computerprogrammen.",
+      "description": "Während ihrer Arbeit bei IBM veröffentlichte Allen Program Optimization und eröffnete damit eine Reihe von Aufsätzen, in denen sie der internationalen Informatikgemeinschaft ihren sich entwickelnden Ansatz zur Compilerforschung vorstellte. Die Arbeit legte den Grundstein für die systematische Analyse und Transformation von Computerprogrammen.",
       "locations": [
         {
           "name_historic": "Yorktown Heights, New York",
@@ -361,14 +361,14 @@
         "type": "publication",
         "title": "Program Optimization",
         "publication_type": "paper",
-        "significance": "grundlegende Arbeit"
+        "significance": "grundlegender Aufsatz"
       }
     },
     {
       "date": "1970",
       "date_precision": "year",
       "title": "Control Flow Analysis veröffentlicht",
-      "description": "Während ihrer Tätigkeit bei IBM veröffentlichte Allen Control Flow Analysis und A Basis for Program Optimization. Die Arbeiten etablierten Intervalle als Rahmen für Datenflussanalyse und Compileroptimierung.",
+      "description": "Während ihrer Arbeit bei IBM veröffentlichte Allen Control Flow Analysis und A Basis for Program Optimization. Die Aufsätze etablierten Intervalle als Rahmen für Datenflussanalyse und Compileroptimierung.",
       "locations": [
         {
           "name_historic": "Yorktown Heights, New York",
@@ -404,8 +404,8 @@
     {
       "date": "1971",
       "date_precision": "year",
-      "title": "Compilertransformationen systematisiert",
-      "description": "Am Thomas J. Watson Research Center von IBM in Yorktown Heights, New York, veröffentlichten Frances Allen und John Cocke eine Studie, die neu entstehende Ansätze zur Verbesserung von compilererzeugten Programmen ordnete.",
+      "title": "Compilertransformationen katalogisiert",
+      "description": "Am Thomas J. Watson Research Center von IBM in Yorktown Heights, New York, veröffentlichten Frances Allen und John Cocke eine Studie, die neue Ansätze zur Verbesserung von Compilern erzeugter Programme ordnete.",
       "locations": [
         {
           "name_historic": "Yorktown Heights",
@@ -433,16 +433,25 @@
         "publisher": "Prentice Hall",
         "significance": "wegweisende Arbeit"
       },
-      "background": "Ende der 1960er Jahre lautete die zentrale praktische Frage hinter Programmiersprachen höherer Ebene, ob ein Compiler Maschinenbefehle erzeugen könne, die mit handgeschriebener Assemblersprache konkurrieren konnten. Diese Skepsis hatte Fortran bei IBM seit den frühesten Tagen begleitet: An Assemblersprache gewöhnte Forscher glaubten, kompilierte Programme könnten nicht schnell genug sein. Ein Compiler musste mehr leisten, als die Anweisungen eines Programmierers wortgetreu zu übersetzen. Er musste mögliche Programmpfade untersuchen, feststellen, welche Berechnungen und gespeicherten Werte von Bedeutung waren, und das Programm verändern, ohne sein Ergebnis zu ändern. Frühere Arbeiten zur Kontrollflussanalyse hatten eine Möglichkeit geschaffen, Programme in „Intervalle“ zu unterteilen und diese Untersuchung systematischer zu machen.\n\n## Das Werkzeug des Optimierers\n\nDie hier zusammengetragenen Verfahren gaben Operationen Namen und ein handhabbares Vokabular, die sonst vielleicht maschinenspezifische Kniffe geblieben wären. Beim Inlining von Prozeduren wird ein Aufruf einer separaten Routine durch den Rumpf dieser Routine ersetzt, sodass der Aufrufaufwand entfällt, wenn sich dies lohnt. Beim Loop Unrolling werden wiederholte Anweisungen ausgeweitet, sodass eine Schleife bei jedem Durchlauf mehr Arbeit erledigt. Die Eliminierung gemeinsamer Teilausdrücke verhindert, dass derselbe Ausdruck zweimal berechnet wird, während Code Motion eine Berechnung an eine Stelle verschiebt, an der sie seltener ausgeführt wird. Die Peephole-Optimierung hingegen untersucht eine kleine Folge erzeugter Befehle auf eine gleichwertige, aber effizientere Abfolge. Zusammengenommen machten solche Änderungen die Optimierung zu einer geordneten Phase der Kompilierung statt zu einer Sammlung von Ad-hoc-Anpassungen.\n\nDie entscheidende Einschränkung war die Korrektheit. Eine Transformation, die ein Programm kürzer oder schneller macht, ist nutzlos, wenn sie das Ergebnis verändert oder eine Berechnung über eine Verzweigung hinweg verschiebt, an der ihr Wert anders ausfallen könnte. Graphentheoretische Darstellungen eines Programms machten die Beziehungen zwischen seinen Anweisungen sichtbar und halfen, sichere Möglichkeiten zur Transformation zu erkennen. Das war besonders folgenreich, weil es nicht bloß darum ging, ein einzelnes Programm für einen einzelnen Computer abzustimmen. Die Arbeit trug dazu bei, die Machbarkeit und Struktur von Optimierern zu begründen, die sowohl von einer bestimmten Programmiersprache als auch von einer bestimmten Maschinenarchitektur unabhängig sein konnten.\n\nDie Methoden wurden in Arbeiten zu den IBM-Systemen Stretch-Harvest und zum experimentellen Advanced Computing System erprobt, statt bloß abstrakte Vorschläge zu bleiben. Ihre langfristige Wirkung zeigte sich im Compilerbau: Spätere Forschung weitete die Datenflussanalyse auf ganze Programme aus, und eine spätere Arbeit beschrieb eine der beiden grundlegenden Analysestrategien optimierender Compiler. Dieselbe Gewohnheit, Abhängigkeiten präzise darzustellen, führte auch zur automatischen Parallelisierung, bei der ein Compiler entscheiden muss, welche Teile eines scheinbar sequenziellen Programms gefahrlos gleichzeitig ausgeführt werden können. Was als Versuch begann, erzeugten Code gegenüber der Assemblerprogrammierung konkurrenzfähig zu machen, wurde Teil des gedanklichen Standardwerkzeugs moderner Compiler.",
+      "background": "Anfang der 1970er-Jahre machten höhere Programmiersprachen es möglich, Programme in mathematisch anmutenden Anweisungen statt unmittelbar im Befehlssatz einer Maschine zu schreiben. Dennoch misstrauten viele Forscher weiterhin der Geschwindigkeit des daraus entstehenden Maschinencodes. Ein optimierender Compiler musste mehr leisten als nur zu übersetzen: Er musste die Pfade und Berechnungen eines Programms untersuchen, vermeidbare oder umstellbare Arbeit erkennen und Änderungen vornehmen, ohne das Ergebnis zu verändern. Die Herausforderung bestand darin, aus einer Sammlung von Programmierertricks Verfahren zu machen, die ein Compiler mechanisch anwenden konnte. Allens frühere Forschung hatte graphenbasierte Möglichkeiten geliefert, ein Programm darzustellen und die Bewegung von Steuerung und Daten darin zu analysieren; der Katalog gab diesen Ideen ein gemeinsames Arbeitsvokabular.\n\nDie Transformationen zielten auf unterschiedliche Arten von Verschwendung oder ungenutzten Möglichkeiten. Beim Inlining von Prozeduren konnte der Aufruf einer separaten Routine durch deren Anweisungen ersetzt werden, sodass der Aufruf-Overhead entfiel, sofern dies sinnvoll war. Beim Entrollen von Schleifen wurde der Schleifenkörper in einem Durchlauf mehrfach wiederholt, wodurch Verwaltungsanweisungen eingespart wurden. Die Eliminierung gemeinsamer Teilausdrücke erkannte, wann dieselbe Berechnung bereits ausgeführt worden war, und verwendete ihr Ergebnis erneut. Bei der Codebewegung wurde eine Berechnung an eine Stelle verlagert, an der sie seltener ausgeführt wurde; die Peephole-Optimierung wiederum untersuchte kurze Abschnitte erzeugter Anweisungen auf eine kostengünstigere äquivalente Folge. Das waren keine kosmetischen Änderungen: Für jede musste durch Analyse sichergestellt werden, dass sie auf jedem möglichen Programmpfad sicher war.\n\nDie bleibende Bedeutung des Katalogs lag darin, diese Transformationen für Compilerentwickler zu systematisieren, statt sie als voneinander isolierte, maschinenspezifische Techniken zu behandeln. Sein Ansatz trug zur Herausbildung der Struktur moderner Optimierer bei, die sprach- und maschinenübergreifend arbeiten können. Die Verfahren wurden in Compilern entwickelt und implementiert, die mit IBMs STRETCH-HARVEST-Systemen und dem experimentellen Advanced Computing System verbunden waren. Die gleiche Konzentration auf Abhängigkeiten unterstützte später die automatische parallele Ausführung von FORTRAN-Programmen.",
       "background_images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/IBM_7030_Stretch_computer_photo_at_National_Cryptologic_Museum.agr.jpg/960px-IBM_7030_Stretch_computer_photo_at_National_Cryptologic_Museum.agr.jpg",
-          "caption": "Foto eines im National Cryptologic Museum ausgestellten IBM-7030-Computers",
+          "caption": "Foto eines IBM-7030-Rechners im National Cryptologic Museum",
           "source": "https://commons.wikimedia.org/wiki/File:IBM_7030_Stretch_computer_photo_at_National_Cryptologic_Museum.agr.jpg",
           "creator": "ArnoldReinhold",
           "license": "Public domain",
           "licenseUrl": null,
           "query": "IBM Stretch computer"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/IBM_7950_HARVEST_system_at_National_Cryptologic_Museum.agr.jpg/960px-IBM_7950_HARVEST_system_at_National_Cryptologic_Museum.agr.jpg",
+          "caption": "Foto eines ausgestellten IBM-7950-HARVEST-Systems im National Cryptologic Museum",
+          "source": "https://commons.wikimedia.org/wiki/File:IBM_7950_HARVEST_system_at_National_Cryptologic_Museum.agr.jpg",
+          "creator": "ArnoldReinhold",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "IBM Harvest computer"
         }
       ]
     },
@@ -452,7 +461,7 @@
       "date_end": "1982",
       "date_end_precision": "year",
       "title": "Heirat mit Jacob Schwartz",
-      "description": "1972 heiratete Allen Jacob T. Schwartz, einen Informatikprofessor an der New York University und Kollegen. 1982 ließen sie sich scheiden.",
+      "description": "1972 heiratete Allen Jacob T. Schwartz, einen Informatikprofessor der New York University und ihren Forschungspartner. 1982 wurde die Ehe geschieden.",
       "locations": [],
       "involved_people": [
         "Jacob T. Schwartz"
@@ -475,8 +484,8 @@
       "date_precision": "year",
       "date_end": "1995",
       "date_end_precision": "year",
-      "title": "Forschung zur Parallelverarbeitung geleitet",
-      "description": "Allen leitete die Arbeit von IBM zur Parallelverarbeitung und stand dem Projekt [[PTRAN|PTRAN, dem Parallel Translator,]] vor. Ihr Team entwickelte Verfahren, um Parallelität in Programmen zu erkennen, und nutzte [[program-dependence graphs|Programmabhängigkeitsgraphen]], um Arbeit auf parallele Architekturen zu verteilen.",
+      "title": "Leitung der Parallelforschung",
+      "description": "Allen leitete IBMs Arbeiten zum parallelen Rechnen und führte das Projekt [[PTRAN|PTRAN, der Parallel Translator,]]. Ihr Team entwickelte Verfahren zur Erkennung von Parallelität in Programmen und nutzte [[program-dependence graphs|Programmabhängigkeitsgraphen]], um Arbeit auf parallele Architekturen zu verteilen.",
       "locations": [],
       "sources": [
         "https://en.wikipedia.org/wiki/Frances_Allen"
@@ -485,41 +494,50 @@
       "chapter": "opening_parallel_frontiers",
       "annotations": {
         "PTRAN": {
-          "explanation": "Ein IBM-Forschungsprojekt zu Compilern aus einer Zeit, in der das Auffinden sicherer Nebenläufigkeit in bestehenden sequenziellen Programmen ein zentrales Hindernis für die praktische Parallelverarbeitung darstellte.",
+          "explanation": "Ein IBM-Forschungsprojekt zur Compilerentwicklung aus einer Zeit, in der die sichere Erkennung von Nebenläufigkeit in bestehenden sequenziellen Programmen ein zentrales Hindernis für praxisnahes paralleles Rechnen war.",
           "wikipedia_url": null
         },
         "program-dependence graphs": {
-          "explanation": "Eine Darstellung, die Abhängigkeiten, welche die Ausführung einschränken, von Operationen unterscheidet, die sicher unabhängig ausgeführt werden können; sie wurde zu einem zentralen Werkzeug, um Parallelität in Programmen zu analysieren.",
+          "explanation": "Eine Darstellung, die Abhängigkeiten, welche die Ausführung begrenzen, von Operationen unterscheidet, die sicher unabhängig voneinander ablaufen können; sie wurde zu einem wichtigen Werkzeug für die Analyse von Programmparallelität.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Program_dependence_graph"
         }
       },
       "weight": 0.95,
-      "background": "Um 1980 veränderte sich für die Compilerforschung die Bedeutung von Effizienz. Zuvor war das Ziel gewesen, den Befehlsstrom für einen Prozessor so sparsam wie möglich zu gestalten; bei den neueren Maschinen hing die Geschwindigkeit davon ab, ob ein Compiler genügend unabhängige Arbeit freilegen konnte, um mehrere Verarbeitungseinheiten auszulasten. FORTRAN stand dabei im Zentrum, weil es die Sprache eines großen Teils der bestehenden wissenschaftlichen Berechnungen war. Die verlockende Aussicht bestand darin, die Vorteile einer parallelen Maschine zu gewinnen, ohne von jedem wissenschaftlichen Programmierer zu verlangen, bewährte Programme aufzugeben und sie von Hand für ungewohnte Hardware umzuschreiben.\n\nDie Arbeit von IBM baute auf einem umfangreichen technischen Erbe auf. Verfahren, die für die STRETCH-HARVEST-Compiler und das experimentelle Advanced Computing System entwickelt worden waren, hatten bereits gezeigt, dass sich ein Optimierer unabhängig von einer bestimmten Maschine und Programmiersprache gestalten ließ. Gemeinsam mit John Cocke hatte eine Reihe von Arbeiten die Compilerverbesserung zu einem systematischeren Unterfangen gemacht: Der Aufsatz „Program Optimization“ von 1966 nutzte graphentheoretische Strukturen, um Beziehungen innerhalb eines Programms zu erfassen, während spätere Arbeiten zur Kontrollfluss- und zur prozedurübergreifenden Datenflussanalyse die Untersuchung über einzelne Anweisungen und Prozeduren hinaus erweiterten. Diese Forschung ermöglichte es, über ein ganzes Programm nachzudenken, bevor es verändert wurde – eine Voraussetzung, wenn eine Transformation sonst das Ergebnis einer Berechnung verändern könnte.\n\n## Das Compilersystem\n\nDie Forschungskultur dieser Zeit zeigt sich in „The Experimental Compiling System“, erschienen im November 1980 im IBM Journal of Research and Development, Band 24, Nummer 6, Seiten 695–715. Sein Erscheinen in jenem Jahr stellte die Parallelisierung neben IBMs fortdauerndes Bemühen, die Kompilierung als Forschungsproblem statt als feststehenden Übersetzungsschritt zu behandeln. Ein Compiler musste mehr können, als die Grammatik von FORTRAN zu erkennen und Befehle auszugeben: Er brauchte ein internes Modell der Werte, Kontrollpfade und Auswirkungen verschobener Berechnungen. Die schwierigen Fälle waren keine spektakulären Vorführungen vieler arbeitender Prozessoren, sondern gewöhnlicher Code, in dem eine Berechnung stillschweigend vom Ergebnis einer anderen abhängen konnte. Eine Transformation war nur dann nützlich, wenn sie diese Beziehungen bewahrte und zugleich Arbeit freilegte, die die Hardware gleichzeitig erledigen konnte.\n\nDas Ergebnis war eine dauerhafte Veränderung der Compilerpraxis. Die spätere Begründung des ACM Turing Award bezeichnete den Programmabhängigkeitsgraphen als die wichtigste Strukturierungsmethode der meisten parallelisierenden Compiler; damit wurde die Idee zu einem der Standardwerkzeuge des Fachs statt zu einem bloßen IBM-Experiment. Die Arbeit gehört zudem zu einer umfassenderen Entwicklung bei IBM von der Forschung zur Sprachverarbeitung hin zu Hochleistungssystemen; spätere Projekte umfassten auch Software für IBM Blue Gene. Ihre größere Bedeutung lag darin, dass parallele Hardware nicht mehr vollständig darauf angewiesen war, dass Programmierer jede Möglichkeit zur Nebenläufigkeit von Hand erkannten. Der Compiler selbst konnte aktiv dazu beitragen, bewährten wissenschaftlichen Code an neue Architekturen anzupassen.",
+      "background": "IBMs Vorstoß in das parallele Rechnen erwuchs aus einem Problem, das die herkömmliche Compilerforschung nicht gelöst hatte: Ein großer Teil der wissenschaftlichen Software war als einziger, streng geordneter Strom von FORTRAN-Anweisungen geschrieben. Solche Programme von Hand für mehrere Prozessoren umzuschreiben, war anspruchsvoll, denn vermeintliche Möglichkeiten, Schritte gleichzeitig auszuführen, konnten durch gemeinsam genutzte Daten zunichtegemacht werden. Bei IBM verband die Arbeit daher die Sprachverarbeitung mit der Entwicklung paralleler Hardware, statt schnellere Maschinen allein für ausreichend zu halten.\n\nPTRAN stand in einer längeren Reihe von IBM-Compilerexperimenten, die mit den STRETCH-HARVEST-Maschinen und dem experimentellen Advanced Computing System verbunden waren. Allens frühere Zusammenarbeit mit John Cocke hatte Verfahren zur Analyse ganzer Programme hervorgebracht und dazu beigetragen, die Programmstruktur von den Besonderheiten einer Maschine oder Sprache zu lösen. Das war wichtig, weil PTRAN bereits geschriebene FORTRAN-Programme verarbeiten sollte, ohne Wissenschaftler zum Wechsel auf eine völlig neue Programmiersprache zu zwingen. Das Versprechen des Projekts war deshalb ungewöhnlich praxisnah: Das vertraute sequenzielle Quellprogramm blieb erhalten, während der Übersetzer selbst ermittelte, ob sich seine Arbeit auf eine parallele Architektur verteilen ließ.\n\nDer Abhängigkeitsgraph hielt dieses Urteil entscheidend fest. Er zwang den Übersetzer, nicht nur unabhängig ausführbare Operationen zu berücksichtigen, sondern auch die Reihenfolge, die sich daraus ergab, dass eine Berechnung einen Wert erzeugte, den eine andere benötigte. Das PTRAN-Team entwickelte Verfahren zur Erkennung von Parallelität auf der Grundlage dieser Unterscheidung und machte den Graphen zu einer zentralen Struktur statt zu einem bloßen Hilfsmittel der Optimierung. So ließ sich verhindern, dass eine Transformation ein Programm zwar beschleunigte, dabei aber unbemerkt sein Ergebnis veränderte.\n\nDie Arbeit lief von 1980 bis 1995 und hatte damit für ein Forschungsprojekt eine bemerkenswert lange Lebensdauer. Später wirkte Allen an der Entwicklung von Software für IBMs Blue-Gene-Projekt mit und schlug so eine Verbindung von compilerzentrierter Forschung zu einem großen IBM-Projekt des parallelen Rechnens. In der Begründung für ihren Turing Award wird dem PTRAN-Team zugeschrieben, den Programmabhängigkeitsgraphen als wichtigstes Strukturierungsverfahren der meisten parallelisierenden Compiler etabliert zu haben. Sein bleibender Einfluss liegt damit in der Software, die zwischen dem sequenziellen Code der Programmierer und den Parallelrechnern vermittelt.",
       "background_images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/IBM_7030_-_Mus%C3%A9e_des_arts_et_m%C3%A9tiers.jpg/960px-IBM_7030_-_Mus%C3%A9e_des_arts_et_m%C3%A9tiers.jpg",
-          "caption": "IBM 7030 – Musée des arts et métiers",
-          "source": "https://commons.wikimedia.org/wiki/File:IBM_7030_-_Musée_des_arts_et_métiers.jpg",
-          "creator": "Tieum512",
-          "license": "CC BY 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Blue_Gene_node_and_board.JPG/960px-Blue_Gene_node_and_board.JPG",
+          "caption": "Ein IBM Blue Gene/P am National Center for Supercomputing Applications in Sofia, Bulgarien",
+          "source": "https://commons.wikimedia.org/wiki/File:Blue_Gene_node_and_board.JPG",
+          "creator": "Tourbillon",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "IBM Blue Gene computer"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/IBM_7030_Stretch_%284376986732%29.jpg/960px-IBM_7030_Stretch_%284376986732%29.jpg",
+          "caption": "IBM 7030 Stretch",
+          "source": "https://commons.wikimedia.org/wiki/File:IBM_7030_Stretch_(4376986732).jpg",
+          "creator": "Marcin Wichary from San Francisco, Calif.",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
           "query": "IBM Stretch computer"
         },
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Mira_-_Blue_Gene_Q_at_Argonne_National_Laboratory_-_Skin.jpg/960px-Mira_-_Blue_Gene_Q_at_Argonne_National_Laboratory_-_Skin.jpg",
-          "caption": "Der am Argonne National Laboratory nahe Chicago, Illinois, installierte IBM Blue Gene/Q debütierte als drittschnellster Supercomputer der Welt.",
-          "source": "https://commons.wikimedia.org/wiki/File:Mira_-_Blue_Gene_Q_at_Argonne_National_Laboratory_-_Skin.jpg",
-          "creator": "Argonne National Laboratory (Flickr) / U.S. Department of Energy",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-          "query": "IBM Blue Gene supercomputer"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/IBM_7950_HARVEST_system_at_National_Cryptologic_Museum.agr.jpg/960px-IBM_7950_HARVEST_system_at_National_Cryptologic_Museum.agr.jpg",
+          "caption": "Foto eines ausgestellten IBM-7950-HARVEST-Systems im National Cryptologic Museum",
+          "source": "https://commons.wikimedia.org/wiki/File:IBM_7950_HARVEST_system_at_National_Cryptologic_Museum.agr.jpg",
+          "creator": "ArnoldReinhold",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "IBM Harvest computer"
         }
       ]
     },
     {
       "date": "1987",
       "date_precision": "year",
-      "title": "In die Ingenieurakademie gewählt",
+      "title": "Aufnahme in die Ingenieursakademie",
       "description": "1987 wurde Allen in die National Academy of Engineering gewählt.",
       "locations": [],
       "sources": [
@@ -533,7 +551,7 @@
       "date": "1989",
       "date_precision": "year",
       "title": "IBM Fellow geworden",
-      "description": "Allen wurde IBM Fellow, die höchste technische Auszeichnung des Unternehmens. Als erste Frau erhielt sie diesen Titel.",
+      "description": "Allen wurde IBM Fellow, der höchsten technischen Auszeichnung des Unternehmens. Sie war die erste Frau, der dieser Status verliehen wurde.",
       "locations": [],
       "sources": [
         "https://en.wikipedia.org/wiki/Frances_Allen"
@@ -545,8 +563,8 @@
     {
       "date": "2002",
       "date_precision": "year",
-      "title": "Abschied von IBM",
-      "description": "Nach 45 Jahren im Unternehmen ging Allen bei IBM in den Ruhestand. Als Fellow Emerita blieb sie IBM verbunden und ermutigte weiterhin Frauen und Mädchen, sich der Informatik und den Naturwissenschaften zuzuwenden.",
+      "title": "Ruhestand bei IBM",
+      "description": "Nach 45 Jahren im Unternehmen ging Allen bei IBM in den Ruhestand. Als Fellow Emerita blieb sie IBM verbunden und setzte sich weiterhin dafür ein, Frauen und Mädchen für Informatik und Naturwissenschaften zu gewinnen.",
       "locations": [],
       "sources": [
         "https://en.wikipedia.org/wiki/Frances_Allen"
@@ -559,7 +577,7 @@
       "date": "2006",
       "date_precision": "year",
       "title": "Turing Award erhalten",
-      "description": "2006 verlieh die Association for Computing Machinery Allen den A. M. Turing Award für ihre Beiträge zur Forschung und Praxis optimierender Compiler. In der vierzigjährigen Geschichte der Auszeichnung war sie die erste Preisträgerin.",
+      "description": "2006 verlieh die Association for Computing Machinery Allen den A. M. Turing Award für ihre Beiträge zur Erforschung und Praxis optimierender Compiler. Sie war die erste Frau, die den Preis in seiner vierzigjährigen Geschichte erhielt.",
       "locations": [],
       "involved_people": [],
       "sources": [
@@ -573,8 +591,8 @@
       "date": "2020-08-04",
       "date_precision": "day",
       "age": 88,
-      "title": "Tod am Geburtstag",
-      "description": "Allen starb am 4. August 2020, an ihrem 88. Geburtstag.",
+      "title": "Tod an ihrem Geburtstag",
+      "description": "Allen starb am 4. August 2020, ihrem 88. Geburtstag.",
       "locations": [],
       "sources": [
         "https://en.wikipedia.org/wiki/Frances_Allen"
@@ -584,7 +602,7 @@
       "weight": 0.35,
       "event_class": {
         "type": "death",
-        "cause": "Komplikationen der Alzheimer-Krankheit",
+        "cause": "Komplikationen infolge der Alzheimer-Krankheit",
         "characterization": "an ihrem Geburtstag"
       }
     }
@@ -592,8 +610,8 @@
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "68f71c7ad906260f",
-    "translated_on": "2026-08-31T06:43:26.033065+02:00",
-    "translator": "openai:gpt-5.6-terra"
+    "source_fingerprint": "91ad63a31141433e",
+    "translated_on": "2026-08-31T17:27:38.632874+02:00",
+    "translator": "openai:gpt-5.6-luna"
   }
 }
