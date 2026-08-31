@@ -547,14 +547,19 @@ STEPS: List[Step] = [
         "events/images/scoring.py",
         "filter_images_by_quality",
         summary=(
-            "Scores every hit on resolution, file efficiency, and how "
-            "informative its filename is, then drops the ones under a "
-            "permissive threshold and ranks the rest—so the matching call sees "
-            "candidates rather than noise. The function can also weigh how "
-            "close a picture falls to the event and what its Commons "
-            "categories say, but both callers leave that off: the scores are "
-            "computed once for the whole pool, and the pool serves every event "
-            "at once."
+            "Scores every hit on resolution, file efficiency, how informative "
+            "its filename is, and whether it shows a commemoration, then drops "
+            "the ones under a permissive threshold and ranks the rest—so the "
+            "matching call sees candidates rather than noise. The "
+            "commemoration penalty is what keeps a well-lit modern photograph "
+            "of a plaque or a grave from outranking a scanned period "
+            "photograph, which it beats on every other measure; it reads the "
+            "filename and the caption as well as the categories, because "
+            "Openverse reports no categories at all. The function can also "
+            "weigh how close a picture falls to the event and what its Commons "
+            "categories say about it, but both callers leave that off: the "
+            "scores are computed once for the whole pool, and the pool serves "
+            "every event at once."
         ),
         depends_on=[Dep("p_img_fetch", "every hit the queries returned")],
     ),

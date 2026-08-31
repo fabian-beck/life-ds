@@ -81,19 +81,18 @@ def score_file_efficiency(file_size: int, width: int, height: int) -> float:
         return 1.0  # Extremely compressed or bloated
 
 
-def score_temporal_relevance(
-    event_date: str, image_date_original: str, image_date_upload: str
-) -> float:
-    """
-    Score temporal relevance (0-10 points).
+def score_temporal_relevance(event_date: str, image_date_original: str) -> float:
+    """Score how close a picture falls to the event it would illustrate (0-10).
 
-    Prefers:
-    - Period-appropriate images (contemporary to the event)
-    - Recent uploads (better scans/digitization)
+    Only the picture's own date counts. A bonus for a recent *upload* used to
+    sit here as a proxy for a good digitization, but an upload date is recent
+    for two different reasons: someone scanned a period photograph, or someone
+    photographed a physical object last year. The second is the far commoner
+    one, and a wall plaque is exactly that — so the bonus paid for the pictures
+    this score exists to rank down.
     """
     event_year = parse_year_from_date_string(event_date)
     original_year = parse_year_from_date_string(image_date_original)
-    upload_year = parse_year_from_date_string(image_date_upload)
 
     score = 0.0
 
@@ -108,15 +107,6 @@ def score_temporal_relevance(
             score += 4.0  # Same era
         elif year_diff <= 100:
             score += 2.0  # Within lifetime
-
-    # Recent uploads bonus (better scans/digitization)
-    if upload_year:
-        if upload_year >= 2020:
-            score += 3.0  # Very recent upload
-        elif upload_year >= 2015:
-            score += 2.0  # Recent upload
-        elif upload_year >= 2010:
-            score += 1.0  # Modern upload
 
     return min(score, 10.0)  # Cap at 10
 
@@ -209,23 +199,7 @@ def score_categories(
             score += 1.0
             break
 
-    # Penalty for modern/generic categories
-    penalty_categories = [
-        "modern",
-        "statue",
-        "monument",
-        "memorial",
-        "plaque",
-        "street",
-        "postage",
-        "stamp",
-    ]
-    for penalty in penalty_categories:
-        if any(penalty in cat for cat in categories_lower):
-            score -= 2.0
-            break
-
-    return max(0.0, min(score, 5.0))  # Clamp to 0-5
+    return min(score, 5.0)  # Cap at 5
 
 
 def score_filename(filename: str) -> float:
@@ -262,6 +236,82 @@ def score_filename(filename: str) -> float:
     return max(0.0, min(score, 5.0))  # Clamp to 0-5
 
 
+COMMEMORATION_PENALTY = 10.0
+"""What a picture of a commemoration costs, out of the 20 points a candidate
+can otherwise score.
+
+Large enough to outweigh what a commemoration is always good at: a modern
+digital photograph of a wall plaque beats a scanned period photograph on
+resolution and file efficiency by about eight points, so anything smaller left
+the plaque on top. Not a hard filter, because a monument is sometimes the
+subject's own work — an architect's memorial, a sculptor's statue — and the
+matching call, not this function, is what can tell those apart.
+"""
+
+# Matched as whole words: "grave" sits inside "engraved", and an engraving is
+# exactly the period picture this penalty exists to protect.
+COMMEMORATION_TERMS = (
+    r"plaques?",
+    r"memorials?",
+    r"monuments?",
+    r"statues?",
+    r"busts?",
+    r"graves?",
+    r"gravestones?",
+    r"headstones?",
+    r"tombs?",
+    r"tombstones?",
+    r"cemet[ea]r(?:y|ies)",
+    r"graveyards?",
+    r"burials?",
+    r"obelisks?",
+    r"cenotaphs?",
+    r"commemorat\w*",
+    r"postage",
+    r"stamps?",
+    # Commons names a German subject's commemorations in German.
+    r"gedenktafeln?",
+    r"gedenksteine?",
+    r"denkmal",
+    r"denkm[äa]ler",
+    r"grabsteine?",
+    r"grabm[äa]ler?",
+    r"friedh[öo]fe?",
+    r"briefmarken?",
+)
+
+_COMMEMORATION_PATTERN = re.compile(
+    r"\b(?:" + "|".join(COMMEMORATION_TERMS) + r")\b", re.IGNORECASE
+)
+
+
+def score_commemoration(image_metadata: Dict[str, Any]) -> float:
+    """What to subtract because the picture shows a commemoration (0 or -10).
+
+    A plaque, a grave, a statue erected afterwards: the thing is real, but it
+    is a photograph of how the subject is remembered rather than of the life
+    the story tells, and it is usually the best-lit, highest-resolution
+    candidate in the pool.
+
+    This runs on every candidate, unlike the event-specific scores, because it
+    needs nothing but the candidate: the words are in the filename, the caption
+    and the categories. That matters for Openverse, which reports no categories
+    at all — the one Commons field the old penalty read.
+    """
+    text = " ".join(
+        [
+            str(image_metadata.get("filename", "")),
+            str(image_metadata.get("caption", "")),
+            " ".join(str(cat) for cat in image_metadata.get("categories", []) or []),
+        ]
+    )
+    # Commons writes a filename as Memorial_plaque_for_David_Hilbert.jpg, and an
+    # underscore is a word character: without this the word boundaries below
+    # match nothing at all in the field most likely to name the subject.
+    text = re.sub(r"[_\-]+", " ", text)
+    return -COMMEMORATION_PENALTY if _COMMEMORATION_PATTERN.search(text) else 0.0
+
+
 def calculate_image_quality_score(
     image_metadata: Dict[str, Any],
     person_name: str = "",
@@ -269,15 +319,20 @@ def calculate_image_quality_score(
     event_text: str = "",
 ) -> float:
     """
-    Calculate overall image quality score (0-45 points).
+    Calculate overall image quality score (up to 35 points).
 
-    Combines multiple quality metrics:
+    Always weighed, because they need only the candidate:
     - Resolution (0-10)
     - File efficiency (0-5)
     - Filename quality (0-5)
-    - Temporal relevance (0-10, if event data provided)
-    - Category relevance (0-5, if event data provided)
+    - Commemoration penalty (0 or -10)
     - Hard filters (aspect ratio, file size, MIME type)
+
+    Weighed only when the caller has an event to weigh against, which the
+    production callers do not — they score the pool once and serve every event
+    from it:
+    - Temporal relevance (0-10)
+    - Category relevance (0-5)
 
     Returns score (higher is better), or -1 if image fails hard filters.
     """
@@ -321,13 +376,12 @@ def calculate_image_quality_score(
     score += score_resolution(width, height)
     score += score_file_efficiency(file_size, width, height)
     score += score_filename(image_metadata.get("filename", ""))
+    score += score_commemoration(image_metadata)
 
     # Add event-specific scores if provided
     if event_date or event_text:
         score += score_temporal_relevance(
-            event_date,
-            image_metadata.get("dateTimeOriginal", ""),
-            image_metadata.get("dateTimeUpload", ""),
+            event_date, image_metadata.get("dateTimeOriginal", "")
         )
 
         if person_name and event_text:

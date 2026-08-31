@@ -225,11 +225,11 @@
       }
     },
     "p_img_filter": {
-      "fingerprint": "b2236dd464ee157b",
+      "fingerprint": "92d3fd21fa291fb2",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Scores the shared image pool, removes weak candidates, and orders the survivors before later matching assigns images to events. It keeps the score with each image so later stages can inspect why a candidate reached the matcher.",
-        "why_this_design": "It leaves event-specific signals unused because the same ranked pool serves every event, avoiding scores that would be valid for one event but misleading for another."
+        "what_it_does": "Scores the shared image pool, removes weak candidates, and leaves the remaining images in quality order for later event matching. By ranking before matching, it gives the matcher a smaller set that favors usable period images over modern commemorative material.",
+        "why_this_design": "The callers omit event-specific signals because this pool is scored once and reused across events."
       }
     },
     "p_img_match": {
