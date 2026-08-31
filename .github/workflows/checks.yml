@@ -67,8 +67,13 @@ jobs:
       # cache only has to be present, not fresh. The key carries the commit so
       # every run writes an entry back — a cache entry is immutable, so a key
       # that never varies is written once and then never updated again.
+      #
+      # Restore and save are separate actions because `actions/cache` saves only
+      # when the whole job succeeds, and this job fails on `main` today at the
+      # translation-currency check. A cache written only by a green run would
+      # never be written at all.
       - name: Restore the mypy cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: .mypy_cache
           key: mypy-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'pyproject.toml') }}-${{ github.sha }}
@@ -76,7 +81,15 @@ jobs:
             mypy-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'pyproject.toml') }}-
 
       - name: Python types
+        id: mypy
         run: npm run type-check:py
+
+      - name: Save the mypy cache
+        if: always() && steps.mypy.conclusion != 'skipped'
+        uses: actions/cache/save@v4
+        with:
+          path: .mypy_cache
+          key: mypy-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'pyproject.toml') }}-${{ github.sha }}
 
       - name: Build
         run: npm run build
@@ -144,18 +157,28 @@ jobs:
 
       - name: Restore the Chromium build
         id: chromium
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
 
       - name: Install Chromium for Playwright
+        id: chromium-install
         if: steps.chromium.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
 
       - name: Install the libraries Chromium links
         if: steps.chromium.outputs.cache-hit == 'true'
         run: npx playwright install-deps chromium
+
+      # Saved separately for the same reason as the mypy cache: a download this
+      # job then fails on is a download the next run would have to repeat.
+      - name: Save the Chromium build
+        if: always() && steps.chromium-install.conclusion == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
 
       - name: Interface tests
         run: npm run test:interface
