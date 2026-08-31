@@ -9,11 +9,11 @@
       }
     },
     "m_p1": {
-      "fingerprint": "dd489bbe1064494a",
+      "fingerprint": "aee722ed1766a2de",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the collection’s editorial frame by selecting people whose records directly support the topic, then arranging them into themes and eras with an opening narrative and conclusion. It also identifies absent people who would fill gaps in the dataset and strengthen the eventual story.",
-        "why_this_design": "It supplies event locations and titles alongside abbreviated biographies so selection can recognize substantive place-based and topic-specific work, while manual choices and explicit hints can override automated relevance judgments."
+        "what_it_does": "Selects the registry’s relevant people and turns them into a narrative plan: an opening account of the topic, thematic groupings, a chronology of active work, and gaps the dataset could fill. It gives later stages a declared cast and structure rather than asking them to infer the story from the full registry.",
+        "why_this_design": "It supplies event locations and titles alongside concise biographies so selection can recognize substantive links—especially to a place—while manual choices and explicit hints can override the automatic test of relevance."
       }
     },
     "m_p2": {

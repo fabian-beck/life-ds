@@ -474,16 +474,14 @@ def phase1_story_planning(
             # Extract unique location names from events
             location_set = set()
             for event in life_events.get("events", []):
-                # `locations` is the field generation writes and the app reads.
-                # Reading only the legacy `location_coordinates` list left this
-                # hint empty for the 39 of 52 people whose data never carried
-                # it, so the planner picked place-based topics half blind.
-                places = event.get("locations") or event.get("location_coordinates", [])
-                for loc_data in places:
-                    loc_name = (
-                        loc_data.get("name_historic")
-                        or loc_data.get("name_modern")
-                        or loc_data.get("name")
+                # `locations` is the field generation writes and the app
+                # reads. This hint once read the legacy `location_coordinates`
+                # list instead, which left it empty for the 39 of 52 people
+                # whose data never carried it, so the planner picked
+                # place-based topics half blind.
+                for loc_data in event.get("locations") or []:
+                    loc_name = loc_data.get("name_historic") or loc_data.get(
+                        "name_modern"
                     )
                     if loc_name:
                         # Extract city/region (before first comma)

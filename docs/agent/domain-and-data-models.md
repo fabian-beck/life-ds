@@ -104,7 +104,7 @@ Events are the core narrative units displayed as slides. Events can optionally b
 ```
 
 **New Fields (Two-Phase System)**:
-- `locations`: every place the event touches, each with the name at the time (`name_historic`), the name to geocode against today (`name_modern`, e.g. "Kaliningrad, Russia" for historic "Königsberg"), a `centroid` as `[lon, lat]`, and a `primary` flag marking the one the maps pin. This is the only location field the application reads. An older `location_coordinates` list (`label`/`name`/`source`) survives on 29 events and is dead everywhere except as a fallback in `scripts/meta_story_map.py`; see issue #71.
+- `locations`: every place the event touches, each with the name at the time (`name_historic`), the name to geocode against today (`name_modern`, e.g. "Kaliningrad, Russia" for historic "Königsberg"), a `centroid` as `[lon, lat]`, and a `primary` flag marking the one the maps pin. This is the only location field anything reads — the person story, the collection map, and the meta-story planner alike. An older `location_coordinates` list (`label`/`name`/`source`) still sits on ten English events and their German derivations, listed in `data/outdated.md`; nothing reads it, so those events show no place until their datasets are regenerated.
 - `involved_people`: List of people directly involved in this event (excludes the main subject)
 - `event_type_icon`: MDI icon identifier for visual categorization (e.g., "mdi-crown", "mdi-book", "mdi-school")
 

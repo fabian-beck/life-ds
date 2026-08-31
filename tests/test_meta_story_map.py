@@ -1,9 +1,11 @@
-"""Chronological order of the events inside a geographic map stop.
+"""What the geographic map places, and in what order.
 
 A stop card lists its cluster's events in array order and spells out only the
 first few, so an unordered cluster both reads backwards and can hide the wrong
 events. The order is a property of the stored data, checked here for the
-generator and for the meta-story files the app actually reads.
+generator and for the meta-story files the app actually reads. The map also
+has to place an event where its own story places it, which is a property of
+the one location field both read.
 """
 
 import json
@@ -16,6 +18,7 @@ SCRIPTS_DIR = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 from meta_story_map import (  # noqa: E402
+    _event_location,
     cluster_located_events,
     event_date_key,
 )
@@ -65,6 +68,45 @@ class ClusterEventOrderTests(unittest.TestCase):
             [e["event_date"] for e in clusters[0]["events"]],
             ["1781-09-28", "1781-10-14"],
         )
+
+
+class EventLocationTests(unittest.TestCase):
+    """The collection map reads the same field the person story reads.
+
+    It once fell back to a legacy ``location_coordinates`` list when
+    ``locations`` was empty, which pinned events the person story showed no
+    place for. Datasets still carrying that list are flagged in
+    ``data/outdated.md`` for regeneration, not read here.
+    """
+
+    def test_reads_the_primary_entry_of_locations(self):
+        event = {
+            "locations": [
+                {"name_modern": "Berlin, Germany", "centroid": [13.4, 52.5]},
+                {
+                    "name_historic": "Königsberg",
+                    "centroid": [20.4565666, 54.7046485],
+                    "primary": True,
+                },
+            ]
+        }
+        self.assertEqual(
+            _event_location(event), ("Königsberg", [20.4565666, 54.7046485])
+        )
+
+    def test_ignores_the_legacy_location_coordinates_list(self):
+        event = {
+            "locations": [],
+            "location_coordinates": [
+                {
+                    "label": "Bamberg (inference)",
+                    "name": "Bamberg, Bavaria, Germany",
+                    "primary": True,
+                    "centroid": [10.8985, 49.8917],
+                }
+            ],
+        }
+        self.assertIsNone(_event_location(event))
 
 
 class StoredMetaStoryTests(unittest.TestCase):

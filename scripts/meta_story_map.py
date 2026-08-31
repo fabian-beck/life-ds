@@ -102,9 +102,12 @@ def _valid_coordinates(coords: Any) -> Optional[List[float]]:
 def _event_location(event: Dict[str, Any]) -> Optional[Tuple[str, List[float]]]:
     """Resolve an event's primary place label and ``[lon, lat]`` centroid.
 
-    Handles both location schemas found in the data: the current
-    ``locations`` list (``name_historic``/``name_modern``/``centroid``) and
-    the legacy ``location_coordinates`` list (``name``/``label``/``centroid``).
+    Reads ``locations`` and nothing else, the same field the person story
+    reads, so an event pins on the collection map exactly where it pins on
+    its own. A second, legacy ``location_coordinates`` list used to be
+    consulted when ``locations`` was empty; that placed events the person
+    story showed no place for, and the datasets still carrying it are flagged
+    in ``data/outdated.md`` for regeneration.
     """
     candidates = []
     for loc in event.get("locations") or []:
@@ -116,16 +119,6 @@ def _event_location(event: Dict[str, Any]) -> Optional[Tuple[str, List[float]]]:
                     bool(loc.get("primary")),
                 )
             )
-    if not candidates:
-        for loc in event.get("location_coordinates") or []:
-            if isinstance(loc, dict):
-                candidates.append(
-                    (
-                        loc.get("name") or loc.get("label") or "",
-                        loc.get("centroid"),
-                        bool(loc.get("primary")),
-                    )
-                )
 
     # Primary entry first, then first valid fallback.
     candidates.sort(key=lambda c: not c[2])
