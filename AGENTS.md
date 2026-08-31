@@ -22,7 +22,7 @@ Detailed project information is intentionally kept out of this always-loaded fil
 - [Data generation and localization](docs/agent/data-generation-and-localization.md)
 - [Development reference](docs/agent/development-reference.md)
 
-`docs/report/index.html` is a generated, interactive technical report on the system—data model, both generation pipelines with their steps, prompts, and output schemas, the application, localization, and testing. Open it to orient yourself before changing a generation script.
+`docs/report/index.html` is a generated, interactive technical report on the system—data model, both generation pipelines and their steps, the application, localization, and testing. Open it to orient yourself before changing a generation script.
 
 Its prose is authored in `docs/report/report.md`; everything factual is computed at build time, so never hand-edit `index.html`. Run `python scripts/generate_report.py --check` after changing a generation script or the report source. Its screenshots of the application are described in the same markdown and taken by a browser—`npm run report:shots` retakes the ones whose description moved, `--shots all` retakes them after the interface itself changed.
 

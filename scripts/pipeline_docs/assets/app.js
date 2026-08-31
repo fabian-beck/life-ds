@@ -312,17 +312,7 @@
       step.spec_summary || "",
       (step.summary && step.summary.what_it_does) || "",
       (step.summary && step.summary.why_this_design) || "",
-      ((step.summary && step.summary.constraints) || []).join(" "),
       (step.schemas || []).join(" "),
-      (step.prompts || [])
-        .map((prompt) => {
-          return (prompt.segments || [])
-            .map((segment) => {
-              return segment.text;
-            })
-            .join(" ");
-        })
-        .join(" "),
     ]
       .join(" ")
       .toLowerCase();
@@ -494,7 +484,7 @@
     const search = el("input", {
       class: "search",
       type: "search",
-      placeholder: "Search steps, prompts, schemas…",
+      placeholder: "Search steps, schemas…",
       "aria-label": "Search the " + lane.label + " pipeline",
     });
     const filters = el("div", { class: "filters" });
@@ -1700,9 +1690,9 @@
           " visible steps match “" +
           state.query +
           "”"
-        : "Click any step for its prompt, output schema and dependencies. " +
-          "Hovering a shaded band names its concern; selecting a step labels " +
-          "its arrows with the data that travels along them.";
+        : "Click any step for what it does and the record read out of its " +
+          "source. Hovering a shaded band names its concern; selecting a " +
+          "step labels its arrows with the data that travels along them.";
 
       /* What the figure is, and then the marks that carry no label of their
          own. The layer semantics, the branch structure and what a step node
@@ -1919,24 +1909,6 @@
 
   /* ------------------------------------------------------------- drawer */
 
-  function promptHtml(prompt) {
-    return (prompt.segments || [])
-      .map((segment) => {
-        const conditions = (segment.conditions || []).length
-          ? '<span class="cond">' +
-            escapeHtml(segment.conditions.join("  ·  ")) +
-            "</span>"
-          : "";
-        const body = escapeHtml(segment.text)
-          .replace(/&lt;&lt;([a-z_]+)&gt;&gt;/g, '<span class="role">$1</span>')
-          .replace(/\{[^{}\n]{1,80}\}/g, (match) => {
-            return '<span class="ph">' + match + "</span>";
-          });
-        return conditions + body;
-      })
-      .join("");
-  }
-
   function schemaBlock(name) {
     const schema = DATA.schemas[name];
     if (!schema) return null;
@@ -1983,50 +1955,35 @@
       .join("<br>");
   }
 
-  function dependentList(step) {
-    return DATA.steps
-      .filter((other) => {
-        return (other.depends_on || []).some((dep) => {
-          return dep.on === step.id;
-        });
-      })
-      .map((other) => {
-        const dep = other.depends_on.filter((entry) => {
-          return entry.on === step.id;
-        })[0];
-        return "<b>" + escapeHtml(other.label) + "</b>—" + escapeHtml(dep.data);
-      })
-      .join("<br>");
-  }
-
-  /* Everything a step can be asked about, written into `body`.
+  /* Everything a step's entry holds, written into `body`.
      Two readers call this. The drawer summons it for one step at a time, and
      the print appendix lays the same material out for every step, because paper
-     cannot be clicked. `expand` is what that second reader needs: the prompt
-     tabs become every prompt in sequence, since a printed page has no "show the
-     rest" affordance. */
-  function stepDetail(body, step, expand) {
+     cannot be clicked.
+
+     What belongs in an entry is set by the level the report argues at. The
+     written explanation and the record measured from the source belong to it;
+     the literal prompt text and the output schema expanded field by field do
+     not. Those are the source, and the record points at it by file, line and
+     type name—which is what the figures are an index to, rather than a copy
+     of. The four schemas the pipelines turn on are expanded once in the main
+     text, where the argument needs them. */
+  function stepDetail(body, step) {
     const summary = step.summary || {};
-    body.appendChild(el("h3", { text: "What this step does" }));
     body.appendChild(
       el("p", { text: summary.what_it_does || step.spec_summary })
     );
     if (summary.why_this_design) {
-      body.appendChild(el("h3", { text: "Why it is built this way" }));
       body.appendChild(el("p", { text: summary.why_this_design }));
     }
-    if ((summary.constraints || []).length) {
-      body.appendChild(el("h3", { text: "Rules it enforces" }));
-      const list = el("ul", { class: "bullets" });
-      summary.constraints.forEach((item) => {
-        list.appendChild(el("li", { text: item }));
-      });
-      body.appendChild(list);
-    }
-    /* Whose words those were. Everything under "Facts from the source" is
+    /* Whose words those were. Everything under "Record from the source" is
        measured from the code; the explanation above it is not, and a report
        that argues for traceability cannot print generated prose unattributed.
-       `spec.py` marks the hand-written fallback, which needs no notice. */
+       `spec.py` marks the hand-written fallback, which needs no notice.
+
+       The attribution alone, because the appendix prints this line under every
+       one of the steps: how the explanation is cached against the source it
+       describes is said once, in the colophon, where a claim about the whole
+       build belongs. */
     if (summary.source && summary.source !== "spec.py") {
       body.appendChild(
         el("p", {
@@ -2034,14 +1991,21 @@
           text:
             "Explanation written by " +
             summary.source +
-            " from this step's source, prompt, and output schema, and rewritten " +
-            "when any of the three changes. The record below is measured.",
+            " from this step's source; the record below is measured.",
         })
       );
     }
 
-    body.appendChild(el("h3", { text: "Facts from the source" }));
+    body.appendChild(el("h3", { text: "Record from the source" }));
     const table = el("table", { class: "facts" });
+    /* Only what the figure cannot already say. The chart carries the step's
+       kind in its color, its pipeline in the figure it is drawn in, its group
+       in the band behind it, and its phase in its own label; repeating any of
+       those here would make the entry longer without making it say more. What
+       the step needs is kept, because the chart names a flow only while the
+       step is selected and paper never selects one. What it feeds is not: that
+       is the same edge read backwards, and it is already stated on the entry
+       of the step that needs it. */
     const rows = [
       factRow(
         "Source",
@@ -2052,25 +2016,6 @@
           escapeHtml(step.function) +
           "()</code>"
       ),
-      factRow("Kind", escapeHtml(DATA.kinds[step.kind].label)),
-      factRow("Pipeline", escapeHtml(DATA.lanes[step.lane].label)),
-      factRow(
-        "Part of",
-        step.group && groupById[step.group]
-          ? escapeHtml(groupById[step.group].label) +
-              (groupById[step.group].note
-                ? "<span class='sub'>—" +
-                  escapeHtml(groupById[step.group].note) +
-                  "</span>"
-                : "")
-          : null
-      ),
-      factRow("Phase", step.phase ? escapeHtml(step.phase) : null),
-      factRow(
-        "Needs",
-        dependencyList(step) || "Nothing—this step starts a branch"
-      ),
-      factRow("Feeds", dependentList(step) || null),
       factRow(
         "Model",
         step.model
@@ -2087,6 +2032,10 @@
       factRow(
         "Reasoning effort",
         step.effort ? "<code>" + escapeHtml(step.effort) + "</code>" : null
+      ),
+      factRow(
+        "Needs",
+        dependencyList(step) || "Nothing—this step starts a branch"
       ),
       factRow("Calls per run", escapeHtml(step.calls_per_run)),
       factRow(
@@ -2113,61 +2062,6 @@
       if (row) table.appendChild(row);
     });
     body.appendChild(table);
-
-    if ((step.schemas || []).length) {
-      body.appendChild(el("h3", { text: "Structured output" }));
-      step.schemas.forEach((name) => {
-        const block = schemaBlock(name);
-        if (block) body.appendChild(block);
-      });
-    }
-
-    if ((step.prompts || []).length) {
-      body.appendChild(el("h3", { text: "Prompt template" }));
-      body.appendChild(
-        el("p", {
-          class: "sub",
-          html:
-            "Literal instruction text extracted from the source. " +
-            "<span class='ph'>{highlighted}</span> marks where runtime data is injected; " +
-            "gray lines above a block are the conditions that guard it.",
-        })
-      );
-      if (expand) {
-        step.prompts.forEach((prompt) => {
-          body.appendChild(
-            el("p", { class: "prompt-name", text: prompt.symbol })
-          );
-          body.appendChild(
-            el("pre", { class: "prompt", html: promptHtml(prompt) })
-          );
-        });
-      } else {
-        const tabs = el("div", { class: "tabs" });
-        const panel = el("div", {});
-        step.prompts.forEach((prompt, index) => {
-          const tab = el("button", {
-            class: "tab",
-            type: "button",
-            "aria-selected": index === 0 ? "true" : "false",
-            text: prompt.symbol,
-            onclick: function () {
-              Array.prototype.forEach.call(tabs.children, (child) => {
-                child.setAttribute("aria-selected", "false");
-              });
-              tab.setAttribute("aria-selected", "true");
-              panel.innerHTML =
-                "<pre class='prompt'>" + promptHtml(prompt) + "</pre>";
-            },
-          });
-          tabs.appendChild(tab);
-        });
-        body.appendChild(tabs);
-        panel.innerHTML =
-          "<pre class='prompt'>" + promptHtml(step.prompts[0]) + "</pre>";
-        body.appendChild(panel);
-      }
-    }
   }
 
   function renderDrawer(step) {
@@ -2175,7 +2069,7 @@
     head.textContent = step.label;
     const body = document.getElementById("drawer-body");
     clear(body);
-    stepDetail(body, step, false);
+    stepDetail(body, step);
     body.scrollTop = 0;
   }
 
@@ -4567,11 +4461,11 @@
 
   /* ----------------------------------------------------- print appendix */
 
-  /* On screen, a step's prompt, schema and dependencies are one click away in
-     the drawer. Paper has no click, so a printed report that stopped at the
-     figures would be missing the material the figures are an index to. This
-     builds that material as an appendix: every step, in the order the pipelines
-     run them, with the drawer's own content expanded.
+  /* On screen, what a step does and the record read out of its source are one
+     click away in the drawer. Paper has no click, so a printed report that
+     stopped at the figures would be missing the material the figures are an
+     index to. This builds that material as an appendix: every step, in the
+     order the pipelines run them, with the drawer's own content.
 
      It is print-only. On screen it would double the length of the page to say
      what the drawer already says on demand, so the stylesheet hides it and the
@@ -4638,10 +4532,9 @@
       el("p", {
         text:
           "One entry per documented step, in the order the pipelines reach " +
-          "them: what the step does, the facts read out of its source, its " +
-          "structured output and the literal prompt text it sends. In the " +
-          "interactive report this is the panel that opens when a step in " +
-          "Figure 2 or Figure 3 is clicked.",
+          "them: what the step does, why it is built that way, and the record " +
+          "read out of its source. In the interactive report this is the " +
+          "panel that opens when a step in Figure 2 or Figure 3 is clicked.",
       })
     );
 
@@ -4651,7 +4544,7 @@
       const entry = el("article", { class: "step-detail" });
       entry.appendChild(appendixHeading(2, number, slug, step.label));
       const body = el("div", { class: "step-detail-body" });
-      stepDetail(body, step, true);
+      stepDetail(body, step);
       entry.appendChild(body);
       section.appendChild(entry);
     });

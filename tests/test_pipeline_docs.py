@@ -267,7 +267,6 @@ class WrittenExplanationTests(unittest.TestCase):
             self.step.id: {
                 "what_it_does": text,
                 "why_this_design": "",
-                "constraints": [],
                 "source": source,
             }
         }
@@ -326,14 +325,13 @@ class ExplanationFreshnessTests(unittest.TestCase):
         path.write_text(
             json.dumps(
                 {
-                    "version": 2,
+                    "version": summarize.CACHE_VERSION,
                     "steps": {
                         self.step.id: {
                             "fingerprint": fingerprint,
                             "summary": {
                                 "what_it_does": "Writes a palette.",
                                 "why_this_design": "",
-                                "constraints": [],
                                 "source": "gpt-5.6-terra",
                             },
                         }
@@ -364,7 +362,7 @@ class ExplanationFreshnessTests(unittest.TestCase):
         """The build writes it, and without a key `spec.py` text stands in."""
         directory = tempfile.mkdtemp()
         path = Path(directory) / "summaries.json"
-        path.write_text(json.dumps({"version": 2, "steps": {}}), encoding="utf-8")
+        path.write_text(json.dumps({"version": summarize.CACHE_VERSION, "steps": {}}), encoding="utf-8")
         self.assertEqual([], validate.check_freshness(self.codebase, path))
 
     def test_every_published_explanation_matches_the_source_it_describes(self) -> None:
@@ -622,14 +620,38 @@ class PayloadAndRenderTests(unittest.TestCase):
         self.assertTrue(by_id["p_translate"]["depends_on"])
 
     def test_ai_steps_carry_a_model_and_a_schema_or_prompt(self) -> None:
+        """The page prints no prompt, but a step still has to have one.
+
+        What has to exist is the documented call: a step that asks a model for
+        something names either the type it fills or the prompt text it sends.
+        One that names neither is a step `spec.py` describes without pointing
+        at anything, whatever the page chooses to show.
+        """
+        prompts = {item.id: item.prompts for item in spec.STEPS}
         for step in self.payload["steps"]:
             if step["kind"] != "ai":
                 continue
             self.assertTrue(step["model"], f"{step['id']} has no resolved model")
             self.assertTrue(
-                step["prompts"] or step["schemas"],
+                step["schemas"] or prompts.get(step["id"]),
                 f"{step['id']} has neither a prompt nor a schema",
             )
+
+    def test_the_page_is_a_function_of_the_payloads_values(self) -> None:
+        """Two equal payloads render the same bytes, however they were built.
+
+        `--check` compares the committed page with a rebuild character by
+        character, and a step summary reaches the build either straight from
+        the summarizer or read back out of the sorted cache. The two dicts are
+        equal and their key order is not, so a build that re-summarized a step
+        once wrote a page the next check reported as drift.
+        """
+        shuffled = {key: self.payload[key] for key in reversed(list(self.payload))}
+        shuffled["steps"] = [
+            {key: step[key] for key in reversed(list(step))}
+            for step in self.payload["steps"]
+        ]
+        self.assertEqual(render.render(self.payload), render.render(shuffled))
 
     def test_rendered_page_is_self_contained(self) -> None:
         html = render.render(self.payload)
@@ -2107,8 +2129,7 @@ class PrintTests(unittest.TestCase):
     def test_the_appendix_is_the_drawer(self) -> None:
         """One builder, so a new fact in the drawer reaches the PDF for free."""
         self.assertIn("function stepDetail(", self.js)
-        self.assertIn("stepDetail(body, step, false)", self.js)  # the drawer
-        self.assertIn("stepDetail(body, step, true)", self.js)  # the appendix
+        self.assertEqual(2, self.js.count("stepDetail(body, step);"))  # both
         self.assertIn("renderStepAppendix();", self.js)
 
     def test_the_export_script_waits_for_the_page_to_finish(self) -> None:

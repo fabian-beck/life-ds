@@ -80,8 +80,8 @@ __BODY__
 
     <footer class="colophon">
       <p>
-        Authored prose lives in <code>__SOURCE__</code>. Every figure, table,
-        count and prompt in this report is computed at build time by
+        Authored prose lives in <code>__SOURCE__</code>. Every figure, table
+        and count in this report is computed at build time by
         <code>scripts/generate_report.py</code>—from the abstract syntax trees
         of <code>scripts/</code> and from the repository itself. Step
         explanations are written by a language model from the source and cached
@@ -206,7 +206,14 @@ def render(payload: Dict[str, Any], document: Optional[Document] = None) -> str:
     script = (ASSETS / "app.js").read_text(encoding="utf-8")
     # `</script>` inside the payload would close the tag early; escaping the
     # slash keeps the JSON valid while making that impossible.
-    data = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
+    #
+    # Sorted, because `--check` compares the rendered page byte for byte: the
+    # text has to be a function of the payload's values and nothing else. A
+    # step summary reaches the build either straight from the summarizer or
+    # read back out of the sorted cache, and the two dicts are equal while
+    # their insertion order is not—so without this a build that re-summarized
+    # anything wrote a page the very next check called drift.
+    data = json.dumps(payload, ensure_ascii=False, sort_keys=True).replace("</", "<\\/")
 
     title = document.title if document else "Life Data Stories—technical report"
     subtitle = (document.front.get("subtitle", "") if document else "").strip()

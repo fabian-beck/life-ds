@@ -1735,15 +1735,6 @@ figure.figure > .cap {
   font-size: 12px;
 }
 
-/* The label above an expanded prompt, where the drawer would have shown a tab.
-   Scoped past `.report p`, which the appendix sits inside. */
-.step-detail-body .prompt-name {
-  margin: 0 0 4px;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 11px;
-}
-
 .facts {
   width: 100%;
   border-collapse: collapse;
@@ -1822,44 +1813,6 @@ details.block .inner {
   padding: 0 12px 12px;
 }
 
-pre.prompt {
-  overflow: auto;
-  max-height: 460px;
-  margin: 0;
-  padding: 12px;
-  border: 1px solid var(--rule);
-  background: var(--surface);
-  font-family: var(--mono);
-  font-size: 12px;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
-pre.prompt .ph {
-  padding: 0 2px;
-  background: var(--paper);
-  box-shadow: inset 0 0 0 1px var(--rule);
-  color: var(--ink);
-}
-
-pre.prompt .role {
-  display: block;
-  margin: 6px 0 2px;
-  color: var(--muted);
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.cond {
-  display: block;
-  margin: 8px 0 2px;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 11px;
-}
-
 .schema-field {
   padding: 6px 0;
   border-top: 1px solid var(--rule-soft);
@@ -1883,28 +1836,6 @@ pre.prompt .role {
 }
 
 .schema-field .fdesc {
-  color: var(--ink);
-}
-
-.tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 8px;
-}
-
-.tab {
-  padding: 4px 8px;
-  border: 1px solid var(--rule);
-  background: var(--paper);
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 11px;
-  cursor: pointer;
-}
-
-.tab[aria-selected="true"] {
-  border-color: var(--rule-strong);
   color: var(--ink);
 }
 
@@ -3028,15 +2959,6 @@ figure.teaser > .cap {
     white-space: pre-wrap;
   }
 
-  /* A prompt is the point of the appendix, so it may not end at a scrollbar.
-     It is allowed to break across pages: some of them are longer than a sheet,
-     and the alternative is a page break that leaves half a page empty. */
-  pre.prompt {
-    overflow: visible;
-    max-height: none;
-    break-inside: auto;
-  }
-
   /* On paper a reference is only a phrase; the marker would point nowhere. The
      button box goes with it: a button is an atomic inline whatever its display
      says, and the line breaker treats it as an object, so the comma after one
@@ -3051,14 +2973,19 @@ figure.teaser > .cap {
   }
 
   /* The appendix the drawer stands in for on screen. It opens a page of its
-     own, and so does each step, so that an entry can be found by leafing. */
+     own; its entries then run on. A step used to be given a page of its own so
+     it could be found by leafing, which was worth a sheet while an entry ran
+     to several of them and is not worth one now that it is a paragraph and a
+     table—a page each would leave most of forty-three sheets empty. Each entry
+     is kept whole instead, so a step is still read in one place. */
   .appendix {
     display: block;
     break-before: page;
   }
 
   .step-detail {
-    break-before: page;
+    margin-top: 22px;
+    break-inside: avoid;
   }
 
   .step-detail-body {

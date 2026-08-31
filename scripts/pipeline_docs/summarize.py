@@ -6,6 +6,12 @@ schema. The summary is stored with a fingerprint of exactly those inputs, so a
 rebuild only pays for the steps that actually changed—the same
 staleness-by-fingerprint idea the translation pipeline uses for person data.
 
+The summarizer reads the source but does not paraphrase it. What it writes is
+a report entry: what the step contributes and why it is built that way, at the
+level the surrounding prose argues at. Character budgets, field inventories,
+and the counts a prompt happens to state are below that level, and the record
+printed beside the text carries what is measurable anyway.
+
 Without an API key (or with `--skip-ai`) the build falls back to the
 hand-written one-liners in `spec.py`, so the chart always renders.
 """
@@ -23,23 +29,40 @@ from pydantic import BaseModel, Field
 from . import spec
 from .introspect import Codebase
 
-CACHE_VERSION = 2
+CACHE_VERSION = 3
 MAX_SOURCE_CHARS = 9000
 MAX_PROMPT_CHARS = 6000
 
 SYSTEM_PROMPT = (
-    "You document a data-journalism pipeline for the developer who wrote it and "
-    "for researchers reading it later. You are given one processing step: its "
-    "source, the prompt template it sends, and the structured output it asks "
-    "for. Explain what the step does and why it is built that way. Be concrete "
-    "and technical; prefer the specific constraint over the general claim. "
-    "Never name a model, an API version or a vendor product: the record printed "
-    "beside your text carries the model this step resolves, measured from the "
-    "code, and a name repeated from a comment is how that record goes stale. "
-    "Never address the reader, never use second person, and do not restate the "
-    "step's name as a sentence. Write in American English, and set em dashes "
-    "closed up against the words they join, with no surrounding spaces, as the "
-    "rest of the report does."
+    "You write the step entries of a technical report on a data-journalism "
+    "pipeline, for the developer who wrote it and for researchers reading it "
+    "later. You are given one processing step: its source, the prompt template "
+    "it sends, and the structured output it asks for. Say what the step "
+    "contributes to the story the pipeline is building and why it is built "
+    "that way. Write at the level of the report around you, which argues about "
+    "the design rather than restating it: no character budgets, no "
+    "field-by-field inventory of the output, no counts or formatting rules "
+    "quoted from the prompt. A specific constraint earns its place only where "
+    "the design turns on it. The report prints the step's source, model, "
+    "output schema, and dependencies beside your text, so leave those to it. "
+    "Its register is plain and concrete. Name the thing that acts, prefer the "
+    "active verb and the plain word over the impressive one, and call a thing "
+    "what it is: a step reads an article and returns a place name, it does not "
+    "ingest a source and emit a geographically resolvable location layer. "
+    "Never stack abstract nouns where one concrete noun would do, and cut any "
+    "adjective that only praises the design. Every clause carries part of the "
+    "claim, so a sentence that merely restates its predecessor is dropped "
+    "rather than rewritten. "
+    "Never name a model, an API version or a vendor product: the record "
+    "printed beside your text carries the model this step resolves, measured "
+    "from the code, and a name repeated from a comment is how that record goes "
+    "stale. Never address the reader, never use second person, and do not "
+    "restate the step's name as a sentence. Open with the verb: the entry is "
+    "printed under the step's name, so 'This step gathers the article' spends "
+    "the opening on a subject the heading already gave, where 'Gathers the "
+    "article' does not. Write in American English, and set "
+    "em dashes closed up against the words they join, with no surrounding "
+    "spaces, as the rest of the report does."
 )
 
 
@@ -48,24 +71,17 @@ class StepSummary(BaseModel):
 
     what_it_does: str = Field(
         description=(
-            "2-3 sentences on what this step computes or asks the model for, "
-            "in terms of the story the pipeline is building."
+            "At most two sentences on what this step contributes to the story "
+            "the pipeline is building: what it reads, what it decides, what it "
+            "leaves behind."
         )
     )
     why_this_design: str = Field(
         description=(
-            "1-2 sentences on a non-obvious design decision visible in the "
+            "One sentence on a non-obvious design decision visible in the "
             "source or prompt: an ordering constraint, a failure mode it "
             "guards, a budget it protects. Empty string if nothing stands out."
         )
-    )
-    constraints: List[str] = Field(
-        default_factory=list,
-        description=(
-            "Up to 4 short bullets naming hard rules the prompt or code "
-            "enforces (counts, formats, forbidden outputs, invariants). "
-            "Quote numbers where the source gives them."
-        ),
     )
 
 
@@ -215,7 +231,6 @@ def _fallback(step: spec.Step) -> Dict[str, Any]:
     return {
         "what_it_does": step.summary,
         "why_this_design": "",
-        "constraints": [],
         "source": "spec.py",
     }
 

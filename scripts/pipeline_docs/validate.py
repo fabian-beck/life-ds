@@ -356,9 +356,6 @@ def check_summaries(
             str(summary.get("what_it_does") or ""),
             str(summary.get("why_this_design") or ""),
         ]
-        rules = summary.get("constraints")
-        if isinstance(rules, list):
-            parts += [str(rule) for rule in rules]
         for name in sorted(set(MODEL_NAME.findall(" ".join(parts)))):
             if name.lower().replace(" ", "-") in resolved:
                 continue

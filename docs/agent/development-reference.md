@@ -266,11 +266,13 @@ Python scripts use:
 
 ## Technical Report
 
-`docs/report/index.html` is a standalone, interactive technical report on the whole system: what it is for, how the data is modeled, both generation pipelines step by step—the model and reasoning effort each uses, the prompt it sends, and the structured output it asks for—plus the application, localization, and testing.
+`docs/report/index.html` is a standalone, interactive technical report on the whole system: what it is for, how the data is modeled, both generation pipelines step by step—what each step contributes, the model and reasoning effort it uses, and the structured output it asks for—plus the application, localization, and testing.
 
 It has two halves that never mix. The prose is authored by hand in `docs/report/report.md`; everything factual is computed at build time. See [Authoring the Report](#authoring-the-report) below before editing either.
 
 The page is styled as an academic report: black on white, square corners, and color reserved for the step kind alone. Both pipelines are drawn, as sections 4.1 and 4.2 rather than as tabs, each with its own filters, search, and selection; the step drawer is shared between them.
+
+**A step entry stays at the level the report argues at.** The drawer, and the appendix built from it, hold the written explanation of a step and the record measured from its source. Source itself is not reprinted there: the literal prompt text and the output schema expanded field by field are the thing the figures index rather than a description of it, so `Source` names the file, line, and function to read the one in, `Output schema` names the type of the other, and the four schemas the pipelines turn on are expanded once in the main text by `::: schemalist`. The record carries only what the drawing cannot—a step's kind, pipeline, group, and phase are already drawn—and states each dependency once, on the step that needs it, since what a step feeds is the same edge read backwards.
 
 The chart is a **layered DAG, not a sequence**. An arrow means one step consumes what another produced (`Step.depends_on` in `spec.py`, with a label for the data that travels along it); a step's layer is the longest such chain reaching it, so steps drawn side by side are genuinely independent—the meta story's map branch and network branch really do run without seeing each other. The artifacts a step writes are printed inside its node, each behind its concept's glyph; an artifact the pipeline only reads becomes a source node, which is how the meta chart shows that it consumes person-pipeline output. Orchestrator `main()` functions are deliberately not steps: they impose an order without creating a dependency, and drawing them made a fork look like a chain.
 
@@ -302,7 +304,7 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `[[part]]` figure references, `[@key]` reference citations, `::: component` mount points, callouts. |
 | Bibliography | `bibliography.py` | Parses `docs/report/references.bib` and prints it in IEEE form with every author named. Every entry needs a DOI; `[@key]` is resolved against it and numbered by first use. |
 | Teaser figure | `teaser.py` | The scene of Figure 1—its parts, their boxes, labels, sentences, and arrows—declared once and drawn by `app.js`. Part ids are what the prose points at. |
-| Explanations | `summarize.py` | AI-written per-step documentation, cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt, and schema. Only changed steps are re-summarized, and each is attributed to the model that wrote it wherever it is shown. |
+| Explanations | `summarize.py` | AI-written per-step documentation—what the step contributes and why it is built that way, and nothing the record beside it already measures—cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt, and schema. Only changed steps are re-summarized, and each is attributed to the model that wrote it wherever it is shown. |
 | Screenshots | `screenshots.py` | Reads the `::: screenshot` blocks—including the `@id x,y,w,h Label` part declarations the prose points into—pairs each with the picture on disk, embeds it as a data URI, and decides whether it is stale. Capture itself is `scripts/capture_report_screenshots.mjs` (Playwright). |
 
 `spec.py`, `report.md`, and `references.bib` are the only hand-maintained inputs.
@@ -445,7 +447,7 @@ Both routes render the same `@media print` rules at the foot of `assets/style.cs
 - **Nothing behind an interaction.** Every `<details>` is opened before printing (`bindPrintDisclosure` in `app.js` for the browser, the export script itself for headless runs, since the DevTools protocol never fires `beforeprint`), and the drawer's material is laid out as an appendix.
 - **Nothing straddling a break** that costs the reader what it describes: figures stay with captions, rows stay whole, headings stay with their text.
 
-**Appendix A is the drawer on paper.** `renderStepAppendix` in `app.js` builds one entry per documented step from `stepDetail`—the same function that fills the drawer—with the prompt tabs expanded into every prompt in sequence. It is in the DOM but hidden on screen, where the drawer already answers the question in place; `?appendix=0` skips building it. Anything added to the drawer therefore reaches the PDF for free, and anything printed outside `stepDetail` will drift.
+**Appendix A is the drawer on paper.** `renderStepAppendix` in `app.js` builds one entry per documented step from `stepDetail`—the same function that fills the drawer. It is in the DOM but hidden on screen, where the drawer already answers the question in place; `?appendix=0` skips building it. Anything added to the drawer therefore reaches the PDF for free, and anything printed outside `stepDetail` will drift.
 
 ### When the Pipeline Changes
 

@@ -100,17 +100,6 @@ def _step_line(codebase: Codebase, step: spec.Step) -> Optional[int]:
     return None
 
 
-def _step_prompts(codebase: Codebase, step: spec.Step) -> List[Dict[str, Any]]:
-    prompts: List[Dict[str, Any]] = []
-    for symbol in step.prompts:
-        for facts in codebase.scripts.values():
-            prompt = facts.prompts.get(symbol)
-            if prompt is not None:
-                prompts.append(prompt.to_json())
-                break
-    return prompts
-
-
 def _collect_schemas(codebase: Codebase, names: List[str]) -> Dict[str, Any]:
     out: Dict[str, Any] = {}
     queue = list(dict.fromkeys(names))
@@ -250,7 +239,6 @@ def build_payload(
                 "schemas": list(dict.fromkeys(names)),
                 "spec_summary": step.summary,
                 "summary": summaries.get(step.id) or {},
-                "prompts": _step_prompts(codebase, step),
                 "inputs": step.inputs,
                 "outputs": step.outputs,
                 "ai_calls": ai_calls,
