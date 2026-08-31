@@ -48,6 +48,7 @@ from config import (
 from events.images.assign import STAND_IN_REJECTION_INSTRUCTIONS
 from events.images.scoring import filter_images_by_quality
 from events.images.sources import search_wikimedia_commons
+from events.pipeline import PEOPLE_DIR
 from events.prompts.phase2 import (
     RELATED_ARTICLE_COUNT,
     _related_articles_prompt_section,
@@ -55,7 +56,6 @@ from events.prompts.phase2 import (
     filter_related_articles_for_event,
 )
 from events.schemas import CLASSIFICATION_MODELS, EventSkeleton
-from generate_person_events import PEOPLE_DIR
 from utils.datasets import person_ids
 from utils.deutsche_biographie import format_for_prompt, get_cached_deutsche_biographie
 from utils.event_depth import get_event_weight, select_deep_event_indexes

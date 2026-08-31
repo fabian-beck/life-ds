@@ -22,7 +22,7 @@ from events.images.assign import (  # noqa: E402
     PortraitVerification,
     verify_portrait_depicts_person,
 )
-from generate_person_events import resolve_portrait  # noqa: E402
+from events.pipeline import resolve_portrait  # noqa: E402
 
 PORTRAIT = {
     "url": "https://images.example.org/wagner_1915.jpg",

@@ -7,10 +7,8 @@ import sys
 from typing import Any, List, Tuple
 
 # Import the individual generation functions
-from generate_person_events import (
-    generate_person_events as generate_dataset,
-    DEFAULT_MODEL as DATASET_MODEL,
-)
+from config import DEFAULT_MODEL as DATASET_MODEL
+from events.pipeline import generate_person_events as generate_dataset
 from generate_person_style import generate_style, BULK_MODEL as STYLE_MODEL
 from generate_person_network import (
     generate_person_network,
@@ -25,6 +23,7 @@ from generate_chapter_illustrations import generate_chapter_illustrations
 from generate_event_backgrounds import generate_event_backgrounds
 from review_person import review_person_data
 from utils import usage
+from utils.text import slugify
 from utils.person_style import has_style
 
 STEP_OK = "ok"
@@ -191,8 +190,6 @@ def main(argv: Any = None) -> int:
     # When URL is provided, use it for fetching but preserve original subject as person_id
     if args.url:
         subject_for_fetch = args.url
-        from generate_person_events import slugify
-
         person_id_override = slugify(args.subject)
     else:
         subject_for_fetch = args.subject

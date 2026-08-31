@@ -153,11 +153,11 @@
       }
     },
     "p_chapters": {
-      "fingerprint": "69861684ca610200",
+      "fingerprint": "8a9640de8d7ae37a",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Groups the established event record into chronological life phases and gives each phase a story-driven headline, a broad setting, and its key supporting people. It also supplies a closing statement that turns the event sequence into an account of the person’s larger trajectory and legacy.",
-        "why_this_design": "It fails the run when chapter generation fails because the chapters provide the narrative structure that makes the researched events readable as a personal story rather than a timeline."
+        "what_it_does": "Groups the verified chronology into themed, ordered chapters that turn a sequence of events into a personal story, then closes that story with a statement of the subject’s legacy. It also carries forward the people and broad setting that define each phase.",
+        "why_this_design": "The step fails the run rather than returning an unstructured fallback because chapters provide the narrative frame that makes the event research readable as a life story."
       }
     },
     "p_db": {
@@ -169,19 +169,19 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "725df06f59649874",
+      "fingerprint": "da0a3dadf25c76c7",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the biographical spine by reading the main article alongside related context and selecting the life events that best carry the story from early life through death. It dates and orders those events, describes them without hindsight, and ranks their importance relative to the person’s own life for later phases to expand.",
-        "why_this_design": "It makes the selection and weighting in one pass because significance depends on comparing events across the whole life, while restricting related articles to context keeps the timeline centered on the target subject."
+        "what_it_does": "Builds the biographical spine by reading the main article alongside related material, selecting and ordering the events that best tell the subject's life, and assigning each a relative narrative weight. It leaves later phases a concise chronology with enough context to research places, images, and sources without committing to them yet.",
+        "why_this_design": "It makes the selection and weighting in one pass because significance is relative to the whole life, while the prompt keeps related articles contextual so associated people do not displace the subject."
       }
     },
     "p_events_p2": {
-      "fingerprint": "cb78a7d6d202e098",
+      "fingerprint": "4b31b5e206efab93",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Researches each timeline event against the subject’s article and event-specific related articles, adding grounded narrative context, places, participants, supporting sources, visual search leads, and a semantic label. It can refine weak event text while keeping classified events from repeating details already carried by their structured classification.",
-        "why_this_design": "It treats the subject’s article as the authority when sources conflict and lets a failed event remain unresolved rather than stopping the rest of the life story."
+        "what_it_does": "Researches each timeline event against the subject’s article and event-specific related articles, adding grounded narrative context, places, participants, evidence, visual-search leads, and explanatory notes. It preserves the event even when research fails, leaving later stages a visible but unresolved entry rather than stopping the personal story.",
+        "why_this_design": "It treats the subject’s article as the authority and filters related material by event so plausible but unrelated biographical context does not become evidence."
       }
     },
     "p_geocode": {
@@ -281,11 +281,11 @@
       }
     },
     "p_register": {
-      "fingerprint": "6d7c9c58ffb3eb0a",
+      "fingerprint": "c0ca7dd52fe0f244",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Updates the landing-page record for a person with the story’s current name, summary, dates, roles, and portrait reference. It preserves the original appearance date, removes a portrait field when the story explicitly has none, then saves the register in name order.",
-        "why_this_design": "The update keeps the first-seen timestamp because later story runs revise the person’s details rather than create a new registry entry."
+        "what_it_does": "Updates the landing-page record for a person with the current biographical details and the portrait selected earlier in the pipeline. It keeps the original arrival time while making the record searchable and consistently ordered by name.",
+        "why_this_design": "It treats an absent portrait as a removal rather than storing a null value, so later portrait readers can distinguish no selection from a stale reference."
       }
     },
     "p_review": {
@@ -337,11 +337,11 @@
       }
     },
     "p_write": {
-      "fingerprint": "b5d327b943c76aee",
+      "fingerprint": "0f7848b99407ab6e",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Writes the assembled life-events document to the person’s directory and returns its path. This makes the generated account a durable dataset that later stages read instead of the in-memory payload.",
-        "why_this_design": "Creates the person-specific directory before writing so a new person can complete the pipeline without relying on prior filesystem setup."
+        "what_it_does": "Writes the assembled life-events document to the person’s directory and returns its path. Downstream work reads this file rather than the in-memory payload, making the dataset the durable handoff from the three upstream branches.",
+        "why_this_design": "Creates the person-specific directory before writing so a new person can complete the pipeline without a separate setup step."
       }
     }
   },

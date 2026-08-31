@@ -44,7 +44,7 @@ python scripts/generate_person.py "Albert Einstein"
 
 This runs the whole pipeline: the three generators, the portrait and chapter art, review, the depth-layer background reports, and translation.
 
-1. `generate_person_events.py` - Life events via two-phase AI
+1. `generate_person_events.py` - Life events via two-phase AI (the command line over `events/pipeline.py`)
 2. `generate_person_style.py` - Visual design
 3. `generate_person_network.py` - Ego network
 4. `generate_event_backgrounds.py` - Background reports for the deep events (after review, before translation)
@@ -366,7 +366,7 @@ python scripts/generate_person.py "Albert Einstein" --skip-db
 
 **Key files**:
 - `scripts/utils/deutsche_biographie.py` — API client, caching, license checking, prompt formatting
-- Integration in `scripts/generate_person_events.py` (Phase 1 & 2 prompts)
+- Integration in `scripts/events/pipeline.py` (fetched per person) and `scripts/events/prompts/` (Phase 1 & 2 prompts)
 - Integration in `scripts/cache_wikipedia_materials.py` (caching step)
 
 **Limitations**:

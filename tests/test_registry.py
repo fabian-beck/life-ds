@@ -164,18 +164,22 @@ class UpdateRegisterTests(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        import generate_person_events as gpe
+        # Patched on the module that defines both the writer and the path it
+        # reads. The command-line module imports REGISTER_PATH for one print
+        # statement, and patching it there would leave this test writing to
+        # the real data/persons.json while passing.
+        from events import pipeline
 
-        self.gpe = gpe
+        self.pipeline = pipeline
         self._dir = tempfile.TemporaryDirectory()
         self.addCleanup(self._dir.cleanup)
         self.path = Path(self._dir.name) / "persons.json"
-        patched = unittest.mock.patch.object(gpe, "REGISTER_PATH", self.path)
+        patched = unittest.mock.patch.object(pipeline, "REGISTER_PATH", self.path)
         patched.start()
         self.addCleanup(patched.stop)
 
     def run_update(self, person_id: str, person: dict) -> dict:
-        self.gpe.update_register(person_id, {"person": person}, self.path)
+        self.pipeline.update_register(person_id, {"person": person}, self.path)
         return json.loads(self.path.read_text(encoding="utf-8"))
 
     def test_a_new_person_is_stamped_and_written(self) -> None:

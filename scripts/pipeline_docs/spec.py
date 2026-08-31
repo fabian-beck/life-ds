@@ -434,7 +434,7 @@ STEPS: List[Step] = [
         "Phase 1—event skeletons",
         PERSON,
         AI,
-        "generate_person_events.py",
+        "events/pipeline.py",
         "call_openai_phase1",
         phase_label="Phase 1",
         summary=(
@@ -451,13 +451,14 @@ STEPS: List[Step] = [
         ],
         prompts=["build_phase1_prompt", "call_openai_phase1"],
         inputs=["wiki_cache", "db_cache"],
+        model_from="generate_person_events.py",
     ),
     Step(
         "p_events_p2",
         "Phase 2—research each event",
         PERSON,
         AI,
-        "generate_person_events.py",
+        "events/pipeline.py",
         "research_event_details",
         phase_label="Phase 2",
         summary=(
@@ -489,7 +490,7 @@ STEPS: List[Step] = [
         "Group events into chapters",
         PERSON,
         AI,
-        "generate_person_events.py",
+        "events/pipeline.py",
         "call_openai_chapter_generation",
         summary=(
             "Turns the researched events into 3–5 chapters with headlines that "
@@ -497,6 +498,7 @@ STEPS: List[Step] = [
         ),
         depends_on=[Dep("p_events_p2", "the merged, researched events")],
         prompts=["build_chapter_generation_prompt", "call_openai_chapter_generation"],
+        model_from="generate_person_events.py",
     ),
     Step(
         "p_img_search",
@@ -631,7 +633,7 @@ STEPS: List[Step] = [
         "Write the dataset",
         PERSON,
         CODE,
-        "generate_person_events.py",
+        "events/pipeline.py",
         "write_dataset",
         summary=(
             "Serializes the document the three branches above assembled. This is "
@@ -651,7 +653,7 @@ STEPS: List[Step] = [
         "Update the persons registry",
         PERSON,
         CODE,
-        "generate_person_events.py",
+        "events/pipeline.py",
         "update_register",
         summary=(
             "Folds the person into the landing-page index, carrying over the "

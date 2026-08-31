@@ -20,7 +20,7 @@ from events.schemas import (  # noqa: E402
     DeathClassification,
     EventSkeleton,
 )
-from generate_person_events import (  # noqa: E402
+from events.pipeline import (  # noqa: E402
     ensure_death_classification,
     find_death_event_index,
 )

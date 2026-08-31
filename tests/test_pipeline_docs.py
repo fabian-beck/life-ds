@@ -67,15 +67,23 @@ class IntrospectionTests(unittest.TestCase):
         calls = {
             (call.script, call.function): call for call in self.codebase.all_ai_calls()
         }
-        phase1 = calls[("generate_person_events.py", "call_openai_phase1")]
-        self.assertIn("gpt-", phase1.model_value or "")
-        self.assertIn("OPENAI_MODEL", phase1.model_value or "")
+        # Phase 1 takes `model` as a plain parameter, and the command line
+        # that supplies it is a module away, so the call carries no model of
+        # its own. The value the chart shows reaches the step through spec's
+        # `model_from`, which reads that module's --model default.
+        phase1 = calls[("pipeline.py", "call_openai_phase1")]
+        self.assertIsNone(phase1.model_value)
         self.assertIn("medium", phase1.reasoning_value or "")
+        cli = self.codebase.scripts["generate_person_events.py"]
+        model_flag = next(
+            flag for flag in cli.cli_flags if "--model" in flag.flags
+        )
+        self.assertEqual("DEFAULT_MODEL", model_flag.default)
         # Phase 2 is on the small model: every field it returns is checked
         # afterwards — icons against the catalog, places against the geocoder.
         # The background report, the one output checked by nobody, is written
         # in its own step on the larger model.
-        research = calls[("generate_person_events.py", "research_event_details")]
+        research = calls[("pipeline.py", "research_event_details")]
         self.assertIn("gpt-", research.model_value or "")
         self.assertIn("OPENAI_BULK_MODEL", research.model_value or "")
         self.assertIn("low", research.reasoning_value or "")

@@ -24,7 +24,7 @@ from config import (  # noqa: E402
     DEFAULT_REASONING_EFFORT,
     LOW_REASONING_EFFORT,
 )
-from generate_person_events import enrich_event_coordinates_v2  # noqa: E402
+from events.pipeline import enrich_event_coordinates_v2  # noqa: E402
 from generate_person_style import load_styles, write_styles  # noqa: E402
 from utils.model_calls import parse_structured_or_raise  # noqa: E402
 from utils.person_style import STYLES_PATH, load_style  # noqa: E402

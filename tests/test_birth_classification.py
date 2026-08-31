@@ -19,7 +19,7 @@ from events.schemas import (  # noqa: E402
     EventSkeleton,
     MarriagePartnershipClassification,
 )
-from generate_person_events import (  # noqa: E402
+from events.pipeline import (  # noqa: E402
     ensure_birth_classification,
     find_birth_event_index,
 )
