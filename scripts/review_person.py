@@ -25,7 +25,9 @@ from config import (  # noqa: E402
     LOW_REASONING_EFFORT,
 )
 from generate_person_events import enrich_event_coordinates_v2  # noqa: E402
+from generate_person_style import load_styles, write_styles  # noqa: E402
 from utils.model_calls import parse_structured_or_raise  # noqa: E402
+from utils.person_style import STYLES_PATH, load_style  # noqa: E402
 from utils.review_models import (  # noqa: E402
     CombinedReviewOutput,
     StyleReviewOutput,
@@ -62,7 +64,6 @@ def get_cached_related_articles(person_id: str) -> Optional[List[Dict[str, str]]
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 PERSONS_REGISTER = DATA_DIR / "persons.json"
-STYLES_REGISTER = DATA_DIR / "person_styles.json"
 PEOPLE_DIR = DATA_DIR / "people"
 
 
@@ -133,12 +134,9 @@ def load_person_data(person_id: str) -> Dict[str, Any]:
         with open(network_path, "r", encoding="utf-8") as f:
             network_data = json.load(f)
 
-    # Load style
-    style_data = None
-    if STYLES_REGISTER.exists():
-        with open(STYLES_REGISTER, "r", encoding="utf-8") as f:
-            styles = json.load(f)
-            style_data = styles.get(person_id)
+    # Load style. The register nests its entries under "styles", so it is read
+    # through the loader that knows that rather than opened here.
+    style_data = load_style(person_id)
 
     # Load cached Wikipedia content
     # Note: We pass empty title since we're always using cache (use_cache=True by default)
@@ -519,15 +517,12 @@ def review_person_data(
         print(f"  * Updated {network_path.name}")
 
     if aspect in ["all", "style"] and updated_style:
-        # Update style in styles register
-        with open(STYLES_REGISTER, "r", encoding="utf-8") as f:
-            styles = json.load(f)
-
-        styles[person_id] = updated_style
-
-        with open(STYLES_REGISTER, "w", encoding="utf-8") as f:
-            json.dump(styles, f, indent=2, ensure_ascii=False)
-        print(f"  * Updated {STYLES_REGISTER.name}")
+        # Update style in styles register, through the same load/write pair the
+        # style generator uses so the entry lands inside "styles".
+        styles_register = load_styles()
+        styles_register["styles"][person_id] = updated_style
+        write_styles(styles_register)
+        print(f"  * Updated {STYLES_PATH.name}")
 
     total_applied = events_applied + network_applied + style_applied
     total_skipped = events_skipped + network_skipped + style_skipped
