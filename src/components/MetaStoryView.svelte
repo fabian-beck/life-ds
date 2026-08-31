@@ -24,14 +24,15 @@
   } from "../utils/metaStoryStyles.js";
   import { resolveSectionOrder } from "../utils/metaStorySections.js";
   import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
-  import personStylesData from "../../data/person_styles.json";
 
   export let metaStoryData = null;
+  // Normalized in App.svelte and handed down rather than imported here: a
+  // static import would pull the whole style registry back into the entry
+  // chunk this component is reached from.
+  export let personStyles = {};
   export let personsRegistry = [];
   export let currentLanguage = "en";
   export let isLoading = false;
-
-  const personStyles = personStylesData.styles;
 
   // The story's own visual identity — colors, fonts, and the SVG marks that
   // punctuate its prose. Language-independent, so the same entry serves every
@@ -108,19 +109,6 @@
   function birthYear(person) {
     const year = Number.parseInt(String(person?.birthDate ?? ""), 10);
     return Number.isFinite(year) ? year : Number.POSITIVE_INFINITY;
-  }
-
-  // PersonCard expects the normalized (camelCase) style shape App.svelte builds;
-  // the raw registry carries everything a card needs, so map it here.
-  function cardStyle(personId) {
-    const raw = personStyles[personId];
-    if (!raw) return null;
-    return {
-      primary: raw.primary,
-      secondary: raw.secondary,
-      headingFont: raw.heading_font,
-      bodyFont: raw.body_font,
-    };
   }
 
   // Carry the meta story context so the story's close button returns here, and
@@ -860,6 +848,7 @@
                   bind:this={metaTimelineComponent}
                   metaStoryId={metaStoryData.meta_story.id}
                   {currentLanguage}
+                  {personStyles}
                   chapters={metaStoryData.chapters}
                   {personsRegistry}
                   subtopics={metaStoryData.subtopics}
@@ -911,6 +900,7 @@
               network={metaStoryData.social_network}
               metaStoryId={metaStoryData.meta_story.id}
               {personAliases}
+              {personStyles}
               {currentLanguage}
             />
           {/await}
@@ -928,6 +918,7 @@
               geoMap={metaStoryData.geo_map}
               metaStoryId={metaStoryData.meta_story.id}
               {personAliases}
+              {personStyles}
               {currentLanguage}
             />
           {/await}
@@ -963,7 +954,7 @@
             <PersonCard
               {person}
               class="ms-frame"
-              personStyle={cardStyle(person.id)}
+              personStyle={personStyles[person.id] ?? null}
               href={storyHref(person.id)}
               ariaLabel={$_("meta_story.people_open_story", {
                 name: displayName(person.name),

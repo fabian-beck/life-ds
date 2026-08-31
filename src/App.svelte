@@ -16,7 +16,6 @@
     landingFilterQuery,
     navigationContext,
   } from "./stores/queryParams";
-  import styleRegistry from "../data/person_styles.json";
   import { restoreFocusTrigger } from "./stores/returnFocus.js";
   import {
     makeLocalizedLoader,
@@ -29,6 +28,23 @@
   let registry = { people: [] };
   let englishRegistry = { people: [] }; // Always keep English registry for carousel
   let metaStories = [];
+
+  // The style records for every person in the corpus, normalized once. They are
+  // fetched rather than imported because the file is the one thing on the eager
+  // path whose size is a function of how many lives the project has: roughly
+  // 2 kB per person, and it only ever grows. Consumers see an empty map on the
+  // first tick and the default style with it, which is what defaultStyle is for.
+  let personStyles = {};
+
+  async function loadPersonStyles() {
+    try {
+      const module = await import("../data/person_styles.json");
+      personStyles = normalizeStyleRegistry(module.default);
+    } catch (error) {
+      console.warn("Failed to load person styles:", error);
+      personStyles = {};
+    }
+  }
 
   // Load English registry (for carousel portraits)
   async function loadEnglishRegistry() {
@@ -133,6 +149,7 @@
 
   // Reload registry and meta stories when language changes
   onMount(() => {
+    loadPersonStyles();
     loadEnglishRegistry(); // Load English registry once for carousel
     const unsubscribe = currentLanguage.subscribe((lang) => {
       loadRegistry(lang);
@@ -262,11 +279,9 @@
     };
   })();
 
-  const personStyles = (() => {
+  function normalizeStyleRegistry(registry) {
     const rawStyles =
-      styleRegistry && typeof styleRegistry === "object"
-        ? styleRegistry.styles
-        : null;
+      registry && typeof registry === "object" ? registry.styles : null;
     if (!rawStyles || typeof rawStyles !== "object") {
       return {};
     }
@@ -277,13 +292,22 @@
       }
       return accumulator;
     }, {});
-  })();
+  }
 
-  function styleFor(id) {
+  // Rebuilt when the records arrive, so everything derived from it — the
+  // registry entries, the story's own palette, the landing cards — recomputes
+  // then rather than keeping the default it was built with.
+  $: styleFor = makeStyleFor(personStyles);
+
+  function makeStyleFor(styles) {
+    return (id) => styleForIn(styles, id);
+  }
+
+  function styleForIn(styles, id) {
     if (!id) {
       return { ...defaultStyle };
     }
-    const override = personStyles[id];
+    const override = styles[id];
     if (!override) {
       return { ...defaultStyle };
     }
@@ -594,6 +618,7 @@
   {#if metaMatch}
     <MetaStoryView
       {metaStoryData}
+      {personStyles}
       personsRegistry={registry.people}
       currentLanguage={$currentLanguage}
       isLoading={dataLoading}

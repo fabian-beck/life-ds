@@ -19,9 +19,11 @@
   import { relationshipTypeLabel } from "../utils/relationshipLabels.js";
   import { queryParams, personStoryHref } from "../stores/queryParams.js";
   import { createScrollSteps } from "../utils/scrollSteps.js";
-  import personStylesData from "../../data/person_styles.json";
 
   // The `social_network` block from a meta story: { nodes: [...], links: [...] }
+  // Handed down from App.svelte, already normalized. Importing the
+  // registry here would put all 52 style records back on the eager path.
+  export let personStyles = {};
   export let network = null;
   export let currentLanguage = "en";
   // Id of the meta story this network belongs to, so opening a person's story
@@ -30,8 +32,6 @@
   // Extra names per person id (e.g. the translated registry name), so a
   // translated story still recognizes its people in the narration prose.
   export let personAliases = null;
-
-  const personStyles = personStylesData.styles;
 
   const SECONDARY_COLOR = "#94a3b8";
   const LINK_IDLE = "#64748b"; // links when nothing is focused

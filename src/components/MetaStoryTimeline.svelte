@@ -8,9 +8,11 @@
   import { extractYear } from "../utils/story/dates.js";
   import { createTooltipPlacementEngine } from "../utils/tooltipPlacement.js";
   import { assetUrl } from "../utils/assetUrl.js";
-  import personStylesData from "../../data/person_styles.json";
   import { metaStoryStyle } from "../utils/metaStoryStyles.js";
 
+  // Handed down from App.svelte, already normalized. Importing the
+  // registry here would put all 52 style records back on the eager path.
+  export let personStyles = {};
   export let metaStoryId = null; // ID of the meta story (for navigation context)
   export let currentLanguage = "en"; // Route language prefix for story links
   export let chapters = [];
@@ -24,9 +26,6 @@
   // header floating over the timeline and each theme's title are the
   // timeline's subheads, and carry the same mark as the article's.
   $: storyMarked = !!metaStoryStyle(metaStoryId)?.separatorGlyphDataUrl;
-
-  // Person styles registry
-  const personStyles = personStylesData.styles;
 
   // Helper to get person data by ID
   function getPersonById(personId) {

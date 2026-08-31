@@ -10,7 +10,6 @@
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { createScrollSteps } from "../utils/scrollSteps.js";
   import { queryParams, personStoryHref } from "../stores/queryParams.js";
-  import personStylesData from "../../data/person_styles.json";
   import {
     resolveBasemapUrl,
     createBasemapStyle,
@@ -19,6 +18,9 @@
   } from "../utils/basemap.js";
 
   // The `geo_map` block from a meta story: { clusters: [...], narration? }
+  // Handed down from App.svelte, already normalized. Importing the
+  // registry here would put all 52 style records back on the eager path.
+  export let personStyles = {};
   export let geoMap = null;
   export let currentLanguage = "en";
   // Meta story id, so an event link can carry the `from_meta` context that
@@ -28,8 +30,6 @@
   // clusters store the untranslated person_name, so a translated story needs
   // the reader-facing name to recognize its people in the stop texts.
   export let personAliases = null;
-
-  const personStyles = personStylesData.styles;
 
   // Whether the story has a glyph to open its stop cards with.
   $: storyMarked = !!metaStoryStyle(metaStoryId)?.separatorGlyphDataUrl;
