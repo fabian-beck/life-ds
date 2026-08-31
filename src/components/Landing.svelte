@@ -26,6 +26,7 @@
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import HighContrastToggle from "./HighContrastToggle.svelte";
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
+  import PrivacyModal from "./PrivacyModal.svelte";
   import SeparatedList from "./SeparatedList.svelte";
   // LandingMap is imported on demand where it is rendered: it pulls in MapLibre
   // and its basemap dependencies (~1.1 MB), and the map starts collapsed.
@@ -38,6 +39,7 @@
   export let onSelectPerson = () => {};
 
   let showExplanation = false;
+  let showPrivacy = false;
   let activeTags = new Set();
   let searchQuery = "";
   let loadedImages = new Set();
@@ -99,6 +101,14 @@
 
   function closeExplanation() {
     showExplanation = false;
+  }
+
+  function openPrivacy() {
+    showPrivacy = true;
+  }
+
+  function closePrivacy() {
+    showPrivacy = false;
   }
 
   function handleLanguageChange(event) {
@@ -860,9 +870,20 @@
       </div>
     {/if}
   </div>
+
+  <footer class="landing-footer">
+    <button
+      class="privacy-link"
+      on:click={openPrivacy}
+      aria-label={$_("landing.open_privacy")}
+    >
+      {$_("landing.privacy_label")}
+    </button>
+  </footer>
 </section>
 
 <AIDisclaimerModal show={showExplanation} onClose={closeExplanation} />
+<PrivacyModal show={showPrivacy} onClose={closePrivacy} />
 
 <style>
   .landing {
@@ -1635,6 +1656,29 @@
   .clear-filters:hover {
     background: rgba(148, 163, 184, 0.18);
     border-color: rgba(148, 163, 184, 0.4);
+    color: #cbd5e1;
+  }
+
+  .landing-footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 2.5rem;
+  }
+
+  .privacy-link {
+    padding: 0.25rem 0.5rem;
+    border: none;
+    background: none;
+    color: #94a3b8;
+    font: inherit;
+    font-size: 0.75rem;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .privacy-link:hover {
     color: #cbd5e1;
   }
 

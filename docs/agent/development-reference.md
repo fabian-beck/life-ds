@@ -148,7 +148,7 @@ Two things feed the matcher besides the text:
 
 ### Svelte Patterns
 
-**Components run in legacy (non-runes) mode.** The project is on Svelte 5, but `export let`, `$:`, and `on:click` all still work there and no component has been converted. Adopting runes is a deliberate, separate decision—do not introduce `$state`/`$derived`/`$props` into a component piecemeal, because a component that uses any rune switches to runes mode wholesale and its `export let` and `$:` statements stop compiling.
+**Components run in legacy (non-runes) mode, except the ones written since the displacement rule.** The project is on Svelte 5, but `export let`, `$:`, and `on:click` all still work there and no component has been converted; `PrivacyModal.svelte` was written with runes rather than converted. Adopting runes is a deliberate, separate decision—do not introduce `$state`/`$derived`/`$props` into a component piecemeal, because a component that uses any rune switches to runes mode wholesale and its `export let` and `$:` statements stop compiling.
 
 - Prefer reactive declarations (`$:`) over manual updates
 - Keep component files focused (< 500 lines)
