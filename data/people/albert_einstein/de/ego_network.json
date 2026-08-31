@@ -1,454 +1,378 @@
 {
-  "dataset": "wikipedia-egonetwork",
-  "created_on": "2025-11-22",
+  "dataset": "Albert Einstein ego network",
+  "created_on": "2026-08-31",
   "ego": {
     "name": "Albert Einstein",
     "birth_year": 1879,
     "death_year": 1955,
     "primary_roles": [
-      "Physiker"
+      "Theoretischer Physiker",
+      "Schriftsteller",
+      "Friedensaktivist"
     ],
-    "summary": "Albert Einstein (1879–1955) war ein in Deutschland geborener theoretischer Physiker, dessen Arbeiten zur speziellen und allgemeinen Relativitätstheorie sowie zur Quantentheorie die moderne Physik grundlegend veränderten. Er hatte akademische Positionen in Europa und den Vereinigten Staaten inne, erhielt 1921 den Nobelpreis für Physik und wurde zu einer weithin beachteten öffentlichen Stimme für Pazifismus, Zionismus, Bürgerrechte und den Umgang mit Atomwaffen.",
-    "wikipedia": "https://en.wikipedia.org/wiki/Albert_Einstein"
+    "summary": "Albert Einstein war ein in Deutschland geborener theoretischer Physiker, dessen Arbeiten zur Relativität, zu Lichtquanten und zur Gravitation die moderne Physik grundlegend veränderten. Als zunächst Schweizer und später amerikanischer Staatsbürger nutzte er seine öffentliche Bekanntheit außerdem, um sich für internationale Zusammenarbeit, Frieden und die Kontrolle von Atomwaffen einzusetzen.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Albert_Einstein"
   },
   "connections": [
     {
       "person_name": "Hermann Einstein",
-      "relationship_type": "family/father",
-      "relationship_description": "Albert Einsteins Vater, ein Ingenieur und Unternehmer der Elektrotechnik, dessen Arbeit und Umzug nach München Alberts frühes Umfeld prägten.",
+      "relationship_description": "Einsteins Vater, ein Unternehmer der Elektrotechnik, dessen geschäftliche Entscheidungen das frühe Familienleben in Ulm, München, Mailand und Pavia prägten.",
       "start_year": 1879,
       "end_year": 1902,
       "strength": "strong",
       "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
+      "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Familienleben",
-        "Austausch über Technik und Elektrotechnik",
-        "Unterstützung von Alberts Ausbildung"
+        "Familienleben in Ulm und München",
+        "Übersiedlungen nach Italien infolge geschäftlicher Schwierigkeiten der Familie",
+        "Unterstützung von Einsteins Ausbildung"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
         "https://en.wikipedia.org/wiki/Einstein_family"
       ],
-      "notes": "Hermann gründete die Elektrotechnische Fabrik J. Einstein & Cie mit und bestärkte Alberts Interesse an den Naturwissenschaften, trotz geschäftlicher Rückschläge."
+      "notes": "Hermann wünschte, dass Einstein Elektrotechnik studierte, doch Einstein entschied sich für die Physik.",
+      "relationship_type": "family/father"
     },
     {
-      "person_name": "Pauline Einstein (geb. Koch)",
-      "relationship_type": "family/mother",
-      "relationship_description": "Albert Einsteins Mutter, die seine kulturelle und musikalische Bildung förderte und ihn in seiner schulischen Ausbildung unterstützte.",
+      "person_name": "Pauline Einstein",
+      "relationship_description": "Einsteins Mutter, die ihn in einem assimilierten deutsch-jüdischen Haushalt erzog und ihm schon als Kind Violinunterricht geben ließ.",
       "start_year": 1879,
       "end_year": 1920,
       "strength": "strong",
       "interaction_frequency": "daily",
       "influence_direction": "alter_to_ego",
       "shared_activities": [
-        "Familienleben",
-        "Musikalische Ausbildung",
-        "Begleitung der Schulbildung"
+        "Familienleben in Ulm, München und Italien",
+        "Frühe musikalische Ausbildung",
+        "Pflege während Paulines letzter Krankheit in Berlin"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
         "https://en.wikipedia.org/wiki/Einstein_family"
       ],
-      "notes": "Eine gebildete, musikalisch begabte Frau, die darauf bestand, dass Albert Violinunterricht nahm, und ihm ein kultiviertes Zuhause bot."
+      "notes": "Sie war gegen seine Heirat mit Mileva Marić und lebte später während ihrer unheilbaren Krankheit mit Albert und Elsa zusammen.",
+      "relationship_type": "family/mother"
     },
     {
-      "person_name": "Maria „Maja“ Einstein",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Albert Einsteins jüngere Schwester und lebenslange enge Vertraute, die seine geistigen Interessen teilte und später mit ihm in Princeton lebte.",
+      "person_name": "Maria Einstein",
+      "relationship_description": "Einsteins jüngere Schwester, die unter dem Namen Maja bekannt war und zu der er zeitlebens ein enges, vertrauensvolles Verhältnis pflegte.",
       "start_year": 1881,
       "end_year": 1951,
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Kindheit in München und Italien",
-        "Geistiger Austausch",
-        "Späteres Zusammenleben in Princeton"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Einstein_family"
-      ],
-      "notes": "Maja promovierte in romanischen Sprachen und verbrachte nach ihrer Flucht aus dem faschistischen Italien ihre letzten Jahre in Alberts Haus in Princeton, bis sie durch einen Schlaganfall pflegebedürftig wurde."
-    },
-    {
-      "person_name": "Max Talmud (später Max Talmey)",
-      "relationship_type": "academic/mentor",
-      "relationship_description": "Ein Freund der Familie und Medizinstudent, der den jungen Einstein privat unterrichtete und ihn mit höherer Mathematik und Philosophie bekannt machte.",
-      "start_year": 1889,
-      "end_year": 1894,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Privatunterricht in Mathematik",
-        "Gespräche über Naturwissenschaften und Philosophie",
-        "Einführung in Kants Kritik der reinen Vernunft"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
-      ],
-      "notes": "Talmud erinnerte sich später daran, dass Einstein sich rasch ein ganzes Geometrielehrbuch aneignete und die mathematischen Kenntnisse seines Tutors bald übertraf."
-    },
-    {
-      "person_name": "Marcel Grossmann",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Schweizer Mathematiker, Studienkollege an der ETH und späterer Mitarbeiter, der den differentialgeometrischen Rahmen bereitstellte, den Einstein für die allgemeine Relativitätstheorie benötigte.",
-      "start_year": 1896,
-      "end_year": 1936,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Studentenleben am Polytechnikum Zürich",
-        "Gegenseitige Hilfe beim Studium",
-        "Mathematische Formulierung der allgemeinen Relativitätstheorie",
-        "Widmung von Einsteins Dissertation von 1905"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Marcel_Grossmann"
-      ],
-      "notes": "Einstein widmete Grossmann seine Doktorarbeit. Grossmann führte ihn in die Tensorrechnung sowie in die Arbeiten von Riemann und Ricci ein, die für die allgemeine Theorie von entscheidender Bedeutung waren."
-    },
-    {
-      "person_name": "Hermann Minkowski",
-      "relationship_type": "academic/teacher",
-      "relationship_description": "Mathematiker und ehemaliger ETH-Professor, bei dem Einstein studiert hatte und der die spezielle Relativitätstheorie später als vierdimensionale Raumzeit neu fasste.",
-      "start_year": 1896,
-      "end_year": 1909,
-      "strength": "moderate",
       "interaction_frequency": "occasional",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Student-Lehrer-Verhältnis am Polytechnikum Zürich",
-        "Entwicklung der Minkowski-Formulierung der Raumzeit"
+        "Kindheit in München und Italien",
+        "Familiärer Briefwechsel und Besuche",
+        "Gemeinsamer Haushalt in Princeton, nachdem Maja aus Europa geflohen war"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Hermann_Minkowski"
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Einstein_family"
       ],
-      "notes": "Als Student hatte Einstein Minkowskis Mathematikvorlesungen versäumt; dennoch wurde Minkowskis spätere geometrische Neufassung zu einem Grundpfeiler der modernen Relativitätstheorie."
+      "notes": "Maja zog 1939 in Einsteins Haus in Princeton und blieb dort bis zu ihrem Tod.",
+      "relationship_type": "family/sister"
     },
     {
       "person_name": "Mileva Marić",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Einsteins erste Ehefrau, eine serbische Physikerin und ehemalige Studienkollegin; sie führten in den frühen Jahren wissenschaftliche Gespräche und bekamen drei Kinder, bevor sie sich scheiden ließen.",
-      "start_year": 1897,
+      "relationship_description": "Einsteins Kommilitonin am Zürcher Polytechnikum, erste Ehefrau und Mutter seiner drei Kinder; ihre frühe geistige Verbundenheit ging einer schwierigen Ehe und Scheidung voraus.",
+      "start_year": 1896,
       "end_year": 1919,
       "strength": "strong",
       "interaction_frequency": "daily",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Gemeinsames Studium am Polytechnikum Zürich",
-        "Wissenschaftliche Gespräche während der Studienjahre",
-        "Familienleben und Kindererziehung",
-        "Übergänge in Einsteins früher Laufbahn"
+        "Mathematik- und Physikstudium am Zürcher Polytechnikum",
+        "Frühe wissenschaftliche Gespräche und Briefwechsel",
+        "Ehe und Familienleben in Bern, Zürich, Prag und Berlin"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Mileva_Mari%C4%87"
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
+        "https://de.wikipedia.org/wiki/Mileva_Mari%C4%87"
       ],
-      "notes": "Ihre Briefe zeugen von einem intensiven persönlichen und wissenschaftlichen Austausch. Im Rahmen der Scheidungsvereinbarung versprach Einstein ihr sein künftiges Nobelpreisgeld; sie verwendete es vor allem zur Unterstützung ihrer Söhne, insbesondere für Eduards psychiatrische Behandlung."
+      "notes": "Die historische Forschung belegt, dass Marić eine wissenschaftlich versierte Gesprächspartnerin war, nicht jedoch, dass sie an Einsteins Arbeiten von 1905 als Mitautorin beteiligt war.",
+      "relationship_type": "family/spouse"
     },
     {
-      "person_name": "Hendrik Antoon Lorentz",
-      "relationship_type": "professional/mentor",
-      "relationship_description": "Niederländischer theoretischer Physiker, dessen Elektrodynamik und Transformationen Einsteins Formulierung der speziellen Relativitätstheorie zugrunde lagen und mit dem Einstein eine enge geistige Verbindung pflegte.",
-      "start_year": 1901,
-      "end_year": 1928,
+      "person_name": "Marcel Grossmann",
+      "relationship_description": "Einsteins Kommilitone am Polytechnikum und lebenslanger Freund, der ihn dem Berner Patentamt empfahl und ihm später mathematische Hilfsmittel für die allgemeine Relativitätstheorie vermittelte.",
+      "start_year": 1896,
+      "end_year": 1936,
       "strength": "strong",
       "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
+      "influence_direction": "bidirectional",
       "shared_activities": [
-        "Wissenschaftlicher Briefwechsel",
-        "Solvay-Konferenzen",
-        "Gespräche über Relativitätstheorie und Elektrodynamik"
+        "Studium am Zürcher Polytechnikum",
+        "Empfehlung für das Schweizer Patentamt",
+        "Mathematische Arbeiten im Zusammenhang mit der allgemeinen Relativitätstheorie"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Hendrik_Lorentz"
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
       ],
-      "notes": "Einstein knüpfte an Lorentz’ Arbeiten zu Transformationen und zur Elektronentheorie an. Er brachte Lorentz außerordentliche Hochachtung entgegen und bezeichnete ihn als einen führenden Geist der theoretischen Physik."
+      "notes": "Grossmanns Mitschriften halfen Einstein außerdem bei der Prüfungsvorbereitung, wenn er Vorlesungen versäumte.",
+      "relationship_type": "academic/friend"
+    },
+    {
+      "person_name": "Michele Besso",
+      "relationship_description": "Ingenieur und enger wissenschaftlicher Vertrauter, der mit Einstein physikalische Probleme erörterte und in Einsteins Arbeit von 1905 zur speziellen Relativitätstheorie gewürdigt wurde.",
+      "start_year": 1902,
+      "end_year": 1955,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Wissenschaftliche Gespräche in Bern",
+        "Geistiger Austausch während der Zeit am Patentamt",
+        "Relativitätsforschung"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "notes": "Einstein äußerte später seine Bewunderung für Bessos lange und harmonische Ehe.",
+      "relationship_type": "academic/collaborator"
+    },
+    {
+      "person_name": "Lieserl Einstein",
+      "relationship_description": "Das erste Kind von Einstein und Mileva Marić, geboren vor ihrer Eheschließung; Einstein wusste durch den Briefwechsel von ihr, begegnete ihr aber offenbar nie.",
+      "start_year": 1902,
+      "end_year": 1903,
+      "strength": "moderate",
+      "interaction_frequency": "rare",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Familiärer Briefwechsel über ihre Geburt und Krankheit"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Lieserl_Mari%C4%87",
+        "https://en.wikipedia.org/wiki/Einstein_family"
+      ],
+      "notes": "Ihr tatsächlicher Name und ihr Schicksal sind ungeklärt; möglicherweise starb sie 1903 oder wurde adoptiert.",
+      "relationship_type": "family/daughter"
     },
     {
       "person_name": "Hans Albert Einstein",
-      "relationship_type": "family/child",
-      "relationship_description": "Einsteins älterer Sohn, der in den Vereinigten Staaten ein angesehener Bauingenieur wurde; ihre Beziehung war von Distanz, aber auch von wiederkehrender Unterstützung und brieflichem Austausch geprägt.",
+      "relationship_description": "Einsteins älterer Sohn mit Mileva Marić, der Bauingenieur wurde und auf Anraten seines Vaters in die Vereinigten Staaten auswanderte.",
       "start_year": 1904,
       "end_year": 1955,
       "strength": "moderate",
-      "interaction_frequency": "yearly",
-      "influence_direction": "bidirectional",
+      "interaction_frequency": "occasional",
+      "influence_direction": "ego_to_alter",
       "shared_activities": [
-        "Familienleben in Europa",
-        "Späterer Austausch über Familie und Wissenschaft",
-        "Finanzielle Unterstützung und Beratung"
+        "Familienleben in der Schweiz und in Berlin",
+        "Briefwechsel und Ratschläge zur Auswanderung",
+        "Späterer Familienkontakt in den Vereinigten Staaten"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Hans_Albert_Einstein",
         "https://en.wikipedia.org/wiki/Einstein_family"
       ],
-      "notes": "Hans Albert erinnerte sich, dass die wissenschaftliche Zusammenarbeit seiner Eltern auch in ihre Ehe hinein fortbestanden hatte. Später emigrierte er auf Anraten seines Vaters in die USA, um dem Nationalsozialismus zu entkommen."
+      "notes": "Hans Albert befürwortete nach Einsteins Tod die wissenschaftliche Untersuchung von dessen Gehirn.",
+      "relationship_type": "family/son"
     },
     {
-      "person_name": "Max Planck",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Bedeutender deutscher Physiker, der Einsteins Relativitätsarbeiten früh erkannte und förderte und dazu beitrug, ihn nach Berlin zu holen.",
-      "start_year": 1905,
-      "end_year": 1947,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Wissenschaftlicher Briefwechsel",
-        "Sitzungen der Preußischen Akademie",
-        "Führung der Berliner Physikergemeinschaft"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Max_Planck"
-      ],
-      "notes": "Plancks Unterstützung war entscheidend für Einsteins Berufung an die Preußische Akademie im Jahr 1914; Einstein würdigte später Plancks Rolle bei der Verbreitung der Relativitätstheorie."
-    },
-    {
-      "person_name": "Eduard „Tete“ Einstein",
-      "relationship_type": "family/child",
-      "relationship_description": "Einsteins jüngerer Sohn, ein sensibler angehender Psychiater, dessen Erwachsenenleben von Schizophrenie überschattet war; zwischen beiden bestand eine liebevolle, letztlich jedoch getrennte Beziehung.",
+      "person_name": "Eduard Einstein",
+      "relationship_description": "Einsteins jüngerer Sohn mit Mileva Marić, mit dem er regelmäßig korrespondierte, von dem er jedoch nach dessen Auswanderung in die Vereinigten Staaten getrennt war.",
       "start_year": 1910,
       "end_year": 1955,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familienleben in Zürich und Berlin",
-        "Briefwechsel über Musik, Kunst und Psychoanalyse"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Einstein_family"
-      ],
-      "notes": "Nach Eduards Zusammenbruch und seiner Diagnose emigrierte Einstein in die USA; die beiden sahen sich nie wieder persönlich, blieben aber bis zu Einsteins Tod in brieflichem Kontakt. Eduard blieb in Zürich in einer Einrichtung untergebracht."
-    },
-    {
-      "person_name": "Elsa Einstein (geb. Löwenthal)",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Einsteins zweite Ehefrau und Cousine, die seinen Haushalt führte, ihm den Rücken freihielt und ihn ins Exil in die Vereinigten Staaten begleitete.",
-      "start_year": 1912,
-      "end_year": 1936,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben in Berlin und Princeton",
-        "Gesellschaftliche Bewirtung",
-        "Organisation von Besuchen und Briefwechsel"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Elsa_Einstein"
-      ],
-      "notes": "Elsa schirmte Einstein als eine Art Torwächterin vor unerwünschten Besuchern und praktischen Belastungen ab. Er behandelte ihre Töchter Ilse und Margot wie seine eigenen."
-    },
-    {
-      "person_name": "David Hilbert",
-      "relationship_type": "professional/rival",
-      "relationship_description": "Einflussreicher deutscher Mathematiker, der parallel zu Einstein an den Gravitationsfeldgleichungen arbeitete und zur mathematischen Grundlage der allgemeinen Relativitätstheorie beitrug.",
-      "start_year": 1915,
-      "end_year": 1943,
       "strength": "moderate",
       "interaction_frequency": "occasional",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Parallele Herleitung der Feldgleichungen",
-        "Wissenschaftlicher Austausch zwischen Göttingen und Berlin",
-        "Gespräche über axiomatische Methoden und Physik"
+        "Familienleben vor der Trennung 1914",
+        "Briefwechsel zwischen Vater und Sohn"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/David_Hilbert"
+        "https://en.wikipedia.org/wiki/Einstein_family",
+        "https://de.wikipedia.org/wiki/Albert_Einstein"
       ],
-      "notes": "Hilbert reichte 1915 eine relativistische Gravitationstheorie ein, nur wenige Tage bevor Einstein seine endgültigen Feldgleichungen vorlegte; die daraus entstandene Frage der Priorität wich später gegenseitigem Respekt."
+      "notes": "Eduard erkrankte an Schizophrenie und blieb in Zürich in psychiatrischer Behandlung; nach Einsteins Auswanderung im Jahr 1933 sahen sich Vater und Sohn nie wieder.",
+      "relationship_type": "family/son"
     },
     {
-      "person_name": "Arthur Eddington",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Britischer Astronom, der die Sonnenfinsternisexpeditionen von 1919 leitete, welche die allgemeine Relativitätstheorie bestätigten, und zu einem wichtigen Vermittler von Einsteins Werk in der englischsprachigen Welt wurde.",
-      "start_year": 1916,
-      "end_year": 1944,
+      "person_name": "Elsa Einstein",
+      "relationship_description": "Einsteins Cousine und zweite Ehefrau, die während seiner internationalen Berühmtheit Haushalt, Finanzen, Reisen und öffentliche Verpflichtungen organisierte.",
+      "start_year": 1912,
+      "end_year": 1936,
       "strength": "strong",
-      "interaction_frequency": "occasional",
+      "interaction_frequency": "daily",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Briefwechsel über die allgemeine Relativitätstheorie",
-        "Sonnenfinsternistest zur Lichtablenkung",
-        "Allgemeinverständliche Darstellung der Relativitätstheorie",
-        "Wissenschaftsdiplomatie nach dem Ersten Weltkrieg"
+        "Haushaltsführung in Berlin und Princeton",
+        "Reisen und öffentliche Auftritte",
+        "Auswanderung in die Vereinigten Staaten"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Arthur_Eddington"
+        "https://de.wikipedia.org/wiki/Elsa_Einstein",
+        "https://de.wikipedia.org/wiki/Albert_Einstein"
       ],
-      "notes": "Eddingtons erfolgreiche Messungen der Ablenkung des Sternenlichts im Jahr 1919 machten Einstein weltweit berühmt und wurden zum Symbol einer wissenschaftlichen Aussöhnung zwischen Großbritannien und Deutschland nach dem Ersten Weltkrieg."
+      "notes": "Ihre Liebesbeziehung begann, als Einstein noch mit Marić verheiratet war; 1919 heirateten sie.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Max Planck",
+      "relationship_description": "Führender deutscher Physiker, der Einstein 1914 nach Berlin holte und ihm eine Stellung an der Preußischen Akademie der Wissenschaften und der Universität Berlin verschaffte.",
+      "start_year": 1913,
+      "end_year": 1947,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Berufung an eine Berliner Hochschule",
+        "Preußische Wissenschaftsgemeinschaft",
+        "Theoretische Physik"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Max_Planck"
+      ],
+      "notes": "Plancks Einladung machte Berlin für Einstein auch deshalb attraktiv, weil er dadurch in der Nähe von Elsa Einstein leben konnte.",
+      "relationship_type": "academic/mentor"
     },
     {
       "person_name": "Niels Bohr",
-      "relationship_type": "professional/rival",
-      "relationship_description": "Dänischer Physiker und einer der maßgeblichen Begründer der Quantentheorie, der mit Einstein tiefgreifende Debatten über die Deutung der Quantenmechanik führte.",
+      "relationship_description": "Ein befreundeter Physiker, dessen anhaltende Auseinandersetzungen mit Einstein über die Quantenmechanik ihre gegensätzlichen Auffassungen von Kausalität, Messung und physikalischer Wirklichkeit zu Grundfragen der Physik des 20. Jahrhunderts machten.",
       "start_year": 1920,
       "end_year": 1955,
       "strength": "strong",
       "interaction_frequency": "occasional",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Debatten auf den Solvay-Konferenzen",
-        "Entwicklung und Kritik der Quantenmechanik",
-        "Philosophische Gespräche über Determinismus und Komplementarität"
+        "Gespräche auf den Solvay-Konferenzen",
+        "Öffentliche und private Debatten über Quantenmechanik",
+        "Philosophie der Physik"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
         "https://en.wikipedia.org/wiki/Bohr%E2%80%93Einstein_debates"
       ],
-      "notes": "Die Bohr-Einstein-Debatten über Unschärfe und Vollständigkeit der Quantenmechanik prägten die begrifflichen Grundlagen der modernen Physik; trotz ihrer Differenzen blieben sie persönlich verbundene und einander bewundernde Freunde."
+      "notes": "Trotz ihrer tiefen theoretischen Differenzen bewahrten sie gegenseitige Bewunderung und Freundschaft.",
+      "relationship_type": "intellectual/opponent"
     },
     {
       "person_name": "Chaim Weizmann",
-      "relationship_type": "social/ally",
-      "relationship_description": "Zionistischer Führer, Chemiker und später erster Präsident Israels; er reiste mit Einstein auf Spenden- und Werbereisen und teilte dessen Engagement für jüdische Kultur- und Bildungsprojekte.",
+      "relationship_description": "Zionistischer Führer, der 1921 gemeinsam mit Einstein durch die Welt reiste, um Mittel für die Hebräische Universität Jerusalem und das Technion zu sammeln.",
       "start_year": 1921,
       "end_year": 1952,
       "strength": "moderate",
       "interaction_frequency": "occasional",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "Reise in die Vereinigten Staaten 1921 zur Einwerbung von Spenden für die Hebräische Universität",
-        "Öffentliches Eintreten für jüdische Bildung in Palästina",
-        "Austausch über zionistische Politik"
+        "Spendenreise 1921",
+        "Unterstützung jüdischer Hochschulbildung in Palästina",
+        "Öffentliches Eintreten für den Zionismus"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Chaim_Weizmann"
+        "https://en.wikipedia.org/wiki/Chaim_Weizmann",
+        "https://de.wikipedia.org/wiki/Albert_Einstein"
       ],
-      "notes": "Weizmann und Einstein traten gemeinsam als prominente jüdische Persönlichkeiten auf; nach Weizmanns Tod wurde Einstein die Präsidentschaft Israels angeboten, die er ablehnte."
-    },
-    {
-      "person_name": "Niels Bohr (im Kontext der Bohr-Einstein-Debatten)",
-      "relationship_type": "academic/rival",
-      "relationship_description": "Siehe oben den gesonderten Eintrag unter „Berufliche Beziehungen/Rivalen“; hier aufgenommen, um seine Rolle als Einsteins wichtigster Gesprächspartner in den Grundlagenfragen der Quantenphysik hervorzuheben.",
-      "start_year": 1927,
-      "end_year": 1955,
-      "strength": "strong",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Intensive technische und philosophische Debatten auf den Solvay-Konferenzen",
-        "Briefwechsel über das EPR-Paradoxon und Komplementarität"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Bohr%E2%80%93Einstein_debates"
-      ],
-      "notes": "Einsteins berühmte Bemerkung „Gott würfelt nicht“ richtete sich gegen die probabilistische Quantenmechanik, die Bohr verteidigte."
-    },
-    {
-      "person_name": "J. Robert Oppenheimer",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Amerikanischer theoretischer Physiker und später wissenschaftlicher Leiter des Manhattan-Projekts; ein jüngerer Zeitgenosse und Kollege am Institute for Advanced Study mit einem komplexen, bisweilen ambivalenten Verhältnis zu Einstein.",
-      "start_year": 1932,
-      "end_year": 1955,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Lehrtätigkeit am IAS in Princeton",
-        "Wissenschaftliche und philosophische Gespräche",
-        "Öffentliche Debatten über Atomwaffen und Politik"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Oppenheimer_relationship"
-      ],
-      "notes": "Beide verkörperten unterschiedliche Rollen des Wissenschaftlers: Einstein den kontemplativen Außenseiter, Oppenheimer den politisch gut vernetzten Insider. Sie begegneten sich am IAS häufig, wurden jedoch keine engen Freunde."
-    },
-    {
-      "person_name": "Adolf Hitler",
-      "relationship_type": "political/persecutor",
-      "relationship_description": "Nationalsozialistischer Diktator, dessen antisemitische und nationalistische Politik Einstein ins Exil trieb und die deutsche akademische Welt zerstörte, in der Einstein aufgestiegen war.",
-      "start_year": 1933,
-      "end_year": 1945,
-      "strength": "strong",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Keine direkten; indirekte Verbindung durch die Verfolgung der Juden und Einsteins Ausschluss aus deutschen Institutionen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Adolf_Hitler"
-      ],
-      "notes": "Nach Hitlers Machtübernahme wurde Einsteins Eigentum beschlagnahmt, er in der Propaganda angeprangert und entzog sich der deutschen Staatsbürgerschaft. Er ließ sich in den Vereinigten Staaten nieder und wurde zu einem entschiedenen Kritiker des Nationalsozialismus."
+      "notes": "Ihre Zusammenarbeit verband Einsteins öffentliche Autorität mit dem Aufbau jüdischer Bildungs- und zionistischer Institutionen.",
+      "relationship_type": "political/ally"
     },
     {
       "person_name": "Leó Szilárd",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Ungarischer Physiker, der Einstein dazu bewegte, 1939 den Brief an Präsident Roosevelt zu unterzeichnen, in dem die Erforschung von Atomwaffen auf Grundlage der Kernspaltung in den USA gefordert wurde.",
-      "start_year": 1939,
+      "relationship_description": "Physiker und Gegner von Atomwaffen, der mit Einstein an der Warnung von 1939 an Franklin D. Roosevelt arbeitete und das Emergency Committee of Atomic Scientists mitbegründete.",
+      "start_year": 1926,
+      "end_year": 1955,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Entwicklung des Einstein-Kühlschranks",
+        "Einstein-Szilard-Brief",
+        "Emergency Committee of Atomic Scientists",
+        "Einsatz für die Kontrolle von Atomwaffen"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Szilard_letter",
+        "https://en.wikipedia.org/wiki/Emergency_Committee_of_Atomic_Scientists"
+      ],
+      "notes": "Szilárd entwarf den Brief von 1939, den Einstein unterschrieb und in dem vor der Möglichkeit deutscher Atomwaffen gewarnt wurde.",
+      "relationship_type": "political/collaborator"
+    },
+    {
+      "person_name": "Robert Oppenheimer",
+      "relationship_description": "Ein theoretischer Physiker und späterer Direktor des Institute for Advanced Study, an dem er und Einstein von 1947 bis zu Einsteins Tod Kollegen in Princeton waren.",
+      "start_year": 1947,
       "end_year": 1955,
       "strength": "moderate",
       "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
+      "influence_direction": "bidirectional",
       "shared_activities": [
-        "Verfassen und Unterzeichnen des Einstein-Szilárd-Briefs",
-        "Gespräche über nukleare Kettenreaktionen und politische Verantwortung"
+        "Institute for Advanced Study in Princeton",
+        "Gespräche über Physik und die gesellschaftliche Rolle der Wissenschaft",
+        "Sorgen über die Atompolitik der Nachkriegszeit"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Szilard_letter"
+        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Oppenheimer_relationship"
       ],
-      "notes": "Szilárd verfasste den Brief, der Einsteins Bekanntheit nutzte, um den Anstoß zu dem späteren Manhattan-Projekt zu geben; Einstein äußerte später tiefes Bedauern über sein Eingreifen."
+      "notes": "Ihr Verhältnis war freundlich, zugleich aber geistig von Spannungen geprägt, insbesondere in Fragen der Quantentheorie und der institutionellen Wissenschaft.",
+      "relationship_type": "academic/colleague"
+    },
+    {
+      "person_name": "Nazi regime",
+      "entity_kind": "organization",
+      "qualifier": "Regime des deutschen totalitären Staates",
+      "relationship_description": "Die antisemitische Verfolgung durch das totalitäre deutsche Regime zwang Einstein ins dauerhafte Exil aus Deutschland. 1933 beantragte er die Entlassung aus der preußischen Staatsangehörigkeit; 1934 erklärte ihn das Regime offiziell zum Ausgebürgerten.",
+      "start_year": 1933,
+      "end_year": 1945,
+      "strength": "strong",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Einsteins Ausreise aus Deutschland",
+        "Verlust der preußischen Staatsangehörigkeit",
+        "Exil in den Vereinigten Staaten"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Albert_Einstein"
+      ],
+      "notes": "Einstein beantragte 1933 die Entlassung aus der preußischen Staatsangehörigkeit; 1934 erklärte ihn das Regime offiziell zum Ausgebürgerten.",
+      "relationship_type": "political/persecutor"
     },
     {
       "person_name": "Franklin D. Roosevelt",
-      "relationship_type": "professional/patron",
-      "relationship_description": "Präsident der Vereinigten Staaten und Empfänger des Einstein-Szilárd-Briefs; er genehmigte die vorbereitenden Arbeiten, die zum Manhattan-Projekt führten.",
+      "relationship_description": "Präsident der Vereinigten Staaten, der Einsteins Brief von 1939 mit der Warnung vor möglichen Atomwaffen erhielt und eine staatliche Prüfung der Uranforschung anordnete.",
       "start_year": 1939,
       "end_year": 1945,
       "strength": "moderate",
       "interaction_frequency": "rare",
       "influence_direction": "ego_to_alter",
       "shared_activities": [
-        "Briefwechsel über Kernspaltung und nationale Sicherheit",
-        "Indirekte Zusammenarbeit über Beratungskanäle zur Wissenschaftspolitik"
+        "Briefwechsel zum Einstein-Szilard-Brief",
+        "Politik zur Uranforschung"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Szilard_letter",
-        "https://en.wikipedia.org/wiki/Franklin_D._Roosevelt"
+        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Szilard_letter"
       ],
-      "notes": "Einstein arbeitete selbst nie am Manhattan-Projekt mit und galt als Sicherheitsrisiko; dennoch war sein Brief an Roosevelt von 1939 ein entscheidender politischer Anstoß."
+      "notes": "Roosevelts Reaktion führte zur Einsetzung des Advisory Committee on Uranium, eines Vorläufers der späteren amerikanischen Atomwaffenforschung.",
+      "relationship_type": "political/advocate"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Einsteins familiäre Beziehungen standen im Zentrum seines Lebens: Seine Eltern und seine Schwester prägten seine frühe Bildung und musikalische Kultur, während seine beiden Ehen sowie seine schwierigen Beziehungen zu seinen Kindern und zum weit verzweigten Einstein-Koch-Familiennetzwerk ihm während seiner gesamten Laufbahn sowohl emotionalen Halt als auch Belastungen boten."
-    },
-    {
-      "relationship_type": "professional",
-      "summary": "Sein berufliches Netzwerk war dicht geknüpft und international. Dazu gehörten Mentoren wie Lorentz und Grossmann, Mitarbeiter und Vermittler wie Arthur Stanley Eddington und Planck sowie intellektuelle Rivalen wie Bohr und Hilbert – sie alle trugen dazu bei, die Relativitätstheorie und die moderne Physik zu prägen und zu verbreiten."
+      "summary": "Einsteins Familienleben war von dauerhafter Verbundenheit ebenso geprägt wie von tiefen Spannungen. Seine Eltern schufen den technischen und kulturellen Rahmen seiner Kindheit, während seine Schwester Maja ihm eine vertraute Begleiterin blieb und schließlich mit ihm in Princeton zusammenlebte. Seine erste Ehe begann im geistig anregenden Umfeld des Zürcher Polytechnikums, zerbrach jedoch nach der Trennung; die daraus entstandene Distanz belastete auch seine Beziehungen zu den Kindern, besonders zu Eduard. Elsa wurde danach für die praktische Organisation des Lebens des gefeierten Wissenschaftlers unentbehrlich, auch wenn die Ehe ihre eigenen Spannungen hatte."
     },
     {
       "relationship_type": "academic",
-      "summary": "Lehrer, frühe Tutoren und institutionelle Kollegen – von Max Talmud und den Dozenten der ETH bis zu Kollegen wie Robert Oppenheimer am Institute for Advanced Study – bildeten das akademische Umfeld, das Einsteins Entwicklung förderte und ihm später in Princeton eine stabile Wirkungsstätte bot."
+      "summary": "Einsteins Laufbahn hing weniger von institutioneller Anpassung als von einer kleinen Gruppe von Kollegen ab, die ihm Wege eröffneten und seine Ideen auf die Probe stellten. Marcel Grossmann half ihm zunächst, am Berner Patentamt eine gesicherte Stellung zu finden, und lieferte später entscheidende mathematische Grundlagen für die allgemeine Relativitätstheorie, während Michele Besso den ausdauernden Gedankenaustausch ermöglichte, aus dem wichtige frühe Arbeiten hervorgingen. Max Plancks Vermittlung brachte Einstein nach Berlin, wo die allgemeine Relativitätstheorie vollendet wurde; seine spätere Verbindung zu Oppenheimer in Princeton verortete ihn in der sich wandelnden amerikanischen Kultur der theoretischen Physik nach dem Krieg."
     },
     {
-      "relationship_type": "social",
-      "summary": "Einsteins gesellschaftliche und politischen Verbindungen reichten vom zionistischen Verbündeten Chaim Weizmann und dem US-Präsidenten Roosevelt bis zu seinem existenziellen Gegenspieler Hitler. In diesen Beziehungen verflochten sich sein wissenschaftliches Ansehen mit der Politik des 20. Jahrhunderts, dem Exil, dem Zionismus und dem Atomzeitalter."
+      "relationship_type": "intellectual",
+      "summary": "Einsteins Auseinandersetzungen mit der Quantenmechanik legten einen zentralen Widerspruch in seinem wissenschaftlichen Denken offen: Er erkannte die außergewöhnlichen Erfolge der Theorie an, widerstrebte jedoch ihrer probabilistischen Beschreibung der Wirklichkeit. Seine langjährige Debatte mit Bohr auf den Solvay-Konferenzen und darüber hinaus schärfte Fragen nach Kausalität, Lokalität und Messung, die noch lange nach dem Ende ihrer persönlichen Gespräche nachwirkten."
+    },
+    {
+      "relationship_type": "political",
+      "summary": "Die öffentliche Verantwortung wurde für Einstein zu einer folgenreichen zweiten Laufbahn. Seine Verbindung zu Weizmann brachte ihn mit jüdischen Bildungs- und politischen Bestrebungen in Kontakt, während Szilárd seine Autorität für die nukleare Warnung von 1939 und spätere Kampagnen zur internationalen Kontrolle der Atomenergie nutzte. Die Verfolgung durch das deutsche Regime machte das Exil für Einstein zu einer persönlichen und nicht bloß abstrakten Erfahrung; sein Appell an Roosevelt zeigte sowohl seine Bereitschaft, während des Krieges einzugreifen, als auch die moralische Last, die er später mit Atomwaffen verband."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "1f2c38bb005691cc",
-    "translated_on": "2026-08-02T12:40:23.990243+00:00",
+    "source_fingerprint": "0de2df9455bf8d0e",
+    "translated_on": "2026-08-31T18:45:23.845390+02:00",
     "translator": "openai:gpt-5.6-luna"
   }
 }

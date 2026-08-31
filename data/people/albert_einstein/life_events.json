@@ -1,145 +1,202 @@
 {
-  "dataset": "historical_biography_v1",
-  "created_on": "2025-12-09",
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-08-31",
   "person": {
     "name": "Albert_Einstein",
     "birth_date": "1879-03-14",
     "death_date": "1955-04-18",
     "primary_roles": [
       "physicist",
-      "scientist"
+      "writer",
+      "activist"
     ],
-    "tagline": "Architect of Relativity",
-    "summary": "Albert Einstein (1879–1955) was a German-born theoretical physicist whose work transformed modern understandings of space, time, matter, and energy. While working at the Swiss Patent Office he published his 1905 “Annus Mirabilis” papers, including special relativity and the mass–energy relation E=mc², and a key explanation of the photoelectric effect. He later developed the general theory of relativity, received the 1921 Nobel Prize in Physics, emigrated from Nazi Germany to the United States, and used his worldwide fame to advocate for peace, international cooperation, and nuclear arms control.",
-    "wikipedia": "https://en.wikipedia.org/wiki/Albert_Einstein",
+    "tagline": "Architect of relativity",
+    "summary": "Albert Einstein was a German-born theoretical physicist whose work on relativity, light quanta, and gravity transformed modern physics. A Swiss and later American citizen, he also used his public standing to advocate for peace, international cooperation, and nuclear arms control.",
+    "wikipedia": "https://de.wikipedia.org/wiki/Albert_Einstein",
     "portrait": {
       "image": "/portraits/albert_einstein_thumbnail.webp",
-      "source": "https://de.wikipedia.org/wiki/Albert_Einstein",
+      "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_Head_cleaned.jpg",
       "caption": "Stylized portrait based on historical photograph",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Albert_Einstein_1921_by_F_Schmutzer.jpg",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Albert_Einstein_Head_cleaned.jpg/960px-Albert_Einstein_Head_cleaned.jpg",
       "thumbnail": "/portraits/albert_einstein_thumbnail.webp",
       "medium": "/portraits/albert_einstein_medium.webp",
-      "full": "/portraits/albert_einstein_full.webp"
+      "full": "/portraits/albert_einstein_full.webp",
+      "originalCreator": "Oren Jack Turner",
+      "originalLicense": "Public domain"
     }
   },
   "chapters": [
     {
-      "id": "formative_european_years",
-      "headline": "Formative European Years",
+      "id": "restless_young_mind",
+      "headline": "A Mind Unbound",
       "date_start": "1879-03-14",
       "date_start_precision": "day",
-      "date_end": "1896-10-02",
-      "date_end_precision": "day",
+      "date_end": "1900",
+      "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 17,
+      "age_end": 21,
       "involved_people": [
         "Hermann Einstein",
-        "Pauline Einstein (née Koch)",
-        "Jakob Einstein"
-      ],
-      "location": "Central Europe"
-    },
-    {
-      "id": "student_to_patent_visionary",
-      "headline": "Student To Patent Visionary",
-      "date_start": "1896-10",
-      "date_start_precision": "month",
-      "date_end": "1909",
-      "date_end_precision": "year",
-      "age_start": 17,
-      "age_end": 30,
-      "involved_people": [
+        "Pauline Einstein",
+        "Marie Winteler",
+        "Gustav Maier",
+        "Albin Herzog",
         "Mileva Marić"
       ],
-      "location": "Switzerland"
+      "location": "Central Europe",
+      "illustration": {
+        "image": "/chapter_art/albert_einstein/restless_young_mind_medium.webp",
+        "medium": "/chapter_art/albert_einstein/restless_young_mind_medium.webp",
+        "full": "/chapter_art/albert_einstein/restless_young_mind_full.webp",
+        "concept": "A luminous, irregular crystal floats in deep charcoal darkness, its facets opening into delicate branching planes that reach outward in several directions. Tiny cool sparks drift around its edges, suggesting questions multiplying faster than they can settle.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-31"
+      }
     },
     {
-      "id": "berlin_theoretical_breakthroughs",
-      "headline": "Berlin Theoretical Breakthroughs",
+      "id": "patent_office_revolution",
+      "headline": "The Patent Office Revolution",
+      "date_start": "1902-06",
+      "date_start_precision": "month",
+      "date_end": "1908",
+      "date_end_precision": "year",
+      "age_start": 23,
+      "age_end": 29,
+      "involved_people": [
+        "Marcel Grossmann",
+        "Mileva Marić"
+      ],
+      "location": "Switzerland",
+      "illustration": {
+        "image": "/chapter_art/albert_einstein/patent_office_revolution_medium.webp",
+        "medium": "/chapter_art/albert_einstein/patent_office_revolution_medium.webp",
+        "full": "/chapter_art/albert_einstein/patent_office_revolution_full.webp",
+        "concept": "At center, a compact brass-like gear dissolves into a radiant whirl of fine silver arcs, as though hidden order has suddenly escaped its casing. The surrounding darkness remains perfectly still, heightening the burst of motion.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-31"
+      }
+    },
+    {
+      "id": "gravity_remakes_cosmos",
+      "headline": "Gravity Remakes the Cosmos",
       "date_start": "1909",
       "date_start_precision": "year",
-      "date_end": "1922-11-09",
-      "date_end_precision": "day",
+      "date_end": "1918",
+      "date_end_precision": "year",
       "age_start": 30,
-      "age_end": 43,
+      "age_end": 39,
       "involved_people": [
         "Mileva Marić",
         "Hans Albert Einstein",
         "Eduard Einstein",
-        "Elsa Einstein",
-        "Arthur Eddington",
-        "Frank Watson Dyson",
-        "Andrew Crommelin",
-        "Charles Rundle Davidson",
-        "Members of the Royal Swedish Academy of Sciences"
+        "Max Planck"
       ],
-      "location": "Central Europe"
+      "location": "Central Europe",
+      "illustration": {
+        "image": "/chapter_art/albert_einstein/gravity_remakes_cosmos_medium.webp",
+        "medium": "/chapter_art/albert_einstein/gravity_remakes_cosmos_medium.webp",
+        "full": "/chapter_art/albert_einstein/gravity_remakes_cosmos_full.webp",
+        "concept": "A broad midnight-blue fabric of light curves inward around a single suspended amber sphere, forming a deep, smooth well. Fine distant pinpricks slide along the bent surface, tracing an elegant, unavoidable pull.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-31"
+      }
     },
     {
-      "id": "exile_in_america",
-      "headline": "Exile In America",
-      "date_start": "1922-11-10",
-      "date_start_precision": "day",
-      "date_end": "1952-11-26",
-      "date_end_precision": "day",
-      "age_start": 43,
-      "age_end": 73,
+      "id": "starlight_makes_legend",
+      "headline": "Starlight Makes a Legend",
+      "date_start": "1919",
+      "date_start_precision": "year",
+      "date_end": "1922",
+      "date_end_precision": "year",
+      "age_start": 40,
+      "age_end": 43,
       "involved_people": [
-        "Leo Szilard",
+        "Elsa Einstein",
+        "Arthur Stanley Eddington",
+        "Rudolf Nadolny"
+      ],
+      "location": "Europe",
+      "illustration": {
+        "image": "/chapter_art/albert_einstein/starlight_makes_legend_medium.webp",
+        "medium": "/chapter_art/albert_einstein/starlight_makes_legend_medium.webp",
+        "full": "/chapter_art/albert_einstein/starlight_makes_legend_full.webp",
+        "concept": "A blazing white disk is veiled by a dark circular shadow, while a crown of thin golden rays curves gracefully around its rim. The bent filaments flare into a vast black field, making invisible forces briefly visible.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-31"
+      }
+    },
+    {
+      "id": "refuge_across_oceans",
+      "headline": "A Refuge Across Oceans",
+      "date_start": "1923",
+      "date_start_precision": "year",
+      "date_end": "1945",
+      "date_end_precision": "year",
+      "age_start": 44,
+      "age_end": 66,
+      "involved_people": [
+        "Elsa Einstein",
+        "Leó Szilárd",
         "Franklin D. Roosevelt",
         "Edward Teller",
-        "Eugene Wigner",
-        "Chaim Weizmann",
-        "David Ben-Gurion",
-        "Abba Eban"
+        "Eugene Wigner"
       ],
-      "location": "United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/albert_einstein/refuge_across_oceans_medium.webp",
+        "medium": "/chapter_art/albert_einstein/refuge_across_oceans_medium.webp",
+        "full": "/chapter_art/albert_einstein/refuge_across_oceans_full.webp",
+        "concept": "A small glowing seed-shaped ember crosses a wide field of layered cobalt waves, leaving a faint trail of warm light behind it. Far ahead, the waves soften into a calm, open band of pale horizon.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-31"
+      }
     },
     {
-      "id": "final_princeton_days",
-      "headline": "Final Princeton Days",
-      "date_start": "1952-11-27",
-      "date_start_precision": "day",
+      "id": "conscience_for_peace",
+      "headline": "A Conscience for Peace",
+      "date_start": "1946",
+      "date_start_precision": "year",
       "date_end": "1955-04-18",
       "date_end_precision": "day",
-      "age_start": 73,
+      "age_start": 67,
       "age_end": 76,
-      "involved_people": [],
-      "location": "United States"
+      "involved_people": [
+        "Leó Szilárd"
+      ],
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/albert_einstein/conscience_for_peace_medium.webp",
+        "medium": "/chapter_art/albert_einstein/conscience_for_peace_medium.webp",
+        "full": "/chapter_art/albert_einstein/conscience_for_peace_full.webp",
+        "concept": "A fractured translucent sphere hovers in darkness, its separated pieces held apart by a quiet ring of blue-white light. From the gaps, soft green shoots of illumination extend outward, balancing fragility with deliberate restraint.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-31"
+      }
     }
   ],
+  "conclusion": "Einstein transformed humanity's understanding of space, time, and gravity, then spent his final years confronting the moral consequences of scientific power. His legacy endures as both a triumph of imagination and a call to responsibility.",
   "events": [
     {
       "date": "1879-03-14",
       "date_precision": "day",
-      "age": null,
+      "age": 0,
       "title": "Birth in Ulm",
-      "description": "Albert Einstein is born in Ulm in the Kingdom of Württemberg to Hermann and Pauline Einstein, members of an assimilated middle-class German-Jewish family. Shortly after his birth the family will move to Munich, where his father and uncle work in the fledgling electrical industry.",
+      "description": "Albert Einstein was born in Ulm, in the Kingdom of Württemberg, while his father was a partner in a bed-feather factory. He entered an assimilated German-Jewish middle-class household.",
       "locations": [
         {
-          "name_historic": "Ulm, Kingdom of Württemberg",
-          "name_modern": "Ulm, Baden-Württemberg, Germany",
+          "name_historic": "Ulm",
+          "name_modern": "Ulm, Germany",
           "centroid": [
             9.9937,
             48.4011
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Munich",
-          "name_modern": "Munich, Bavaria, Germany",
-          "centroid": [
-            11.582,
-            48.1351
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
         "Hermann Einstein",
-        "Pauline Einstein (née Koch)",
-        "Jakob Einstein"
+        "Pauline Einstein"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
@@ -147,131 +204,77 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Gorri%C3%B3n_de_Ulm%2C_Ulm%2C_Alemania%2C_2023-06-17%2C_DD_67.jpg",
-          "caption": "Ulm Sparrow statue in Einstein’s birthplace, Ulm, Germany",
-          "source": "https://commons.wikimedia.org/wiki/File:Gorrión_de_Ulm,_Ulm,_Alemania,_2023-06-17,_DD_67.jpg",
-          "creator": "Diego Delso",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-candle",
-      "chapter": "formative_european_years",
-      "event_class": {
-        "type": "birth",
-        "father": "Hermann Einstein",
-        "mother": "Pauline Einstein (née Koch)"
-      }
-    },
-    {
-      "date": "1888",
-      "date_precision": "year",
-      "age": 9,
-      "title": "Begins studies at Luitpold-Gymnasium",
-      "description": "Einstein enters the Luitpold-Gymnasium in Munich, receiving a rigorous classical education under the authoritarian [[Prussian education system|Prussian school model]]. Though often at odds with the discipline and rote learning, he excels in mathematics and physics, reads popular science works on his own, and continues violin studies that will remain a lifelong passion.",
-      "locations": [
-        {
-          "name_historic": "Munich",
-          "name_modern": "Munich, Germany",
-          "centroid": [
-            11.576124,
-            48.137154
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Luitpold-Gymnasium_Muenchen-2.jpg",
-          "caption": "Staatliches Luitpold-Gymnasium München school building",
-          "source": "https://commons.wikimedia.org/wiki/File:Luitpold-Gymnasium_Muenchen-2.jpg",
-          "creator": "Rufus46",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Einstein_birthplace%2C_front_door_outline.jpg/960px-Einstein_birthplace%2C_front_door_outline.jpg",
+          "caption": "Einstein birthplace site in Ulm",
+          "source": "https://commons.wikimedia.org/wiki/File:Einstein_birthplace,_front_door_outline.jpg",
+          "creator": "Mirokado",
           "license": "CC BY-SA 3.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
         }
       ],
-      "event_type_icon": "mdi-school",
-      "chapter": "formative_european_years",
-      "annotations": {
-        "Prussian education system": {
-          "explanation": "A highly centralized, authoritarian schooling model developed in 18th–19th century Prussia, emphasizing discipline, obedience, and rote learning in state-run schools.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Prussian_education_system"
-        }
+      "event_type_icon": "mdi-candle",
+      "chapter": "restless_young_mind",
+      "weight": 0.3,
+      "event_class": {
+        "type": "birth",
+        "father": "Hermann Einstein",
+        "mother": "Pauline Einstein, née Koch",
+        "characterization": "German-Jewish middle class"
       }
     },
     {
-      "date": "1896-10-03",
-      "date_precision": "day",
-      "age": 17,
-      "title": "Passes Swiss Matura in Aarau",
-      "description": "After leaving the Munich gymnasium and joining his family in Italy, Einstein moves alone to Aarau in Switzerland to complete his secondary schooling at the liberal Aargau Cantonal School. On 3 October 1896 he receives his [[Matura|Maturitätszeugnis]] with top marks in the sciences, an important step that allows him to enter higher education while formally separating from both German citizenship and organized religion.",
+      "date": "1895-10",
+      "date_precision": "month",
+      "date_end": "1896-10",
+      "date_end_precision": "month",
+      "age": 16,
+      "title": "Studies in Aarau",
+      "description": "After leaving the Munich gymnasium and joining his family in Italy, Einstein enrolled at the Aargau Cantonal School in Aarau to prepare for university. He lived with the Winteler family, formed a relationship with Marie Winteler, and completed the Swiss Matura with strong marks in science and mathematics.",
       "locations": [
         {
           "name_historic": "Aarau",
           "name_modern": "Aarau, Switzerland",
           "centroid": [
-            8.051,
-            47.392
+            8.0456,
+            47.3925
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Munich",
-          "name_modern": "Munich, Germany",
-          "centroid": [
-            11.582,
-            48.135
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Milan",
-          "name_modern": "Milan, Italy",
-          "centroid": [
-            9.19,
-            45.464
-          ],
-          "primary": false
         }
       ],
-      "involved_people": null,
+      "involved_people": [
+        "Marie Winteler",
+        "Gustav Maier",
+        "Albin Herzog"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://de.wikipedia.org/wiki/Kantonsschule_Aarau"
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Aarau-Alte-Kantonsschule-ps.jpg",
-          "caption": "Alte Kantonsschule in Aarau, Switzerland",
-          "source": "https://commons.wikimedia.org/wiki/File:Aarau-Alte-Kantonsschule-ps.jpg",
-          "creator": "Roland Zumbuehl",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Albert_Einstein%27s_exam_of_maturity_grades_%28color2%29.jpg/960px-Albert_Einstein%27s_exam_of_maturity_grades_%28color2%29.jpg",
+          "caption": "Einstein’s 1896 Aarau maturity examination certificate",
+          "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein's_exam_of_maturity_grades_(color2).jpg",
+          "creator": "The authorities of the Canton of Aargau, Switzerland",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "student_to_patent_visionary",
-      "annotations": {
-        "Matura": {
-          "explanation": "The Matura (German: Maturitätsprüfung or Maturitätszeugnis) is a standardized secondary-school leaving examination and diploma in several European countries that qualifies holders for university admission.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Matura"
-        }
-      }
+      "chapter": "restless_young_mind",
+      "weight": 0.45
     },
     {
-      "date": "1896-10",
-      "date_precision": "month",
+      "date": "1896",
+      "date_precision": "year",
+      "date_end": "1900",
+      "date_end_precision": "year",
       "age": 17,
-      "title": "Enrolls at Zurich Polytechnic",
-      "description": "Einstein enrolls in the mathematics and physics teacher-training program at the [[Eidgenössisches Polytechnikum|Eidgenössisches Polytechnikum]] in Zurich (later ETH Zurich). There he studies under leading physicists and mathematicians, often skipping lectures he finds uninspiring while working intensively on theoretical problems with a small circle of friends, including his fellow student and future first wife Mileva Marić.",
+      "title": "Attends Zurich Polytechnic",
+      "description": "In 1896, Einstein entered the teacher-training program in mathematics and physics at the Swiss Federal Polytechnic in Zurich. He studied alongside Mileva Marić, sometimes relying on classmates’ notes when he skipped lectures, and completed the program with a teaching diploma in 1900.",
       "locations": [
         {
-          "name_historic": "Zürich",
-          "name_modern": "Zürich, Switzerland",
+          "name_historic": "Zurich",
+          "name_modern": "Zurich, Switzerland",
           "centroid": [
             8.5417,
             47.3769
@@ -283,37 +286,20 @@
         "Mileva Marić"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://de.wikipedia.org/wiki/Mileva_Mari%C4%87",
-        "https://en.wikipedia.org/wiki/ETH_Zurich"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/af/ETH_zurich_%28Ank_Kumar_Infosys_Limited%29_02.jpg",
-          "caption": "ETH Zurich main building exterior",
-          "source": "https://commons.wikimedia.org/wiki/File:ETH_zurich_(Ank_Kumar_Infosys_Limited)_02.jpg",
-          "creator": "Ank kumar",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
+        "https://de.wikipedia.org/wiki/Mileva_Mari%C4%87"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "formative_european_years",
-      "annotations": {
-        "Eidgenössisches Polytechnikum": {
-          "explanation": "The Swiss Federal Polytechnic School in Zurich, founded in 1855 and later renamed ETH Zurich, a leading institution for science and engineering education and research.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/ETH_Zurich"
-        }
-      }
+      "chapter": "restless_young_mind",
+      "weight": 0.65,
+      "background": "The Polytechnic was not simply a physics department but a federal technical school intended to prepare specialist teachers. Its mathematically oriented teaching diploma qualified graduates in physics as well, yet the curriculum demanded sustained formal mathematical training. That requirement clashed with Einstein’s preference for theoretical problems and thought experiments over memorizing established material. His former classmate Marcel Grossmann became especially important as a careful recorder of the lectures Einstein neglected; the two men’s connection would later prove consequential when Einstein needed more advanced mathematics.\n\nThe class also exposed the limits imposed on women in technical education. Marić was the only woman in her year in mathematics and physics and attended the same lectures. She left for Heidelberg University as an auditor during the winter of 1897–98, then returned to Zurich in April 1898. Although she passed the first examination in 1899, she failed the final diploma examination the following year, with weak results in mathematics, especially function theory, and only a middling evaluation for her thesis. A second attempt in 1901 also failed. Her experience makes clear that access to the Polytechnic did not translate automatically into a professional scientific career.\n\nOne lasting irony of these years was Einstein’s impatience with the very mathematics he regarded as an obstacle to a problem-oriented physicist. When the problem of gravity later required tools for describing curved space, his own command of the subject was insufficient. Grossmann, by then a mathematics professor in Zurich, located the relevant work on Riemannian geometry and the tensor methods developed by Christoffel, Ricci, and Levi-Civita. Thus a student friendship and a set of lecture notes belonged to a longer intellectual chain. In the immediate term, the diploma did not secure an academic assistantship: applications to the Polytechnic and other universities were rejected, sending him toward temporary teaching work before the Bern patent office job."
     },
     {
       "date": "1902-06",
       "date_precision": "month",
-      "date_end": "1909",
-      "date_end_precision": "year",
       "age": 23,
-      "title": "Joins Swiss Patent Office in Bern",
-      "description": "After struggling to secure an academic post following graduation, Einstein accepts a position as a technical expert at the Swiss Federal Patent Office in Bern. Examining patent applications for electrical and mechanical devices gives him financial stability and daily exposure to practical problems in electromagnetism, even as he pursues his own theoretical work in his spare time with the informal \"Olympia Academy\" discussion group.",
+      "title": "Joins Bern Patent Office",
+      "description": "In June 1902, Einstein began work in Bern as a technical expert, third class, at the Swiss Patent Office. Recommended by his friend Marcel Grossmann, the post gave him a stable income while he pursued scientific questions.",
       "locations": [
         {
           "name_historic": "Bern",
@@ -325,29 +311,23 @@
           "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Einstein_family",
-        "https://en.wikipedia.org/wiki/Hans_Albert_Einstein"
+      "involved_people": [
+        "Marcel Grossmann"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Einstein_patentoffice.jpg",
-          "caption": "Albert Einstein as a German-born theoretical physicist",
-          "source": "https://commons.wikimedia.org/wiki/File:Einstein_patentoffice.jpg",
-          "creator": "Lucien Chavan [ 1 ] (1868 - 1942), a friend of Einstein's when he was living in Berne.",
-          "license": "Public domain"
-        }
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein",
+        "https://de.wikipedia.org/wiki/Einsteinhaus_Bern"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "student_to_patent_visionary"
+      "chapter": "patent_office_revolution",
+      "weight": 0.7
     },
     {
       "date": "1903-01-06",
       "date_precision": "day",
       "age": 23,
-      "title": "Marries Mileva Marić in Bern",
-      "description": "Einstein marries his former [[ETH Zurich|ETH]] classmate Mileva Marić in a civil ceremony in Bern, against the initial wishes of his family. The couple soon establish a household in the Kramgasse, later known as the Einsteinhaus, where they will raise two sons while Einstein continues to work at the patent office and develop his revolutionary ideas.",
+      "title": "Marries Mileva Marić",
+      "description": "Einstein and Mileva Marić married in a civil ceremony in Bern on January 6, 1903. They began married life while Einstein worked at the Swiss Patent Office.",
       "locations": [
         {
           "name_historic": "Bern",
@@ -363,103 +343,142 @@
         "Mileva Marić"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein",
         "https://de.wikipedia.org/wiki/Mileva_Mari%C4%87",
-        "https://de.wikipedia.org/wiki/Einsteinhaus_Bern",
-        "https://en.wikipedia.org/wiki/Hans_Albert_Einstein"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Albert_Einstein_and_his_wife_Mileva_Maric.jpg",
-          "caption": "Albert Einstein and his first wife Mileva Marić",
-          "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_and_his_wife_Mileva_Maric.jpg",
-          "creator": "Unknown author Unknown author",
-          "license": "Public domain"
-        }
+        "https://de.wikipedia.org/wiki/Lieserl_Mari%C4%87"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "student_to_patent_visionary",
-      "annotations": {
-        "ETH Zurich": {
-          "explanation": "The Swiss Federal Institute of Technology in Zurich, a leading science and engineering university where Albert Einstein and Mileva Marić studied together.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/ETH_Zurich"
-        }
+      "chapter": "patent_office_revolution",
+      "weight": 0.5,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Mileva Marić",
+        "duration": "until 1919",
+        "children": 3,
+        "characterization": "strained marriage"
       }
     },
     {
-      "date": "1905-06-30",
-      "date_precision": "day",
-      "date_end": "1905-09",
-      "date_end_precision": "month",
-      "date_note": "Spans several papers published between June and September 1905",
+      "date": "1905-09",
+      "date_precision": "month",
       "age": 26,
-      "title": "Publishes Annus Mirabilis papers",
-      "description": "While still a patent clerk in Bern, Einstein publishes a series of four landmark papers in a German physics journal that together reshape modern physics. They explain Brownian motion, introduce the light quantum to account for the photoelectric effect, formulate the special theory of relativity, and derive the mass–energy relation E=mc², bringing him to the attention of leading physicists across Europe.",
+      "title": "Publishes Special Relativity",
+      "description": "Working at the Swiss Patent Office in Bern, Einstein published “On the Electrodynamics of Moving Bodies” in 1905, the paper now known as [[special relativity]]. He acknowledged Michele Besso for valuable discussion of the problem.",
       "locations": [
         {
           "name_historic": "Bern",
           "name_modern": "Bern, Switzerland",
           "centroid": [
             7.4474,
-            46.9481
+            46.948
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Annus_Mirabilis_papers",
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
+        "https://en.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Special_relativity"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Einstein%2C_on_the_electrodynamics_of_moving_bodies%2C_1905.jpg/960px-Einstein%2C_on_the_electrodynamics_of_moving_bodies%2C_1905.jpg",
+          "caption": "Einstein’s 1905 paper on special relativity",
+          "source": "https://commons.wikimedia.org/wiki/File:Einstein,_on_the_electrodynamics_of_moving_bodies,_1905.jpg",
+          "creator": "NASA Universe",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+        }
       ],
       "event_type_icon": "mdi-file-document",
-      "chapter": "student_to_patent_visionary",
-      "annotations": {
-        "photoelectric_effect": {
-          "explanation": "The photoelectric effect is the emission of electrons from a material when it is illuminated by light, revealing the particle-like behavior of light quanta.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Photoelectric_effect"
+      "chapter": "patent_office_revolution",
+      "weight": 1.0,
+      "event_class": {
+        "type": "publication",
+        "title": "On the Electrodynamics of Moving Bodies",
+        "publication_type": "paper",
+        "publisher": "Annalen der Physik",
+        "significance": "special relativity",
+        "source_link": {
+          "url": "https://en.wikisource.org/wiki/On_the_Electrodynamics_of_Moving_Bodies_(1920_edition)",
+          "kind": "wikisource",
+          "site": "Wikisource",
+          "entity": "Q3020388",
+          "resolved_by": "wikidata",
+          "resolved_on": "2026-08-31"
         }
-      }
+      },
+      "annotations": {
+        "special relativity": {
+          "explanation": "A theory that treats the laws of physics as the same for observers moving uniformly relative to one another, reshaping how modern physics relates space, time, motion, and light.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Special_relativity"
+        }
+      },
+      "involved_people": [
+        "Michele Besso"
+      ],
+      "background": "Bern was not an academic refuge but the setting of a precarious early career. After failing to secure an assistantship at the Zurich Polytechnic or elsewhere, Einstein had obtained a permanent civil-service post as a technical expert, third class, on Marcel Grossmann’s recommendation in June 1902. He and Mileva Marić lived from October 1903 to May 1905 on the second floor of Kramgasse 49 in Bern’s old town, now the Einsteinhaus. Their son Hans Albert was born in 1904. Outside office hours, Einstein’s circle had included Maurice Solovine and Conrad Habicht in the informal “Olympia Academy,” whose meetings combined philosophy, mathematics, and scientific reading; the group’s regular meetings ended in 1904.\n\nThe work in 1905 was not an isolated leap in one subject. In March, Einstein completed a study of the photoelectric effect; in April, he finished a doctoral dissertation calculating the size of sugar molecules in solution and a value for the Avogadro constant; and in May he published an analysis of Brownian motion. The dissertation mattered because it supported the still-disputed atomic hypothesis, which leading figures including Wilhelm Ostwald and Ernst Mach had questioned. Alfred Kleiner and Heinrich Burkhardt at the University of Zurich accepted it quickly, though the journal editor Paul Drude demanded corrections to its numerical result, delaying formal completion of the doctorate until January 1906.\n\nA further short follow-up in 1905, Is the Inertia of a Body Dependent upon Its Energy Content?, drew out the mass-energy relation later condensed into E = mc². The paper’s immediate reception did not turn its author into a celebrity: that came much later, after the 1919 eclipse observations were reported as favoring the prediction of his general theory of gravity. Still, the cluster of 1905 studies gave experimental physics several distinct targets—from molecular motion to light’s action on matter—and established the questions that occupied Einstein’s later work. His own route from this stage to gravity began in 1907 with the insight that a person in free fall does not feel their own weight; the mathematical tools required for that project would take years longer to assemble.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Einstein_Haus.jpg/960px-Einstein_Haus.jpg",
+          "caption": "Casa de Einstein en Berna vista de frente",
+          "source": "https://commons.wikimedia.org/wiki/File:Einstein_Haus.jpg",
+          "creator": "Aliman5040",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Einsteinhaus Bern Kramgasse 49"
+        }
+      ]
     },
     {
       "date": "1909",
       "date_precision": "year",
-      "age": 29,
-      "title": "Leaves patent office for Zurich professorship",
-      "description": "Einstein resigns from the Swiss Patent Office after being appointed associate professor of theoretical physics at the University of Zurich. The move marks his full entry into the academic world and gives him more time and institutional support to further develop his work on relativity and statistical physics.",
+      "age": 30,
+      "title": "Leaves Patent Office",
+      "description": "In 1909, Einstein became a lecturer in theoretical physics at the University of Zurich and soon an associate professor, leaving his position at the Swiss Patent Office in Bern.",
       "locations": [
         {
-          "name_historic": "Bern",
-          "name_modern": "Bern, Switzerland",
-          "centroid": [
-            7.4474,
-            46.9481
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Zurich",
-          "name_modern": "Zürich, Switzerland",
+          "name_historic": "Zürich",
+          "name_modern": "Zurich, Switzerland",
           "centroid": [
             8.5417,
             47.3769
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Bern",
+          "name_modern": "Bern, Switzerland",
+          "centroid": [
+            7.4474,
+            46.948
+          ],
+          "primary": false
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/University_of_Zurich"
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
       ],
-      "event_type_icon": "mdi-school-outline",
-      "chapter": "student_to_patent_visionary"
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "gravity_remakes_cosmos",
+      "weight": 0.6
     },
     {
       "date": "1914-04",
       "date_precision": "month",
       "age": 35,
-      "title": "Moves to Berlin as leading professor",
-      "description": "Einstein accepts a prestigious position in Berlin as a member of the [[Prussian Academy of Sciences|Prussian Academy of Sciences]] and professor at the University of Berlin, while also becoming director-designate of a new physics institute. The move places him at the center of German scientific life on the eve of World War I, even as his marriage to Mileva Marić deteriorates and his personal life becomes increasingly strained.",
+      "title": "Moves to Berlin",
+      "description": "In April 1914, Einstein accepted positions in Berlin with the Prussian Academy of Sciences and the University of Berlin, attracted by the city’s strong scientific community. Mileva Marić and their sons joined him briefly, but after the couple’s separation, Marić returned with the children to Zurich in July.",
       "locations": [
+        {
+          "name_historic": "Zurich",
+          "name_modern": "Zurich, Switzerland",
+          "centroid": [
+            8.5417,
+            47.3769
+          ],
+          "primary": false
+        },
         {
           "name_historic": "Berlin",
           "name_modern": "Berlin, Germany",
@@ -468,43 +487,34 @@
             52.52
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Zürich",
-          "name_modern": "Zürich, Switzerland",
-          "centroid": [
-            8.5417,
-            47.3769
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
         "Mileva Marić",
         "Hans Albert Einstein",
         "Eduard Einstein",
-        "Elsa Einstein"
+        "Max Planck"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Einstein_family",
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
         "https://de.wikipedia.org/wiki/Mileva_Mari%C4%87"
       ],
-      "event_type_icon": "mdi-school-outline",
-      "chapter": "berlin_theoretical_breakthroughs",
-      "annotations": {
-        "Prussian Academy of Sciences": {
-          "explanation": "A leading learned society in Berlin, founded in 1700, which served as one of the foremost scientific academies in Europe until its dissolution after World War II.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Prussian_Academy_of_Sciences"
-        }
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "gravity_remakes_cosmos",
+      "weight": 0.75,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Zurich, Switzerland",
+        "to_location": "Berlin, Germany",
+        "characterization": "academic appointment"
       }
     },
     {
-      "date": "1915-11-25",
-      "date_precision": "day",
+      "date": "1915",
+      "date_precision": "year",
       "age": 36,
-      "title": "Presents general relativity field equations",
-      "description": "After years of intense work in [[general theory of relativity|Berlin, Einstein presents the final form of the field equations of the general theory of relativity]] to the Prussian Academy of Sciences. The new theory describes gravity as the curvature of spacetime caused by mass and energy, supplanting Newtonian gravitation and providing a framework for understanding phenomena such as the precession of Mercury’s orbit.",
+      "title": "Formulates General Relativity",
+      "description": "In 1915, while working in Berlin, Einstein presented the final field equations of [[general relativity]] to the Prussian Academy of Sciences, completing his new theory of gravitation.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -516,110 +526,165 @@
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/General_relativity",
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/General_relativity"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Abhandlungen_der_physikalischen_Klasse_der_K%C3%B6niglich-Preussischen_Akademie_der_Wissenschaften_BHL11078008.jpg/960px-Abhandlungen_der_physikalischen_Klasse_der_K%C3%B6niglich-Preussischen_Akademie_der_Wissenschaften_BHL11078008.jpg",
+          "caption": "Prussian Academy publication on general relativity",
+          "source": "https://commons.wikimedia.org/wiki/File:Abhandlungen_der_physikalischen_Klasse_der_Königlich-Preussischen_Akademie_der_Wissenschaften_BHL11078008.jpg",
+          "creator": "Königlich Preussische Akademie der Wissenschaften zu Berlin.",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "berlin_theoretical_breakthroughs",
+      "chapter": "gravity_remakes_cosmos",
+      "weight": 1.0,
       "annotations": {
-        "general theory of relativity": {
-          "explanation": "A fundamental physical theory, finalized by Einstein in 1915, that describes gravity not as a force but as the geometric curvature of four‑dimensional spacetime produced by mass and energy.",
+        "general relativity": {
+          "explanation": "Einstein's theory of gravity, in which matter and energy affect the geometry of spacetime; it extends Newtonian gravity in regimes of strong gravity or high precision.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/General_relativity"
         }
+      },
+      "background": "Berlin gave Einstein an unusually protected working position: as a paid member of the Prussian Academy of Sciences, he was free of regular teaching duties, while the city’s scientific network included Max Planck and other leading physicists. The problem, however, had followed him from his patent-office years. In 1907, a thought experiment about a person in free fall—someone who would not feel their own weight—had suggested an equivalence between acceleration and gravity. By 1911 he also recognized a hard limit on his earlier work: light speed could not remain constant under gravity, so special relativity applied only when gravity was absent.\n\nThe obstacle was as much mathematical as physical. Ordinary distance rules in flat Minkowski spacetime could not handle a world in which geometry itself varied from place to place. In 1912 Einstein turned to Marcel Grossmann, his former Zurich classmate, then a mathematics professor. Einstein asked him to see whether the library held a usable theory; Grossmann returned with the answer: Riemannian geometry. He also identified work by Bernhard Riemann, Elwin Christoffel, Gregorio Ricci, and Tullio Levi-Civita, whose methods supplied the needed tools—tensor analysis, Christoffel symbols, and covariant differentiation. Their 1913 Entwurf theory was an important attempt, but it was not yet the fully satisfactory formulation.\n\n## A prediction to test\n\nOne early practical test concerned starlight passing the Sun. In a 1911 paper, using an older Huygens-style approach, Einstein had calculated a deflection of 0.83 arcseconds. The mature theory gave roughly 1.7 arcseconds instead. That difference made a solar eclipse a decisive opportunity: stars close to the darkened Sun’s edge could be photographed and their apparent positions compared with positions observed at other times. The later 1919 eclipse observations associated with Arthur Stanley Eddington found a result nearer the newer value than Newtonian corpuscular theory, turning an abstruse mathematical achievement into international news. Erwin Freundlich subsequently initiated Potsdam’s Einstein Tower, built from 1920 to 1924 to pursue further astronomical tests rather than merely commemorate its namesake.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Einstein_Tower_%2821255%29.jpg/960px-Einstein_Tower_%2821255%29.jpg",
+          "caption": "Einstein Tower",
+          "source": "https://commons.wikimedia.org/wiki/File:Einstein_Tower_(21255).jpg",
+          "creator": "Ideophagous",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Einstein Tower Potsdam"
+        }
+      ]
+    },
+    {
+      "date": "1919-06-02",
+      "date_precision": "day",
+      "age": 40,
+      "title": "Marries Elsa Einstein",
+      "description": "After his divorce in February, Einstein married in Berlin on June 2, 1919. The marriage followed several years of personal closeness, and his new wife increasingly managed his household and public obligations as his health required attention.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Elsa Einstein"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Elsa_Einstein"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "starlight_makes_legend",
+      "weight": 0.55,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Elsa Einstein",
+        "duration": "until her death in 1936",
+        "characterization": "supportive but strained"
       }
     },
     {
-      "date": "1919-11-06",
-      "date_precision": "day",
-      "date_note": "Date the confirming eclipse results were announced to the Royal Society and Royal Astronomical Society",
+      "date": "1919-11",
+      "date_precision": "month",
       "age": 40,
-      "title": "Relativity confirmed by eclipse observations",
-      "description": "British astronomers announce in [[London|London]] that measurements of starlight during the May 1919 solar eclipse match the light-bending predicted by Einstein’s [[general relativity|general relativity]]. The dramatic confirmation is widely reported in the international press, instantly making Einstein a global scientific celebrity and a symbol of postwar intellectual cooperation between former enemies.",
+      "title": "Eclipse Confirms Relativity",
+      "description": "British eclipse expeditions observed starlight near the Sun in 1919. Arthur Eddington's Príncipe expedition and the separate Sobral observations produced results reported as consistent with Einstein's prediction that gravity bends starlight. The London announcement brought Einstein international public attention.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, UK",
           "centroid": [
             -0.1276,
-            51.5074
+            51.5072
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Principe",
-          "name_modern": "Príncipe, São Tomé and Príncipe",
-          "centroid": [
-            7.4,
-            1.6
-          ],
-          "primary": false
         },
         {
           "name_historic": "Sobral",
           "name_modern": "Sobral, Brazil",
           "centroid": [
             -40.3497,
-            -3.6894
+            -3.6861
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Príncipe",
+          "name_modern": "Príncipe Island, São Tomé and Príncipe",
+          "centroid": [
+            1.6167,
+            1.6167
           ],
           "primary": false
         }
       ],
       "involved_people": [
-        "Arthur Eddington",
-        "Frank Watson Dyson",
-        "Andrew Crommelin",
-        "Charles Rundle Davidson"
+        "Arthur Stanley Eddington"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Oppenheimer_relationship",
-        "https://en.wikipedia.org/wiki/Arthur_Eddington",
-        "https://en.wikipedia.org/wiki/Tests_of_general_relativity"
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/d/da/1919_eclipse_negative.jpg",
-          "caption": "Negative of the 1919 solar eclipse for relativity test",
+          "caption": "1919 eclipse negative testing Einstein’s prediction",
           "source": "https://commons.wikimedia.org/wiki/File:1919_eclipse_negative.jpg",
           "creator": "F. W. Dyson, A. S. Eddington, and C. Davidson",
-          "license": "Public domain"
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-eye",
-      "chapter": "berlin_theoretical_breakthroughs",
-      "annotations": {
-        "London": {
-          "explanation": "Capital city of the United Kingdom, which in 1919 was the political and scientific center where the British announcement of the eclipse results was made.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/London"
-        },
-        "general relativity": {
-          "explanation": "Einstein’s 1915 theory of gravitation describing gravity as the curvature of spacetime, which predicts that light passing near a massive body like the Sun will be deflected.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/General_relativity"
+      "chapter": "starlight_makes_legend",
+      "weight": 0.9,
+      "background": "The eclipse result arrived in a Berlin already transformed by war and personal upheaval. Einstein had joined the Prussian Academy of Sciences in 1914 with a salaried post and no teaching obligation, a setting that gave him the time to finish his work on gravity. By 1917 he was director of the Kaiser Wilhelm Institute for Physics. Yet he was also ill for much of 1917–20, living in the apartment of his cousin Elsa Löwenthal at Haberlandstrasse 5, and his mother, Pauline, was dying of cancer. The end of World War I also made contact with his sons in Switzerland difficult.\n\nThe stakes of the eclipse test were unusually exact. In a 1911 paper, before the final form of the theory, Einstein had estimated that rays from stars passing close to the Sun should be shifted by 0.83 arcseconds. The gravitational field equations later gave about 1.7 arcseconds instead. An eclipse made the measurement possible because the darkened sky revealed stars ordinarily drowned out by the Sun’s glare; their apparent positions near the Sun could then be compared with their usual positions. The issue was not simply whether gravity existed, but whether it altered the path of light by the larger amount required by a theory in which space and time are curved.\n\nThe sudden public response changed the practical conditions of Einstein’s career. Lectures that might once have been attended chiefly by specialists now drew audiences eager to see the newly famous scientist. The confirmation also encouraged a more permanent observational program: at Erwin Freundlich’s initiative, the Einstein Tower was built in Potsdam between 1920 and 1924. It was intended for astronomical observations that could subject the theory to further tests. The episode therefore made a difficult mathematical account of gravitation into an international public fact, while leaving its predictions open to continued measurement rather than treating one eclipse as the final word.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Einstein_Tower_%2821255%29.jpg/960px-Einstein_Tower_%2821255%29.jpg",
+          "caption": "Einstein Tower",
+          "source": "https://commons.wikimedia.org/wiki/File:Einstein_Tower_(21255).jpg",
+          "creator": "Ideophagous",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Einstein Tower Potsdam"
         }
-      }
+      ]
     },
     {
       "date": "1922-11-09",
       "date_precision": "day",
-      "date_note": "Einstein received the 1921 Nobel Prize at the 1922 ceremony",
+      "date_note": "The 1921 Nobel Prize in Physics was awarded to Einstein in 1922",
       "age": 43,
-      "title": "Receives Nobel Prize in Physics",
-      "description": "Einstein is awarded the Nobel Prize in Physics \"for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect.\" The honor, based on his work in quantum theory rather than relativity, consolidates his standing in the scientific community and provides financial resources he had promised in part to his former wife Mileva Marić under their divorce agreement.",
+      "title": "Receives Nobel Prize",
+      "description": "The 1921 Nobel Prize in Physics was awarded to Einstein on November 9, 1922, for his services to theoretical physics, especially his discovery of the law of the photoelectric effect. Because he was traveling in Japan, German envoy Rudolf Nadolny accepted the prize on his behalf at the Stockholm ceremony on December 10, 1922.",
       "locations": [
         {
           "name_historic": "Stockholm",
           "name_modern": "Stockholm, Sweden",
           "centroid": [
-            18.06324,
-            59.334591
+            18.0686,
+            59.3293
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Mileva Marić",
-        "Members of the Royal Swedish Academy of Sciences"
+        "Rudolf Nadolny"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Albert_Einstein",
@@ -627,29 +692,24 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/5/50/Albert_Einstein_%28Nobel%29.png",
-          "caption": "Albert Einstein official 1921 Nobel Prize portrait",
-          "source": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_(Nobel).png",
-          "creator": "Possibly Herman Mishkin",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Einstein_Nobel_1922_Urkunde.jpg/960px-Einstein_Nobel_1922_Urkunde.jpg",
+          "caption": "Einstein’s Nobel Prize certificate, presented in 1922",
+          "source": "https://commons.wikimedia.org/wiki/File:Einstein_Nobel_1922_Urkunde.jpg",
+          "creator": "Sofia Gisberg[1]",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-trophy",
-      "chapter": "berlin_theoretical_breakthroughs",
-      "annotations": {
-        "photoelectric_effect": {
-          "explanation": "The photoelectric effect is the process by which electrons are ejected from a material when it is exposed to light, a phenomenon whose explanation helped found quantum theory.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Photoelectric_effect"
-        }
-      }
+      "event_type_icon": "mdi-medal",
+      "chapter": "starlight_makes_legend",
+      "weight": 0.85
     },
     {
-      "date": "1933-10-17",
-      "date_precision": "day",
-      "date_note": "Arrives in the United States after deciding not to return to Nazi Germany",
+      "date": "1933-10",
+      "date_precision": "month",
       "age": 54,
-      "title": "Emigrates from Germany to the United States",
-      "description": "Following the Nazi rise to power and anti-Jewish measures in Germany, Einstein renounces his positions in Berlin and decides not to return from a trip abroad. He travels to the United States and accepts a permanent appointment at the newly founded Institute for Advanced Study in Princeton, where he will live and work for the rest of his life while speaking out against fascism and racial persecution.",
+      "title": "Settles in America",
+      "description": "After Hitler's rise to power, Einstein, already abroad, did not return to Germany. In October 1933 he began work at the Institute for Advanced Study in Princeton, and Elsa joined him in the United States.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -662,163 +722,171 @@
         },
         {
           "name_historic": "Princeton",
-          "name_modern": "Princeton, New Jersey, United States",
+          "name_modern": "Princeton, New Jersey, USA",
           "centroid": [
-            -74.6591,
-            40.3573
+            -74.659,
+            40.357
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
+      "involved_people": [
+        "Elsa Einstein",
+        "Nazi regime"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study"
+        "https://de.wikipedia.org/wiki/Albert_Einstein",
+        "https://de.wikipedia.org/wiki/Elsa_Einstein"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Institute_for_Advanced_Study_Campus.jpg",
-          "caption": "Aerial view of Institute for Advanced Study, Princeton",
-          "source": "https://commons.wikimedia.org/wiki/File:Institute_for_Advanced_Study_Campus.jpg",
-          "creator": "Hanno Rein",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Albert-einstein-house.JPG/960px-Albert-einstein-house.JPG",
+          "caption": "Albert Einstein House in Princeton, New Jersey",
+          "source": "https://commons.wikimedia.org/wiki/File:Albert-einstein-house.JPG",
+          "creator": "Dmadeo",
           "license": "CC BY-SA 3.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
         }
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "exile_in_america"
+      "chapter": "refuge_across_oceans",
+      "weight": 0.85,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Germany",
+        "to_location": "United States",
+        "characterization": "political exile"
+      },
+      "background": "The Institute for Advanced Study offered an unusual setting for a scientist accustomed to the prestige and pressures of Berlin: it was designed for sustained research rather than a conventional teaching load. Einstein’s European reputation made the appointment immediately consequential, but his position also marked a break with the network of the Prussian Academy of Sciences and the Kaiser Wilhelm Institute for Physics that had supported his work for nearly two decades. His Swiss citizenship, held since 1901, gave him a legal status separate from the German state; American citizenship would not follow until 1940.\n\nPrinceton became a household as well as an intellectual refuge. Elsa had long handled the practical burden created by his celebrity—correspondence, visitors, travel, and finances—and the couple eventually made a permanent home at 112 Mercer Street. Her health deteriorated soon afterward, and she died in Princeton in December 1936. The move also placed Einstein closer to American public life at a moment when events in Europe made his views on war, refugees, Jewish institutions, and international cooperation increasingly urgent.\n\nThe Institute did not turn Einstein into the head of a school in the ordinary university sense. He remained notably individual in his working habits, pursuing problems of gravitation and a unified field theory while physics increasingly concentrated on quantum mechanics. The contrast mattered: the relocation preserved for him the time and institutional independence to pursue long-running theoretical questions, but it also began the Princeton years in which a figure already known worldwide as a physicist became an unusually visible public intellectual. That later visibility would make his interventions on the dangers posed by Nazi Germany carry weight far beyond the scientific community.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/112mercer.JPG/960px-112mercer.JPG",
+          "caption": "Einstein's house in Princeton - 112 Mercer Street, Princeton, New Jersey, formerly the home of Albert Einstein.",
+          "source": "https://commons.wikimedia.org/wiki/File:112mercer.JPG",
+          "creator": "Ekem",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "query": "112 Mercer Street Princeton"
+        }
+      ]
     },
     {
       "date": "1939-08-02",
       "date_precision": "day",
       "age": 60,
-      "title": "Signs Einstein–Szilard letter to Roosevelt",
-      "description": "At the urging of fellow émigré physicists led by Leó Szilárd, Einstein signs a letter to U.S. President Franklin D. Roosevelt warning that Nazi Germany might be attempting to build atomic bombs and urging American attention to uranium research. The letter helps prompt the creation of U.S. advisory committees that eventually lead to the Manhattan Project, although Einstein himself will be excluded from direct work on the program.",
+      "title": "Signs Roosevelt Letter",
+      "description": "On August 2, 1939, at Cutchogue on Long Island, Albert Einstein signed a letter drafted by Leó Szilárd to President Franklin D. Roosevelt, warning that Nazi Germany might develop atomic weapons and urging U.S. support for uranium research.",
       "locations": [
         {
-          "name_historic": "Long Island",
-          "name_modern": "Long Island, New York, USA",
+          "name_historic": "Cutchogue, New York",
+          "name_modern": "Cutchogue, New York, USA",
           "centroid": [
-            -73.135,
-            40.789
+            -72.485,
+            40.994
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Washington, D.C.",
-          "name_modern": "Washington, D.C., USA",
-          "centroid": [
-            -77.0365,
-            38.8951
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Leo Szilard",
+        "Leó Szilárd",
         "Franklin D. Roosevelt",
         "Edward Teller",
         "Eugene Wigner"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Szilard_letter"
+        "https://en.wikipedia.org/wiki/Einstein%E2%80%93Szilard_letter",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/1-Einstein_and_Szilard_letter_to_Roosevelt_NNSA.jpg",
-          "caption": "Einstein and Leó Szilárd reenact signing Roosevelt letter",
-          "source": "https://commons.wikimedia.org/wiki/File:1-Einstein_and_Szilard_letter_to_Roosevelt_NNSA.jpg",
-          "creator": "Time Life Pictures",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Einstein_Szilard_p1.jpg",
+          "caption": "Einstein-Szilárd letter to President Roosevelt",
+          "source": "https://commons.wikimedia.org/wiki/File:Einstein_Szilard_p1.jpg",
+          "creator": "Written by Leó Szilárd and signed by Albert Einstein.",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-email",
-      "chapter": "exile_in_america"
+      "chapter": "refuge_across_oceans",
+      "weight": 0.7
     },
     {
-      "date": "1952-11-18",
-      "date_precision": "day",
-      "age": 73,
-      "title": "Declines presidency of Israel",
-      "description": "After the death of Chaim Weizmann, the government of Israel informally offers Einstein the largely ceremonial post of President of Israel in recognition of his moral authority and support for Zionism. He respectfully declines, explaining in a letter that he lacks both the natural aptitude and the experience to deal with people and official duties on such a scale, while reaffirming his deep connection to the Jewish people and the new state.",
+      "date": "1946-05",
+      "date_precision": "month",
+      "age": 67,
+      "title": "Founds Atomic Scientists Committee",
+      "description": "Einstein and Leó Szilárd founded the Emergency Committee of Atomic Scientists in May 1946, with Einstein as its chairman. The group sought to warn the public about the dangers of nuclear weapons, promote the peaceful use of atomic energy, and advocate international control as a path toward world peace.",
       "locations": [
         {
-          "name_historic": "Princeton",
+          "name_historic": "Princeton, New Jersey",
           "name_modern": "Princeton, New Jersey, USA",
+          "primary": true,
           "centroid": [
-            -74.6591,
-            40.3573
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Jerusalem",
-          "name_modern": "Jerusalem",
-          "centroid": [
-            35.2137,
-            31.7683
-          ],
-          "primary": false
+            -74.6597376,
+            40.3496953
+          ]
         }
       ],
       "involved_people": [
-        "Chaim Weizmann",
-        "David Ben-Gurion",
-        "Abba Eban"
+        "Leó Szilárd"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Chaim_Weizmann",
-        "https://en.wikipedia.org/wiki/President_of_Israel"
+        "https://en.wikipedia.org/wiki/Emergency_Committee_of_Atomic_Scientists",
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
       ],
-      "event_type_icon": "mdi-calendar",
-      "chapter": "exile_in_america",
-      "date_note": "Abba Eban conveyed the offer in a letter dated 17 November 1952; Einstein wrote his refusal the next day."
+      "event_type_icon": "mdi-account-group",
+      "chapter": "conscience_for_peace",
+      "weight": 0.6,
+      "background": "The committee emerged from a bitter divide among the scientists connected to the Manhattan Project. In July 1945, 70 project scientists signed the Szilárd petition asking President Harry S. Truman not to use the atomic bomb on moral grounds. The new organization brought together people who had worked directly on the project and others who had been consulted on producing the first bomb. Its eight-member board paired Einstein with Harold C. Urey as vice-chairman and included Hans Bethe, Thorfin R. Hogness, Philip M. Morse, Linus Pauling, Szilárd, and Victor Weisskopf. The group’s immediate practical target was a $1 million fund for public education about civilian, national, and international control of atomic energy.\n\nIts central argument was deliberately stark. Atomic bombs, the committee said, could be made cheaply and in large numbers, would become more destructive, and had no foreseeable military defense. Secrecy could not solve the problem because other nations could rediscover the necessary processes. In that view, an arms race would not create security: preparations for atomic war would damage the social order, while an actual war would bring the weapons into use and threaten civilization itself. International control of atomic energy, followed ultimately by the elimination of war, was therefore presented as the only solution.\n\n## Building a public campaign\n\nThe committee was incorporated in New Jersey on August 6, 1946, and used private donations to support a network of educational organizations rather than keeping the campaign solely in its own hands. Recipients included the National Committee for Atomic Information, the Association of Scientists for Atomic Education, the Federation of American Scientists, and the Atomic Scientists of Chicago, which published the Bulletin of the Atomic Scientists. Members undertook lecture tours and issued promotional material, including one of the first films to depict what a full-scale nuclear war might look like. They also opposed development of the hydrogen bomb.\n\nThe campaign sought backing for the 1946 Baruch Plan, a proposal for international control of atomic bombs submitted to the United Nations. Although the United Nations Atomic Energy Commission passed it, the Soviet Union did not accept it. As international relations worsened and the commission failed in 1947, the committee concluded that public education was a long-term task unsuited to an emergency body. By the end of 1948, its original urgency had given way to a broader push for world federalism and a world government.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Petition_from_Leo_Szilard_and_Other_Scientists_to_President_Harry_S._Truman_01.jpg/960px-Petition_from_Leo_Szilard_and_Other_Scientists_to_President_Harry_S._Truman_01.jpg",
+          "caption": "Petition from Leo Szilard and Other Scientists to President Harry S. Truman",
+          "source": "https://commons.wikimedia.org/wiki/File:Petition_from_Leo_Szilard_and_Other_Scientists_to_President_Harry_S._Truman_01.jpg",
+          "creator": "Leó Szilárd",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Manhattan Project scientists"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Bulletin_Atomic_Scientists_Cover.jpg/960px-Bulletin_Atomic_Scientists_Cover.jpg",
+          "caption": "Cover of the Bulletin of the Atomic Scientists.",
+          "source": "https://commons.wikimedia.org/wiki/File:Bulletin_Atomic_Scientists_Cover.jpg",
+          "creator": "Bulletin of the Atomic Scientists. The original uploader was Fastfission at English Wikipedia.. Later version(s) were uploaded by FreeMediaKid!, Goszei at en.wikipedia.",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Bulletin of the Atomic Scientists"
+        }
+      ]
     },
     {
       "date": "1955-04-18",
       "date_precision": "day",
       "age": 76,
-      "title": "Dies in Princeton",
-      "description": "Einstein dies in [[Princeton|Princeton, New Jersey]], after suffering an aortic aneurysm, remaining mentally active and working on unified field theories until his final days. In accordance with his wishes, he is cremated and his ashes scattered in an undisclosed location, while his brain is removed for scientific study, reflecting his lifelong dedication to understanding the nature of the physical world.",
+      "title": "Death in Princeton",
+      "description": "Einstein died at Princeton Hospital in Princeton, New Jersey, on April 18, 1955, at age 76.",
       "locations": [
         {
-          "name_historic": "Princeton, New Jersey",
+          "name_historic": "Princeton",
           "name_modern": "Princeton, New Jersey, USA",
           "centroid": [
-            -74.6591,
-            40.3573
+            -74.659,
+            40.357
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Albert_Einstein",
-        "https://en.wikipedia.org/wiki/Brain_of_Albert_Einstein"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/26/Bust_of_Albert_Einstein_%28Princeton%29.jpg",
-          "caption": "Bust of Albert Einstein in Princeton, New Jersey",
-          "source": "https://commons.wikimedia.org/wiki/File:Bust_of_Albert_Einstein_(Princeton).jpg",
-          "creator": "Djkeddie",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
+        "https://en.wikipedia.org/wiki/Albert_Einstein"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "final_princeton_days",
-      "annotations": {
-        "Princeton": {
-          "explanation": "A university town in New Jersey, United States, known for Princeton University and the Institute for Advanced Study, where Albert Einstein lived and worked in his later years.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Princeton,_New_Jersey"
-        }
-      },
+      "chapter": "conscience_for_peace",
+      "weight": 0.4,
       "event_class": {
         "type": "death",
-        "cause": "aortic aneurysm"
+        "cause": "ruptured abdominal aortic aneurysm",
+        "characterization": "declined surgery"
       }
     }
   ]
