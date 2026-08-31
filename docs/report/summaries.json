@@ -129,11 +129,11 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "d446193aee76749a",
+      "fingerprint": "b86cd80378543570",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds background reports only for the events the story’s depth layer will expose, using the reviewed event record, the subject’s article, and related articles to add context rather than repeat the slide. It replaces each selected event’s citations with sources that document that event, creates image-search terms from the report, and carries the approved URLs into translated copies.",
-        "why_this_design": "It recomputes the same deep-event selection used by the interface so the pipeline does not spend work on reports no reader can reach, while filtering citations to URLs shown to the call prevents invented or unrelated provenance."
+        "what_it_does": "Selects the story’s deep events and writes background passages only for events the interface can open. It grounds each passage in the reviewed subject article, related articles, and the surrounding story, then replaces the event’s citations and adds image-search terms before copying citations to translated versions.",
+        "why_this_design": "It recomputes citations while the event’s evidence is already in view and accepts only supplied URLs, preventing plausible but unrelated or broken citations from reaching the reader."
       }
     },
     "p_chapter_art": {
@@ -153,11 +153,11 @@
       }
     },
     "p_chapters": {
-      "fingerprint": "c8bcc71dd27c0613",
+      "fingerprint": "69861684ca610200",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Groups the established events into chronological life phases and gives each phase a story-led headline, a broad setting, and the people who matter within it. It also supplies the closing statement that turns the event record into a personal narrative with an ending.",
-        "why_this_design": "It fails the run rather than return an unchaptered record because the chapters provide the narrative structure that makes the collected events read as a life story."
+        "what_it_does": "Groups the established event record into chronological life phases and gives each phase a story-driven headline, a broad setting, and its key supporting people. It also supplies a closing statement that turns the event sequence into an account of the person’s larger trajectory and legacy.",
+        "why_this_design": "It fails the run when chapter generation fails because the chapters provide the narrative structure that makes the researched events readable as a personal story rather than a timeline."
       }
     },
     "p_db": {
@@ -169,19 +169,19 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "503ecfb2fc5a632f",
+      "fingerprint": "725df06f59649874",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the biographical spine from the main article, using related articles only to clarify context. It selects and orders the subject’s defining life events, assigns dates and relative importance, and leaves later steps a factual outline to enrich with places, images, and sources.",
-        "why_this_design": "Because significance is relative within one life, this is the only step that can rank events against each other while seeing the full article set; it also keeps event descriptions in their own moment so later legacy claims do not distort the chronology."
+        "what_it_does": "Builds the biographical spine by reading the main article alongside related context and selecting the life events that best carry the story from early life through death. It dates and orders those events, describes them without hindsight, and ranks their importance relative to the person’s own life for later phases to expand.",
+        "why_this_design": "It makes the selection and weighting in one pass because significance depends on comparing events across the whole life, while restricting related articles to context keeps the timeline centered on the target subject."
       }
     },
     "p_events_p2": {
-      "fingerprint": "6e9bb480a9c1669e",
+      "fingerprint": "cb78a7d6d202e098",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Researches each biographical event against the subject’s article and only the related articles that match that event. It adds grounded narrative context, places, participants, evidence, explanatory links, an event icon, and illustration searches while preserving the event when research fails.",
-        "why_this_design": "It treats the subject’s article as the authority and isolates each event’s supporting material so later details do not leak into the chronology or pad weakly documented events."
+        "what_it_does": "Researches each timeline event against the subject’s article and event-specific related articles, adding grounded narrative context, places, participants, supporting sources, visual search leads, and a semantic label. It can refine weak event text while keeping classified events from repeating details already carried by their structured classification.",
+        "why_this_design": "It treats the subject’s article as the authority when sources conflict and lets a failed event remain unresolved rather than stopping the rest of the life story."
       }
     },
     "p_geocode": {

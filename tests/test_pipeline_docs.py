@@ -184,9 +184,7 @@ class IntrospectionTests(unittest.TestCase):
         )
 
     def test_prompt_templates_keep_instructions_and_mark_injections(self) -> None:
-        prompt = self.codebase.prompt(
-            "generate_person_events.py", "build_phase2_prompt_base"
-        )
+        prompt = self.codebase.prompt("phase2.py", "build_phase2_prompt_base")
         self.assertIsNotNone(prompt)
         assert prompt is not None
         self.assertIn("{", prompt.text, "injected data should stay marked")
