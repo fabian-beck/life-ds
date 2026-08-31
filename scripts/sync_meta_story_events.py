@@ -14,7 +14,7 @@ import re
 from datetime import datetime
 from difflib import SequenceMatcher
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, NamedTuple, Optional, Tuple
 
 from utils.json_io import write_json
 
@@ -144,20 +144,45 @@ def _touch_registry(data_dir: Path, story_ids: set, language: str = "") -> None:
         write_json(path, registry)
 
 
+class DroppedReference(NamedTuple):
+    """One curated event a story lost because the person no longer has it.
+
+    Carried out of the sync rather than counted, because a count cannot be
+    acted on: what a reader needs is which chapter is now missing which event,
+    and whether that chapter has any events left at all.
+    """
+
+    story_id: str
+    chapter_title: str
+    event_date: str
+    event_title: str
+    chapter_emptied: bool
+
+    def describe(self) -> str:
+        left = " — the chapter now has no events at all" if self.chapter_emptied else ""
+        return (
+            f"{self.story_id}: chapter '{self.chapter_title}' lost "
+            f"'{self.event_title}' ({self.event_date}){left}"
+        )
+
+
 def _update_detail(
     detail: Dict[str, Any],
     person_id: str,
     mapping: Dict[int, Optional[int]],
     new_events: List[Dict[str, Any]],
     title_events: Optional[List[Dict[str, Any]]] = None,
-) -> Tuple[int, int]:
+    story_id: str = "",
+) -> Tuple[int, int, List[DroppedReference]]:
     updated = 0
     removed = 0
+    dropped: List[DroppedReference] = []
     title_events = title_events or new_events
 
     for chapter in detail.get("chapters", []) or []:
         references = chapter.get("person_events") or []
         kept = []
+        chapter_dropped: List[DroppedReference] = []
         for reference in references:
             if reference.get("person_id") != person_id:
                 kept.append(reference)
@@ -167,6 +192,15 @@ def _update_detail(
             new_index = mapping.get(old_index) if isinstance(old_index, int) else None
             if new_index is None or not 0 <= new_index < len(new_events):
                 removed += 1
+                chapter_dropped.append(
+                    DroppedReference(
+                        story_id=story_id,
+                        chapter_title=str(chapter.get("title", "")),
+                        event_date=str(reference.get("event_date", "")),
+                        event_title=str(reference.get("event_title", "")),
+                        chapter_emptied=False,
+                    )
+                )
                 continue
 
             event = new_events[new_index]
@@ -184,12 +218,18 @@ def _update_detail(
                 updated += 1
             kept.append(reference)
         chapter["person_events"] = kept
+        # A chapter keeps its title, its dates, its lifelines and the prose that
+        # names the person whatever happens here, so an emptied one looks intact
+        # in the data and shows up as a chapter that contributes no marker.
+        dropped.extend(
+            entry._replace(chapter_emptied=not kept) for entry in chapter_dropped
+        )
 
     if updated or removed:
         meta = detail.get("meta_story")
         if isinstance(meta, dict):
             meta["lastUpdated"] = datetime.now().astimezone().isoformat()
-    return updated, removed
+    return updated, removed, dropped
 
 
 def sync_meta_story_events(
@@ -199,7 +239,7 @@ def sync_meta_story_events(
     new_person_data: Optional[Dict[str, Any]] = None,
     data_dir: Path = DATA_DIR,
     verbose: bool = False,
-) -> Dict[str, int]:
+) -> Dict[str, Any]:
     """Update only meta-story event references affected by one person update."""
     people_dir = data_dir / "people"
     meta_dir = data_dir / "meta_stories"
@@ -227,7 +267,15 @@ def sync_meta_story_events(
                 old_event = _resolve_old_event(reference, old_events)
                 mapping[old_index] = _find_new_event(old_event, new_events)
 
-    report = {"stories": 0, "files": 0, "updated": 0, "removed": 0}
+    report: Dict[str, Any] = {
+        "stories": 0,
+        "files": 0,
+        "updated": 0,
+        "removed": 0,
+        # Named from the English pass only: every language copy mirrors it, so
+        # listing each loss once per locale would bury it rather than report it.
+        "dropped": [],
+    }
     affected_story_ids = set()
     changed_story_ids = set()
 
@@ -241,9 +289,10 @@ def sync_meta_story_events(
             for event in (chapter.get("person_events") or [])
         ):
             affected_story_ids.add(path.stem)
-        updated, removed = _update_detail(
-            english_detail, person_id, mapping, new_events, new_events
+        updated, removed, dropped = _update_detail(
+            english_detail, person_id, mapping, new_events, new_events, path.stem
         )
+        report["dropped"].extend(dropped)
         if updated or removed:
             write_json(path, english_detail)
             changed_story_ids.add(path.stem)
@@ -267,7 +316,7 @@ def sync_meta_story_events(
             localized_detail = _load(path)
             if localized_detail is None:
                 continue
-            updated, removed = _update_detail(
+            updated, removed, _ = _update_detail(
                 localized_detail, person_id, mapping, new_events, translated_events
             )
             fingerprint_changed = False
@@ -300,6 +349,29 @@ def sync_meta_story_events(
     return report
 
 
+def describe_dropped(report: Dict[str, Any]) -> List[str]:
+    """The lines a caller should print about what the sync could not carry over.
+
+    A dropped reference is not a routine edit: the story was curated to include
+    that event, and no later step puts it back. Regeneration is the only repair,
+    so the lines end by naming it.
+    """
+    dropped: List[DroppedReference] = list(report.get("dropped") or [])
+    if not dropped:
+        return []
+    lines = ["  Warning: curated event references could not be carried over:"]
+    lines.extend(f"    - {entry.describe()}" for entry in dropped)
+    stories = sorted({entry.story_id for entry in dropped})
+    lines.append(
+        "    Incremental synchronization cannot restore these. Regenerate with "
+        + ", ".join(
+            f"python scripts/generate_meta_story.py {story}" for story in stories
+        )
+        + ", or record them in data/outdated.md."
+    )
+    return lines
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Incrementally sync a person's event references in meta stories."
@@ -313,6 +385,8 @@ def main() -> int:
         f"Synced {report['stories']} meta stories: "
         f"{report['updated']} references updated, {report['removed']} removed."
     )
+    for line in describe_dropped(report):
+        print(line)
     return 0
 
 

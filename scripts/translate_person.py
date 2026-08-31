@@ -1677,9 +1677,12 @@ def translate_person_data(
     # Refresh copied event titles in translated meta stories without
     # retranslating or regenerating those stories.
     try:
-        from sync_meta_story_events import sync_meta_story_events
+        from sync_meta_story_events import describe_dropped, sync_meta_story_events
 
-        sync_meta_story_events(person_id, verbose=verbose)
+        for line in describe_dropped(
+            sync_meta_story_events(person_id, verbose=verbose)
+        ):
+            print(line)
     except Exception as error:
         print(f"  Warning: Could not sync translated meta-story events: {error}")
 

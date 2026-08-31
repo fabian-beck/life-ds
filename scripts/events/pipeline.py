@@ -1539,7 +1539,7 @@ def generate_person_events(
 
     # Preserve curated meta-story selections when event indexes or text change.
     try:
-        from sync_meta_story_events import sync_meta_story_events
+        from sync_meta_story_events import describe_dropped, sync_meta_story_events
 
         sync_report = sync_meta_story_events(
             identifier, old_person_data=old_payload, new_person_data=payload
@@ -1550,6 +1550,8 @@ def generate_person_events(
                 f"({sync_report['updated']} references changed, "
                 f"{sync_report['removed']} removed)"
             )
+        for line in describe_dropped(sync_report):
+            print(line)
     except Exception as error:
         print(f"Warning: Could not sync meta-story events ({error})")
 
