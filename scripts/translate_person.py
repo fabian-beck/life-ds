@@ -138,9 +138,9 @@ class TrEvent(BaseModel):
     title: str
     description: str
     # The report Phase 2 writes, taken apart into the two things it is made of
-    # and put back together on merge. Both lists are empty for the datasets
-    # written before the field existed, which must not be asked to invent a
-    # paragraph in order to keep the shape.
+    # and put back together on merge. Both lists default to empty: a life the
+    # report step has not reached carries no report fields in its payload at
+    # all, and must not be asked to invent a paragraph to keep the shape.
     #
     # It used to travel as one string, headings and all. A `## ` line inside a
     # passage reads to a translator as formatting to preserve, and rule 3 tells
@@ -274,6 +274,14 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         "conclusion": data.get("conclusion"),
         "events": [],
     }
+    # The depth layer is filled per dataset, and the payload follows it there:
+    # a life whose events carry reports offers the translator the report
+    # fields on every event, and a life the report step has not reached
+    # offers them nowhere. Carried unconditionally instead, they reported 43
+    # of the 52 German life-event copies stale although not one English word
+    # had changed — the same cost the `qualifier` and `event_class` blocks
+    # below are kept out of the payload to avoid.
+    has_reports = any(event.get("background") for event in data.get("events", []))
     for event in data.get("events", []):
         marked_terms = set(
             _ANNOTATION_MARKER_RE.findall(event.get("description") or "")
@@ -281,11 +289,6 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
         entry: Dict[str, Any] = {
             "title": event.get("title", ""),
             "description": event.get("description", ""),
-            # The report, taken apart: its paragraphs as an array the length
-            # contract holds the translator to, its headings as text nothing
-            # marks as formatting. `_rebuild_background` puts them back.
-            "background_paragraphs": _paragraphs_of(event.get("background") or ""),
-            "background_headings": _heading_texts(event.get("background") or ""),
             "date_note": event.get("date_note"),
             "locations": [
                 {
@@ -298,10 +301,6 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
             "images": [
                 {"caption": img.get("caption")} for img in (event.get("images") or [])
             ],
-            "background_images": [
-                {"caption": img.get("caption")}
-                for img in (event.get("background_images") or [])
-            ],
             # Only the annotations the description actually marks up. An
             # orphan — an entry whose [[term|display]] marker is missing from
             # the text — reaches no reader, and offering one to the translator
@@ -313,6 +312,19 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
                 if term in marked_terms
             ],
         }
+        # The report, taken apart: its paragraphs as an array the length
+        # contract holds the translator to, its headings as text nothing
+        # marks as formatting, and the captions of the pictures it carries.
+        # `_rebuild_background` puts the prose back.
+        if has_reports:
+            entry["background_paragraphs"] = _paragraphs_of(
+                event.get("background") or ""
+            )
+            entry["background_headings"] = _heading_texts(event.get("background") or "")
+            entry["background_images"] = [
+                {"caption": img.get("caption")}
+                for img in (event.get("background_images") or [])
+            ]
         event_class = _event_class_translatables(event.get("event_class"))
         if event_class:
             entry["event_class"] = event_class

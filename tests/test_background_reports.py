@@ -116,9 +116,7 @@ class IllustrationTests(unittest.TestCase):
 
     def test_a_report_with_no_pictures_loses_the_ones_it_had(self) -> None:
         event = {"background_images": [{"url": "https://example.org/stale.jpg"}]}
-        with mock.patch.object(
-            backgrounds, "fetch_background_images", return_value=[]
-        ):
+        with mock.patch.object(backgrounds, "fetch_background_images", return_value=[]):
             backgrounds.illustrate_event(
                 mock.MagicMock(), event, "A report.", ["query"]
             )
@@ -249,6 +247,114 @@ class TranslatedHeadingTests(unittest.TestCase):
             ),
             "Erster.\n\nZweiter.\n\nDritter.",
         )
+
+
+class ReportPayloadTests(unittest.TestCase):
+    """The report fields reach the translator's payload per dataset.
+
+    A document's fingerprint decides whether its German copy is current, so a
+    field the corpus mostly does not have costs a re-translation everywhere
+    the moment it joins the payload unconditionally: the report fields
+    reported 43 of the 52 German life-event copies stale although not one
+    English word had changed. The depth layer is filled per dataset, so the
+    payload carries it per dataset — the way ``event_class`` and a
+    connection's ``qualifier`` are carried only where they exist.
+    """
+
+    report = "First.\n\n## A label\n\nSecond."
+    fields = ("background_paragraphs", "background_headings", "background_images")
+
+    def document(self, *events: Dict[str, Any]) -> Dict[str, Any]:
+        return {
+            "person": {"summary": "A summary.", "primary_roles": ["Architect"]},
+            "chapters": [],
+            "events": list(events),
+        }
+
+    def test_a_report_arrives_taken_apart_with_its_pictures(self) -> None:
+        payload = translate.extract_life_events_translatables(
+            self.document(
+                event(
+                    "Builds a house",
+                    background=self.report,
+                    background_images=[{"caption": "The house from the creek"}],
+                )
+            )
+        )
+        entry = payload["events"][0]
+        self.assertEqual(entry["background_paragraphs"], ["First.", "Second."])
+        self.assertEqual(entry["background_headings"], ["A label"])
+        self.assertEqual(
+            entry["background_images"], [{"caption": "The house from the creek"}]
+        )
+
+    def test_a_reportless_event_of_a_filled_dataset_keeps_the_empty_fields(
+        self,
+    ) -> None:
+        # Its neighbor has a report, so the dataset's translations were made
+        # from a payload that carries the fields on every event.
+        payload = translate.extract_life_events_translatables(
+            self.document(
+                event("Builds a house", background=self.report),
+                event("Moves to Chicago"),
+            )
+        )
+        for field in self.fields:
+            self.assertEqual(payload["events"][1][field], [])
+
+    def test_a_dataset_the_report_step_has_not_reached_carries_none_of_them(
+        self,
+    ) -> None:
+        payload = translate.extract_life_events_translatables(
+            self.document(event("Builds a house"), event("Moves to Chicago"))
+        )
+        for entry in payload["events"]:
+            for field in self.fields:
+                self.assertNotIn(field, entry)
+
+    def test_such_a_dataset_keeps_the_fingerprint_it_was_translated_from(
+        self,
+    ) -> None:
+        before_the_fields_existed = {
+            "person": {
+                "tagline": None,
+                "summary": "A summary.",
+                "primary_roles": ["Architect"],
+            },
+            "chapters": [],
+            "conclusion": None,
+            "events": [
+                {
+                    "title": "Builds a house",
+                    "description": "Something happened.",
+                    "date_note": None,
+                    "locations": [{"name_historic": "Place 0", "name_modern": None}],
+                    "images": [],
+                    "annotations": [],
+                }
+            ],
+        }
+        self.assertEqual(
+            translate.compute_fingerprint(
+                translate.extract_life_events_translatables(
+                    self.document(event("Builds a house"))
+                )
+            ),
+            translate.compute_fingerprint(before_the_fields_existed),
+        )
+
+    def test_filling_the_first_report_does_invalidate_the_translation(self) -> None:
+        before = translate.compute_fingerprint(
+            translate.extract_life_events_translatables(
+                self.document(event("Builds a house"))
+            )
+        )
+        after = translate.compute_fingerprint(
+            translate.extract_life_events_translatables(
+                self.document(event("Builds a house", background=self.report))
+            )
+        )
+        self.assertNotEqual(before, after)
 
 
 if __name__ == "__main__":
