@@ -14,10 +14,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from generate_person_events import (  # noqa: E402
+from events.schemas import (  # noqa: E402
     BirthClassification,
     EventSkeleton,
     MarriagePartnershipClassification,
+)
+from generate_person_events import (  # noqa: E402
     ensure_birth_classification,
     find_birth_event_index,
 )

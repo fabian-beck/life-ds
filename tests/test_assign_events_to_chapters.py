@@ -17,9 +17,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
+from events.schemas import LifeChapter, LifeEvent  # noqa: E402
 from generate_person_events import (  # noqa: E402
-    LifeChapter,
-    LifeEvent,
     assign_events_to_chapters,
     clamp_chapter_bounds,
 )

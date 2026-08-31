@@ -47,12 +47,11 @@ from config import (
 )
 from events.images.scoring import filter_images_by_quality
 from events.images.sources import search_wikimedia_commons
+from events.schemas import CLASSIFICATION_MODELS, EventSkeleton
 from generate_person_events import (
-    CLASSIFICATION_MODELS,
     PEOPLE_DIR,
     RELATED_ARTICLE_COUNT,
     STAND_IN_REJECTION_INSTRUCTIONS,
-    EventSkeleton,
     _related_articles_prompt_section,
     _subject_article_prompt_section,
     filter_related_articles_for_event,

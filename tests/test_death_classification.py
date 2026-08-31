@@ -15,10 +15,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from generate_person_events import (  # noqa: E402
+from events.schemas import (  # noqa: E402
     BirthClassification,
     DeathClassification,
     EventSkeleton,
+)
+from generate_person_events import (  # noqa: E402
     ensure_death_classification,
     find_death_event_index,
 )

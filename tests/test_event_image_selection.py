@@ -24,15 +24,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import generate_person_events as pipeline  # noqa: E402
 from events.images import sources  # noqa: E402
+from events.schemas import EventSkeleton  # noqa: E402
 
 SKELETONS = [
-    pipeline.EventSkeleton(
+    EventSkeleton(
         date="1912",
         date_precision="year",
         title="Birth in London",
         description="Born in Maida Vale.",
     ),
-    pipeline.EventSkeleton(
+    EventSkeleton(
         date="1940",
         date_precision="year",
         title="Built the bombe",
