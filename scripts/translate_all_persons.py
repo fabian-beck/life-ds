@@ -5,6 +5,12 @@ English is the reference version. By default this script (re)translates only
 documents that are missing or stale — i.e. whose stored source fingerprint no
 longer matches the current English text. Use --force to re-translate
 everything, and --check to print a parity report without calling any API.
+
+--check fails on a missing translation and warns on a stale one. A missing
+document leaves a reader in that language with nothing, while a stale one is
+readable prose describing English text that has since moved, and it is the
+expected state between regenerating a person and re-translating them. Gating
+on it stops every unrelated change until the re-translation runs.
 """
 
 import argparse
@@ -50,7 +56,7 @@ def load_person_list():
 
 
 def run_check(persons, target_lang, include_meta=True):
-    """Print a parity report (no API calls). Returns True if fully current."""
+    """Print a parity report (no API calls). Returns the status counts."""
     lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
     print(f"Translation status for {lang_name} ({target_lang})")
     print("(✓ current, ↻ stale, ✗ missing)\n")
@@ -86,7 +92,12 @@ def run_check(persons, target_lang, include_meta=True):
         f"\nSummary: {counts['current']}/{total} current, "
         f"{counts['stale']} stale, {counts['missing']} missing"
     )
-    return counts["stale"] == 0 and counts["missing"] == 0
+    if counts["stale"]:
+        print(
+            f"Warning: {counts['stale']} document(s) describe English text "
+            "that has since changed. Re-translate with translate_person.py."
+        )
+    return counts
 
 
 def main():
@@ -147,8 +158,8 @@ def main():
 
     # Check-only mode requires no API key and changes nothing
     if args.check:
-        all_current = run_check(persons_to_translate, args.target_lang, include_meta)
-        sys.exit(0 if all_current else 1)
+        counts = run_check(persons_to_translate, args.target_lang, include_meta)
+        sys.exit(1 if counts["missing"] else 0)
 
     # Validate OpenAI API key
     api_key = os.getenv("OPENAI_API_KEY")

@@ -160,7 +160,7 @@ jobs:
         if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: python scripts/validate_cross_person_events.py --check
 
-      - name: German translations are current
+      - name: Every German translation exists
         if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: python scripts/translate_all_persons.py --target-lang de --check
 

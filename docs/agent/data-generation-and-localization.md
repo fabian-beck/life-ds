@@ -416,7 +416,7 @@ data/people/{person_id}/
 python scripts/translate_all_persons.py --target-lang de --check
 ```
 
-Prints per-person and per-meta-story status (✓ current, ↻ stale, ✗ missing) and exits non-zero if anything is stale or missing.
+Prints per-person and per-meta-story status (✓ current, ↻ stale, ✗ missing). It exits non-zero when a translation is missing, and warns without failing when one is stale: a missing document leaves a German reader with nothing, while a stale one still reads, describing English text that has since moved. Staleness is the expected state between regenerating a person and re-translating them, so CI reports it rather than gating on it.
 
 **Translate a single person**:
 
