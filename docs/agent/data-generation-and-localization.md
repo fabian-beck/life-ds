@@ -49,6 +49,8 @@ This runs the whole pipeline: the three generators, the portrait and chapter art
 3. `generate_person_network.py` - Ego network
 4. `generate_event_backgrounds.py` - Background reports for the deep events (after review, before translation)
 
+**The images wait for the style**: both image steps draw in the story's own primary and secondary color, which `generate_person_style.py` writes to `data/person_styles.json`, so they run after it and only for a person who has an entry there. `scripts/utils/person_style.py` is the one reader of those colors, and it raises rather than substituting a default palette: a portrait or a chapter illustration in colors no story uses would be cached under the person's name, and every later run would find it and leave it alone. A run whose style step failed reports the portrait and the chapter art as skipped for the missing style; a person whose style an earlier run wrote is drawn in that one.
+
 **What the run consumed**:
 
 Every model call the pipeline makes is recorded by `scripts/utils/usage.py` and attributed to the step that was open when it was made, and a run ends by printing one row per step: calls, input tokens, input tokens served from the provider's prefix cache, input tokens written to it, output tokens, reasoning tokens, and images. `--usage-json PATH` writes the same ledger, plus one entry per individual call, as JSON. The ledger counts tokens and images only. Rates for the configured models are not part of this repository, so a run states what it consumed and not what it cost.
@@ -245,6 +247,7 @@ This uses OpenAI image generation to transform the existing Wikimedia Commons po
 **Prerequisites**:
 1. Create master style reference portrait at `public/master_style_portrait.png` (1024x1024 PNG)
 2. Ensure person has existing Wikimedia portrait (from `generate_person_events.py`)
+3. Generate the person's style first (`generate_person_style.py`): the transfer prompt names the story's primary and secondary color, and a person without an entry in `data/person_styles.json` is reported as an unmet prerequisite before anything is requested
 
 **Options**:
 - `--force`: Regenerate even if portrait already exists
@@ -270,7 +273,7 @@ python scripts/generate_chapter_illustrations.py "Alan Turing"
 Each chapter of a story gets one abstract image, printed translucently above its headline. It is style transfer of the same kind as the portrait — the master style at `public/master_style_portrait.png` is the only reference image passed — but the *content* comes from the prompt rather than from a second picture, because there is no photograph of what a chapter is about. Two calls stand behind that:
 
 1. A text call reads the whole chapter list at once, with each chapter's events, and writes one visual concept per chapter: an abstract, metaphorical image described in concrete visual nouns. Its rules are negative and strict — no people, no faces, no recognizable buildings or landmarks, no text — because a model shown a biography draws the biography, and a chapter slide must not make a second claim about what happened. The chapters are shown together so the metaphors differ from one another.
-2. One image call per chapter draws that concept in the person's own primary and secondary color, on a pure black ground, as a centered emblem with a wide margin. The margin matters: the interface dissolves the edges with a radial mask, and a form that crowds the frame leaves a visible square.
+2. One image call per chapter draws that concept in the person's own primary and secondary color, on a pure black ground, as a centered emblem with a wide margin. The margin matters: the interface dissolves the edges with a radial mask, and a form that crowds the frame leaves a visible square. Those colors come from `data/person_styles.json`, so a person without a style there stops the step before the concept call rather than drawing in a default palette.
 
 The result is stored under the chapter as `illustration` in `data/people/{person_id}/life_events.json`, synced to every translated copy (a path and a concept are not prose), and the WebP files are written to `public/chapter_art/{person_id}/`. The concept is stored with it so the picture can be redrawn without paying for the text call again. No PNG master is kept — a corpus-wide set of them would outweigh every other asset in the repository.
 
@@ -282,7 +285,7 @@ The result is stored under the chapter as `illustration` in `data/people/{person
 - `--dry-run`: Print the concept prompt without calling the API
 - `--model MODEL` / `--concept-model MODEL`: the image and the text model
 
-Inside the full workflow the step runs after the portrait and is skipped with `--skip-chapter-art`. A person whose dataset has no chapters is reported as having nothing to illustrate rather than as a failure.
+Inside the full workflow the step runs after the portrait and is skipped with `--skip-chapter-art`, and — like the portrait — with the reason named when the person has no style to draw in. A person whose dataset has no chapters is reported as having nothing to illustrate rather than as a failure.
 
 ### Two-Phase Event Generation
 

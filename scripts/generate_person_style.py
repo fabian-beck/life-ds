@@ -9,20 +9,20 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import Any, Dict, TypeGuard, cast
+from typing import Any, Dict, cast
 from xml.etree import ElementTree as ET
 
 from openai import APIStatusError, OpenAI
 
 from config import BULK_MODEL, BULK_REASONING_EFFORT, enable_utf8_console
 from utils import usage
+from utils.person_style import STYLES_PATH, is_hex_color
 from utils.text import slugify
 
 enable_utf8_console()
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 PEOPLE_DIR = DATA_DIR / "people"
-STYLES_PATH = DATA_DIR / "person_styles.json"
 REGISTER_PATH = DATA_DIR / "persons.json"
 HEADING_FONT_CHOICES = [
     "Playfair Display",
@@ -41,18 +41,6 @@ BODY_FONT_CHOICES = [
     "DM Sans",
     "Manrope",
 ]
-
-
-def is_hex_color(value: Any) -> TypeGuard[str]:
-    """True if value is a "#RRGGBB" string.
-
-    Declared as a TypeGuard because callers rely on it to narrow: they pull
-    values out of an untyped payload and reject anything this returns False
-    for, after which the value is known to be a str.
-    """
-    if not isinstance(value, str):
-        return False
-    return bool(re.fullmatch(r"#[0-9a-fA-F]{6}", value.strip()))
 
 
 def clamp(value: float, minimum: float, maximum: float) -> float:

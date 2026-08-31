@@ -22,10 +22,10 @@ from openai import APIStatusError, OpenAI
 
 from config import BULK_MODEL, BULK_REASONING_EFFORT, enable_utf8_console
 from utils import usage
+from utils.person_style import is_hex_color
 from generate_person_style import (
     BODY_FONT_CHOICES,
     HEADING_FONT_CHOICES,
-    is_hex_color,
     sanitise_pattern_svg,
     sanitise_separator_glyph_svg,
 )

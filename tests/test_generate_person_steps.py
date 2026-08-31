@@ -9,14 +9,18 @@ and the run reported one error instead of what it actually produced.
 
 from __future__ import annotations
 
+import json
 import sys
+import tempfile
 import unittest
+from contextlib import contextmanager
 from pathlib import Path
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import generate_person as pipeline  # noqa: E402
+from utils import person_style  # noqa: E402
 
 ARGV = [
     "Ada Lovelace",
@@ -46,6 +50,16 @@ def _run(argv=ARGV, **overrides):
     stubs.update(overrides)
     with patch.multiple(pipeline, **{k: v for k, v in stubs.items()}):
         return pipeline.main(argv)
+
+
+@contextmanager
+def _styles(**styles):
+    """Run with `person_styles.json` holding exactly the styles given."""
+    with tempfile.TemporaryDirectory() as directory:
+        path = Path(directory) / "person_styles.json"
+        path.write_text(json.dumps({"styles": styles}), encoding="utf-8")
+        with patch.object(person_style, "STYLES_PATH", path):
+            yield
 
 
 def _boom(message):
@@ -88,6 +102,71 @@ class StepIsolationTests(unittest.TestCase):
 
         self.assertEqual(reached, ["style"])
         self.assertEqual(code, 1)
+
+
+class StyleGatesTheImagesTests(unittest.TestCase):
+    """The portrait and the chapter art are drawn in the story's own colors.
+
+    Both steps read `person_styles.json` for the primary and secondary color
+    their prompts name, so a run whose style step produced nothing has no
+    palette to draw in. It skips them instead: an image drawn in a default
+    palette is cached under the person's name, and the next run finds it there
+    and leaves it alone.
+    """
+
+    def test_the_image_steps_are_skipped_when_the_person_has_no_style(self) -> None:
+        drawn = []
+
+        def portrait(*args, **kwargs):
+            drawn.append("portrait")
+            return {"success": True, "local_path": "portrait.png"}
+
+        def chapter_art(*args, **kwargs):
+            drawn.append("chapter art")
+            return {"id": "nobody", "success": True, "generated": [], "message": ""}
+
+        argv = ["Nobody Yet", "--no-register", "--skip-review", "--skip-translate"]
+        with _styles():
+            code = _run(
+                argv,
+                generate_dataset=lambda *a, **k: (
+                    "data/people/nobody_yet",
+                    "nobody_yet",
+                ),
+                generate_style=_boom("style service is down"),
+                generate_portrait=portrait,
+                generate_chapter_illustrations=chapter_art,
+            )
+
+        self.assertEqual(drawn, [], "an image was drawn without a style to draw in")
+        self.assertEqual(code, 1, "the failed style step must still be reported")
+
+    def test_a_person_who_has_a_style_still_gets_their_images(self) -> None:
+        drawn = []
+
+        def portrait(*args, **kwargs):
+            drawn.append("portrait")
+            return {"success": True, "local_path": "portrait.png"}
+
+        def chapter_art(*args, **kwargs):
+            drawn.append("chapter art")
+            return {
+                "id": "ada_lovelace",
+                "success": True,
+                "generated": [],
+                "message": "stubbed",
+            }
+
+        argv = ["Ada Lovelace", "--no-register", "--skip-review", "--skip-translate"]
+        with _styles(ada_lovelace={"primary": "#FF8800", "secondary": "#1155AA"}):
+            code = _run(
+                argv,
+                generate_portrait=portrait,
+                generate_chapter_illustrations=chapter_art,
+            )
+
+        self.assertEqual(drawn, ["portrait", "chapter art"])
+        self.assertEqual(code, 0)
 
 
 class RunLogTests(unittest.TestCase):

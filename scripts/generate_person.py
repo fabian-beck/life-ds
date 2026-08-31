@@ -25,6 +25,7 @@ from generate_chapter_illustrations import generate_chapter_illustrations
 from generate_event_backgrounds import generate_event_backgrounds
 from review_person import review_person_data
 from utils import usage
+from utils.person_style import has_style
 
 STEP_OK = "ok"
 STEP_FAILED = "failed"
@@ -257,6 +258,17 @@ def main(argv: Any = None) -> int:
         print("\n⊘ Skipping interface style generation")
         run_log.record("Interface style", STEP_SKIPPED, "not requested")
 
+    # The two image steps are drawn in the story's primary and secondary color,
+    # so they are downstream of the style rather than beside it. A person whose
+    # style step failed — or was never asked for, as under --dataset-only — has
+    # no palette to draw in, and an image drawn in a default one would be cached
+    # under the person's name and never redrawn. The check reads what is on
+    # disk, so a style written by an earlier run still counts.
+    style_missing = person_id is not None and not has_style(person_id)
+    no_style_reason = (
+        "no interface style — run scripts/generate_person_style.py, then rerun"
+    )
+
     # Step 3: Generate ego network
     usage.begin_step("Ego network")
     if run_network:
@@ -279,7 +291,13 @@ def main(argv: Any = None) -> int:
 
     # Step 4: Generate portrait (if not skipped)
     usage.begin_step("Portrait")
-    if not args.skip_portrait:
+    if args.skip_portrait:
+        print("\n⊘ Skipping portrait generation (--skip-portrait flag)")
+        run_log.record("Portrait", STEP_SKIPPED, "--skip-portrait")
+    elif style_missing:
+        print(f"\n⊘ Skipping portrait generation ({no_style_reason})")
+        run_log.record("Portrait", STEP_SKIPPED, no_style_reason)
+    else:
         banner("STEP 4/8: Generating stylized portrait")
         try:
             from pathlib import Path
@@ -332,15 +350,18 @@ def main(argv: Any = None) -> int:
         except Exception as error:
             print(f"\n✗ Portrait generation failed: {error}")
             run_log.record("Portrait", STEP_FAILED, str(error))
-    else:
-        print("\n⊘ Skipping portrait generation (--skip-portrait flag)")
-        run_log.record("Portrait", STEP_SKIPPED, "--skip-portrait")
 
     # Step 5: Chapter illustrations (if not skipped). After the style, whose
     # colors they are drawn in, and after the dataset, whose chapters they
     # illustrate — a person with neither simply has nothing to draw.
     usage.begin_step("Chapter illustrations")
-    if not args.skip_chapter_art:
+    if args.skip_chapter_art:
+        print("\n⊘ Skipping chapter illustrations (--skip-chapter-art flag)")
+        run_log.record("Chapter illustrations", STEP_SKIPPED, "--skip-chapter-art")
+    elif style_missing:
+        print(f"\n⊘ Skipping chapter illustrations ({no_style_reason})")
+        run_log.record("Chapter illustrations", STEP_SKIPPED, no_style_reason)
+    else:
         banner("STEP 5/8: Generating chapter illustrations")
         try:
             if not person_id:
@@ -364,9 +385,6 @@ def main(argv: Any = None) -> int:
         except Exception as error:
             print(f"\n✗ Chapter illustrations failed: {error}")
             run_log.record("Chapter illustrations", STEP_FAILED, str(error))
-    else:
-        print("\n⊘ Skipping chapter illustrations (--skip-chapter-art flag)")
-        run_log.record("Chapter illustrations", STEP_SKIPPED, "--skip-chapter-art")
 
     # Step 6: Review (if not skipped)
     usage.begin_step("Review")

@@ -51,7 +51,6 @@ from PIL import Image
 from pydantic import BaseModel, Field
 
 from config import (
-    DATA_DIR,
     DEFAULT_MODEL,
     DEFAULT_REASONING_EFFORT,
     PEOPLE_DIR,
@@ -63,12 +62,12 @@ from utils import usage
 from utils.datasets import event_files
 from utils.json_io import read_json, write_json
 from utils.model_calls import parse_structured
+from utils.person_style import MissingStyleError, story_colors
 
 enable_utf8_console()
 
 CHAPTER_ART_DIR = PUBLIC_DIR / "chapter_art"
 DEFAULT_MASTER_STYLE_PATH = PUBLIC_DIR / "master_style_portrait.png"
-STYLES_PATH = DATA_DIR / "person_styles.json"
 
 DEFAULT_IMAGE_MODEL = "gpt-image-2"
 IMAGE_SIZE = "1024x1024"
@@ -166,20 +165,6 @@ def load_dataset(person_id: str) -> Dict[str, Any]:
     if not path.exists():
         raise FileNotFoundError(f"No life events dataset for '{person_id}': {path}")
     return cast(Dict[str, Any], read_json(path))
-
-
-def load_person_colors(person_id: str) -> Dict[str, str]:
-    """The person's primary and secondary color, or the interface defaults."""
-    try:
-        styles = read_json(STYLES_PATH)
-        style = styles.get("styles", {}).get(person_id, {})
-        return {
-            "primary": style.get("primary", "#5ED0FF"),
-            "secondary": style.get("secondary", "#9A7BFF"),
-        }
-    except (OSError, ValueError, TypeError) as error:
-        print(f"  Warning: Could not load colors for {person_id}: {error}")
-        return {"primary": "#5ED0FF", "secondary": "#9A7BFF"}
 
 
 def _excerpt(text: str, limit: int = EVENT_EXCERPT_CHARS) -> str:
@@ -465,7 +450,21 @@ def generate_chapter_illustrations(
         print(f"✗ {message}", file=sys.stderr)
         return {"id": person_id, "success": False, "generated": [], "message": message}
 
-    colors = load_person_colors(person_id)
+    # The colors the strokes are drawn in come from the story's style, so the
+    # step is downstream of it. Without a style there is nothing to draw in:
+    # stopping here costs a run, while drawing in a default palette costs a set
+    # of cached illustrations that no later run has a reason to redraw.
+    try:
+        colors = story_colors(person_id)
+    except MissingStyleError as error:
+        print(f"✗ {error}", file=sys.stderr)
+        return {
+            "id": person_id,
+            "success": False,
+            "generated": [],
+            "message": str(error),
+        }
+
     print(f"[Step 1/4] {len(pending)} chapter(s) to illustrate for '{person_id}'")
     print(f"  Primary {colors['primary']}, secondary {colors['secondary']}")
 

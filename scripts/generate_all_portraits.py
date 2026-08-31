@@ -14,6 +14,7 @@ from generate_person_portrait import (
     generate_portrait,
     person_registry,
 )
+from utils.person_style import has_style
 
 # Note: UTF-8 encoding is already set by generate_person_portrait module
 
@@ -59,13 +60,21 @@ def get_persons_needing_portraits(
                 # Has generated portrait, check for original
                 reference_url = portrait.get("originalImage")
 
-            if reference_url:
-                persons_needing_portraits.append(person_id)
-            else:
+            if not reference_url:
                 print(
                     f"⊘ Skipping {person_id}: No reference portrait URL available",
                     file=sys.stderr,
                 )
+            elif not has_style(person_id):
+                # The portrait is painted in the story's own two colors, so a
+                # person the style step has not reached yet is not a person
+                # whose portrait can be drawn.
+                print(
+                    f"⊘ Skipping {person_id}: No interface style to paint in",
+                    file=sys.stderr,
+                )
+            else:
+                persons_needing_portraits.append(person_id)
 
     return persons_needing_portraits
 

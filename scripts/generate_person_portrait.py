@@ -21,6 +21,7 @@ from PIL import Image, ImageOps
 
 from utils import usage
 from utils.http import QueryParams
+from utils.person_style import MissingStyleError, story_colors
 from utils.registry import Registry
 from utils.text import slugify
 
@@ -39,7 +40,6 @@ if sys.platform == "win32":
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 REGISTER_PATH = DATA_DIR / "persons.json"
-STYLES_PATH = DATA_DIR / "person_styles.json"
 PUBLIC_DIR = Path(__file__).resolve().parents[1] / "public"
 PORTRAITS_DIR = PUBLIC_DIR / "portraits"
 DEFAULT_MASTER_STYLE_PATH = PUBLIC_DIR / "master_style_portrait.png"
@@ -456,26 +456,6 @@ def person_registry() -> Registry:
     return Registry(REGISTER_PATH)
 
 
-def load_person_colors(person_id: str) -> Dict[str, str]:
-    """
-    Load color scheme for a person from person_styles.json.
-
-    Returns:
-        Dict with 'primary' and 'secondary' hex colors, or defaults if not found.
-    """
-    try:
-        with open(STYLES_PATH, "r", encoding="utf-8") as f:
-            styles_data = json.load(f)
-            person_style = styles_data.get("styles", {}).get(person_id, {})
-            return {
-                "primary": person_style.get("primary", "#5ED0FF"),
-                "secondary": person_style.get("secondary", "#9A7BFF"),
-            }
-    except Exception as e:
-        print(f"  Warning: Could not load colors for {person_id}: {e}", file=sys.stderr)
-        return {"primary": "#5ED0FF", "secondary": "#9A7BFF"}
-
-
 def create_webp_sizes(source_image_path: Path, person_id: str) -> Dict[str, str]:
     """
     Create multiple WebP sizes from source image for optimized loading.
@@ -738,8 +718,18 @@ def generate_portrait(
     """
     print(f"[Step 1/7] Checking prerequisites for '{person_id}'...")
 
-    # Load person's color scheme
-    colors = load_person_colors(person_id)
+    # The style the portrait is painted in. It is a prerequisite, not a
+    # preference: the prompt names the story's two colors, so a person whose
+    # style has not been generated has no portrait to draw yet.
+    try:
+        colors = story_colors(person_id)
+    except MissingStyleError as error:
+        print(f"✗ Error: {error}", file=sys.stderr)
+        return {
+            "id": person_id,
+            "success": False,
+            "message": str(error),
+        }
     print(
         f"  Primary color: {colors['primary']}, Secondary color: {colors['secondary']}"
     )
