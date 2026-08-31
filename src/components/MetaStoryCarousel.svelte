@@ -694,12 +694,23 @@
 
   /* Each portrait is a click target for that person's story, so hovering or
      focusing it names who it opens. The caption sits outside .portrait-clip
-     so the slanted mask cannot cut it, and above the clip's lower slant so it
-     stays on the image on both edges of the polygon. */
+     so the slanted mask cannot cut it, and below the clip's upper slant so it
+     stays on the image on both edges of the polygon.
+
+     It rides the top of the column because the bottom belongs to
+     .slide-content, which is opaque, paints a layer above the portraits, and
+     grows with the headline it holds. A caption anchored to the bottom landed
+     underneath the title rather than on the face it names (#129).
+
+     The offset answers to both edges it sits between. The percentage keeps it
+     below the slant, which reaches 8% at the right edge and scales with the
+     slide; the 3.5rem floor clears .playback-indicator, which is 32px tall at
+     0.75rem from the same top edge and paints above the portraits, so on a
+     short slide the last column's caption would otherwise hide under it. */
   .portrait-name {
     position: absolute;
     left: 50%;
-    bottom: 14%;
+    top: max(14%, 3.5rem);
     transform: translateX(-50%);
     max-width: calc(100% - 1rem);
     padding: 0.2rem 0.55rem;
