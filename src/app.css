@@ -150,3 +150,49 @@ html.high-contrast .map-gradient {
   font-weight: bold;
   text-shadow: 0 0 4px var(--story-secondary, rgb(56 189 248 / 25%));
 }
+
+/* The layout of an overview column: a portrait beside a block of text, stacked
+   on a phone and side by side once there is room. Declared here because two
+   components draw that column — OverviewSlide for the real slide and
+   StoryLoadingSlide for the skeleton the reader sees while the life loads —
+   and a skeleton whose geometry has drifted from the slide it stands in for
+   is a flicker at exactly the moment the reader is watching. Svelte scoping
+   cannot reach across the two, so the shared geometry lives here and each
+   component keeps what is its own: the portrait masking and the type on one
+   side, the shimmer blocks on the other. */
+.overview-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  align-self: center;
+  width: min(54rem, 100%);
+  max-width: 56rem;
+  margin: 0 auto;
+  position: relative;
+  z-index: 4;
+}
+
+.overview-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Tablet and desktop, the same breakpoint the slides use. */
+@media (width >= 768px) and (height >= 600px) {
+  .overview-content {
+    flex-flow: row wrap;
+    align-items: center;
+    text-align: left;
+    justify-content: center;
+    gap: 3rem;
+  }
+
+  .overview-text {
+    flex: 1;
+    min-width: 300px;
+    align-items: flex-start;
+  }
+}

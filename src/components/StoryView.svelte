@@ -19,6 +19,7 @@
   import ImageViewer from "./ImageViewer.svelte";
   import NetworkModal from "./NetworkModal.svelte";
   import OverviewSlide from "./OverviewSlide.svelte";
+  import StoryLoadingSlide from "./StoryLoadingSlide.svelte";
   import EventSlide from "./EventSlide.svelte";
   import EventDepth from "./EventDepth.svelte";
   import ChapterSlide from "./ChapterSlide.svelte";
@@ -1444,35 +1445,7 @@
           class="slide overview loading-slide"
           aria-label={$_("story.loading_life")}
         >
-          <div class="content overview-content">
-            <div class="skeleton-portrait"></div>
-            <div class="overview-text">
-              <div class="skeleton-text skeleton-eyebrow"></div>
-              <div class="skeleton-text skeleton-title"></div>
-              <div class="skeleton-text skeleton-years"></div>
-              <div class="skeleton-text skeleton-roles"></div>
-              <div class="skeleton-paragraph">
-                <div class="skeleton-text skeleton-line"></div>
-                <div class="skeleton-text skeleton-line"></div>
-                <div
-                  class="skeleton-text skeleton-line"
-                  style="width: 80%;"
-                ></div>
-              </div>
-            </div>
-          </div>
-          <div class="loading-indicator">
-            <div class="spinner"></div>
-            <p class="loading-text">
-              {#if loadingStage === "initial" || loadingStage === "dataset"}
-                {$_("story.loading_life")}
-              {:else if loadingStage === "network"}
-                {$_("story.loading_network")}
-              {:else}
-                {$_("story.loading_life")}
-              {/if}
-            </p>
-          </div>
+          <StoryLoadingSlide {loadingStage} />
           <div class="slide-reserve" aria-hidden="true"></div>
         </section>
       {:else if totalPanels > 0}
@@ -1802,7 +1775,7 @@
     }
   }
 
-  /* Loading skeleton styles */
+  /* The loading slide fades in; the skeleton it holds is StoryLoadingSlide. */
   .loading-slide {
     animation: fadeIn 0.3s ease;
   }
@@ -1818,123 +1791,6 @@
     }
     to {
       opacity: 1;
-    }
-  }
-
-  .skeleton-portrait {
-    width: min(220px, 80vw);
-    height: min(220px, 30vh);
-    border-radius: 1rem;
-    background: linear-gradient(
-      90deg,
-      rgba(148, 163, 184, 0.1) 0%,
-      rgba(148, 163, 184, 0.2) 50%,
-      rgba(148, 163, 184, 0.1) 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 2s infinite;
-  }
-
-  .skeleton-text {
-    height: 1em;
-    border-radius: 0.25rem;
-    background: linear-gradient(
-      90deg,
-      rgba(148, 163, 184, 0.1) 0%,
-      rgba(148, 163, 184, 0.2) 50%,
-      rgba(148, 163, 184, 0.1) 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 2s infinite;
-    margin-bottom: 0.5rem;
-  }
-
-  .skeleton-eyebrow {
-    width: 120px;
-    height: 0.7rem;
-  }
-
-  .skeleton-title {
-    width: 280px;
-    max-width: 90%;
-    height: 1.5rem;
-    margin-top: 0.5rem;
-  }
-
-  .skeleton-years {
-    width: 100px;
-    height: 0.9rem;
-  }
-
-  .skeleton-roles {
-    width: 200px;
-    max-width: 70%;
-    height: 0.85rem;
-  }
-
-  .skeleton-paragraph {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .skeleton-line {
-    width: 100%;
-    height: 0.9rem;
-  }
-
-  @keyframes shimmer {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
-  }
-
-  .loading-indicator {
-    position: absolute;
-    bottom: 4rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    z-index: 10;
-  }
-
-  .spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid rgba(148, 163, 184, 0.2);
-    border-top-color: var(--story-secondary, #38bdf8);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .loading-text {
-    margin: 0;
-    font-size: 0.9rem;
-    color: rgba(148, 163, 184, 0.9);
-    font-weight: 500;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
     }
   }
 
@@ -2588,6 +2444,15 @@
     z-index: 3;
   }
 
+  /* The loading spinner is the one slide child that hangs off the slide rather
+     than standing in its flow, so it opts out of the rule above. Stated here,
+     and not left to the component that draws it, because the two declarations
+     are equally specific: which one wins would otherwise depend on the order
+     the bundler happens to emit the two stylesheets in. */
+  .slide > :global(.loading-indicator) {
+    position: absolute;
+  }
+
   /* A fold lays out the first screen of a deep event, but it must not become
      the containing block for the event picture: the fold occupies the slide's
      padded content box, which leaves the picture inset from the real corner.
@@ -2606,40 +2471,11 @@
     right: 0;
   }
 
-  .slide > .content {
-    align-self: center;
-    width: min(54rem, 100%);
-    margin: 0 auto;
-  }
-
   .slide.overview {
     justify-content: flex-start;
     padding-top: 1rem;
     --slide-bottom-total: 8rem;
     position: relative;
-  }
-
-  .overview-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    text-align: center;
-    max-width: 56rem;
-  }
-
-  .overview-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    position: relative;
-    z-index: 4;
   }
 
   /* Tablet and desktop styles
@@ -2679,21 +2515,6 @@
 
     .slide.overview {
       padding-top: 2.5rem;
-    }
-
-    .overview-content {
-      flex-direction: row;
-      align-items: center;
-      flex-wrap: wrap;
-      text-align: left;
-      justify-content: center;
-      gap: 3rem;
-    }
-
-    .overview-text {
-      flex: 1;
-      min-width: 300px;
-      align-items: flex-start;
     }
   }
 </style>

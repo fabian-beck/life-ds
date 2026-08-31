@@ -109,20 +109,9 @@
 </div>
 
 <style>
-  .overview-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    text-align: center;
-    max-width: 56rem;
-    align-self: center;
-    width: min(54rem, 100%);
-    margin: 0 auto;
-    position: relative;
-    z-index: 4;
-  }
-
+  /* `.overview-content` and `.overview-text` carry only what is specific to
+     the real slide here; their shared layout is the global rule in app.css,
+     which the loading skeleton uses too. */
   .overview-portrait {
     margin: 0;
     display: flex;
@@ -172,12 +161,6 @@
 
   .portrait-button:focus {
     outline: none;
-  }
-
-  .overview-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
   }
 
   .overview-text h2 {
@@ -264,15 +247,6 @@
       max-width: 340px;
     }
 
-    .overview-content {
-      flex-direction: row;
-      align-items: center;
-      flex-wrap: wrap;
-      text-align: left;
-      justify-content: center;
-      gap: 3rem;
-    }
-
     .overview-portrait {
       align-items: center;
     }
@@ -280,12 +254,6 @@
     .overview-portrait img {
       max-width: 520px;
       max-height: min(50dvh, 450px);
-    }
-
-    .overview-text {
-      flex: 1;
-      min-width: 300px;
-      align-items: flex-start;
     }
 
     .overview-text h2 {
