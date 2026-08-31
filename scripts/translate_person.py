@@ -46,6 +46,8 @@ from config import (
     BULK_MODEL,
     BULK_REASONING_EFFORT,
     DEFAULT_MODEL,
+    GLOSSARY_MODEL,
+    GLOSSARY_REASONING_EFFORT,
     enable_utf8_console,
 )
 from utils.model_calls import parse_structured
@@ -836,13 +838,6 @@ def collect_person_names(
 # the one thing this call is asked to get right.
 TRANSLATION_MODEL = BULK_MODEL
 TRANSLATION_REASONING_EFFORT = BULK_REASONING_EFFORT
-
-# The glossary is the exception. It is one small call per person and language,
-# and everything else matches on the names it decides: the UI's cross-references
-# between a story and its network are exact-name lookups, so a name rendered two
-# ways is a broken link rather than an awkward sentence.
-GLOSSARY_MODEL = DEFAULT_MODEL
-GLOSSARY_REASONING_EFFORT = BULK_REASONING_EFFORT
 
 
 def collect_place_names(life_events: Optional[Dict[str, Any]]) -> List[str]:

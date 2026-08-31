@@ -262,7 +262,7 @@ GROUPS: List[Group] = [
     Group(
         "composition",
         "Composition and output",
-        ["m_p8", "m_save", "m_translate"],
+        ["m_p8", "m_save", "m_images", "m_translate"],
         note=(
             "Where the branches become one story: rewrite every text in one "
             "voice, save it, translate it."
@@ -1166,6 +1166,29 @@ STEPS: List[Step] = [
         skip_flag="--skip-style",
     ),
     Step(
+        "m_images",
+        "Settle the story's recurring images",
+        SHARED,
+        AI,
+        "meta_story_translation.py",
+        "build_image_glossary",
+        summary=(
+            "Decides once, before any prose is written, how the metaphors the "
+            "story argues in read in the target language — and whether the "
+            "language has them at all. Left to the translation call the "
+            "decision is never made: it meets the image in the title, renders "
+            "it word for word, and then carries that rendering faithfully "
+            "through every passage, so an architecture story about 'the box' "
+            "arrived in German as 'Kasten', a crate. Same reason as the name "
+            "glossary — what has to read the same in every passage is settled "
+            "once rather than re-derived per field."
+        ),
+        depends_on=[Dep("m_save", "the story's own text, as the images to judge")],
+        prompts=["build_image_glossary", "format_image_glossary_for_prompt"],
+        inputs=["meta_story"],
+        skip_flag="--skip-translate",
+    ),
+    Step(
         "m_translate",
         "Translate meta story",
         SHARED,
@@ -1178,7 +1201,7 @@ STEPS: List[Step] = [
             "story slides never disagree, and the names in its prose are taken "
             "from the same place: what each person's own translation settled on."
         ),
-        depends_on=[Dep("m_save", "the saved English story")],
+        depends_on=[Dep("m_images", "the settled wording for each recurring image")],
         inputs=["meta_story", "person_de"],
         outputs=["meta_de"],
         skip_flag="--skip-translate",

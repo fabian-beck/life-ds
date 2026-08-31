@@ -8,6 +8,14 @@
         "why_this_design": "It recomputes the circles with the same deterministic rules as the client so narration keys continue to match the groups shown in the interface without storing a second version."
       }
     },
+    "m_images": {
+      "fingerprint": "9992a480450c6900",
+      "summary": {
+        "source": "gpt-5.6-terra",
+        "what_it_does": "Identifies the metaphors and coined terms that carry a story’s theme, then settles how each should read in the target language before translation begins. It preserves a native target-language image when one exists and otherwise replaces the English picture with its plain meaning, giving later passages one shared rendering.",
+        "why_this_design": "Making the choice once prevents an early literal translation—especially in a title—from becoming a misleading term repeated throughout the story."
+      }
+    },
     "m_p1": {
       "fingerprint": "aee722ed1766a2de",
       "summary": {

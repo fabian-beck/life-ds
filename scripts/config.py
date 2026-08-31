@@ -31,9 +31,23 @@ a critic weaker than the generator is worse than no critic, and the small model
 is weakest at recalling detail from a long context.
 """
 
+GLOSSARY_MODEL = DEFAULT_MODEL
+"""The model for the calls that settle a document's vocabulary before it is written.
+
+Translation itself runs on the small model, and a glossary call is the
+exception: it is one small call per document and language, and everything
+downstream matches on what it decides. A name rendered two ways is a broken
+cross-reference rather than an awkward sentence, and a metaphor rendered
+literally once is rendered literally in every passage that repeats it.
+"""
+
 DEFAULT_REASONING_EFFORT = os.getenv("OPENAI_REASONING_EFFORT", "medium")
 LOW_REASONING_EFFORT = os.getenv("OPENAI_LOW_REASONING_EFFORT", "none")
 BULK_REASONING_EFFORT = os.getenv("OPENAI_BULK_REASONING_EFFORT", "low")
+GLOSSARY_REASONING_EFFORT = BULK_REASONING_EFFORT
+"""Reasoning budget for the glossary calls. Between LOW and DEFAULT for the
+same reason as BULK: the call holds a threshold — whether a name has an exonym,
+whether a language has an image — rather than transcribing what it was given."""
 """Reasoning budget for bulk call sites that still make a judgment.
 
 Between LOW (slot filling from supplied text) and DEFAULT (interpretation).
