@@ -693,24 +693,26 @@
   }
 
   /* Each portrait is a click target for that person's story, so hovering or
-     focusing it names who it opens. The caption sits outside .portrait-clip
-     so the slanted mask cannot cut it, and below the clip's upper slant so it
-     stays on the image on both edges of the polygon.
+     focusing it names who it opens. The caption sits outside .portrait-clip,
+     so the slanted mask cannot cut it.
 
-     It rides the top of the column because the bottom belongs to
-     .slide-content, which is opaque, paints a layer above the portraits, and
-     grows with the headline it holds. A caption anchored to the bottom landed
-     underneath the title rather than on the face it names (#129).
+     It sits at the very top of the column, because the bottom belongs to
+     .slide-content: an opaque block that paints a layer above the portraits
+     and grows with the headline it holds, so a caption anchored to the bottom
+     was drawn underneath the title rather than on the face it names (#129).
 
-     The offset answers to both edges it sits between. The percentage keeps it
-     below the slant, which reaches 8% at the right edge and scales with the
-     slide; the 3.5rem floor clears .playback-indicator, which is 32px tall at
-     0.75rem from the same top edge and paints above the portraits, so on a
-     short slide the last column's caption would otherwise hide under it. */
+     Two things share that top edge. The clip's slant starts the image lower at
+     the right than at the left, so on a right-leaning column the caption sits
+     above the cut rather than on the image; its own pill carries it. And
+     .playback-indicator holds the same corner, 32px at 0.75rem in, so on a
+     narrow slide its circle grazes the last column's caption. That control is
+     translucent and the caption stays readable through it, which is the lesser
+     cost: an offset large enough to clear it would drop every caption off the
+     top edge to spare one column on one width. */
   .portrait-name {
     position: absolute;
     left: 50%;
-    top: max(14%, 3.5rem);
+    top: 0;
     transform: translateX(-50%);
     max-width: calc(100% - 1rem);
     padding: 0.2rem 0.55rem;
