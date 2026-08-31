@@ -59,6 +59,7 @@ from config import (
     REPO_ROOT,
     enable_utf8_console,
 )
+from utils import usage
 from utils.datasets import event_files
 from utils.json_io import read_json, write_json
 from utils.model_calls import parse_structured
@@ -310,6 +311,7 @@ def request_illustration(
                 size=IMAGE_SIZE,
                 n=1,
             )
+        usage.record_response(model, response, label="chapter illustration", images=1)
     except APIStatusError as error:
         status = getattr(error, "status_code", "unknown")
         print(f"  ✗ Image API error ({status}): {error}", file=sys.stderr)

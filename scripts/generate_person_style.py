@@ -15,6 +15,7 @@ from xml.etree import ElementTree as ET
 from openai import APIStatusError, OpenAI
 
 from config import BULK_MODEL, BULK_REASONING_EFFORT, enable_utf8_console
+from utils import usage
 from utils.text import slugify
 
 enable_utf8_console()
@@ -427,6 +428,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
             ],
             text={"format": {"type": "json_object"}},
         )
+        usage.record_response(model, response, label="interface style")
     except APIStatusError as error:
         message = getattr(
             getattr(error, "response", {}), "text", str(error)

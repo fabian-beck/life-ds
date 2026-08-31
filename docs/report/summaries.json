@@ -197,17 +197,17 @@
       }
     },
     "m_style": {
-      "fingerprint": "136de166e2a0d123",
+      "fingerprint": "07b1a00c4521e13c",
       "summary": {
         "constraints": [
-          "Returns JSON with exactly these fields: primary, secondary, background, background_pattern_svg, separator_glyph_svg, ornament_svg, frame, heading_font, and body_font.",
-          "Primary, secondary, and background use #RRGGBB; background luminance must be under 0.18, and primary must remain a legible light text accent.",
-          "background_pattern_svg is a seamless 160x160 abstract geometric tile using only #000000 and #FFFFFF—no gray values, opacity attributes, dense clusters, or large solid areas.",
-          "separator_glyph_svg uses a 32x32 viewBox and at most 2-3 simple shapes; ornament_svg uses viewBox \"0 0 240 24\", is horizontally symmetric, and both marks are recolored to primary downstream."
+          "Returns strict JSON with exactly these fields: primary, secondary, background, background_pattern_svg, separator_glyph_svg, ornament_svg, frame, heading_font, body_font.",
+          "Colors use #RRGGBB; background luminance must be below 0.18, and primary must remain a legible light text accent.",
+          "The background pattern is a seamless 160x160 SVG using only #000000 and #FFFFFF, with no gray values or opacity attributes.",
+          "The separator uses a 32x32 viewBox and at most \"2-3\" simple shapes; the centered ornament uses a \"0 0 240 24\" viewBox and must be horizontally symmetric."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a dark-mode editorial visual system for a theme-driven, long-form meta story that connects biographies with timeline, network, and map sections. It asks for a palette, a seamless abstract background tile, matched SVG punctuation marks, a shared box-frame treatment, and typography choices, then parses the returned strict JSON for downstream use. The design brief derives geometry and period cues from the overall theme and date range rather than from an individual subject.",
-        "why_this_design": "The background tile is deliberately limited to pure black and white with no opacity, while the primary accent is reserved for running text and the two punctuation marks. This separates a faint, CSS-controlled background treatment from legible editorial accents and keeps the separator glyph, end ornament, cards, maps, and timeline visually coherent."
+        "what_it_does": "Creates a dark-mode design system for a theme-centered, long-form editorial story that interleaves biography prose with timeline, network, and map sections. It returns palette values, a monochrome seamless background-pattern SVG, two related primary-color punctuation marks, a shared frame choice, and heading/body font selections so the interface reads as one visual identity.",
+        "why_this_design": "The prompt separates the faint page texture from the foreground identity marks: the texture is restricted to opaque black and white so it can be controlled by later rendering, while the glyph and ornamental rule inherit the primary color at display time. Requiring theme-derived abstract geometry prevents the visual language from privileging one biography within a multi-person story."
       }
     },
     "m_translate": {
@@ -239,17 +239,17 @@
       }
     },
     "p_chapter_art": {
-      "fingerprint": "23f28280f7e6556f",
+      "fingerprint": "5f48d1eac6e288ae",
       "summary": {
         "constraints": [
-          "Generates exactly \"1\" image in the configured square size, with one centered emblematic form.",
-          "Forbids people, faces, silhouettes, body parts, buildings, landmarks, maps, flags, and all text-like marks.",
-          "Requires pure black \"#000000\" to reach all four edges, with generous empty margins; frames, borders, vignettes, cartouches, and decorative surrounds are forbidden.",
-          "Limits luminous strokes to pure white \"#FFFFFF\" plus the injected primary and secondary colors; output must use glowing, long-exposure-like light strokes rather than photorealism or flat vector rendering."
+          "Generate exactly \"1\" square image per request.",
+          "Use the reference image’s artistic treatment, but do not reproduce, trace, or reference its content.",
+          "Forbid people or body parts; recognizable buildings, landmarks, maps, and flags; and all text, letters, numbers, and written symbols.",
+          "Use only glowing white, primary, and secondary strokes on a pure black (#000000) edge-to-edge background; keep a generous margin and include no frame, border, vignette, cartouche, or decorative surround."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Creates one square abstract chapter emblem from the injected concept and two palette colors. It supplies a single master-style image as an edit input, instructing the generator to transfer only that image’s light-painting treatment, then returns decoded image bytes from inline Base64 data or downloads them from a returned URL.",
-        "why_this_design": "The reference image is deliberately treated as a rendering-style source rather than a content source, preventing chapter art from inheriting portrait imagery while keeping illumination and line treatment consistent across the story. Broad exception handling and per-request failure returns ensure that one unavailable or malformed illustration does not terminate the full chapter run."
+        "what_it_does": "Creates one square abstract illustration for a story chapter from the chapter’s injected concept, two configured accent colors, and a single master-style image. The reference image supplies rendering treatment only; the returned image bytes come from embedded base64 data when available or from a downloaded response URL, while failures are logged and converted to None so later chapters can continue.",
+        "why_this_design": "Using only a style reference prevents chapter art from inheriting the reference image’s subject matter while keeping its light-painted visual language aligned with the portrait treatment. The prompt sharply narrows the composition to a centered emblem on an unbroken black field, protecting slide-level consistency and avoiding accidental narrative claims through people, places, or text."
       }
     },
     "p_chapter_concepts": {
@@ -465,17 +465,17 @@
       }
     },
     "p_portrait": {
-      "fingerprint": "f21e8c5a39c86959",
+      "fingerprint": "3104de90f81d0979",
       "summary": {
         "constraints": [
-          "Requires a registry portrait URL—or an explicitly supplied HTTP(S) reference—and a valid local master-style image.",
-          "Preserves the second image’s facial features, expression, gaze, head pose, shoulder orientation, hair, and clothing silhouette exactly; the person must remain immediately recognizable.",
-          "Produces a borderless 2:3 vertical head-and-shoulders or upper-torso portrait, cropping away lower body and source-scene material when needed.",
-          "Uses a pitch-black background with broad glowing white strokes plus the person’s configured primary and secondary accent colors; no added decorative elements are allowed."
+          "Requires a valid HTTP(S) original portrait URL, a valid local master-style image, and a registry entry when no URL is supplied.",
+          "Preserves the second image’s facial features, expression, gaze, head pose, hair, and clothing silhouette; the result must remain immediately recognizable.",
+          "Uses a borderless 2:3 vertical portrait with head-and-shoulders or upper-torso framing, cropping away source-scene furniture and lower body when needed.",
+          "Limits the palette to dominant white plus the person’s two configured accent colors on a deep-black background; decorative additions and enclosing frames are forbidden."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Creates a standardized, vertical light-drawing portrait for a registered person by combining two inputs: a shared master-style image and the person’s licensed source portrait. The source portrait supplies identity, expression, pose, hair, and historical clothing, while the master image supplies the collection-wide rendering treatment; the result is saved as a PNG and later exposed in thumbnail, medium, and full WebP variants.",
-        "why_this_design": "The dual-image prompt explicitly assigns different roles to the inputs so style transfer does not replace the subject’s likeness with features from the master portrait. It also discards inherited ovals, frames, furniture, and scene context common in archival imagery, preventing inconsistent decorative containers across the collection."
+        "what_it_does": "Creates a reusable, stylized portrait asset for one person by downloading the registry’s original licensed portrait and combining it with a shared master-style image. The dual-image edit treats the person’s portrait as the identity source and the master image as a style-only reference, producing a dark, glowing light-drawing head-and-shoulders portrait in that person’s assigned accent colors. It saves a PNG portrait and later pipeline variants can use the generated asset for thumbnail, medium, and full-size outputs.",
+        "why_this_design": "The prompt repeatedly separates image roles because style transfer can otherwise copy the master reference’s subject rather than preserve the historical subject’s likeness. Explicit border prohibitions address a common source-image failure mode: archival portraits enclosed in ovals, cartouches, or painted frames that must not become part of the collection’s visual language."
       }
     },
     "p_pub_links": {
@@ -536,17 +536,17 @@
       }
     },
     "p_style": {
-      "fingerprint": "9545c0b86a6e4fbd",
+      "fingerprint": "faa4fe59cda2e7c8",
       "summary": {
         "constraints": [
-          "`primary`, `secondary`, and `background` must be `#RRGGBB`; background luminance must be under `0.18`.",
-          "`background_pattern_svg` must be a tileable `160x160` SVG using only `#000000` and `#FFFFFF`; gradients, gray values, opacity attributes, and representational imagery are forbidden.",
-          "Pattern motifs must be abstract geometric compositions that encode the subject’s character, era, and work; stroke-width variation such as `1px`, `2px`, `4px`, and `8px` supplies hierarchy.",
-          "`separator_glyph_svg` should use the primary color, fit a roughly `32x32` viewBox, contain at most `2-3` simple geometric shapes, and remain non-directional and preferably symmetric."
+          "Returns strict JSON with `primary`, `secondary`, `background`, `background_pattern_svg`, `separator_glyph_svg`, `heading_font`, and `body_font`; the call requests JSON-object output, but parsed fields are not subsequently schema-validated.",
+          "`primary`, `secondary`, and `background` must be `#RRGGBB`; background luminance must be under `0.18`, and the two accent colors must contrast with it and each other.",
+          "The background SVG must be a tileable `160x160` abstract geometric pattern using only `#000000` and `#FFFFFF`; gray values, gradients, opacity attributes, and figurative elements are forbidden.",
+          "The separator SVG should use the primary color, have a roughly `32x32` viewBox, contain at most `2-3` simple geometric shapes, and remain non-directional and legible at `16-24px`. The font rules are malformed: each font is required to be exactly one item from an empty list."
         ],
         "source": "gpt-5.6-terra",
-        "what_it_does": "Produces a strict JSON visual-identity specification for a personal data story: three interface colors, a repeating dark-background SVG pattern, a small separator SVG glyph, and heading/body font selections. The design brief asks the generator to derive abstract geometric motifs from the subject’s era, field, working style, and contributions, so the resulting interface can visually distinguish one person’s story from another.",
-        "why_this_design": "The background pattern is deliberately restricted to opaque pure black and pure white, while hierarchy must come from stroke weight rather than tonal variation. This protects the dark-mode color system from low-contrast gray pattern assets and makes tiled motifs visually robust. The response is requested as a JSON object and parsed directly, with explicit failures for unsuccessful, incomplete, empty, or non-JSON responses."
+        "what_it_does": "Creates a dark-mode interface style package for a personal-story subject: three colors, a repeating monochrome background pattern, a small separator glyph, and heading/body font selections. The design brief ties the visual system to the subject’s era, field, working style, and contributions, asking for abstract geometry rather than literal illustration.",
+        "why_this_design": "The background tile is restricted to pure black and white with no opacity so that its visual hierarchy survives dark-mode rendering and can be controlled entirely through stroke weight. The prompt separates the dense 160×160 background pattern from a 2–3-shape small-size glyph, preventing the decorative motif from becoming unusable as a section separator."
       }
     },
     "p_translate": {

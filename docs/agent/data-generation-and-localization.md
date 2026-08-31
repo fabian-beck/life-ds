@@ -49,6 +49,12 @@ This runs the whole pipeline: the three generators, the portrait and chapter art
 3. `generate_person_network.py` - Ego network
 4. `generate_event_backgrounds.py` - Background reports for the deep events (after review, before translation)
 
+**What the run consumed**:
+
+Every model call the pipeline makes is recorded by `scripts/utils/usage.py` and attributed to the step that was open when it was made, and a run ends by printing one row per step: calls, input tokens, cached input tokens, output tokens, reasoning tokens, and images. `--usage-json PATH` writes the same ledger, plus one entry per individual call, as JSON. The ledger counts tokens and images only. Rates for the configured models are not part of this repository, so a run states what it consumed and not what it cost.
+
+A call made outside any step appears under `Unattributed`, which is how a generator invoked on its own reports, and how a missing `usage.begin_step` in the orchestrator would show up.
+
 **Disambiguate with Wikipedia URL** (for ambiguous names):
 
 When a person's name is ambiguous (e.g., "Henry II"), you can specify the exact Wikipedia article using the `--url` argument. The URL will be used to fetch the correct Wikipedia article, while the subject parameter determines the `person_id` (directory name):

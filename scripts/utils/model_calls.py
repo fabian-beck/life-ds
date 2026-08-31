@@ -41,6 +41,8 @@ from typing import Any, Dict, List, Optional, Sequence, Type, TypeVar, cast
 from openai import APIConnectionError, APIStatusError, OpenAI
 from pydantic import BaseModel
 
+from . import usage
+
 ParsedT = TypeVar("ParsedT", bound=BaseModel)
 
 # Statuses worth trying again: the request was fine, the service was not.
@@ -229,6 +231,10 @@ def _parse_structured(
                 return None, reason
             last_error = reason
         else:
+            # Recorded before the result is inspected: a refused or empty
+            # response consumed tokens too, and a step that spent them without
+            # producing anything is exactly what the ledger should show.
+            usage.record_response(model, response, label=label)
             parsed = getattr(response, "output_parsed", None)
             if parsed is not None:
                 return cast(ParsedT, parsed), ""

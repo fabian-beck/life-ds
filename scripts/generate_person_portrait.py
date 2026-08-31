@@ -19,6 +19,7 @@ from bs4 import BeautifulSoup
 from openai import APIStatusError, OpenAI
 from PIL import Image, ImageOps
 
+from utils import usage
 from utils.registry import Registry
 from utils.text import slugify
 
@@ -963,6 +964,9 @@ REMEMBER: The SECOND IMAGE provides identity, likeness, expression, and recogniz
                             size="1024x1536",  # 2:3 portrait format (closest to 3:4)
                             n=1,
                         )
+                        usage.record_response(
+                            model, response, label="portrait", images=1
+                        )
 
                         print("  API call completed, processing response...")
                         print(f"  Response type: {type(response)}")
@@ -998,6 +1002,9 @@ ALWAYS produce a vertical head-and-shoulders or upper-torso portrait. Crop away 
                             size="1024x1024",
                             n=1,
                         )
+                        usage.record_response(
+                            model, response, label="portrait", images=1
+                        )
                 else:
                     # Use generate endpoint for DALL-E 3, etc.
                     print(
@@ -1018,6 +1025,7 @@ Professional and dignified composition, portrait orientation, shoulders visible.
                         size="1024x1024",
                         n=1,
                     )
+                    usage.record_response(model, response, label="portrait", images=1)
 
                 # Extract URL or base64 data from response
                 generated_url = None

@@ -2,6 +2,7 @@
 """Generate complete person dataset by running all three generation scripts."""
 
 import argparse
+import json
 import sys
 from typing import Any, List, Tuple
 
@@ -23,6 +24,7 @@ from generate_person_portrait import (
 from generate_chapter_illustrations import generate_chapter_illustrations
 from generate_event_backgrounds import generate_event_backgrounds
 from review_person import review_person_data
+from utils import usage
 
 STEP_OK = "ok"
 STEP_FAILED = "failed"
@@ -166,6 +168,13 @@ def parse_args(argv: Any) -> argparse.Namespace:
         help="Skip automatic translation after generation.",
     )
     parser.add_argument(
+        "--usage-json",
+        help=(
+            "Write the per-step token ledger to this path as JSON, in "
+            "addition to printing it."
+        ),
+    )
+    parser.add_argument(
         "--translate-langs",
         default="de",
         help="Comma-separated language codes to translate to after generation (default: de).",
@@ -209,6 +218,7 @@ def main(argv: Any = None) -> int:
     person_id = person_id_override
 
     # Step 1: Generate life events dataset
+    usage.begin_step("Life events")
     if run_dataset:
         banner("STEP 1/8: Generating life events dataset")
         try:
@@ -229,6 +239,7 @@ def main(argv: Any = None) -> int:
         run_log.record("Life events", STEP_SKIPPED, "not requested")
 
     # Step 2: Generate interface style
+    usage.begin_step("Interface style")
     if run_style:
         banner("STEP 2/8: Generating interface style")
         try:
@@ -247,6 +258,7 @@ def main(argv: Any = None) -> int:
         run_log.record("Interface style", STEP_SKIPPED, "not requested")
 
     # Step 3: Generate ego network
+    usage.begin_step("Ego network")
     if run_network:
         banner("STEP 3/8: Generating ego network")
         try:
@@ -266,6 +278,7 @@ def main(argv: Any = None) -> int:
         run_log.record("Ego network", STEP_SKIPPED, "not requested")
 
     # Step 4: Generate portrait (if not skipped)
+    usage.begin_step("Portrait")
     if not args.skip_portrait:
         banner("STEP 4/8: Generating stylized portrait")
         try:
@@ -326,6 +339,7 @@ def main(argv: Any = None) -> int:
     # Step 5: Chapter illustrations (if not skipped). After the style, whose
     # colors they are drawn in, and after the dataset, whose chapters they
     # illustrate — a person with neither simply has nothing to draw.
+    usage.begin_step("Chapter illustrations")
     if not args.skip_chapter_art:
         banner("STEP 5/8: Generating chapter illustrations")
         try:
@@ -355,6 +369,7 @@ def main(argv: Any = None) -> int:
         run_log.record("Chapter illustrations", STEP_SKIPPED, "--skip-chapter-art")
 
     # Step 6: Review (if not skipped)
+    usage.begin_step("Review")
     if not args.skip_review:
         print("\n" + "=" * 60)
         print("STEP 6/8: REVIEWING GENERATED DATA")
@@ -387,6 +402,7 @@ def main(argv: Any = None) -> int:
     # translation, so the translator sees them. The step computes the story's
     # own deep-event selection and writes a report only where the story will
     # offer one.
+    usage.begin_step("Background reports")
     if args.skip_backgrounds:
         print("\n⊘ Skipping background reports (--skip-backgrounds flag)")
         run_log.record("Background reports", STEP_SKIPPED, "--skip-backgrounds")
@@ -407,6 +423,7 @@ def main(argv: Any = None) -> int:
     # derived from the final (reviewed) English data. The English reference is
     # complete either way, and `translate_all_persons.py --check` reports the
     # gap, but a failure still counts against the run.
+    usage.begin_step("Translation")
     translate_langs = [
         code.strip() for code in args.translate_langs.split(",") if code.strip()
     ]
@@ -461,6 +478,16 @@ def main(argv: Any = None) -> int:
             run_log.record("Translation", STEP_FAILED, str(error))
 
     run_log.report(args.subject)
+    usage.print_report()
+    if args.usage_json:
+        from pathlib import Path as UsagePath
+
+        ledger_path = UsagePath(args.usage_json)
+        ledger_path.parent.mkdir(parents=True, exist_ok=True)
+        ledger_path.write_text(
+            json.dumps(usage.as_dict(), indent=2) + "\n", encoding="utf-8"
+        )
+        print(f"Usage ledger written to {ledger_path}")
     if not update_registry:
         print("⊘ Register update skipped by request")
 
