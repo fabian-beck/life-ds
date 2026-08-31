@@ -1,140 +1,157 @@
 {
-  "dataset": "wikipedia-frances-allen",
-  "created_on": "2025-12-06",
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-08-31",
   "person": {
     "name": "Frances_Allen",
     "birth_date": "1932-08-04",
     "death_date": "2020-08-04",
     "primary_roles": [
       "computer scientist",
-      "mathematician"
+      "programmer",
+      "researcher"
     ],
     "tagline": "Pioneer of Optimizing Compilers",
-    "summary": "Frances E. Allen was an American computer scientist whose foundational work on optimizing compilers and automatic parallelization reshaped modern software and high-performance computing. Over a 45-year career at IBM she led major compiler and parallel computing projects, becoming the first woman IBM Fellow and the first woman to receive the ACM A. M. Turing Award. She was also a committed mentor and advocate for women and other underrepresented groups in computing.",
+    "summary": "Frances Elizabeth Allen was an American computer scientist whose research established foundational methods for optimizing compilers and automatic parallelization. During a 45-year career at IBM, she became its first woman Fellow and the first woman to receive the ACM Turing Award.",
     "wikipedia": "https://en.wikipedia.org/wiki/Frances_Allen",
     "portrait": {
       "image": "/portraits/frances_allen_thumbnail.webp",
-      "source": "https://en.wikipedia.org/wiki/Frances_Allen",
+      "source": "https://commons.wikimedia.org/wiki/File:Allen_mg_2528-3750K-b.jpg",
       "caption": "Stylized portrait based on historical photograph",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/1/15/Allen_mg_2528-3750K-b.jpg",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Allen_mg_2528-3750K-b.jpg/960px-Allen_mg_2528-3750K-b.jpg",
       "thumbnail": "/portraits/frances_allen_thumbnail.webp",
       "medium": "/portraits/frances_allen_medium.webp",
-      "full": "/portraits/frances_allen_full.webp"
+      "full": "/portraits/frances_allen_full.webp",
+      "originalCreator": "Rama",
+      "originalLicense": "CC BY-SA 2.0 fr",
+      "originalLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/fr/deed.en"
     }
   },
   "chapters": [
     {
-      "id": "rural_roots_and_early_education",
-      "headline": "Rural Roots to Mathematics",
+      "id": "from_farm_to_fortran",
+      "headline": "From Farm to FORTRAN",
       "date_start": "1932-08-04",
       "date_start_precision": "day",
-      "date_end": "1955",
+      "date_end": "1958",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 23,
+      "age_end": 26,
+      "involved_people": null,
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/frances_allen/from_farm_to_fortran_medium.webp",
+        "medium": "/chapter_art/frances_allen/from_farm_to_fortran_medium.webp",
+        "full": "/chapter_art/frances_allen/from_farm_to_fortran_full.webp",
+        "concept": "A single luminous seed suspended in deep indigo, sending out precise branching roots that gradually become fine silver grid-lines, with small dew-bright points gathering along the transition. The form suggests learning unfolding from patient beginnings.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-31"
+      }
+    },
+    {
+      "id": "compiler_foundations",
+      "headline": "Compiler Foundations",
+      "date_start": "1959",
+      "date_start_precision": "year",
+      "date_end": "1971",
+      "date_end_precision": "year",
+      "age_start": 26,
+      "age_end": 39,
       "involved_people": [
-        "Unnamed father of Frances E. Allen",
-        "Unnamed mother of Frances E. Allen"
+        "John Cocke"
       ],
-      "location": "United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/frances_allen/compiler_foundations_medium.webp",
+        "medium": "/chapter_art/frances_allen/compiler_foundations_medium.webp",
+        "full": "/chapter_art/frances_allen/compiler_foundations_full.webp",
+        "concept": "At the center of black space, translucent amber channels divide, loop, and rejoin through a faceted crystal framework. A few pathways sharpen from diffuse haze into clean radiant arcs, suggesting order extracted from intricate flow.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-31"
+      }
     },
     {
-      "id": "graduate_study_and_ibm_beginnings",
-      "headline": "Graduate Study to IBM",
-      "date_start": "1956",
+      "id": "opening_parallel_frontiers",
+      "headline": "Opening Parallel Frontiers",
+      "date_start": "1972",
       "date_start_precision": "year",
-      "date_end": "1961",
+      "date_end": "2001",
       "date_end_precision": "year",
-      "age_start": 24,
-      "age_end": 29,
-      "involved_people": [],
-      "location": "United States"
-    },
-    {
-      "id": "foundations_of_optimizing_compilers",
-      "headline": "Foundations of Optimizing Compilers",
-      "date_start": "1962",
-      "date_start_precision": "year",
-      "date_end": "1976",
-      "date_end_precision": "year",
-      "age_start": 30,
-      "age_end": 44,
+      "age_start": 39,
+      "age_end": 69,
       "involved_people": [
-        "John Cocke",
         "Jacob T. Schwartz"
       ],
-      "location": "United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/frances_allen/opening_parallel_frontiers_medium.webp",
+        "medium": "/chapter_art/frances_allen/opening_parallel_frontiers_medium.webp",
+        "full": "/chapter_art/frances_allen/opening_parallel_frontiers_full.webp",
+        "concept": "A bright white beam enters a dark field and separates into many distinct, synchronized ribbons of cobalt, violet, and gold, each curving independently before converging toward one shared horizon of light.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-31"
+      }
     },
     {
-      "id": "parallel_computing_leadership",
-      "headline": "Parallel Computing Leadership",
-      "date_start": "1977",
-      "date_start_precision": "year",
-      "date_end": "1995",
-      "date_end_precision": "year",
-      "age_start": 45,
-      "age_end": 63,
-      "involved_people": [
-        "Anita Borg"
-      ],
-      "location": "United States"
-    },
-    {
-      "id": "late_recognition_and_legacy",
-      "headline": "Global Recognition and Legacy",
-      "date_start": "1996",
+      "id": "legacy_beyond_the_machine",
+      "headline": "Legacy Beyond the Machine",
+      "date_start": "2002",
       "date_start_precision": "year",
       "date_end": "2020-08-04",
       "date_end_precision": "day",
-      "age_start": 64,
+      "age_start": 69,
       "age_end": 88,
       "involved_people": [
         "John Cocke"
       ],
-      "location": "North America"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/frances_allen/legacy_beyond_the_machine_medium.webp",
+        "medium": "/chapter_art/frances_allen/legacy_beyond_the_machine_medium.webp",
+        "full": "/chapter_art/frances_allen/legacy_beyond_the_machine_full.webp",
+        "concept": "A wide, dark expanse holds an open ring of warm gold dust, its particles slowly drifting outward into a field of newly kindled stars. The incomplete circle glows with enduring influence and generous continuation.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-08-31"
+      }
     }
   ],
+  "conclusion": "Frances Allen transformed compiler optimization from an emerging craft into a rigorous foundation of modern computing. Her trailblazing work in parallelism and her historic Turing Award opened both machines and the field itself to new possibilities.",
   "events": [
     {
       "date": "1932-08-04",
       "date_precision": "day",
-      "age": 0,
-      "title": "Birth near Lake Champlain",
-      "description": "Frances Elizabeth Allen was born on a farm near Peru, New York, close to Lake Champlain, the eldest of six children. Her father farmed while her mother taught in a local elementary school, giving Allen an early model of both practical problem-solving and education. She attended a one-room schoolhouse before moving on to a nearby high school, experiences that shaped her later interest in teaching and mentoring.",
+      "title": "Birth in Peru",
+      "description": "Frances Elizabeth Allen was born in Peru, New York, on August 4, 1932. She was the eldest of six children in a farm family near Lake Champlain; her father farmed and her mother taught elementary school.",
       "locations": [
         {
           "name_historic": "Peru, New York",
           "name_modern": "Peru, New York, USA",
           "centroid": [
-            -73.53875,
-            44.57949
+            -73.5832,
+            44.5784
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "Unnamed father of Frances E. Allen",
-        "Unnamed mother of Frances E. Allen"
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
       ],
-      "sources": [],
       "event_type_icon": "mdi-candle",
-      "chapter": "rural_roots_and_early_education",
+      "chapter": "from_farm_to_fortran",
+      "weight": 0.2,
       "event_class": {
-        "type": "birth"
+        "type": "birth",
+        "characterization": "farming family"
       }
     },
     {
       "date": "1954",
       "date_precision": "year",
-      "date_end": "1954",
-      "date_end_precision": "year",
-      "age": 22,
-      "title": "Earns Mathematics Degree",
-      "description": "Allen graduated with a Bachelor of Science in mathematics from the [[New York State College for Teachers|New York State College for Teachers, later part of the University at Albany, SUNY]], in 1954. Soon after, she returned to her hometown area of Peru, New York, where she taught high-school mathematics courses ranging from algebra to trigonometry. The need for an advanced degree to secure permanent certification pushed her to consider graduate study in mathematics.",
+      "title": "Earned Mathematics Degree",
+      "description": "Allen earned a Bachelor of Science degree in mathematics from the New York State College for Teachers, now part of the University at Albany. She returned to Peru, New York, and taught mathematics courses ranging from algebra through trigonometry.",
       "locations": [
         {
-          "name_historic": "Albany, New York",
+          "name_historic": "Albany",
           "name_modern": "Albany, New York, USA",
           "centroid": [
             -73.7562,
@@ -146,184 +163,154 @@
           "name_historic": "Peru, New York",
           "name_modern": "Peru, New York, USA",
           "centroid": [
-            -73.5382,
-            44.5792
+            -73.5301,
+            44.5784
           ],
           "primary": false
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/6236/6875828256_843e826638_b.jpg",
+          "caption": "New York State College for Teachers, Albany",
+          "source": "https://www.flickr.com/photos/24029425@N06/6875828256",
+          "creator": "Boston Public Library",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+        }
       ],
       "event_type_icon": "mdi-certificate",
-      "chapter": "rural_roots_and_early_education",
+      "chapter": "from_farm_to_fortran",
       "annotations": {
-        "New York State College for Teachers": {
-          "explanation": "A teacher-training institution in Albany that later evolved into the University at Albany, State University of New York (SUNY), where Frances E. Allen completed her undergraduate degree.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/University_at_Albany,_SUNY"
+        "Peru, New York": {
+          "explanation": "A town in Clinton County in northeastern New York, near Lake Champlain, where Allen grew up and began teaching after graduation.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Peru,_New_York"
         }
-      }
-    },
-    {
-      "date": "1956",
-      "date_precision": "year",
-      "date_end": "1957",
-      "date_end_precision": "year",
-      "date_note": "Two-year period between leaving high-school teaching and completing the master's degree",
-      "age": 24,
-      "title": "Begins Graduate Study at Michigan",
-      "description": "After two years of teaching, Allen enrolled in the University of Michigan to pursue graduate study in mathematics, seeking the master's degree required for teaching certification. At Michigan she encountered a larger research university environment and early computing resources that would soon redirect her career away from secondary-school teaching. Her training deepened her mathematical background, which later underpinned her theoretical approach to compiler optimization.",
-      "locations": [
-        {
-          "name_historic": "Ann Arbor",
-          "name_modern": "Ann Arbor, Michigan, USA",
-          "centroid": [
-            -83.732124,
-            42.279594
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen",
-        "https://en.wikipedia.org/wiki/University_of_Michigan"
-      ],
-      "event_type_icon": "mdi-school",
-      "chapter": "graduate_study_and_ibm_beginnings"
+      },
+      "weight": 0.35
     },
     {
       "date": "1957",
       "date_precision": "year",
-      "date_end": "1957",
-      "date_end_precision": "year",
-      "age": 25,
-      "title": "Completes Master’s in Mathematics",
-      "description": "Allen received a Master of Science degree in mathematics from the University of Michigan. The degree left her with significant student debt, which led her to look for higher-paying work than high-school teaching could offer in the 1950s. This financial pressure directly prompted her next step: taking a programming position at IBM with the intent of staying only long enough to repay her loans.",
+      "title": "Completed Michigan Master's",
+      "description": "After teaching for two years, Allen enrolled at the University of Michigan to obtain the credential required for teacher certification. She received a Master of Science degree in mathematics in 1957 while carrying substantial student-loan debt.",
       "locations": [
         {
-          "name_historic": "Ann Arbor",
+          "name_historic": "Ann Arbor, Michigan",
           "name_modern": "Ann Arbor, Michigan, USA",
           "centroid": [
-            -83.739,
+            -83.743,
             42.2808
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Richard_Rummel_lithograph_of_the_University_of_Michigan_Campus_in_1907.jpg/960px-Richard_Rummel_lithograph_of_the_University_of_Michigan_Campus_in_1907.jpg",
+          "caption": "University of Michigan campus in 1907",
+          "source": "https://commons.wikimedia.org/wiki/File:Richard_Rummel_lithograph_of_the_University_of_Michigan_Campus_in_1907.jpg",
+          "creator": "Richard Rummell",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
       ],
       "event_type_icon": "mdi-certificate",
-      "chapter": "graduate_study_and_ibm_beginnings"
+      "chapter": "from_farm_to_fortran",
+      "weight": 0.4
     },
     {
       "date": "1957",
       "date_precision": "year",
-      "date_end": "1961",
-      "date_end_precision": "year",
-      "date_note": "End year approximate; covers her early Fortran-teaching period at IBM",
-      "age": 25,
-      "title": "Joins IBM, Teaches Fortran",
-      "description": "Deeply in debt, Allen joined [[IBM|IBM]] in Poughkeepsie, New York, as a programmer in 1957, just two months after the announcement of the [[Fortran|Fortran]] language. She was assigned to teach incoming IBM staff how to program in Fortran, often learning new material only days before presenting it to more senior scientists and engineers. By reading the Fortran [[compiler|compiler]] source code herself, she developed a fascination with how compilers could translate and optimize high-level programs, setting the direction for her entire research career.",
+      "title": "Joined IBM Research",
+      "description": "Seeking to repay her student loans, Allen joined IBM Research in Poughkeepsie, New York, as a programmer. She taught new employees the recently announced [[Fortran|FORTRAN programming language]] and studied the Fortran compiler's source code to prepare her lessons.",
       "locations": [
         {
-          "name_historic": "Poughkeepsie, New York",
-          "name_modern": "Poughkeepsie, New York, USA",
+          "name_historic": "Poughkeepsie",
+          "name_modern": "Poughkeepsie, New York, United States",
           "centroid": [
-            -73.9283672,
-            41.7065539
+            -73.9209,
+            41.7004
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen",
-        "https://en.wikipedia.org/wiki/Fortran"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "graduate_study_and_ibm_beginnings",
+      "chapter": "from_farm_to_fortran",
       "annotations": {
-        "IBM": {
-          "explanation": "International Business Machines Corporation, a major American technology company that was a leading manufacturer of mainframe computers and a central player in early commercial computing.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/IBM"
-        },
         "Fortran": {
-          "explanation": "One of the earliest high-level programming languages, developed at IBM in the 1950s for scientific and engineering calculations, and widely influential in the history of programming.",
+          "explanation": "FORTRAN was an early high-level programming language developed at IBM for scientific and engineering computation, allowing programmers to use more readable statements instead of machine or assembly code.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Fortran"
-        },
-        "compiler": {
-          "explanation": "A specialized program that translates code written in a high-level programming language into machine code that a computer’s hardware can execute, often performing optimizations in the process.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Compiler"
         }
-      }
+      },
+      "weight": 0.75,
+      "background": "IBM’s early programming work was trying to change who could use a scientific computer. John Backus had assembled the team to define and develop FORTRAN for the IBM 704 in 1954, at a time when writing a program commonly meant specifying operations in assembly language, close to the machine’s own instructions. The language was intended to let scientists and engineers express calculations without mastering that machinery. It became the first high-level language put to broad use, but in 1957 it was still new enough that its arrival at IBM was an active workplace problem rather than settled technical knowledge: it had been announced only two months earlier.\n\n## A controversial compiler\n\nThe obstacle was not simply persuading people to use a new notation. Researchers accustomed to assembly language doubted that a compiler could translate a higher-level program into machine code competitive with code written directly by an expert. At the time, it was treated as common knowledge that compiled languages could not produce sufficiently performant programs. That skepticism made the compiler central to FORTRAN’s credibility. Its job was to turn a programmer’s statements into the exact machine-level instructions a computer executed, while avoiding wasteful choices that would make programs slower.\n\nThe training arrangement reveals how quickly the technology was moving. Lessons sometimes had to be learned only days before they were passed along to other IBM researchers. Reading the compiler’s source code offered more than a way to understand the language’s rules: it exposed the sequence of decisions by which a program was analyzed and translated. That practical encounter supplied a direct view of the problem that would define much of the subsequent work: how a compiler could find a better equivalent form of a program automatically, rather than merely convert it mechanically from one notation to another.\n\nThat question proved durable because the early objection to FORTRAN contained a real technical challenge. High-level languages would only gain broad acceptance if the machinery beneath them could produce efficient code. The later body of work associated with IBM compiler research treated optimization as a systematic discipline, using program structure to identify transformations that preserved a program’s result while reducing its cost. The path therefore began not with an abstract theory project, but with the immediate practical pressure of explaining an unproven language to colleagues who had good reason to demand evidence that it could match hand-written assembly.\n\nThe episode also illustrates a larger shift in computing’s division of labor. Rather than expecting every scientific user to be an expert in a particular machine’s instruction set, IBM’s language and compiler work moved some of that expertise into software. The programmer could work at a more intelligible level; the compiler had to bear the difficult responsibility of making the resulting program run well. That bargain became fundamental to modern programming, and the early encounter with FORTRAN’s implementation helped turn it into a long-running research problem rather than a temporary instructional assignment.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/IBM_Electronic_Data_Processing_Machine_-_GPN-2000-001881.jpg/960px-IBM_Electronic_Data_Processing_Machine_-_GPN-2000-001881.jpg",
+          "caption": "Man and woman working with IBM type 704 electronic data processing machine used for making computations for aeronautical research. Langley NACA",
+          "source": "https://commons.wikimedia.org/wiki/File:IBM_Electronic_Data_Processing_Machine_-_GPN-2000-001881.jpg",
+          "creator": "NASA",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "IBM 704 computer"
+        }
+      ]
     },
     {
       "date": "1959",
       "date_precision": "year",
-      "date_end": "1961",
-      "date_end_precision": "year",
-      "date_note": "End year approximate for her primary Stretch–Harvest work",
-      "age": 27,
-      "title": "Leads Stretch–Harvest Optimizations",
-      "description": "Allen was assigned to the confidential [[IBM_7030_Stretch|Stretch]]–[[Harvest_(computer)|Harvest]] projects, which supported [[National_Security_Agency|National Security Agency]] codebreaking activities during the Cold War. She managed the compiler optimization team for both the experimental IBM Stretch computer and the NSA’s Harvest extension, working on the [[Alpha_(programming_language)|Alpha]] programming language and related tools. In this role she helped prove that compiled high-level languages could generate code fast enough for the most demanding intelligence workloads, challenging the prevailing belief that only hand-written assembly could be truly efficient.",
+      "title": "Worked on Harvest",
+      "description": "Allen was assigned to IBM's confidential Harvest project, conducted with the National Security Agency for codebreaking. She managed compiler-optimization work associated with Harvest and IBM's earlier Stretch project while developing the Alpha programming language.",
       "locations": [
         {
-          "name_historic": "Poughkeepsie, New York",
-          "name_modern": "Poughkeepsie, New York, USA",
+          "name_historic": "Poughkeepsie",
+          "name_modern": "Poughkeepsie, New York, United States",
           "centroid": [
-            -73.9283672,
-            41.7065539
+            -73.921,
+            41.7
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/IBM_7030_Stretch",
-        "https://en.wikipedia.org/wiki/Harvest_(computer)",
-        "https://en.wikipedia.org/wiki/Frances_E._Allen"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/IBM_7950_HARVEST_system_at_National_Cryptologic_Museum.agr.jpg/960px-IBM_7950_HARVEST_system_at_National_Cryptologic_Museum.agr.jpg",
+          "caption": "IBM 7950 HARVEST system at National Cryptologic Museum",
+          "source": "https://commons.wikimedia.org/wiki/File:IBM_7950_HARVEST_system_at_National_Cryptologic_Museum.agr.jpg",
+          "creator": "ArnoldReinhold",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "graduate_study_and_ibm_beginnings",
-      "annotations": {
-        "IBM_7030_Stretch": {
-          "explanation": "The IBM 7030 \"Stretch\" was an experimental supercomputer developed in the late 1950s as IBM's most powerful machine, pioneering many high‑performance architecture and reliability techniques.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/IBM_7030_Stretch"
-        },
-        "Harvest_(computer)": {
-          "explanation": "Harvest was a special-purpose adjunct computer built by IBM for the U.S. National Security Agency, designed to perform very high-speed cryptanalytic and data-reduction tasks.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Harvest_(computer)"
-        },
-        "Alpha_(programming_language)": {
-          "explanation": "Alpha was a specialized high-level programming language and system developed at IBM for the NSA’s Stretch–Harvest systems, aimed at expressing complex data-processing and cryptanalytic tasks efficiently.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Harvest_(computer)"
-        },
-        "National_Security_Agency": {
-          "explanation": "The National Security Agency (NSA) is a U.S. intelligence organization responsible for signals intelligence and cryptography, including large-scale codebreaking and communications security.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/National_Security_Agency"
-        }
-      }
+      "chapter": "compiler_foundations",
+      "weight": 0.7
     },
     {
       "date": "1962",
       "date_precision": "year",
-      "date_end": "1974",
-      "date_end_precision": "year",
-      "date_note": "Covers her early Watson Research work and the series of seminal compiler papers through the early 1970s",
-      "age": 30,
-      "title": "Moves to Watson, Founds Optimizing Compilers",
-      "description": "In 1962 Allen transferred to IBM’s [[Thomas J. Watson Research Center|Thomas J. Watson Research Center]], joining advanced projects such as the [[ACS-1|ACS-1 architecture]] and later PL/I compiler work. Collaborating closely with John Cocke, she developed and implemented key algorithms and abstractions for machine- and language-independent optimization. During this period she published landmark papers including “Program Optimization” (1966), “Control Flow Analysis” and “A Basis for Program Optimization” (1970), and, with Cocke, “A Catalogue of Optimizing Transformations” (1972), which systematically organized many of the techniques used in modern compilers. Their work introduced graph-theoretic representations and [[interprocedural analysis|interprocedural analysis]] that became foundational to both academic research and industrial compiler design.",
+      "title": "Transferred to Watson Center",
+      "description": "IBM transferred Allen to the Thomas J. Watson Research Center in 1962. There she contributed to the Advanced Computing System project and worked with John Cocke on compiler research and an optimizing compiler for Fortran.",
       "locations": [
         {
-          "name_historic": "Yorktown Heights, New York",
+          "name_historic": "Yorktown Heights",
           "name_modern": "Yorktown Heights, New York, USA",
           "centroid": [
-            -73.8088,
-            41.2709
+            -73.7785,
+            41.2704
           ],
           "primary": true
         }
@@ -332,150 +319,155 @@
         "John Cocke"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen",
-        "https://en.wikipedia.org/wiki/John_Cocke_(computer_scientist)"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/IBM_Watson_Research_Center_entrance.jpg/960px-IBM_Watson_Research_Center_entrance.jpg",
+          "caption": "IBM Watson Research Center entrance, Yorktown Heights",
+          "source": "https://commons.wikimedia.org/wiki/File:IBM_Watson_Research_Center_entrance.jpg",
+          "creator": "Autopilot",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "foundations_of_optimizing_compilers",
-      "annotations": {
-        "Thomas J. Watson Research Center": {
-          "explanation": "IBM’s principal industrial research laboratory, opened in 1961 in Yorktown Heights, New York, which became a major center for advances in computer science and engineering.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Thomas_J._Watson_Research_Center"
-        },
-        "ACS-1": {
-          "explanation": "A high‑performance experimental computer architecture project at IBM in the 1960s (Advanced Computing Systems), aimed at exploring aggressive hardware and compiler techniques."
-        },
-        "interprocedural analysis": {
-          "explanation": "A family of compiler techniques that analyze multiple procedures or functions together—rather than one at a time—to enable more powerful optimizations across function-call boundaries.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Interprocedural_optimization"
+      "chapter": "compiler_foundations",
+      "weight": 0.7
+    },
+    {
+      "date": "1966",
+      "date_precision": "year",
+      "title": "Published Program Optimization",
+      "description": "Allen published Program Optimization while working at IBM, beginning a series of papers that shared her developing approach to compiler research with the wider computing community. The paper established a foundation for systematic analysis and transformation of computer programs.",
+      "locations": [
+        {
+          "name_historic": "Yorktown Heights, New York",
+          "name_modern": "Yorktown Heights, New York, USA",
+          "primary": true,
+          "centroid": [
+            -73.7753539,
+            41.2701781
+          ]
         }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "compiler_foundations",
+      "weight": 0.95,
+      "event_class": {
+        "type": "publication",
+        "title": "Program Optimization",
+        "publication_type": "paper",
+        "significance": "foundational paper"
       }
     },
     {
       "date": "1970",
       "date_precision": "year",
-      "date_end": "1971",
-      "date_end_precision": "year",
-      "age": 38,
-      "title": "Sabbatical and Teaching at NYU",
-      "description": "From 1970 to 1971, Allen spent a sabbatical year at New York University, where she taught and collaborated with researchers in computer science. She continued as an adjunct professor afterward, helping to bridge cutting-edge industrial compiler work at IBM and the academic community. This experience strengthened her role as an educator and broadened the audience for her ideas on program optimization and compiler design.",
+      "title": "Published Control Flow Analysis",
+      "description": "Allen published Control Flow Analysis and A Basis for Program Optimization while working at IBM. The papers established intervals as a framework for data-flow analysis and compiler optimization.",
       "locations": [
         {
-          "name_historic": "New York City",
-          "name_modern": "New York City, New York, USA",
+          "name_historic": "Yorktown Heights, New York",
+          "name_modern": "Yorktown Heights, New York, USA",
+          "primary": true,
           "centroid": [
-            -74.006,
-            40.7128
+            -73.7753539,
+            41.2701781
+          ]
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "compiler_foundations",
+      "weight": 0.9,
+      "event_class": {
+        "type": "publication",
+        "title": "Control Flow Analysis",
+        "publication_type": "paper",
+        "significance": "seminal research",
+        "source_link": {
+          "url": "https://doi.org/10.1145/390013.808479",
+          "kind": "doi",
+          "site": "DOI",
+          "entity": "Q56079997",
+          "resolved_by": "wikidata",
+          "resolved_on": "2026-08-31"
+        }
+      }
+    },
+    {
+      "date": "1971",
+      "date_precision": "year",
+      "title": "Cataloged Compiler Transformations",
+      "description": "At IBM’s Thomas J. Watson Research Center in Yorktown Heights, New York, Frances Allen and John Cocke published a study that organized emerging approaches to improving compiler-generated programs.",
+      "locations": [
+        {
+          "name_historic": "Yorktown Heights",
+          "name_modern": "Yorktown Heights, New York, USA",
+          "centroid": [
+            -73.7785,
+            41.2706
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen",
-        "https://en.wikipedia.org/wiki/IBM",
-        "https://en.wikipedia.org/wiki/New_York_University"
+      "involved_people": [
+        "John Cocke"
       ],
-      "event_type_icon": "mdi-school-outline",
-      "chapter": "foundations_of_optimizing_compilers"
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "compiler_foundations",
+      "weight": 1.0,
+      "event_class": {
+        "type": "publication",
+        "title": "A Catalogue of Optimizing Transformations",
+        "publication_type": "paper",
+        "publisher": "Prentice Hall",
+        "significance": "seminal work"
+      },
+      "background": "By the end of the 1960s, the central practical question behind high-level languages was whether a compiler could produce machine instructions competitive with hand-written assembly language. That skepticism had surrounded Fortran from its earliest days at IBM: researchers accustomed to assembly believed compiled programs could not be fast enough. A compiler had to do more than translate a programmer’s statements literally. It had to inspect the paths a program could take, determine which calculations and stored values mattered, and alter the program without changing its result. Earlier work on control-flow analysis had supplied a way to divide programs into “intervals,” making that inspection more systematic.\n\n## The optimizer’s toolkit\n\nThe techniques gathered here gave names and a working vocabulary to operations that otherwise might have remained machine-specific tricks. Procedure inlining replaces a call to a separate routine with that routine’s body, removing the overhead of the call when doing so is worthwhile. Loop unrolling expands repeated instructions so that a loop performs more work on each pass. Common-subexpression elimination avoids computing the same expression twice, while code motion relocates a computation to a place where it will be executed less often. Peephole optimization, by contrast, examines a small run of generated instructions for an equivalent but more efficient sequence. Together, such changes made optimization an organized stage of compilation rather than a collection of ad hoc adjustments.\n\nThe important constraint was correctness. A transformation that makes a program shorter or faster is useless if it changes the answer, or if it moves a calculation past a branch where its value might differ. Graph-theoretic representations of a program made relationships among statements explicit and helped identify safe opportunities for transformation. This was especially consequential because the goal was not merely to tune one program for one computer. The work helped establish the feasibility and structure of optimizers that could be independent of both a particular programming language and a particular machine architecture.\n\nThe methods were tested in work connected with the IBM Stretch-Harvest systems and the experimental Advanced Computing System, rather than being left as abstract proposals. Their longer reach was into compiler construction: later research extended data-flow analysis across whole programs, and a later paper described one of the two principal analysis strategies used by optimizing compilers. The same habit of representing dependencies precisely also led toward automatic parallelization, where a compiler must decide which parts of an apparently sequential program can safely run at the same time. What began as an effort to make generated code respectable against assembly programming became part of the standard intellectual machinery behind modern compilers.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/IBM_7030_Stretch_computer_photo_at_National_Cryptologic_Museum.agr.jpg/960px-IBM_7030_Stretch_computer_photo_at_National_Cryptologic_Museum.agr.jpg",
+          "caption": "Photo of an IBM 7030 computer on display at National Cryptologic Museum",
+          "source": "https://commons.wikimedia.org/wiki/File:IBM_7030_Stretch_computer_photo_at_National_Cryptologic_Museum.agr.jpg",
+          "creator": "ArnoldReinhold",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "IBM Stretch computer"
+        }
+      ]
     },
     {
       "date": "1972",
       "date_precision": "year",
       "date_end": "1982",
       "date_end_precision": "year",
-      "date_note": "Covers her decade-long marriage; precise divorce date in 1982",
-      "age": 40,
-      "title": "Marriage to Jacob Schwartz",
-      "description": "In 1972 Allen married Jacob T. Schwartz, a prominent [[New York University|New York University]] computer science professor and collaborator. The couple’s relationship connected two vibrant centers of computing research, IBM and NYU, during a formative decade for theoretical and systems work in programming languages. They divorced in 1982, but Allen’s New York academic ties remained strong.",
-      "locations": [
-        {
-          "name_historic": "New York City",
-          "name_modern": "New York City, New York, USA",
-          "centroid": [
-            -74.006,
-            40.7128
-          ],
-          "primary": true
-        }
-      ],
+      "title": "Married Jacob Schwartz",
+      "description": "In 1972, Allen married Jacob T. Schwartz, a New York University computer science professor and collaborator. They divorced in 1982.",
+      "locations": [],
       "involved_people": [
         "Jacob T. Schwartz"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen",
-        "https://en.wikipedia.org/wiki/Jacob_T._Schwartz"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "foundations_of_optimizing_compilers",
-      "annotations": {
-        "New York University": {
-          "explanation": "A major private research university in New York City whose Courant Institute became an influential early center for research in mathematics and computer science, including programming languages and theoretical computer science.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/New_York_University"
-        }
-      }
-    },
-    {
-      "date": "1977",
-      "date_precision": "year",
-      "date_end": "1979",
-      "date_end_precision": "year",
-      "date_note": "End year approximate; covers her Stanford sabbatical and immediate aftermath",
-      "age": 45,
-      "title": "Stanford Sabbatical and Mentoring",
-      "description": "Allen took another sabbatical in 1977 at [[Stanford University|Stanford University]], where she taught graduate courses in computer science. Among her students was Anita Borg, for whom Allen was the only woman professor during graduate school and who later became a leading advocate for women in computing. Allen’s visiting professorships at Stanford and, later, distinguished lectureships at [[University of California, Berkeley|Berkeley]] and [[University of California, San Diego|UC San Diego]] reinforced her reputation as both a technical leader and an influential mentor.",
-      "locations": [
-        {
-          "name_historic": "Stanford",
-          "name_modern": "Stanford, California, USA",
-          "centroid": [
-            -122.1697,
-            37.4275
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Berkeley",
-          "name_modern": "Berkeley, California, USA",
-          "centroid": [
-            -122.2727,
-            37.8716
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "San Diego",
-          "name_modern": "San Diego, California, USA",
-          "centroid": [
-            -117.1611,
-            32.7157
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Anita Borg"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen",
-        "https://en.wikipedia.org/wiki/Anita_Borg",
-        "https://en.wikipedia.org/wiki/Stanford_University"
-      ],
-      "event_type_icon": "mdi-school-outline",
-      "chapter": "parallel_computing_leadership",
-      "annotations": {
-        "Stanford University": {
-          "explanation": "A private research university in Stanford, California, whose computer science department became a major center for early research in programming languages, theory, and systems.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Stanford_University"
-        },
-        "University of California, Berkeley": {
-          "explanation": "A leading public research university in Berkeley, California, whose computer science division has been influential in systems, architecture, and programming languages research.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_California,_Berkeley"
-        },
-        "University of California, San Diego": {
-          "explanation": "A public research university in San Diego, California, known for strong programs in science and engineering, including computer science.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_California,_San_Diego"
-        }
+      "chapter": "opening_parallel_frontiers",
+      "weight": 0.3,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Jacob T. Schwartz",
+        "duration": "10 years"
       }
     },
     {
@@ -483,223 +475,117 @@
       "date_precision": "year",
       "date_end": "1995",
       "date_end_precision": "year",
-      "age": 47,
-      "title": "Leads IBM Parallel Computing",
-      "description": "From 1980 to 1995, Allen led IBM’s work in the emerging field of parallel computing. She headed the [[PTRAN|PTRAN (Parallel Translator) project]], which introduced the [[program dependence graph|program dependence graph]] and advanced [[automatic parallelization|automatic-parallelization]] techniques that transformed sequential Fortran programs into efficiently parallel ones. Her group also contributed to software for massively parallel systems that fed into IBM’s later Blue Gene project, helping to make high-performance parallel computing more accessible to scientists and engineers.",
-      "locations": [
-        {
-          "name_historic": "Yorktown Heights, New York",
-          "name_modern": "Yorktown Heights, New York, USA",
-          "centroid": [
-            -73.8074,
-            41.2709
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
+      "title": "Led Parallel Computing Research",
+      "description": "Allen led IBM's work in parallel computing and directed the [[PTRAN|PTRAN, or Parallel Translator,]] project. Her team developed methods for detecting program parallelism and used [[program-dependence graphs|program-dependence graphs]] to distribute work across parallel architectures.",
+      "locations": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen",
-        "https://en.wikipedia.org/wiki/Program_dependence_graph"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
       ],
       "event_type_icon": "mdi-microscope",
-      "chapter": "parallel_computing_leadership",
+      "chapter": "opening_parallel_frontiers",
       "annotations": {
         "PTRAN": {
-          "explanation": "The Parallel Translator (PTRAN) was an IBM research project focused on developing compiler technology to automatically transform sequential programs into parallel ones for multiprocessor systems."
+          "explanation": "An IBM research compiler project from a period when finding safe concurrency in existing sequential programs was a central obstacle to practical parallel computing.",
+          "wikipedia_url": null
         },
-        "program dependence graph": {
-          "explanation": "A program dependence graph (PDG) is a representation of a program that explicitly captures data and control dependencies between operations, enabling advanced optimizations such as automatic parallelization.",
+        "program-dependence graphs": {
+          "explanation": "A representation that distinguishes dependencies constraining execution from operations that may safely proceed independently; it became a key tool for reasoning about program parallelism.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Program_dependence_graph"
-        },
-        "automatic parallelization": {
-          "explanation": "Automatic parallelization is the process by which a compiler analyzes a sequential program and restructures it to run in parallel on multiple processors without requiring the programmer to manage low-level parallel code.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Automatic_parallelization"
         }
-      }
+      },
+      "weight": 0.95,
+      "background": "By 1980, compiler research faced a shift in the meaning of efficiency. The earlier aim had been to make the instruction stream for one processor as economical as possible; the newer machines made speed depend on whether a compiler could expose enough independent work to keep several processing elements busy. FORTRAN was central to that problem because it was the language of much existing scientific computing. The appealing prospect was to gain the benefit of a parallel machine without demanding that every scientific programmer abandon established programs and hand-rewrite them for unfamiliar hardware.\n\nIBM’s work had a long technical inheritance. Methods developed for the STRETCH-HARVEST compilers and the experimental Advanced Computing System had already demonstrated that an optimizer could be made independent of a particular machine and programming language. With John Cocke, a series of papers had turned compiler improvement into a more systematic enterprise: the 1966 “Program Optimization” paper used graph-theoretic structures to capture relationships inside a program, while later work on control flow and interprocedural data-flow analysis extended analysis beyond isolated statements and procedures. That body of work supplied a way to reason about a whole program before changing it, a prerequisite when a transformation might otherwise alter the result of a calculation.\n\n## The compiling system\n\nThe period’s research culture is visible in “The Experimental Compiling System,” published in the IBM Journal of Research and Development in November 1980, volume 24, number 6, pages 695–715. Its appearance that year placed parallelization alongside IBM’s continuing effort to make compilation a research problem rather than a fixed translation step. A compiler had to do more than recognize the grammar of FORTRAN and emit instructions: it needed an internal account of values, control paths, and the effects of moving computations. The difficult cases were not flashy demonstrations of many processors at work, but ordinary code in which one calculation might silently rely on the result of another. A transformation could only be useful if it preserved those relationships while uncovering work that hardware could perform simultaneously.\n\nThe result was a durable change in compiler practice. The ACM’s later Turing Award citation described the program-dependence graph as the primary structuring method used by most parallelizing compilers, placing the idea among the standard tools of the field rather than treating it as an IBM-only experiment. The effort also belongs to a broader IBM trajectory from language-processing research toward high-performance systems; later work included software for the IBM Blue Gene project. Its larger significance was that parallel hardware no longer had to depend entirely on programmers manually identifying every opportunity for concurrency. The compiler itself could become an active participant in adapting established scientific code to new architectures.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/IBM_7030_-_Mus%C3%A9e_des_arts_et_m%C3%A9tiers.jpg/960px-IBM_7030_-_Mus%C3%A9e_des_arts_et_m%C3%A9tiers.jpg",
+          "caption": "IBM 7030 - Musée des arts et métiers",
+          "source": "https://commons.wikimedia.org/wiki/File:IBM_7030_-_Musée_des_arts_et_métiers.jpg",
+          "creator": "Tieum512",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+          "query": "IBM Stretch computer"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Mira_-_Blue_Gene_Q_at_Argonne_National_Laboratory_-_Skin.jpg/960px-Mira_-_Blue_Gene_Q_at_Argonne_National_Laboratory_-_Skin.jpg",
+          "caption": "The IBM Blue Gene/Q installed at Argonne National Laboratory, near Chicago, Illinois, debuted as the third fastest supercomputer in the world.",
+          "source": "https://commons.wikimedia.org/wiki/File:Mira_-_Blue_Gene_Q_at_Argonne_National_Laboratory_-_Skin.jpg",
+          "creator": "Argonne National Laboratory (Flickr) / U.S. Department of Energy",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "query": "IBM Blue Gene supercomputer"
+        }
+      ]
+    },
+    {
+      "date": "1987",
+      "date_precision": "year",
+      "title": "Elected to Engineering Academy",
+      "description": "In 1987, Allen was elected to the National Academy of Engineering.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "event_type_icon": "mdi-vote",
+      "chapter": "opening_parallel_frontiers",
+      "weight": 0.55
     },
     {
       "date": "1989",
       "date_precision": "year",
-      "date_end": "1995",
-      "date_end_precision": "year",
-      "date_note": "Range covers her tenure as IBM Fellow and subsequent leadership of the IBM Academy steering committee",
-      "age": 57,
-      "title": "First Woman IBM Fellow",
-      "description": "In 1989 Allen became the first woman appointed as an [[IBM Fellow|IBM Fellow]], the company’s highest technical rank, recognizing her decades of contributions to [[compiler|compilers]] and [[parallel computing|parallel computing]]. She later served as president of the [[IBM Academy of Technology|IBM Academy of Technology]]’s steering committee, beginning in 1995, influencing the corporation’s strategic technical directions. Throughout this period she actively recruited and mentored women and other underrepresented groups, helping to build compiler research teams in which women made up about half the staff.",
-      "locations": [
-        {
-          "name_historic": "Yorktown Heights, New York",
-          "name_modern": "Yorktown Heights, New York, USA",
-          "centroid": [
-            -73.7753539,
-            41.270178
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
+      "title": "Became IBM Fellow",
+      "description": "Allen became an IBM Fellow, the company's highest technical distinction. She was the first woman to receive the designation.",
+      "locations": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen",
-        "https://en.wikipedia.org/wiki/IBM_Fellow"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
       ],
       "event_type_icon": "mdi-account-group",
-      "chapter": "parallel_computing_leadership",
-      "annotations": {
-        "IBM Fellow": {
-          "explanation": "A prestigious corporate honorary title created by IBM in 1963, awarded to a very small number of its most exceptional technical leaders and researchers.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/IBM_Fellow"
-        },
-        "compiler": {
-          "explanation": "A specialized computer program that translates source code written in a high-level programming language into a lower-level language, typically machine code, so it can be executed by a computer.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Compiler"
-        },
-        "parallel computing": {
-          "explanation": "A form of computation in which many calculations or processes are carried out simultaneously by dividing tasks across multiple processors or cores.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Parallel_computing"
-        },
-        "IBM Academy of Technology": {
-          "explanation": "An internal IBM organization composed of the company’s top technical leaders, established to provide independent technical advice and help shape IBM’s long-term technology strategy."
-        }
-      }
+      "chapter": "opening_parallel_frontiers",
+      "weight": 0.85
     },
     {
       "date": "2002",
       "date_precision": "year",
-      "date_end": "2002",
-      "date_end_precision": "year",
-      "age": 70,
-      "title": "Retires as IBM Fellow Emerita",
-      "description": "Allen retired from [[IBM Fellow|IBM]] in 2002 after a 45-year career, retaining an affiliation as an IBM Fellow Emerita. Even in retirement she remained active in the company’s mentoring programs and in external initiatives to encourage women and girls to enter computing and science. That same year she received the Augusta Ada Lovelace Award from the [[Association for Women in Computing|Association for Women in Computing]], honoring both her technical achievements and her advocacy.",
-      "locations": [
-        {
-          "name_historic": "Yorktown Heights, New York",
-          "name_modern": "Yorktown Heights, New York, USA",
-          "centroid": [
-            -73.7753539,
-            41.270178
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
+      "title": "Retired from IBM",
+      "description": "Allen retired from IBM after 45 years with the company. She remained affiliated with IBM as a Fellow Emerita and continued encouraging women and girls to enter computing and science.",
+      "locations": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen",
-        "https://en.wikipedia.org/wiki/Ada_Lovelace_Award"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
       ],
       "event_type_icon": "mdi-account-clock",
-      "chapter": "late_recognition_and_legacy",
-      "annotations": {
-        "IBM Fellow": {
-          "explanation": "An IBM Fellow is the company's highest technical honor, awarded to a small number of IBM employees for exceptional and sustained contributions to science, engineering, and technology.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/IBM_Fellow"
-        },
-        "Association for Women in Computing": {
-          "explanation": "A professional organization founded in 1978 to support, advocate for, and advance the careers of women in computing and information technology.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Association_for_Women_in_Computing"
-        }
-      }
+      "chapter": "legacy_beyond_the_machine",
+      "weight": 0.55
     },
     {
       "date": "2006",
       "date_precision": "year",
-      "date_end": "2006",
-      "date_end_precision": "year",
-      "age": 74,
-      "title": "Receives the Turing Award",
-      "description": "In 2006 Allen became the first woman to receive the [[ACM A. M. Turing Award|ACM A. M. Turing Award]], often described as the Nobel Prize of computing. The citation recognized her foundational work in program optimization, control-flow and data-flow analysis, and automatic parallelization, much of it developed in collaboration with John Cocke. In interviews she expressed hope that the honor would expand opportunities for women in science, engineering, and computing, underscoring her longstanding commitment to inclusion in the field.",
-      "locations": [
-        {
-          "name_historic": "New York City",
-          "name_modern": "New York City, USA",
-          "centroid": [
-            -74.006,
-            40.7128
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "John Cocke"
-      ],
+      "title": "Received Turing Award",
+      "description": "In 2006, the Association for Computing Machinery awarded Allen the A. M. Turing Award for her contributions to optimizing compiler research and practice. She was the first woman recipient in the award's forty-year history.",
+      "locations": [],
+      "involved_people": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_Cocke_(computer_scientist)"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
       ],
       "event_type_icon": "mdi-medal",
-      "chapter": "late_recognition_and_legacy",
-      "annotations": {
-        "ACM A. M. Turing Award": {
-          "explanation": "An annual prize given by the Association for Computing Machinery, widely regarded as the highest honor in computer science for contributions of lasting and major technical importance.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Turing_Award"
-        }
-      }
-    },
-    {
-      "date": "2009",
-      "date_precision": "year",
-      "date_end": "2010",
-      "date_end_precision": "year",
-      "date_note": "Range groups her late-career honors around 2009–2010",
-      "age": 77,
-      "title": "Late-Career Scientific Honors",
-      "description": "In 2009 McGill University awarded Allen an honorary Doctor of Science degree for her pioneering contributions to optimizing compiler techniques and automatic parallel execution. Around the same time she was elected to the National Academy of Sciences (2010), adding to earlier honors from the National Academy of Engineering and the American Philosophical Society. These recognitions confirmed her status as one of the central figures in the history of programming languages and high-performance computing.",
-      "locations": [
-        {
-          "name_historic": "Montreal",
-          "name_modern": "Montreal, Quebec, Canada",
-          "centroid": [
-            -73.5673,
-            45.5017
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Washington, D.C.",
-          "name_modern": "Washington, District of Columbia, USA",
-          "centroid": [
-            -77.0369,
-            38.9072
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen",
-        "https://en.wikipedia.org/wiki/McGill_University",
-        "https://en.wikipedia.org/wiki/National_Academy_of_Sciences"
-      ],
-      "event_type_icon": "mdi-star",
-      "chapter": "late_recognition_and_legacy"
+      "chapter": "legacy_beyond_the_machine",
+      "weight": 1.0
     },
     {
       "date": "2020-08-04",
       "date_precision": "day",
-      "date_end": "2020-08-04",
-      "date_end_precision": "day",
       "age": 88,
-      "title": "Death on Her 88th Birthday",
-      "description": "Frances Allen died on August 4, 2020, her 88th birthday, from complications related to Alzheimer’s disease. She spent her final years remembered not only for transforming compiler theory and practice but also for her tireless work mentoring colleagues and opening doors for women in computing. Her passing prompted tributes from researchers, professional societies, and former students worldwide who credited her with shaping both their field and their careers.",
-      "locations": [
-        {
-          "name_historic": "Schenectady, New York",
-          "name_modern": "Schenectady, New York, USA",
-          "centroid": [
-            -73.9396,
-            42.8142
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
+      "title": "Death on Her Birthday",
+      "description": "Allen died on August 4, 2020, her 88th birthday.",
+      "locations": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_E._Allen"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "late_recognition_and_legacy",
+      "chapter": "legacy_beyond_the_machine",
+      "weight": 0.35,
       "event_class": {
         "type": "death",
-        "cause": "Alzheimer’s disease"
+        "cause": "complications of Alzheimer's disease",
+        "characterization": "on her birthday"
       }
     }
   ]

@@ -1,230 +1,238 @@
 {
-  "dataset": "Frances_Allen_ego_network",
-  "created_on": "2025-12-06",
+  "dataset": "Frances Allen ego network",
+  "created_on": "2026-08-31",
   "ego": {
-    "name": "Frances E. Allen",
+    "name": "Frances Elizabeth Allen",
     "birth_year": 1932,
     "death_year": 2020,
     "primary_roles": [
       "computer scientist",
-      "mathematician"
+      "programmer",
+      "researcher"
     ],
-    "summary": "Frances Elizabeth Allen (1932\u20132020) was an American computer scientist whose pioneering work on optimizing compilers and automatic parallelization transformed modern software and high\u2011performance computing. Over a 45\u2011year career at IBM she led major compiler and parallel computing projects, became the first woman IBM Fellow and the first woman to receive the ACM A. M. Turing Award, and was a prominent mentor and advocate for women and other underrepresented groups in computing.",
+    "summary": "Frances Elizabeth Allen was an American computer scientist whose foundational work on optimizing compilers, program analysis, and automatic parallelization shaped modern compiler technology. During a 45-year IBM career, she became the company's first woman Fellow and, in 2006, the first woman to receive the ACM Turing Award.",
     "wikipedia": "https://en.wikipedia.org/wiki/Frances_Allen"
   },
   "connections": [
     {
-      "person_name": "Unnamed father of Frances E. Allen",
-      "relationship_type": "family/father",
-      "relationship_description": "Allen's father was a farmer in Peru, New York; her upbringing as the eldest of six children on the family farm shaped her work ethic and early experience with practical problem\u2011solving.",
-      "start_year": 1932,
-      "end_year": null,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life on a working farm",
-        "early childhood education and support"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frances_Allen"
-      ],
-      "notes": "The article does not give his name, but notes that he farmed near Peru, New York, and that Allen grew up as the oldest of six children on the family farm."
-    },
-    {
-      "person_name": "Unnamed mother of Frances E. Allen",
-      "relationship_type": "family/mother",
-      "relationship_description": "Allen's mother was an elementary school teacher whose example of teaching and education strongly influenced Allen's own early career as a mathematics teacher and later commitment to mentoring.",
-      "start_year": 1932,
-      "end_year": null,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life",
-        "modeling of teaching as a profession",
-        "support for Allen\u2019s schooling"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frances_Allen"
-      ],
-      "notes": "The article identifies her as an elementary school teacher but does not provide her name; Allen later followed a teaching path before joining IBM, echoing her mother's profession."
-    },
-    {
-      "person_name": "John Backus",
-      "relationship_type": "professional/influence",
-      "relationship_description": "John Backus led the IBM team that created Fortran, the language Allen was hired to teach and whose compiler source she studied intensively; his work on Fortran and compiler design provided the technical foundation for Allen\u2019s early research interests.",
+      "person_name": "IBM",
+      "entity_kind": "organization",
+      "qualifier": "technology corporation and research employer",
+      "relationship_description": "IBM employed Allen from 1957 until her retirement in 2002, after which she remained a Fellow Emerita.",
       "start_year": 1957,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "working at IBM during the formative years of commercial computing",
-        "development and industrial use of Fortran and its compiler",
-        "shared participation in the emerging compiler research community"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frances_Allen",
-        "https://en.wikipedia.org/wiki/John_Backus",
-        "https://en.wikipedia.org/wiki/Fortran"
-      ],
-      "notes": "When Allen joined IBM in 1957, Fortran had just been announced, and she was assigned to teach it by reading and understanding the Fortran compiler source. Backus\u2019s leadership in creating Fortran and his work on programming language design strongly shaped the environment in which Allen began her compiler research. There is no explicit record here of direct collaboration, so this connection is characterized as an influential, field\u2011level relationship."
-    },
-    {
-      "person_name": "John Cocke",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "IBM researcher John Cocke was Allen's closest long\u2011term technical collaborator at the Thomas J. Watson Research Center, co\u2011developing foundational techniques for machine\u2011 and language\u2011independent compiler optimization and co\u2011authoring several seminal papers.",
-      "start_year": 1962,
-      "end_year": 1975,
+      "end_year": 2002,
       "strength": "strong",
       "interaction_frequency": "daily",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "co\u2011authoring seminal papers on program optimization and control\u2011flow analysis",
-        "designing and implementing optimizing compilers for Fortran, Autocoder, and Alpha",
-        "working together on the ACS-1 architecture and related projects at IBM Watson"
+        "compiler research",
+        "program optimization",
+        "parallel computing research",
+        "mentoring women and underrepresented computer scientists",
+        "IBM Academy leadership"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "notes": "Allen became IBM's first woman Fellow in 1989 and led its parallel-computing work from 1980 to 1995.",
+      "relationship_type": "professional/employer"
+    },
+    {
+      "person_name": "National Security Agency",
+      "entity_kind": "organization",
+      "qualifier": "United States signals intelligence agency",
+      "relationship_description": "The National Security Agency partnered with IBM on the confidential Harvest codebreaking project to which Allen was assigned in 1959.",
+      "start_year": 1959,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "alter_to_ego",
+      "shared_activities": [
+        "Harvest codebreaking project",
+        "compiler-optimization work",
+        "Alpha programming language development"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "notes": "Allen managed compiler-optimization work connected with Harvest and the earlier Stretch project; the source does not document direct personal contact with NSA staff.",
+      "relationship_type": "professional/client"
+    },
+    {
+      "person_name": "John Cocke",
+      "relationship_description": "Cocke was Allen's IBM research collaborator on optimizing compilers, including a Fortran optimizing compiler and influential papers on program analysis and transformations.",
+      "start_year": 1962,
+      "end_year": 1976,
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "Advanced Computing System research",
+        "Fortran optimizing compiler development",
+        "compiler optimization research",
+        "co-authoring A Catalogue of Optimizing Transformations",
+        "interprocedural data-flow analysis"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Frances_Allen",
         "https://en.wikipedia.org/wiki/John_Cocke_(computer_scientist)"
       ],
-      "notes": "Allen\u2019s move to IBM\u2019s Thomas J. Watson Research Center in 1962 brought her into close collaboration with Cocke; their joint work included \u201cA Catalogue of Optimizing Transformations\u201d (1972) and influential papers on interprocedural data\u2011flow analysis. Cocke received the Turing Award in 1987; Allen received it in 2006, with her citation explicitly highlighting work done alone and jointly with Cocke."
+      "notes": "Their joint work supplied major abstractions and analysis strategies used in optimizing compilers. The supplied sources do not document a final year for their collaboration.",
+      "relationship_type": "professional/collaborator"
     },
     {
-      "person_name": "Fernando J. Corbat\u00f3",
-      "relationship_type": "professional/peer",
-      "relationship_description": "Fernando J. Corbat\u00f3 was a contemporary systems pioneer and Turing Award recipient whose work on time\u2011sharing operating systems and advocacy of PL/I for system programming paralleled Allen\u2019s work on PL/I compilers and high\u2011performance systems at IBM.",
-      "start_year": 1969,
-      "end_year": 1990,
-      "strength": "weak",
-      "interaction_frequency": "rare",
+      "person_name": "New York University",
+      "entity_kind": "organization",
+      "qualifier": "university",
+      "relationship_description": "Allen spent a 1970–1971 sabbatical at New York University and subsequently served as an adjunct professor for several years.",
+      "start_year": 1970,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "participation in the broader systems and programming\u2011languages research community",
-        "development and promotion of PL/I for systems (Corbat\u00f3) and industrial PL/I compilers (Allen)",
-        "service as high\u2011profile Turing Award\u2013winning figures in computer systems"
+        "sabbatical research",
+        "adjunct teaching",
+        "computer science instruction"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_Allen",
-        "https://en.wikipedia.org/wiki/Fernando_J._Corbat%C3%B3"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
       ],
-      "notes": "Allen contributed to PL/I compiler work at IBM in the 1970s, while Corbat\u00f3 promoted and analyzed PL/I as a systems programming language and led the development of CTSS and Multics. The texts do not document direct collaboration, but their work occupied closely related technical and institutional spaces; this is therefore modeled as a weak, peer\u2011level relationship based on overlapping contributions to systems and language technology."
+      "notes": "Her former husband, Jacob T. Schwartz, was a New York University computer science professor.",
+      "relationship_type": "academic/institution"
     },
     {
       "person_name": "Jacob T. Schwartz",
-      "relationship_type": "family/spouse",
-      "relationship_description": "New York University computer science professor Jacob T. Schwartz was Allen's husband from 1972 to 1982 and a professional collaborator, linking her IBM work with the NYU theoretical and systems research community.",
-      "start_year": 1970,
+      "relationship_description": "Allen married New York University computer science professor Jacob T. Schwartz in 1972; he was also her collaborator. They divorced in 1982.",
+      "start_year": 1972,
       "end_year": 1982,
       "strength": "strong",
       "interaction_frequency": "daily",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "marriage and shared household",
-        "collaborative computer science research discussions",
-        "participation in overlapping IBM and NYU research circles"
+        "marriage",
+        "computer science collaboration"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_Allen",
-        "https://en.wikipedia.org/wiki/Jacob_T._Schwartz"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
       ],
-      "notes": "Allen met Schwartz through her sabbatical and adjunct role at NYU around 1970\u20131971; their 1972\u20131982 marriage is explicitly documented, and the article notes him as both professor and collaborator."
+      "notes": "The source identifies Schwartz as both Allen's husband and collaborator, but does not specify their joint projects.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Stanford University",
+      "entity_kind": "organization",
+      "qualifier": "university",
+      "relationship_description": "Allen took a sabbatical at Stanford University in 1977, where she taught graduate students in computer science.",
+      "start_year": 1977,
+      "end_year": 1977,
+      "strength": "moderate",
+      "interaction_frequency": "weekly",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "sabbatical appointment",
+        "graduate computer science teaching"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "notes": "Allen's teaching at Stanford included Anita Borg, then a graduate student.",
+      "relationship_type": "academic/institution"
     },
     {
       "person_name": "Anita Borg",
-      "relationship_type": "academic/student",
-      "relationship_description": "Anita Borg was one of Allen's graduate students during Allen\u2019s 1977 sabbatical at Stanford University; Allen was the only woman professor Borg had in graduate school and became an important mentor and role model in Borg\u2019s later advocacy for women in computing.",
+      "relationship_description": "Borg was Allen's student during Allen's Stanford sabbatical; Allen was Borg's only woman professor in graduate school.",
       "start_year": 1977,
-      "end_year": 2003,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "graduate\u2011level computer science courses at Stanford University",
-        "mentor\u2013mentee relationship in a male\u2011dominated research environment",
-        "later interaction through women\u2011in\u2011computing communities and awards (e.g., ABIE Award)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frances_Allen",
-        "https://en.wikipedia.org/wiki/Anita_Borg",
-        "https://en.wikipedia.org/wiki/Stanford_University"
-      ],
-      "notes": "Allen\u2019s sabbatical at Stanford in 1977 explicitly notes that she taught Anita Borg and was Borg\u2019s only woman professor in graduate school. Borg later founded Systers, the Grace Hopper Celebration, and the Institute for Women and Technology, extending the mentoring lineage Allen represented."
-    },
-    {
-      "person_name": "Barbara Simons",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Computer scientist Barbara Simons worked with Allen at IBM and regarded her as both a colleague and a friend, remembering Allen as a strong feminist and mentor within IBM\u2019s compiler research community.",
-      "start_year": 1980,
-      "end_year": null,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "collaborative work at IBM Research",
-        "participation in IBM\u2019s compiler and systems research community",
-        "women\u2011in\u2011computing and feminist advocacy within IBM and professional societies"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frances_Allen",
-        "https://en.wikipedia.org/wiki/Barbara_Simons"
-      ],
-      "notes": "Allen\u2019s article notes that Simons \u201cworked with Allen and considered her a friend\u201d and recalls Allen as a strong feminist; Simons\u2019s own biography documents her IBM background and leadership in ACM, which overlapped with Allen\u2019s mentoring and diversity efforts."
-    },
-    {
-      "person_name": "Telle Whitney",
-      "relationship_type": "professional/advocate",
-      "relationship_description": "Telle Whitney, as president and CEO of the Institute for Women and Technology (later the Anita Borg Institute), led the organization that honored Allen with the 2004 ABIE Award for Technical Leadership, amplifying Allen\u2019s impact as a mentor and role model for technical women.",
-      "start_year": 2004,
-      "end_year": null,
+      "end_year": 1977,
       "strength": "moderate",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
+      "interaction_frequency": "weekly",
+      "influence_direction": "ego_to_alter",
       "shared_activities": [
-        "recognition of Allen through the ABIE Award for Technical Leadership",
-        "participation in the women\u2011in\u2011computing advocacy community",
-        "public events and award ceremonies associated with the Anita Borg Institute"
+        "Stanford graduate computer science education",
+        "women's representation in computing"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Frances_Allen",
         "https://en.wikipedia.org/wiki/Anita_Borg"
       ],
-      "notes": "Anita Borg\u2019s article records that Telle Whitney became president and CEO of the Institute for Women and Technology in 2002; Allen\u2019s article notes that she received the ABIE Award for Technical Leadership from the Anita Borg Institute in 2004. While direct personal interactions are not detailed, Whitney\u2019s leadership role at the institute frames Allen\u2019s recognition and visibility in women\u2011in\u2011technology initiatives."
+      "notes": "Both became notable advocates for women's participation and advancement in computing, although the supplied source only documents their teacher-student relationship.",
+      "relationship_type": "academic/student"
     },
     {
-      "person_name": "Barbara Liskov",
-      "relationship_type": "professional/peer",
-      "relationship_description": "Barbara Liskov is a fellow programming\u2011languages pioneer and the second woman to receive the ACM A. M. Turing Award, following Allen; both advanced foundational ideas in programming methodology and became prominent role models for women in computer science.",
-      "start_year": 2008,
+      "person_name": "Barbara Simons",
+      "relationship_description": "Simons worked with Allen at IBM and considered her a friend, later recalling Allen as a strong feminist.",
+      "start_year": null,
       "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "rare",
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
       "influence_direction": "bidirectional",
       "shared_activities": [
-        "shared recognition as women Turing Award laureates",
-        "leadership in programming language and software methodology research",
-        "public advocacy and visibility for women in computing"
+        "IBM computing research community",
+        "support for women in computing"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frances_Allen",
-        "https://en.wikipedia.org/wiki/Barbara_Liskov"
+        "https://en.wikipedia.org/wiki/Frances_Allen"
       ],
-      "notes": "Liskov\u2019s biography notes that she is the second woman to receive the Turing Award; Allen, honored in 2006, was the first. While specific joint projects are not documented here, they are linked as peers in programming languages and as sequential female Turing laureates frequently cited together in discussions of women\u2019s contributions to computing."
+      "notes": "The source confirms both a work connection and friendship but does not provide dates or specific projects.",
+      "relationship_type": "professional/colleague"
+    },
+    {
+      "person_name": "American Alpine Club",
+      "entity_kind": "organization",
+      "qualifier": "mountaineering organization",
+      "relationship_description": "Allen was a member of the American Alpine Club and pursued mountain climbing outside her computing career.",
+      "start_year": null,
+      "end_year": null,
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "mountain climbing",
+        "mountaineering community"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "notes": "Allen also established a new route across Ellesmere Island in northern Canada.",
+      "relationship_type": "social/association"
+    },
+    {
+      "person_name": "University of California, Berkeley",
+      "entity_kind": "organization",
+      "qualifier": "public research university",
+      "relationship_description": "The University of California, Berkeley appointed Allen as a Chancellor's Distinguished Lecturer and Mackay Lecturer.",
+      "start_year": null,
+      "end_year": null,
+      "strength": "weak",
+      "interaction_frequency": "occasional",
+      "influence_direction": "bidirectional",
+      "shared_activities": [
+        "distinguished lectures",
+        "computer science outreach"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frances_Allen"
+      ],
+      "notes": "The source does not give dates for the lectureships.",
+      "relationship_type": "academic/institution"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Family relationships were foundational in Frances Allen\u2019s life, from the practical problem\u2011solving environment of her farmer father and teacher mother in rural New York to her intellectually rich but ultimately dissolved marriage to NYU computer scientist Jacob T. Schwartz. These ties shaped her early commitment to education, work ethic, and later ability to bridge academic and industrial research worlds."
+      "summary": "Allen's documented family network in the source centers on her decade-long marriage to Jacob T. Schwartz, a fellow computer scientist. Their relationship connected her personal life with the academic computing world during the 1970s, although the record gives little detail about their collaboration before their 1982 divorce."
     },
     {
       "relationship_type": "professional",
-      "summary": "Allen\u2019s professional network centers on her decades at IBM and her leadership in optimizing compilers and parallel systems, highlighted by her deep collaboration with John Cocke and collegial work with Barbara Simons. She was also embedded in a broader ecosystem of programming\u2011language and systems pioneers\u2014including John Backus, Fernando Corbat\u00f3, Barbara Liskov, and Telle Whitney\u2014whose work and advocacy intersected with hers through shared technologies, awards, and women\u2011in\u2011computing initiatives."
+      "summary": "IBM was the institutional foundation of Allen's entire research career, providing the setting in which she moved from teaching newly hired programmers FORTRAN in 1957 to leading major work in compiler optimization and parallel computing. Her collaboration with John Cocke at the Thomas J. Watson Research Center produced foundational work on optimizing transformations and data-flow analysis. Within IBM, Allen also used her standing to mentor others and help make compiler research more welcoming to women; her association with Barbara Simons reflects that wider professional commitment."
     },
     {
       "relationship_type": "academic",
-      "summary": "As an educator and mentor, Allen\u2019s most prominent academic relationship was with her student Anita Borg at Stanford, where Allen served as Borg\u2019s only female professor and an important role model. Her adjunct and visiting roles at NYU, Stanford, UC Berkeley, and UC San Diego helped transfer cutting\u2011edge compiler research into the classroom and seeded long\u2011lasting mentor\u2013mentee ties that extended into the women\u2011in\u2011computing movement."
+      "summary": "Allen’s sabbaticals and teaching appointments carried IBM compiler research into university settings. At New York University and Stanford, she taught and exchanged ideas beyond the corporate laboratory; at Stanford, Anita Borg encountered her only woman professor in graduate school. Her lectureships at the University of California, Berkeley further show how Allen’s technical authority reached academic audiences beyond IBM."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Mountaineering provided an important nonprofessional sphere in Allen's life. Her American Alpine Club membership and expeditionary climbing, including establishing a route on Ellesmere Island, point to a sustained community and demanding activity outside computing."
     }
   ]
 }
