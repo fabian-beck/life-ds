@@ -54,15 +54,22 @@ def enable_utf8_console() -> None:
     a meta story's translation step got skipped while the run still reported
     success.
 
+    Only the interpreter's own streams are reconfigured. A stream someone else
+    installed belongs to them: reconfiguring pytest's capture object closes the
+    temporary file pytest reads afterwards, which ends the run in "no tests
+    ran" no matter which module imported this one.
+
     Note: reconfigure() rather than a fresh TextIOWrapper around the buffer —
     replacing the stream orphans the original wrapper, which closes the buffer
     when it is collected and leaves the interpreter with a dead stdout.
     """
     for name in ("stdout", "stderr"):
         stream = getattr(sys, name, None)
+        if stream is None or stream is not getattr(sys, f"__{name}__", None):
+            continue  # a capture object or a redirect the caller owns
         reconfigure = getattr(stream, "reconfigure", None)
         if reconfigure is None:
-            continue  # replaced by a capture object without reconfigure()
+            continue
         if (getattr(stream, "encoding", "") or "").lower().replace("-", "") == "utf8":
             continue
         reconfigure(encoding="utf-8", errors="replace")
