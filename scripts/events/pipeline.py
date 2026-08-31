@@ -1619,32 +1619,19 @@ def resolve_portrait(
 ) -> Optional[Dict[str, Any]]:
     """The portrait block to store, or None when there is nothing to show.
 
-    A generated portrait always wins over the AI-selected one; the latter then
-    replaces the original it was derived from — and `source` follows it, so
-    the reader's source link points at the page the current original lives on
-    rather than at wherever a previous one came from. The original's own
-    attribution travels under original* keys, because a CC-BY reference keeps
-    its license terms even behind a stylized derivative.
+    A generated portrait wins over the AI-selected one and keeps the
+    attribution it was stored with. The stylized artwork is a derivative of one
+    specific original, so `originalImage`, `source`, and the other original*
+    keys go on naming that original; a candidate this run happens to pick
+    describes an image the artwork was never derived from. `originalImage` is
+    also the reference `generate_person_portrait.py` reads back, so a swapped
+    one would redirect the next `--force` run as well. The attribution is
+    written by the portrait step, which knows the original it stylized.
     """
+    if existing_generated:
+        print(f"{indent}Keeping the generated portrait and its attribution")
+        return existing_generated
     if ai_portrait:
-        if existing_generated:
-            portrait_data = existing_generated.copy()
-            portrait_data["originalImage"] = ai_portrait["url"]
-            portrait_data["source"] = ai_portrait["source"]
-            for src_key, dst_key in (
-                ("creator", "originalCreator"),
-                ("license", "originalLicense"),
-                ("licenseUrl", "originalLicenseUrl"),
-            ):
-                if ai_portrait.get(src_key):
-                    portrait_data[dst_key] = ai_portrait[src_key]
-                else:
-                    portrait_data.pop(dst_key, None)
-            print(
-                f"{indent}Preserving generated portrait, updating originalImage to: "
-                f"{ai_portrait['url']}"
-            )
-            return portrait_data
         portrait_data = {
             "image": ai_portrait["url"],
             "source": ai_portrait["source"],
@@ -1653,9 +1640,6 @@ def resolve_portrait(
             if ai_portrait.get(key):
                 portrait_data[key] = ai_portrait[key]
         return portrait_data
-    if existing_generated:
-        print(f"{indent}No AI portrait found, keeping existing generated portrait")
-        return existing_generated
     return None
 
 

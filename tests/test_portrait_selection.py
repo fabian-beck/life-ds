@@ -1,12 +1,12 @@
-"""The portrait pick gets looked at, and its metadata follows the original.
+"""The portrait pick gets looked at, and a preserved one keeps its attribution.
 
 Two defects this guards against. The matcher chooses the reference portrait
 from filenames and captions alone, and nothing downstream checked the choice —
 with Openverse in the candidate pool, a photograph of the subject's spouse
-carries the subject's name in its caption. And when a generated portrait was
-preserved, only `originalImage` was swapped: `source` kept pointing at
-wherever a previous original came from, and the new original's attribution
-was dropped entirely.
+carries the subject's name in its caption. And a preserved generated portrait
+had its attribution swapped for whichever original the current run picked, so
+the register credited an image the artwork was never derived from, and the
+`originalImage` the portrait step reads back as its reference moved with it.
 """
 
 from __future__ import annotations
@@ -79,25 +79,23 @@ class VerificationTests(unittest.TestCase):
 
 
 class PortraitDataTests(unittest.TestCase):
-    def test_preserved_portrait_keeps_the_artwork_and_follows_the_original(
-        self,
-    ) -> None:
+    def test_preserved_portrait_keeps_the_artwork_and_its_attribution(self) -> None:
+        data = resolve_portrait(PORTRAIT, GENERATED)
+        self.assertEqual(data, GENERATED)
+
+    def test_a_fresh_pick_does_not_become_the_credited_original(self) -> None:
         data = resolve_portrait(PORTRAIT, GENERATED)
         assert data is not None
-        self.assertEqual(data["image"], GENERATED["image"])
-        self.assertEqual(data["creator"], "AI generated artwork")
-        self.assertEqual(data["originalImage"], PORTRAIT["url"])
-        self.assertEqual(data["source"], PORTRAIT["source"])
-        self.assertEqual(data["originalCreator"], PORTRAIT["creator"])
-        self.assertEqual(data["originalLicense"], PORTRAIT["license"])
-        self.assertEqual(data["originalLicenseUrl"], PORTRAIT["licenseUrl"])
-
-    def test_stale_original_attribution_does_not_survive_a_swap(self) -> None:
-        generated = {**GENERATED, "originalCreator": "Somebody Else"}
-        bare = {k: v for k, v in PORTRAIT.items() if k in ("url", "source")}
-        data = resolve_portrait(bare, generated)
-        assert data is not None
+        self.assertEqual(data["originalImage"], GENERATED["originalImage"])
+        self.assertEqual(data["source"], GENERATED["source"])
         self.assertNotIn("originalCreator", data)
+
+    def test_a_preserved_portrait_survives_a_run_that_picks_nothing(self) -> None:
+        data = resolve_portrait(None, GENERATED)
+        self.assertEqual(data, GENERATED)
+
+    def test_nothing_to_show_without_a_pick_or_a_generated_portrait(self) -> None:
+        self.assertIsNone(resolve_portrait(None, None))
 
     def test_without_a_generated_portrait_the_selection_is_the_portrait(self) -> None:
         data = resolve_portrait(PORTRAIT, None)
