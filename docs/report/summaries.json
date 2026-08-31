@@ -129,11 +129,11 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "04992f85ae1ebb5c",
+      "fingerprint": "d446193aee76749a",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Writes the long-form background passages for only the events the story exposes as depth layers, using the reviewed event record, the subject’s article, related articles, and the surrounding story outline. It also replaces each event’s citations with shown, event-specific sources and passes report details to image selection, then carries the source corrections into translated copies.",
-        "why_this_design": "Limits work to the interface’s deep-event selection so no unreachable report is created, while filtering citations to supplied URLs prevents plausible but unsupported links from appearing beside the passage."
+        "what_it_does": "Builds background reports only for the events the story’s depth layer will expose, using the reviewed event record, the subject’s article, and related articles to add context rather than repeat the slide. It replaces each selected event’s citations with sources that document that event, creates image-search terms from the report, and carries the approved URLs into translated copies.",
+        "why_this_design": "It recomputes the same deep-event selection used by the interface so the pipeline does not spend work on reports no reader can reach, while filtering citations to URLs shown to the call prevents invented or unrelated provenance."
       }
     },
     "p_chapter_art": {
@@ -177,11 +177,11 @@
       }
     },
     "p_events_p2": {
-      "fingerprint": "e179f442c3049827",
+      "fingerprint": "6e9bb480a9c1669e",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Researches one biographical event against the subject’s article and event-specific related articles, enriching the timeline with grounded narrative context, places, participants, supporting sources, visual search leads, and a semantic icon. Leaves an unresolved event in the story when the research call fails rather than dropping it.",
-        "why_this_design": "It treats the subject’s article as the authority and admits related articles only when they document the event, which keeps added detail tied to the life narrative instead of nearby but irrelevant material."
+        "what_it_does": "Researches each biographical event against the subject’s article and only the related articles that match that event. It adds grounded narrative context, places, participants, evidence, explanatory links, an event icon, and illustration searches while preserving the event when research fails.",
+        "why_this_design": "It treats the subject’s article as the authority and isolates each event’s supporting material so later details do not leak into the chronology or pad weakly documented events."
       }
     },
     "p_geocode": {
