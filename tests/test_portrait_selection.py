@@ -18,11 +18,11 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from generate_person_events import (  # noqa: E402
+from events.images.assign import (  # noqa: E402
     PortraitVerification,
-    resolve_portrait,
     verify_portrait_depicts_person,
 )
+from generate_person_events import resolve_portrait  # noqa: E402
 
 PORTRAIT = {
     "url": "https://images.example.org/wagner_1915.jpg",
@@ -48,8 +48,8 @@ GENERATED = {
 
 def _verify(parsed):
     with (
-        patch("generate_person_events.get_client"),
-        patch("generate_person_events.parse_structured", return_value=parsed) as call,
+        patch("events.images.assign.get_client"),
+        patch("events.images.assign.parse_structured", return_value=parsed) as call,
     ):
         verdict = verify_portrait_depicts_person(PORTRAIT, "Otto Wagner")
     return verdict, call

@@ -88,10 +88,10 @@ class IntrospectionTests(unittest.TestCase):
         self.assertIn("OPENAI_BULK_REASONING_EFFORT", report.reasoning_value or "")
         # The steps working from what those two settled do run on the small
         # model, which resolves through its own environment variable.
-        matching = calls[("generate_person_events.py", "match_images_to_events")]
+        matching = calls[("assign.py", "match_images_to_events")]
         self.assertIn("OPENAI_BULK_MODEL", matching.model_value or "")
         # Writing Commons queries is slot filling and takes no reasoning at all.
-        searches = calls[("generate_person_events.py", "generate_image_search_strings")]
+        searches = calls[("assign.py", "generate_image_search_strings")]
         self.assertIn("none", searches.reasoning_value or "")
 
     def test_reads_reasoning_effort_through_the_typing_cast(self) -> None:

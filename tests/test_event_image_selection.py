@@ -22,8 +22,7 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-import generate_person_events as pipeline  # noqa: E402
-from events.images import sources  # noqa: E402
+from events.images import assign, sources  # noqa: E402
 from events.schemas import EventSkeleton  # noqa: E402
 
 SKELETONS = [
@@ -43,7 +42,7 @@ SKELETONS = [
 
 
 def match_prompt(candidates=None) -> str:
-    return pipeline.build_image_match_prompt(
+    return assign.build_image_match_prompt(
         (
             candidates
             if candidates is not None
@@ -64,10 +63,10 @@ class StandInRejectionTests(unittest.TestCase):
         chooser = source[source.index("def fetch_background_images") :]
         chooser = chooser[: chooser.index("\ndef ")]
         self.assertIn("STAND_IN_REJECTION_INSTRUCTIONS", chooser)
-        self.assertIn(pipeline.STAND_IN_REJECTION_INSTRUCTIONS, match_prompt())
+        self.assertIn(assign.STAND_IN_REJECTION_INSTRUCTIONS, match_prompt())
 
     def test_the_commemorative_forms_are_named(self) -> None:
-        rules = pipeline.STAND_IN_REJECTION_INSTRUCTIONS.lower()
+        rules = assign.STAND_IN_REJECTION_INSTRUCTIONS.lower()
         for form in ("plaque", "gravestone", "tomb", "statue", "bust", "stamp"):
             with self.subTest(form=form):
                 self.assertIn(form, rules)
@@ -78,7 +77,7 @@ class StandInRejectionTests(unittest.TestCase):
         Without the exception the rule would strip the medal from the event
         that awarded it, which is a real picture of a real event.
         """
-        self.assertIn("ABOUT the object", pipeline.STAND_IN_REJECTION_INSTRUCTIONS)
+        self.assertIn("ABOUT the object", assign.STAND_IN_REJECTION_INSTRUCTIONS)
 
 
 class MatchPromptTests(unittest.TestCase):
@@ -116,7 +115,7 @@ class SearchPlanningTests(unittest.TestCase):
         require—answers with a birthplace plaque, a bronze head, a kinetic
         sculpture, and a statue.
         """
-        source = Path(pipeline.__file__).read_text(encoding="utf-8")
+        source = Path(assign.__file__).read_text(encoding="utf-8")
         planner = source[source.index("def generate_image_search_strings") :]
         planner = planner[: planner.index("\ndef ")]
         self.assertIn("NEVER search for a commemoration", planner)
@@ -125,7 +124,7 @@ class SearchPlanningTests(unittest.TestCase):
                 self.assertIn(f"'X {banned}'", planner)
 
     def test_the_researched_searches_are_kept_two_per_event(self) -> None:
-        planned = pipeline.plan_event_image_searches(
+        planned = assign.plan_event_image_searches(
             [
                 ["bombe machine", "Hut 8 Bletchley", "Enigma rotor", "Banbury sheet"],
                 [],
@@ -137,10 +136,10 @@ class SearchPlanningTests(unittest.TestCase):
         )
 
     def test_an_event_with_no_searches_is_left_out(self) -> None:
-        self.assertEqual(pipeline.plan_event_image_searches([[], [""], ["  "]]), {})
+        self.assertEqual(assign.plan_event_image_searches([[], [""], ["  "]]), {})
 
     def test_a_repeated_search_is_not_run_twice(self) -> None:
-        planned = pipeline.plan_event_image_searches([["bombe", "bombe", "Hut 8"]])
+        planned = assign.plan_event_image_searches([["bombe", "bombe", "Hut 8"]])
         self.assertEqual(planned, {0: ["bombe", "Hut 8"]})
 
 
@@ -172,7 +171,7 @@ class BatchSearchTests(unittest.TestCase):
             mock.patch.object(sources, "search_wikimedia_commons", commons),
             mock.patch.object(sources, "search_openverse", self._openverse),
         ):
-            return pipeline.execute_batch_image_search(
+            return assign.execute_batch_image_search(
                 ["Alan Turing"], event_queries=event_queries
             )
 

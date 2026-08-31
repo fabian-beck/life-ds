@@ -503,7 +503,7 @@ STEPS: List[Step] = [
         "Plan image searches",
         PERSON,
         AI,
-        "generate_person_events.py",
+        "events/images/assign.py",
         "generate_image_search_strings",
         summary=(
             "Writes twenty Commons search strings for the life as a whole: "
@@ -521,7 +521,7 @@ STEPS: List[Step] = [
         "Search image sources",
         SHARED,
         EXTERNAL,
-        "generate_person_events.py",
+        "events/images/assign.py",
         "execute_batch_image_search",
         summary=(
             "Runs every planned query against Wikimedia Commons and Openverse "
@@ -561,7 +561,7 @@ STEPS: List[Step] = [
         "Assign images to events",
         PERSON,
         AI,
-        "generate_person_events.py",
+        "events/images/assign.py",
         "match_images_to_events",
         summary=(
             "Matches the retrieved Commons images to events and writes captions, "
@@ -583,7 +583,7 @@ STEPS: List[Step] = [
         "Verify the portrait",
         PERSON,
         AI,
-        "generate_person_events.py",
+        "events/images/assign.py",
         "verify_portrait_depicts_person",
         summary=(
             "Shows the chosen portrait file itself to the model and asks "

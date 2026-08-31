@@ -45,13 +45,13 @@ from config import (
     DEFAULT_REASONING_EFFORT,
     enable_utf8_console,
 )
+from events.images.assign import STAND_IN_REJECTION_INSTRUCTIONS
 from events.images.scoring import filter_images_by_quality
 from events.images.sources import search_wikimedia_commons
 from events.schemas import CLASSIFICATION_MODELS, EventSkeleton
 from generate_person_events import (
     PEOPLE_DIR,
     RELATED_ARTICLE_COUNT,
-    STAND_IN_REJECTION_INSTRUCTIONS,
     _related_articles_prompt_section,
     _subject_article_prompt_section,
     filter_related_articles_for_event,

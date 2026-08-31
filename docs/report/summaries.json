@@ -201,19 +201,19 @@
       }
     },
     "p_illustrations": {
-      "fingerprint": "0054953086edc5b4",
+      "fingerprint": "4935ae1af34a63ee",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Judges Commons search results against the background report and keeps only images that directly show a named thing in the account. It returns a small set of distinct illustrations after excluding the event image already shown.",
-        "why_this_design": "It treats search results as untrusted word matches—using filenames as well as captions—and enforces one image per query in code so related but wrong results or duplicate views do not fill the report."
+        "what_it_does": "Reads Commons search results against the background report and keeps only images that directly show a named, relevant thing. It returns a small set of distinct illustrations, excluding the event image already shown and allowing the report to go without a background image when the search has no honest match.",
+        "why_this_design": "It treats search results as leads rather than evidence because keyword matches often point to unrelated people, places, or objects, and code prevents several results from one query from repeating the same illustration."
       }
     },
     "p_img_fetch": {
-      "fingerprint": "97ea038931f003a0",
+      "fingerprint": "450a061469b67241",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Searches two public image collections for the broad person queries and for event-specific queries, then returns one candidate record per image URL. It marks images found through event searches so the later matcher can connect them to the event that prompted the search.",
-        "why_this_design": "It searches event queries first and keeps their Commons result when URLs overlap, preserving event evidence while using the second collection to widen the less specific person search."
+        "what_it_does": "Searches Wikimedia Commons and Openverse for images tied to the life-wide search terms, then returns one candidate record per image URL. It also searches event-specific terms and marks those results with the event they may illustrate, giving the later matcher candidates linked to particular moments in the story.",
+        "why_this_design": "It runs event searches through Commons first so URL deduplication preserves the event link, while Openverse broadens the less-specific person searches without replacing Commons metadata for the same image."
       }
     },
     "p_img_filter": {
@@ -225,27 +225,27 @@
       }
     },
     "p_img_match": {
-      "fingerprint": "fb4fd392f2d17173",
+      "fingerprint": "f06fef48312259bf",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Selects a reference portrait and places only directly relevant Commons images beside life events, using filenames and source metadata to write cautious captions. It leaves unsupported events unillustrated and preserves the selected image’s attribution data for later display.",
-        "why_this_design": "It treats search results as leads rather than evidence and prevents the portrait or a commemorative stand-in from becoming a misleading substitute for an event."
+        "what_it_does": "Matches retrieved image metadata to biography events only when it supports the event directly, and writes restrained captions from that metadata. It also selects one usable likeness for the profile and keeps it out of the event images.",
+        "why_this_design": "Treating search results as leads rather than evidence—and validating unique image and event choices in code—prevents commemorative stand-ins and loose associations from filling the timeline."
       }
     },
     "p_img_search": {
-      "fingerprint": "80175f1d59d1524c",
+      "fingerprint": "eba18625075407c4",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a shared set of Commons searches from the full event list, reserving person-name searches for portrait selection and directing the rest toward the named objects, works, and institutions that carry the life story. This gives later image selection candidates tied to events rather than to isolated places or occupations.",
-        "why_this_design": "It excludes commemorations because Commons searches that join a person to a place often surface plaques, graves, and statues made after the life instead of images of what the person encountered or made."
+        "what_it_does": "Builds a shared set of Commons searches from the person’s life events, reserving person-name searches for the portrait and directing the rest toward the works, places, and institutions that can illustrate the timeline. It leaves later image selection with candidates tied to what the person did rather than only to their public remembrance.",
+        "why_this_design": "It excludes commemorative searches because Commons keyword results otherwise favor plaques, statues, graves, and other artifacts made after the life over historically relevant images."
       }
     },
     "p_img_verify": {
-      "fingerprint": "39e79f5519032de0",
+      "fingerprint": "655c2e63b6442b8b",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Checks the selected portrait against the person named in the story by examining the image itself. It rejects picks that show a related person, an object, or an unidentifiable group despite metadata that mentions the subject.",
-        "why_this_design": "It treats a failed check as inconclusive so an unavailable verification call cannot discard an otherwise usable portrait; the check only removes clear mismatches introduced by metadata-based matching."
+        "what_it_does": "Checks the selected image itself before it becomes the story’s portrait, rejecting a file when it does not visibly depict the named subject. It corrects errors from the earlier caption-and-filename match, including images that mention the subject but show a spouse, work, or memorial instead.",
+        "why_this_design": "It preserves the existing portrait when the check fails, so an unavailable review cannot discard an otherwise usable selection."
       }
     },
     "p_name_evidence": {
