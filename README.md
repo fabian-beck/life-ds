@@ -30,7 +30,7 @@ The HTML report includes screenshots and viewport audits. Generated reports and 
 
 The site is published by **Netlify**, and the `deploy` branch is the deployment. Netlify watches that branch, builds every update it receives, and serves the result; nothing else publishes. `main` is integrated continuously and stays unpublished until someone advances `deploy`, which is what keeps releasing a deliberate act.
 
-There is no deployment through GitHub Actions. `.github/workflows/checks.yml` lints, builds, and tests on every push and pull request, and a green run of it releases nothing.
+There is no deployment through GitHub Actions. `.github/workflows/checks.yml` lints, builds, and tests every push except the one onto `deploy`, whose tree `main` has already been checked, and a green run of it releases nothing.
 
 ### Publishing a new version
 

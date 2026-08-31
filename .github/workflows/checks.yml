@@ -4,8 +4,19 @@ name: Checks
 # remembered to run it, and the drift that produced was already visible in the
 # tree. These run on every push instead.
 #
+# Three jobs, because they answer different questions and one must not silence
+# another. `checks` and `interface` ask whether the commit is sound — its
+# formatting, types, build, unit tests, and the one browser journey. `data`
+# asks whether the corpus is current, which is a property of generated data
+# rather than of the commit that happens to be pushed: a story renders, it just
+# renders something outdated. Corpus conditions are recorded in
+# `data/outdated.md` and cleared by regenerating with the pipeline, so they can
+# stand for weeks, and while they did they used to fail the one job that also
+# carried lint, build, and the tests — the whole workflow was red for a reason
+# no commit could fix, and every check behind the failing one was skipped.
+#
 # A branch pushed here fires `push`, and opening a pull request from it fires
-# `pull_request` as well, so both jobs used to run twice over the same commit.
+# `pull_request` as well, so the jobs used to run twice over the same commit.
 # The push already covers every branch in this repository — which integrates by
 # pushing to `main` rather than through pull requests — so the `pull_request`
 # trigger is left the one thing a push here cannot reach: a branch in a fork.
@@ -13,32 +24,39 @@ name: Checks
 #
 # Deployment is deliberately not here, and there is no deployment workflow
 # beside it: the site is published by Netlify from the `deploy` branch, so a
-# green run of this workflow releases nothing. See README "Deployment".
+# green run of this workflow releases nothing. See README "Deployment". Pushing
+# `main` onto `deploy` therefore re-checked a tree that had just been checked,
+# which is why `deploy` is the one branch this workflow ignores.
 on:
   push:
+    branches-ignore:
+      - deploy
   pull_request:
 
-# A newer push to the same branch supersedes an older run of this workflow.
+# A newer push to the same branch supersedes an older run of this workflow —
+# except on `main`, where a superseded run means a commit that is already
+# integrated never finished being checked. That is the one branch whose runs
+# have to be allowed to finish.
 concurrency:
   group: checks-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 permissions:
   contents: read
 
 jobs:
   checks:
-    name: Lint, build, and data integrity
+    name: Lint, build, and tests
     runs-on: ubuntu-latest
     if: >-
       github.event_name != 'pull_request'
       || github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -46,7 +64,7 @@ jobs:
       # The floor the scripts support is 3.10, and mypy is configured to check
       # against it whatever interpreter runs here (pyproject.toml, python_version).
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: pip
@@ -68,12 +86,11 @@ jobs:
       # every run writes an entry back — a cache entry is immutable, so a key
       # that never varies is written once and then never updated again.
       #
-      # Restore and save are separate actions because `actions/cache` saves only
-      # when the whole job succeeds, and this job fails on `main` today at the
-      # translation-currency check. A cache written only by a green run would
-      # never be written at all.
+      # Restore and save are separate actions because `actions/cache` saves on
+      # the way out only when the whole job succeeded. A cache that only a green
+      # run can write is one this repository would often not write at all.
       - name: Restore the mypy cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: .mypy_cache
           key: mypy-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'pyproject.toml') }}-${{ github.sha }}
@@ -86,7 +103,7 @@ jobs:
 
       - name: Save the mypy cache
         if: always() && steps.mypy.conclusion != 'skipped'
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: .mypy_cache
           key: mypy-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'pyproject.toml') }}-${{ github.sha }}
@@ -97,25 +114,58 @@ jobs:
       - name: Python tests
         run: python -m pytest
 
-      # Deterministic data-integrity checks. None of them needs an API key, a
-      # model, or the network; each guards a failure that is otherwise silent
-      # in the data — a story renders, it just renders something wrong.
+  data:
+    name: Data integrity
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name != 'pull_request'
+      || github.event.pull_request.head.repo.full_name != github.repository
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # Only the runtime dependencies: these checks read the corpus and none of
+      # them shells out to the black-and-flake8 tooling `checks` installs.
+      - name: Install Python dependencies
+        id: deps
+        run: pip install -r requirements.txt
+
+      # Deterministic checks. None needs an API key, a model, or the network;
+      # each guards a failure that is otherwise silent in the data.
+      #
+      # Every one carries the same condition, so a failing check reports
+      # alongside the others rather than hiding them: steps stop at the first
+      # failure by default, and these are independent questions about the same
+      # corpus. One run should answer all of them. The condition still stands
+      # them down when the dependencies they need never arrived.
       - name: Event-to-chapter assignments
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: python scripts/validate_event_chapters.py
 
       - name: English event titles are English
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: python scripts/validate_event_titles.py
 
       - name: Event dates agree with their descriptions
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: python scripts/validate_event_dates.py
 
       - name: People who lived the same events agree about them
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: python scripts/validate_cross_person_events.py --check
 
       - name: German translations are current
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: python scripts/translate_all_persons.py --target-lang de --check
 
       - name: The technical report matches its source
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: python scripts/generate_report.py --check
 
       # Deliberately not in this list: scripts/validate_source_links.py --check.
@@ -132,10 +182,10 @@ jobs:
       || github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -157,7 +207,7 @@ jobs:
 
       - name: Restore the Chromium build
         id: chromium
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
@@ -175,7 +225,7 @@ jobs:
       # job then fails on is a download the next run would have to repeat.
       - name: Save the Chromium build
         if: always() && steps.chromium-install.conclusion == 'success'
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
@@ -185,7 +235,7 @@ jobs:
 
       - name: Keep the report when something fails
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: playwright-report
           path: playwright-report
