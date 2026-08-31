@@ -439,7 +439,7 @@ def main(argv: Any = None) -> int:
             import os
 
             from openai import OpenAI
-            from translate_person import translate_person_data
+            from translate_person import TRANSLATION_MODEL, translate_person_data
 
             translate_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
             incomplete = []
@@ -449,7 +449,14 @@ def main(argv: Any = None) -> int:
                     person_id=person_id,
                     target_lang=lang,
                     client=translate_client,
-                    model=args.model or DATASET_MODEL,
+                    # The translator's own tier, not the dataset model. A
+                    # payload whose structure the merge enforces is the small
+                    # model's case exactly, and `translate_person.py` says so
+                    # in TRANSLATION_MODEL; passing DATASET_MODEL here
+                    # overrode that silently and ran the documents on the
+                    # reasoning tier. The glossary is unaffected — it takes
+                    # GLOSSARY_MODEL explicitly, whatever this argument says.
+                    model=args.model or TRANSLATION_MODEL,
                     force=True,
                 )
                 if all(results.values()):

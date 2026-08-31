@@ -2734,16 +2734,31 @@ def build_phase2_prompt_base(
     Used for standard events (no classification) and as foundation for class-specific prompts.
     Focus on specific details for THIS event only (NO images - Phase 3).
     """
-    prompt = "Research details for this specific event:\n\n"
-    prompt += f"Title: {event_skeleton.title}\n"
-    prompt += f"Date: {event_skeleton.date}\n"
-    prompt += f"Description: {event_skeleton.description}\n"
-    prompt += f"Subject: {person_name}\n"
+    # The material first, the event last. Every event of a life is researched
+    # against the same article, the same second source and the same task
+    # description, so those blocks are identical across the sixteen or so
+    # calls a person costs, but a provider discounts a repeated prefix only
+    # while nothing varying precedes it, and the four lines naming the event
+    # used to precede all of it. Stated at the end the event also reads as the
+    # question the material has been laid out to answer.
+    event_section = "\n" + "=" * 60 + "\n"
+    event_section += "RESEARCH DETAILS FOR THIS SPECIFIC EVENT:\n"
+    event_section += "=" * 60 + "\n\n"
+    event_section += f"Title: {event_skeleton.title}\n"
+    event_section += f"Date: {event_skeleton.date}\n"
+    event_section += f"Description: {event_skeleton.description}\n"
+    event_section += f"Subject: {person_name}\n"
 
     # Add event class info if present
     if event_skeleton.event_class:
         class_type = event_skeleton.event_class.type
-        prompt += f"Event Class: {class_type}\n"
+        event_section += f"Event Class: {class_type}\n"
+
+    prompt = _subject_article_prompt_section(subject_article)
+
+    # Add Deutsche Biographie context if available
+    if deutsche_biographie_text:
+        prompt += "\n" + deutsche_biographie_text + "\n"
 
     prompt += "\n" + "=" * 60 + "\n"
     prompt += "TASK: Provide the following details for THIS specific event:\n"
@@ -2760,7 +2775,7 @@ def build_phase2_prompt_base(
         [config["display_name"].lower() for config in EVENT_CLASS_CONFIG.values()]
     )
     prompt += f"   - CRITICAL ANTI-REDUNDANCY RULE for CLASSIFIED events ({class_types_str}):\n"
-    prompt += "     * If this event has a classification (see Event Class above), DO NOT describe technical details\n"
+    prompt += "     * If this event has a classification (see Event Class below), DO NOT describe technical details\n"
     prompt += "     * The classification already provides structured metadata - keep description narrative only\n"
     prompt += "     * Focus ONLY on narrative context: where, when, why, with whom\n"
     prompt += "     * Good (classified event): 'In his parents' Berlin apartment, Zuse built the Z1 using scavenged materials.'\n"
@@ -2830,7 +2845,7 @@ def build_phase2_prompt_base(
     prompt += "   - ⚠️ If a term appears multiple times in the description, only annotate the FIRST occurrence\n"
     prompt += "   \n"
     prompt += "   ⛔ CRITICAL PROHIBITION FOR CLASSIFIED EVENTS:\n"
-    prompt += "   - If this event has a classification (see Event Class above), DO NOT annotate the classification subject\n"
+    prompt += "   - If this event has a classification (see Event Class below), DO NOT annotate the classification subject\n"
     prompt += "   - Examples of FORBIDDEN annotations for classified events:\n"
     prompt += "     * ❌ Don't annotate 'Z1', 'Z3' for invention events - classification provides technical details\n"
     prompt += "     * ❌ Don't annotate partner's name for marriage events - use INVOLVED_PEOPLE instead\n"
@@ -2933,17 +2948,18 @@ def build_phase2_prompt_base(
     prompt += format_icon_categories_for_prompt()
     prompt += "\n"
 
-    # Add Deutsche Biographie context if available
-    if deutsche_biographie_text:
-        prompt += "\n" + deutsche_biographie_text + "\n"
-
-    prompt += _subject_article_prompt_section(subject_article)
+    prompt += event_section
 
     return prompt + _related_articles_prompt_section(filtered_related_articles)
 
 
 def _subject_article_prompt_section(subject_article: Optional[Dict[str, Any]]) -> str:
-    """The subject's own article as the primary source, ahead of the related ones."""
+    """The subject's own article as the primary source, ahead of everything else.
+
+    It leads the prompt rather than trailing it: the same article is sent with
+    every event of a life, and a repeated prefix is only discounted while
+    nothing that varies per call precedes it.
+    """
     extract = (subject_article or {}).get("extract", "")
     if not extract:
         return ""
@@ -2953,7 +2969,7 @@ def _subject_article_prompt_section(subject_article: Optional[Dict[str, Any]]) -
     section += "=" * 60 + "\n"
     section += (
         "This is the article the whole story is drawn from. Ground every field "
-        "above in it before reaching for recall or for the related articles: "
+        "you return in it before reaching for recall or for the related articles: "
         "historic and modern location names, involved people, sources, and any "
         "prose you write. Where it and your memory disagree, the article wins.\n\n"
     )

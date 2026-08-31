@@ -79,9 +79,13 @@ class IntrospectionTests(unittest.TestCase):
         self.assertIn("gpt-", research.model_value or "")
         self.assertIn("OPENAI_BULK_MODEL", research.model_value or "")
         self.assertIn("low", research.reasoning_value or "")
+        # The report keeps the larger model and takes the bulk effort: the
+        # sources are supplied, the questions are listed and the shape is
+        # prescribed, so what it needs is recall across a long article rather
+        # than deliberation about what to write.
         report = calls[("generate_event_backgrounds.py", "generate_event_backgrounds")]
         self.assertIn("OPENAI_MODEL", report.model_value or "")
-        self.assertIn("medium", report.reasoning_value or "")
+        self.assertIn("OPENAI_BULK_REASONING_EFFORT", report.reasoning_value or "")
         # The steps working from what those two settled do run on the small
         # model, which resolves through its own environment variable.
         matching = calls[("generate_person_events.py", "match_images_to_events")]

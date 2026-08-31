@@ -40,6 +40,7 @@ from openai import OpenAI
 from pydantic import BaseModel, Field, ValidationError
 
 from config import (
+    BULK_REASONING_EFFORT,
     DEFAULT_MODEL,
     DEFAULT_REASONING_EFFORT,
     enable_utf8_console,
@@ -68,7 +69,14 @@ enable_utf8_console()
 # The report is prose checked by nobody, which is what keeps it off the bulk
 # tier (see config.py): a wrong extraction is caught, a thin report ships.
 REPORT_MODEL = DEFAULT_MODEL
-REPORT_REASONING_EFFORT = DEFAULT_REASONING_EFFORT
+
+# The effort, unlike the tier, can come down. What the report needs from the
+# model is recall across a long article and control of a paragraph, not
+# deliberation: the material is supplied, the questions to answer are listed,
+# and the shape is prescribed to the paragraph. Reasoning was a third of what
+# this step spent and bought a plan for prose that the instructions had
+# already planned.
+REPORT_REASONING_EFFORT = BULK_REASONING_EFFORT
 
 # ``[[term|display]]`` markers are an interface detail; the event is shown to
 # the model as the reader reads it.
@@ -92,7 +100,7 @@ class BackgroundOnly(BaseModel):
     background: Optional[str] = Field(
         None,
         description=(
-            "A background report for this event, 350-550 words in 3-5 "
+            "A background report for this event, 250-350 words in 2-4 "
             "paragraphs separated by blank lines: the situation it sat in, the "
             "concrete specifics, a scene or episode told at length, and what "
             "came of it. One or two '## Section heading' lines may divide it "
@@ -135,16 +143,17 @@ SYSTEM = (
 # cannot get from it.
 REPORT_INSTRUCTIONS = """\
 THE BACKGROUND REPORT:
-- Write 350-550 words, in 3-5 paragraphs, for a curious reader who has finished the
-  description above and wants the story behind it. This is by far the longest thing
+- Write 250-350 words, in 2-4 paragraphs, for a curious reader who has finished the
+  description and wants the story behind it. This is by far the longest thing
   you write here and the only one addressed to a reader rather than to a schema.
-  Aim for the upper end whenever the sources support it: a reader who has chosen to
-  scroll down here has asked for depth, and three thin paragraphs are a let-down
+  Depth here is specificity, not length: a reader who has chosen to scroll down
+  has asked for what the description could not hold, and every sentence that
+  restates it or hedges toward the general spends the budget on nothing
 - Prose. Complete sentences, no bullets, no lists
 - Separate paragraphs with a blank line
 - HEADINGS, where the report turns to a genuinely different thing: a line of its
   own beginning with '## ', two to five words, naming what the paragraphs under it
-  are about. Use one or two in a report of this length, never one per paragraph,
+  are about. Use at most one in a report of this length, never one per paragraph,
   and never above the opening paragraph — the reader has just arrived from the
   event and wants prose, not a table of contents. A report that runs as a single
   argument takes none at all
@@ -693,24 +702,38 @@ def build_report_prompt(
         if connection.get("relationship_description")
     }
 
-    prompt = "Write the background report for this event:\n\n"
-    prompt += f"Title: {event.get('title', '')}\n"
-    prompt += f"Date: {event.get('date', '')}\n"
+    # The material and the rules first, this event last. The reports of one
+    # person are written against the same article, the same second source and
+    # the same instructions, so leading with them leaves a prefix identical
+    # across the calls; the event, the story around it and the articles chosen
+    # for it are what differ, and they follow.
+    event_section = "\n" + "=" * 60 + "\n"
+    event_section += "WRITE THE BACKGROUND REPORT FOR THIS EVENT:\n"
+    event_section += "=" * 60 + "\n\n"
+    event_section += f"Title: {event.get('title', '')}\n"
+    event_section += f"Date: {event.get('date', '')}\n"
     description = _MARKER.sub(r"\1", event.get("description") or "")
-    prompt += f"Description: {description}\n"
-    prompt += f"Subject: {person_name}\n"
+    event_section += f"Description: {description}\n"
+    event_section += f"Subject: {person_name}\n"
 
     panel = _panel_lines(event)
     if panel:
-        prompt += (
+        event_section += (
             "\nThis event is classified, and the interface already presents "
             "these fields in a panel of their own beside the description. "
             "Never repeat them in the report:\n"
         )
-        prompt += "\n".join(panel) + "\n"
+        event_section += "\n".join(panel) + "\n"
+
+    prompt = _subject_article_prompt_section(subject_article)
+
+    if deutsche_biographie_text:
+        prompt += "\n" + deutsche_biographie_text + "\n"
 
     prompt += "\n" + "=" * 60 + "\n"
     prompt += REPORT_INSTRUCTIONS
+
+    prompt += event_section
 
     prompt += build_background_avoidance(
         known_annotations=known,
@@ -720,10 +743,6 @@ def build_report_prompt(
         cited_sources=cited,
     )
 
-    if deutsche_biographie_text:
-        prompt += "\n" + deutsche_biographie_text + "\n"
-
-    prompt += _subject_article_prompt_section(subject_article)
     prompt += _related_articles_prompt_section(filtered)
     return prompt
 

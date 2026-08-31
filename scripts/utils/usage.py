@@ -44,6 +44,7 @@ class CallRecord:
     model: str
     input_tokens: int = 0
     cached_input_tokens: int = 0
+    cache_write_tokens: int = 0
     output_tokens: int = 0
     reasoning_tokens: int = 0
     images: int = 0
@@ -61,6 +62,7 @@ class StepUsage:
     calls: int = 0
     input_tokens: int = 0
     cached_input_tokens: int = 0
+    cache_write_tokens: int = 0
     output_tokens: int = 0
     reasoning_tokens: int = 0
     images: int = 0
@@ -170,6 +172,7 @@ def record_response(
         model=model,
         input_tokens=_count(usage, "input_tokens", "prompt_tokens"),
         cached_input_tokens=_count(input_details, "cached_tokens"),
+        cache_write_tokens=_count(input_details, "cache_write_tokens"),
         output_tokens=_count(usage, "output_tokens", "completion_tokens"),
         reasoning_tokens=_count(output_details, "reasoning_tokens"),
         images=images,
@@ -191,6 +194,7 @@ def by_step() -> List[StepUsage]:
         row.calls += 1
         row.input_tokens += record.input_tokens
         row.cached_input_tokens += record.cached_input_tokens
+        row.cache_write_tokens += record.cache_write_tokens
         row.output_tokens += record.output_tokens
         row.reasoning_tokens += record.reasoning_tokens
         row.images += record.images
@@ -206,6 +210,7 @@ def totals() -> StepUsage:
         total.calls += row.calls
         total.input_tokens += row.input_tokens
         total.cached_input_tokens += row.cached_input_tokens
+        total.cache_write_tokens += row.cache_write_tokens
         total.output_tokens += row.output_tokens
         total.reasoning_tokens += row.reasoning_tokens
         total.images += row.images
@@ -224,6 +229,7 @@ def as_dict() -> Dict[str, Any]:
             "calls": row.calls,
             "input_tokens": row.input_tokens,
             "cached_input_tokens": row.cached_input_tokens,
+            "cache_write_tokens": row.cache_write_tokens,
             "output_tokens": row.output_tokens,
             "reasoning_tokens": row.reasoning_tokens,
             "images": row.images,
@@ -241,6 +247,7 @@ def as_dict() -> Dict[str, Any]:
                 "model": record.model,
                 "input_tokens": record.input_tokens,
                 "cached_input_tokens": record.cached_input_tokens,
+                "cache_write_tokens": record.cache_write_tokens,
                 "output_tokens": record.output_tokens,
                 "reasoning_tokens": record.reasoning_tokens,
                 "images": record.images,
@@ -260,13 +267,23 @@ def format_report() -> str:
     if not rows:
         return "No model calls were recorded."
 
-    header = ("Step", "Calls", "Input", "Cached", "Output", "Reasoning", "Images")
+    header = (
+        "Step",
+        "Calls",
+        "Input",
+        "Cached",
+        "Written",
+        "Output",
+        "Reasoning",
+        "Images",
+    )
     body = [
         (
             row.step,
             _thousands(row.calls),
             _thousands(row.input_tokens),
             _thousands(row.cached_input_tokens),
+            _thousands(row.cache_write_tokens),
             _thousands(row.output_tokens),
             _thousands(row.reasoning_tokens),
             _thousands(row.images),

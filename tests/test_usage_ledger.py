@@ -19,13 +19,15 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from utils import usage  # noqa: E402
 
 
-def response(input_tokens=0, output_tokens=0, cached=0, reasoning=0):
+def response(input_tokens=0, output_tokens=0, cached=0, reasoning=0, written=0):
     """A stand-in for a Responses API result, shaped like the real one."""
     return SimpleNamespace(
         usage=SimpleNamespace(
             input_tokens=input_tokens,
             output_tokens=output_tokens,
-            input_tokens_details=SimpleNamespace(cached_tokens=cached),
+            input_tokens_details=SimpleNamespace(
+                cached_tokens=cached, cache_write_tokens=written
+            ),
             output_tokens_details=SimpleNamespace(reasoning_tokens=reasoning),
         )
     )
@@ -77,6 +79,17 @@ class UsageLedgerTests(unittest.TestCase):
         )
         row = usage.by_step()[0]
         self.assertEqual((row.input_tokens, row.output_tokens), (11, 4))
+
+    def test_a_cached_prefix_is_counted_apart_from_the_write_that_filled_it(self):
+        usage.begin_step("Life events")
+        usage.record_response("model-a", response(16_000, 300, written=15_000))
+        usage.record_response("model-a", response(16_000, 300, cached=15_000))
+
+        row = usage.by_step()[0]
+        self.assertEqual(row.input_tokens, 32_000)
+        self.assertEqual(row.cache_write_tokens, 15_000)
+        self.assertEqual(row.cached_input_tokens, 15_000)
+        self.assertIn("Written", usage.format_report())
 
     def test_totals_add_the_steps_up(self):
         usage.begin_step("Life events")

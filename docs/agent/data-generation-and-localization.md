@@ -51,7 +51,9 @@ This runs the whole pipeline: the three generators, the portrait and chapter art
 
 **What the run consumed**:
 
-Every model call the pipeline makes is recorded by `scripts/utils/usage.py` and attributed to the step that was open when it was made, and a run ends by printing one row per step: calls, input tokens, cached input tokens, output tokens, reasoning tokens, and images. `--usage-json PATH` writes the same ledger, plus one entry per individual call, as JSON. The ledger counts tokens and images only. Rates for the configured models are not part of this repository, so a run states what it consumed and not what it cost.
+Every model call the pipeline makes is recorded by `scripts/utils/usage.py` and attributed to the step that was open when it was made, and a run ends by printing one row per step: calls, input tokens, input tokens served from the provider's prefix cache, input tokens written to it, output tokens, reasoning tokens, and images. `--usage-json PATH` writes the same ledger, plus one entry per individual call, as JSON. The ledger counts tokens and images only. Rates for the configured models are not part of this repository, so a run states what it consumed and not what it cost.
+
+The prompts of the repeated steps are ordered for that cache: the subject's article, the second biographical source, and the task description lead, and the event being researched follows them, because a repeated prefix is discounted only while nothing that varies per call precedes it. A step whose prompt changes shape should keep that order.
 
 A call made outside any step appears under `Unattributed`, which is how a generator invoked on its own reports, and how a missing `usage.begin_step` in the orchestrator would show up.
 
