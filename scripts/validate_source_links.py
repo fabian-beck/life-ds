@@ -34,6 +34,8 @@ from urllib.parse import unquote, urlsplit
 
 import requests
 
+from utils.http import QueryParams
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PEOPLE_DIR = REPO_ROOT / "data" / "people"
 USER_AGENT = "life-ds-data-generator/1.0 (+https://github.com/fabian-beck/life-ds)"
@@ -168,15 +170,16 @@ def existing_titles(host: str, titles: List[str]) -> Set[str]:
     """
     resolved: Set[str] = set()
     for batch in _batched(titles, BATCH_SIZE):
+        params: QueryParams = {
+            "action": "query",
+            "format": "json",
+            "redirects": 1,
+            "titles": "|".join(batch),
+        }
         try:
             response = requests.get(
                 f"https://{host}/w/api.php",
-                params={
-                    "action": "query",
-                    "format": "json",
-                    "redirects": 1,
-                    "titles": "|".join(batch),
-                },
+                params=params,
                 headers=_headers(),
                 timeout=30,
             )
@@ -278,16 +281,17 @@ def is_confident(requested: str, suggested: str) -> bool:
 
 def search_replacement(host: str, title: str) -> Optional[str]:
     """The article a search for this title lands on, if any."""
+    params: QueryParams = {
+        "action": "query",
+        "format": "json",
+        "list": "search",
+        "srsearch": title,
+        "srlimit": 2,
+    }
     try:
         response = requests.get(
             f"https://{host}/w/api.php",
-            params={
-                "action": "query",
-                "format": "json",
-                "list": "search",
-                "srsearch": title,
-                "srlimit": 2,
-            },
+            params=params,
             headers=_headers(),
             timeout=30,
         )

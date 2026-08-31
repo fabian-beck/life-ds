@@ -20,6 +20,7 @@ from openai import APIStatusError, OpenAI
 from PIL import Image, ImageOps
 
 from utils import usage
+from utils.http import QueryParams
 from utils.registry import Registry
 from utils.text import slugify
 
@@ -103,18 +104,19 @@ def get_wikimedia_thumbnail_url(
     filename = path_parts[-2] if "/thumb/" in parsed.path else path_parts[-1]
     filename = unquote(filename)
 
+    params: QueryParams = {
+        "action": "query",
+        "format": "json",
+        "prop": "imageinfo",
+        "iiprop": "url",
+        "iiurlwidth": max_dimensions[0],
+        "iiurlheight": max_dimensions[1],
+        "titles": f"File:{filename}",
+    }
     try:
         response = requests.get(
             "https://commons.wikimedia.org/w/api.php",
-            params={
-                "action": "query",
-                "format": "json",
-                "prop": "imageinfo",
-                "iiprop": "url",
-                "iiurlwidth": max_dimensions[0],
-                "iiurlheight": max_dimensions[1],
-                "titles": f"File:{filename}",
-            },
+            params=params,
             headers={
                 "User-Agent": (
                     "life-ds-portrait-generator/1.0 "

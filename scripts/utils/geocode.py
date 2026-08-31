@@ -33,6 +33,7 @@ from typing import Any, Dict, List, Optional, Set
 
 import requests
 
+from .http import QueryParams
 from .wikipedia_cache import wikipedia_headers
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
@@ -163,16 +164,17 @@ def _request_geocoder(query: str) -> Optional[List[Dict[str, Any]]]:
     Returns the result list, or None when every attempt failed — a failure that
     says nothing about whether the place exists, so it is not cached as a miss.
     """
+    params: QueryParams = {
+        "q": query,
+        "format": "jsonv2",
+        "limit": GEOCODER_MAX_RESULTS,
+    }
     for attempt in range(1, GEOCODER_MAX_ATTEMPTS + 1):
         try:
             _throttle_geocoder()
             response = requests.get(
                 GEOCODER_ENDPOINT,
-                params={
-                    "q": query,
-                    "format": "jsonv2",
-                    "limit": GEOCODER_MAX_RESULTS,
-                },
+                params=params,
                 timeout=30,
                 headers=geocoder_headers(),
             )

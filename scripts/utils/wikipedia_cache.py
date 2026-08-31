@@ -10,6 +10,8 @@ from urllib.parse import unquote, urlparse
 
 import requests
 
+from .http import QueryParams
+
 # Constants from generate_person_dataset.py
 MEDIAWIKI_API = "https://en.wikipedia.org/w/api.php"
 MEDIAWIKI_API_DE = "https://de.wikipedia.org/w/api.php"
@@ -51,7 +53,7 @@ def wikipedia_search_titles(query: str, limit: int = 5) -> List[str]:
     Three generation scripts carried byte-identical copies of this; it lives
     here so a change to how titles are ranked reaches all of them.
     """
-    params = {
+    params: QueryParams = {
         "action": "query",
         "format": "json",
         "list": "search",
@@ -245,7 +247,7 @@ def _strip_html_tags(value: str) -> str:
 
 def _fetch_wikipedia_page_from_api(title: str, api_url: str) -> Dict[str, Any]:
     """Fetch Wikipedia page data from a specific API endpoint."""
-    params = {
+    params: QueryParams = {
         "action": "query",
         "format": "json",
         "prop": "extracts|pageimages|info|images",
@@ -371,7 +373,7 @@ def _fetch_commons_images_direct(
     """Fetch Commons images directly from API."""
     try:
         # Search Commons for images related to the person
-        params = {
+        params: QueryParams = {
             "action": "query",
             "format": "json",
             "list": "search",
@@ -406,7 +408,7 @@ def _fetch_commons_images_direct(
         # Process in chunks of 50
         for i in range(0, len(file_titles), 50):
             chunk = file_titles[i : i + 50]
-            params = {
+            detail_params: QueryParams = {
                 "action": "query",
                 "format": "json",
                 "prop": "imageinfo",
@@ -417,7 +419,7 @@ def _fetch_commons_images_direct(
             try:
                 response = requests.get(
                     COMMONS_API,
-                    params=params,
+                    params=detail_params,
                     timeout=30,
                     headers=wikipedia_headers(),
                 )

@@ -11,6 +11,7 @@ from openai import OpenAI
 from pydantic import BaseModel, Field
 
 from config import BULK_MODEL, LOW_REASONING_EFFORT
+from utils.http import QueryParams
 from utils.model_calls import parse_structured
 from utils.text import slugify
 from utils.wikipedia_cache import (
@@ -65,7 +66,7 @@ def find_wikipedia_page(title: str) -> str:
 
 def fetch_page_links(title: str, limit: int = 500) -> List[str]:
     """Fetch outgoing links from a Wikipedia page."""
-    params = {
+    params: QueryParams = {
         "action": "query",
         "format": "json",
         "prop": "links",
@@ -274,7 +275,7 @@ def fetch_related_articles(
 
     try:
         # Also fetch links from German version
-        params = {
+        params: QueryParams = {
             "action": "query",
             "format": "json",
             "prop": "links",

@@ -48,6 +48,7 @@ from icon_categories import (
     normalize_icon,
 )
 from utils.geocode import geocode_location
+from utils.http import QueryParams
 from utils.registry import Registry
 from utils.model_calls import (
     get_client,
@@ -1538,7 +1539,7 @@ def search_wikimedia_commons(query: str, limit: int = 10) -> List[Dict[str, Any]
     """
     api_url = "https://commons.wikimedia.org/w/api.php"
 
-    params = {
+    params: QueryParams = {
         "action": "query",
         "format": "json",
         "generator": "search",
@@ -1645,7 +1646,7 @@ def search_openverse(query: str, limit: int = 10) -> List[Dict[str, Any]]:
     """
     api_url = "https://api.openverse.org/v1/images/"
 
-    params = {
+    params: QueryParams = {
         "q": query,
         "page_size": limit,
         # Filter for licenses that allow reuse

@@ -15,6 +15,7 @@ from openai import OpenAI
 from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
+from utils.http import QueryParams
 from utils.model_calls import parse_structured_or_raise
 from utils.registry import Registry
 from utils.relationship_vocabulary import (
@@ -178,7 +179,7 @@ def _fetch_wikipedia_page(title: str, lang: Optional[str] = None) -> Dict[str, A
     language = lang or "en"
     api_url = f"https://{language}.wikipedia.org/w/api.php"
 
-    params = {
+    params: QueryParams = {
         "action": "query",
         "format": "json",
         "prop": "extracts|info",
