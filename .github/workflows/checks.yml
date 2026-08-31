@@ -2,7 +2,14 @@ name: Checks
 
 # Every check this repository owns used to run only when a person or an agent
 # remembered to run it, and the drift that produced was already visible in the
-# tree. These run on every push and every pull request instead.
+# tree. These run on every push instead.
+#
+# A branch pushed here fires `push`, and opening a pull request from it fires
+# `pull_request` as well, so both jobs used to run twice over the same commit.
+# The push already covers every branch in this repository — which integrates by
+# pushing to `main` rather than through pull requests — so the `pull_request`
+# trigger is left the one thing a push here cannot reach: a branch in a fork.
+# The `if` on each job below is what draws that line; the trigger itself cannot.
 #
 # Deployment is deliberately not here, and there is no deployment workflow
 # beside it: the site is published by Netlify from the `deploy` branch, so a
@@ -23,6 +30,9 @@ jobs:
   checks:
     name: Lint, build, and data integrity
     runs-on: ubuntu-latest
+    if: >-
+      github.event_name != 'pull_request'
+      || github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
@@ -51,6 +61,19 @@ jobs:
 
       - name: Formatting and lint
         run: npm run validate
+
+      # mypy from cold spends about ten seconds re-analyzing dependencies that
+      # did not change; it invalidates its own entries by file hash, so the
+      # cache only has to be present, not fresh. The key carries the commit so
+      # every run writes an entry back — a cache entry is immutable, so a key
+      # that never varies is written once and then never updated again.
+      - name: Restore the mypy cache
+        uses: actions/cache@v4
+        with:
+          path: .mypy_cache
+          key: mypy-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'pyproject.toml') }}-${{ github.sha }}
+          restore-keys: |
+            mypy-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'pyproject.toml') }}-
 
       - name: Python types
         run: npm run type-check:py
@@ -91,6 +114,9 @@ jobs:
   interface:
     name: Interface tests
     runs-on: ubuntu-latest
+    if: >-
+      github.event_name != 'pull_request'
+      || github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
@@ -106,8 +132,30 @@ jobs:
 
       # Only Chromium: playwright.config.js runs the logic project without a
       # browser at all and the smoke test against a Pixel 7.
+      #
+      # The build is keyed by the Playwright version rather than by the
+      # lockfile, since that is what decides which revision `install` fetches.
+      # A hit still runs `install-deps`, which is the apt half of `--with-deps`:
+      # the cache carries the browser, not the system libraries it links.
+      - name: Read the Playwright version
+        id: playwright
+        run: |
+          echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Restore the Chromium build
+        id: chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+
       - name: Install Chromium for Playwright
+        if: steps.chromium.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
+
+      - name: Install the libraries Chromium links
+        if: steps.chromium.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
 
       - name: Interface tests
         run: npm run test:interface

@@ -9,6 +9,7 @@ presentation.
 
 from __future__ import annotations
 
+import functools
 import json
 import re
 import sys
@@ -24,7 +25,7 @@ from pipeline_docs import bibliography, concepts  # noqa: E402
 from pipeline_docs import facts as facts_module  # noqa: E402
 from pipeline_docs import render, report, screenshots  # noqa: E402
 from pipeline_docs import spec, summarize, teaser, validate  # noqa: E402
-from pipeline_docs.introspect import scan_codebase, scan_script  # noqa: E402
+from pipeline_docs.introspect import Codebase, scan_codebase, scan_script  # noqa: E402
 from pipeline_docs.model import build_payload  # noqa: E402
 
 REPORT_SOURCE = REPO_ROOT / "docs" / "report" / "report.md"
@@ -32,12 +33,26 @@ REFERENCES = REPO_ROOT / "docs" / "report" / "references.bib"
 ASSETS = SCRIPTS_DIR / "pipeline_docs" / "assets"
 
 
+@functools.lru_cache(maxsize=None)
+def _codebase() -> Codebase:
+    """The one scan every test in this file reads.
+
+    `scan_codebase` parses every generation script with `ast` on each call, at a
+    third of a second, and its answer cannot change while the tests run. The 97
+    unmemoized calls this file used to make were its whole runtime, and most of
+    the Python suite's.
+
+    Nothing here mutates what it returns, and nothing may.
+    """
+    return scan_codebase()
+
+
 class IntrospectionTests(unittest.TestCase):
     """The static layer must read real facts out of the real scripts."""
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.codebase = scan_codebase()
+        cls.codebase = _codebase()
 
     def test_finds_every_generation_script(self) -> None:
         for name in (
@@ -215,7 +230,7 @@ class DriftCheckTests(unittest.TestCase):
     """The check has to fail loudly, or documenting the pipeline is pointless."""
 
     def setUp(self) -> None:
-        self.codebase = scan_codebase()
+        self.codebase = _codebase()
         self.original_steps = list(spec.STEPS)
 
     def tearDown(self) -> None:
@@ -259,7 +274,7 @@ class WrittenExplanationTests(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        self.codebase = scan_codebase()
+        self.codebase = _codebase()
         self.step = next(item for item in spec.STEPS if item.id == "p_style")
 
     def _summaries(self, text: str, source: str = "gpt-5.6-terra") -> dict:
@@ -316,7 +331,7 @@ class ExplanationFreshnessTests(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        self.codebase = scan_codebase()
+        self.codebase = _codebase()
         self.step = next(item for item in spec.STEPS if item.id == "p_style")
 
     def _cache(self, fingerprint: str) -> Path:
@@ -593,7 +608,7 @@ class PayloadAndRenderTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        codebase = scan_codebase()
+        codebase = _codebase()
         cls.payload = build_payload(codebase, summaries={})
 
     def test_payload_covers_every_step(self) -> None:
@@ -698,7 +713,7 @@ class PayloadAndRenderTests(unittest.TestCase):
         )
 
     def test_payload_carries_the_report_structure_the_sidebar_needs(self) -> None:
-        codebase = scan_codebase()
+        codebase = _codebase()
         facts = facts_module.collect(codebase)
         document = report.compile_report(
             REPORT_SOURCE.read_text(encoding="utf-8"), facts
@@ -769,7 +784,7 @@ class PayloadAndRenderTests(unittest.TestCase):
             )
 
     def test_the_rendered_page_embeds_the_authored_body(self) -> None:
-        codebase = scan_codebase()
+        codebase = _codebase()
         facts = facts_module.collect(codebase)
         document = report.compile_report(
             REPORT_SOURCE.read_text(encoding="utf-8"), facts
@@ -790,7 +805,7 @@ class PayloadAndRenderTests(unittest.TestCase):
 
     def test_the_title_block_names_the_authors_without_scripting(self) -> None:
         """The byline is served HTML: no reader should have to run JS for it."""
-        codebase = scan_codebase()
+        codebase = _codebase()
         facts = facts_module.collect(codebase)
         document = report.compile_report(
             REPORT_SOURCE.read_text(encoding="utf-8"), facts
@@ -809,7 +824,7 @@ class PayloadAndRenderTests(unittest.TestCase):
 
 
 def _facts() -> dict:
-    return facts_module.collect(scan_codebase())
+    return facts_module.collect(_codebase())
 
 
 def _compile(source: str, facts: dict | None = None) -> report.Document:
@@ -1345,7 +1360,7 @@ class ReportSourceTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.codebase = scan_codebase()
+        cls.codebase = _codebase()
         cls.facts = facts_module.collect(cls.codebase)
         cls.document = report.compile_report(
             REPORT_SOURCE.read_text(encoding="utf-8"), cls.facts
@@ -1589,7 +1604,7 @@ class ScreenshotTests(unittest.TestCase):
             )
 
     def test_the_report_ships_the_pictures_it_declares(self) -> None:
-        codebase = scan_codebase()
+        codebase = _codebase()
         document = report.compile_report(
             REPORT_SOURCE.read_text(encoding="utf-8"),
             facts_module.collect(codebase),
@@ -1830,7 +1845,7 @@ class TeaserTests(unittest.TestCase):
         )
         problems = [
             problem
-            for problem in validate.check_report(document, facts, scan_codebase())
+            for problem in validate.check_report(document, facts, _codebase())
             if problem.severity == "error" and "teaser" in problem.message
         ]
         self.assertTrue(problems)
@@ -1853,7 +1868,7 @@ class TeaserTests(unittest.TestCase):
         self.assertEqual(teaser_mount.figure_start, 1)
 
     def test_the_scene_travels_in_the_payload(self) -> None:
-        codebase = scan_codebase()
+        codebase = _codebase()
         payload = build_payload(codebase, {})
         self.assertEqual(
             [part["id"] for part in payload["teaser"]["parts"]],
@@ -1882,7 +1897,7 @@ class ConceptTests(unittest.TestCase):
             )
 
     def test_the_payload_carries_the_vocabulary_but_no_paths(self) -> None:
-        payload = build_payload(scan_codebase(), {})
+        payload = build_payload(_codebase(), {})
         self.assertEqual(
             [concept["id"] for concept in payload["concepts"]],
             concepts.concept_ids(),
@@ -1899,7 +1914,7 @@ class ConceptTests(unittest.TestCase):
         scripts are exempt: those are the source quoted as it stands, and
         rewriting a quotation to avoid a filename would make it a paraphrase.
         """
-        payload = build_payload(scan_codebase(), {})
+        payload = build_payload(_codebase(), {})
         authored = json.dumps(
             [
                 payload["artifacts"],
@@ -1936,7 +1951,7 @@ class FactTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.facts = facts_module.collect(scan_codebase())
+        cls.facts = facts_module.collect(_codebase())
 
     def test_every_fact_has_a_display_value_and_a_source(self) -> None:
         self.assertTrue(self.facts)
