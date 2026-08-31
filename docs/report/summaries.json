@@ -209,11 +209,11 @@
       }
     },
     "p_img_fetch": {
-      "fingerprint": "daf4ce52ab09c1d4",
+      "fingerprint": "97ea038931f003a0",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Searches image archives with both broad person queries and event-specific queries, returning one deduplicated pool of image candidates. It marks images found through event searches so later matching can connect them to the event that prompted the search.",
-        "why_this_design": "It searches event queries first and keeps the first copy of a URL, preserving event provenance when the same image appears in broader results; it limits those targeted searches to the archive best suited to named objects while using the second source to broaden person searches."
+        "what_it_does": "Searches two public image collections for the broad person queries and for event-specific queries, then returns one candidate record per image URL. It marks images found through event searches so the later matcher can connect them to the event that prompted the search.",
+        "why_this_design": "It searches event queries first and keeps their Commons result when URLs overlap, preserving event evidence while using the second collection to widen the less specific person search."
       }
     },
     "p_img_filter": {

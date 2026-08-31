@@ -21,7 +21,7 @@ from unittest.mock import Mock, patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from events.images.scoring import calculate_image_quality_score  # noqa: E402
-from generate_person_events import search_openverse  # noqa: E402
+from events.images.sources import search_openverse  # noqa: E402
 
 # The response shape the Openverse API actually returns, one item per case the
 # search must handle: a Commons duplicate, a Flickr photograph without size or
@@ -69,7 +69,7 @@ def _search() -> list:
     response = Mock()
     response.json.return_value = {"results": API_RESULTS}
     response.raise_for_status.return_value = None
-    with patch("generate_person_events.requests.get", return_value=response):
+    with patch("events.images.sources.requests.get", return_value=response):
         return search_openverse("Emmy Noether")
 
 

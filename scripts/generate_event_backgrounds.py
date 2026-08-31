@@ -46,6 +46,7 @@ from config import (
     enable_utf8_console,
 )
 from events.images.scoring import filter_images_by_quality
+from events.images.sources import search_wikimedia_commons
 from generate_person_events import (
     CLASSIFICATION_MODELS,
     PEOPLE_DIR,
@@ -55,7 +56,6 @@ from generate_person_events import (
     _related_articles_prompt_section,
     _subject_article_prompt_section,
     filter_related_articles_for_event,
-    search_wikimedia_commons,
 )
 from utils.datasets import person_ids
 from utils.deutsche_biographie import format_for_prompt, get_cached_deutsche_biographie

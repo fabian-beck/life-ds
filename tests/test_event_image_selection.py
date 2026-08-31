@@ -23,6 +23,7 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import generate_person_events as pipeline  # noqa: E402
+from events.images import sources  # noqa: E402
 
 SKELETONS = [
     pipeline.EventSkeleton(
@@ -162,9 +163,13 @@ class BatchSearchTests(unittest.TestCase):
         return []
 
     def _search(self, commons, event_queries) -> List[Dict[str, Any]]:
+        # Patched where the searches are defined, not where they are called:
+        # `execute_batch_image_search` reaches them through the `sources`
+        # module, so the substitutions survive that caller moving into the
+        # events package as the split proceeds.
         with (
-            mock.patch.object(pipeline, "search_wikimedia_commons", commons),
-            mock.patch.object(pipeline, "search_openverse", self._openverse),
+            mock.patch.object(sources, "search_wikimedia_commons", commons),
+            mock.patch.object(sources, "search_openverse", self._openverse),
         ):
             return pipeline.execute_batch_image_search(
                 ["Alan Turing"], event_queries=event_queries
