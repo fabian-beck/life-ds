@@ -22,6 +22,7 @@ life-ds/
 │       ├── PersonCard.svelte # Portrait card linking to a person's story
 │       ├── MetaStoryOrnament.svelte # Meta story rule/divider/end mark (SVG)
 │       └── ImageViewer.svelte # Lightbox for event images
+│   └── evaluation/          # The user-evaluation deployment: participant gate, logger, analysis page
 │   └── utils/
 │       ├── story/           # One module per cluster of story helpers: dates,
 │       │                    # geo, color, eventIcons, images, personMatching,

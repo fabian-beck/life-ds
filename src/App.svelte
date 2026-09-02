@@ -23,6 +23,8 @@
   } from "./utils/localizedData.js";
   import { displayName } from "./utils/helpers.js";
   import { parseHexColor } from "./utils/story/color.js";
+  import { evaluationMode } from "./evaluation/log.js";
+  import { participant, setParticipant } from "./evaluation/participant.js";
 
   // Initial registry (will be replaced with language-specific version)
   let registry = { people: [] };
@@ -146,6 +148,40 @@
       metaStories = [];
     }
   }
+
+  // The evaluation deployment: a gate before the first view, and the logger
+  // once the reader has a name. Both modules are loaded only when this build is
+  // the evaluation one; everywhere else the condition is a constant, the
+  // imports never run, and the ordinary site carries neither.
+  let EvaluationGate = null;
+  onMount(() => {
+    // The literal comparison, not the exported constant: Vite substitutes the
+    // variable at build time, so the branch folds away and the two chunks
+    // behind these imports are not even emitted for the ordinary site.
+    if (import.meta.env.VITE_EVALUATION_MODE !== "1") return undefined;
+    import("./evaluation/EvaluationGate.svelte").then((module) => {
+      EvaluationGate = module.default;
+    });
+    let stopLogging = null;
+    let activeParticipant = null;
+    const unsubscribe = participant.subscribe((id) => {
+      activeParticipant = id;
+      if (stopLogging) {
+        stopLogging();
+        stopLogging = null;
+      }
+      if (!id) return;
+      import("./evaluation/logger.js").then((module) => {
+        // The reader may have changed the id again while the chunk loaded.
+        if (activeParticipant !== id || stopLogging) return;
+        stopLogging = module.startLogging(id);
+      });
+    });
+    return () => {
+      unsubscribe();
+      if (stopLogging) stopLogging();
+    };
+  });
 
   // Reload registry and meta stories when language changes
   onMount(() => {
@@ -648,6 +684,10 @@
     />
   {/if}
 </div>
+
+{#if evaluationMode && EvaluationGate && !$participant}
+  <svelte:component this={EvaluationGate} onSubmit={setParticipant} />
+{/if}
 
 <style>
   :global(body) {

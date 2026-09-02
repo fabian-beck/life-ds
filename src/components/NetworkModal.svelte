@@ -7,6 +7,7 @@
   import { _ } from "../stores/language";
   import { dialog } from "../utils/dialog.js";
   import { storyStyleVars } from "../utils/helpers.js";
+  import { logEvent } from "../evaluation/log.js";
   import {
     escapeRegex,
     normalizeFamilyRole,
@@ -607,6 +608,11 @@
     } else {
       visiblePersonInfo = personKey;
     }
+    logEvent("story.person_info", {
+      key: personKey,
+      open: visiblePersonInfo === personKey,
+      where: "network",
+    });
   }
 
   function handleClickOutside(event) {

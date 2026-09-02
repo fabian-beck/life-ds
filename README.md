@@ -57,6 +57,10 @@ Notes:
 - `public/` is currently ~141 MB, most of it generated portraits, and all of it is published. It is worth watching against whatever storage and bandwidth the hosting plan allows.
 - The basemap is served from the site's own origin and relies on HTTP range requests. If the map fails to load with a byte-serving error, point `VITE_PROTOMAPS_PM_TILES_URL` at an external host (see "Basemap" below); the map degrades to a message rather than breaking the page.
 
+### The user-evaluation deployment
+
+A second deployment of the same site, built from the `deploy-evaluation` branch in Vite's `evaluation` mode, asks each reader for a participant ID, logs their interactions to Netlify Blobs through a Netlify Function, and serves an analysis page at `/analysis/` with a report per participant and one across all of them. Publishing it is `git push origin origin/main:deploy-evaluation`, once the branch is enabled under the site's branch deploys; nothing of it is in the ordinary `deploy` build. See [User evaluation](docs/agent/user-evaluation.md).
+
 ## Routing
 
 The application supports URL-based routing, allowing you to:

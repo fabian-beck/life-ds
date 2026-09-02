@@ -28,6 +28,8 @@
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
   import PrivacyModal from "./PrivacyModal.svelte";
   import SeparatedList from "./SeparatedList.svelte";
+  import { evaluationMode, logEvent } from "../evaluation/log.js";
+  import { participant, clearParticipant } from "../evaluation/participant.js";
   // LandingMap is imported on demand where it is rendered: it pulls in MapLibre
   // and its basemap dependencies (~1.1 MB), and the map starts collapsed.
 
@@ -97,6 +99,7 @@
 
   function toggleExplanation() {
     showExplanation = !showExplanation;
+    logEvent("landing.ai_modal", { open: showExplanation });
   }
 
   function closeExplanation() {
@@ -105,6 +108,26 @@
 
   function openPrivacy() {
     showPrivacy = true;
+    logEvent("landing.privacy", { open: true });
+  }
+
+  function toggleMap() {
+    showMap = !showMap;
+    logEvent("landing.map", { shown: showMap });
+  }
+
+  // The evaluation log gets the search once typing pauses, never a keystroke.
+  let searchLogTimer = null;
+  let lastLoggedSearch = "";
+  $: scheduleSearchLog(searchQuery);
+  function scheduleSearchLog(query) {
+    clearTimeout(searchLogTimer);
+    searchLogTimer = setTimeout(() => {
+      const trimmed = String(query ?? "").trim();
+      if (trimmed === lastLoggedSearch) return;
+      lastLoggedSearch = trimmed;
+      logEvent("landing.search", { query: trimmed });
+    }, 600);
   }
 
   function closePrivacy() {
@@ -175,6 +198,10 @@
       activeTags.add(normalizedTag);
     }
     activeTags = new Set(activeTags); // Trigger reactivity
+    logEvent("landing.filter", {
+      tag: normalizedTag,
+      active: activeTags.has(normalizedTag),
+    });
   }
 
   $: activeMetaStoryFilter = activeCollectionId
@@ -185,6 +212,7 @@
     searchQuery = "";
     activeTags = new Set();
     activeCollectionId = null;
+    logEvent("landing.filters_clear", {});
   }
 
   function setsEqual(left, right) {
@@ -493,6 +521,10 @@
     if (!id) return;
     // Remembered before the route changes: this card is about to be unmounted.
     rememberFocusTrigger(trigger);
+    logEvent("landing.select_person", {
+      id,
+      via: trigger?.classList?.contains("person-card") ? "card" : "carousel",
+    });
     onSelectPerson({ detail: id });
   }
 
@@ -503,10 +535,15 @@
     // Clear search query and tag filters when filtering by meta story
     searchQuery = "";
     activeTags = new Set();
+    logEvent("landing.collection_filter", {
+      id: metaStory.id,
+      active: activeCollectionId === metaStory.id,
+    });
   }
 
   function handleExploreMetaStory(metaStory, trigger) {
     rememberFocusTrigger(trigger);
+    logEvent("landing.explore_collection", { id: metaStory.id });
     // Navigate to meta story view, carrying the filters the reader set here so
     // that closing the collection puts this page back the way they left it.
     push(
@@ -712,7 +749,7 @@
       <button
         class="map-toggle-button"
         class:active={showMap}
-        on:click={() => (showMap = !showMap)}
+        on:click={toggleMap}
         aria-label={showMap ? $_("landing.hide_map") : $_("landing.show_map")}
         aria-expanded={showMap}
         aria-controls="event-map-panel"
@@ -744,6 +781,10 @@
             {filteredEntries}
             {getStyle}
             onNavigate={(detail) => {
+              logEvent("landing.map_select", {
+                id: detail.personId,
+                event: detail.eventIndex ?? null,
+              });
               const lang = $currentLanguage;
               const fromLanding = landingFilterQuery($querystring);
               push(
@@ -879,6 +920,14 @@
     >
       {$_("landing.privacy_label")}
     </button>
+    {#if evaluationMode && $participant}
+      <p class="evaluation-participant">
+        <span>{$_("evaluation.participant_label", { id: $participant })}</span>
+        <button class="privacy-link" on:click={clearParticipant}>
+          {$_("evaluation.change_participant")}
+        </button>
+      </p>
+    {/if}
   </footer>
 </section>
 
@@ -1663,6 +1712,15 @@
     display: flex;
     justify-content: center;
     padding-top: 2.5rem;
+  }
+
+  .evaluation-participant {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    justify-content: center;
+    margin: 0.5rem 0 0;
+    font-size: 0.8rem;
   }
 
   .privacy-link {

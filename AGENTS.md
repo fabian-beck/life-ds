@@ -21,6 +21,7 @@ Detailed project information is intentionally kept out of this always-loaded fil
 - [Project structure and UI](docs/agent/project-structure-and-ui.md)
 - [Data generation and localization](docs/agent/data-generation-and-localization.md)
 - [Development reference](docs/agent/development-reference.md)
+- [User evaluation](docs/agent/user-evaluation.md): the evaluation deployment, its interaction logging, and the analysis page
 
 `docs/report/index.html` is a generated, interactive technical report on the system—data model, both generation pipelines and their steps, the application, localization, and testing. Open it to orient yourself before changing a generation script.
 

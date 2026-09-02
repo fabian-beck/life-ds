@@ -1,8 +1,16 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { copyFileSync, mkdirSync, readdirSync, readFileSync } from "fs";
-import { resolve } from "path";
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from "fs";
+import { dirname, resolve } from "path";
 import * as mdiExports from "@mdi/js";
+import { createEvaluationApi } from "./netlify/lib/evaluationApi.mjs";
 
 /**
  * Deployment base path.
@@ -121,6 +129,120 @@ function technicalReportPlugin() {
 }
 
 /**
+ * Vite plugin: evaluation-api (dev server only, evaluation mode only)
+ *
+ * The evaluation deployment stores interaction logs through a Netlify Function
+ * (`netlify/functions/evaluation.mjs`), which the Vite dev server cannot run.
+ * This middleware answers the same routes with the same module
+ * (`netlify/lib/evaluationApi.mjs`) over a directory of JSON files, so the
+ * whole loop — gate, logger, flush, analysis page — can be exercised with
+ * `npm run dev:evaluation` and no Netlify account. The directory is
+ * `.evaluation-logs/`, which is ignored by Git.
+ */
+function evaluationApiPlugin() {
+  const root = resolve(".evaluation-logs");
+  const routePrefix = `${basePath}api/evaluation/`;
+
+  function fileFor(key) {
+    return resolve(root, `${key}.json`);
+  }
+
+  function walk(directory, out = []) {
+    if (!existsSync(directory)) return out;
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = resolve(directory, entry.name);
+      if (entry.isDirectory()) walk(path, out);
+      else if (entry.name.endsWith(".json")) out.push(path);
+    }
+    return out;
+  }
+
+  const store = {
+    getJSON: (key) => {
+      const path = fileFor(key);
+      return Promise.resolve(
+        existsSync(path) ? JSON.parse(readFileSync(path, "utf-8")) : null
+      );
+    },
+    setJSON: (key, value) => {
+      const path = fileFor(key);
+      mkdirSync(dirname(path), { recursive: true });
+      writeFileSync(path, JSON.stringify(value));
+      return Promise.resolve();
+    },
+    list: (prefix) => {
+      const keys = walk(resolve(root, prefix))
+        .map((path) => path.slice(root.length + 1).replace(/\.json$/, ""))
+        .map((key) => key.replaceAll("\\", "/"))
+        .filter((key) => key.startsWith(prefix))
+        .sort();
+      return Promise.resolve(keys);
+    },
+    listDirectories: (prefix) => {
+      const directory = resolve(root, prefix);
+      if (!existsSync(directory)) return Promise.resolve([]);
+      return Promise.resolve(
+        readdirSync(directory, { withFileTypes: true })
+          .filter((entry) => entry.isDirectory())
+          .map((entry) => `${prefix}${entry.name}/`)
+          .sort()
+      );
+    },
+  };
+
+  const api = createEvaluationApi({
+    store,
+    enabled: true,
+    analysisKey: process.env.EVALUATION_ANALYSIS_KEY ?? "",
+  });
+
+  return {
+    name: "evaluation-api",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const url = new URL(req.url, "http://localhost");
+        if (!url.pathname.startsWith(routePrefix)) return next();
+        const action = url.pathname.slice(routePrefix.length);
+        const request = {
+          method: req.method,
+          action,
+          searchParams: url.searchParams,
+          header: (name) => {
+            const value = req.headers[name.toLowerCase()];
+            return Array.isArray(value) ? value[0] : (value ?? null);
+          },
+          text: () =>
+            new Promise((resolveText, reject) => {
+              const chunks = [];
+              req.on("data", (chunk) => chunks.push(chunk));
+              req.on("end", () =>
+                resolveText(Buffer.concat(chunks).toString("utf-8"))
+              );
+              req.on("error", reject);
+            }),
+        };
+        api.handle(request).then(
+          (response) => {
+            res.statusCode = response.status;
+            res.setHeader("Content-Type", "application/json; charset=utf-8");
+            res.setHeader("Cache-Control", "no-store");
+            res.end(
+              response.body === null ? "" : JSON.stringify(response.body)
+            );
+          },
+          (error) => {
+            res.statusCode = 500;
+            res.setHeader("Content-Type", "application/json; charset=utf-8");
+            res.end(JSON.stringify({ error: String(error?.message ?? error) }));
+          }
+        );
+      });
+    },
+  };
+}
+
+/**
  * Vite plugin: virtual:mdi-icon-map
  *
  * Generates a virtual module holding only the MDI icons this app can actually
@@ -218,13 +340,33 @@ function mdiIconMapPlugin() {
   };
 }
 
-export default defineConfig({
-  base: basePath,
-  plugins: [
-    mdiIconMapPlugin(),
-    svelte(),
-    socialCardPlugin(),
-    technicalReportPlugin(),
-    notFoundFallbackPlugin(),
-  ],
+/**
+ * `--mode evaluation` builds the user-evaluation deployment: `.env.evaluation`
+ * sets `VITE_EVALUATION_MODE=1` for the client, the analysis page becomes a
+ * second entry at `<base>analysis/`, and the dev server emulates the log API.
+ * Every other mode is the ordinary site, with none of that in it.
+ */
+export default defineConfig(({ mode }) => {
+  const evaluation = mode === "evaluation";
+  return {
+    base: basePath,
+    plugins: [
+      mdiIconMapPlugin(),
+      svelte(),
+      socialCardPlugin(),
+      technicalReportPlugin(),
+      notFoundFallbackPlugin(),
+      ...(evaluation ? [evaluationApiPlugin()] : []),
+    ],
+    build: {
+      rollupOptions: {
+        input: evaluation
+          ? {
+              main: resolve("index.html"),
+              analysis: resolve("analysis/index.html"),
+            }
+          : resolve("index.html"),
+      },
+    },
+  };
 });

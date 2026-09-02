@@ -52,6 +52,7 @@
     normalizePrimaryLocation,
   } from "../utils/story/geo.js";
   import { collectStoryImages } from "../utils/story/images.js";
+  import { logEvent } from "../evaluation/log.js";
 
   export let dataset = null;
   export let egoNetwork = null;
@@ -424,6 +425,75 @@
   $: indicatorIcons = eventSlides.map((event) => resolveEventIcon(event));
 
   $: datasetName = dataset?.person?.name ?? null;
+
+  // The evaluation log's record of a story opening — its size, so that how
+  // much of it a reader saw can be computed later — and of every slide the
+  // reader lands on, with the mechanism that brought them there. Both are
+  // no-ops outside the evaluation deployment.
+  let loggedStoryName = null;
+  let loggedSlideIndex = null;
+  $: if (datasetName && slides.length > 0 && datasetName !== loggedStoryName) {
+    loggedStoryName = datasetName;
+    loggedSlideIndex = null;
+    logEvent("story.open", {
+      name: personName,
+      slides: slides.length,
+      events: eventSlides.length,
+      deep: deepEventIndexes.size,
+    });
+  }
+  $: if (
+    loggedStoryName &&
+    activeIndex !== loggedSlideIndex &&
+    !isTimelineScrubbing
+  ) {
+    loggedSlideIndex = activeIndex;
+    logEvent("story.navigate", {
+      index: activeIndex,
+      slideType: slides[activeIndex]?.type ?? null,
+      event: slideIndexToEventIndex.get(activeIndex) ?? null,
+      source:
+        scrollState === SCROLL_STATE.USER_SCROLLING
+          ? "user-scroll"
+          : currentNavigationSource,
+      total: slides.length,
+    });
+  }
+
+  // The depth layer, for the same log: entering it on a slide, and how far
+  // down the reader got before leaving that slide.
+  let depthLogSlide = -1;
+  let depthLogMax = 0;
+  let depthLogEntered = false;
+  $: trackDepthForLog(activeIndex, depthProgress);
+  function trackDepthForLog(index, progress) {
+    if (index !== depthLogSlide) {
+      closeDepthLog();
+      depthLogSlide = index;
+    }
+    if (progress > depthLogMax) depthLogMax = progress;
+    if (!depthLogEntered && progress > 0.35) {
+      depthLogEntered = true;
+      logEvent("story.depth", {
+        action: "enter",
+        index,
+        event: slideIndexToEventIndex.get(index) ?? null,
+      });
+    }
+  }
+  function closeDepthLog() {
+    if (depthLogSlide >= 0 && depthLogMax > 0) {
+      logEvent("story.depth", {
+        action: "leave",
+        index: depthLogSlide,
+        event: slideIndexToEventIndex.get(depthLogSlide) ?? null,
+        progress: Math.round(depthLogMax * 100) / 100,
+      });
+    }
+    depthLogMax = 0;
+    depthLogEntered = false;
+  }
+
   $: if (datasetName !== lastDatasetName) {
     // Only reset scroll state when changing to a different person (not on initial load)
     const isPersonChange = lastDatasetName !== null && lastDatasetName !== "";
@@ -721,20 +791,22 @@
     }
   }
 
-  function prevSlide() {
+  // `source` names the control that asked, for the evaluation log; the
+  // arrows and the keys move the same way.
+  function prevSlide(source = "button") {
     if (totalPanels === 0) return;
     const targetIndex = Math.max(0, activeIndex - 1);
     requestScrollTo(targetIndex, {
-      source: "button",
+      source,
       updateStateImmediately: true,
     });
   }
 
-  function nextSlide() {
+  function nextSlide(source = "button") {
     if (totalPanels === 0) return;
     const targetIndex = Math.min(totalPanels - 1, activeIndex + 1);
     requestScrollTo(targetIndex, {
-      source: "button",
+      source,
       updateStateImmediately: true,
     });
   }
@@ -803,9 +875,15 @@
       globalIndex >= 0
         ? allImages[globalIndex]
         : { ...imageData, slideIndex: activeIndex };
+    logEvent("story.image", {
+      action: "open",
+      index: currentImageGlobalIndex,
+      event: enlargedImage?.eventIndex ?? null,
+    });
   }
 
   function closeEnlargedImage() {
+    if (enlargedImage) logEvent("story.image", { action: "close" });
     enlargedImage = null;
     currentImageGlobalIndex = -1;
   }
@@ -814,11 +892,17 @@
     if (newIndex >= 0 && newIndex < allImages.length) {
       currentImageGlobalIndex = newIndex;
       enlargedImage = allImages[newIndex];
+      logEvent("story.image", {
+        action: "navigate",
+        index: newIndex,
+        event: enlargedImage?.eventIndex ?? null,
+      });
     }
   }
 
   function handleJumpToEvent(slideIndex) {
     if (slideIndex >= 0 && slideIndex < slides.length) {
+      logEvent("story.image", { action: "jump", index: slideIndex });
       requestScrollTo(slideIndex, {
         source: "image-viewer-jump",
         updateStateImmediately: true,
@@ -1007,10 +1091,10 @@
 
     if (["ArrowLeft", "ArrowUp", "PageUp"].includes(event.key)) {
       event.preventDefault();
-      prevSlide();
+      prevSlide("keyboard");
     } else if (["ArrowRight", "ArrowDown", "PageDown"].includes(event.key)) {
       event.preventDefault();
-      nextSlide();
+      nextSlide("keyboard");
     } else if (event.key === "Home") {
       event.preventDefault();
       requestScrollTo(0, {
@@ -1149,12 +1233,21 @@
 
   function toggleDateNote(eventIndex) {
     visibleDateNote = visibleDateNote === eventIndex ? null : eventIndex;
+    logEvent("story.date_note", {
+      event: eventIndex,
+      open: visibleDateNote === eventIndex,
+    });
   }
 
   function toggleAnnotation(eventIndex, termKey) {
     const compositeKey = `${eventIndex}-${termKey}`;
     visibleAnnotation =
       visibleAnnotation === compositeKey ? null : compositeKey;
+    logEvent("story.annotation", {
+      event: eventIndex,
+      term: termKey,
+      open: visibleAnnotation === compositeKey,
+    });
   }
 
   function handleClickOutside(event) {
@@ -1183,6 +1276,16 @@
 
   function togglePersonInfo(personKey) {
     visiblePersonInfo = visiblePersonInfo === personKey ? null : personKey;
+    logEvent("story.person_info", {
+      key: personKey,
+      open: visiblePersonInfo === personKey,
+      where: "slide",
+    });
+  }
+
+  function handleCloseStory() {
+    logEvent("story.close", { via: "button" });
+    onClose();
   }
 
   function openNetworkModal() {
@@ -1199,6 +1302,7 @@
 
   function openAIModal() {
     showAIModal = true;
+    logEvent("story.ai_modal", { open: true });
   }
 
   function closeAIModal() {
@@ -1358,6 +1462,7 @@
   });
 
   onDestroy(() => {
+    closeDepthLog();
     // Final cleanup
     if (scrollStateTimeout) {
       clearTimeout(scrollStateTimeout);
@@ -1416,7 +1521,7 @@
           variant="theme"
           size="responsive"
           ariaLabel={closeStoryLabel}
-          on:click={onClose}
+          on:click={handleCloseStory}
           class="compact"
         />
       </div>

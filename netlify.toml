@@ -20,3 +20,26 @@
   # its own release schedule, and a build that publishes should not be the one
   # place the toolchain differs.
   NODE_VERSION = "22"
+
+# Netlify Functions. The one function, netlify/functions/evaluation.mjs, is the
+# log endpoint of the user-evaluation deployment; it answers 404 on every other
+# deployment, so bundling it with the normal site publishes nothing.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# The user-evaluation deployment: the same site built from the
+# `deploy-evaluation` branch, in Vite's evaluation mode, which adds the
+# participant gate, the interaction logger, and the analysis page. Enable the
+# branch under Site configuration → Build & deploy → Branches and deploy
+# contexts, and it publishes at `deploy-evaluation--<site>.netlify.app`; the
+# logs go to the site's Netlify Blobs store, which every deploy of the site
+# shares and which no other deploy reads or writes. See
+# docs/agent/user-evaluation.md, including for running it as a site of its own.
+[context.deploy-evaluation]
+  command = "VITE_BASE_PATH=/ npm run build:evaluation"
+
+[context.deploy-evaluation.environment]
+  # Read by the function at runtime: the switch that lets it store and serve
+  # logs at all.
+  EVALUATION_MODE = "1"

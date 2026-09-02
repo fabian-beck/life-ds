@@ -10,6 +10,7 @@
   } from "d3-force";
   import { _ } from "../stores/language.js";
   import { assetUrl } from "../utils/assetUrl.js";
+  import { logEvent } from "../evaluation/log.js";
   import { displayName } from "../utils/helpers.js";
   import { computeClusters } from "../utils/networkClusters.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
@@ -246,6 +247,7 @@
 
   // Remember where the reader left the meta story before jumping into a story.
   function openStory() {
+    logEvent("meta.open_story", { via: "network", person: selectedId ?? null });
     if (metaStoryId) saveMetaStoryScroll(metaStoryId);
   }
 
@@ -551,6 +553,10 @@
   function selectNode(node, evt) {
     evt.stopPropagation();
     selectedId = selectedId === node.id ? null : node.id;
+    logEvent("meta.network", {
+      action: selectedId ? "select" : "deselect",
+      id: node.id,
+    });
   }
 
   // Clicking empty canvas clears the selection (node clicks stopPropagation).

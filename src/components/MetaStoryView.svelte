@@ -15,6 +15,7 @@
     consumeMetaStoryScroll,
     saveMetaStoryScroll,
   } from "../stores/metaStoryScroll.js";
+  import { logEvent } from "../evaluation/log.js";
   import { queryParams, personStoryHref } from "../stores/queryParams.js";
   import { restoreFocusTrigger } from "../stores/returnFocus.js";
   import { displayName } from "../utils/helpers.js";
@@ -39,6 +40,20 @@
   // translation. Stories without one keep the neutral editorial palette the
   // stylesheet declares as fallbacks, and render no ornaments.
   $: storyStyle = metaStoryStyle(metaStoryData?.meta_story?.id);
+
+  // The evaluation log's record of a collection opening. A no-op outside the
+  // evaluation deployment, like every other logEvent call.
+  let loggedMetaStoryId = null;
+  $: if (
+    metaStoryData?.meta_story?.id &&
+    metaStoryData.meta_story.id !== loggedMetaStoryId
+  ) {
+    loggedMetaStoryId = metaStoryData.meta_story.id;
+    logEvent("meta.open", {
+      id: loggedMetaStoryId,
+      title: metaStoryData.meta_story.title ?? null,
+    });
+  }
   $: storyStyleVars = metaStoryStyleVars(storyStyle);
 
   // The story's own people — those with an individual story — resolved to
@@ -160,6 +175,7 @@
 
   // Navigate back to landing, restoring the filters it was left with
   function backToLanding() {
+    logEvent("meta.back", { via: "button" });
     const fromLanding = $queryParams.from_landing;
     replace(`/${currentLanguage}` + (fromLanding ? `?${fromLanding}` : ""));
     restoreFocusTrigger("[data-landing-heading]");
@@ -247,9 +263,11 @@
     enlargedGallery = index >= 0 ? galleryImages : [image];
     enlargedIndex = index >= 0 ? index : 0;
     enlargedImage = enlargedGallery[enlargedIndex];
+    logEvent("meta.image", { action: "open", index: enlargedIndex });
   }
 
   function closeEnlargedImage() {
+    if (enlargedImage) logEvent("meta.image", { action: "close" });
     enlargedImage = null;
   }
 
@@ -257,6 +275,7 @@
     if (index < 0 || index >= enlargedGallery.length) return;
     enlargedIndex = index;
     enlargedImage = enlargedGallery[index];
+    logEvent("meta.image", { action: "navigate", index });
   }
 
   // Calculate proxy height based on timeline's horizontal scroll distance
@@ -504,6 +523,7 @@
 
   function openAIModal() {
     showAIModal = true;
+    logEvent("meta.ai_modal", { open: true });
   }
 
   function closeAIModal() {
@@ -549,6 +569,7 @@
 
     const nextYear = metaTimelineComponent.getNextYear?.();
     if (nextYear === null) return;
+    logEvent("meta.timeline", { action: "next_year", year: nextYear });
 
     const targetScrollProgress =
       metaTimelineComponent.yearToScrollProgress?.(nextYear);
@@ -562,6 +583,7 @@
 
     const prevYear = metaTimelineComponent.getPrevYear?.();
     if (prevYear === null) return;
+    logEvent("meta.timeline", { action: "prev_year", year: prevYear });
 
     const targetScrollProgress =
       metaTimelineComponent.yearToScrollProgress?.(prevYear);
@@ -764,7 +786,7 @@
     {/if}
 
     <!-- Header section -->
-    <header class="meta-story-header">
+    <header class="meta-story-header" data-section="header">
       <div class="header-controls">
         <div class="header-ai-button">
           <AIGeneratedButton variant="large" onClick={openAIModal} />
@@ -820,7 +842,7 @@
     {#each sectionOrder as section (section)}
       {#if section === "timeline"}
         <!-- Chapters section - scroll proxy container for horizontal scroll lock -->
-        <section class="chapters-section">
+        <section class="chapters-section" data-section="chapters">
           <h2>
             {sectionHeadings.timeline || $_("meta_story.chapters_heading")}
           </h2>
@@ -888,7 +910,7 @@
           </div>
         </section>
       {:else if section === "network"}
-        <section class="network-section">
+        <section class="network-section" data-section="network">
           <h2>{sectionHeadings.network || $_("meta_story.network_heading")}</h2>
           <MetaStoryBody
             blocks={sectionBodies.network}
@@ -906,7 +928,7 @@
           {/await}
         </section>
       {:else}
-        <section class="map-section">
+        <section class="map-section" data-section="map">
           <h2>{sectionHeadings.map || $_("meta_story.map_heading")}</h2>
           <MetaStoryBody
             blocks={sectionBodies.map}
@@ -928,7 +950,7 @@
 
     <!-- Conclusion section -->
     {#if conclusionBlocks.length}
-      <section class="conclusion">
+      <section class="conclusion" data-section="conclusion">
         <h2>
           {sectionHeadings.conclusion || $_("meta_story.conclusion_heading")}
         </h2>
@@ -947,7 +969,7 @@
     <!-- The story's people - closing cards linking into each individual story,
          mirroring the related people at the end of a person's story -->
     {#if storyPersonCards.length}
-      <section class="people-section">
+      <section class="people-section" data-section="people">
         <h2>{$_("meta_story.people_heading")}</h2>
         <div class="people-grid">
           {#each storyPersonCards as person (person.id)}

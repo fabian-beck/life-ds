@@ -2,6 +2,7 @@
   import CloseButton from "./CloseButton.svelte";
   import { _ } from "../stores/language";
   import { dialog } from "../utils/dialog.js";
+  import { evaluationMode } from "../evaluation/log.js";
 
   // The one address in the notice that is not translated prose, kept here so
   // it is stated once rather than in both locale files.
@@ -53,6 +54,12 @@
           <strong>{$_("landing.privacy_storage")}</strong>
           {$_("landing.privacy_storage_text")}
         </p>
+        {#if evaluationMode}
+          <p>
+            <strong>{$_("evaluation.privacy_logging")}</strong>
+            {$_("evaluation.privacy_logging_text")}
+          </p>
+        {/if}
         <p>
           <strong>{$_("landing.privacy_contact")}</strong>
           {$_("landing.privacy_contact_text")}

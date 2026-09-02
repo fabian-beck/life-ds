@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:evaluation": "vite --mode evaluation",
     "build": "vite build",
+    "build:evaluation": "vite build --mode evaluation",
     "preview": "vite preview",
     "preview:card": "node scripts/capture_social_preview.mjs",
     "report:pdf": "node scripts/export_report_pdf.mjs",
@@ -58,6 +60,7 @@
     "@fontsource/space-grotesk": "^5.3.0",
     "@fontsource/unbounded": "^5.3.0",
     "@mdi/js": "^7.4.47",
+    "@netlify/blobs": "^11.0.2",
     "@protomaps/basemaps": "^5.7.0",
     "d3-force": "^3.0.0",
     "maplibre-gl": "^5.18.0",

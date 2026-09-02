@@ -42,6 +42,8 @@ The card image is `public/preview.png`, taken from the running application by `n
 
 See README "Deployment" for the publishing steps and the notes that go with them.
 
+The user-evaluation deployment—the same site in Vite's `evaluation` mode, from the `deploy-evaluation` branch, with interaction logging and an analysis page—is described in [User evaluation](user-evaluation.md).
+
 ### Adding a New Person
 
 1. Run `python scripts/generate_person.py "Person Name"`

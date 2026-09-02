@@ -9,6 +9,7 @@
   import { createTooltipPlacementEngine } from "../utils/tooltipPlacement.js";
   import { assetUrl } from "../utils/assetUrl.js";
   import { metaStoryStyle } from "../utils/metaStoryStyles.js";
+  import { logEvent } from "../evaluation/log.js";
 
   // Handed down from App.svelte, already normalized. Importing the
   // registry here would put all 52 style records back on the eager path.
@@ -1317,6 +1318,11 @@
   }
 
   function showEventTooltip(personId, eventIndex, event, clickEvent) {
+    logEvent("meta.timeline", {
+      action: "event_tooltip",
+      person: personId,
+      event: event?.event_index ?? eventIndex ?? null,
+    });
     // Clear any pending indicator hover timeout
     if (indicatorHoverTimeout) {
       clearTimeout(indicatorHoverTimeout);
@@ -1361,6 +1367,10 @@
 
   // Show grouped tooltip for event cluster (used by scroll indicator)
   function showGroupedEventTooltip(cluster) {
+    logEvent("meta.timeline", {
+      action: "group_tooltip",
+      count: cluster?.events?.length ?? null,
+    });
     const timelineContainer = document.querySelector(
       ".meta-timeline-container"
     );
@@ -1445,6 +1455,10 @@
   }
 
   function showHistoricalTooltip(hEvent, clickEvent) {
+    logEvent("meta.timeline", {
+      action: "historical_tooltip",
+      year: hEvent?.year ?? null,
+    });
     if (indicatorHoverTimeout) {
       clearTimeout(indicatorHoverTimeout);
       indicatorHoverTimeout = null;
@@ -1506,6 +1520,11 @@
   }
 
   function handleEventClick(personId, event) {
+    logEvent("meta.open_story", {
+      via: "timeline",
+      person: personId,
+      event: event.event_index ?? 0,
+    });
     // Remember where the reader left the meta story so returning restores it
     saveMetaStoryScroll(metaStoryId);
     window.location.hash = personStoryHref({
@@ -1519,6 +1538,7 @@
 
   // Handle person click - navigate to their story
   function handlePersonClick(personId) {
+    logEvent("meta.open_story", { via: "timeline", person: personId });
     // Remember where the reader left the meta story so returning restores it
     saveMetaStoryScroll(metaStoryId);
     window.location.hash = personStoryHref({

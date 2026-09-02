@@ -9,6 +9,7 @@
   import { metaStoryStyle } from "../utils/metaStoryStyles.js";
   import { saveMetaStoryScroll } from "../stores/metaStoryScroll.js";
   import { createScrollSteps } from "../utils/scrollSteps.js";
+  import { logEvent } from "../evaluation/log.js";
   import { queryParams, personStoryHref } from "../stores/queryParams.js";
   import {
     resolveBasemapUrl,
@@ -58,6 +59,7 @@
   // Remember where the reader left the meta story before jumping into a story,
   // so returning restores this scroll position (matches the network/timeline).
   function openStory() {
+    logEvent("meta.open_story", { via: "map", step: activeStep });
     if (metaStoryId) saveMetaStoryScroll(metaStoryId);
   }
 
@@ -217,6 +219,13 @@
   // Drive camera + marker emphasis from the active card.
   $: if (mapReady && activeStep !== lastCameraStep) {
     lastCameraStep = activeStep;
+    // The overview the map opens on is not a stop the reader reached.
+    if (activeStep != null) {
+      logEvent("meta.map", {
+        step: activeStep,
+        key: clusters[activeStep]?.key ?? null,
+      });
+    }
     moveCamera(activeStep);
     updateMarkerStates();
   }

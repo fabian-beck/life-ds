@@ -3,6 +3,7 @@
   import { displayName } from "../utils/helpers.js";
   import { extractYear } from "../utils/story/dates.js";
   import { getThumbnailUrl } from "../utils/story/images.js";
+  import { logEvent } from "../evaluation/log.js";
 
   export let metaStories = [];
   export let persons = [];
@@ -110,16 +111,19 @@
   function handlePrevClick() {
     prevSlide();
     pauseWithResumeTimer();
+    logEvent("landing.carousel", { action: "prev", index: currentSlide });
   }
 
   function handleNextClick() {
     nextSlide();
     pauseWithResumeTimer();
+    logEvent("landing.carousel", { action: "next", index: currentSlide });
   }
 
   function goToSlide(index) {
     currentSlide = index;
     pauseWithResumeTimer();
+    logEvent("landing.carousel", { action: "goto", index });
   }
 
   function handleMouseDown(e) {
