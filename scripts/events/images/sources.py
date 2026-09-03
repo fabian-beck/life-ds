@@ -11,26 +11,12 @@ Both return the same candidate shape, so the pool they build can be scored and
 ranked as one.
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 import requests
 
-from utils.http import QueryParams
+from utils.http import QueryParams, canonical_commons_url
 from utils.wikipedia_cache import _strip_html_tags, wikipedia_headers
-
-
-def _clean_commons_url(url: Optional[str]) -> Optional[str]:
-    """The file's address without the analytics Commons hangs off it.
-
-    The API answers with ``?utm_source=commons.wikimedia.org&...`` appended to
-    every URL. It is tracking, not identity: it makes one photograph look like
-    two when a stored URL is compared with a fresh one, and the interface's
-    thumbnail rewriter — which appends a size to the path — builds a broken
-    address out of it when the query string sits between the two.
-    """
-    if not url:
-        return url
-    return url.split("?", 1)[0] if "upload.wikimedia.org/" in url else url
 
 
 def search_wikimedia_commons(query: str, limit: int = 10) -> List[Dict[str, Any]]:
@@ -73,7 +59,7 @@ def search_wikimedia_commons(query: str, limit: int = 10) -> List[Dict[str, Any]
 
         # For SVGs, prefer thumburl (PNG render) over url (raw SVG)
         # thumburl is provided when iiurlwidth is set
-        url = _clean_commons_url(image_info.get("thumburl") or image_info.get("url"))
+        url = canonical_commons_url(image_info.get("thumburl") or image_info.get("url"))
 
         if not url:
             continue

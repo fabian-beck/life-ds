@@ -20,7 +20,7 @@ from openai import APIStatusError, OpenAI
 from PIL import Image, ImageOps
 
 from utils import usage
-from utils.http import QueryParams
+from utils.http import COMMONS_FILE_HOST, QueryParams, canonical_commons_url
 from utils.person_style import MissingStyleError, story_colors
 from utils.registry import Registry
 from utils.text import slugify
@@ -93,9 +93,10 @@ def get_wikimedia_thumbnail_url(
     Returns:
         A Wikimedia thumbnail URL, or the original URL if lookup is unavailable.
     """
+    url = canonical_commons_url(url) or url
     parsed = urlparse(url)
     if (
-        parsed.netloc.lower() != "upload.wikimedia.org"
+        parsed.netloc.lower() != COMMONS_FILE_HOST
         or "/wikipedia/commons/" not in parsed.path
     ):
         return url
@@ -130,7 +131,7 @@ def get_wikimedia_thumbnail_url(
         for page in pages.values():
             image_info = page.get("imageinfo") or []
             if image_info and image_info[0].get("thumburl"):
-                return str(image_info[0]["thumburl"])
+                return str(canonical_commons_url(image_info[0]["thumburl"]))
     except (requests.RequestException, ValueError, TypeError) as error:
         print(
             f"  Warning: Wikimedia thumbnail lookup failed: {error}",
