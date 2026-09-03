@@ -2462,16 +2462,20 @@
      own masks: the margin coat's mask is a union of two ramps, and a union can
      only ever add.
 
-     It reaches full gray a little above the map, inside the band the map's own
-     top gradient already covers with the slide color, and eases in over 10rem
-     so nothing draws a line across the slide. The overview slide is left out:
-     the map is hidden while it is on screen. */
+     It eases in over 10rem so nothing draws a line across the slide, and it
+     reaches full gray 6rem below the map's top edge: the pattern is still
+     present where the map begins and fades out inside the band the map's own
+     top gradient paints in the slide color, which is transparent by about the
+     same depth, so the ornament reaches into the map without ever lying over
+     legible tiles. The map's gradient is left as it is; only the pattern
+     reaches in. The overview slide is left out: the map is hidden while it is
+     on screen. */
   .slides-wrapper.map-enabled .slide:not(.overview) {
     --pattern-map-guard: linear-gradient(
       180deg,
       rgb(50% 50% 50% / 0%) 0%,
-      rgb(50% 50% 50% / 0%) calc(100% - 45vh - 8rem),
-      rgb(50% 50% 50% / 100%) calc(100% - 45vh + 2rem),
+      rgb(50% 50% 50% / 0%) calc(100% - 45vh - 4rem),
+      rgb(50% 50% 50% / 100%) calc(100% - 45vh + 6rem),
       rgb(50% 50% 50% / 100%) 100%
     );
   }
