@@ -1,397 +1,162 @@
 {
-  "dataset": "wikipedia_ego_network",
-  "created_on": "2025-11-20",
+  "dataset": "Grace Hopper ego network",
+  "created_on": "2026-09-03",
   "ego": {
     "name": "Grace Hopper",
     "birth_year": 1906,
     "death_year": 1992,
     "primary_roles": [
       "computer scientist",
-      "mathematician"
+      "mathematician",
+      "United States Navy rear admiral"
     ],
-    "summary": "Grace Brewster Hopper was an American computer scientist, mathematician, and U.S. Navy rear admiral, a pioneer of computer programming and machine-independent languages, central to the development of the Harvard Mark I, early compilers, FLOW-MATIC, and COBOL, and a long-serving officer influencing U.S. Navy and industry computing standards.",
+    "summary": "Grace Hopper was an American computer scientist, mathematician, and United States Navy rear admiral who helped program the Harvard Mark I, developed foundational compiler systems including A-0 and FLOW-MATIC, and helped shape COBOL and programming-language standards.",
     "wikipedia": "https://en.wikipedia.org/wiki/Grace_Hopper"
   },
   "connections": [
     {
       "person_name": "Walter Fletcher Murray",
-      "relationship_type": "family/father",
-      "relationship_description": "Father of Grace Hopper, who supported her education and upbringing in New York City.",
-      "start_year": 1906,
-      "end_year": null,
+      "relationship_description": "Walter Fletcher Murray was Hopper's father; she was born the eldest of his and Mary Campbell Van Horne's three children in New York City in 1906.",
       "strength": "strong",
       "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life",
-        "childhood upbringing",
-        "education support"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "notes": "Mentioned as her father; no detailed anecdotes, but as parent he shaped her early environment."
+      "notes": "Her parents attended West End Collegiate Church and had Scottish and Dutch ancestry.",
+      "relationship_type": "family/biological_father"
     },
     {
       "person_name": "Mary Campbell Van Horne",
-      "relationship_type": "family/mother",
-      "relationship_description": "Mother of Grace Hopper, part of her Scottish and Dutch heritage and religious upbringing.",
-      "start_year": 1906,
-      "end_year": null,
+      "relationship_description": "Mary Campbell Van Horne was Hopper's mother and raised her in New York City as the eldest of three children.",
       "strength": "strong",
       "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life",
-        "childhood upbringing",
-        "religious attendance at West End Collegiate Church"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "notes": "Encouraged Grace’s curiosity (e.g., the alarm clock story implies a permissive environment before imposing limits)."
-    },
-    {
-      "person_name": "Alexander Wilson Russell",
-      "relationship_type": "family/extended_family",
-      "relationship_description": "Grace Hopper’s great-grandfather, a U.S. Navy admiral who fought in the Battle of Mobile Bay, providing a family naval tradition.",
-      "start_year": 1906,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family heritage",
-        "naval tradition"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "notes": "Likely an indirect role model for her later naval career; no evidence of direct interaction given generational distance."
+      "notes": "She intervened when the seven-year-old Hopper dismantled several alarm clocks to understand their workings.",
+      "relationship_type": "family/biological_mother"
     },
     {
       "person_name": "Vincent Foster Hopper",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Husband; New York University professor whom Grace Murray married in 1930 and divorced in 1945, whose surname she kept.",
-      "start_year": 1930,
-      "end_year": 1945,
-      "strength": "moderate",
+      "relationship_description": "Hopper married New York University professor Vincent Foster Hopper in 1930; they divorced in 1945, and she retained his surname.",
+      "strength": "strong",
       "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "marriage",
-        "shared household",
-        "academic social circles"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "notes": "The article notes the marriage and divorce but not professional collaboration; influence is primarily personal and social-academic."
+      "notes": "Hopper did not remarry after their divorce.",
+      "relationship_type": "family/spouse"
     },
     {
       "person_name": "Øystein Ore",
-      "relationship_type": "academic/advisor",
-      "relationship_description": "Doctoral advisor at Yale University who supervised Hopper’s Ph.D. in mathematics and directed her dissertation on irreducibility criteria.",
-      "start_year": 1931,
-      "end_year": 1934,
+      "relationship_description": "Ore directed Hopper's doctoral work in mathematics at Yale, where she completed her dissertation, New Types of Irreducibility Criteria, in 1934.",
       "strength": "strong",
       "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "graduate study",
-        "dissertation supervision",
-        "mathematical research"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/%C3%98ystein_Ore"
+        "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "notes": "As her Ph.D. supervisor, Ore shaped her formal mathematical training and research skills, foundational for her later work in computing."
+      "notes": "Her Yale doctorate was in mathematics and mathematical physics.",
+      "relationship_type": "academic/teacher"
     },
     {
       "person_name": "Howard H. Aiken",
-      "relationship_type": "professional/superior",
-      "relationship_description": "Leader of the Harvard Mark I project; Hopper served on his programming staff and co‑authored three papers on the Mark I.",
-      "start_year": 1944,
-      "end_year": 1949,
+      "relationship_description": "Aiken led the Harvard Mark I programming staff that Hopper joined in 1944 during World War II. They co-authored three papers on the Mark I, also known as the Automatic Sequence Controlled Calculator.",
       "strength": "strong",
       "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Harvard Mark I development",
-        "Harvard Computation Lab work",
-        "co-authored research papers",
-        "writing operational manuals"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/Howard_H._Aiken",
-        "https://en.wikipedia.org/wiki/Harvard_Mark_I"
+        "https://en.wikipedia.org/wiki/Howard_H._Aiken"
       ],
-      "notes": "Aiken headed the Mark I team where Hopper began her computing career; they collaborated closely, with him as project lead and her as key programmer and co-author."
-    },
-    {
-      "person_name": "Harvard Mark II programming team",
-      "entity_kind": "group",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Colleagues at the Harvard Computation Lab with whom Hopper worked on the Mark II Aiken Relay Calculator, including the team that documented the famous 'bug'.",
-      "start_year": 1947,
-      "end_year": 1949,
-      "strength": "moderate",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "operation and programming of Harvard Mark II",
-        "maintenance and debugging of electromechanical computers",
-        "creation of the logbook entry on the first 'bug'"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/Software_bug"
-      ],
-      "notes": "Although individuals are not named, this team context was crucial for the debugging anecdote and for Hopper’s early reputation in computing."
+      "notes": "Hopper remained at the Harvard Computation Laboratory until 1949 as a research fellow under a Navy contract.",
+      "relationship_type": "professional/supervisor"
     },
     {
       "person_name": "J. Presper Eckert",
-      "relationship_type": "professional/employer",
-      "relationship_description": "Co-founder of Eckert–Mauchly Computer Corporation where Hopper worked as a senior mathematician on UNIVAC I.",
-      "start_year": 1949,
-      "end_year": 1959,
+      "relationship_description": "Hopper joined Eckert’s Eckert–Mauchly Computer Corporation in 1949 as a senior mathematician and worked on the UNIVAC I development team.",
       "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "development of UNIVAC I",
-        "corporate research at Eckert–Mauchly",
-        "early commercial computing projects"
-      ],
+      "interaction_frequency": "occasional",
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/J._Presper_Eckert",
-        "https://en.wikipedia.org/wiki/Eckert%E2%80%93Mauchly_Computer_Corporation"
+        "https://en.wikipedia.org/wiki/J._Presper_Eckert"
       ],
-      "notes": "The article names the company rather than specific personal interactions, but as a senior mathematician on the UNIVAC team she would have worked within the organization Eckert co-led."
+      "notes": "The company later became part of Remington Rand, where Hopper directed automatic programming development.",
+      "relationship_type": "professional/close_colleague"
     },
     {
       "person_name": "John Mauchly",
-      "relationship_type": "professional/employer",
-      "relationship_description": "Co-founder of Eckert–Mauchly Computer Corporation, employer of Hopper on the UNIVAC I project and early compiler work.",
-      "start_year": 1949,
-      "end_year": 1959,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "UNIVAC I development",
-        "corporate research",
-        "promotion of commercial computing"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/John_Mauchly",
-        "https://en.wikipedia.org/wiki/Eckert%E2%80%93Mauchly_Computer_Corporation"
-      ],
-      "notes": "Like Eckert, Mauchly provided the organizational context for Hopper’s work in automatic programming and compilers at Eckert–Mauchly/Remington Rand."
-    },
-    {
-      "person_name": "Members of the CODASYL COBOL Committee",
-      "entity_kind": "group",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Industry and government computer experts with whom Hopper collaborated in 1959 to design the COBOL language under the CODASYL consortium.",
-      "start_year": 1959,
-      "end_year": 1960,
-      "strength": "strong",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Conference on Data Systems Languages (CODASYL)",
-        "design of COBOL language specifications",
-        "standardization discussions between vendors and government"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/CODASYL",
-        "https://en.wikipedia.org/wiki/COBOL"
-      ],
-      "notes": "Hopper served as technical consultant; many of her former employees were on the short-term committee, amplifying her influence within the group."
-    },
-    {
-      "person_name": "Jean E. Sammet",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Fellow computer scientist and member of the COBOL committee in the CODASYL consortium where Hopper served as technical consultant.",
-      "start_year": 1959,
-      "end_year": 1960,
+      "relationship_description": "Hopper joined the Eckert–Mauchly Computer Corporation in 1949 and worked on its UNIVAC I development effort, the company Mauchly co-founded with J. Presper Eckert.",
       "strength": "moderate",
       "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Conference on Data Systems Languages (CODASYL)",
-        "definition of COBOL language features",
-        "industry-government standards discussions"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/Jean_E._Sammet",
-        "https://en.wikipedia.org/wiki/COBOL"
+        "https://en.wikipedia.org/wiki/J._Presper_Eckert"
       ],
-      "notes": "Sammet is singled out in the COBOL section as a committee member; Hopper and Sammet were both influential figures in early programming language design."
-    },
-    {
-      "person_name": "Employees in Hopper’s Navy Programming Languages Group",
-      "entity_kind": "group",
-      "relationship_type": "academic/student",
-      "relationship_description": "Younger programmers and staff in the Navy Programming Languages Group and broader Navy computing community whom Hopper trained and mentored.",
-      "start_year": 1967,
-      "end_year": 1977,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "development of Navy programming language standards",
-        "creation and validation of COBOL software",
-        "professional mentoring and career support"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "notes": "The article quotes Hopper emphasizing that training young people was one of her most important accomplishments and that she kept track of them and encouraged risk-taking."
+      "notes": "Mauchly co-founded the company with J. Presper Eckert.",
+      "relationship_type": "professional/close_colleague"
     },
     {
       "person_name": "Elmo R. Zumwalt Jr.",
-      "relationship_type": "professional/superior",
-      "relationship_description": "Chief of Naval Operations who promoted Hopper to the rank of captain in 1973 during her service directing Navy programming language efforts.",
-      "start_year": 1972,
-      "end_year": 1973,
+      "relationship_description": "Admiral Elmo R. Zumwalt Jr. promoted Hopper to captain in 1973 while she directed the Navy Programming Languages Group.",
       "strength": "moderate",
       "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "U.S. Navy leadership and administration",
-        "Navy Programming Languages Group oversight",
-        "officer promotions"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/Elmo_Zumwalt"
+        "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "notes": "The article notes that she was promoted to captain by Admiral Zumwalt; their relationship is hierarchical and administrative rather than collaborative research."
-    },
-    {
-      "person_name": "Philip Crane",
-      "relationship_type": "professional/patron",
-      "relationship_description": "Republican U.S. Representative who, after seeing Hopper on a 1983 60 Minutes segment, championed a joint resolution to promote her to commodore on the retired list.",
-      "start_year": 1983,
-      "end_year": 1983,
-      "strength": "moderate",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "promotion advocacy in U.S. Congress",
-        "public recognition of her career"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/Philip_Crane"
-      ],
-      "notes": "Although the resolution was not reported out of committee, his advocacy helped raise her profile and contributed to the context for her eventual promotion."
-    },
-    {
-      "person_name": "Ronald Reagan",
-      "relationship_type": "professional/patron",
-      "relationship_description": "President of the United States who promoted Hopper to commodore via the Appointments Clause in December 1983.",
-      "start_year": 1983,
-      "end_year": 1983,
-      "strength": "moderate",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "formal military promotion",
-        "recognition of service in computing and the Navy"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/Ronald_Reagan"
-      ],
-      "notes": "Promotion was a significant symbolic recognition; direct personal interaction is not detailed, but the action reflects presidential-level support."
+      "notes": "The promotion occurred during Hopper's second period of recalled active duty.",
+      "relationship_type": "professional/superior"
     },
     {
       "person_name": "Rita Yavinsky",
-      "relationship_type": "professional/employer",
-      "relationship_description": "Digital Equipment Corporation (DEC) manager who initially offered Hopper a position after her Navy retirement, leading to her role as Principal Corporate Consulting Engineer.",
-      "start_year": 1986,
-      "end_year": 1986,
+      "relationship_description": "Yavinsky initially offered Hopper a post-retirement position at Digital Equipment Corporation, where Hopper became a full-time Principal Corporate Consulting Engineer and remained until her death.",
       "strength": "moderate",
       "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "recruitment to DEC",
-        "negotiation of consulting role",
-        "corporate representation at industry forums"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "notes": "Yavinsky’s offer facilitated Hopper’s influential post-retirement role as a public face and goodwill ambassador for DEC."
+      "notes": "Hopper insisted on undergoing the usual formal interview process before accepting the position.",
+      "relationship_type": "professional/employer"
     },
     {
-      "person_name": "Young engineers and computer professionals at Digital Equipment Corporation",
-      "entity_kind": "group",
-      "relationship_type": "academic/student",
-      "relationship_description": "Engineers across DEC’s facilities who attended Hopper’s lectures and received guidance and inspiration as part of her role as principal corporate consulting engineer.",
-      "start_year": 1986,
-      "end_year": 1992,
+      "person_name": "Jean E. Sammet",
+      "relationship_description": "Sammet and Hopper both contributed to the development of COBOL in 1959 through the original COBOL design effort, which drew substantially on Hopper's FLOW-MATIC language.",
       "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "technical lectures",
-        "industry forums",
-        "discussions on user-centered computing"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "notes": "She visited most of DEC’s engineering facilities, often receiving standing ovations; while individuals are not named, the group collectively represents a major mentoring relationship."
-    },
-    {
-      "person_name": "Digital Equipment Corporation (DEC) industry committees and forums peers",
-      "entity_kind": "group",
-      "relationship_type": "professional/peer",
-      "relationship_description": "Industry peers and committee members with whom Hopper interacted while representing DEC at forums and standards bodies in her post-retirement role.",
-      "start_year": 1986,
-      "end_year": 1992,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "industry committees on computing standards",
-        "public talks and panels",
-        "advocacy for user-friendly systems"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "notes": "The article notes she served on various industry committees and represented DEC widely; while unnamed, these peers formed an important professional network in her later years."
-    },
-    {
-      "person_name": "Barack Obama",
-      "relationship_type": "professional/patron",
-      "relationship_description": "President of the United States who posthumously awarded Hopper the Presidential Medal of Freedom in 2016.",
-      "start_year": 2016,
-      "end_year": 2016,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "posthumous national honor",
-        "public recognition of computing contributions"
-      ],
+      "interaction_frequency": "occasional",
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "https://en.wikipedia.org/wiki/Presidential_Medal_of_Freedom"
+        "https://en.wikipedia.org/wiki/Jean_E._Sammet"
       ],
-      "notes": "Posthumous, symbolic relationship; important for assessing her legacy but not an interpersonal connection."
+      "notes": "Sammet's earlier work at Sperry Rand also brought her into contact with Hopper and the UNIVAC I.",
+      "relationship_type": "innovation/collaborator"
+    },
+    {
+      "person_name": "Betty Holberton",
+      "relationship_description": "Holberton worked with Hopper on early standards for the COBOL and FORTRAN programming languages.",
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Betty_Holberton",
+        "https://en.wikipedia.org/wiki/Grace_Hopper"
+      ],
+      "notes": "Both were major early programmers and later contributors to programming-language standardization.",
+      "relationship_type": "innovation/collaborator"
     }
   ],
-  "network_summary": "Grace Hopper’s ego network combines close family ties, formative academic mentorship, intense technical collaborations, hierarchical military relationships, and large-scale mentoring and advocacy roles. Early influences include her parents and great‑grandfather’s naval legacy, and especially Ph.D. advisor Øystein Ore, who grounded her in rigorous mathematics. Her core professional network centers on wartime and postwar computing: Howard H. Aiken and the Harvard Mark I/II teams; corporate leaders J. Presper Eckert and John Mauchly at Eckert–Mauchly/Remington Rand; and collaborators such as Jean E. Sammet and other CODASYL members in the creation of COBOL. In the Navy, senior figures like Admiral Elmo R. Zumwalt Jr., Representative Philip Crane, and President Ronald Reagan shaped her promotions and public recognition, while she in turn led and mentored the Navy Programming Languages Group. In her post‑retirement role at DEC, facilitated by Rita Yavinsky, she became a high‑visibility ambassador, influencing large cohorts of young engineers and industry peers through frequent lectures and committee work. Overall, her network is characterized by strong vertical ties (mentor–student, officer–subordinate) and broad, loosely coupled professional communities, reflecting her position as both a pioneering technologist and a high‑profile institutional change agent."
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Hopper's early family life supplied the setting for the curiosity she later treated as central to her work. Her mother encountered that trait directly when young Grace dismantled alarm clocks to learn how they worked, while her marriage to Vincent Hopper left a lasting public marker: she retained the Hopper surname after their 1945 divorce."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Mathematics was Hopper's entry point into computing. Under Øystein Ore at Yale, she completed a rigorous doctorate in 1934 before building an academic career as a mathematics professor at Vassar College; that training gave her the technical grounding she brought to wartime computation and later software design."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Hopper's career joined academic, industrial, and naval work in an unusually continuous professional path. Howard Aiken brought her into practical computer programming on the Harvard Mark I, and her move to the Eckert-Mauchly company placed her at the commercial UNIVAC project, where she eventually led automatic programming. Her Navy leadership and later role at Digital Equipment Corporation extended her authority from early machine programming to standards, public technical advocacy, and industry-wide communication."
+    },
+    {
+      "relationship_type": "innovation",
+      "summary": "Hopper's most consequential collaborators were connected by the effort to make programming languages more usable and interoperable. Her FLOW-MATIC work helped supply the English-like model carried into COBOL, whose 1959 design effort included Jean Sammet, while later work with Betty Holberton on COBOL and FORTRAN standards helped turn programming languages into shared technical infrastructure rather than isolated vendor products."
+    }
+  ]
 }
