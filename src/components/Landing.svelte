@@ -25,6 +25,9 @@
   import AIDisclaimerModal from "./AIDisclaimerModal.svelte";
   import AIGeneratedButton from "./AIGeneratedButton.svelte";
   import HighContrastToggle from "./HighContrastToggle.svelte";
+  import DeploymentPreviewToggle from "./DeploymentPreviewToggle.svelte";
+  import { developmentMode } from "../stores/visibility.js";
+  import { isHidden } from "../utils/visibility.js";
   import MetaStoryCarousel from "./MetaStoryCarousel.svelte";
   import PrivacyModal from "./PrivacyModal.svelte";
   import SeparatedList from "./SeparatedList.svelte";
@@ -599,6 +602,9 @@
             <option value="de">Deutsch</option>
           </select>
           <HighContrastToggle variant="sticky" />
+          {#if developmentMode}
+            <DeploymentPreviewToggle variant="sticky" />
+          {/if}
         </div>
       </header>
       <div class="sticky-ai-button">
@@ -620,6 +626,9 @@
         <option value="de">Deutsch</option>
       </select>
       <HighContrastToggle />
+      {#if developmentMode}
+        <DeploymentPreviewToggle />
+      {/if}
     </div>
   </div>
 
@@ -819,7 +828,11 @@
             name: displayName(entry.name),
           })}
         >
-          {#if anniversary}
+          {#if isHidden(entry)}
+            <!-- Development only: a production build never renders a hidden
+                 entry, so the badge marks what the deployment will not show. -->
+            <span class="hidden-badge">{$_("landing.hidden_label")}</span>
+          {:else if anniversary}
             <span
               class="anniversary-badge"
               title={`${anniversary.years} years since ${anniversary.type}`}
@@ -1505,6 +1518,26 @@
 
   .person-card:hover .new-badge {
     transform: rotate(0deg) scale(1.05);
+  }
+
+  .hidden-badge {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.75rem 0.25rem 0.55rem;
+    border-radius: 0.4rem;
+    background: rgba(15, 23, 42, 0.92);
+    border: 2px dashed rgba(251, 191, 36, 0.8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: #fbbf24;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    z-index: 10;
   }
 
   .anniversary-badge {

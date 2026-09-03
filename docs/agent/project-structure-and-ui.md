@@ -12,6 +12,7 @@ life-ds/
 │   ├── meta-frames.css      # Meta story frame vocabulary (global, by data-ms-frame)
 │   └── components/
 │       ├── Landing.svelte    # Person grid landing page
+│       ├── DeploymentPreviewToggle.svelte # Dev only: preview the deployed view without hidden entries
 │       ├── StoryView.svelte  # Main story viewer (timeline/map)
 │       ├── EventDepth.svelte # Context layer below the fold of a landmark event
 │       ├── Timeline.svelte   # Event timeline component
@@ -29,9 +30,12 @@ life-ds/
 │       │                    # prose, eventDepth. Import the module, not a barrel.
 │       ├── metaStoryStyles.js # Resolves a meta story's style to CSS variables
 │       ├── metaStorySections.js # Resolves the composed order of a meta story's sections
-│       └── personNames.js    # Finds person names in prose (highlighting)
+│       ├── personNames.js    # Finds person names in prose (highlighting)
+│       └── visibility.js     # Entries marked hidden: filter, and carry the English flag over
+│   └── stores/
+│       └── visibility.js     # Whether hidden entries show: never in a build, dev toggle otherwise
 ├── data/
-│   ├── persons.json         # Master person registry
+│   ├── persons.json         # Master person registry (entries may carry hidden: true)
 │   ├── person_styles.json   # Visual styles registry
 │   ├── meta_story_styles.json # Per-meta-story colors, fonts, SVG marks
 │   └── people/
@@ -63,6 +67,7 @@ life-ds/
 │   ├── cache_wikipedia_materials.py # Cache Wikipedia data
 │   ├── clear_caches.py              # Clear old cached data
 │   ├── remove_person.py             # Delete person
+│   ├── set_hidden.py                # Hide a person or meta story from the deployed site, or show it again
 │   └── config.py                    # Shared config
 └── public/                  # Static assets
 ```

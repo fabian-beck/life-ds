@@ -408,6 +408,8 @@ data/people/{person_id}/
 - `data/persons.json` - English (reference)
 - `data/persons_de.json` - German (all persons, same ids/order/fields; entries carry a `translation` block)
 
+An entry of either registry, or of the meta story registries, may carry `"hidden": true` to keep the person or collection off the deployed site; see [Person Data Model](domain-and-data-models.md#person-data-model). `scripts/set_hidden.py` sets and clears the flag in the English and every localized registry at once, so the derivations agree the way a translation would leave them.
+
 ### Translation Scripts (require `OPENAI_API_KEY`, except `--check`)
 
 **Check parity (no API key needed)**:

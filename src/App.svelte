@@ -22,6 +22,12 @@
     mergeLocalized,
   } from "./utils/localizedData.js";
   import { displayName } from "./utils/helpers.js";
+  import {
+    filterVisible,
+    isHidden,
+    withHiddenFrom,
+  } from "./utils/visibility.js";
+  import { showHidden } from "./stores/visibility.js";
   import { parseHexColor } from "./utils/story/color.js";
   import { evaluationMode } from "./evaluation/log.js";
   import { participant, setParticipant } from "./evaluation/participant.js";
@@ -76,11 +82,13 @@
           const localizedModule = await import(
             `../data/persons_${language}.json`
           );
+          // The hidden flag is read from the English entries, which the
+          // localized ones replace whole (see utils/visibility.js).
           merged = {
             ...merged,
-            people: mergeLocalized(
-              merged.people,
-              localizedModule.default?.people
+            people: withHiddenFrom(
+              mergeLocalized(merged.people, localizedModule.default?.people),
+              englishModule.default?.people
             ),
           };
         } catch (error) {
@@ -106,15 +114,19 @@
     const generation = ++metaStoriesLoadGeneration;
     try {
       const registryModule = await import("../data/meta_stories.json");
-      let metaStoryRegistry = registryModule.default?.meta_stories || [];
+      const englishMetaStories = registryModule.default?.meta_stories || [];
+      let metaStoryRegistry = englishMetaStories;
       if (language !== "en") {
         try {
           const localizedModule = await import(
             `../data/meta_stories_${language}.json`
           );
-          metaStoryRegistry = mergeLocalized(
-            metaStoryRegistry,
-            localizedModule.default?.meta_stories
+          metaStoryRegistry = withHiddenFrom(
+            mergeLocalized(
+              metaStoryRegistry,
+              localizedModule.default?.meta_stories
+            ),
+            englishMetaStories
           );
         } catch {
           // No localized meta story registry yet — English fallback
@@ -394,27 +406,32 @@
     warnWhenMissing: true,
   });
 
+  // What the reader may see. The registries keep people and collections
+  // marked hidden; a production build never shows them, and the development
+  // server shows them until the deployment preview is switched on (see
+  // stores/visibility.js). Every view reads these lists rather than the
+  // registries, so a hidden person is absent from the landing grid, the
+  // related-people cards, the collection cast, and the mentions alike.
+  $: visibleRegistry = {
+    ...registry,
+    people: filterVisible(registry?.people, $showHidden),
+  };
+  $: visibleMetaStories = filterVisible(metaStories, $showHidden);
+
   // Build registry entries directly from registry data (no dataset loading needed)
-  $: registryEntries = (() => {
-    if (!Array.isArray(registry?.people)) {
-      return [];
-    }
-    return registry.people.map((entry) => ({
-      ...entry,
-      style: styleFor(entry.id),
-    }));
-  })();
+  $: registryEntries = visibleRegistry.people.map((entry) => ({
+    ...entry,
+    style: styleFor(entry.id),
+  }));
 
   // Build English registry entries for carousel (portraits always from English data)
-  $: englishRegistryEntries = (() => {
-    if (!Array.isArray(englishRegistry?.people)) {
-      return [];
-    }
-    return englishRegistry.people.map((entry) => ({
-      ...entry,
-      style: styleFor(entry.id),
-    }));
-  })();
+  $: englishRegistryEntries = filterVisible(
+    englishRegistry?.people,
+    $showHidden
+  ).map((entry) => ({
+    ...entry,
+    style: styleFor(entry.id),
+  }));
 
   function entrySummary(entry) {
     if (!entry?.id) return "";
@@ -468,6 +485,19 @@
     replace(`/${$currentLanguage}`);
   }
 
+  // A hidden story is not there for a reader who may not see hidden entries:
+  // its route goes home the way an unknown id does. The registries decide,
+  // so the check waits for them and passes an id they do not know yet.
+  $: routeHidden =
+    !$showHidden &&
+    ((personId &&
+      isHidden(englishRegistry?.people?.find((e) => e.id === personId))) ||
+      (metaStoryId &&
+        isHidden(metaStories.find((story) => story.id === metaStoryId))));
+  $: if (routeHidden) {
+    replace(`/${$currentLanguage}`);
+  }
+
   // Reactive data loading - load when personId OR language changes
   let dataset = null;
   let egoNetwork = null;
@@ -493,7 +523,7 @@
   // overwrite the data of the story actually being viewed.
   let dataLoadGeneration = 0;
 
-  $: if (personId && $currentLanguage) {
+  $: if (personId && $currentLanguage && !routeHidden) {
     const generation = ++dataLoadGeneration;
     const requestedPersonId = personId;
     const requestedLanguage = $currentLanguage;
@@ -534,7 +564,7 @@
   }
 
   // Reactive meta story loading - load when metaStoryId OR language changes
-  $: if (metaStoryId && $currentLanguage) {
+  $: if (metaStoryId && $currentLanguage && !routeHidden) {
     const generation = ++dataLoadGeneration;
     dataLoading = true;
     metaStoryData = null;
@@ -655,7 +685,7 @@
     <MetaStoryView
       {metaStoryData}
       {personStyles}
-      personsRegistry={registry.people}
+      personsRegistry={visibleRegistry.people}
       currentLanguage={$currentLanguage}
       isLoading={dataLoading}
     />
@@ -663,7 +693,7 @@
     <StoryView
       {dataset}
       {egoNetwork}
-      personsRegistry={registry}
+      personsRegistry={visibleRegistry}
       personStylesRegistry={personStyles}
       isLoading={dataLoading}
       {loadingStage}
@@ -677,7 +707,7 @@
     <Landing
       entries={registryEntries}
       englishEntries={englishRegistryEntries}
-      {metaStories}
+      metaStories={visibleMetaStories}
       getSummary={entrySummary}
       getStyle={styleFor}
       onSelectPerson={handleSelectPerson}

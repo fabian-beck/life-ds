@@ -30,6 +30,8 @@ Each person has a unique `id` (snake_case, e.g., `alan_turing`) and exists in th
    }
    ```
 
+   An entry may also carry `"hidden": true`, and so may an entry of the meta story registry `data/meta_stories.json`. The person or collection then stays in the data but is kept off the deployed site: a production build lists it nowhere—not on the landing page, not among the related-people or collection cards, not as a person mention—and sends its route to the landing page as it does an unknown id. The development server shows hidden entries by default, marked with a badge, and offers a toggle next to the high-contrast one that previews the deployed view (`src/stores/visibility.js`, `src/utils/visibility.js`). The English registries are the reference the application reads the flag from; the localized registries mirror it because their entries are derived from the English ones whole. Set or clear it with `python scripts/set_hidden.py --person <id> --meta-story <id> [--show]`, which writes every registry, and `--list` prints what is hidden. The registry writers keep the flag through a regeneration. A visible entry carries no flag at all; `false` is never written.
+
 2. **`data/person_styles.json`** - Visual styling per person:
 
    ```json

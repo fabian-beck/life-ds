@@ -3,6 +3,7 @@
   import { displayName } from "../utils/helpers.js";
   import { extractYear } from "../utils/story/dates.js";
   import { getThumbnailUrl } from "../utils/story/images.js";
+  import { isHidden } from "../utils/visibility.js";
   import { logEvent } from "../evaluation/log.js";
 
   export let metaStories = [];
@@ -394,6 +395,13 @@
                   data-focus-id={`meta-title-${metaStory.id}`}
                   aria-label={$_("landing.explore_meta_story")}
                 >
+                  {#if isHidden(metaStory)}
+                    <!-- Development only: the deployment never lists a
+                         hidden collection, so the badge marks what it drops. -->
+                    <span class="hidden-badge"
+                      >{$_("landing.hidden_label")}</span
+                    >
+                  {/if}
                   <h2
                     class="slide-title"
                     style="--title-scale: {getTitleScale(metaStory.title)}"
@@ -817,6 +825,19 @@
       0 3px 10px rgba(0, 0, 0, 1),
       0 2px 6px rgba(0, 0, 0, 1),
       0 1px 3px rgba(0, 0, 0, 0.9);
+  }
+
+  .hidden-badge {
+    display: inline-block;
+    margin-bottom: 0.35rem;
+    padding: 0.2rem 0.5rem;
+    border: 1px dashed rgba(251, 191, 36, 0.8);
+    border-radius: 0.3rem;
+    color: #fbbf24;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .slide-title {

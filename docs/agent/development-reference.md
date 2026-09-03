@@ -30,6 +30,8 @@ Web sessions run in a fresh container that has the repository cloned and nothing
 
 Published by **Netlify** from the `deploy` branch, which Netlify watches and builds on every update. Pushing or merging to `main` does not publish; advancing `deploy` does, and that push is the only step (`git push origin origin/main:deploy`). There is no deployment workflow in `.github/workflows`—`checks.yml` validates and releases nothing—and no manual upload. Do not deploy unless the user asks for it.
 
+A production build leaves out every person and collection whose registry entry carries `"hidden": true`; the development server shows them, marked, with a toggle on the landing page that previews the deployed view. See [Person Data Model](domain-and-data-models.md#person-data-model) and `scripts/set_hidden.py`.
+
 `netlify.toml` holds the build and is read from the branch being built, so a change to it takes effect once it reaches `deploy`. It builds with `VITE_BASE_PATH=/` because Netlify serves the site from the domain root, while `vite.config.js` defaults to `base: "/life-ds/"` for the dev server and the interface tests. The build writes a `404.html` copy of `index.html` (`notFoundFallbackPlugin`) so path-style entry URLs survive on a host without rewrite rules.
 
 `technicalReportPlugin` publishes the generated technical report alongside the app: the build copies `docs/report/index.html` to `dist/report/index.html`, and the dev server answers `/life-ds/report/` with the same file ahead of the SPA fallback. The landing page and the AI-generated modal link there through `assetUrl("/report/")`.

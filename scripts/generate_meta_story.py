@@ -1725,6 +1725,10 @@ def update_meta_stories_registry(
         if existing["id"] == story_id:
             # Preserve original created date
             entry["created"] = existing.get("created", entry["created"])
+            # A collection hidden from the deployed site stays hidden when it
+            # is regenerated (see scripts/set_hidden.py).
+            if existing.get("hidden") is True:
+                entry["hidden"] = True
             registry["meta_stories"][i] = entry
             found = True
             break
