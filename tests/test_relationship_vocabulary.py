@@ -19,12 +19,14 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from utils.relationship_vocabulary import (  # noqa: E402
     CATEGORIES,
     ENTITY_KINDS,
+    RETIRED_CATEGORIES,
     ROLES,
     is_canonical,
     normalize_relationship_type,
 )
 
 DATA_DIR = ROOT / "data"
+OUTDATED = (DATA_DIR / "outdated.md").read_text("utf-8")
 LOCALES = {
     lang: json.loads((ROOT / "src" / "locales" / f"{lang}.json").read_text("utf-8"))
     for lang in ("en", "de")
@@ -42,6 +44,23 @@ def ego_network_files():
 def meta_story_files():
     yield from sorted((DATA_DIR / "meta_stories").glob("*.json"))
     yield from sorted((DATA_DIR / "meta_stories").glob("*/*.json"))
+
+
+def dataset_id(path):
+    """The person or meta story id a data file belongs to."""
+    relative = path.relative_to(DATA_DIR)
+    if relative.parts[0] == "people":
+        return relative.parts[1]
+    return path.stem
+
+
+def carries_retired_category(token):
+    category = str(token or "").partition("/")[0]
+    return category in RETIRED_CATEGORIES
+
+
+def is_flagged_outdated(path):
+    return f"`{dataset_id(path)}`" in OUTDATED
 
 
 class VocabularyLocaleParity(unittest.TestCase):
@@ -63,6 +82,19 @@ class VocabularyLocaleParity(unittest.TestCase):
             if f"network.category.{category}" not in locale
         ]
         self.assertEqual(missing, [])
+
+    def test_locale_categories_do_not_outgrow_the_vocabulary(self):
+        # A category the locales name but the module lacks is either a gap
+        # the generator can no longer fill or a retired one kept only while
+        # outdated datasets still carry it.
+        prefix = "network.category."
+        stray = [
+            key[len(prefix) :]
+            for key in LOCALES["en"]
+            if key.startswith(prefix)
+            and key[len(prefix) :] not in CATEGORIES | RETIRED_CATEGORIES
+        ]
+        self.assertEqual(stray, [])
 
     def test_locale_roles_do_not_outgrow_the_vocabulary(self):
         # A role translated but absent from the module would let the
@@ -86,21 +118,31 @@ class VocabularyLocaleParity(unittest.TestCase):
 
 
 class CorpusStaysCanonical(unittest.TestCase):
+    # A retired category is not canonical — a run cannot emit it — but a
+    # dataset that still carries one is tolerated as long as it is flagged
+    # for regeneration in data/outdated.md, where the no-repair rule sends
+    # it. Anything else outside the vocabulary is an offender as before.
+    def _classify(self, path, token, offenders, unflagged):
+        if is_canonical(token):
+            return
+        if carries_retired_category(token):
+            if not is_flagged_outdated(path):
+                unflagged.append(f"{path.relative_to(ROOT)}: {token!r}")
+            return
+        offenders.append(f"{path.relative_to(ROOT)}: {token!r}")
+
     def test_every_ego_network_type_is_in_the_vocabulary(self):
-        offenders = []
+        offenders, unflagged = [], []
         for path in ego_network_files():
             data = json.loads(path.read_text("utf-8"))
             for connection in data.get("connections", []):
                 token = connection.get("relationship_type", "")
-                if not is_canonical(token):
-                    offenders.append(
-                        f"{path.relative_to(ROOT)}: "
-                        f"{connection.get('person_name')} — {token!r}"
-                    )
+                self._classify(path, token, offenders, unflagged)
         self.assertEqual(offenders, [])
+        self.assertEqual(unflagged, [], "retired category not flagged as outdated")
 
     def test_every_meta_story_link_type_is_in_the_vocabulary(self):
-        offenders = []
+        offenders, unflagged = [], []
         for path in meta_story_files():
             data = json.loads(path.read_text("utf-8"))
             links = (data.get("social_network") or {}).get("links") or []
@@ -108,9 +150,14 @@ class CorpusStaysCanonical(unittest.TestCase):
                 holders = [link, *(link.get("endpoints") or {}).values()]
                 for holder in holders:
                     token = holder.get("relationship_type")
-                    if token and not is_canonical(token):
-                        offenders.append(f"{path.relative_to(ROOT)}: {token!r}")
+                    if token:
+                        self._classify(path, token, offenders, unflagged)
         self.assertEqual(offenders, [])
+        self.assertEqual(unflagged, [], "retired category not flagged as outdated")
+
+    def test_a_retired_category_is_out_of_the_vocabulary(self):
+        self.assertEqual(RETIRED_CATEGORIES & CATEGORIES, frozenset())
+        self.assertFalse(is_canonical("intellectual/influence"))
 
     def test_entity_kinds_in_the_corpus_are_the_declared_ones(self):
         offenders = []

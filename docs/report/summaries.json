@@ -65,11 +65,11 @@
       }
     },
     "m_p5b": {
-      "fingerprint": "a030da2b32a40689",
+      "fingerprint": "2884cd790c130c00",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews the derived social graph against the article evidence, adding missed direct ties and correcting or removing weak ones before clustering turns the graph into circles. It preserves the existing graph when review cannot run or when there are too few main people to form a network.",
-        "why_this_design": "The step adjusts its standard for additions and deletions to the graph's existing density, so it can fill genuine gaps in a sparse graph without making a dense graph less discriminating."
+        "what_it_does": "Reviews the derived network against the biographical evidence, adding missed direct ties, correcting supported ones, and removing links that rest on vague or indirect contact. It leaves a revised graph for clustering so the resulting circles reflect reviewed relationships rather than the separate ego networks alone.",
+        "why_this_design": "It adjusts its standard for additions and pruning to the existing density, helping a sparse graph recover documented connections without making a dense graph still more speculative."
       }
     },
     "m_p6": {
@@ -265,11 +265,11 @@
       }
     },
     "p_network": {
-      "fingerprint": "a54eef014a86d9a7",
+      "fingerprint": "a562125405b3df39",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a person-centered network from the main Wikipedia article and related articles, turning documented family, work, social, and political ties into named human connections. It also leaves category-level prose that explains how those circles shaped the person’s life, giving the later story pipeline both graph structure and narrative context.",
-        "why_this_design": "It excludes institutions and collectives as connections so the graph preserves relationships between people, while summaries retain important context that cannot be tied to a named individual."
+        "what_it_does": "Builds a person-centered relationship network from the subject’s Wikipedia article and related articles, linking the subject to documented family, collaborators, mentors, friends, rivals, and other significant people. It leaves later story steps a typed account of each tie and category-level prose that explains how the people around the subject shaped their life and work.",
+        "why_this_design": "It restricts nodes to named individuals and assigns political harm or support to the person who acted, so the graph preserves agency instead of turning institutions or regimes into misleading social ties."
       }
     },
     "p_portrait": {

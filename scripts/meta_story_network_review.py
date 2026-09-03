@@ -328,7 +328,7 @@ well-established facts:
   contact goes).
 - relationship_category and relationship_role come from the closed vocabulary
   the schema offers; together they form the stored type, e.g.
-  professional/colleague, professional/mentor, intellectual/influence,
+  professional/colleague, professional/mentor, academic/influence,
   social/correspondent, family/spouse, social/friend.
 - strength is one of: weak, moderate, strong.
 - Do not restate ties that should stay unchanged. Only list real edits.

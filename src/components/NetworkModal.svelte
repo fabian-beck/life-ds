@@ -18,6 +18,11 @@
     relationshipRoleLabel,
   } from "../utils/relationshipLabels.js";
   import { assetUrl } from "../utils/assetUrl.js";
+  import {
+    getSubcategory,
+    groupBySubcategory,
+    sortByStrength,
+  } from "../utils/story/networkGroups.js";
 
   export let egoNetwork = null;
   export let personName = "";
@@ -154,102 +159,6 @@
       groups[mainCategory].push(connection);
     });
     return groups;
-  }
-
-  /**
-   * Group connections by subcategory if subcategories repeat (≥2 occurrences)
-   * @param {Array} connections - Array of connection objects
-   * @returns {Array} Array of {subcategory, label, people} objects
-   */
-  function groupBySubcategory(connections) {
-    // Count subcategory occurrences
-    const subcategoryCounts = new Map();
-    connections.forEach((conn) => {
-      const subcategory = getSubcategory(conn.relationship_type);
-      if (subcategory) {
-        const count = subcategoryCounts.get(subcategory) || 0;
-        subcategoryCounts.set(subcategory, count + 1);
-      }
-    });
-
-    // Find repeated subcategories (≥2 occurrences)
-    const repeatedSubcategories = new Set();
-    subcategoryCounts.forEach((count, subcategory) => {
-      if (count >= 2) {
-        repeatedSubcategories.add(subcategory);
-      }
-    });
-
-    // If no repeated subcategories, return ungrouped
-    if (repeatedSubcategories.size === 0) {
-      return [
-        { subcategory: null, label: null, people: sortByStrength(connections) },
-      ];
-    }
-
-    // Group by subcategory
-    const groups = new Map();
-    const ungrouped = [];
-
-    connections.forEach((conn) => {
-      const subcategory = getSubcategory(conn.relationship_type);
-      if (subcategory && repeatedSubcategories.has(subcategory)) {
-        if (!groups.has(subcategory)) {
-          groups.set(subcategory, []);
-        }
-        groups.get(subcategory).push(conn);
-      } else {
-        ungrouped.push(conn);
-      }
-    });
-
-    // Convert to array with accumulated strength scores
-    const groupsArray = [];
-    groups.forEach((people, subcategory) => {
-      const accumulatedStrength = calculateAccumulatedStrength(people);
-      groupsArray.push({
-        subcategory,
-        label: subcategoryLabel(subcategory, people.length),
-        people: sortByStrength(people),
-        accumulatedStrength,
-      });
-    });
-
-    // Sort by accumulated strength (lower is stronger)
-    groupsArray.sort((a, b) => a.accumulatedStrength - b.accumulatedStrength);
-
-    // Add ungrouped people at the end (always last)
-    if (ungrouped.length > 0) {
-      // A lone leftover that has its own subcategory needs no generic "Other"
-      // box: name the box after that subcategory and let the person drop its
-      // now-redundant role label (showRole is off once the box has a subcategory).
-      const soleSubcategory =
-        ungrouped.length === 1
-          ? getSubcategory(ungrouped[0].relationship_type)
-          : null;
-      groupsArray.push({
-        subcategory: soleSubcategory,
-        label: soleSubcategory ? subcategoryLabel(soleSubcategory, 1) : null,
-        isOther: !soleSubcategory, // Labeled "Other" (translated) in the template
-        people: sortByStrength(ungrouped),
-        accumulatedStrength: Infinity, // Ensures it's always last
-      });
-    }
-
-    return groupsArray;
-  }
-
-  /**
-   * Calculate accumulated strength score for a group of connections
-   * Lower score = stronger overall connections
-   * @param {Array} connections - Array of connection objects
-   * @returns {number} Accumulated strength score
-   */
-  function calculateAccumulatedStrength(connections) {
-    const strengthOrder = { strong: 0, moderate: 1, weak: 2 };
-    return connections.reduce((sum, conn) => {
-      return sum + (strengthOrder[conn.strength] ?? 3);
-    }, 0);
   }
 
   // A box label names a repeated subcategory. `relationship_type` is a machine
@@ -457,22 +366,6 @@
       rows: rows.filter((row) => row.boxes.length > 0),
       other: sortByStrength(other),
     };
-  }
-
-  function sortByStrength(connections) {
-    const strengthOrder = { strong: 0, moderate: 1, weak: 2 };
-    return connections.sort((a, b) => {
-      const aStrength = strengthOrder[a.strength] ?? 3;
-      const bStrength = strengthOrder[b.strength] ?? 3;
-      return aStrength - bStrength;
-    });
-  }
-
-  function getSubcategory(relationshipType) {
-    if (!relationshipType || !relationshipType.includes("/")) {
-      return null;
-    }
-    return relationshipType.split("/")[1];
   }
 
   let familyGenerationsEl = null;
@@ -807,7 +700,8 @@
             </div>
           </div>
         {:else}
-          {@const subgroups = groupBySubcategory(people)}
+          {@const subgroups = groupBySubcategory(people, subcategoryLabel)}
+          {@const boxed = subgroups.length > 1}
           <div class="person-group">
             <h4 class="group-title">
               {relationshipCategoryLabel($_, type, people.length)}
@@ -834,7 +728,10 @@
                     {@const boxLabel =
                       subgroup.label ??
                       (subgroup.isOther ? $_("network.other") : null)}
-                    <div class="family-box" class:other-box={subgroup.isOther}>
+                    <div
+                      class={boxed ? "family-box" : "group-people"}
+                      class:other-box={subgroup.isOther}
+                    >
                       {#if boxLabel}
                         <span class="family-box-label">{boxLabel}</span>
                       {/if}
@@ -1095,6 +992,14 @@
 
   .family-box.other-box {
     border-style: dashed;
+  }
+
+  /* A circle with a single group is not subdivided, so its chips stand in
+     the row without a box around them. */
+  .group-people {
+    display: flex;
+    justify-content: center;
+    min-width: 0;
   }
 
   .family-box-label {

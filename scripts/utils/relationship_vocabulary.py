@@ -9,6 +9,13 @@ predates a vocabulary change is regenerated rather than migrated.
 `tests/test_relationship_vocabulary.py` holds the data, this module, and
 both locale files to one another.
 
+Categories stay coarse: the interface opens one circle per category, so two
+categories that a reader cannot tell apart split one circle in two. That is
+why `academic` alone holds the ties of scholarship — teachers, students,
+colleagues, influences, and the opponent of a long scientific debate — and
+the `intellectual` category that used to sit beside it is retired (see
+`RETIRED_CATEGORIES`).
+
 Two rules shape the role list:
 
 - A role names what the other person is or did **toward the subject**, never
@@ -36,7 +43,6 @@ RelationshipCategory = Literal[
     "enslaver",
     "family",
     "innovation",
-    "intellectual",
     "other",
     "political",
     "professional",
@@ -160,6 +166,11 @@ RelationshipRole = Literal[
 
 CATEGORIES = frozenset(get_args(RelationshipCategory))
 ROLES = frozenset(get_args(RelationshipRole))
+
+# Categories a run can no longer emit. A dataset still carrying one is
+# outdated (listed in data/outdated.md) and is regenerated, not rewritten;
+# until then the locales keep the entry so the shipped circle stays named.
+RETIRED_CATEGORIES = frozenset({"intellectual"})
 
 ENTITY_KINDS = ("person", "organization", "group")
 
