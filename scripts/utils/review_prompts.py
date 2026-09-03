@@ -279,6 +279,7 @@ REVIEW GUIDELINES:
 **SVG Pattern**:
 - Must use ONLY pure black (#000000) and white (#FFFFFF)
 - Must include at least one white element
+- Must paint the whole 160x160 tile: black is the field and white the marks, and the story multiplies the tile against its primary color, so a tile left transparent renders as a flat wash of that color rather than a pattern
 - Should be 160x160 tileable pattern
 - Should reflect person's era, culture, or field
 - Strong strokes preferred over thin lines

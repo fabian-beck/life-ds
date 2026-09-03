@@ -7,7 +7,7 @@ structure.
 
 import json
 import re
-from typing import Dict, Any, Tuple
+from typing import Any, Callable, Dict, Tuple
 
 from .relationship_vocabulary import normalize_relationship_type
 from .review_models import EventsChanges, NetworkChanges, StyleChanges
@@ -238,15 +238,31 @@ def apply_network_changes(
 
 
 def apply_style_changes(
-    style_data: Dict[str, Any], changes: StyleChanges, min_confidence: int = 4
+    style_data: Dict[str, Any],
+    changes: StyleChanges,
+    min_confidence: int = 4,
+    *,
+    sanitise_pattern: Callable[[str], str],
 ) -> Tuple[Dict[str, Any], int, int]:
     """
     Apply changes to style data, preserving JSON structure.
+
+    The reviewer proposes a replacement pattern as free SVG text, and the
+    generator's guarantees about that text — two colors, no opacity, 160x160,
+    and an opaque ground beneath the marks — hold only for the string the
+    generator itself wrote. `sanitise_pattern` is therefore required rather
+    than optional: the reviewer once replaced a tile with a deliberately
+    transparent one, reasoning that the page background should show through,
+    and the story renders the tile by multiplying it against its primary
+    color, so a tile with no ground came out as a flat wash of that color
+    instead of a pattern.
 
     Args:
         style_data: Original style data
         changes: Proposed changes
         min_confidence: Minimum confidence to apply
+        sanitise_pattern: The generator's pattern sanitiser, applied to a
+            proposed pattern; a pattern it rejects is left unchanged.
 
     Returns:
         Tuple of (updated_data, applied_count, skipped_count)
@@ -256,6 +272,7 @@ def apply_style_changes(
 
     updated_data = json.loads(json.dumps(style_data))  # Deep copy
     applied = 0
+    skipped = 0
 
     if changes.new_primary:
         updated_data["primary"] = changes.new_primary
@@ -270,8 +287,14 @@ def apply_style_changes(
         applied += 1
 
     if changes.new_pattern_svg:
-        updated_data["background_pattern_svg"] = changes.new_pattern_svg
-        applied += 1
+        try:
+            updated_data["background_pattern_svg"] = sanitise_pattern(
+                changes.new_pattern_svg
+            )
+            applied += 1
+        except ValueError as error:
+            print(f"  Keeping the existing pattern: {error}")
+            skipped += 1
 
     if changes.new_fonts:
         for key, value in changes.new_fonts.items():
@@ -279,4 +302,4 @@ def apply_style_changes(
                 updated_data[key] = value
                 applied += 1
 
-    return updated_data, applied, 0
+    return updated_data, applied, skipped

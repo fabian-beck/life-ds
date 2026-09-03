@@ -305,19 +305,19 @@
       }
     },
     "p_review_style": {
-      "fingerprint": "25c85cba20c34852",
+      "fingerprint": "8e99ec782588c3c2",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews a biography page’s colors, pattern, and fonts against the subject’s life, era, and roles. It returns an assessment and recommends changes only when the existing style has a clear problem or missed opportunity.",
-        "why_this_design": "The review treats the generated style as presumptively sound, which limits cosmetic churn while still checking readability, cultural fit, and the pattern’s hard rendering constraints."
+        "what_it_does": "Reviews a person’s existing visual style against the biography’s era, roles, and mood. It identifies meaningful problems in the palette, pattern, and font pairing, then returns targeted changes rather than rebuilding a style that already works.",
+        "why_this_design": "The review treats the SVG as a black-and-white mask because the rendering layer multiplies it by the primary color; transparent or incomplete tiles would erase the intended pattern."
       }
     },
     "p_style": {
-      "fingerprint": "4171de9a2dad5663",
+      "fingerprint": "af4adcd10b170f3c",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Derives the story’s dark-mode visual identity from the subject’s era, field, and character. It returns a color palette, paired type choices, and abstract geometric SVG elements that carry those cues into the interface.",
-        "why_this_design": "It restricts the repeating pattern to black and white and uses stroke weight rather than opacity so the pattern stays legible and consistent behind the story’s content."
+        "what_it_does": "Derives a dark-mode visual identity for the person, tying color, typography, and abstract geometric motifs to the person’s era, field, and character. It leaves the story with reusable background and separator artwork as well as interface colors and type choices.",
+        "why_this_design": "The background tile uses only opaque black and white because the story multiplies it with the primary color, so transparent or gray areas would weaken or erase the intended pattern."
       }
     },
     "p_translate": {

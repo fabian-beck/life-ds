@@ -340,6 +340,7 @@ def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
         "- background must remain dark (perceived luminance under 0.18).",
         "- primary and secondary should contrast well against the background and with each other.",
         "- background_pattern_svg must be a 160x160 tileable SVG string that uses ONLY pure black (#000000) and pure white (#FFFFFF).",
+        "- The tile must be painted edge to edge over a black ground, with the marks in white. The story multiplies the tile against its primary color, so any part left transparent renders as a flat wash of that color instead of a pattern.",
         "- CRITICAL: NO gray shades allowed—only #000000 (black) and #FFFFFF (white). No #111111, #EEEEEE, or any other color values.",
         "- Do NOT use opacity, fill-opacity, or stroke-opacity attributes in the SVG. Use stroke-width variations instead for visual hierarchy.",
         "- The pattern should be highly stylized and work as a tiled background, smoothly repeating.",

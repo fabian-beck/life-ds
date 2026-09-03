@@ -25,7 +25,11 @@ from config import (  # noqa: E402
     LOW_REASONING_EFFORT,
 )
 from events.pipeline import enrich_event_coordinates_v2  # noqa: E402
-from generate_person_style import load_styles, write_styles  # noqa: E402
+from generate_person_style import (  # noqa: E402
+    load_styles,
+    sanitise_pattern_svg,
+    write_styles,
+)
 from utils.model_calls import parse_structured_or_raise  # noqa: E402
 from utils.person_style import STYLES_PATH, load_style  # noqa: E402
 from utils.review_models import (  # noqa: E402
@@ -437,7 +441,10 @@ def review_person_data(
 
     if aspect in ["all", "style"] and person_data["style"]:
         updated_style, style_applied, style_skipped = apply_style_changes(
-            person_data["style"], style_review.proposed_changes, min_confidence
+            person_data["style"],
+            style_review.proposed_changes,
+            min_confidence,
+            sanitise_pattern=sanitise_pattern_svg,
         )
         print(f"  Style: {style_applied} applied, {style_skipped} skipped")
 
