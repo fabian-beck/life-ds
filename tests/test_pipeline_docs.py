@@ -75,9 +75,7 @@ class IntrospectionTests(unittest.TestCase):
         self.assertIsNone(phase1.model_value)
         self.assertIn("medium", phase1.reasoning_value or "")
         cli = self.codebase.scripts["generate_person_events.py"]
-        model_flag = next(
-            flag for flag in cli.cli_flags if "--model" in flag.flags
-        )
+        model_flag = next(flag for flag in cli.cli_flags if "--model" in flag.flags)
         self.assertEqual("DEFAULT_MODEL", model_flag.default)
         # Phase 2 is on the small model: every field it returns is checked
         # afterwards — icons against the catalog, places against the geocoder.
@@ -91,7 +89,9 @@ class IntrospectionTests(unittest.TestCase):
         # sources are supplied, the questions are listed and the shape is
         # prescribed, so what it needs is recall across a long article rather
         # than deliberation about what to write.
-        report = calls[("generate_event_backgrounds.py", "generate_event_backgrounds")]
+        report = calls[
+            ("generate_event_backgrounds.py", "generate_event_backgrounds.write_report")
+        ]
         self.assertIn("OPENAI_MODEL", report.model_value or "")
         self.assertIn("OPENAI_BULK_REASONING_EFFORT", report.reasoning_value or "")
         # The steps working from what those two settled do run on the small
@@ -387,7 +387,10 @@ class ExplanationFreshnessTests(unittest.TestCase):
         """The build writes it, and without a key `spec.py` text stands in."""
         directory = tempfile.mkdtemp()
         path = Path(directory) / "summaries.json"
-        path.write_text(json.dumps({"version": summarize.CACHE_VERSION, "steps": {}}), encoding="utf-8")
+        path.write_text(
+            json.dumps({"version": summarize.CACHE_VERSION, "steps": {}}),
+            encoding="utf-8",
+        )
         self.assertEqual([], validate.check_freshness(self.codebase, path))
 
     def test_every_published_explanation_matches_the_source_it_describes(self) -> None:
@@ -1654,9 +1657,7 @@ class ShotPartTests(unittest.TestCase):
 
     def _shot(self, document: report.Document) -> screenshots.Shot:
         mount = next(
-            mount
-            for mount in document.mounts
-            if mount.component == "screenshot"
+            mount for mount in document.mounts if mount.component == "screenshot"
         )
         return screenshots.parse(mount.params, mount.body_markdown, mount.line)
 
@@ -1695,9 +1696,7 @@ class ShotPartTests(unittest.TestCase):
         self.assertNotIn("@hero", document.html)
 
     def test_a_reference_without_a_phrase_uses_the_part_label(self) -> None:
-        document = _compile(
-            self.HEAD + "See [[shot-one.side]].\n\n" + self.BLOCK
-        )
+        document = _compile(self.HEAD + "See [[shot-one.side]].\n\n" + self.BLOCK)
         self.assertIn("Side region", document.html)
 
     def test_an_unknown_shot_or_part_fails_the_build(self) -> None:
@@ -1773,9 +1772,7 @@ class ShotPartTests(unittest.TestCase):
         )
         album = screenshots.collect(document)
         declared = {
-            f"{shot.id}.{part.id}"
-            for shot in album.shots
-            for part in shot.parts
+            f"{shot.id}.{part.id}" for shot in album.shots for part in shot.parts
         }
         self.assertTrue(declared, "the report declares no screenshot parts")
         self.assertEqual(sorted(declared - set(document.shotrefs)), [])

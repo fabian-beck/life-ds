@@ -56,6 +56,7 @@ from events.prompts.phase2 import (
     filter_related_articles_for_event,
 )
 from events.schemas import CLASSIFICATION_MODELS, EventSkeleton
+from utils.concurrency import map_concurrently, worker_count
 from utils.datasets import person_ids
 from utils.deutsche_biographie import format_for_prompt, get_cached_deutsche_biographie
 from utils.event_depth import get_event_weight, select_deep_event_indexes
@@ -884,8 +885,15 @@ def generate_event_backgrounds(
     db_text = _deutsche_biographie_text(person_id)
     subject_article = _wikipedia_page(person_id)
 
-    written = 0
-    for index in targets:
+    # The reports are written side by side. Each one reads the story as it
+    # stands on disk and writes only its own event, so no report waits on
+    # another; the shared material above is read only.
+    workers = min(worker_count(), len(targets))
+    if workers > 1:
+        print(f"  {person_id}: writing {len(targets)} report(s), {workers} at a time")
+
+    def write_report(index: int) -> bool:
+        """Report, sources, and pictures for one event; whether it got one."""
         event = events[index]
         title = str(event.get("title", "")).encode("ascii", "replace").decode("ascii")
         print(f"  {person_id}[{index}] {title}")
@@ -916,8 +924,8 @@ def generate_event_backgrounds(
         )
         passage = (parsed.background or "").strip() if parsed is not None else ""
         if parsed is None or not passage:
-            print("    [!] no passage; leaving the event without one")
-            continue
+            print(f"    [!] no passage for [{index}]; leaving the event without one")
+            return False
         event["background"] = passage
 
         # Only URLs the call was actually shown. A model asked for a citation
@@ -926,11 +934,13 @@ def generate_event_backgrounds(
         allowed = _citable(person_wikipedia, related, event.get("sources"))
         chosen = [url for url in (parsed.sources or []) if _normalize(url) in allowed]
         if chosen and chosen != event.get("sources"):
-            print(f"    sources: {event.get('sources')} -> {chosen}")
+            print(f"    sources of [{index}]: {event.get('sources')} -> {chosen}")
             event["sources"] = chosen
 
         illustrate_event(client, event, passage, parsed.background_image_queries)
-        written += 1
+        return True
+
+    written = sum(map_concurrently(targets, write_report, workers=workers))
 
     if written:
         write_json(path, data)

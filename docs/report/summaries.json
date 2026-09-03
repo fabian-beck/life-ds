@@ -137,11 +137,11 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "b86cd80378543570",
+      "fingerprint": "57a5c7418cfeee2a",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Selects the story’s deep events and writes background passages only for events the interface can open. It grounds each passage in the reviewed subject article, related articles, and the surrounding story, then replaces the event’s citations and adds image-search terms before copying citations to translated versions.",
-        "why_this_design": "It recomputes citations while the event’s evidence is already in view and accepts only supplied URLs, preventing plausible but unrelated or broken citations from reaching the reader."
+        "what_it_does": "Writes the optional depth-layer passage for an event from the reviewed subject article, related articles, and the surrounding story context. It also replaces the event’s citations with sources that document that event and passes report-grounded image ideas to the illustration step.",
+        "why_this_design": "It accepts only URLs shown to the call, preventing plausible but invented citations from reaching the first event-level provenance readers see."
       }
     },
     "p_chapter_art": {
@@ -217,11 +217,11 @@
       }
     },
     "p_img_fetch": {
-      "fingerprint": "450a061469b67241",
+      "fingerprint": "d40878bdfa238093",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Searches Wikimedia Commons and Openverse for images tied to the life-wide search terms, then returns one candidate record per image URL. It also searches event-specific terms and marks those results with the event they may illustrate, giving the later matcher candidates linked to particular moments in the story.",
-        "why_this_design": "It runs event searches through Commons first so URL deduplication preserves the event link, while Openverse broadens the less-specific person searches without replacing Commons metadata for the same image."
+        "what_it_does": "Searches image sources for both life-wide and event-specific queries, returning one deduplicated pool of image candidates. It preserves the event tag on pictures found for named events so the later matcher can connect those pictures to the event that prompted the search.",
+        "why_this_design": "It runs event queries first and keeps the first copy of each URL, because a duplicate found later without the event tag would erase the link needed for event-level matching."
       }
     },
     "p_img_filter": {

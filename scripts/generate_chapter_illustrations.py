@@ -43,7 +43,7 @@ import sys
 from datetime import date
 from io import BytesIO
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, cast
+from typing import Any, Dict, List, Optional, Sequence, Tuple, cast
 
 import requests
 from openai import APIStatusError, OpenAI
@@ -59,6 +59,7 @@ from config import (
     enable_utf8_console,
 )
 from utils import usage
+from utils.concurrency import map_concurrently
 from utils.datasets import event_files
 from utils.json_io import read_json, write_json
 from utils.model_calls import parse_structured
@@ -499,6 +500,7 @@ def generate_chapter_illustrations(
     today = date.today().isoformat()
 
     print("[Step 3/4] Generating illustrations...")
+    drawable: List[Tuple[str, str]] = []
     for chapter in pending:
         chapter_id = chapter.get("id", "")
         concept = concepts.get(chapter_id)
@@ -508,9 +510,12 @@ def generate_chapter_illustrations(
             continue
 
         print(f"  {chapter_id}: {concept}")
-        if concepts_only:
-            continue
+        if not concepts_only:
+            drawable.append((chapter_id, concept))
 
+    def draw(item: Tuple[str, str]) -> Tuple[str, Optional[Dict[str, Any]]]:
+        """One chapter's illustration, drawn and written, or None having said why."""
+        chapter_id, concept = item
         image_bytes = request_illustration(
             client,
             concept,
@@ -519,11 +524,9 @@ def generate_chapter_illustrations(
             model=model,
         )
         if not image_bytes:
-            failed.append(chapter_id)
-            continue
-
+            return chapter_id, None
         paths = write_webp_sizes(image_bytes, person_id, chapter_id)
-        illustrations[chapter_id] = {
+        return chapter_id, {
             "image": paths["medium"],
             "medium": paths["medium"],
             "full": paths["full"],
@@ -531,6 +534,15 @@ def generate_chapter_illustrations(
             "creator": "AI generated artwork",
             "generated_on": today,
         }
+
+    # The image calls are the slowest single calls of the run and read
+    # nothing of each other — each draws its own concept into its own file —
+    # so they are made side by side and gathered in chapter order.
+    for chapter_id, illustration in map_concurrently(drawable, draw):
+        if illustration is None:
+            failed.append(chapter_id)
+            continue
+        illustrations[chapter_id] = illustration
         generated.append(chapter_id)
 
     print("[Step 4/4] Updating datasets...")

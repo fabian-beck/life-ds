@@ -41,6 +41,18 @@ cross-reference rather than an awkward sentence, and a metaphor rendered
 literally once is rendered literally in every passage that repeats it.
 """
 
+WORKERS = int(os.getenv("LIFE_DS_WORKERS", "4"))
+"""How many of a step's independent calls run at once.
+
+The calls that qualify are the ones that read nothing of each other: the
+research of the events, the image searches, the chapter illustrations, and
+the background reports. Their wall clock was the sum of their latencies for
+no reason other than the loop they sat in. The value is a small one because
+the provider limits tokens per minute, and a step whose every call carries
+the subject's article reaches that limit at a handful of workers; ``1``
+restores the serial order call for call. See ``utils/concurrency.py``.
+"""
+
 DEFAULT_REASONING_EFFORT = os.getenv("OPENAI_REASONING_EFFORT", "medium")
 LOW_REASONING_EFFORT = os.getenv("OPENAI_LOW_REASONING_EFFORT", "none")
 BULK_REASONING_EFFORT = os.getenv("OPENAI_BULK_REASONING_EFFORT", "low")

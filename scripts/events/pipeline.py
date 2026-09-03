@@ -2,8 +2,8 @@
 
 The order is the argument. Phase 1 reads the whole article set and proposes
 the events, because how much of a life an event turns on is a comparison only
-that call can make. Phase 2 researches them one at a time, given the material
-each one needs. The chapter pass groups what came back, the image phase
+that call can make. Phase 2 researches each of them on its own material, side by
+side. The chapter pass groups what came back, the image phase
 illustrates it, the geocoder places it, and `enforce_metadata` brings the whole
 payload into the shape the corpus is read with before it is written.
 
@@ -57,6 +57,7 @@ from events.schemas import (
 )
 from events.images.scoring import filter_images_by_quality
 from icon_categories import normalize_icon
+from utils.concurrency import map_concurrently, worker_count
 from utils.geocode import geocode_location
 from utils.registry import Registry
 from utils.model_calls import (
@@ -611,15 +612,26 @@ def research_all_event_details(
     deutsche_biographie_text: Optional[str] = None,
     subject_article: Optional[Dict[str, Any]] = None,
 ) -> List[EventDetails]:
-    """Research details for all events sequentially (NO images - Phase 3)."""
+    """Research details for all events (NO images - Phase 3).
+
+    The events are researched side by side: no event's research reads
+    another's, and each call carries the same article set, so the step's
+    wall clock is that of its slowest call rather than the sum of all of
+    them. The details come back in the skeletons' order regardless.
+    """
     # Log classification routing info
     classified_count = sum(1 for skeleton in event_skeletons if skeleton.event_class)
     print(
         f"  Phase 2: Using class-specific prompts for {classified_count}/{len(event_skeletons)} classified events"
     )
+    workers = min(worker_count(), max(1, len(event_skeletons)))
+    if workers > 1:
+        print(
+            f"  Phase 2: Researching {len(event_skeletons)} events, {workers} at a time"
+        )
 
-    details = []
-    for idx, skeleton in enumerate(event_skeletons, 1):
+    def research(indexed: Tuple[int, EventSkeleton]) -> EventDetails:
+        idx, skeleton = indexed
         safe_title = skeleton.title.encode("ascii", "replace").decode("ascii")
 
         # Show which prompt type is being used
@@ -631,7 +643,7 @@ def research_all_event_details(
             f"  [{idx}/{len(event_skeletons)}] Researching: {safe_title} [{prompt_type}]"
         )
 
-        detail = research_event_details(
+        return research_event_details(
             skeleton,
             person_name,
             all_related_articles,
@@ -639,9 +651,8 @@ def research_all_event_details(
             deutsche_biographie_text=deutsche_biographie_text,
             subject_article=subject_article,
         )
-        details.append(detail)
 
-    return details
+    return map_concurrently(enumerate(event_skeletons, 1), research, workers=workers)
 
 
 # ============================================================================

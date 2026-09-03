@@ -864,7 +864,7 @@ STEPS: List[Step] = [
         PERSON,
         AI,
         "generate_event_backgrounds.py",
-        "generate_event_backgrounds",
+        "write_report",
         summary=(
             "Computes the story's own deep-event selection — roughly one event "
             "per chapter, ported from the interface and kept in sync with it — "

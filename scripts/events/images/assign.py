@@ -26,6 +26,7 @@ from config import (
 )
 from events.images import sources
 from events.schemas import EventSkeleton
+from utils.concurrency import map_concurrently
 from utils.model_calls import get_client, parse_structured
 
 # Image search string generation: writing Commons queries, which the search
@@ -245,55 +246,77 @@ def execute_batch_image_search(
 
     ``event_queries`` maps an event index to the searches written for that
     event; their hits are tagged with ``for_event`` so the matcher knows which
-    event a candidate was found for. They run first, because deduplication
+    event a candidate was found for. They come first, because deduplication
     keeps the first sighting of a URL and the tag is worth more than the order.
+
+    The queries of one group are sent side by side and their answers merged
+    in the group's own order, so the result is the one the serial loop
+    produced, minus the wait: forty searches of half a second each were
+    twenty seconds spent on nothing that depended on anything.
 
     Returns deduplicated list of image candidates with metadata.
     """
-    all_images = []
+    all_images: List[Dict[str, Any]] = []
     seen_urls: Set[str] = set()
+
+    def safe(query: str) -> str:
+        return query.encode("ascii", "replace").decode("ascii")
+
+    def commons(query: str) -> List[Dict[str, Any]]:
+        try:
+            return sources.search_wikimedia_commons(query, limit=images_per_query)
+        except Exception as e:
+            print(f"        Warning: Search failed for '{safe(query)}': {e}")
+            return []
+
+    def openverse(query: str) -> List[Dict[str, Any]]:
+        try:
+            return sources.search_openverse(query, limit=images_per_query)
+        except Exception as e:
+            print(f"        Warning: Search failed for '{safe(query)}': {e}")
+            return []
+
+    def keep(
+        results: List[Dict[str, Any]],
+        provider: Optional[str] = None,
+        for_event: Optional[int] = None,
+    ) -> None:
+        # Merged on the calling thread, in query order: the first sighting of a
+        # URL wins, and which sighting is first is decided here, not by the
+        # order the searches happened to answer in.
+        for img in results:
+            if img["url"] in seen_urls:
+                continue
+            seen_urls.add(img["url"])
+            if provider:
+                img["provider"] = provider
+            if for_event is not None:
+                img["for_event"] = for_event
+            all_images.append(img)
 
     # Commons only for these: they name things, and the thing-shaped query is
     # what Commons indexes well. Openverse contributes breadth to the person
     # searches below, where breadth is what is missing.
     if event_queries:
-        planned = sum(len(queries) for queries in event_queries.values())
-        print(f"    [Per event] {planned} search(es) from the researched events:")
-        for event_index in sorted(event_queries):
-            for query in event_queries[event_index]:
-                safe_query = query.encode("ascii", "replace").decode("ascii")
-                print(f"      Event {event_index}: '{safe_query}'")
-                try:
-                    results = sources.search_wikimedia_commons(
-                        query, limit=images_per_query
-                    )
-                except Exception as e:
-                    print(f"        Warning: Search failed: {e}")
-                    continue
-                for img in results:
-                    if img["url"] in seen_urls:
-                        continue
-                    seen_urls.add(img["url"])
-                    img["provider"] = "wikimedia"
-                    img["for_event"] = event_index
-                    all_images.append(img)
+        planned = [
+            (event_index, query)
+            for event_index in sorted(event_queries)
+            for query in event_queries[event_index]
+        ]
+        print(f"    [Per event] {len(planned)} search(es) from the researched events:")
+        for event_index, query in planned:
+            print(f"      Event {event_index}: '{safe(query)}'")
+        found = map_concurrently([query for _, query in planned], commons)
+        for (event_index, _), results in zip(planned, found):
+            keep(results, provider="wikimedia", for_event=event_index)
         print(f"      Found {len(all_images)} unique images for named things")
 
     # Search Wikimedia Commons for the searches written for the whole life
     print("    [Source 1/2] Wikimedia Commons:")
     for query in search_strings:
-        safe_query = query.encode("ascii", "replace").decode("ascii")
-        print(f"      Searching: '{safe_query}'")
-
-        try:
-            results = sources.search_wikimedia_commons(query, limit=images_per_query)
-            for img in results:
-                if img["url"] not in seen_urls:
-                    seen_urls.add(img["url"])
-                    img["provider"] = "wikimedia"
-                    all_images.append(img)
-        except Exception as e:
-            print(f"        Warning: Search failed: {e}")
+        print(f"      Searching: '{safe(query)}'")
+    for results in map_concurrently(search_strings, commons):
+        keep(results, provider="wikimedia")
 
     commons_count = len(all_images)
     print(f"      Found {commons_count} unique images from Commons and events")
@@ -301,17 +324,9 @@ def execute_batch_image_search(
     # Search Openverse (aggregates Flickr, museums, etc.)
     print("    [Source 2/2] Openverse (Flickr, museums, etc.):")
     for query in search_strings:
-        safe_query = query.encode("ascii", "replace").decode("ascii")
-        print(f"      Searching: '{safe_query}'")
-
-        try:
-            results = sources.search_openverse(query, limit=images_per_query)
-            for img in results:
-                if img["url"] not in seen_urls:
-                    seen_urls.add(img["url"])
-                    all_images.append(img)
-        except Exception as e:
-            print(f"        Warning: Search failed: {e}")
+        print(f"      Searching: '{safe(query)}'")
+    for results in map_concurrently(search_strings, openverse):
+        keep(results)
 
     openverse_count = len(all_images) - commons_count
     print(f"      Found {openverse_count} unique images from Openverse")

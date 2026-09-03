@@ -23,10 +23,18 @@ The ledger is process-global because the alternative is threading a recorder
 through every generation function, most of which exist to be callable on their
 own. It is therefore only meaningful for a single run in a single process,
 which is what the pipeline is.
+
+The steps that run their calls side by side (``utils/concurrency.py``) record
+from several threads at once, so the record list is guarded by a lock. The
+attribution is not: which step is open is decided by the orchestrator between
+steps, on the main thread, and holds for every worker of that step. A
+:func:`step` block belongs on the main thread for the same reason — opened
+inside a worker it would attribute the other workers' calls too.
 """
 
 from __future__ import annotations
 
+import threading
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from typing import Any, Dict, Iterator, List, Optional
@@ -74,6 +82,7 @@ class StepUsage:
 
 
 _records: List[CallRecord] = []
+_records_lock = threading.Lock()
 _step_stack: List[str] = []
 _base_step: str = UNATTRIBUTED
 
@@ -85,7 +94,8 @@ def reset() -> None:
     a normal run records once and reports once.
     """
     global _base_step
-    _records.clear()
+    with _records_lock:
+        _records.clear()
     _step_stack.clear()
     _base_step = UNATTRIBUTED
 
@@ -177,19 +187,21 @@ def record_response(
         reasoning_tokens=_count(output_details, "reasoning_tokens"),
         images=images,
     )
-    _records.append(record)
+    with _records_lock:
+        _records.append(record)
     return record
 
 
 def records() -> List[CallRecord]:
     """Every call recorded so far, in the order it was made."""
-    return list(_records)
+    with _records_lock:
+        return list(_records)
 
 
 def by_step() -> List[StepUsage]:
     """One row per step, in the order the steps first spent anything."""
     rows: Dict[str, StepUsage] = {}
-    for record in _records:
+    for record in records():
         row = rows.setdefault(record.step, StepUsage(step=record.step))
         row.calls += 1
         row.input_tokens += record.input_tokens
@@ -252,7 +264,7 @@ def as_dict() -> Dict[str, Any]:
                 "reasoning_tokens": record.reasoning_tokens,
                 "images": record.images,
             }
-            for record in _records
+            for record in records()
         ],
     }
 
