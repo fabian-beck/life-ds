@@ -265,11 +265,11 @@
       }
     },
     "p_network": {
-      "fingerprint": "02f2fda254b63f67",
+      "fingerprint": "a54eef014a86d9a7",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a sourced map of the subject’s important family, work, social, and political ties from the main article and related Wikipedia pages. It turns those ties into a small set of relationship circles whose summaries explain how each circle shaped the person’s life and work.",
-        "why_this_design": "It keeps one entry per connected person while separating category and role, so the later story can combine several aspects of a tie without duplicating people or drifting outside the interface’s relationship vocabulary."
+        "what_it_does": "Builds a person-centered network from the main Wikipedia article and related articles, turning documented family, work, social, and political ties into named human connections. It also leaves category-level prose that explains how those circles shaped the person’s life, giving the later story pipeline both graph structure and narrative context.",
+        "why_this_design": "It excludes institutions and collectives as connections so the graph preserves relationships between people, while summaries retain important context that cannot be tied to a named individual."
       }
     },
     "p_portrait": {

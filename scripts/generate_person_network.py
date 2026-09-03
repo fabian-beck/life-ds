@@ -8,7 +8,7 @@ import re
 import sys
 from datetime import date
 from pathlib import Path
-from typing import Any, Dict, List, Literal, Optional, cast
+from typing import Any, Dict, List, Optional, cast
 
 import requests
 from openai import OpenAI
@@ -77,19 +77,10 @@ class Connection(BaseModel):
     """A connection/relationship in the ego network."""
 
     person_name: str = Field(
-        description="Full name of the connected person, organization, or group. "
-        "Never append an explanatory parenthetical — a descriptor belongs in 'qualifier'."
-    )
-    entity_kind: Literal["person", "organization", "group"] = Field(
-        description="What the connection is: 'person' for an individual, "
-        "'organization' for an institution connected as an entity (an employer, "
-        "a club, a university), 'group' for a collective of unnamed people "
-        "('editorial staff', 'programming team', 'committee members')."
-    )
-    qualifier: Optional[str] = Field(
-        None,
-        description="Short reader-facing descriptor for an organization or group "
-        "('secret police', 'insurance company', 'curatorial team'); null for persons.",
+        description="Full name of the connected individual. Every connection is "
+        "one human being: never an organization, an institution, a company, a "
+        "state, a regime, an office, a staff, a team, or any other collective. "
+        "Never append an explanatory parenthetical."
     )
     relationship_category: RelationshipCategory = Field(
         description="The circle this connection belongs to. Stored joined with "
@@ -279,6 +270,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "You are a meticulous social network analyst who converts raw Wikipedia content into structured JSON ego networks. "
         "Focus on identifying significant relationships in a person's life, including family members, colleagues, mentors, "
         "students, collaborators, friends, rivals, and other important connections. "
+        "Every node of the network is one individual human being; an organization, a state, a regime, or a group of people is never a node. "
         "IMPORTANT: All output text must be in American English only, regardless of the source language. "
         "IMPORTANT: Use only 3-5 main relationship categories maximum to keep the network organized and focused. "
         "Every text field is plain text rendered verbatim by the interface: never write "
@@ -291,17 +283,21 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "Analyze the provided Wikipedia content and extract an ego network for the subject. "
         "Include 10-25 significant connections/relationships. For each connection provide:\n"
         "- person_name: Full name of the connected person (IMPORTANT: Each person should appear ONLY ONCE in the network - do not create separate entries for the same person in different roles). "
-        "Never put an explanatory parenthetical into the name — that text belongs in 'qualifier'.\n"
-        "- entity_kind: 'person' for an individual; 'organization' for an institution the subject was tied to as an entity (an employer, a club, a university); "
-        "'group' for a collective of unnamed people ('editorial staff', 'programming team'). Prefer named individuals; include an organization or group only when the sources tie the subject to the collective rather than to any one member.\n"
-        "- qualifier: for an organization or group, a short reader-facing descriptor of what it is ('secret police', 'insurance company'); null for persons.\n"
+        "Never put an explanatory parenthetical into the name.\n"
+        "  INDIVIDUALS ONLY: every connection is a single, named human being — someone who could be the subject of a biography. "
+        "Never make an organization, an institution, a company, a university, a government, a state, a regime, a party, a police force, "
+        "a committee, a movement, or an unnamed collective ('editorial staff', 'programming team', 'colleagues at X', 'members of Y') into a connection. "
+        "When the sources tie the subject to a collective — an employer, a committee, a regime that persecuted them — name the individual through whom the tie ran "
+        "(the director who hired them, the official who dismissed them, the chair they served under) if the sources name one; "
+        "otherwise leave the tie out of the connections and let the category summary carry it in prose.\n"
         "- relationship_category and relationship_role: the two halves of the closed vocabulary; "
         "the stored type is 'category/role':\n"
         f"  Categories (select the 3-5 that best represent this person's network): {', '.join(sorted(CATEGORIES))}\n"
         f"  Roles: {', '.join(sorted(ROLES))}\n"
         "  The role names what the other party is or did toward the subject, as the reader's one-word tag for the tie. "
         "Pick the most specific role that fits; 'family' roles are for family, 'employer'/'colleague'/'collaborator' for work, 'friend'/'acquaintance' for social life.\n"
-        "  CONFLICT DIRECTION: for a relationship with a state or regime official or institution, the role must name the ACTION toward the subject, never the office. "
+        "  CONFLICT DIRECTION: for a relationship with a state or regime official, the role must name the ACTION toward the subject, never the office. "
+        "The persecutor, censor, or patron is the person who acted — a minister, a police chief, a denouncing colleague — never the regime, the state, or the police force as such. "
         "Use 'political/censor' (banned or suppressed the subject's work), 'political/persecutor' (interrogated, denounced, drove out, or otherwise acted against the subject), "
         "'political/banned_by' (excluded the subject from a profession, guild, or publication), or 'political/patron' (protected or promoted them). "
         "Never a neutral role word like 'gatekeeper' or 'authority', and never 'opponent' or 'rival' for one-sided persecution — "
@@ -391,6 +387,49 @@ def _normalize_person_name(name: str) -> str:
     name = " ".join(name.split())
     # Lowercase for comparison
     return name.strip().lower()
+
+
+# Words that end, or stand as, the name of a collective rather than a person.
+# The generation prompt forbids such nodes; this check only reports the ones
+# that get through, so a run log shows them before the data ships.
+_COLLECTIVE_WORDS = (
+    "abbey|academy|agency|army|association|board|bureau|cabaret|club|"
+    "college|colleagues|commission|committee|community|company|corporation|"
+    "council|court|editors|employees|ensemble|faculty|family|federation|"
+    "firm|forum|founders|foundation|government|group|institute|institution|"
+    "laboratory|leadership|league|members|ministry|movement|office|officials|"
+    "organization|parliament|party|peers|police|professionals|regime|"
+    "researchers|school|society|staff|state|students|team|troupe|union|"
+    "university|users"
+)
+_COLLECTIVE_NAME = re.compile(
+    rf"(^|\b)(the )?({_COLLECTIVE_WORDS})\b(\s*\(.*\)|,\s.*)?$", re.IGNORECASE
+)
+# A plurality named by what it does or where it sits: 'Students at ...',
+# 'Editors of ...', 'Founders of ...'.
+_COLLECTIVE_HEAD = re.compile(
+    rf"^(the )?({_COLLECTIVE_WORDS})\s+(at|of|in|from)\b", re.IGNORECASE
+)
+# Two people joined into one entry: 'Philip Johnson and Mark Wigley'.
+_CONJUNCTION = re.compile(r"\s(and|&)\s")
+_INITIALISM = re.compile(r"^[A-Z][A-Z0-9&.]{1,}$")
+
+
+def looks_collective(name: str) -> bool:
+    """Report whether a connection name reads as a collective, not a person.
+
+    A name ends in, or opens with, a word that names an institution, a body,
+    or a plurality of people ('Nazi regime', 'IBM', 'Students at ...' — a
+    plain 'Gestapo' escapes it), is a bare initialism, or joins two people
+    with 'and'. The check is a heuristic that only reports; the schema and
+    the prompt are what keep collectives out of a fresh run.
+    """
+    text = " ".join(str(name or "").split())
+    if not text:
+        return False
+    if _INITIALISM.match(text) or _CONJUNCTION.search(text):
+        return True
+    return bool(_COLLECTIVE_NAME.search(text) or _COLLECTIVE_HEAD.match(text))
 
 
 def _deduplicate_connections(connections: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -523,12 +562,12 @@ def _normalize_relationship_types(connections: List[Dict[str, Any]]) -> None:
                 f"scripts/utils/relationship_vocabulary.py and the locales, "
                 f"or correct the entry."
             )
-        # The default entity kind and an absent qualifier stay out of the
-        # data, so person connections keep their established shape.
-        if conn.get("entity_kind") == "person":
-            del conn["entity_kind"]
-        if not conn.get("qualifier"):
-            conn.pop("qualifier", None)
+        if looks_collective(conn.get("person_name", "")):
+            print(
+                f"  Warning: connection named like a collective rather than "
+                f"an individual kept as-is: {conn.get('person_name')!r} — "
+                f"name the person behind the tie or drop the entry."
+            )
 
 
 def enforce_metadata(

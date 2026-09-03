@@ -471,7 +471,7 @@ Meta story `event_title`s are copied verbatim from the person's translated life 
 - Image captions
 - Relationship descriptions
 - Social network notes and summaries
-- A connection's `qualifier` (the short descriptor of an organization or group), extracted only when present so documents without one keep their fingerprint
+- A connection's `qualifier` (the short descriptor of an organization or group in a network that predates the individuals-only rule, see `data/outdated.md`), extracted only when present so documents without one keep their fingerprint
 - The prose inside an `event_class`: `characterization`, `duration`, `from_location`, `to_location`, `title`, `description`, `impact`, and `significance` (see below)
 
 **What is preserved** (guaranteed by the merge — the model never sees these fields):
@@ -480,7 +480,7 @@ Meta story `event_title`s are copied verbatim from the person's translated life 
 - All URLs (sources, wikipedia, images, annotation wikipedia_urls, publication `source_link`s)
 - All IDs (person_id, chapter IDs, annotation term keys, event_index)
 - `event_type_icon`, `involved_people` list structure
-- Relationship types (e.g., `professional/mentor`) — entirely; the UI localizes them from locale files (the closed vocabulary in `scripts/utils/relationship_vocabulary.py`), and `entity_kind` is copied verbatim the same way
+- Relationship types (e.g., `professional/mentor`) — entirely; the UI localizes them from locale files (the closed vocabulary in `scripts/utils/relationship_vocabulary.py`), and `entity_kind`, where a pre-rule network still carries it, is copied verbatim the same way
 - Strength values (`weak`, `moderate`, `strong`)
 - Technical classifications
 
