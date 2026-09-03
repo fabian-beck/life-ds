@@ -7,7 +7,6 @@
     relationshipRoleLabel,
     relationshipMetaValueLabel,
   } from "../utils/relationshipLabels.js";
-  import SeparatedList from "./SeparatedList.svelte";
 
   export let person = {};
   export let personKey = "";
@@ -16,7 +15,7 @@
   export let onOpenNetwork = null; // Optional: callback to open the full network view
   export let containerSelector = null; // Optional: restrict positioning to container (e.g., ".modal-content")
   export let subcategory = null; // Optional: subcategory to display instead of full relationship_type
-  export let styleConfig = null; // Optional: style configuration for separator
+  export let styleConfig = null; // Optional: story style whose colors and font the tooltip inherits
   export let stacked = false; // Optional: vertical layout with role label below name
   export let showRole = true; // Optional: hide the role line (e.g. when a surrounding box label already names it)
 
@@ -239,35 +238,13 @@
     <p class="tooltip-relationship">
       {person.relationship_description}
     </p>
-    {#if person.start_year || person.end_year}
-      <p class="tooltip-years">
-        {#if person.start_year && person.end_year}
-          {$_("person.years_range", {
-            start: person.start_year,
-            end: person.end_year,
-          })}
-        {:else if person.start_year}
-          {$_("person.from_year", { year: person.start_year })}
-        {:else if person.end_year}
-          {$_("person.until_year", { year: person.end_year })}
-        {/if}
-      </p>
-    {/if}
-    {#if person.shared_activities?.length}
-      <p class="tooltip-activities">
-        <SeparatedList
-          items={person.shared_activities}
-          {styleConfig}
-          fallback=", "
-          compact
-        />
-      </p>
-    {/if}
-    {#if person.strength || person.interaction_frequency || person.influence_direction}
-      <!-- The values are machine tokens ("strong", "daily", "alter_to_ego")
-           in every language, so they are resolved through the locale like the
-           labels next to them. An unknown influence direction says nothing a
-           reader can use, so it does not render. -->
+    {#if person.strength || person.interaction_frequency}
+      <!-- The values are machine tokens ("strong", "daily") in every
+           language, so they are resolved through the locale like the labels
+           next to them. A connection is a mutual tie, so these two weights
+           are all the metadata the tooltip shows: the datasets that still
+           carry a direction of influence, years, or activity tags predate
+           the schema (see data/outdated.md), and those fields are ignored. -->
       <div class="tooltip-meta">
         {#if person.strength}
           <span class="meta-item">
@@ -289,18 +266,6 @@
                 $_,
                 "frequency",
                 person.interaction_frequency
-              )}</span
-            >
-          </span>
-        {/if}
-        {#if person.influence_direction && person.influence_direction !== "unknown"}
-          <span class="meta-item">
-            <span class="meta-label">{$_("person.influence")}</span>
-            <span class="meta-value"
-              >{relationshipMetaValueLabel(
-                $_,
-                "influence",
-                person.influence_direction
               )}</span
             >
           </span>
@@ -552,23 +517,6 @@
     font-size: 0.78rem;
     color: #e2e8f0;
     line-height: 1.4;
-    font-family: var(--story-body-font, Inter, sans-serif);
-  }
-
-  .tooltip-years {
-    margin: 0 0 0.3rem 0;
-    font-size: 0.7rem;
-    color: var(--story-secondary, #94a3b8);
-    font-weight: 500;
-    font-family: var(--story-body-font, Inter, sans-serif);
-  }
-
-  .tooltip-activities {
-    margin: 0 0 0.3rem 0;
-    font-size: 0.7rem;
-    color: rgba(148, 163, 184, 0.85);
-    font-style: italic;
-    line-height: 1.35;
     font-family: var(--story-body-font, Inter, sans-serif);
   }
 

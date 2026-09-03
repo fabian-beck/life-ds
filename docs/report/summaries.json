@@ -265,11 +265,11 @@
       }
     },
     "p_network": {
-      "fingerprint": "a562125405b3df39",
+      "fingerprint": "ad5cfba278c97c7c",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a person-centered relationship network from the subject’s Wikipedia article and related articles, linking the subject to documented family, collaborators, mentors, friends, rivals, and other significant people. It leaves later story steps a typed account of each tie and category-level prose that explains how the people around the subject shaped their life and work.",
-        "why_this_design": "It restricts nodes to named individuals and assigns political harm or support to the person who acted, so the graph preserves agency instead of turning institutions or regimes into misleading social ties."
+        "what_it_does": "Builds a person-centered relationship graph from the subject’s Wikipedia article and related articles, selecting documented direct ties and explaining the main circles of family, work, study, social life, or politics that shaped the person’s story. It leaves the later meta-story pipeline a consistent set of people, relationship types, evidence, and category-level context to merge with other personal material.",
+        "why_this_design": "It excludes institutions, collectives, and one-sided influence so the graph represents encounters between people rather than a mixed map of affiliations, reputation, and historical context."
       }
     },
     "p_portrait": {

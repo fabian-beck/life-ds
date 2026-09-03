@@ -74,12 +74,20 @@ def _clean_all_strings(data: Any) -> Any:
 
 # Pydantic models for structured outputs
 class Connection(BaseModel):
-    """A connection/relationship in the ego network."""
+    """A connection/relationship in the ego network.
+
+    Every connection is a mutual tie: two people who dealt with each other
+    directly. The schema therefore carries no direction of influence, no
+    years, and no activity tags — the type, the description, and the two
+    weights say what the tie was.
+    """
 
     person_name: str = Field(
         description="Full name of the connected individual. Every connection is "
         "one human being: never an organization, an institution, a company, a "
         "state, a regime, an office, a staff, a team, or any other collective. "
+        "The two people dealt with each other directly; someone the subject "
+        "only read, admired, or was later taken up by is not a connection. "
         "Never append an explanatory parenthetical."
     )
     relationship_category: RelationshipCategory = Field(
@@ -93,24 +101,11 @@ class Connection(BaseModel):
     relationship_description: str = Field(
         description="Brief description of the nature of the relationship"
     )
-    start_year: Optional[int] = Field(
-        None, description="Approximate year when the relationship began"
-    )
-    end_year: Optional[int] = Field(
-        None,
-        description="Approximate year when the relationship ended (null if ongoing or unknown)",
-    )
     strength: str = Field(
         description="Strength of the relationship: 'strong', 'moderate', or 'weak'"
     )
     interaction_frequency: str = Field(
         description="How often they interacted: 'daily', 'weekly', 'monthly', 'yearly', 'occasional', or 'rare'"
-    )
-    influence_direction: str = Field(
-        description="Direction of influence: 'bidirectional', 'ego_to_alter' (ego influenced the other), 'alter_to_ego' (other influenced ego)"
-    )
-    shared_activities: List[str] = Field(
-        description="List of shared activities, projects, or contexts (e.g., 'co-authored papers', 'worked at same institution', 'family gatherings')"
     )
     sources: List[str] = Field(
         description="Array of Wikipedia URLs or references supporting this connection"
@@ -271,6 +266,7 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "Focus on identifying significant relationships in a person's life, including family members, colleagues, mentors, "
         "students, collaborators, friends, rivals, and other important connections. "
         "Every node of the network is one individual human being; an organization, a state, a regime, or a group of people is never a node. "
+        "Every tie of the network is mutual: the two people dealt with each other directly. "
         "IMPORTANT: All output text must be in American English only, regardless of the source language. "
         "IMPORTANT: Use only 3-5 main relationship categories maximum to keep the network organized and focused. "
         "Every text field is plain text rendered verbatim by the interface: never write "
@@ -290,6 +286,12 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "When the sources tie the subject to a collective — an employer, a committee, a regime that persecuted them — name the individual through whom the tie ran "
         "(the director who hired them, the official who dismissed them, the chair they served under) if the sources name one; "
         "otherwise leave the tie out of the connections and let the category summary carry it in prose.\n"
+        "  MUTUAL TIES ONLY: a connection is a relationship both people took part in — they met, corresponded, worked, lived, "
+        "studied, or fought with one another, and the sources document the contact. Someone the subject only read, admired, "
+        "or was shaped by from afar is not a connection, and neither is someone who only later drew on the subject's work "
+        "or memory without ever dealing with them. Such one-sided influence belongs in the category summary as prose, if anywhere. "
+        "The 'influence', 'inspiration', and 'legacy' roles therefore name a documented direct tie — a teacher whose ideas the "
+        "subject took up in their classroom, a student who carried the subject's work on — never a distant reading.\n"
         "- relationship_category and relationship_role: the two halves of the closed vocabulary; "
         "the stored type is 'category/role':\n"
         f"  Categories (select the 3-5 that best represent this person's network): {', '.join(sorted(CATEGORIES))}\n"
@@ -305,13 +307,10 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "'political/banned_by' (excluded the subject from a profession, guild, or publication), or 'political/patron' (protected or promoted them). "
         "Never a neutral role word like 'gatekeeper' or 'authority', and never 'opponent' or 'rival' for one-sided persecution — "
         "'opponent', 'rival', and 'adversary' are reserved for genuinely two-sided conflicts.\n"
-        "- relationship_description: Brief description of the relationship\n"
-        "- start_year: When the relationship began (approximate)\n"
-        "- end_year: When it ended (null if ongoing or unknown)\n"
+        "- relationship_description: Brief description of the relationship — what the two did with or to each other, "
+        "and when, if the sources date it\n"
         "- strength: 'strong', 'moderate', or 'weak'\n"
         "- interaction_frequency: How often they interacted ('daily', 'weekly', 'monthly', 'yearly', 'occasional', 'rare')\n"
-        "- influence_direction: 'bidirectional', 'ego_to_alter', or 'alter_to_ego'\n"
-        "- shared_activities: List of what they did together or shared contexts\n"
         "- sources: Wikipedia URLs supporting this connection\n"
         "- notes: Additional context (optional)\n\n"
         "IMPORTANT BALANCE CONSIDERATIONS:\n"
@@ -442,12 +441,9 @@ def _deduplicate_connections(connections: List[Dict[str, Any]]) -> List[Dict[str
     When duplicates are found (same normalized name):
     - Keep the first occurrence as the base
     - Merge relationship descriptions
-    - Combine shared_activities (deduplicated)
     - Combine sources (deduplicated)
     - Prefer 'strong' over 'moderate' over 'weak' strength
     - Prefer more frequent interaction_frequency
-    - Keep 'bidirectional' influence if present, otherwise prefer alter_to_ego
-    - Use the earliest start_year and latest end_year
     """
     seen_names: Dict[str, int] = {}  # normalized_name -> index in result
     result: List[Dict[str, Any]] = []
@@ -480,11 +476,6 @@ def _deduplicate_connections(connections: List[Dict[str, Any]]) -> List[Dict[str
             if desc2 and desc2 not in desc1:
                 existing["relationship_description"] = f"{desc1} {desc2}".strip()
 
-            # Merge shared_activities (deduplicate)
-            activities = set(existing.get("shared_activities", []))
-            activities.update(conn.get("shared_activities", []))
-            existing["shared_activities"] = sorted(activities)
-
             # Merge sources (deduplicate)
             sources = set(existing.get("sources", []))
             sources.update(conn.get("sources", []))
@@ -511,27 +502,6 @@ def _deduplicate_connections(connections: List[Dict[str, Any]]) -> List[Dict[str
             )
             if freq2 > freq1:
                 existing["interaction_frequency"] = conn["interaction_frequency"]
-
-            # Prefer bidirectional influence
-            if conn.get("influence_direction") == "bidirectional":
-                existing["influence_direction"] = "bidirectional"
-            elif (
-                existing.get("influence_direction") != "bidirectional"
-                and conn.get("influence_direction") == "alter_to_ego"
-            ):
-                existing["influence_direction"] = "alter_to_ego"
-
-            # Use earliest start_year
-            start1 = existing.get("start_year")
-            start2 = conn.get("start_year")
-            if start2 is not None and (start1 is None or start2 < start1):
-                existing["start_year"] = start2
-
-            # Use latest end_year
-            end1 = existing.get("end_year")
-            end2 = conn.get("end_year")
-            if end2 is not None and (end1 is None or end2 > end1):
-                existing["end_year"] = end2
 
         else:
             # First time seeing this person
@@ -593,19 +563,12 @@ def enforce_metadata(
     connections = _deduplicate_connections(connections)
     _normalize_relationship_types(connections)
 
-    # Sort connections by start_year (nulls last), then by relationship strength
+    # Sort connections by relationship strength; the sort is stable, so ties
+    # keep the order the model gave them.
 
-    def connection_sort_key(conn: Dict[str, Any]) -> tuple:
-        start_year = conn.get("start_year")
-        # Put connections with start_year first, sorted by year
-        # Then those without, sorted by strength
+    def connection_sort_key(conn: Dict[str, Any]) -> int:
         strength_order = {"strong": 0, "moderate": 1, "weak": 2}
-        strength = strength_order.get(conn.get("strength", "").lower(), 3)
-
-        if start_year is not None:
-            return (0, start_year, strength)
-        else:
-            return (1, 9999, strength)
+        return strength_order.get(conn.get("strength", "").lower(), 3)
 
     connections.sort(key=connection_sort_key)
     payload["connections"] = connections

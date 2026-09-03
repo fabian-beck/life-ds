@@ -191,7 +191,7 @@ The death slide is the birth's mirror: the same frame and label, boxing the **ca
 
 ### Ego Network Schema
 
-Social connections with rich relationship metadata:
+Social connections with relationship metadata. Every connection is a **mutual tie**: two people who dealt with each other directly, documented by the sources. The schema therefore carries no direction of influence, no relationship years, and no activity tags — the type, the description, and the two weights say what the tie was:
 
 ```json
 {
@@ -208,12 +208,8 @@ Social connections with rich relationship metadata:
       "person_name": "Max Newman",
       "relationship_type": "professional/mentor",
       "relationship_description": "PhD supervisor and collaborator",
-      "start_year": 1935,
-      "end_year": 1954,
       "strength": "strong",
       "interaction_frequency": "regular",
-      "influence_direction": "bidirectional",
-      "shared_activities": ["mathematics", "computer design"],
       "sources": ["https://..."],
       "notes": "..."
     }
@@ -226,6 +222,8 @@ Social connections with rich relationship metadata:
 `relationship_type` is always `category/role`, both segments drawn from the closed vocabulary in `scripts/utils/relationship_vocabulary.py` — 12 categories (`family`, `professional`, `social`, `academic`, `artistic`, `political`, …) and about a hundred roles. Categories are the circles the network view opens, so they stay coarse: `academic` holds every tie of scholarship, and the `intellectual` category that used to split a scientist's circle in two is retired (`RETIRED_CATEGORIES` in the module); the datasets still carrying it are listed in `data/outdated.md`, and the locales keep its entry only until they are regenerated. Both segments are reader-facing text, resolved through the locale files by `src/utils/relationshipLabels.js` — `network.category.{segment}` for the first and `network.role.{segment}_one`/`_other` for the second. The vocabulary used to be open, which left 155 generated types without a locale entry rendering as title-cased English in every language (issue #117); now the generator prompt is constrained to it, generated and review output is checked against it through `normalize_relationship_type()` (which collapses spelling variants and reports anything outside), and a token that still escapes falls back to a visibly generic label ("Connection"/"Verbindung") and a dev-console warning instead of fake precision. Extending the vocabulary means adding the role to the module **and** its `network.role.*` entries to both locale files; `tests/test_relationship_vocabulary.py` fails on any drift between module, corpus, and locales. There is deliberately no migration map from old tokens to new ones — a dataset that predates a vocabulary change is regenerated, not rewritten.
 
 The conflict roles are directional (issue #119): for a relationship with a state or regime official the role names the action toward the subject — `political/censor`, `political/persecutor`, `political/banned_by` when the official acted against the subject, `political/patron` when they protected or promoted them — never a neutral office word, and never `opponent` or `rival` for one-sided persecution; those, with `adversary`, are reserved for genuinely two-sided conflicts. The other party is the person who acted, never the regime or the police force as such.
+
+**Mutual ties only**: a connection is a relationship both people took part in — they met, corresponded, worked, lived, or fought with one another. Someone the subject only read or admired from afar, or who only later drew on the subject's work, is not a connection; such one-sided influence belongs in the category summary as prose. The generator's prompt states the rule, and the `influence`, `inspiration`, and `legacy` roles of the vocabulary name a documented direct tie under it. The schema used to carry `influence_direction` (`bidirectional` / `ego_to_alter` / `alter_to_ego`), `start_year` / `end_year`, and `shared_activities` tags; a mutual tie has no direction, the description dates the tie where the sources do, and the tags restated the description. The generator no longer writes the four fields, `PersonChip.svelte` no longer shows them, the story no longer filters an event's chips by the tie's years, and the review step no longer edits them. Datasets generated before the change still carry the fields; they are listed in `data/outdated.md` for regeneration, and `translate_person.py` keeps carrying `shared_activities` for a dataset that has the key so its fingerprint holds until then.
 
 **Individuals only**: every connection is one named human being. The generator's schema has no field for anything else, its prompt forbids organizations, states, regimes, and unnamed groups as nodes and asks for the individual through whom such a tie ran (the official who dismissed the subject, the director who hired them) or for the tie to stay in the category summary, and `looks_collective()` in `scripts/generate_person_network.py` reports a name that still reads as a collective ("Nazi regime", "IBM", "Students at …") in the run log. Datasets generated before this rule carry such nodes, typed by `entity_kind` (`organization` | `group`) with an optional translatable `qualifier` ("secret police"); they are listed in `data/outdated.md` for regeneration, and until then `PersonChip.svelte` still shows the localized entity label (`network.entity.*`) and the qualifier in the chip tooltip.
 

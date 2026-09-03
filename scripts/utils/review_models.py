@@ -168,12 +168,8 @@ class ConnectionMetadata(BaseModel):
     arbitrary Dict[str, Any] cannot express.
     """
 
-    start_year: Optional[int] = None
-    end_year: Optional[int] = None
     strength: Optional[str] = None
     interaction_frequency: Optional[str] = None
-    influence_direction: Optional[str] = None
-    shared_activities: Optional[List[str]] = None
     notes: Optional[str] = None
 
 

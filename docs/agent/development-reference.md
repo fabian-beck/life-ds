@@ -65,7 +65,7 @@ The user-evaluation deployment—the same site in Vite's `evaluation` mode, from
 - Follow relationship type conventions (see schema above)
 - Strength: `weak`, `moderate`, `strong`
 - Interaction frequency: `rare`, `occasional`, `monthly`, `weekly`, `daily`, `yearly`
-- Influence direction: `alter_to_ego`, `ego_to_alter`, `bidirectional`, `unknown`
+- A connection is a mutual tie and carries no direction of influence, years, or activity tags
 
 **Visual style**: Edit `data/person_styles.json`
 
@@ -196,9 +196,8 @@ Two things feed the matcher besides the text:
 ### Network Data Issues
 
 1. Validate relationship types follow category conventions
-2. Check year ranges (start_year ≤ end_year)
-3. Verify required fields: `person_name`, `relationship_type`, `relationship_description`
-4. Ensure connection references are meaningful (not circular)
+2. Verify required fields: `person_name`, `relationship_type`, `relationship_description`
+3. Ensure connection references are meaningful (not circular)
 
 ## Performance Considerations
 

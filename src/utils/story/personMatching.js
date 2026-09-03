@@ -4,7 +4,6 @@
  */
 import { displayName } from "../helpers.js";
 import { findPersonMentions } from "../personNames.js";
-import { extractYear } from "./dates.js";
 
 /**
  * Get the subcategory from a relationship type string.
@@ -37,19 +36,6 @@ export function escapeRegex(str) {
  * Minimum similarity score for a name match to be accepted.
  */
 const MATCH_THRESHOLD = 0.6;
-/**
- * Check if event year falls within relationship timeframe.
- * @param {number|null} eventYear - Event year
- * @param {number} startYear - Relationship start year
- * @param {number} endYear - Relationship end year
- * @returns {boolean} True if within range
- */
-function isWithinYearRange(eventYear, startYear, endYear) {
-  if (!eventYear) return true; // No year to check
-  if (startYear && eventYear < startYear) return false;
-  if (endYear && eventYear > endYear) return false;
-  return true;
-}
 /**
  * Normalize a person name for matching.
  * Handles parentheticals, initials, and special characters.
@@ -279,8 +265,6 @@ export function getRelevantPeople(event, egoNetwork) {
     return [];
   }
 
-  const parsedYear = extractYear(event?.date);
-  const eventYear = Number.isNaN(parsedYear) ? null : parsedYear;
   const connections = egoNetwork.connections;
 
   // PHASE 1: Use involved_people field if present
@@ -305,10 +289,7 @@ export function getRelevantPeople(event, egoNetwork) {
         )
       );
 
-      if (bestScore < MATCH_THRESHOLD) return false;
-
-      // Still apply year-range filtering
-      return isWithinYearRange(eventYear, conn.start_year, conn.end_year);
+      return bestScore >= MATCH_THRESHOLD;
     });
 
     return matched.slice(0, 5);
@@ -324,11 +305,7 @@ export function getRelevantPeople(event, egoNetwork) {
 
   const strengthOrder = { strong: 0, moderate: 1, weak: 2 };
   return connections
-    .filter(
-      (connection) =>
-        mentioned.has(connection) &&
-        isWithinYearRange(eventYear, connection.start_year, connection.end_year)
-    )
+    .filter((connection) => mentioned.has(connection))
     .sort(
       (a, b) =>
         (strengthOrder[a.strength] ?? 3) - (strengthOrder[b.strength] ?? 3)

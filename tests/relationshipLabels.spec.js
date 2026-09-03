@@ -99,14 +99,6 @@ test("names the relationship metadata values in the reader's language", () => {
   expect(relationshipMetaValueLabel(tDe, "frequency", "occasional")).toBe(
     "gelegentlich"
   );
-  // "alter to ego" is ego-network jargon in any language; both locales say
-  // who the influence went to instead.
-  expect(relationshipMetaValueLabel(t, "influence", "alter_to_ego")).toBe(
-    "exerted"
-  );
-  expect(relationshipMetaValueLabel(tDe, "influence", "alter to ego")).toBe(
-    "ausgeübt"
-  );
   // An unmapped token still falls back to its humanized form.
   expect(relationshipMetaValueLabel(t, "strength", "overwhelming")).toBe(
     "Overwhelming"
@@ -119,7 +111,6 @@ test("every relationship metadata token in the corpus has both locale entries", 
   const families = {
     strength: ["strong", "moderate", "weak"],
     frequency: ["daily", "weekly", "monthly", "yearly", "occasional", "rare"],
-    influence: ["alter_to_ego", "ego_to_alter", "bidirectional"],
   };
   for (const [family, tokens] of Object.entries(families)) {
     for (const token of tokens) {

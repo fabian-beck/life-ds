@@ -80,11 +80,7 @@ class DeepEventSelectionTests(unittest.TestCase):
         self.assertEqual(select_deep_event_indexes(events, {}), set())
 
     def test_a_chip_counts_toward_the_material(self) -> None:
-        network = {
-            "connections": [
-                {"person_name": "Joan Clarke", "start_year": 1939, "end_year": 1954}
-            ]
-        }
+        network = {"connections": [{"person_name": "Joan Clarke"}]}
         thin = event(
             "Engagement",
             "one",

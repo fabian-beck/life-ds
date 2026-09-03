@@ -26,7 +26,7 @@ Two deliberate differences from the interface:
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Set
 
 from utils.person_matching import (
     MATCH_THRESHOLD,
@@ -40,7 +40,6 @@ MIN_DEPTH_SECTIONS = 2
 MIN_DEPTH_ITEMS = 3
 
 _TIFF = re.compile(r"\.tiff?(\?|$)", re.I)
-_YEAR = re.compile(r"^(-?\d{1,4})")
 
 
 def get_event_weight(event: Dict[str, Any]) -> float:
@@ -49,23 +48,6 @@ def get_event_weight(event: Dict[str, Any]) -> float:
     if isinstance(weight, (int, float)):
         return min(max(float(weight), 0.0), 1.0)
     return 0.0
-
-
-def _extract_year(value: Any) -> Optional[int]:
-    match = _YEAR.match(str(value or "").strip())
-    return int(match.group(1)) if match else None
-
-
-def _within_year_range(
-    event_year: Optional[int], start_year: Any, end_year: Any
-) -> bool:
-    if event_year is None:
-        return True
-    if isinstance(start_year, int) and event_year < start_year:
-        return False
-    if isinstance(end_year, int) and event_year > end_year:
-        return False
-    return True
 
 
 def _valid_images(images: Any) -> List[Dict[str, Any]]:
@@ -90,7 +72,6 @@ def _relevant_people(
     connections = (ego_network or {}).get("connections")
     if not isinstance(connections, list):
         return []
-    event_year = _extract_year(event.get("date"))
 
     involved = [
         normalized
@@ -110,10 +91,7 @@ def _relevant_people(
             )
             if best < MATCH_THRESHOLD:
                 continue
-            if _within_year_range(
-                event_year, connection.get("start_year"), connection.get("end_year")
-            ):
-                matched.append(connection)
+            matched.append(connection)
         return matched[:5]
 
     # Mention fallback, approximated: the connection's normalized full name
@@ -124,9 +102,7 @@ def _relevant_people(
         name = normalize_person_name(str(connection.get("person_name") or ""))
         if name is None or not name["fullName"]:
             continue
-        if name["fullName"].lower() in text and _within_year_range(
-            event_year, connection.get("start_year"), connection.get("end_year")
-        ):
+        if name["fullName"].lower() in text:
             mentioned.append(connection)
     return mentioned[:5]
 

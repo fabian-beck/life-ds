@@ -192,7 +192,11 @@ class LifeEventsTranslation(BaseModel):
 class TrConnection(BaseModel):
     relationship_description: str
     notes: Optional[str] = None
-    shared_activities: List[str]
+    # Activity tags the network schema no longer carries (see
+    # data/outdated.md). Extracted only from datasets that still have the
+    # key, so those keep their fingerprint until they are regenerated; the
+    # field can go once no dataset carries it.
+    shared_activities: Optional[List[str]] = None
     # The short descriptor an organization or group connection carries next
     # to its name ("secret police", "insurance company"). Optional and only
     # extracted when present, so documents without one keep their fingerprint.
@@ -339,13 +343,17 @@ def _connection_translatables(conn: Dict[str, Any]) -> Dict[str, Any]:
 
     The `qualifier` — the short descriptor an organization or group carries
     next to its name — joins the payload only when present, so connections
-    without one (the overwhelming majority) keep their fingerprint.
+    without one (the overwhelming majority) keep their fingerprint. The
+    `shared_activities` tags join it only while the source still has the
+    key: the current schema writes none, and a dataset that predates the
+    removal keeps its fingerprint this way until it is regenerated.
     """
     entry: Dict[str, Any] = {
         "relationship_description": conn.get("relationship_description", ""),
         "notes": conn.get("notes"),
-        "shared_activities": list(conn.get("shared_activities") or []),
     }
+    if "shared_activities" in conn:
+        entry["shared_activities"] = list(conn.get("shared_activities") or [])
     qualifier = conn.get("qualifier")
     if isinstance(qualifier, str) and qualifier.strip():
         entry["qualifier"] = qualifier
@@ -739,12 +747,12 @@ def apply_ego_network_translations(
         )
         _set_if_source_has(conn, "notes", tr_conn.get("notes"))
         _set_if_source_has(conn, "qualifier", tr_conn.get("qualifier"))
-        src_activities = conn.get("shared_activities") or []
-        tr_activities = tr_conn.get("shared_activities") or []
-        _require_same_length(
-            "connection.shared_activities", src_activities, tr_activities
-        )
         if "shared_activities" in conn:
+            src_activities = conn.get("shared_activities") or []
+            tr_activities = tr_conn.get("shared_activities") or []
+            _require_same_length(
+                "connection.shared_activities", src_activities, tr_activities
+            )
             conn["shared_activities"] = tr_activities
         if conn.get("person_name"):
             conn["person_name"] = localize_name(conn["person_name"], name_glossary)
@@ -1429,8 +1437,8 @@ def translate_ego_network(
         response_format=EgoNetworkTranslation,
         document_kind="social network",
         extra_rules=(
-            "7. shared_activities are short activity tags — translate them "
-            "concisely (1-4 words each)."
+            "7. shared_activities, where a connection carries them, are short "
+            "activity tags — translate them concisely (1-4 words each)."
         ),
         target_lang=target_lang,
         glossary=glossary,

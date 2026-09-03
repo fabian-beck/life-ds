@@ -472,6 +472,7 @@ Meta story `event_title`s are copied verbatim from the person's translated life 
 - Relationship descriptions
 - Social network notes and summaries
 - A connection's `qualifier` (the short descriptor of an organization or group in a network that predates the individuals-only rule, see `data/outdated.md`), extracted only when present so documents without one keep their fingerprint
+- A connection's `shared_activities` tags, which the network schema no longer carries: extracted only while the source still has the key, so a network that predates the removal keeps its fingerprint until it is regenerated
 - The prose inside an `event_class`: `characterization`, `duration`, `from_location`, `to_location`, `title`, `description`, `impact`, and `significance` (see below)
 
 **What is preserved** (guaranteed by the merge — the model never sees these fields):
@@ -620,7 +621,7 @@ Features:
 - [StoryView.svelte](src/components/StoryView.svelte): Loading states, slide content, error messages
 - [Timeline.svelte](src/components/Timeline.svelte): Navigation, scrubber, expand/collapse
 - [NetworkModal.svelte](src/components/NetworkModal.svelte): Title, close button, group counts
-- [PersonChip.svelte](src/components/PersonChip.svelte): Tooltips, year ranges, relationship metadata
+- [PersonChip.svelte](src/components/PersonChip.svelte): Tooltips, relationship metadata
 - [ImageViewer.svelte](src/components/ImageViewer.svelte): Controls, help text, captions
 
 #### Adding a New Language
