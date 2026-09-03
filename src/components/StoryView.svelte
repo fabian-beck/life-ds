@@ -1635,8 +1635,12 @@
                 depth={getEventDepth(slide, egoNetwork)}
                 {egoNetwork}
                 subjectName={personName}
+                {styleConfig}
+                {visiblePersonInfo}
                 onEnlargeImage={enlargeImage}
                 onReturnToEvent={() => scrollSlideTo("fold")}
+                onTogglePersonInfo={togglePersonInfo}
+                onOpenNetwork={openNetworkModal}
               />
             {:else if slide.type === "overview"}
               <OverviewSlide

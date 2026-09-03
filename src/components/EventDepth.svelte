@@ -1,16 +1,25 @@
 <script>
-  import { mdiChevronUp, mdiOpenInNew } from "@mdi/js";
+  import { mdiAccountOutline, mdiChevronUp } from "@mdi/js";
   import { _ } from "../stores/language";
+  import PersonChip from "./PersonChip.svelte";
   import PersonMentions from "./PersonMentions.svelte";
-  import { getThumbnailUrl, sourceLabel } from "../utils/story/images.js";
-  import { parseBackgroundBlocks } from "../utils/story/prose.js";
+  import { getSubcategory } from "../utils/story/personMatching.js";
+  import { getThumbnailUrl } from "../utils/story/images.js";
+  import {
+    mentionedPeople,
+    parseBackgroundBlocks,
+  } from "../utils/story/prose.js";
 
   export let slide = {};
   export let depth = null;
   export let egoNetwork = null;
   export let subjectName = null;
+  export let styleConfig = null;
+  export let visiblePersonInfo = null;
   export let onEnlargeImage = () => {};
   export let onReturnToEvent = () => {};
+  export let onTogglePersonInfo = () => {};
+  export let onOpenNetwork = () => {};
 
   // The report Phase 2 wrote, as the page it is set as: its section headings,
   // its paragraphs, and the people its own life's network knows named inside
@@ -25,6 +34,11 @@
   $: paragraphCount = blocks.filter(
     (block) => block.type === "paragraph"
   ).length;
+  // The people the report names and the network knows, set as chips under
+  // it. The slide above carries chips only for the event's own cast; a report
+  // ranging over a decade names people the event never did, and a reader who
+  // meets one here should be able to open them here.
+  $: people = mentionedPeople(blocks);
 
   // The pictures are dealt out along the report rather than banked at the top,
   // so it reads as an illustrated page. They are spaced across the paragraphs
@@ -126,23 +140,30 @@
       {/if}
     {/each}
 
-    {#if depth?.sources?.length}
-      <p class="depth-sources">
-        <span>{$_("story.depth.read_at")}</span>
-        {#each depth.sources as source, index (source)}{#if index > 0}<span
-              aria-hidden="true">&#32;·&#32;</span
-            >{/if}<a
-            class="depth-link"
-            href={source}
-            target="_blank"
-            rel="noreferrer"
-            >{sourceLabel(source).label}<svg
-              class="source-icon"
-              viewBox="0 0 24 24"
-              aria-hidden="true"><path d={mdiOpenInNew} /></svg
-            ></a
-          >{/each}
-      </p>
+    {#if people.length > 0}
+      <!-- The event's citations are data, not something a reader is asked to
+           follow up: what closes the report is its people, as the same chips
+           the slide above uses for the event's own cast. -->
+      <div class="depth-people">
+        <span class="depth-people-label" aria-label={$_("story.people")}>
+          <svg class="depth-people-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d={mdiAccountOutline} />
+          </svg>
+        </span>
+        <div class="depth-people-list">
+          {#each people as person, index (person.person_name)}
+            <PersonChip
+              {person}
+              personKey={`${slide.eventIndex}-depth-${index}`}
+              {visiblePersonInfo}
+              subcategory={getSubcategory(person.relationship_type)}
+              {styleConfig}
+              onToggle={onTogglePersonInfo}
+              {onOpenNetwork}
+            />
+          {/each}
+        </div>
+      </div>
     {/if}
 
     <button type="button" class="depth-return" on:click={onReturnToEvent}>
@@ -293,12 +314,33 @@
     color: rgba(203, 213, 225, 0.55);
   }
 
-  .depth-sources {
-    margin: 0.35rem 0 0;
-    font-family: var(--story-body-font, Inter, sans-serif);
-    font-size: 0.8rem;
-    line-height: 1.6;
-    color: rgba(203, 213, 225, 0.6);
+  /* The same row the slide sets its cast in: the person glyph as its label,
+     and the chips wrapping after it. */
+  .depth-people {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+  }
+
+  .depth-people-label {
+    display: inline-flex;
+    align-items: center;
+    height: 2rem;
+    color: rgba(148, 163, 184, 0.76);
+    flex: 0 0 auto;
+  }
+
+  .depth-people-icon {
+    width: 0.85rem;
+    height: 0.85rem;
+    fill: currentColor;
+  }
+
+  .depth-people-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .depth-link {
@@ -311,14 +353,6 @@
 
   .depth-link:hover {
     border-bottom-color: var(--story-secondary, #38bdf8);
-  }
-
-  .source-icon {
-    width: 0.75rem;
-    height: 0.75rem;
-    margin-left: 0.2rem;
-    fill: currentColor;
-    vertical-align: -0.05rem;
   }
 
   .depth-return {

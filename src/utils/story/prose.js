@@ -255,10 +255,10 @@ export function parseDescriptionSegments(
  * section heading, and it is the one text in the application long enough to
  * need them. The names are emphasized the way the event's own description
  * emphasizes them — the same matcher, the same treatment — so a reader meets
- * Christopher Morcom the same way whichever screen they are on. They are
- * emphasis and not chips: the chip belongs to the event above, where the
- * person was actually involved, and a report ranging over a decade names
- * people the event never did.
+ * Christopher Morcom the same way whichever screen they are on. A report
+ * ranging over a decade names people the event never did, so the people it
+ * emphasizes are also gathered (`mentionedPeople`) for the chips under it,
+ * where each of them can be opened.
  * @param {string} background - The report, as the generator wrote it
  * @param {Array} people - Connection objects from the ego network
  * @param {string} [subjectName] - The story's own subject, whose name stays
@@ -343,4 +343,23 @@ function segmentBackgroundParagraph(paragraph, candidates, introduced) {
     segments.push({ type: "text", content: paragraph.slice(cursor) });
   }
   return segments;
+}
+
+/**
+ * The people a parsed report emphasized, once each, in the order the report
+ * introduces them. These are the network's own connection objects, so the
+ * chips set under the report open the same tooltip the slide's chips do.
+ * @param {Array} blocks - Blocks from `parseBackgroundBlocks`
+ * @returns {Array} Connection objects the report names
+ */
+export function mentionedPeople(blocks) {
+  const people = [];
+  for (const block of blocks ?? []) {
+    if (block?.type !== "paragraph") continue;
+    for (const segment of block.segments ?? []) {
+      if (segment.type !== "person" || !segment.person) continue;
+      if (!people.includes(segment.person)) people.push(segment.person);
+    }
+  }
+  return people;
 }

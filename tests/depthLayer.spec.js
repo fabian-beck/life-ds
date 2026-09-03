@@ -8,7 +8,10 @@ import {
   getBackgroundImages,
   getThumbnailUrl,
 } from "../src/utils/story/images.js";
-import { parseBackgroundBlocks } from "../src/utils/story/prose.js";
+import {
+  mentionedPeople,
+  parseBackgroundBlocks,
+} from "../src/utils/story/prose.js";
 
 /* What the layer under the fold is made of. Everything it says is written by
    the generation pipeline — the report and the pictures chosen for it — so all
@@ -149,8 +152,7 @@ test("an undivided report is still a page of paragraphs", () => {
 });
 
 /* The same matcher the description uses, so a reader meets a person the same
-   way on both screens. They are emphasis rather than chips: the chip belongs
-   to the event above, where the person was actually involved. */
+   way on both screens. */
 test("the names the network knows are emphasized in the prose", () => {
   expect(
     render(
@@ -185,6 +187,25 @@ test("a name the network does not know is left alone", () => {
   expect(render("Winston Churchill read the decrypts.", [])).toEqual([
     "Winston Churchill read the decrypts.",
   ]);
+});
+
+/* The chips under the report are the people it emphasized and nobody else:
+   the slide above carries the event's own cast, and a report ranging over a
+   decade names people the event never did. Each once, in the order the report
+   introduces them, and as the network's own records, so a chip here opens the
+   same tooltip a chip on the slide does. */
+test("the report's chips are the people it names, once each, in order", () => {
+  const morcom = connection("Christopher Morcom");
+  const newman = connection("Max Newman");
+  const blocks = parseBackgroundBlocks(
+    "Max Newman lectured on it.\n\n## Before\n\nChristopher Morcom had " +
+      "died four years earlier; Newman had not known him. Max Newman later " +
+      "signed the letter.",
+    [morcom, newman, connection("Joan Clarke")],
+    "Alan Turing"
+  );
+  expect(mentionedPeople(blocks)).toEqual([newman, morcom]);
+  expect(mentionedPeople([])).toEqual([]);
 });
 
 /* This is the subject's own story: there is nothing to point them at, and a
