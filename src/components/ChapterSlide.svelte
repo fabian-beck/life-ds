@@ -14,9 +14,17 @@
   export let egoNetwork = null;
   export let formatters = {};
   export let activeSlideIndex = -1; // Track active slide to close popups on navigation
+  export let slideIndex = -1; // Where this slide sits in the story
   export let onOpenNetwork = null; // Callback to open the network modal
 
+  // How many slides ahead of the reader the illustration starts loading. Every
+  // slide is a screen tall, so the browser's own lazy-loading margin reaches
+  // the next slide at best, and the picture was still arriving when the
+  // reader landed on the chapter.
+  const ILLUSTRATION_LOOKAHEAD = 2;
+
   let visiblePersonInfo = null;
+  let illustrationWanted = false;
 
   // Close person info popup when slide changes
   $: if (activeSlideIndex !== undefined) {
@@ -69,6 +77,17 @@
   // technology rather than given an alt text describing a metaphor.
   $: illustration = chapter?.illustration?.medium ? chapter.illustration : null;
 
+  // The illustration is fetched as soon as the reader is within reach of the
+  // slide, and stays requested once it has been: a reader who turns back does
+  // not unload it, and one who returns finds it already there.
+  $: if (
+    slideIndex >= 0 &&
+    activeSlideIndex >= 0 &&
+    slideIndex - activeSlideIndex <= ILLUSTRATION_LOOKAHEAD
+  ) {
+    illustrationWanted = true;
+  }
+
   // Match involved people against ego network using shared fuzzy matching
   $: involvedPeople = getChapterPeople(chapter, egoNetwork).map((person) => ({
     ...person,
@@ -103,7 +122,7 @@
         srcset={`${getThumbnailUrl(illustration, 400)} 1x, ${getThumbnailUrl(illustration, 800)} 2x`}
         alt=""
         aria-hidden="true"
-        loading="lazy"
+        loading={illustrationWanted ? "eager" : "lazy"}
         decoding="async"
       />
     {/if}

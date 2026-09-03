@@ -1660,6 +1660,7 @@
                 {egoNetwork}
                 {formatters}
                 activeSlideIndex={activeIndex}
+                slideIndex={index}
                 onOpenNetwork={openNetworkModal}
               />
             {:else if slide.type === "conclusion"}
