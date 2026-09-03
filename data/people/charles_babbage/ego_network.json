@@ -1,439 +1,214 @@
 {
-  "dataset": "wikipedia_ego_network",
-  "created_on": "2025-12-28",
+  "dataset": "Charles Babbage ego network",
+  "created_on": "2026-09-03",
   "ego": {
     "name": "Charles Babbage",
     "birth_year": 1791,
     "death_year": 1871,
     "primary_roles": [
-      "mathematician",
-      "inventor",
-      "engineer",
-      "philosopher"
+      "Mathematician",
+      "Inventor",
+      "Philosopher",
+      "Mechanical engineer"
     ],
-    "summary": "Charles Babbage was an English polymath whose designs for the Difference Engine and Analytical Engine anticipated key ideas of programmable, general-purpose computation. Active in London and Cambridge scientific circles, he helped reform British mathematics, co-founded scientific societies, and wrote influentially on industrial organization and machinery.",
+    "summary": "Charles Babbage was an English mathematician, inventor, and mechanical engineer whose Difference Engine and Analytical Engine designs introduced central principles of programmable mechanical computation. He also campaigned for scientific and educational reform, wrote on industrial organization and political economy, and made his London home a major site of scientific sociability.",
     "wikipedia": "https://en.wikipedia.org/wiki/Charles_Babbage"
   },
   "connections": [
     {
       "person_name": "Benjamin Babbage",
-      "relationship_type": "family/father",
-      "relationship_description": "Babbage's father; a banking partner involved with Praed's & Co., whose financial support and later inheritance strongly shaped Babbage's independence.",
-      "start_year": 1791,
-      "end_year": 1827,
+      "relationship_description": "Babbage's father was a banking partner whose financial support sustained Charles's early adult life; his 1827 death left Charles a substantial inheritance and financial independence.",
       "strength": "strong",
       "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family upbringing",
-        "financial support during early career",
-        "inheritance enabling later travel and work"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
-      "notes": "His death in 1827 left Babbage a substantial estate, making him financially independent."
+      "notes": "The inheritance allowed Babbage to pursue his mechanical-engine projects without dependence on a conventional career.",
+      "relationship_type": "family/biological_father"
     },
     {
       "person_name": "Betsy Plumleigh Teape",
-      "relationship_type": "family/mother",
-      "relationship_description": "Babbage's mother; part of his early family life in London and Devon.",
-      "start_year": 1791,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family upbringing",
-        "household moves (e.g., to East Teignmouth)"
-      ],
+      "relationship_description": "Betsy Plumleigh Teape was Babbage's mother and raised him within the financially secure Babbage household, which moved to East Teignmouth in 1808.",
+      "strength": "strong",
+      "interaction_frequency": "daily",
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
-      "notes": "Wikipedia extract names her as 'Betsy Plumleigh Teape'."
+      "notes": null,
+      "relationship_type": "family/biological_mother"
+    },
+    {
+      "person_name": "Georgiana Whitmore",
+      "relationship_description": "Babbage married Georgiana Whitmore in 1814; they established a home in Marylebone and had a large family before her death in 1827.",
+      "strength": "strong",
+      "interaction_frequency": "daily",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
+      ],
+      "notes": "Her sister married Babbage's close Cambridge friend Edward Ryan in the same year.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Henry Prevost Babbage",
+      "relationship_description": "Henry Prevost Babbage assisted his father as a student and, after Charles Babbage's death, organized his papers and prototypes and pursued work on a simplified Analytical Engine Mill.",
+      "strength": "strong",
+      "interaction_frequency": "weekly",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Henry_Prevost_Babbage",
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
+      ],
+      "notes": "He was central to preserving and extending Babbage's unfinished computing work.",
+      "relationship_type": "family/son"
     },
     {
       "person_name": "John Herschel",
-      "relationship_type": "academic/close_colleague",
-      "relationship_description": "Close friend and collaborator from Cambridge; co-founded the Analytical Society with Babbage, co-founded the Astronomical Society of London, and collaborated on electrodynamics work.",
-      "start_year": 1812,
-      "end_year": 1871,
+      "relationship_description": "A Cambridge friend and Analytical Society collaborator, Herschel worked with Babbage on calculus reform, electrodynamics, astronomical calculations, and the early Difference Engine project.",
       "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Analytical Society (calculus reform)",
-        "translation work connected to Lacroix's calculus text",
-        "Royal Astronomical Society founding and oversight of table-checking projects",
-        "joint research on Arago's rotations/electrodynamics",
-        "Herschel managing Difference Engine project while Babbage was in Italy"
-      ],
+      "interaction_frequency": "weekly",
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Babbage",
         "https://en.wikipedia.org/wiki/John_Herschel",
         "https://en.wikipedia.org/wiki/Analytical_Society"
       ],
-      "notes": "One of Babbage's most enduring scientific relationships."
+      "notes": "Their partnership extended from undergraduate mathematics through joint scientific and institutional work.",
+      "relationship_type": "academic/close_colleague"
     },
     {
       "person_name": "George Peacock",
-      "relationship_type": "academic/close_colleague",
-      "relationship_description": "Cambridge mathematician and reformer; co-founded the Analytical Society with Babbage and collaborated in promoting continental calculus methods in Britain.",
-      "start_year": 1812,
-      "end_year": 1858,
+      "relationship_description": "Peacock joined Babbage and Herschel in founding the Analytical Society in 1812 and collaborated on the 1816 English translation of Sylvestre Lacroix's calculus text.",
       "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Analytical Society",
-        "calculus notation reform at Cambridge",
-        "translation/publication of continental calculus materials"
-      ],
+      "interaction_frequency": "weekly",
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Babbage",
         "https://en.wikipedia.org/wiki/George_Peacock",
         "https://en.wikipedia.org/wiki/Analytical_Society"
       ],
-      "notes": "Part of the core Cambridge reform network."
-    },
-    {
-      "person_name": "Edward Ryan",
-      "relationship_type": "academic/friend",
-      "relationship_description": "Close friend from Cambridge circle; both he and Babbage married Whitmore sisters, linking friendship and family ties.",
-      "start_year": 1812,
-      "end_year": null,
-      "strength": "strong",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Cambridge friendship networks",
-        "family connection through Whitmore sisters"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage"
-      ],
-      "notes": "Mentioned as part of the Analytical Society friendship circle."
-    },
-    {
-      "person_name": "Georgiana Whitmore",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Babbage's wife (married 1814); her death in 1827 was a major personal loss during the period of the Difference Engine project.",
-      "start_year": 1814,
-      "end_year": 1827,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "marriage and household",
-        "raising a large family",
-        "London home in Marylebone"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage"
-      ],
-      "notes": "Babbage and friend Edward Ryan married the Whitmore sisters."
-    },
-    {
-      "person_name": "Benjamin Herschel Babbage",
-      "relationship_type": "family/child",
-      "relationship_description": "Babbage's eldest son; became an engineer, scientist, and explorer (notably in South Australia).",
-      "start_year": 1815,
-      "end_year": 1878,
-      "strength": "moderate",
-      "interaction_frequency": "yearly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family relationship",
-        "scientific/engineering family legacy"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Benjamin_Herschel_Babbage",
-        "https://en.wikipedia.org/wiki/Charles_Babbage"
-      ],
-      "notes": "The son's middle name reflects Babbage's close connection with John Herschel."
-    },
-    {
-      "person_name": "Pierre-Simon Laplace",
-      "relationship_type": "academic/patron",
-      "relationship_description": "Provided a recommendation when Babbage applied for the professorship at the University of Edinburgh (though Babbage did not receive the post).",
-      "start_year": 1819,
-      "end_year": 1819,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "academic patronage/recommendation for Edinburgh post"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage"
-      ],
-      "notes": "Recommendation did not secure the appointment."
-    },
-    {
-      "person_name": "Michael Faraday",
-      "relationship_type": "professional/peer",
-      "relationship_description": "Scientific peer in London; Faraday's work built on and broadened electrodynamics topics Babbage and Herschel addressed, and Faraday was involved in responses around Babbage's 'Decline of Science' polemics and attended Babbage's soirées.",
-      "start_year": 1820,
-      "end_year": 1867,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "overlapping work on electrodynamics context (Arago's rotations)",
-        "Royal Society-related controversies (reply literature)",
-        "London scientific social scene / soirées"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage",
-        "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es",
-        "https://en.wikipedia.org/wiki/John_Herschel"
-      ],
-      "notes": "Babbage and Herschel's explanations were later surpassed by Faraday's developments."
-    },
-    {
-      "person_name": "Francis Baily",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Reform-minded astronomer associated with Babbage in founding the Astronomical Society of London (later Royal Astronomical Society) and in related calculation/table reliability efforts.",
-      "start_year": 1820,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Royal Astronomical Society founding milieu",
-        "astronomical calculation reform and table-checking context",
-        "insurance-related scheme discussions (life assurance project context)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage",
-        "https://en.wikipedia.org/wiki/Royal_Astronomical_Society"
-      ],
-      "notes": "Babbage also calculated actuarial tables for an insurance project connected to this circle."
-    },
-    {
-      "person_name": "James South",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Astronomer in the founding group of the Astronomical Society of London with Babbage; associated with survey/measurement activities such as the Lough Foyle baseline event attended by Herschel and Babbage.",
-      "start_year": 1820,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Royal Astronomical Society founding circle",
-        "scientific measurement/survey demonstrations (Lough Foyle baseline)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage",
-        "https://en.wikipedia.org/wiki/Royal_Astronomical_Society"
-      ],
-      "notes": "Part of Babbage's astronomy and precision-measurement network."
-    },
-    {
-      "person_name": "Thomas Frederick Colby",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Friend and fellow founder of the Astronomical Society of London; worked with Babbage on postal-system studies and connected survey activities (Survey of Ireland).",
-      "start_year": 1820,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "postal-system study and advocacy for uniform rate",
-        "Astronomical Society founding circle",
-        "survey/measurement context (Survey of Ireland; Lough Foyle baseline)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage"
-      ],
-      "notes": "Illustrates Babbage's blend of scientific and administrative-reform interests."
+      "notes": "Their work helped establish Continental, Leibnizian calculus notation at Cambridge.",
+      "relationship_type": "academic/close_colleague"
     },
     {
       "person_name": "Joseph Clement",
-      "relationship_type": "professional/engineer_collaborator",
-      "relationship_description": "Precision engineer hired by Babbage to manufacture tools and parts for the Difference Engine; their relationship later deteriorated due to disputes over costs/tools.",
-      "start_year": 1823,
-      "end_year": 1833,
+      "relationship_description": "Babbage engaged Clement in 1823 to build the Difference Engine. Clement's precision engineering and specialized machine tools were essential to the project, though their disagreement over tool costs contributed to a falling out.",
       "strength": "strong",
       "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Difference Engine construction",
-        "precision toolmaking and workshop management"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Babbage",
         "https://en.wikipedia.org/wiki/Joseph_Clement"
       ],
-      "notes": "Clement is often identified as the maker of Babbage's first Difference Engine components."
-    },
-    {
-      "person_name": "Henry Prevost Babbage",
-      "relationship_type": "family/child",
-      "relationship_description": "Babbage's son; assisted his father and later organized, edited, and helped publish and complete aspects of Babbage's computing-engine work.",
-      "start_year": 1824,
-      "end_year": 1918,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "assistance on computing-engine work",
-        "posthumous curation of Babbage's designs and papers"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Henry_Prevost_Babbage"
-      ],
-      "notes": "He helped carry forward Babbage's technical legacy after 1871."
-    },
-    {
-      "person_name": "William Whewell",
-      "relationship_type": "academic/rival",
-      "relationship_description": "Cambridge scholar who opposed aspects of Babbage's reform agenda; Whewell rejected Babbage's university reform program and was associated with debates around BAAS/statistics and institutional direction.",
-      "start_year": 1830,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "university reform debates at Cambridge",
-        "BAAS-era disputes about science organization and statistics"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage"
-      ],
-      "notes": "A significant institutional/intellectual antagonist in Babbage's academic life."
-    },
-    {
-      "person_name": "Harriet Martineau",
-      "relationship_type": "social/chronicler",
-      "relationship_description": "Writer and sociologist who attended and described Babbage's Saturday soirées, commenting on his role as a host and explainer of his machine.",
-      "start_year": 1830,
-      "end_year": 1840,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "attendance at Babbage's Saturday soirées",
-        "public/printed commentary shaping reputation"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
-      ],
-      "notes": "Her accounts highlight the social reception of Babbage's machines."
-    },
-    {
-      "person_name": "Richard Jones",
-      "relationship_type": "academic/rival",
-      "relationship_description": "Economist and clergyman; had a long-running controversy with Babbage (lasting about six years) over political economy and university/intellectual directions.",
-      "start_year": 1831,
-      "end_year": 1837,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "public/intellectual controversy",
-        "debates connected to political economy and academic reform"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage"
-      ],
-      "notes": "Cited as a prolonged dispute during Babbage's Lucasian professorship period."
-    },
-    {
-      "person_name": "Samuel Rogers",
-      "relationship_type": "social/friend",
-      "relationship_description": "Friendship formed after Babbage's 1832 parliamentary election campaign in Finsbury, as described in Babbage's memoirs.",
-      "start_year": 1832,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "political campaigning context",
-        "London social ties"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage"
-      ],
-      "notes": "Babbage linked the friendship directly to the election experience."
+      "notes": "Clement worked on the engine between 1824 and 1833.",
+      "relationship_type": "innovation/engineer_collaborator"
     },
     {
       "person_name": "Ada Lovelace",
-      "relationship_type": "intellectual/collaborator",
-      "relationship_description": "Mathematician and writer who became a long-term friend and collaborator after meeting Babbage at his 1833 soirée; produced influential notes on the Analytical Engine via translation and commentary on Menabrea's paper.",
-      "start_year": 1833,
-      "end_year": 1852,
+      "relationship_description": "Lovelace met Babbage at his soirée in June 1833 and became his friend and collaborator on the Analytical Engine. In 1842–1843, she translated Luigi Menabrea's account of the engine and added extensive notes developed in correspondence with Babbage.",
       "strength": "strong",
       "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Babbage's Saturday night soirées",
-        "Analytical Engine discussions",
-        "publication process around Menabrea/Lovelace paper and Notes A–G"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Babbage",
         "https://en.wikipedia.org/wiki/Ada_Lovelace",
         "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
       ],
-      "notes": "Lovelace emphasized broader symbolic applications of the engine beyond calculation."
+      "notes": "Babbage called her the Enchantress of Number; their collaboration helped articulate the engine's potential beyond numerical calculation.",
+      "relationship_type": "innovation/collaborator"
     },
     {
-      "person_name": "Mary Somerville",
-      "relationship_type": "social/connector",
-      "relationship_description": "Prominent scientific author and network connector; attended Babbage's soirées and introduced Ada Lovelace into Babbage's circle (as Lovelace's tutor and mutual friend).",
-      "start_year": 1833,
-      "end_year": null,
+      "person_name": "Benjamin Herschel Babbage",
+      "relationship_description": "Benjamin Herschel Babbage was Babbage's eldest son with Georgiana Whitmore and later became an engineer, scientist, explorer, and politician.",
+      "strength": "moderate",
+      "interaction_frequency": "daily",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Babbage",
+        "https://en.wikipedia.org/wiki/Benjamin_Herschel_Babbage"
+      ],
+      "notes": null,
+      "relationship_type": "family/son"
+    },
+    {
+      "person_name": "William Whewell",
+      "relationship_description": "Whewell opposed Babbage's proposed reform program for Cambridge education, including its broader syllabus, stronger research role, and practical applications.",
       "strength": "moderate",
       "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "London scientific social scene / soirées",
-        "introductions within elite scientific networks"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es",
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
         "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
-      "notes": "Represents the salon-style infrastructure around early Victorian science."
+      "notes": "They were part of the same Cambridge and scientific-reform milieu, but differed over the direction of university reform.",
+      "relationship_type": "academic/opponent"
+    },
+    {
+      "person_name": "Richard Jones",
+      "relationship_description": "Babbage conducted a six-year controversy with Richard Jones during his Lucasian professorship over Babbage's plans for university and educational reform.",
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
+      ],
+      "notes": "The dispute occurred while Babbage held the Lucasian Professorship from 1828 to 1839.",
+      "relationship_type": "academic/opponent"
     },
     {
       "person_name": "Dionysius Lardner",
-      "relationship_type": "professional/advocate",
-      "relationship_description": "Science writer who later popularized issues around mechanizing tables and wrote about Babbage's work in the Edinburgh Review (noted as under Babbage's guidance).",
-      "start_year": 1834,
-      "end_year": 1834,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "public communication about mechanized computation and table-making",
-        "Edinburgh Review coverage connected to Babbage's program"
-      ],
+      "relationship_description": "Lardner publicized Babbage's Difference Engine in an 1834 Edinburgh Review article written under Babbage's guidance, helping explain the project to a broader audience.",
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Babbage",
         "https://en.wikipedia.org/wiki/Dionysius_Lardner"
       ],
-      "notes": "The context and motivations around such publications remain historically debated."
+      "notes": "Lardner's account later helped Georg and Edvard Scheutz understand the engine's design.",
+      "relationship_type": "innovation/advocate"
+    },
+    {
+      "person_name": "Georg Scheutz",
+      "relationship_description": "Scheutz developed difference engines after encountering accounts of Babbage's work. Babbage supported Scheutz's efforts to sell his machine in London and Paris while emphasizing his own prior contribution.",
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Georg_Scheutz",
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
+      ],
+      "notes": "Scheutz's working machines demonstrated a practical, smaller-scale realization of ideas associated with Babbage's Difference Engine.",
+      "relationship_type": "innovation/field_peer"
+    },
+    {
+      "person_name": "Mary Somerville",
+      "relationship_description": "Somerville was a guest in Babbage's scientific social circle and introduced Ada Lovelace to him at his Saturday evening soirée in 1833.",
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
+      ],
+      "notes": "Her introduction initiated the Babbage-Lovelace friendship and collaboration.",
+      "relationship_type": "social/connector"
+    },
+    {
+      "person_name": "Harriet Martineau",
+      "relationship_description": "Martineau attended Babbage's Saturday night soirées and later described his patience in explaining his calculating machine to guests.",
+      "strength": "moderate",
+      "interaction_frequency": "occasional",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
+      ],
+      "notes": "Her account documents the role of Babbage's home as a setting for sustained scientific discussion in London society.",
+      "relationship_type": "social/friend"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Babbage’s family network includes supportive parents—especially his father’s financial backing and inheritance—his marriage to Georgiana Whitmore, and children who carried forward aspects of his legacy. His wife’s death in 1827 coincided with a pivotal period in his engineering work and personal life."
+      "summary": "Babbage's family supplied both the material base and the long afterlife of his work. His parents' secure banking household enabled education and private study, while his father's 1827 inheritance freed him from ordinary professional dependence at a decisive moment for the engine projects. His marriage created the Marylebone household from which he later cultivated his public scientific life, and his son's subsequent work preserving papers and mechanisms ensured that the unfinished Analytical Engine remained available to later investigators."
     },
     {
       "relationship_type": "academic",
-      "summary": "Babbage’s academic relationships were forged at Cambridge and in later university politics, ranging from close collaborators like John Herschel and George Peacock in calculus reform to institutional opponents such as William Whewell and Richard Jones. Recommendations from leading figures like Laplace show his connection to European scientific prestige even when appointments did not materialize."
+      "summary": "Babbage's formative academic circle was rooted in Cambridge's campaign to displace its insular Newtonian calculus tradition with Continental methods. The Analytical Society turned undergraduate friendship into an effective reform network: its translations and examinations helped reshape mathematical instruction. Later, Babbage's ambitious vision of a more inclusive, research-oriented university placed him in sustained conflict with colleagues who resisted the scope and practical direction of his reforms."
     },
     {
-      "relationship_type": "professional",
-      "summary": "Professionally, Babbage relied on elite scientific and engineering networks: instrument-makers such as Joseph Clement for the Difference Engine, and society colleagues (e.g., Baily, South, Colby) for astronomy, surveying, and administrative reform projects. He also interacted with science communicators like Dionysius Lardner who amplified (and sometimes reframed) his program to wider publics."
+      "relationship_type": "innovation",
+      "summary": "The engine work depended on relationships that joined mathematical conception, precision manufacture, publication, and interpretation. The Difference Engine exposed the limits of contemporary engineering capacity as much as it displayed Babbage's ingenuity, while later collaborators made the Analytical Engine intelligible as a programmable system rather than merely an advanced calculator. Advocates and technically engaged peers carried these designs into public debate and experimental realizations, even though Babbage did not live to see a complete engine built."
     },
     {
       "relationship_type": "social",
-      "summary": "In London, Babbage’s Saturday night soirées created a high-status social bridge between science and culture, hosting figures such as Ada Lovelace, Mary Somerville, and Harriet Martineau. These gatherings helped form collaborations, spread ideas, and shaped public perceptions of his machines and scientific persona."
+      "summary": "After returning from travel in 1828, Babbage made his Dorset Street home a significant meeting point for London's scientific and cultural world. The Saturday soirées gave him a setting to demonstrate machinery, recruit informed attention, and connect people who might otherwise not have worked together. This sociability was consequential rather than ornamental: the meeting that linked him with Ada Lovelace arose from this circle, and contemporary visitors recorded his unusual persistence in explaining his machines."
     }
   ]
 }

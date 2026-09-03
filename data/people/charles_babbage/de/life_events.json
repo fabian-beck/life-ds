@@ -1,6 +1,6 @@
 {
-  "dataset": "biographical_timeline_outline",
-  "created_on": "2025-12-28",
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-09-03",
   "person": {
     "name": "Charles_Babbage",
     "birth_date": "1791-12-26",
@@ -8,10 +8,10 @@
     "primary_roles": [
       "Mathematiker",
       "Erfinder",
-      "Ingenieur"
+      "Philosoph"
     ],
-    "tagline": "Architekt des mechanischen Rechnens",
-    "summary": "Charles Babbage war ein englischer Mathematiker und Erfinder. Mit seinen Entwürfen für die Difference Engine und die Analytical Engine entwarf er eine neue Vision des maschinellen Rechnens und der programmierbaren Datenverarbeitung. Als Akteur in Londons wissenschaftlicher Welt schrieb er außerdem wegweisend über industrielle Organisation und die Ökonomie des Maschinenwesens.",
+    "tagline": "Pionier der programmierbaren Datenverarbeitung",
+    "summary": "Charles Babbage war ein englischer Mathematiker und Erfinder. Seine Entwürfe für die Difference Engine und die Analytical Engine begründeten wesentliche Konzepte der mechanischen und programmierbaren Datenverarbeitung. Außerdem schrieb er über industrielle Organisation, politische Ökonomie, wissenschaftliche Reformen und öffentliche Verwaltung.",
     "wikipedia": "https://en.wikipedia.org/wiki/Charles_Babbage",
     "portrait": {
       "image": "/portraits/charles_babbage_thumbnail.webp",
@@ -19,122 +19,145 @@
       "medium": "/portraits/charles_babbage_medium.webp",
       "full": "/portraits/charles_babbage_full.webp",
       "source": "https://en.wikipedia.org/wiki/Charles_Babbage",
-      "caption": "Stylized portrait based on historical photograph",
+      "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Charles_Babbage_-_1860.jpg"
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Charles_Babbage_-_1860.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "fevered_london_beginnings",
-      "headline": "Fieberhafte Anfänge in London",
+      "id": "mathematical_rebellion",
+      "headline": "Mathematische Rebellion",
       "date_start": "1791-12-26",
       "date_start_precision": "day",
-      "date_end": "1808",
+      "date_end": "1816",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 16,
+      "age_end": 24,
       "involved_people": [
         "Benjamin Babbage",
-        "Betsy Plumleigh Teape"
-      ],
-      "location": "England"
-    },
-    {
-      "id": "cambridge_calculus_revolt",
-      "headline": "Cambridges Aufstand der Analysis",
-      "date_start": "1810-10",
-      "date_start_precision": "month",
-      "date_end": "1814-07-25",
-      "date_end_precision": "day",
-      "age_start": 18,
-      "age_end": 22,
-      "involved_people": [
+        "Betsy Plumleigh Teape",
         "John Herschel",
         "George Peacock",
-        "Georgiana Whitmore"
+        "Georgiana Whitmore",
+        "Edward Ryan",
+        "Sylvestre Lacroix"
       ],
-      "location": "England"
+      "location": "England",
+      "illustration": {
+        "image": "/chapter_art/charles_babbage/mathematical_rebellion_medium.webp",
+        "medium": "/chapter_art/charles_babbage/mathematical_rebellion_medium.webp",
+        "full": "/chapter_art/charles_babbage/mathematical_rebellion_full.webp",
+        "concept": "At center, a bright cascade of ivory tiles loosens from a rigid black grid, then sweeps into a fluid spiral of pale blue arcs. The old lattice fades into darkness while the new pattern gathers luminous momentum.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-03"
+      }
     },
     {
-      "id": "institutional_rise",
-      "headline": "Aufstieg in den Institutionen",
-      "date_start": "1815",
-      "date_start_precision": "year",
-      "date_end": "1820",
-      "date_end_precision": "year",
-      "age_start": 23,
-      "age_end": 28,
-      "involved_people": [
-        "John Herschel",
-        "Francis Baily",
-        "James South"
-      ],
-      "location": "England"
-    },
-    {
-      "id": "tables_turn_to_iron",
-      "headline": "Tabellen werden zu Eisen",
-      "date_start": "1822",
+      "id": "engines_against_error",
+      "headline": "Maschinen gegen Fehler",
+      "date_start": "1820",
       "date_start_precision": "year",
       "date_end": "1827",
       "date_end_precision": "year",
-      "age_start": 30,
+      "age_start": 28,
       "age_end": 35,
       "involved_people": [
+        "John Herschel",
         "Joseph Clement",
-        "Georgiana Whitmore",
-        "Benjamin Babbage"
+        "Benjamin Babbage",
+        "Georgiana Whitmore"
       ],
-      "location": "England"
+      "location": "England",
+      "illustration": {
+        "image": "/chapter_art/charles_babbage/engines_against_error_medium.webp",
+        "medium": "/chapter_art/charles_babbage/engines_against_error_medium.webp",
+        "full": "/chapter_art/charles_babbage/engines_against_error_full.webp",
+        "concept": "A single polished brass sphere floats above darkness, encircled by uneven rings of tiny sparks. One ring gradually becomes perfectly smooth and continuous, casting a precise amber glow through drifting metallic dust.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-03"
+      }
     },
     {
-      "id": "saturday_night_machines",
-      "headline": "Maschinen am Samstagabend",
+      "id": "universal_machine",
+      "headline": "Die Analytical Engine",
       "date_start": "1828",
       "date_start_precision": "year",
       "date_end": "1839",
       "date_end_precision": "year",
       "age_start": 36,
       "age_end": 47,
-      "involved_people": [
-        "Ada Lovelace",
-        "Anne Isabella Byron",
-        "Mary Somerville"
-      ],
-      "location": "England"
+      "involved_people": [],
+      "location": "England",
+      "illustration": {
+        "image": "/chapter_art/charles_babbage/universal_machine_medium.webp",
+        "medium": "/chapter_art/charles_babbage/universal_machine_medium.webp",
+        "full": "/chapter_art/charles_babbage/universal_machine_full.webp",
+        "concept": "An intricate suspended lattice of copper filaments unfolds from a compact knot into a vast branching geometry. Its pathways split, loop, and reconnect in deep indigo space, each junction catching a cool, deliberate glint.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-03"
+      }
     },
     {
-      "id": "after_the_funding_cut",
-      "headline": "Nach dem Förderstopp",
+      "id": "tomorrow_calculated",
+      "headline": "Europa berechnet die Zukunft",
       "date_start": "1840",
+      "date_start_precision": "year",
+      "date_end": "1843",
+      "date_end_precision": "year",
+      "age_start": 48,
+      "age_end": 51,
+      "involved_people": [
+        "Luigi Federico Menabrea",
+        "Ada Lovelace"
+      ],
+      "location": "Europa",
+      "illustration": {
+        "image": "/chapter_art/charles_babbage/tomorrow_calculated_medium.webp",
+        "medium": "/chapter_art/charles_babbage/tomorrow_calculated_medium.webp",
+        "full": "/chapter_art/charles_babbage/tomorrow_calculated_full.webp",
+        "concept": "A translucent prism hangs in blackness, receiving one narrow beam of gold light and releasing a fan of colored rays. The rays cross through layered glass planes, forming a radiant, orderly web that extends beyond the frame.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-03"
+      }
+    },
+    {
+      "id": "final_reckoning",
+      "headline": "Die letzte Abrechnung",
+      "date_start": "1864",
       "date_start_precision": "year",
       "date_end": "1871-10-18",
       "date_end_precision": "day",
-      "age_start": 48,
+      "age_start": 72,
       "age_end": 79,
-      "involved_people": [
-        "Joseph Clement"
-      ],
-      "location": "England"
+      "involved_people": [],
+      "location": "England",
+      "illustration": {
+        "image": "/chapter_art/charles_babbage/final_reckoning_medium.webp",
+        "medium": "/chapter_art/charles_babbage/final_reckoning_medium.webp",
+        "full": "/chapter_art/charles_babbage/final_reckoning_full.webp",
+        "concept": "A weathered circular disc of dark stone floats against velvet black, its outer edge slowly eroding into silver grains. From the intact center, a quiet pool of warm light remains, surrounded by widening concentric ripples.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-03"
+      }
     }
   ],
-  "conclusion": "Charles Babbage lebte seiner Zeit und den verfügbaren Werkzeugen voraus – und verwandelte mathematische Strenge in den Entwurf eines mechanischen Denkens. Zwar blieben seine großen Maschinen zu seinen Lebzeiten unvollendet, doch ihre Ideen wurden zur Grammatik des modernen Rechnens.",
+  "conclusion": "Charles Babbage verwandelte seinen Frust über menschliche Fehler in den Entwurf einer programmierbaren Datenverarbeitung. Zwar blieben seine großen Maschinen zu seinen Lebzeiten unvollendet, doch seine Ideen gaben dem modernen Computer seine geistige Architektur.",
   "events": [
     {
       "date": "1791-12-26",
       "date_precision": "day",
-      "date_note": "Sein Geburtsjahr ist in zeitgenössischen Quellen umstritten; die Taufe erfolgte am 06.01.1792, was mit einer Geburt im Jahr 1791 übereinstimmt",
       "age": 0,
-      "title": "Geburt in London",
-      "description": "Charles Babbage wurde am 26. Dezember 1791 in London als Sohn von Benjamin Babbage und Betsy Plumleigh Teape geboren. Er entstammte einer finanziell abgesicherten Familie mit Verbindungen zum Bankwesen und Handel.",
+      "title": "Geboren nahe Walworth Road",
+      "description": "Charles Babbage wurde in London geboren, vermutlich in 44 Crosby Row nahe der Walworth Road, auch wenn der genaue Geburtsort umstritten ist. Sein Vater war Teilhaber einer Bank; 1808 zog die Familie später nach East Teignmouth.",
       "locations": [
         {
           "name_historic": "London",
-          "name_modern": "London, England, Vereinigtes Königreich",
+          "name_modern": "London, Vereinigtes Königreich",
           "centroid": [
-            -0.1277653,
-            51.5074456
+            -0.1276,
+            51.5072
           ],
           "primary": true
         }
@@ -147,26 +170,28 @@
         "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "fevered_london_beginnings",
+      "chapter": "mathematical_rebellion",
+      "weight": 0.35,
       "event_class": {
         "type": "birth",
         "father": "Benjamin Babbage",
-        "mother": "Betsy Plumleigh Teape"
+        "mother": "Betsy Plumleigh Teape",
+        "characterization": "Bankiershaushalt"
       }
     },
     {
-      "date": "1808",
-      "date_precision": "year",
-      "age": 16,
-      "title": "Umzug nach East Teignmouth",
-      "description": "1808 zog die Familie Babbage nach Rowdens House in East Teignmouth, Devon. Nach einem schweren Fieber in seiner Kindheit wurde Charles Babbages reguläre Schulbildung wiederholt unterbrochen und durch Privatlehrer ergänzt; zugleich setzte er sein Mathematikstudium im Selbststudium fort.",
+      "date": "1810-10",
+      "date_precision": "month",
+      "age": 18,
+      "title": "Beginnt das Studium in Cambridge",
+      "description": "Im Oktober 1810 trat Babbage in das Trinity College in Cambridge ein, nachdem Schulunterricht und Privatlehrer seine Kenntnisse in Mathematik und klassischen Sprachen gefestigt hatten. Die mathematische Ausbildung an der Universität erschien ihm gegenüber den zeitgenössischen Arbeiten auf dem Kontinent, die er sich bereits selbstständig erschlossen hatte, rückständig.",
       "locations": [
         {
-          "name_historic": "East Teignmouth, Devon",
-          "name_modern": "Teignmouth, Devon, England, Vereinigtes Königreich",
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Vereinigtes Königreich",
           "centroid": [
-            -3.4957798,
-            50.5463385
+            0.1218,
+            52.2053
           ],
           "primary": true
         }
@@ -174,62 +199,33 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
-      "event_type_icon": "mdi-home-switch-outline",
-      "chapter": "fevered_london_beginnings"
-    },
-    {
-      "date": "1810-10",
-      "date_precision": "month",
-      "age": 18,
-      "title": "Eintritt ins Trinity College",
-      "description": "Im Oktober 1810 schrieb sich Babbage am [[Trinity College, Cambridge|Trinity College]] in Cambridge ein. Viel zeitgenössische Mathematik hatte er sich bereits selbst beigebracht. Schon bald enttäuschte ihn der mathematische Unterricht an der Universität im Vergleich zu den französischen analytischen Texten, mit denen er sich beschäftigt hatte.",
-      "locations": [
-        {
-          "name_historic": "Cambridge",
-          "name_modern": "Cambridge, England, Vereinigtes Königreich",
-          "centroid": [
-            0.1186637,
-            52.2055314
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage",
-        "https://en.wikipedia.org/wiki/Trinity_College,_Cambridge"
-      ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Trinity_College_Chapel%2C_Cambridgeshire%2C_England_-_29-11-2019.jpg/960px-Trinity_College_Chapel%2C_Cambridgeshire%2C_England_-_29-11-2019.jpg",
-          "caption": "Kapelle des Trinity College, Cambridge",
-          "source": "https://commons.wikimedia.org/wiki/File:Trinity_College_Chapel,_Cambridgeshire,_England_-_29-11-2019.jpg",
-          "creator": "Cmao20",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Cmglee_Cambridge_Trinity_College_Great_Court.jpg/960px-Cmglee_Cambridge_Trinity_College_Great_Court.jpg",
+          "caption": "Trinity College in Cambridge, wo Babbage sein Studium aufnahm",
+          "source": "https://commons.wikimedia.org/wiki/File:Cmglee_Cambridge_Trinity_College_Great_Court.jpg",
+          "creator": "Cmglee",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
         }
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "cambridge_calculus_revolt",
-      "annotations": {
-        "Trinity College, Cambridge": {
-          "explanation": "Ein zum Verbund der University of Cambridge gehörendes College, an dem zahlreiche bedeutende Naturwissenschaftler und Mathematiker ausgebildet wurden.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Trinity_College,_Cambridge"
-        }
-      }
+      "chapter": "mathematical_rebellion",
+      "weight": 0.55
     },
     {
       "date": "1812",
       "date_precision": "year",
       "age": 20,
-      "title": "Gründung der Analytical Society",
-      "description": "1812 half Babbage in Cambridge gemeinsam mit John Herschel und George Peacock bei der Gründung der [[Analytical Society|Analytical Society]], einer studentischen Gruppe, die sich für die auf dem Kontinent gebräuchlichen Methoden der Analysis und die Einführung der [[Leibniz notation|Leibnizschen Notation]] anstelle der damals in Großbritannien vorherrschenden Newtonschen Fluxionsnotation einsetzte.",
+      "title": "Gründet die Analytical Society",
+      "description": "Gemeinsam mit John Herschel, George Peacock und anderen Freunden aus Cambridge gründete Babbage die Analytical Society. Die Gruppe setzte sich anstelle der traditionellen Newtonschen Schreibweise in Cambridge für kontinentale mathematische Methoden und die Leibnizsche Notation der Infinitesimalrechnung ein.",
       "locations": [
         {
           "name_historic": "Cambridge",
-          "name_modern": "Cambridge, England, Vereinigtes Königreich",
+          "name_modern": "Cambridge, Vereinigtes Königreich",
           "centroid": [
-            0.1186637,
-            52.2055314
+            0.1218,
+            52.2053
           ],
           "primary": true
         }
@@ -240,213 +236,199 @@
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Analytical_Society",
-        "https://en.wikipedia.org/wiki/George_Peacock",
-        "https://en.wikipedia.org/wiki/John_Herschel"
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "cambridge_calculus_revolt",
-      "annotations": {
-        "Analytical Society": {
-          "explanation": "Eine 1812 in Cambridge gegründete mathematische Gesellschaft, die die britische Mathematik durch die Förderung kontinentaleuropäischer Ansätze zur Analysis reformieren wollte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Analytical_Society"
+      "event_type_icon": "mdi-account-multiple",
+      "chapter": "mathematical_rebellion",
+      "weight": 0.65,
+      "background": "Zu Beginn des 19. Jahrhunderts wurde die Mathematik in Cambridge vom Mathematical Tripos geprägt, einem Prüfungssystem, das sich an Fragen orientierte, die man für die Lektüre von Newtons Principia als notwendig erachtete. Britische Studenten verwendeten Newtons Fluxionsnotation, darunter Punkte zur Kennzeichnung von Änderungsraten, während man sich in weiten Teilen Kontinentaleuropas der mit Leibniz verbundenen Differentialnotation bediente. Der Unterschied war mehr als eine typografische Frage. Kritiker beschrieben Cambridge später als von den Entwicklungen auf dem Kontinent isoliert und mathematischen Studien außerhalb der etablierten Tripos-Tradition gegenüber feindselig. Robert Woodhouse hatte 1803 in Principles of Analytical Calculation Leibnizsche Methoden eingeführt, darunter eine Notation, mit der sich das totale Differential einer Funktion mehrerer Variablen ausdrücken ließ; doch setzten sich diese Methoden nur langsam durch.\n\nDie Reformer machten aus ihrer Auseinandersetzung einen Scherz mit ernstem Anliegen. Die Gesellschaft war zunächst als Parodie auf einen Streit darüber gedacht, ob Bibeltexte mit Anmerkungen versehen werden müssten: Babbages Pointe war, dass Sylvestre Lacroix’ französisches Lehrbuch der Infinitesimalrechnung nach der Übersetzung keinerlei erläuternden Apparat benötige. Ihr Slogan lautete „der d-ismus des Kontinents“ gegen das „Punktzeitalter“ der Universität – ein Wortspiel, das ihre fachliche Kritik einprägsam machte. Der Streit betraf die Frage, wie Studenten im Umgang mit Funktionen, Differenzen und Ableitungen ausgebildet werden sollten, nicht bloß, welches Symbol auf der Seite stehen sollte.\n\nDie kleine Studentengruppe löste sich 1814 auf, als ihre Gründungsmitglieder ihr Studium abschlossen. Doch sie hatte einen gangbaren Weg in die Universität gefunden: über Lehrbücher und Prüfungen. Ihre Arbeit schlug sich in der englischen Fassung von Lacroix’ An Elementary Treatise on Differential and Integral Calculus von 1816 nieder, die Babbage begonnen und Peacock und Herschel vollendet hatten. 1817 verwendete Peacock erstmals Leibnizsche Symbole in Prüfungsfragen des Cambridge Senate House. Ein Vikar, D. M. Peacock aus Sedbergh, wandte 1819 ein, die Universität müsse sich in öffentlichen Prüfungen vor „bloß algebraischen oder analytischen Spekulationen“ hüten. Dennoch fanden die Symbole einflussreiche Anhänger, darunter 1820 William Whewell; 1821 waren sie in Cambridge fest etabliert, und 1830 wurden sie in Großbritannien neben Newtons Punkten weithin verwendet. Die Kampagne veränderte somit die Arbeitssprache, in der eine Generation mit höherer Mathematik vertraut wurde.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Newton%27s_Principia_title_page.png/960px-Newton%27s_Principia_title_page.png",
+          "caption": "Titelseite der ersten Ausgabe von Philosophiae Naturalis Principia Mathematica aus dem Jahr 1687 von Isaac Newton. PHILOSOPHIÆ NATURALIS PRINCIPIA MATHEMATICA. Autore IS.",
+          "source": "https://commons.wikimedia.org/wiki/File:Newton's_Principia_title_page.png",
+          "creator": "The original uploader was Zhaladshar at English Wikisource.",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Newton Principia"
         },
-        "Leibniz notation": {
-          "explanation": "Die von Gottfried Wilhelm Leibniz eingeführte Differentialnotation der Analysis im Stil von dy/dx, die auf dem europäischen Kontinent weithin verwendet wird.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Leibniz%27s_notation"
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Cambridge_-_Senate_House_Passage_-_View_South_on_Senate_House%2C_King%27s_College_Chapel_%26_Old_Schools_1837_Charles_Robert_Cockerell.jpg/960px-Cambridge_-_Senate_House_Passage_-_View_South_on_Senate_House%2C_King%27s_College_Chapel_%26_Old_Schools_1837_Charles_Robert_Cockerell.jpg",
+          "caption": "Cambridge – Senate House Passage – Blick nach Süden auf das Senate House, die King's College Chapel und die Old Schools, 1837, Charles Robert Cockerell",
+          "source": "https://commons.wikimedia.org/wiki/File:Cambridge_-_Senate_House_Passage_-_View_South_on_Senate_House,_King's_College_Chapel_&_Old_Schools_1837_Charles_Robert_Cockerell.jpg",
+          "creator": "Txllxt TxllxT",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Cambridge Senate House"
         }
-      }
+      ]
     },
     {
       "date": "1814-07-25",
       "date_precision": "day",
       "age": 22,
-      "title": "Heirat mit Georgiana Whitmore",
-      "description": "Am 25. Juli 1814 heiratete Babbage in die Familie Whitmore ein. Später im selben Jahr erhielt er seinen Cambridge-Abschluss ohne Prüfung, nachdem er am Trinity College und am Peterhouse studiert und sich dort einen hervorragenden Ruf als Mathematiker erworben hatte.",
+      "title": "Heiratet Georgiana Whitmore",
+      "description": "Babbage heiratete 1814; die Schwester seiner Frau heiratete im selben Jahr seinen Freund Edward Ryan. In jenem Jahr erhielt er nach einer umstrittenen öffentlichen Verteidigung seiner Dissertation einen Cambridge-Abschluss, ohne die Prüfung mit Auszeichnung abzulegen.",
       "locations": [
         {
-          "name_historic": "London",
-          "name_modern": "London, Vereinigtes Königreich",
+          "name_historic": "Teignmouth, Devon",
+          "name_modern": "Teignmouth, Vereinigtes Königreich",
+          "primary": true,
           "centroid": [
-            -0.1277653,
-            51.5074456
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Cambridge",
-          "name_modern": "Cambridge, Vereinigtes Königreich",
-          "centroid": [
-            0.1186637,
-            52.2055314
-          ],
-          "primary": false
+            -3.4957798,
+            50.5463385
+          ]
         }
       ],
       "involved_people": [
-        "Georgiana Whitmore"
+        "Georgiana Whitmore",
+        "Edward Ryan"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage",
-        "https://en.wikipedia.org/wiki/Benjamin_Herschel_Babbage"
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "cambridge_calculus_revolt",
+      "chapter": "mathematical_rebellion",
+      "weight": 0.6,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
         "partner": "Georgiana Whitmore",
-        "duration": "bis zu ihrem Tod 1827"
+        "duration": "13 Jahre",
+        "children": 8
       }
     },
     {
-      "date": "1815",
+      "date": "1816",
       "date_precision": "year",
-      "date_end": "1816",
-      "date_end_precision": "year",
-      "age": 23,
-      "title": "Vorträge und Royal Society",
-      "description": "[[1815|1815]] trat Babbage in London erstmals öffentlich als wissenschaftlicher Dozent auf und hielt unter anderem Vorträge über Astronomie an der [[Royal Institution|Royal Institution]]. [[1816|1816]] wurde er zum [[Fellow of the Royal Society|Fellow of the Royal Society]] gewählt – ein Zeichen für seinen Eintritt in die wissenschaftlichen Eliteinstitutionen Großbritanniens.",
+      "age": 24,
+      "title": "Veröffentlicht eine Kalkülübersetzung",
+      "description": "1816 vollendete und veröffentlichte Babbage gemeinsam mit John Herschel und George Peacock die englische Übersetzung eines französischen Lehrbuchs der Infinitesimalrechnung. Damit unterstützte er die Bemühungen der Analytical Society, den Mathematikunterricht in Cambridge zu reformieren. Im selben Jahr wurde er außerdem zum Fellow der Royal Society gewählt.",
       "locations": [
         {
-          "name_historic": "London",
-          "name_modern": "London, Vereinigtes Königreich",
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Vereinigtes Königreich",
           "centroid": [
-            -0.1277653,
-            51.5074456
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage",
-        "https://en.wikipedia.org/wiki/Royal_Society"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Entrance_to_The_Royal_Society.jpg/960px-Entrance_to_The_Royal_Society.jpg",
-          "caption": "Eingang zur Royal Society, London",
-          "source": "https://commons.wikimedia.org/wiki/File:Entrance_to_The_Royal_Society.jpg",
-          "creator": "Royal Society uploader",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "institutional_rise",
-      "annotations": {
-        "Royal Institution": {
-          "explanation": "Eine 1799 gegründete Londoner Organisation zur Förderung wissenschaftlicher Bildung und Forschung, bekannt für öffentliche Vorträge und Demonstrationen.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Royal_Institution"
-        },
-        "Fellow of the Royal Society": {
-          "explanation": "Eine formelle, durch Wahl verliehene Mitgliedschaft (FRS) in der Royal Society, der britischen nationalen Akademie der Wissenschaften; sie bekundet anerkanntes wissenschaftliches Ansehen.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Fellow_of_the_Royal_Society"
-        }
-      }
-    },
-    {
-      "date": "1820",
-      "date_precision": "year",
-      "age": 28,
-      "title": "Mitgründer der Astronomical Society",
-      "description": "1820 wurde in [[Astronomical Society of London|Astronomical Society of London]] gegründet. Babbage half gemeinsam mit anderen reformorientierten Wissenschaftlern beim Aufbau der Organisation in London, die die Zuverlässigkeit astronomischer Berechnungen und den Austausch von Beobachtungsdaten verbessern sollte.",
-      "locations": [
-        {
-          "name_historic": "London",
-          "name_modern": "London, Vereinigtes Königreich",
-          "centroid": [
-            -0.1277653,
-            51.5074456
+            0.1218,
+            52.2053
           ],
           "primary": true
         }
       ],
       "involved_people": [
         "John Herschel",
-        "Francis Baily",
-        "James South"
+        "George Peacock",
+        "Sylvestre Lacroix"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Royal_Astronomical_Society",
-        "https://en.wikipedia.org/wiki/Charles_Babbage"
+        "https://en.wikipedia.org/wiki/Charles_Babbage",
+        "https://en.wikipedia.org/wiki/Analytical_Society"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Entrance_to_the_Royal_Astronomical_Society_1.jpg/960px-Entrance_to_the_Royal_Astronomical_Society_1.jpg",
-          "caption": "Eingang zur Royal Astronomical Society, Burlington House",
-          "source": "https://commons.wikimedia.org/wiki/File:Entrance_to_the_Royal_Astronomical_Society_1.jpg",
-          "creator": "Photograph by Mike Peel ( www.mikepeel.net ).",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "institutional_rise",
-      "annotations": {
-        "Astronomical Society of London": {
-          "explanation": "Die 1820 gegründete Gesellschaft, später Royal Astronomical Society, die der Förderung der Astronomie sowie der Verbesserung von Erstellung und Überprüfung astronomischer Daten und Tabellen diente.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Royal_Astronomical_Society"
-        }
+      "event_type_icon": "mdi-book",
+      "chapter": "mathematical_rebellion",
+      "weight": 0.55,
+      "event_class": {
+        "type": "publication",
+        "title": "An Elementary Treatise on Differential and Integral Calculus",
+        "publication_type": "book",
+        "significance": "Reform der Infinitesimalrechnung"
       }
     },
     {
-      "date": "1822",
+      "date": "1820",
       "date_precision": "year",
-      "age": 30,
-      "title": "Die Difference Engine entsteht",
-      "description": "In [[London|London]] war Charles Babbage zunehmend frustriert über Fehler in veröffentlichten Rechentafeln. 1822 begann er daher, Pläne für eine Maschine auszuarbeiten, die beim Erstellen solcher Tafeln den Bedarf an manueller Abschreibarbeit verringern sollte.",
+      "age": 28,
+      "title": "Gründet eine astronomische Gesellschaft",
+      "description": "Babbage war an der Gründung der Astronomical Society of London beteiligt, der späteren Royal Astronomical Society. Ihre Organisatoren strebten systematischere astronomische Berechnungen und eine weitere Verbreitung von Beobachtungsdaten an.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, Vereinigtes Königreich",
           "centroid": [
-            -0.1277653,
-            51.5074456
+            -0.1276,
+            51.5074
           ],
           "primary": true
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage",
-        "https://en.wikipedia.org/wiki/Difference_engine"
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Babbage_Difference_Engine_Detail_%286224956233%29.jpg/960px-Babbage_Difference_Engine_Detail_%286224956233%29.jpg",
-          "caption": "Detail der Difference Engine von Babbage",
-          "source": "https://commons.wikimedia.org/wiki/File:Babbage_Difference_Engine_Detail_(6224956233).jpg",
-          "creator": "Don DeBold from San Jose, CA, USA",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
-        }
-      ],
-      "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "tables_turn_to_iron",
-      "annotations": {
-        "London": {
-          "explanation": "Die Hauptstadt des Vereinigten Königreichs und im Zeitalter Babbages das wichtigste Zentrum britischer Wissenschaft und Ingenieurskunst.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/London"
-        }
-      },
-      "event_class": {
-        "type": "invention",
-        "title": "Difference Engine",
-        "description": "Ein mechanischer Rechner, der mithilfe endlicher Differenzen durch wiederholte Addition Polynomwerte erzeugte und in Tabellen erfasste."
-      }
+      "event_type_icon": "mdi-account-group",
+      "chapter": "engines_against_error",
+      "weight": 0.55,
+      "involved_people": [
+        "John Herschel"
+      ]
     },
     {
-      "date": "1823",
+      "date": "1822",
       "date_precision": "year",
-      "age": 31,
-      "title": "Staatliche Unterstützung gesichert",
-      "description": "1823 erhielt Babbage finanzielle Unterstützung der britischen Regierung, um den Bau seiner [[Difference Engine|Difference Engine]] voranzutreiben. Außerdem holte er den Präzisionsingenieur Joseph Clement hinzu, der die für das Projekt benötigten Spezialwerkzeuge und Bauteile fertigen sollte.",
+      "date_note": "Die Entstehung der Idee wird auf 1821 oder 1822 datiert",
+      "age": 30,
+      "title": "Entwirft die Difference Engine",
+      "description": "Als Babbage mit Fehlern in mathematischen und astronomischen Tafeln konfrontiert war, kam er auf die Idee einer Maschine, die Tafeln nach dem Verfahren der endlichen Differenzen berechnen konnte. An die Stelle fehleranfälliger Handarbeit sollte eine Folge mechanischer Operationen treten.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, Vereinigtes Königreich",
           "centroid": [
-            -0.1277653,
-            51.5074456
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "John Herschel"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Babbage_Difference_Engine_%28the_power-supply_end%29.jpg/960px-Babbage_Difference_Engine_%28the_power-supply_end%29.jpg",
+          "caption": "Babbages Difference Engine, Seite der Kraftübertragung",
+          "source": "https://commons.wikimedia.org/wiki/File:Babbage_Difference_Engine_(the_power-supply_end).jpg",
+          "creator": "Jitze Couperus from Los Altos Hills, California, USA",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "engines_against_error",
+      "weight": 0.95,
+      "event_class": {
+        "type": "invention",
+        "title": "Difference Engine",
+        "description": "Eine mechanische Rechenmaschine, die mithilfe endlicher Differenzen automatisch mathematische Tafeln erzeugte und ihre Ergebnisse für den Druck vorbereitete."
+      },
+      "background": "Astronomie, Navigation und Vermessungswesen waren auf gedruckte Zahlentafeln angewiesen. Ihre Herstellung bedeutete jedoch lange Ketten aus Berechnungen von Hand, Abschreiben, Setzen und Korrekturlesen. Eine falsche Ziffer konnte jede einzelne Stufe überstehen. Die 1820 gegründete Astronomical Society of London wollte astronomische Berechnungen vereinheitlichen und zuverlässige Beobachtungen verbreiten; ihr Anliegen, Berechnungen in eine standardisierte Form zu bringen, verlieh dem Problem einen institutionellen Rahmen. Von besonderer Bedeutung war der Nautical Almanac, da er Seefahrer mit den Zahlen versorgte, anhand derer sie ihre Position auf See bestimmten.\n\nDer unmittelbare Auslöser war eine probeweise Neuberechnung eines Teils des Almanachs, die Babbage auf Bitten der Gesellschaft gemeinsam mit John Herschel durchführte. Ihre Ergebnisse legten Abweichungen in den vorhandenen Zahlen offen. Später machte Babbage diese Episode zur Ursprungsgeschichte seines Projekts, auch wenn der Artikel darauf hinweist, dass der größere Zusammenhang umstritten ist: Forderungen nach einer Mechanisierung der Tafelerstellung und die Sorge über fehlerhafte Tabellen waren im britischen Wissenschaftsleben bereits geläufig. Dennoch verwandelte der Versuch eine allgemeine Klage in eine präzise praktische Frage: Wie ließ sich die Berechnung so anordnen, dass jedes Ergebnis aus einem festen, überprüfbaren Verfahren hervorging und nicht aus dem Ermessen des Rechners?\n\nEndliche Differenzen boten eine Antwort für Tafeln, deren Werte sich nach regelmäßigen Zahlenmustern verändern. Statt die zugrunde liegende Berechnung immer wieder vollständig auszuführen, konnte man mit vorbereiteten Anfangswerten beginnen und spätere Einträge durch systematische Additionen erzeugen. Das machte die Methode für eine Maschine besonders geeignet: Additionen ließen sich durch miteinander verbundene mechanische Bewegungen darstellen, während die aufwendige geistige Arbeit in der Einrichtung der Tafel lag. Der Anspruch reichte zudem über die reine Arithmetik hinaus – hin zu einem integrierten Verfahren, bei dem zuverlässige Zahlen in den Druck gelangen konnten, ohne durch erneutes Abschreiben neue Fehler einzuführen.\n\nDer Vorschlag brachte Babbage 1824 die Goldmedaille der Astronomical Society ein, verliehen für eine Maschine zur Berechnung mathematischer und astronomischer Tafeln. Zugleich brachte er ihn mit der Präzisionsmechanik in Kontakt, die nötig war, um eine solche Idee in die Wirklichkeit umzusetzen. Die Kluft zwischen einem mathematisch regelmäßigen Verfahren und einer ausreichend präzisen Maschine, die es ausführen konnte, wurde zur entscheidenden Schwierigkeit des Vorhabens; zugleich blieb die ursprüngliche Forderung nach verlässlichen wissenschaftlichen Daten zentral für seine Bedeutung.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/The_American_ephemeris_and_nautical_almanac_%281855%29_%2814583824780%29.jpg/960px-The_American_ephemeris_and_nautical_almanac_%281855%29_%2814583824780%29.jpg",
+          "caption": "Kennung: americanephemeri00grea (Treffer anzeigen). Titel: The American ephemeris and nautical almanac. Jahr: 1855 (1850er Jahre). Autoren: Great Britain.",
+          "source": "https://commons.wikimedia.org/wiki/File:The_American_ephemeris_and_nautical_almanac_(1855)_(14583824780).jpg",
+          "creator": "Internet Archive Book Images",
+          "license": "No restrictions",
+          "licenseUrl": "https://www.flickr.com/commons/usage/",
+          "query": "Nautical Almanac title page"
+        }
+      ]
+    },
+    {
+      "date": "1823",
+      "date_precision": "year",
+      "age": 31,
+      "title": "Sichert die Finanzierung der Maschine",
+      "description": "1823 erklärte sich die britische Regierung bereit, den Bau von Babbages Difference Engine zu unterstützen; Babbage verpflichtete den Präzisionsmechaniker Joseph Clement. Das Projekt erforderte spezialisierte Werkzeugmaschinen und äußerst genaue Fertigungsverfahren.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, Vereinigtes Königreich",
+          "centroid": [
+            -0.1276,
+            51.5072
           ],
           "primary": true
         }
@@ -455,60 +437,41 @@
         "Joseph Clement"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Joseph_Clement",
-        "https://en.wikipedia.org/wiki/Charles_Babbage"
+        "https://en.wikipedia.org/wiki/Charles_Babbage",
+        "https://en.wikipedia.org/wiki/Joseph_Clement"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Gearwheel_cut-outs_for_Babbages_Difference_Engine_No_1%2C_1824-1832._%289660574123%29.jpg/960px-Gearwheel_cut-outs_for_Babbages_Difference_Engine_No_1%2C_1824-1832._%289660574123%29.jpg",
-          "caption": "Zahnrad-Ausschnitte für Difference Engine Nr. 1, 1824–1832",
-          "source": "https://commons.wikimedia.org/wiki/File:Gearwheel_cut-outs_for_Babbages_Difference_Engine_No_1,_1824-1832._(9660574123).jpg",
-          "creator": "Science Museum London / Science and Society Picture Library",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Charles_Babbage_Difference_Engine_No1.jpg/960px-Charles_Babbage_Difference_Engine_No1.jpg",
+          "caption": "Teilmodell der Difference Engine Nr. 1",
+          "source": "https://commons.wikimedia.org/wiki/File:Charles_Babbage_Difference_Engine_No1.jpg",
+          "creator": "Marcin Wichary",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
       "event_type_icon": "mdi-cash",
-      "chapter": "tables_turn_to_iron",
-      "annotations": {
-        "Difference Engine": {
-          "explanation": "Ein von Babbage vorgeschlagener mechanischer Rechner, der mithilfe des Verfahrens der endlichen Differenzen mathematische Tabellen automatisch berechnen und setzen sollte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Difference_engine"
-        }
-      }
+      "chapter": "engines_against_error",
+      "weight": 0.8
     },
     {
       "date": "1827",
       "date_precision": "year",
       "age": 35,
-      "title": "Trauer und Erbe",
-      "description": "1827 starb in [[London|London]] Babbages Frau Georgiana; später im selben Jahr verstarb auch sein Vater Benjamin Babbage. Er hinterließ ihm ein beträchtliches Erbe, das Babbage finanziell unabhängig machte und ihm Reisen auf dem Kontinent ermöglichte.",
-      "locations": [
-        {
-          "name_historic": "London",
-          "name_modern": "London, Vereinigtes Königreich",
-          "centroid": [
-            -0.1277653,
-            51.5074456
-          ],
-          "primary": true
-        }
-      ],
+      "title": "Verliert Vater und Ehefrau",
+      "description": "Babbages Vater starb und hinterließ ihm ein beträchtliches Erbe, das ihn finanziell unabhängig machte. Seine Frau Georgiana starb später im selben Jahr, nachdem mehrere ihrer Kinder gestorben waren, und Babbage verließ England zu einer Reise durch Europa.",
+      "locations": [],
       "involved_people": [
-        "Georgiana Whitmore",
-        "Benjamin Babbage"
+        "Benjamin Babbage",
+        "Georgiana Whitmore"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage"
+        "https://en.wikipedia.org/wiki/Charles_Babbage",
+        "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
       ],
-      "event_type_icon": "mdi-cash",
-      "chapter": "tables_turn_to_iron",
-      "annotations": {
-        "London": {
-          "explanation": "Die wichtigste Stadt, in der Charles Babbage in dieser Zeit lebte und arbeitete und in der diese Todesfälle in biografischen Darstellungen üblicherweise verzeichnet werden.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/London"
-        }
-      }
+      "event_type_icon": "mdi-cross",
+      "chapter": "engines_against_error",
+      "weight": 0.75
     },
     {
       "date": "1828",
@@ -516,161 +479,85 @@
       "date_end": "1839",
       "date_end_precision": "year",
       "age": 36,
-      "title": "Berufung zum Lucasian Professor",
-      "description": "1828 wurde Babbage zum [[Lucasian Professor of Mathematics|Lucasian Professor of Mathematics]] an der [[University of Cambridge|University of Cambridge]] berufen. Obwohl der Lehrstuhl in Cambridge angesiedelt war, hielt er sich in dieser Zeit oft in London auf. Dort begann er, an gut besuchten Samstagabenden [[soirées|Samstagabendgesellschaften]] auszurichten, bei denen über Wissenschaft gesprochen und Besuchern seine Maschinen gezeigt wurden.",
+      "title": "Übernimmt die Lucasian Professorship",
+      "description": "1828 wurde Babbage zum Lucasian Professor of Mathematics an der University of Cambridge ernannt. Er bekleidete den Lehrstuhl bis 1839, hielt während seiner Amtszeit jedoch keine Vorlesungen.",
       "locations": [
         {
           "name_historic": "Cambridge",
-          "name_modern": "Cambridge, England, Vereinigtes Königreich",
+          "name_modern": "Cambridge, Vereinigtes Königreich",
           "centroid": [
-            0.1186637,
-            52.2055314
+            0.1218,
+            52.2053
           ],
           "primary": true
-        },
-        {
-          "name_historic": "London",
-          "name_modern": "London, England, Vereinigtes Königreich",
-          "centroid": [
-            -0.1277653,
-            51.5074456
-          ],
-          "primary": false
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es",
         "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
       "event_type_icon": "mdi-school-outline",
-      "chapter": "saturday_night_machines",
-      "annotations": {
-        "Lucasian Professor of Mathematics": {
-          "explanation": "Eine renommierte Mathematikprofessur an der University of Cambridge, die 1663 eingerichtet wurde und später von Persönlichkeiten wie Isaac Newton und Stephen Hawking bekleidet wurde.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Lucasian_Professor_of_Mathematics"
-        },
-        "University of Cambridge": {
-          "explanation": "Eine bedeutende Kollegialuniversität in Cambridge, England, an der der Lucasian Chair angesiedelt ist.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Cambridge"
-        },
-        "soirées": {
-          "explanation": "Abendliche gesellschaftliche Zusammenkünfte, meist in Privathäusern, bei denen gebildete Gäste Gespräche mit Vorführungen, Musik oder wissenschaftlichen Erörterungen verbanden.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Soir%C3%A9e"
-        }
-      }
+      "chapter": "universal_machine",
+      "weight": 0.5
     },
     {
       "date": "1832",
       "date_precision": "year",
       "age": 40,
-      "title": "Studie zu Maschinen und Industrie",
-      "description": "1832 veröffentlichte Babbage, der in London lebte und dabei auf Fabrik- und Werkstattbesuche der vorangegangenen Jahre zurückgriff, seine Untersuchung der industriellen Praxis – inmitten der rasch expandierenden [[Industrial Revolution|Industriewirtschaft]] Großbritanniens.",
-      "locations": [
-        {
-          "name_historic": "London",
-          "name_modern": "London, Vereinigtes Königreich",
-          "centroid": [
-            -0.1277653,
-            51.5074456
-          ],
-          "primary": true
-        }
-      ],
+      "title": "Veröffentlicht Studie zur Fabrikökonomie",
+      "description": "1832 veröffentlichte Babbage On the Economy of Machinery and Manufactures, ein Werk, das auf Beobachtungen in Fabriken im In- und Ausland beruhte. Das Buch spiegelte sein anhaltendes Interesse an industrieller Produktion, Arbeitsorganisation und politischer Ökonomie wider.",
+      "locations": [],
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/John_Roger_Murray_-_4b44100bd5.jpg/960px-John_Roger_Murray_-_4b44100bd5.jpg",
-          "caption": "The Exposition of 1851; or, Views of the Industry (Buch)",
-          "source": "https://commons.wikimedia.org/wiki/File:John_Roger_Murray_-_4b44100bd5.jpg",
-          "creator": "John Roger Murray",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Babbage_-_On_the_economy_of_machinery_and_manufactures%2C_1835_-_5864499.tif/lossy-page1-960px-Babbage_-_On_the_economy_of_machinery_and_manufactures%2C_1835_-_5864499.tif.jpg",
+          "caption": "Babbages Economy of Machinery and Manufactures",
+          "source": "https://commons.wikimedia.org/wiki/File:Babbage_-_On_the_economy_of_machinery_and_manufactures,_1835_-_5864499.tif",
+          "creator": "Babbage, Charles",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "saturday_night_machines",
-      "annotations": {
-        "Industrial Revolution": {
-          "explanation": "Die Zeit der raschen Industrialisierung in Großbritannien vom späten 18. bis zum frühen 19. Jahrhundert, geprägt durch fabrikbasierte Produktion, Mechanisierung und tiefgreifende Veränderungen der Arbeits- und Wirtschaftsorganisation.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Industrial_Revolution"
-        }
-      },
+      "chapter": "universal_machine",
+      "weight": 0.65,
       "event_class": {
         "type": "publication",
-        "title": "On the Economy of Machinery and Manufactures",
-        "publication_type": "book"
+        "title": "Economy of Manufactures and Machinery",
+        "publication_type": "book",
+        "publisher": "Charles Knight",
+        "significance": "Industrieökonomie"
       }
     },
     {
-      "date": "1833-06-05",
-      "date_precision": "day",
-      "age": 41,
-      "title": "Begegnung mit Ada Lovelace",
-      "description": "Bei einer von Charles Babbages [[soirées|Samstagabendgesellschaften]] in [[London|London]] nahm Ada Byron, die später Ada Lovelace hieß, gemeinsam mit ihrer Mutter und Mary Somerville teil. Babbage zeigte den Gästen Teile seiner Rechenmaschinen und erläuterte die Prinzipien des mechanischen Rechnens.",
-      "locations": [
-        {
-          "name_historic": "London",
-          "name_modern": "London, England, Vereinigtes Königreich",
-          "centroid": [
-            -0.1277653,
-            51.5074456
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Ada Byron (Ada Lovelace)",
-        "Anne Isabella Byron (Lady Byron)",
-        "Mary Somerville"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
-        "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Diagram_for_the_computation_of_Bernoulli_numbers.jpg/960px-Diagram_for_the_computation_of_Bernoulli_numbers.jpg",
-          "caption": "Diagramm zur Berechnung der Bernoulli-Zahlen (Analytical Engine)",
-          "source": "https://commons.wikimedia.org/wiki/File:Diagram_for_the_computation_of_Bernoulli_numbers.jpg",
-          "creator": "Ada Lovelace",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "saturday_night_machines",
-      "annotations": {
-        "soirées": {
-          "explanation": "Von Babbage veranstaltete gesellschaftliche und geistige Abendzusammenkünfte, die für Vorführungen und Gespräche über Wissenschaft und Technik im Londoner Kulturmilieu bekannt waren.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
-        }
-      }
-    },
-    {
-      "date": "1837",
+      "date": "1834",
       "date_precision": "year",
-      "age": 45,
-      "title": "Entwurf der Analytical Engine",
-      "description": "In [[London|London]] entwarf und verbreitete Babbage Pläne für die Analytical Engine, die er als umfassendere Nachfolgerin seiner früheren Rechenprojekte konzipierte. Dabei griff er auf zeitgenössische Beispiele der Lochkartensteuerung am [[Jacquard loom|Jacquard-Webstuhl]] zurück.",
+      "date_end": "1837",
+      "date_end_precision": "year",
+      "age": 42,
+      "title": "Entwirft die Analytical Engine",
+      "description": "Nachdem die Arbeiten an der Difference Engine ins Stocken geraten waren, begann Babbage in London Pläne für die Analytical Engine auszuarbeiten und wandte sich damit einem weit ehrgeizigeren Projekt zu.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, Vereinigtes Königreich",
           "centroid": [
-            -0.1277653,
-            51.5074456
+            -0.1276,
+            51.5072
           ],
           "primary": true
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Charles_Babbage",
+        "https://en.wikipedia.org/wiki/Joseph_Clement",
         "https://en.wikipedia.org/wiki/Charles_Babbage%27s_Saturday_night_soir%C3%A9es"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Babbage_Analytical_Engine_Plan_1840_CHM.agr.jpg/960px-Babbage_Analytical_Engine_Plan_1840_CHM.agr.jpg",
-          "caption": "Plan von Babbages Analytical Engine aus dem Jahr 1840",
+          "caption": "Plan der Analytical Engine von Babbage aus dem Jahr 1840",
           "source": "https://commons.wikimedia.org/wiki/File:Babbage_Analytical_Engine_Plan_1840_CHM.agr.jpg",
           "creator": "ArnoldReinhold",
           "license": "CC BY 4.0",
@@ -678,53 +565,153 @@
         }
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "saturday_night_machines",
-      "annotations": {
-        "Jacquard loom": {
-          "explanation": "Ein Webstuhl, der Lochkarten zur Automatisierung komplexer Textilmuster verwendete und als vielbeachtetes frühes Beispiel programmierbarer Steuerung gilt.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Jacquard_machine"
-        }
-      },
+      "chapter": "universal_machine",
+      "weight": 1.0,
       "event_class": {
         "type": "invention",
         "title": "Analytical Engine",
-        "description": "Der Entwurf eines mechanischen Universalcomputers mit einem „Mahlwerk“ für Rechenoperationen, einem „Speicher“ und Lochkartensteuerung."
-      }
+        "description": "Ein geplanter mechanischer Universalcomputer mit Speicher, Rechenwerk, Lochkarten und bedingten Operationen zur Ausführung von Befehlsfolgen."
+      },
+      "background": "Die Londoner Welt der Präzisionsmechanik setzte dem, was aus einem Entwurf auf Papier werden konnte, enge Grenzen. Joseph Clement, der mit dem früheren Rechenmaschinenprojekt betraute Hersteller, gehörte zu den versiertesten Werkzeugmachern seiner Zeit: Seine große, handbetriebene Hobelmaschine konnte Werkstücke von sechs Fuß im Quadrat bearbeiten, und seine verbesserten Drehbänke setzten neue Maßstäbe der Genauigkeit. Doch die Zusammenarbeit in der Werkstatt wurde durch die Kosten der Spezialwerkzeuge belastet. Nach damaligem Brauch durften Arbeiter die im Verlauf eines Auftrags angefertigten Werkzeuge behalten, und Clements Forderungen für große Präzisionsgeräte wurden zum Streitpunkt. Seine Arbeit an der früheren Maschine endete 1833; Babbage blieben Maschinen, aber kein fertiger Apparat – und die prägende Erkenntnis, wie teuer eine bis dahin unerreichte mechanische Präzision war.\n\nDie neue Konzeption entstand in einem größeren geistigen Umfeld, das von Babbages Arbeit in Cambridge geprägt war. Die Analytical Society hatte kontinentale, Leibnizsche Methoden der Infinitesimalrechnung in die britische Mathematik eingebracht, darunter die Beschäftigung mit endlichen Differenzen und funktionalen Operationen. Diese Themen förderten die Vorstellung, Berechnung als Abfolge regelgeleiteter Operationen zu begreifen und nicht als Herstellung bloß einer bestimmten Art von Tafel. Auch die industrielle Fertigung bot ein Modell: In On the Economy of Machinery and Manufactures hatte Babbage untersucht, wie Fabriken komplexe Arbeit in kleinere, spezialisierte Aufgaben zerlegten. Die Lochkartensteuerung des Jacquardwebstuhls lieferte ein praktisches Vorbild dafür, einer Maschine von außen Anweisungen zu geben.\n\nAuch Babbages Haus in der Dorset Street in Marylebone bot diesen Ideen einen ungewöhnlichen öffentlichen Rahmen. Von 1828 bis in die 1840er Jahre zogen die Zusammenkünfte am Samstagabend Wissenschaftler, Schriftsteller, Aristokraten und Erfinder an; Berichten zufolge nahmen an manchen Veranstaltungen bis zu 200 oder 300 Menschen teil. Besucher konnten ein Vorführmodell der unvollendeten früheren Maschine sehen, doch Harriet Martineau erinnerte sich, dass eine mechanische tanzende Puppe mehr Aufmerksamkeit erregte als der Rechenapparat. Ada Byron begegnete Babbage erstmals bei einer dieser Zusammenkünfte im Juni 1833, noch vor ihrer späteren Zusammenarbeit. Der Wandel in seiner Arbeit vollzog sich somit nicht isoliert, sondern inmitten eines Netzwerks aus mathematischer Reform, hochpräzisem Handwerk, Fabrikpraxis und gesellschaftlichem Interesse an der Wissenschaft. Daraus ging ein Entwurf hervor, der ehrgeizig genug war, die Werkstatt zu überdauern, in der die Grenzen seines Vorgängers sichtbar geworden waren.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/A_Jacquard_loom_showing_information_punchcards%2C_National_Museum_of_Scotland.jpg/960px-A_Jacquard_loom_showing_information_punchcards%2C_National_Museum_of_Scotland.jpg",
+          "caption": "Ein Jacquardwebstuhl mit Informationsloch-karten, National Museum of Scotland",
+          "source": "https://commons.wikimedia.org/wiki/File:A_Jacquard_loom_showing_information_punchcards,_National_Museum_of_Scotland.jpg",
+          "creator": "Stephencdickson",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Jacquard loom punched cards"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Babbage_Difference_Engine_No._1_demonstration_piece_at_CHM.jpg/960px-Babbage_Difference_Engine_No._1_demonstration_piece_at_CHM.jpg",
+          "caption": "Vorführmodell der Difference Engine Nr. 1 von Babbage, Replik im Maßstab 3:4, ausgestellt im Computer History Museum, einem 1996 gegründeten Museum in Mountain V…",
+          "source": "https://commons.wikimedia.org/wiki/File:Babbage_Difference_Engine_No._1_demonstration_piece_at_CHM.jpg",
+          "creator": "Tomwsulcer",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+          "query": "Difference Engine demonstration piece"
+        }
+      ]
     },
     {
-      "date": "1842",
+      "date": "1840",
       "date_precision": "year",
-      "age": 50,
-      "title": "Regierung stoppt Difference Engine",
-      "description": "1842 stellte die britische Regierung nach Jahren steigender Kosten, wiederholter Umkonstruktionen und angespannter Beziehungen zum Ingenieur [[Joseph Clement|Joseph Clement]] ihre finanzielle Unterstützung für Babbages Projekt der [[Difference Engine|Difference Engine]] ein. Babbage behielt die verbliebenen Bauteile, Zeichnungen und Notizen und setzte die damit verbundenen Arbeiten privat fort.",
+      "age": 48,
+      "title": "Hält Vorträge in Turin",
+      "description": "Babbage reiste 1840 nach Turin, um einem wissenschaftlichen Publikum die Analytical Engine zu erläutern. Luigi Menabrea verfasste später den ausführlichen Bericht über die Maschine, der 1842 auf Französisch veröffentlicht wurde.",
       "locations": [
         {
-          "name_historic": "London",
-          "name_modern": "London, Vereinigtes Königreich",
+          "name_historic": "Turin",
+          "name_modern": "Turin, Italien",
           "centroid": [
-            -0.1277653,
-            51.5074456
+            7.6869,
+            45.0703
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Joseph Clement"
+        "Luigi Federico Menabrea"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Difference_engine",
-        "https://en.wikipedia.org/wiki/Joseph_Clement"
+        "https://en.wikipedia.org/wiki/Charles_Babbage",
+        "https://en.wikipedia.org/wiki/Luigi_Federico_Menabrea"
       ],
-      "event_type_icon": "mdi-currency-usd-off",
-      "chapter": "after_the_funding_cut",
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "tomorrow_calculated",
       "annotations": {
-        "Joseph Clement": {
-          "explanation": "Ein britischer Ingenieur und Maschinenbauer, der Bauteile für Babbages erste Difference Engine fertigte. Streitigkeiten über Bezahlung und Werkstatt trugen zum Scheitern des staatlich finanzierten Projekts bei.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Joseph_Clement"
-        },
-        "Difference Engine": {
-          "explanation": "Ein von Babbage vorgeschlagener mechanischer Rechner, der mithilfe des Verfahrens der endlichen Differenzen mathematische Tabellen berechnen und drucken sollte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Difference_engine"
+        "Analytical Engine": {
+          "explanation": "Its design separated calculation, in the “mill,” from stored numbers and instructions, and adapted punched-card control from the Jacquard loom.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Analytical_Engine"
+        }
+      },
+      "weight": 0.6
+    },
+    {
+      "date": "1843",
+      "date_precision": "year",
+      "age": 51,
+      "title": "Lovelace veröffentlicht Anmerkungen zur Maschine",
+      "description": "Ada Lovelace veröffentlichte eine englische Übersetzung von Luigi Menabreas Bericht über die Analytical Engine, ergänzt durch umfangreiche Anmerkungen, die sie im Austausch mit Babbage ausgearbeitet hatte. Ihre Notizen enthielten ein Verfahren zur Berechnung von Bernoulli-Zahlen und untersuchten, wie die Maschine neben Zahlen auch Symbole verarbeiten könnte.",
+      "locations": [],
+      "involved_people": [
+        "Ada Lovelace",
+        "Luigi Menabrea"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ada_Lovelace",
+        "https://en.wikipedia.org/wiki/Luigi_Federico_Menabrea",
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Houghton_AC85.Su662.Zz843m.jpg/960px-Houghton_AC85.Su662.Zz843m.jpg",
+          "caption": "Skizze der Veröffentlichung über die Analytical Engine von 1843",
+          "source": "https://commons.wikimedia.org/wiki/File:Houghton_AC85.Su662.Zz843m.jpg",
+          "creator": "Charles Sumner",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-account-multiple",
+      "chapter": "tomorrow_calculated",
+      "annotations": {
+        "Analytical Engine": {
+          "explanation": "The proposed machine used punched cards, a calculating “mill,” and a separate “store,” anticipating the distinction between processing and memory.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Analytical_Engine"
+        }
+      },
+      "weight": 0.85,
+      "background": "Die Veröffentlichung nahm einen ausgesprochen internationalen Weg, bevor sie zu einer englischen Darstellung des Maschinenentwurfs wurde. Menabrea, der an der Universität Turin zum Ingenieur und Doktor der Mathematik ausgebildet worden war, hatte Babbages Erläuterung des Projekts vor einem wissenschaftlichen Publikum in Turin gehört. Sein daraus entstandener französischer Aufsatz Notions sur la machine analytique de M. Charles Babbage, Esq. erschien 1842 in der Bibliothèque universelle de Genève. Es handelte sich um eine knappe Darstellung auf 23 Seiten, verfasst von einem Mann, der damals an Turins Militärakademie und Universität Mechanik und Bauwesen lehrte. Die Übertragung ins Englische machte den Entwurf über Scientific Memoirs zugänglich, eine Zeitschrift, die Arbeiten aus ausländischen Akademien und gelehrten Gesellschaften veröffentlichte.\n\nDas gedruckte Ergebnis stand in einem ungewöhnlichen Missverhältnis zu seiner Vorlage. Menabreas Original umfasste in der Genfer Zeitschrift die Seiten 352 bis 376, während die englische Fassung in Scientific Memoirs von Seite 666 bis 731 reichte. Der Umfangszuwachs ging auf sieben Anmerkungen der Übersetzerin zurück, die aus dem Vortragsbericht eine eingehende Untersuchung dessen machten, was man von dem geplanten Apparat verlangen konnte. Babbages weiterführende Arbeit hatte bereits auf dem Lochkartenprinzip des Jacquardwebstuhls beruht, einer Textiltechnik, die ein wichtiges Modell für die Steuerung einer Operationsfolge lieferte. Die Anmerkungen brachten daher nicht bloß den Vorschlag für eine Maschine zu Papier, sondern auch eine Denkweise über Anweisungen, Darstellungen und die Grenzen automatisierter Arbeit.\n\nDer Ruhm dieser Veröffentlichung kann eine wesentliche Einschränkung verdecken: Die Analytical Engine wurde nie gebaut und prägte folglich die spätere Erfindung elektronischer Computer nicht unmittelbar. Ihre historische Bedeutung wurde erst rückblickend erkannt, als Leser in dem Entwurf und in Lovelaces Darstellung wesentliche Merkmale eines Universalcomputers entdeckten. Der Artikel ist außerdem zur Grundlage der häufigen Behauptung geworden, Lovelace sei die erste Computerprogrammiererin gewesen – eine Bezeichnung, die sich allerdings auf das veröffentlichte Verfahren bezieht, nicht auf ein Programm, das auf einer funktionierenden Maschine ausgeführt wurde. Menabreas kurzer französischer Bericht und sein stark erweiterter englischer Gegenpart bewahrten somit das ausführlichste zeitgenössische öffentliche Zeugnis eines nicht verwirklichten Entwurfs.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/A_Jacquard_loom_showing_information_punchcards%2C_National_Museum_of_Scotland.jpg/960px-A_Jacquard_loom_showing_information_punchcards%2C_National_Museum_of_Scotland.jpg",
+          "caption": "Ein Jacquardwebstuhl mit Informationslochkarten, National Museum of Scotland",
+          "source": "https://commons.wikimedia.org/wiki/File:A_Jacquard_loom_showing_information_punchcards,_National_Museum_of_Scotland.jpg",
+          "creator": "Stephencdickson",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Jacquard loom punched cards"
+        }
+      ]
+    },
+    {
+      "date": "1864",
+      "date_precision": "year",
+      "age": 72,
+      "title": "Veröffentlicht das Leben eines Philosophen",
+      "description": "1864 veröffentlichte Babbage einen rückblickenden Bericht über seine wissenschaftliche Arbeit, beruflichen Auseinandersetzungen und Vorschläge zur gesellschaftlichen Reform. Der Band behandelte auch seine Bemühungen, mechanische Rechenmaschinen zu entwickeln.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Babbage"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Passages_from_the_Life_of_a_Philosopher_1864_page_ii.png/960px-Passages_from_the_Life_of_a_Philosopher_1864_page_ii.png",
+          "caption": "Illustration der Difference Engine aus Babbages Memoiren",
+          "source": "https://commons.wikimedia.org/wiki/File:Passages_from_the_Life_of_a_Philosopher_1864_page_ii.png",
+          "creator": "BABBAGE, CHARLES (1792—1871), B. H. Babbage, del.",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "final_reckoning",
+      "weight": 0.45,
+      "event_class": {
+        "type": "publication",
+        "title": "Passages from the Life of a Philosopher",
+        "publication_type": "book",
+        "publisher": "Longman, Green, Longman, Roberts, & Green",
+        "significance": "autobiografischer Bericht",
+        "source_link": {
+          "url": "https://en.wikisource.org/wiki/Passages_from_the_Life_of_a_Philosopher",
+          "kind": "wikisource",
+          "site": "Wikisource",
+          "entity": "Q137997470",
+          "resolved_by": "wikidata",
+          "resolved_on": "2026-09-03"
         }
       }
     },
@@ -733,14 +720,14 @@
       "date_precision": "day",
       "age": 79,
       "title": "Tod in London",
-      "description": "Charles Babbage starb am 18. Oktober 1871 im Alter von 79 Jahren in London.",
+      "description": "Babbage starb am 18. Oktober 1871 im Alter von 79 Jahren in seinem Haus in der Dorset Street 1 in Marylebone, London.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, Vereinigtes Königreich",
           "centroid": [
-            -0.1277653,
-            51.5074456
+            -0.1276,
+            51.5072
           ],
           "primary": true
         }
@@ -748,28 +735,21 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Babbage"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Charles_Babbage_grave_Kensal_Green_2014.jpg/960px-Charles_Babbage_grave_Kensal_Green_2014.jpg",
-          "caption": "Grab von Charles Babbage, Kensal Green Cemetery, London",
-          "source": "https://commons.wikimedia.org/wiki/File:Charles_Babbage_grave_Kensal_Green_2014.jpg",
-          "creator": "Deeday-UK",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
       "event_type_icon": "mdi-cross",
-      "chapter": "after_the_funding_cut",
+      "chapter": "final_reckoning",
+      "weight": 0.4,
       "event_class": {
-        "type": "death"
+        "type": "death",
+        "characterization": "zu Hause",
+        "place_of_rest": "Kensal Green Cemetery, London"
       }
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "01c268537083f315",
-    "translated_on": "2026-08-02T12:41:21.458028+00:00",
+    "source_fingerprint": "5ea5bfd68b1de682",
+    "translated_on": "2026-09-03T11:01:37.708994+02:00",
     "translator": "openai:gpt-5.6-luna"
   }
 }
