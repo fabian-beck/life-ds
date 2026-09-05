@@ -77,8 +77,14 @@ export function normalizePersonName(name) {
     ""
   );
 
-  // Remove suffixes like Jr., Sr. but NOT Roman numerals (II, III, IV, V, etc.) as they're part of regnal names
-  normalized = normalized.replace(/\s+(Jr|Sr)\.?$/i, "");
+  // Split off a Jr./Sr. suffix but NOT Roman numerals (II, III, IV, V, etc.),
+  // which are part of regnal names. The suffix is kept aside rather than
+  // dropped: it is what tells a father from the son who carries his name.
+  let suffix = null;
+  normalized = normalized.replace(/\s+(Jr|Sr)\.?$/i, (_, found) => {
+    suffix = found.toLowerCase();
+    return "";
+  });
 
   // Remove titles with geographic qualifiers: "Count of Luxembourg", "Duke of Bavaria", "Bishop of Metz"
   // Pattern: (Title) of (Place) - these are descriptive, not part of the actual name
@@ -132,6 +138,7 @@ export function normalizePersonName(name) {
     firstName: firstName,
     lastName: lastName,
     maidenName: maidenName,
+    suffix: suffix,
     tokens: tokens.map((t) => t.toLowerCase()),
     originalName: name,
     isGeographicName: isGeographicName,
@@ -147,8 +154,13 @@ export function normalizePersonName(name) {
 function calculateNameSimilarity(name1, name2) {
   if (!name1 || !name2) return 0;
 
-  // Exact full name match = perfect score
-  if (name1.fullName.toLowerCase() === name2.fullName.toLowerCase()) {
+  // Exact full name match = perfect score. A suffix on one side only is not
+  // exact: "Christian Bohr" is the father, "Christian Bohr Jr." the son, and
+  // the pair still scores high enough below to match when there is no other.
+  if (
+    name1.fullName.toLowerCase() === name2.fullName.toLowerCase() &&
+    (name1.suffix ?? null) === (name2.suffix ?? null)
+  ) {
     return 1.0;
   }
 
@@ -273,25 +285,17 @@ export function getRelevantPeople(event, egoNetwork) {
     Array.isArray(event.involved_people) &&
     event.involved_people.length > 0
   ) {
-    // Normalize all involved people names
-    const involvedNormalized = event.involved_people
-      .map((name) => normalizePersonName(name))
-      .filter(Boolean);
-
-    const matched = connections.filter((conn) => {
-      const connNormalized = normalizePersonName(conn.person_name);
-      if (!connNormalized) return false;
-
-      // Find the best similarity score against any involved person
-      const bestScore = Math.max(
-        ...involvedNormalized.map((involved) =>
-          calculateNameSimilarity(involved, connNormalized)
-        )
-      );
-
-      return bestScore >= MATCH_THRESHOLD;
-    });
-
+    // Each name resolves to one connection at most — its best match, never
+    // every connection that resembles it. "Benjamin Babbage" scores 1.0
+    // against the father and 0.8 against the son who carries his name; the
+    // father is the chip, the son is not.
+    const matched = [];
+    for (const name of event.involved_people) {
+      const connection = findPersonInNetwork(name, egoNetwork);
+      if (connection && !matched.includes(connection)) {
+        matched.push(connection);
+      }
+    }
     return matched.slice(0, 5);
   }
 

@@ -23,6 +23,12 @@ editor's call, not this script's.
 A pair that is genuinely two people belongs in ACCEPTED below, with the
 reason.
 
+The second shape is the opposite miss (issue #140): an involved name that the
+interface resolves to two connections with the same score, so the chip is
+whichever the network lists first. The interface takes one connection per
+name — its best match, exact first — so a father beside the son who carries
+his name is not a finding; two connections that tie are.
+
 Usage:
     python scripts/validate_involved_names.py            # exit 1 on any finding
     python scripts/validate_involved_names.py max_planck
@@ -37,7 +43,11 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 
 from config import PEOPLE_DIR
 from utils.json_io import read_json
-from utils.person_matching import PARENTHETICAL, interface_would_match
+from utils.person_matching import (  # noqa: F401  (interface_would_match: tests)
+    PARENTHETICAL,
+    interface_would_match,
+    matching_connections,
+)
 from utils.validation import run_dataset_check
 
 # Pairs that look like one person spelled two ways and are nonetheless two
@@ -61,16 +71,24 @@ PARTICLES = {
 
 
 class NameFinding:
-    def __init__(self, person_id: str, involved: str, connection: str, where: str):
+    def __init__(
+        self,
+        person_id: str,
+        involved: str,
+        connection: str,
+        where: str,
+        reason: str = "will not match — one person, two spellings",
+    ):
         self.person_id = person_id
         self.involved = involved
         self.connection = connection
         self.where = where
+        self.reason = reason
 
     def __str__(self) -> str:
         return (
-            f'{self.person_id} {self.where}: "{self.involved}" will not match '
-            f'the network\'s "{self.connection}" — one person, two spellings'
+            f'{self.person_id} {self.where}: "{self.involved}" against '
+            f'the network\'s "{self.connection}" {self.reason}'
         )
 
 
@@ -126,8 +144,16 @@ def same_person_folded(involved: str, connection: str) -> bool:
     return tokens_subsume(smaller, larger) and within_one_edit(smaller[0], larger[0])
 
 
+def is_ambiguous(involved: str, connections: List[str]) -> bool:
+    """Whether the interface's best match for a name is a tie it settles by
+    list order — two connections scoring the same at the top."""
+    ranked = matching_connections(involved, connections)
+    return len(ranked) > 1 and ranked[0][0] == ranked[1][0]
+
+
 # ---------------------------------------------------------------------------
-# The check: the same person folded, rejected by the interface.
+# The check: the same person folded, rejected by the interface — or matched
+# twice over, which the interface settles by list order.
 # ---------------------------------------------------------------------------
 
 
@@ -147,7 +173,22 @@ def check_person(person_id: str, data: Dict[str, Any]) -> List[NameFinding]:
         for involved in event.get("involved_people") or []:
             if not isinstance(involved, str):
                 continue
-            if any(interface_would_match(involved, c) for c in connections):
+            ranked = matching_connections(involved, connections)
+            if ranked:
+                if is_ambiguous(involved, connections):
+                    key = (involved, ranked[1][1])
+                    if key not in reported:
+                        reported.add(key)
+                        findings.append(
+                            NameFinding(
+                                person_id,
+                                involved,
+                                ranked[0][1],
+                                f'event {event.get("date")} "{event.get("title")}"',
+                                f'ties with "{ranked[1][1]}" — the chip is whichever '
+                                "the network lists first",
+                            )
+                        )
                 continue
             for connection in connections:
                 key = (involved, connection)

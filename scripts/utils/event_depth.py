@@ -28,11 +28,7 @@ from __future__ import annotations
 import re
 from typing import Any, Dict, List, Set
 
-from utils.person_matching import (
-    MATCH_THRESHOLD,
-    interface_score,
-    normalize_person_name,
-)
+from utils.person_matching import matching_connections, normalize_person_name
 
 # Keep all three in sync with src/utils/story/eventDepth.js.
 DEEP_EVENT_FLOOR = 0.35
@@ -74,24 +70,19 @@ def _relevant_people(
         return []
 
     involved = [
-        normalized
-        for name in (event.get("involved_people") or [])
-        if isinstance(name, str)
-        and (normalized := normalize_person_name(name)) is not None
+        name for name in (event.get("involved_people") or []) if isinstance(name, str)
     ]
     if involved:
-        matched = []
-        for connection in connections:
-            conn_name = normalize_person_name(str(connection.get("person_name") or ""))
-            if conn_name is None:
-                continue
-            best = max(
-                (interface_score(person, conn_name) for person in involved),
-                default=0.0,
-            )
-            if best < MATCH_THRESHOLD:
-                continue
-            matched.append(connection)
+        # One connection per name — its best match — as the interface does.
+        by_name = {
+            str(connection.get("person_name") or ""): connection
+            for connection in connections
+        }
+        matched: List[Dict[str, Any]] = []
+        for involved_name in involved:
+            ranked = matching_connections(involved_name, by_name)
+            if ranked and by_name[ranked[0][1]] not in matched:
+                matched.append(by_name[ranked[0][1]])
         return matched[:5]
 
     # Mention fallback, approximated: the connection's normalized full name

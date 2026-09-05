@@ -73,3 +73,28 @@ class FindingTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ResolutionTests(unittest.TestCase):
+    # The port of the chip resolution itself (issue #140): one name, its best
+    # connection, and a suffix that decides between a father and his namesake.
+    def test_the_best_match_is_the_exact_one(self) -> None:
+        ranked = names.matching_connections(
+            "Benjamin Babbage", ["Benjamin Herschel Babbage", "Benjamin Babbage"]
+        )
+        self.assertEqual([name for _, name in ranked][0], "Benjamin Babbage")
+        self.assertLess(ranked[1][0], ranked[0][0])
+
+    def test_a_suffix_breaks_the_tie_without_refusing_the_match(self) -> None:
+        ranked = names.matching_connections(
+            "Christian Bohr", ["Christian Bohr Jr.", "Christian Bohr"]
+        )
+        self.assertEqual(ranked[0][1], "Christian Bohr")
+        self.assertLess(ranked[1][0], 1.0)
+        self.assertTrue(would_match("Christian Bohr", "Christian Bohr Jr."))
+
+    def test_a_tie_at_the_top_is_a_finding(self) -> None:
+        self.assertTrue(names.is_ambiguous("Rosa Gaudí", ["Rosa Gaudí", "Rosa Gaudí"]))
+        self.assertFalse(
+            names.is_ambiguous("Rosa Gaudí", ["Rosa Egea Gaudí", "Rosa Gaudí"])
+        )

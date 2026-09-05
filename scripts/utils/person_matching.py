@@ -12,7 +12,7 @@ with it.
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 MATCH_THRESHOLD = 0.6
 
@@ -45,6 +45,8 @@ def normalize_person_name(name: str) -> Optional[Dict[str, Any]]:
     normalized = PARENTHETICAL.sub("", normalized)
     normalized = BRACKETED.sub("", normalized)
     normalized = COMMA_TITLE.sub("", normalized)
+    suffix_match = SUFFIX.search(normalized)
+    suffix = suffix_match.group(1).lower() if suffix_match else None
     normalized = SUFFIX.sub("", normalized)
     normalized = TITLE_OF_PLACE.sub("", normalized)
     of_place = OF_PLACE.match(normalized)
@@ -71,6 +73,7 @@ def normalize_person_name(name: str) -> Optional[Dict[str, Any]]:
         "firstName": first_names[0] if first_names else "",
         "lastName": last_name,
         "maidenName": maiden,
+        "suffix": suffix,
         "tokens": [t.lower() for t in tokens],
     }
 
@@ -80,7 +83,9 @@ def interface_score(
 ) -> float:
     if not name1 or not name2:
         return 0.0
-    if name1["fullName"].lower() == name2["fullName"].lower():
+    if name1["fullName"].lower() == name2["fullName"].lower() and name1.get(
+        "suffix"
+    ) == name2.get("suffix"):
         return 1.0
     score = 0.0
     first1, first2 = name1["firstName"].lower(), name2["firstName"].lower()
@@ -129,3 +134,21 @@ def interface_would_match(involved: str, connection: str) -> bool:
         )
         >= MATCH_THRESHOLD
     )
+
+
+def matching_connections(
+    involved: str, connections: Iterable[str]
+) -> List[Tuple[float, str]]:
+    """The connections the interface would accept for one involved name,
+    best first — ``getRelevantPeople`` shows the first of them and nothing
+    else, so a tie at the top is the one shape it cannot decide."""
+    name = normalize_person_name(involved)
+    if name is None:
+        return []
+    ranked = []
+    for connection in connections:
+        score = interface_score(name, normalize_person_name(connection))
+        if score >= MATCH_THRESHOLD:
+            ranked.append((score, connection))
+    ranked.sort(key=lambda item: -item[0])
+    return ranked

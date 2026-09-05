@@ -153,3 +153,45 @@ test("finds an adoptive parent through the fallback", () => {
   );
   expect(parents).toEqual([adoptive]);
 });
+
+test("resolves each involved name to one connection, not to every namesake", () => {
+  const son = {
+    person_name: "Benjamin Herschel Babbage",
+    relationship_type: "family/son",
+    strength: "moderate",
+  };
+  const babbageFather = {
+    person_name: "Benjamin Babbage",
+    relationship_type: "family/father",
+    strength: "strong",
+  };
+  const event = { involved_people: ["Benjamin Babbage"] };
+  // The son scores 0.8 against his father's name, which used to make him a
+  // chip on his father's events. The best match is the only match.
+  expect(
+    getRelevantPeople(event, { connections: [son, babbageFather] }).map(
+      (p) => p.person_name
+    )
+  ).toEqual(["Benjamin Babbage"]);
+});
+
+test("a Jr. suffix tells the son from the father with the same name", () => {
+  const junior = {
+    person_name: "Christian Bohr Jr.",
+    relationship_type: "family/sibling",
+    strength: "moderate",
+  };
+  const event = { involved_people: ["Christian Bohr"] };
+  expect(
+    getRelevantPeople(event, { connections: [junior, father] }).map(
+      (p) => p.person_name
+    )
+  ).toEqual(["Christian Bohr"]);
+  // Without the father in the network, the suffixed name still matches: the
+  // suffix breaks a tie, it does not refuse the match.
+  expect(
+    getRelevantPeople(event, { connections: [junior] }).map(
+      (p) => p.person_name
+    )
+  ).toEqual(["Christian Bohr Jr."]);
+});
