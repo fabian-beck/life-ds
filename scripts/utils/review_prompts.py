@@ -8,6 +8,8 @@ with focus on readability, accuracy, and UI optimization.
 import json
 from typing import Dict, Any, List, Set
 
+from utils.prose_style import PROSE_STYLE_INSTRUCTIONS
+
 # UI Context documentation embedded in prompts
 UI_CONTEXT = """
 DISPLAY CONSTRAINTS:
@@ -62,9 +64,9 @@ CRITICAL CONSTRAINTS - YOU MUST FOLLOW THESE:
    - Can add missing people to existing events' "involved_people" arrays (if empty or incomplete)
    - Can add missing location data to existing events (if null/empty)
    - CANNOT add new events or new network connections
-4. Moderate text reduction: Target 500-800 words for descriptions, suggest specific cuts
+4. Text edits keep the facts and change the wording: a description stays at 2-4 sentences, and a rewrite never adds a claim the sources do not carry
 5. All changes must be traceable to Wikipedia cache or logical inference
-6. Preserve the narrative voice and storytelling style
+6. Preserve the third-person, in-the-moment telling; the prose rules below say how every sentence reads
 """
 
 
@@ -117,7 +119,7 @@ def get_combined_review_prompt(
 {CONFIDENCE_SCALE}
 
 TASK: Review BOTH the life events and ego network data below together, ensuring consistency and complementary perspectives. Propose improvements focused on:
-1. **Readability & Conciseness**: Tighten prose, remove redundancies, optimize for mobile viewing
+1. **Prose**: Rewrite every sentence that breaks HOW THE PROSE READS below - a "rather than" or "not X but Y", a colon or dash carrying an aside, a closing sentence that says what the event "marked" or "reflected" - keeping its facts and dropping the construction. This is the most common change and needs no source: the fact is already there, only the wording goes
 2. **Factual Accuracy**: Cross-reference all claims against the Wikipedia sources provided
 3. **Completeness**: Fill in missing information from Wikipedia sources (dates, locations, people, annotations)
 4. **Storytelling Quality**: Ensure narrative flow, proper pacing, emotional resonance
@@ -148,12 +150,12 @@ REVIEW GUIDELINES:
 - Examples of BAD titles: "Alan Turing publishes his groundbreaking paper...", "The discovery of...", "Important work on..."
 
 **Event Descriptions**:
-- Target 500-800 words for readability on mobile
-- First 200-300 words are most visible (before scroll)
+- 2-4 sentences, each carrying a fact about the event; a description that has grown past that is cut, not paragraphed
 - Remove redundancies between title and opening sentence
-- Use active voice and vivid language
-- Break into paragraphs for readability
+- Active voice, concrete detail, plain words
 - **CRITICAL - Plain text only**: Descriptions must be plain text without markdown syntax (no **bold**, *italic*, `code`, ## headings, etc.)
+
+{PROSE_STYLE_INSTRUCTIONS}
 
 **Annotations**:
 - Use [[term]] or [[term|display text]] format
@@ -203,7 +205,7 @@ REVIEW GUIDELINES:
 - **No Redundancy**: Relationship descriptions should complement, not repeat, information in event descriptions
 - **Category Summaries**: Shown as a paragraph beside the labeled person chips of that category, so the names are already on screen
   - Flag any summary that mainly enumerates names ("A was his teacher, B his colleague, C his student") and rewrite it to explain what the circle meant for the person's life and work
-  - A good summary opens with the claim that holds the category together, then develops it: the decisive figures and what they changed, the shift over time, the tension or contrast, where it led. Anchor points in a place, institution, year, or work
+  - A good summary opens with the claim that holds the category together, then develops it: the decisive figures and what they changed, the shift over time, where it led. Anchor points in a place, institution, year, or work, and write it under the prose rules above
   - Length follows the evidence, not a quota. One or two sentences when the sources say little; a substantial paragraph when they support it. Do not shorten a rich, well-sourced summary for the sake of brevity, and do not pad a thin one
   - Summaries should differ in shape between categories and between people — flag templated phrasing
   - Summaries must not restate relationship descriptions verbatim, and must be plain prose without markdown

@@ -59,6 +59,8 @@ Every model call the pipeline makes is recorded by `scripts/utils/usage.py` and 
 
 The prompts of the repeated steps are ordered for that cache: the subject's article, the second biographical source, and the task description lead, and the event being researched follows them, because a repeated prefix is discounted only while nothing that varies per call precedes it. A step whose prompt changes shape should keep that order.
 
+**How the prose reads** (see `scripts/utils/prose_style.py`): every phase that writes text a reader sees — Phase 1 and Phase 2, the chapter step's conclusion, the background reports, the review pass, the meta-story composer, and the circle and stop cards — appends the one `PROSE_STYLE_INSTRUCTIONS` block to its prompt, and the German translator carries the same rules in its language note. The block names the habits of model prose by the shape they take on the slide, each with the sentence to write instead: one statement per sentence and no colon, semicolon, or dash carrying an aside; the fact stated and never contrasted against an alternative nobody proposed ("rather than", "not X but Y"); no verdict sentence on what an event "marked" or "reflected"; no opening announcement or closing generalization; plain words. A generic "be concise" moved nothing, and the composer, the one prompt that had named the constructions it did not want, was for a time the only phase whose prose had none of them. A rule about how sentences read belongs in that block, not in one phase's prompt.
+
 A call made outside any step appears under `Unattributed`, which is how a generator invoked on its own reports, and how a missing `usage.begin_step` in the orchestrator would show up.
 
 **Disambiguate with Wikipedia URL** (for ambiguous names):

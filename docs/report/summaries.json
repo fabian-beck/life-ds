@@ -17,11 +17,11 @@
       }
     },
     "m_p1": {
-      "fingerprint": "aee722ed1766a2de",
+      "fingerprint": "3b0f7b9a9e272339",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Selects the registry’s relevant people and turns them into a narrative plan: an opening account of the topic, thematic groupings, a chronology of active work, and gaps the dataset could fill. It gives later stages a declared cast and structure rather than asking them to infer the story from the full registry.",
-        "why_this_design": "It supplies event locations and titles alongside concise biographies so selection can recognize substantive links—especially to a place—while manual choices and explicit hints can override the automatic test of relevance."
+        "what_it_does": "Selects the people who belong in the proposed theme, then turns their contributions into a title, introduction, thematic groupings, chronological chapters, and recommendations for people the registry lacks. It draws on biographies, roles, event titles, and places so the plan gives later stages both a narrative frame and a defined cast.",
+        "why_this_design": "It uses locations and event evidence alongside short biographies, which lets place-based themes rest on recorded work and residence rather than names or occupations alone; manual selections and explicit hints can still override that judgment when an editor has a broader intended story."
       }
     },
     "m_p2": {
@@ -49,11 +49,11 @@
       }
     },
     "m_p4": {
-      "fingerprint": "f0f7ba14f464d1d9",
+      "fingerprint": "d300d2cb62db1859",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Places each chapter in its wider period by adding only discrete historical events that concretely changed the featured people’s lives, work, or circumstances. It uses the chapter dates and existing person events to keep that context tied to the story rather than to the era in general.",
-        "why_this_design": "It permits empty chapters and bars repeated or overlapping events so background landmarks do not crowd out the people’s own events or turn the timeline into generic history."
+        "what_it_does": "Places each chapter against a small set of well-known events that directly changed the featured people’s lives, work, or circumstances. It adds those events to the existing chapters while leaving the biography intact if the context request fails.",
+        "why_this_design": "It favors concrete personal effects over famous contemporaneous history, excludes events already told through person-level events, and avoids overlapping context so background clarifies the narrative without competing with it."
       }
     },
     "m_p5": {
@@ -73,11 +73,11 @@
       }
     },
     "m_p6": {
-      "fingerprint": "44f84189a6ce04fe",
+      "fingerprint": "ea701b60a014da52",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Turns each deterministic social circle’s recorded ties into a short card narrative for the meta story. It preserves the cluster order and keys while giving the network a readable account of the bonds and bridging acquaintances behind each group.",
-        "why_this_design": "It treats narration as optional because the interface can fall back to the underlying ties, allowing the story to remain usable when this generation or later composition fails."
+        "what_it_does": "Turns each deterministically derived social circle into a short card narrative, using the recorded ties to explain the bond among its main people and the acquaintances who connect them. It stores the cards in network order so the social-network section remains readable even if the later composition pass does not run.",
+        "why_this_design": "It rejects a partial response rather than mixing generated cards with missing circles, and leaves the existing tie-list fallback available when narration fails."
       }
     },
     "m_p7a": {
@@ -97,19 +97,19 @@
       }
     },
     "m_p7c": {
-      "fingerprint": "2649e2344788cecc",
+      "fingerprint": "58ece73bd132a376",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Turns chronological place clusters into concise map-card stories, linking local events to the larger meta-story. It also decides which clusters deserve a stop, so weak or incidental places do not survive into the map.",
-        "why_this_design": "It combines narration with curation because a place-based interface needs a small sequence of consequential locations rather than a complete list of where events occurred."
+        "what_it_does": "Turns chronological place clusters into short, factual map-card narratives and decides which places remain in the map sequence. It keeps locations that carry the story’s turning points and marks incidental or weaker clusters for removal, allowing that decision to prune the map.",
+        "why_this_design": "It combines writing with curation so the map follows the story’s arc rather than preserving every geographic coincidence in the source events."
       }
     },
     "m_p8": {
-      "fingerprint": "5c215408ee510471",
+      "fingerprint": "a3401089a41479f9",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Composes the page as a single account after earlier steps have drafted its individual parts. It sets the story’s arc and reading order, rewrites the surrounding prose and component text in one voice, and can remove map stops that no longer serve that account.",
-        "why_this_design": "It reads the assembled material top-down so it can make choices about emphasis, sequence, and omission that item-by-item drafting could not make."
+        "what_it_does": "Composes the assembled material into a single top-to-bottom story, choosing its arc and the order of its timeline, network, and map. It rewrites the surrounding prose and component text in one voice, while deciding which map stops and people belong in the final account.",
+        "why_this_design": "It gives one call both the complete page material and background context because the earlier item-by-item drafts cannot judge which facts carry the shared story or where each fact will be most useful."
       }
     },
     "m_save": {
@@ -129,19 +129,19 @@
       }
     },
     "m_translate": {
-      "fingerprint": "8273f2dae6455856",
+      "fingerprint": "bd481892bdfb105d",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Translates a meta-story detail file when its target-language copy is stale, saves the translated file, and updates the language registry so the story is available with the rest of that language’s material.",
-        "why_this_design": "It reuses the person translations’ event titles and name forms so story slides and chapters refer to the same people and events in the same words."
+        "what_it_does": "Translates a meta story’s text into the target language, saves the localized detail file, and updates the language registry that exposes it. It carries forward event titles and person-name forms already settled in the translated person data, so the story’s chapters and slides use the same wording.",
+        "why_this_design": "Reusing those earlier translations prevents the overview from creating competing names or titles for the people and events it connects."
       }
     },
     "p_backgrounds": {
-      "fingerprint": "57a5c7418cfeee2a",
+      "fingerprint": "7a1047b054d84003",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Writes the optional depth-layer passage for an event from the reviewed subject article, related articles, and the surrounding story context. It also replaces the event’s citations with sources that document that event and passes report-grounded image ideas to the illustration step.",
-        "why_this_design": "It accepts only URLs shown to the call, preventing plausible but invented citations from reaching the first event-level provenance readers see."
+        "what_it_does": "Builds the optional depth passage for each event selected for expansion, using the reviewed story, the subject’s article, related articles, and the event’s surrounding slides to add context without repeating the panel. It also replaces the event’s citations with sources that document that event and passes report-specific visual subjects to the illustration step.",
+        "why_this_design": "It filters returned citations to URLs supplied in the prompt because a plausible invented or merely adjacent article becomes especially misleading when the depth layer shows an event’s provenance directly."
       }
     },
     "p_chapter_art": {
@@ -161,11 +161,11 @@
       }
     },
     "p_chapters": {
-      "fingerprint": "8a9640de8d7ae37a",
+      "fingerprint": "76606c6e5c30b0c7",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Groups the verified chronology into themed, ordered chapters that turn a sequence of events into a personal story, then closes that story with a statement of the subject’s legacy. It also carries forward the people and broad setting that define each phase.",
-        "why_this_design": "The step fails the run rather than returning an unstructured fallback because chapters provide the narrative frame that makes the event research readable as a life story."
+        "what_it_does": "Groups the researched events into chronological life phases that give the personal story a narrative arc, with thematic headlines and regional and personal context. It also closes the account by stating what from the person’s work remains in use, read, or built on.",
+        "why_this_design": "It stops the run if chapter generation fails because the event record cannot serve as a shaped personal story without this organizing layer."
       }
     },
     "p_db": {
@@ -177,19 +177,19 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "da0a3dadf25c76c7",
+      "fingerprint": "c914c62fbde96818",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the biographical spine by reading the main article alongside related material, selecting and ordering the events that best tell the subject's life, and assigning each a relative narrative weight. It leaves later phases a concise chronology with enough context to research places, images, and sources without committing to them yet.",
-        "why_this_design": "It makes the selection and weighting in one pass because significance is relative to the whole life, while the prompt keeps related articles contextual so associated people do not displace the subject."
+        "what_it_does": "Builds the biographical spine from the main article and related context, selecting and ordering the events that tell the subject’s life before later steps add places, images, and sources. It also assigns each event a relative weight, giving the pipeline a shared judgment about which moments carry the story.",
+        "why_this_design": "It makes this judgment in one pass because significance depends on comparing events across the whole life, while the prompt keeps related articles from shifting the timeline to people around the subject."
       }
     },
     "p_events_p2": {
-      "fingerprint": "4b31b5e206efab93",
+      "fingerprint": "184b1af66b3605ab",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Researches each timeline event against the subject’s article and event-specific related articles, adding grounded narrative context, places, participants, evidence, visual-search leads, and explanatory notes. It preserves the event even when research fails, leaving later stages a visible but unresolved entry rather than stopping the personal story.",
-        "why_this_design": "It treats the subject’s article as the authority and filters related material by event so plausible but unrelated biographical context does not become evidence."
+        "what_it_does": "Enriches each life event with grounded narrative context, places, participants, supporting sources, a semantic icon, annotations, and searches for event-specific illustrations. It treats the subject’s article as the authority and uses only related articles selected for that event.",
+        "why_this_design": "Grounding the call in the life article and filtering related material limits invented or loosely relevant detail, while retries and a neutral fallback keep one failed event from breaking the chronology."
       }
     },
     "p_geocode": {
@@ -297,11 +297,11 @@
       }
     },
     "p_review": {
-      "fingerprint": "b896076d6280a3d2",
+      "fingerprint": "7cec35938db1983c",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews the generated life events and relationship network against the available Wikipedia material, then proposes corrections and editorial changes across both. It treats the two views of a person as one story, checking that people, claims, and emphasis agree rather than reviewing each file in isolation.",
-        "why_this_design": "Reviewing the event timeline and network together exposes missing connections and repeated or conflicting descriptions that separate critic passes would miss."
+        "what_it_does": "Reviews the biography timeline and relationship network together against the available Wikipedia material. It identifies factual, prose, metadata, and cross-file problems, then returns proposed corrections for the later high-confidence change gate.",
+        "why_this_design": "Reviewing both records in one pass lets it catch mismatches between people named in events and people represented in the network, while keeping the two views from repeating the same story."
       }
     },
     "p_review_style": {
@@ -321,11 +321,11 @@
       }
     },
     "p_translate": {
-      "fingerprint": "52b6f85c98af56cc",
+      "fingerprint": "dbaced8c030f6d55",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Translates the extracted prose for a person record while preserving its document structure and annotation links. It supplies the name glossary and target-language reference evidence so localized names stay consistent with the rest of the record before the translated fields are merged back into the English document.",
-        "why_this_design": "It sends only text that may change and overlays the result onto the original record, which protects dates, coordinates, URLs, IDs, and other fixed data from translation errors."
+        "what_it_does": "Translates the text-only parts of a person document while preserving their positions in the larger English record. It carries forward the name glossary and target-language reference evidence so prose uses established local forms for people, places, and institutions.",
+        "why_this_design": "Sending only translatable fields and merging the result back onto the original document prevents identifiers, links, dates, coordinates, and annotation keys from changing, while fixed annotation markers preserve the links the interface depends on."
       }
     },
     "p_wiki_fetch": {

@@ -91,6 +91,13 @@ LANGUAGE_STYLE_NOTES = {
         "compounds instead of stringing words together as in English, and reach "
         "for genuinely German phrasing rather than anglicisms or loan-translated "
         "idioms. Vary sentence length so the prose does not feel mechanical. "
+        "The German keeps the plain register the English is written in: one "
+        "statement per sentence, no Doppelpunkt introducing an explanation or a "
+        "list, no Gedankenstrich carrying an aside, no 'statt', 'anstatt', "
+        "'nicht ... sondern', 'nicht nur ... sondern auch', 'weniger ... als', "
+        "no verb of verdict ('markiert', 'unterstreicht', 'spiegelt', "
+        "'bestätigt', 'zeigt sich'), and no closing sentence that weighs what "
+        "the sentences before it said. "
         "Use the informal 'Du' form if the reader is ever addressed. Apply correct "
         "German typography (e.g. „quotes“ where quoting), but keep "
         "[[term|display]] markers intact and stay in plain text: never add "
@@ -1297,6 +1304,11 @@ GENERAL RULES:
      or foreign in {lang_name}, rewrite it until it sounds native.
    - Preserve the full meaning, tone, and register faithfully; do not summarize,
      extend, or omit — but likeness of wording to the English is NOT a goal.
+   - The corpus is written plainly: one statement per sentence, the fact stated
+     and not contrasted against what it was not, no colon or dash carrying an
+     aside, no closing sentence that weighs the ones before it. Where the
+     English still carries such a construction, the translation resolves it
+     into the plain statement; it never adds one.
 3. The corpus is plain text: the interface renders every field verbatim, so
    never introduce Markdown the source does not have — no *emphasis* or
    **bold** around work titles or names, no `code`, no [links](url), no

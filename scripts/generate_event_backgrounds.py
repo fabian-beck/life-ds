@@ -62,6 +62,7 @@ from utils.deutsche_biographie import format_for_prompt, get_cached_deutsche_bio
 from utils.event_depth import get_event_weight, select_deep_event_indexes
 from utils.json_io import read_json, write_json
 from utils.model_calls import parse_structured
+from utils.prose_style import PROSE_STYLE_INSTRUCTIONS
 from utils.wikipedia_cache import get_cache_dir
 
 enable_utf8_console()
@@ -140,7 +141,10 @@ SYSTEM = (
 # pipeline asked to write rather than to extract, and every rule here exists
 # to keep it from restating what the reader has just read: the description is
 # given as the thing to go beyond, and the questions name what the reader
-# cannot get from it.
+# cannot get from it. How the sentences read is the shared block appended at
+# the end; the earlier wording here asked for "tension" and for "what is
+# contested", and the reports answered with a contrast in three sentences of
+# four, each fact set against an alternative nobody had proposed.
 REPORT_INSTRUCTIONS = """\
 THE BACKGROUND REPORT:
 - Write 250-350 words, in 2-4 paragraphs, for a curious reader who has finished the
@@ -176,8 +180,9 @@ THE BACKGROUND REPORT:
      obstacle the sources describe and give it a paragraph of its own — how it
      actually worked, how it actually went, what was actually said. A whole paragraph
      on one thing beats a sentence each on five
-  4. WHAT CAME OF IT. What changed, what it enabled or foreclosed, how it was received,
-     what it is remembered for or misremembered as, and where the trail leads next
+  4. WHAT CAME OF IT. What changed afterward, who took it up, how it was received at
+     the time, stated as the facts the sources give. End on the last of them; the
+     report has no closing sentence that weighs the event
 - DETAIL IS THE POINT. A sentence that could be written about any event of this kind
   is a wasted sentence. Prefer the specific over the general every time:
   * WEAK: 'The work was important for the development of computing.'
@@ -185,11 +190,13 @@ THE BACKGROUND REPORT:
     and by 1943 more than two hundred of them were running.'
 - Name names, places, institutions, machines, titles, quantities and dates that the
   sources give you. A background report with no proper nouns in it is not a report
-- Say what is contested, surprising, or easily misunderstood where the sources do
+- Where the sources disagree or correct a common account, give each position as a fact
+  with who held it, in its own sentence. Do not frame it as a contrast ("not X but Y",
+  "less X than Y"); say what each source says
 - HARD RULE - ADD, NEVER RESTATE:
   * The reader has just read the description. Repeating any of it is a failure
   * Do not re-tell what happened, who was there, when, or where
-  * Every sentence must carry a fact, a consequence, or a tension the description lacks
+  * Every sentence must carry a fact or a consequence the description lacks
 - GROUNDING: the articles below are your material — use them. Read past their first
   paragraph. Do not speculate, and do not invent numbers, names, or dates. Where the
   sources are thin, write less rather than padding with generalities
@@ -732,6 +739,7 @@ def build_report_prompt(
 
     prompt += "\n" + "=" * 60 + "\n"
     prompt += REPORT_INSTRUCTIONS
+    prompt += "\n" + PROSE_STYLE_INSTRUCTIONS + "\n"
 
     prompt += event_section
 

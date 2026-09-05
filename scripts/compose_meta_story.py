@@ -44,11 +44,15 @@ What the prompt still carries is what the model cannot infer:
   rule is the negative of a pattern readers reported bouncing off: prose that
   sounds like it says something but leaves nothing behind.
 - **The voice rules** — every sentence earns its place with a fact or an
-  inference, select rather than compress, no stock rhetoric ("not merely X
-  but Y", "underscores", rhetorical triads), no generic significance claims,
-  and a final pass cutting sentences whose removal loses nothing. The craft
-  rules ban prose that assumes knowledge; these ban prose that simulates
-  meaning.
+  inference, select rather than compress, and a final pass cutting sentences
+  whose removal loses nothing. The craft rules ban prose that assumes
+  knowledge; these ban prose that simulates meaning.
+- **The prose rules** (``utils/prose_style.py``) — the block every writing
+  phase shares: one statement per sentence, no contrast against an
+  alternative nobody proposed, no verdict sentence, no closing generalization,
+  plain words. It replaced this prompt's own list of banned constructions,
+  which had been the one such list in the pipeline and the reason the
+  composed prose was the only prose without them.
 
 Craft beyond those rules is left to the model.
 
@@ -145,6 +149,7 @@ from config import (
 from meta_story_map import MIN_MAP_CLUSTERS
 from utils.json_io import write_json
 from utils.model_calls import parse_structured
+from utils.prose_style import PROSE_STYLE_INSTRUCTIONS
 from meta_story_network import derive_clusters
 from meta_story_network_review import build_wikipedia_context
 
@@ -933,11 +938,10 @@ VOICE. Write as an author with something to say, not as an assistant trying
 to sound helpful or comprehensive. Every sentence contributes a fact, an
 inference, or a necessary step of the argument; within the budgets above,
 that means selecting the strongest material, not compressing everything in.
-No stock rhetoric: no "not merely X but Y", no "highlights" or
-"underscores", no rhetorical triads, no generic claims of significance or
-legacy, and no polished closing sentence that restates what the page already
-said. Before returning, reread every sentence you wrote and cut any whose
-removal would lose nothing — the budgets are ceilings, not targets.
+Before returning, reread every sentence you wrote and cut any whose removal
+would lose nothing — the budgets are ceilings, not targets.
+
+{PROSE_STYLE_INSTRUCTIONS}
 
 Ground everything in the material above: no invented events, dates,
 relationships or quotations. Quotes verbatim, with attribution. Copy every id

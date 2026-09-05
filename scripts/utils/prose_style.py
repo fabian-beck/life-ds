@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""How the prose the reader sees is written, stated once.
+
+Every phase that writes for a reader imports this block into its prompt: the
+event descriptions and the conclusion, the background reports, the review
+pass, the composer's article text, and the circle and stop cards of a meta
+story. The translator carries the same rules for German. Stating them in one
+place keeps the phases from asking for different prose, and keeps a rule that
+turns out to be wrong from having to be found in seven prompts.
+
+Each rule names a habit of model prose by the shape it takes on the slide,
+with the sentence to write instead. Generic instructions moved nothing: the
+Phase 1 prompt asked for "no verbose constructions" for a year while its
+descriptions kept contrasting each fact against an alternative nobody had
+proposed, and the background prompt asked for "tension" and "what is
+contested" and got "not X but Y" in three reports of four. The composer, the
+one prompt that named the constructions it did not want, was the one phase
+whose prose had none of them.
+"""
+
+PROSE_STYLE_INSTRUCTIONS = """\
+HOW THE PROSE READS. The reader is on a phone, reading one slide at a time, and
+knows nothing of the field. Every sentence says what happened, to whom, where,
+or when, in plain words, and stops.
+- One statement per sentence. A sentence that needs a second clause to finish
+  its thought is two sentences. No semicolon joining two clauses. No colon
+  introducing an explanation, an example, or a list; write the sentence the
+  colon stood in for. No dash setting off an aside; give the aside its own
+  sentence or cut it.
+- Say what was, never what it was not. No "rather than", "instead of", "not X
+  but Y", "not only X but also Y", "less X than Y", "as much X as Y", "more X
+  than Y" between two abstractions. Each of these argues against a reading
+  nobody proposed. State the fact.
+  * BAD: "The obstacle was not simply entrance examinations but university
+    status."
+  * GOOD: "Women could sit the examinations. They could not enroll."
+- Report, do not interpret. An event does what it did. It does not "mark",
+  "signal", "reflect", "underscore", "confirm", "cement", "embody", "affirm",
+  "highlight", "demonstrate", "illustrate", "showcase", or "reinforce"
+  anything. A sentence whose subject is "the move", "the decision", "the
+  appointment", "the episode", "the period", "this", or "that" and whose verb
+  is one of these is a verdict on the fact before it. Cut it, or put the next
+  fact in its place.
+  * BAD: "The book reflected his sustained interest in industrial production
+    and political economy."
+  * GOOD: "The book compared the factories he had visited in Britain and on
+    the continent."
+- Begin on a fact and end on the last fact. No opening sentence announcing what
+  the paragraph will show. No sentence opening on "therefore", "thus", "in
+  this way", "in short", or "taken together" to sum up the sentences before
+  it. No closing sentence that generalizes the paragraph, weighs its
+  significance, or looks ahead. When the facts are told, stop.
+  * BAD: "The Kiel years therefore supplied a period of institutional
+    stability and scholarly consolidation."
+  * BAD: "The moment highlighted how far his early work had traveled."
+- Plain words. Name what an insider would assume, and use the common word over
+  the term of art. No "pivotal", "landmark", "seminal", "testament", "legacy",
+  "journey", "trajectory", "hallmark", "cornerstone", "tapestry", "profound",
+  "transformative", "enduring". No triad of adjectives or nouns set out for
+  rhythm. One concept keeps one name throughout a text.
+These rules hold for every field a reader sees, from a two-sentence
+description to a four-paragraph report, and they are not a length target:
+a text that has said its facts in fewer sentences than the range allows is
+finished."""

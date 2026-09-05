@@ -54,6 +54,7 @@ from meta_story_map import (
     collect_located_events,
 )
 from utils.model_calls import parse_structured
+from utils.prose_style import PROSE_STYLE_INSTRUCTIONS
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 META_STORIES_DIR = DATA_DIR / "meta_stories"
@@ -308,10 +309,12 @@ REQUIREMENTS:
   mattered. Mention the people by name and the place naturally. Ground every
   claim in the event data above; do not invent facts. No bullet points.
 - Refer to people by natural name forms (e.g. "Babbage" on second mention).
-- Tone: vivid but factual, matching a biographical story collection.
+- Tone: factual, matching a biographical story collection.
 - NEVER address the reader. No "you"/"your"/"we"/"us", no imperatives aimed
   at the audience, no references to scrolling, zooming, or the map as an
-  interface. Write in the third person, about the people and places."""
+  interface. Write in the third person, about the people and places.
+
+{PROSE_STYLE_INSTRUCTIONS}"""
 
     return parse_structured(
         client,

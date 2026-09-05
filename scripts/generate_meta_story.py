@@ -51,6 +51,7 @@ from meta_story_network_review import review_social_network
 from utils.json_io import read_json, write_json
 from utils.text import slugify as canonical_slugify
 from utils.model_calls import parse_structured
+from utils.prose_style import PROSE_STYLE_INSTRUCTIONS
 
 enable_utf8_console()
 
@@ -574,9 +575,10 @@ CHAPTERS (3-6):
   * Chapters should capture the era when meaningful events happened, not entire lifespans
 
 CONCLUSION:
-- Synthesize the overall narrative (2-3 sentences)
-- Capture the collective impact/legacy
-- Should feel like the closing paragraph of a compelling essay
+- 2-3 sentences on what these lives together left behind: what of their work is
+  still in use, still read, or still built on, stated as facts
+- No "legacy", no dash, no "not X but Y", no sentence that weighs the story
+  instead of saying what came of it
 
 MISSING PEOPLE SUGGESTIONS:
 - After creating the collection, suggest 3-5 notable people NOT in the registry who would strengthen this narrative
@@ -683,9 +685,10 @@ CHAPTERS (3-6):
   * Chapters should capture the era when meaningful events happened, not entire lifespans
 
 CONCLUSION:
-- Synthesize the overall narrative (2-3 sentences)
-- Capture the collective impact/legacy
-- Should feel like the closing paragraph of a compelling essay
+- 2-3 sentences on what these lives together left behind: what of their work is
+  still in use, still read, or still built on, stated as facts
+- No "legacy", no dash, no "not X but Y", no sentence that weighs the story
+  instead of saying what came of it
 
 MISSING PEOPLE SUGGESTIONS:
 - After creating the collection, suggest 3-5 notable people NOT in the registry who would strengthen this narrative
@@ -1427,6 +1430,8 @@ RULES:
     stronger federal system" (assumes the reader already knows what the uprising was)
   * BAD: "A global conflict that reshaped the 20th century" (identifies without connecting
     to these people)
+- Plain sentences: no "rather than", no "not X but Y", no colon or dash carrying an
+  aside, no verb of verdict ("marked", "reshaped", "underscored")
 - These are background landmarks, NOT field-specific milestones or discoveries
 - AVOID FUZZY EPOCHS: Do not pick gradual processes or long eras that lack a discrete moment
   * NO: "Industrial Revolution", "Age of Enlightenment", "Renaissance", "Digital Age"
@@ -1625,12 +1630,14 @@ REQUIREMENTS:
   bridged whom. Ground every claim in the tie descriptions above; do not invent
   facts. No bullet points, no lists of relationships.
 - Refer to people by natural name forms (e.g. "Babbage" on second mention).
-- Tone: vivid but factual, matching a biographical story collection.
+- Tone: factual, matching a biographical story collection.
 - NEVER address the reader. This is a data story, not a tutorial or a guided
   tour: no "you"/"your"/"we"/"us", no imperatives aimed at the audience
   ("Follow...", "Trace...", "Explore..."), no references to scrolling,
   clicking, or the graph as an interface. Write in the third person, about
-  the people themselves."""
+  the people themselves.
+
+{PROSE_STYLE_INSTRUCTIONS}"""
 
     try:
         parsed = parse_structured(

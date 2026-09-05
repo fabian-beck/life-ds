@@ -60,6 +60,7 @@ from icon_categories import normalize_icon
 from utils.concurrency import map_concurrently, worker_count
 from utils.geocode import geocode_location
 from utils.registry import Registry
+from utils.prose_style import PROSE_STYLE_INSTRUCTIONS
 from utils.model_calls import (
     get_client,
     parse_structured,
@@ -417,13 +418,11 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "- Don't make EVERY event about career milestones and professional accomplishments\n"
         "- Consider: What was their personal life like? Who were they close to? What challenges did they face?\n"
         "- Professional events can still mention human context (e.g., who supported them, personal motivations)\n"
-        "\n\nConciseness Requirements:\n"
-        "- Target 2-4 sentences, but make each sentence DIRECT and ECONOMICAL\n"
-        "- Avoid verbose constructions, unnecessary clauses, and abstract philosophical framing\n"
-        "- Prefer active voice and concrete details over interpretive summaries\n"
-        "- Cut any sentence that doesn't add factual information about the event\n"
-        "- GOOD: 'He studied in Landshut and Würzburg, learning from anatomists and clinicians.'\n"
-        "- BAD: 'This mix of theoretical ambition and concrete anatomical instruction helps explain why he later insisted...'\n"
+        "\n\nLength: 2-4 sentences per description, each carrying a fact about the event. "
+        "How every sentence is written is set out below, and it applies to the "
+        "descriptions, the conclusion, and the summary alike.\n\n"
+        + PROSE_STYLE_INSTRUCTIONS
+        + "\n"
         "\n\nDEATH EVENT SPECIAL RULE:\n"
         "- Death descriptions must be FACTUAL ONLY: date, location, age, immediate circumstances, cause if known\n"
         "- DO NOT include legacy analysis, historical impact, or career summaries in the death event\n"
@@ -432,10 +431,11 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "- GOOD: 'Schönlein died in Bamberg on 23 January 1864 after years of declining health.'\n"
         "- BAD: 'His death closed a career that helped reshape German clinical training... The most durable part of his legacy was...'\n"
         "\n\nCONCLUSION FIELD (1-2 sentences):\n"
-        "- This is WHERE legacy, impact, and retrospective analysis belong\n"
+        "- The one place that looks back over the whole life: what of this person's work "
+        "is still in use, still read, still built on, and by whom\n"
         "- Event descriptions = factual, chronological, in-the-moment\n"
-        "- Conclusion = interpretive, retrospective, legacy-focused\n"
-        "- The conclusion summarizes the person's life significance AFTER all events are told\n"
+        "- Conclusion = what came of the life, stated as facts, after all events are told\n"
+        "- The same prose rules hold: no verdict words, no dash, no 'not X but Y'\n"
         "\n\nEVENT CLASSIFICATION (optional):\n"
         f"For each event skeleton, determine if it matches one of these {len(EVENT_CLASS_CONFIG)} specific biographical event types:\n"
         + "".join(
@@ -738,9 +738,8 @@ def call_openai_chapter_generation(
     client = get_client()
 
     system = (
-        "You are a skilled biographer crafting a compelling narrative from life events. "
-        "Your task is to organize events into engaging chapters that read like a well-told story. "
-        "Write with energy and insight, making each chapter feel like part of a coherent journey. "
+        "You are a biographer organizing researched life events into chapters. "
+        "Your task is to group the events into phases that read as one story. "
         "All output must be in American English only. Every text field is plain text "
         "rendered verbatim by the interface: never write Markdown in it."
     )
@@ -780,17 +779,19 @@ def call_openai_chapter_generation(
         "For example: 'England' (not 'London, Cambridge, Manchester'), 'United States' (not 'Princeton, New York, Boston'), "
         "'Central Europe' (not 'Vienna, Prague, Budapest'). Use the broadest appropriate region.\n\n"
         "CONCLUSION:\n"
-        "- After all chapters, provide a crisp, powerful conclusion statement (1-2 sentences)\n"
-        "- Capture the person's legacy, lasting impact, or the essence of their life journey\n"
-        "- Make it memorable and meaningful - this is the final word on their story\n\n"
+        "- After all chapters, write the closing statement (1-2 sentences)\n"
+        "- It is the one text that looks back over the whole life: say what of this "
+        "person's work is still in use, still read, or still built on, and by whom\n"
+        "- State it as facts. No 'legacy', no 'journey', no dash, no 'not X but Y', "
+        "and no sentence that weighs the life instead of saying what came of it\n\n"
         "STORYTELLING GUIDELINES:\n"
         "- Headlines should intrigue and invite the reader in - ONE clear concept, NO lists or comma-separated phrases\n"
         "- VARY headline length (mix 2-word, 3-word, 4-word, and 5-word titles) to create rhythm and avoid monotony\n"
         "- Each chapter should have thematic coherence - events should share a common thread or life phase\n"
         "- Connect chapters so they flow as a continuous story, with each building on the previous\n"
-        "- Use vivid, concrete language over abstract generalities\n"
-        "- The conclusion should resonate and leave a lasting impression\n\n"
-        "Craft chapters that feel like distinct, meaningful phases of this person's journey - not arbitrary date ranges."
+        "- Use concrete language over abstract generalities\n\n"
+        "Craft chapters that feel like distinct, meaningful phases of this person's life - not arbitrary date ranges.\n\n"
+        + PROSE_STYLE_INSTRUCTIONS
     )
 
     chapters = parse_structured(

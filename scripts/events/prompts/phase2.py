@@ -20,6 +20,7 @@ from urllib.parse import quote
 from events.event_classes import EVENT_CLASS_CONFIG
 from events.schemas import EventSkeleton
 from icon_categories import format_icon_categories_for_prompt
+from utils.prose_style import PROSE_STYLE_INSTRUCTIONS
 
 
 def filter_related_articles_for_event(
@@ -152,10 +153,12 @@ def build_phase2_prompt_base(
     )
     prompt += "     * ✓ Tone: Event-focused narrative, not meta-commentary or interpretive analysis\n"
     prompt += "     * ✓ Personal: Includes human context where relevant, not purely professional\n"
-    prompt += "     * ✓ Concise: Direct sentences, no verbose philosophical framing\n"
+    prompt += "     * ✓ Prose: Every sentence follows HOW THE PROSE READS below - no 'rather than', no colon, no dash, no verdict sentence\n"
     prompt += "     * ✓ Death events: Factual only if this is a death event (save legacy for conclusion)\n"
     prompt += "     * If Phase 1 description violates these rules, refine it to fix the issues\n"
     prompt += "     * Refinements should make descriptions BETTER (more concise, more balanced), not longer\n\n"
+    prompt += PROSE_STYLE_INSTRUCTIONS + "\n"
+    prompt += "   The rules above hold for the description, every annotation explanation, and every text field of the classification.\n\n"
 
     prompt += "1. LOCATIONS (can be multiple):\n"
     prompt += "   - Identify ALL significant locations for THIS specific event\n"
