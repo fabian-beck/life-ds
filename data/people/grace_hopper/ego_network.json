@@ -1,6 +1,6 @@
 {
   "dataset": "Grace Hopper ego network",
-  "created_on": "2026-09-03",
+  "created_on": "2026-09-05",
   "ego": {
     "name": "Grace Hopper",
     "birth_year": 1906,
@@ -10,153 +10,142 @@
       "mathematician",
       "United States Navy rear admiral"
     ],
-    "summary": "Grace Hopper was an American computer scientist, mathematician, and United States Navy rear admiral who helped program the Harvard Mark I, developed foundational compiler systems including A-0 and FLOW-MATIC, and helped shape COBOL and programming-language standards.",
+    "summary": "Grace Hopper was an American computer scientist, mathematician, and United States Navy rear admiral. She programmed the Harvard Mark I, developed compiler systems including FLOW-MATIC, and helped create COBOL.",
     "wikipedia": "https://en.wikipedia.org/wiki/Grace_Hopper"
   },
   "connections": [
     {
       "person_name": "Walter Fletcher Murray",
-      "relationship_description": "Walter Fletcher Murray was Hopper's father; she was born the eldest of his and Mary Campbell Van Horne's three children in New York City in 1906.",
+      "relationship_description": "Hopper's father and a member of the New York family in which she grew up.",
       "strength": "strong",
-      "interaction_frequency": "daily",
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "notes": "Her parents attended West End Collegiate Church and had Scottish and Dutch ancestry.",
-      "relationship_type": "family/biological_father"
+      "notes": "He and Mary Campbell Van Horne raised Hopper in a family that attended West End Collegiate Church.",
+      "relationship_type": "family/father"
     },
     {
       "person_name": "Mary Campbell Van Horne",
-      "relationship_description": "Mary Campbell Van Horne was Hopper's mother and raised her in New York City as the eldest of three children.",
+      "relationship_description": "Hopper's mother, who discovered seven-year-old Grace dismantling alarm clocks to learn how they worked.",
       "strength": "strong",
-      "interaction_frequency": "daily",
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "notes": "She intervened when the seven-year-old Hopper dismantled several alarm clocks to understand their workings.",
-      "relationship_type": "family/biological_mother"
+      "notes": "At age seven, Hopper dismantled seven alarm clocks before her mother stopped her.",
+      "relationship_type": "family/mother"
     },
     {
       "person_name": "Vincent Foster Hopper",
-      "relationship_description": "Hopper married New York University professor Vincent Foster Hopper in 1930; they divorced in 1945, and she retained his surname.",
+      "relationship_description": "New York University professor whom Grace Murray married in 1930.",
       "strength": "strong",
-      "interaction_frequency": "daily",
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "notes": "Hopper did not remarry after their divorce.",
+      "notes": "She retained the surname Hopper after their divorce and did not remarry.",
       "relationship_type": "family/spouse"
     },
     {
       "person_name": "Øystein Ore",
-      "relationship_description": "Ore directed Hopper's doctoral work in mathematics at Yale, where she completed her dissertation, New Types of Irreducibility Criteria, in 1934.",
+      "relationship_description": "Yale mathematician who directed Hopper's 1934 doctoral dissertation, New Types of Irreducibility Criteria.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "notes": "Her Yale doctorate was in mathematics and mathematical physics.",
+      "notes": "Hopper's doctorate was in mathematics and mathematical physics.",
       "relationship_type": "academic/teacher"
     },
     {
       "person_name": "Howard H. Aiken",
-      "relationship_description": "Aiken led the Harvard Mark I programming staff that Hopper joined in 1944 during World War II. They co-authored three papers on the Mark I, also known as the Automatic Sequence Controlled Calculator.",
+      "relationship_description": "Leader of the Harvard Mark I team that Hopper joined in 1944. They later co-authored three papers on the Mark I.",
       "strength": "strong",
-      "interaction_frequency": "daily",
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper",
         "https://en.wikipedia.org/wiki/Howard_H._Aiken"
       ],
-      "notes": "Hopper remained at the Harvard Computation Laboratory until 1949 as a research fellow under a Navy contract.",
-      "relationship_type": "professional/supervisor"
+      "notes": "Hopper remained at Harvard's Computation Laboratory under a Navy contract until 1949.",
+      "relationship_type": "innovation/supervisor"
     },
     {
       "person_name": "J. Presper Eckert",
-      "relationship_description": "Hopper joined Eckert’s Eckert–Mauchly Computer Corporation in 1949 as a senior mathematician and worked on the UNIVAC I development team.",
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
+      "relationship_description": "Co-founder of the Eckert–Mauchly Computer Corporation, which brought Hopper into the UNIVAC I project in 1949.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper",
         "https://en.wikipedia.org/wiki/J._Presper_Eckert"
       ],
-      "notes": "The company later became part of Remington Rand, where Hopper directed automatic programming development.",
-      "relationship_type": "professional/close_colleague"
+      "notes": "The company was later acquired by Remington Rand, where Hopper continued her compiler work.",
+      "relationship_type": "innovation/employer"
     },
     {
       "person_name": "John Mauchly",
-      "relationship_description": "Hopper joined the Eckert–Mauchly Computer Corporation in 1949 and worked on its UNIVAC I development effort, the company Mauchly co-founded with J. Presper Eckert.",
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
+      "relationship_description": "Co-founder of the Eckert–Mauchly Computer Corporation, where Hopper joined the UNIVAC I team in 1949.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper",
         "https://en.wikipedia.org/wiki/J._Presper_Eckert"
       ],
-      "notes": "Mauchly co-founded the company with J. Presper Eckert.",
-      "relationship_type": "professional/close_colleague"
-    },
-    {
-      "person_name": "Elmo R. Zumwalt Jr.",
-      "relationship_description": "Admiral Elmo R. Zumwalt Jr. promoted Hopper to captain in 1973 while she directed the Navy Programming Languages Group.",
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "notes": "The promotion occurred during Hopper's second period of recalled active duty.",
-      "relationship_type": "professional/superior"
-    },
-    {
-      "person_name": "Rita Yavinsky",
-      "relationship_description": "Yavinsky initially offered Hopper a post-retirement position at Digital Equipment Corporation, where Hopper became a full-time Principal Corporate Consulting Engineer and remained until her death.",
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "notes": "Hopper insisted on undergoing the usual formal interview process before accepting the position.",
-      "relationship_type": "professional/employer"
+      "notes": "Mauchly co-founded the firm with J. Presper Eckert.",
+      "relationship_type": "innovation/employer"
     },
     {
       "person_name": "Jean E. Sammet",
-      "relationship_description": "Sammet and Hopper both contributed to the development of COBOL in 1959 through the original COBOL design effort, which drew substantially on Hopper's FLOW-MATIC language.",
+      "relationship_description": "COBOL developer who served with Hopper on the 1959 CODASYL effort.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper",
         "https://en.wikipedia.org/wiki/Jean_E._Sammet"
       ],
-      "notes": "Sammet's earlier work at Sperry Rand also brought her into contact with Hopper and the UNIVAC I.",
+      "notes": "COBOL extended Hopper's FLOW-MATIC language and incorporated ideas from other business-language work.",
       "relationship_type": "innovation/collaborator"
     },
     {
       "person_name": "Betty Holberton",
-      "relationship_description": "Holberton worked with Hopper on early standards for the COBOL and FORTRAN programming languages.",
+      "relationship_description": "Computer scientist who worked with Hopper on early standards for the COBOL and FORTRAN programming languages.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
       "sources": [
         "https://en.wikipedia.org/wiki/Betty_Holberton",
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "notes": "Both were major early programmers and later contributors to programming-language standardization.",
+      "notes": "Their work connected early programming practice with later language-standardization efforts.",
       "relationship_type": "innovation/collaborator"
+    },
+    {
+      "person_name": "Elmo R. Zumwalt Jr.",
+      "relationship_description": "Admiral who promoted Hopper to captain in the United States Navy in 1973.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper"
+      ],
+      "notes": "The promotion occurred during Hopper's leadership of the Navy Programming Languages Group.",
+      "relationship_type": "professional/superior"
+    },
+    {
+      "person_name": "Rita Yavinsky",
+      "relationship_description": "Digital Equipment Corporation representative connected with Hopper's move into consulting work after Navy retirement.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper"
+      ],
+      "notes": "Hopper held the DEC position until her death in 1992.",
+      "relationship_type": "professional/connector"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Hopper's early family life supplied the setting for the curiosity she later treated as central to her work. Her mother encountered that trait directly when young Grace dismantled alarm clocks to learn how they worked, while her marriage to Vincent Hopper left a lasting public marker: she retained the Hopper surname after their 1945 divorce."
+      "summary": "Hopper grew up in New York with Walter Fletcher Murray and Mary Campbell Van Horne. Her 1930 marriage to Vincent Foster Hopper gave her the surname she retained after their 1945 divorce."
     },
     {
       "relationship_type": "academic",
-      "summary": "Mathematics was Hopper's entry point into computing. Under Øystein Ore at Yale, she completed a rigorous doctorate in 1934 before building an academic career as a mathematics professor at Vassar College; that training gave her the technical grounding she brought to wartime computation and later software design."
-    },
-    {
-      "relationship_type": "professional",
-      "summary": "Hopper's career joined academic, industrial, and naval work in an unusually continuous professional path. Howard Aiken brought her into practical computer programming on the Harvard Mark I, and her move to the Eckert-Mauchly company placed her at the commercial UNIVAC project, where she eventually led automatic programming. Her Navy leadership and later role at Digital Equipment Corporation extended her authority from early machine programming to standards, public technical advocacy, and industry-wide communication."
+      "summary": "Hopper studied mathematics at Vassar and Yale before teaching at Vassar. Under Øystein Ore at Yale, she earned a doctorate in mathematics in 1934. She left Vassar on wartime leave in 1943."
     },
     {
       "relationship_type": "innovation",
-      "summary": "Hopper's most consequential collaborators were connected by the effort to make programming languages more usable and interoperable. Her FLOW-MATIC work helped supply the English-like model carried into COBOL, whose 1959 design effort included Jean Sammet, while later work with Betty Holberton on COBOL and FORTRAN standards helped turn programming languages into shared technical infrastructure rather than isolated vendor products."
+      "summary": "Hopper's technical circle spans the Harvard Mark I, UNIVAC I, and the development of business programming languages. Howard Aiken led the Harvard team she joined in 1944. Eckert and Mauchly's company gave her a role on UNIVAC I in 1949. In 1959, she worked with COBOL developers including Jean E. Sammet through CODASYL."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Hopper's Navy career included leadership of the Navy Programming Languages Group and promotion to captain by Elmo R. Zumwalt Jr. After retiring in 1986, she worked as a consulting engineer for Digital Equipment Corporation until her death."
     }
   ]
 }

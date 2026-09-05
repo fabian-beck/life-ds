@@ -258,7 +258,7 @@ class ReportPayloadTests(unittest.TestCase):
     """
 
     report = "First.\n\n## A label\n\nSecond."
-    fields = ("background_paragraphs", "background_headings", "background_images")
+    fields = ("background_paragraphs", "background_headings", "figure_captions")
 
     def document(self, *events: Dict[str, Any]) -> Dict[str, Any]:
         return {
@@ -280,9 +280,7 @@ class ReportPayloadTests(unittest.TestCase):
         entry = payload["events"][0]
         self.assertEqual(entry["background_paragraphs"], ["First.", "Second."])
         self.assertEqual(entry["background_headings"], ["A label"])
-        self.assertEqual(
-            entry["background_images"], [{"caption": "The house from the creek"}]
-        )
+        self.assertEqual(entry["figure_captions"], ["The house from the creek"])
 
     def test_a_reportless_event_of_a_filled_dataset_keeps_the_empty_fields(
         self,
@@ -351,6 +349,75 @@ class ReportPayloadTests(unittest.TestCase):
             )
         )
         self.assertNotEqual(before, after)
+
+
+class FigureCaptionMergeTests(unittest.TestCase):
+    """What a short caption array does to the document that carries it.
+
+    A Commons caption is written by whoever uploaded the picture, so one reads
+    as an aside or a joke and says nothing about the event. Rule 2 tells the
+    translator to resolve such a construction into a plain statement, and it
+    resolves this one by returning no caption at all. Nothing downstream is
+    indexed by a caption, so a short array must not cost the document.
+    """
+
+    report = "First.\n\n## A label\n\nSecond."
+
+    def document(self, captions):
+        return {
+            "person": {"summary": "A summary.", "primary_roles": ["Architect"]},
+            "chapters": [],
+            "events": [
+                event(
+                    "Builds a house",
+                    background=self.report,
+                    background_images=[{"caption": c} for c in captions],
+                )
+            ],
+        }
+
+    def translated(self, captions):
+        return {
+            "person": {"summary": "Eine Zusammenfassung.", "primary_roles": ["Architekt"]},
+            "chapters": [],
+            "events": [
+                {
+                    "title": "Baut ein Haus",
+                    "description": "Etwas geschah.",
+                    "background_paragraphs": ["Erstens.", "Zweitens."],
+                    "background_headings": ["Ein Etikett"],
+                    "figure_captions": list(captions),
+                    "locations": [{"name_historic": "Ort 0"}],
+                    "images": [],
+                    "annotations": [],
+                }
+            ],
+        }
+
+    def test_every_caption_returned_is_applied(self) -> None:
+        result = translate.apply_life_events_translations(
+            self.document(["The house from the creek"]),
+            self.translated(["Das Haus vom Bach aus"]),
+            {},
+        )
+        captions = [
+            img["caption"] for img in result["events"][0]["background_images"]
+        ]
+        self.assertEqual(captions, ["Das Haus vom Bach aus"])
+
+    def test_a_short_array_keeps_the_source_captions_instead_of_failing(self) -> None:
+        """Which caption was dropped is unknowable, so none of them are moved."""
+        result = translate.apply_life_events_translations(
+            self.document(["The house from the creek", "A joke about the roof"]),
+            self.translated(["Das Haus vom Bach aus"]),
+            {},
+        )
+        captions = [
+            img["caption"] for img in result["events"][0]["background_images"]
+        ]
+        self.assertEqual(
+            captions, ["The house from the creek", "A joke about the roof"]
+        )
 
 
 if __name__ == "__main__":

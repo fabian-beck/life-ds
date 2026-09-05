@@ -168,10 +168,16 @@ class TrEvent(BaseModel):
     date_note: Optional[str] = None
     locations: List[TrLocation]
     images: List[TrImage]
-    # The pictures searched for the background report. Their captions come off
-    # Wikimedia Commons in English, and the depth layer prints them under the
+    # The captions of the pictures searched for the background report. They come
+    # off Wikimedia Commons in English, and the depth layer prints them under the
     # picture, so a German reader met an English line under every figure.
-    background_images: List[TrImage] = Field(default_factory=list)
+    #
+    # They travel as bare strings rather than as a second list of caption
+    # objects beside `images`. Two same-shaped caption arrays in one event read
+    # to the model as one: asked for both, it returned the report's captions
+    # inside `images` and left its own array empty, and the merge rejected a
+    # document whose only fault was which array a caption sat in.
+    figure_captions: List[str] = Field(default_factory=list)
     annotations: List[TrAnnotation]
     # Optional: only events the pipeline classified carry one, so an unclassified
     # event is not asked to invent a block (and keeps its fingerprint).
@@ -334,9 +340,10 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
                 event.get("background") or ""
             )
             entry["background_headings"] = _heading_texts(event.get("background") or "")
-            entry["background_images"] = [
-                {"caption": img.get("caption")}
+            entry["figure_captions"] = [
+                img["caption"]
                 for img in (event.get("background_images") or [])
+                if img.get("caption")
             ]
         event_class = _event_class_translatables(event.get("event_class"))
         if event_class:
@@ -686,13 +693,30 @@ def apply_life_events_translations(
         for img, tr_img in zip(src_images, tr_images):
             _set_if_source_has(img, "caption", tr_img.get("caption"))
 
-        src_background_images = event.get("background_images") or []
-        tr_background_images = tr_event.get("background_images") or []
-        _require_same_length(
-            "event.background_images", src_background_images, tr_background_images
-        )
-        for img, tr_img in zip(src_background_images, tr_background_images):
-            _set_if_source_has(img, "caption", tr_img.get("caption"))
+        # The report's figures, whose captions travelled as bare strings in the
+        # order the payload listed them: every background image that carries a
+        # caption, and no entry for one that does not.
+        src_figures = [
+            img for img in (event.get("background_images") or []) if img.get("caption")
+        ]
+        tr_captions = tr_event.get("figure_captions") or []
+        # A Commons caption is a leaf: nothing downstream is indexed by it, and
+        # the model sometimes returns fewer than it was given — a caption that
+        # reads as a joke or a question is one rule 2 tells it to resolve into a
+        # plain statement, and it resolves such a caption by dropping it. A short
+        # list gives no way to tell which one was dropped, so none of them are
+        # applied: a caption printed under the wrong picture is worse than an
+        # English one, and discarding the whole document over a line under a
+        # figure is worse than both.
+        if len(src_figures) == len(tr_captions):
+            for img, caption in zip(src_figures, tr_captions):
+                _set_if_source_has(img, "caption", caption)
+        else:
+            print(
+                f"  Warning: {len(tr_captions)} of {len(src_figures)} figure "
+                f"caption(s) came back for '{event.get('title')}'; that event "
+                f"keeps its source captions."
+            )
 
         annotations = event.get("annotations")
         if annotations:
@@ -1319,6 +1343,12 @@ GENERAL RULES:
    short phrases. Translate both, keep both the same length and order as the
    source (rule 1), never merge two paragraphs into one entry, and add no
    headings of your own. The interface reassembles them.
+   "figure_captions" is the captions of the pictures that report carries,
+   one string per picture, and is separate from "images". They are written
+   by whoever uploaded the picture, so one may read as an aside, a question,
+   or a joke, and may say little about the event. Translate each as it
+   stands — rule 2's plainness governs the corpus, not a caption — and
+   return the array at its source length.
 4. Descriptions may contain [[term|display]] annotation markers:
    - Keep the marker syntax and the term (before the |) EXACTLY as-is.
    - Translate ONLY the display text (after the |).

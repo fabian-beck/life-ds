@@ -1,6 +1,6 @@
 {
-  "dataset": "Biographical Timeline",
-  "created_on": "2026-09-03",
+  "dataset": "Wikipedia biographical timeline",
+  "created_on": "2026-09-05",
   "person": {
     "name": "Grace_Hopper",
     "birth_date": "1906-12-09",
@@ -10,71 +10,70 @@
       "Mathematikerin",
       "Marineoffizierin"
     ],
-    "tagline": "Pionierin des maschinenunabhängigen Programmierens",
-    "summary": "Grace Hopper war eine US-amerikanische Informatikerin, Mathematikerin und Konteradmiralin der Reserve der United States Navy. Sie war an der Programmierung des Harvard Mark I beteiligt, entwickelte frühe Compilersysteme und FLOW-MATIC und spielte eine zentrale Rolle bei der Entwicklung und Standardisierung von COBOL.",
+    "tagline": "Compiler, die Englisch verstehen",
+    "summary": "Grace Hopper war eine US-amerikanische Informatikerin, Mathematikerin und Konteradmiralin der United States Navy. Sie programmierte den Harvard Mark I, entwickelte Compilersysteme, leitete die Arbeit an FLOW-MATIC und war an der Entwicklung von COBOL beteiligt.",
     "wikipedia": "https://en.wikipedia.org/wiki/Grace_Hopper",
     "portrait": {
       "image": "/portraits/grace_hopper_thumbnail.webp",
-      "source": "https://en.wikipedia.org/wiki/Grace_Hopper",
-      "caption": "Stylized portrait based on historical photograph",
-      "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg",
       "thumbnail": "/portraits/grace_hopper_thumbnail.webp",
       "medium": "/portraits/grace_hopper_medium.webp",
-      "full": "/portraits/grace_hopper_full.webp"
+      "full": "/portraits/grace_hopper_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Grace_Hopper",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "a_mathematical_calling",
-      "headline": "Eine mathematische Berufung",
+      "id": "numbers_and_learning",
+      "headline": "Zahlen werden greifbar",
       "date_start": "1906-12-09",
       "date_start_precision": "day",
       "date_end": "1934",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 28,
+      "age_end": 27,
       "involved_people": [
-        "Walter Fletcher Murray",
-        "Mary Campbell Van Horne",
         "Vincent Foster Hopper",
         "Øystein Ore"
       ],
       "location": "Nordosten der Vereinigten Staaten",
       "illustration": {
-        "image": "/chapter_art/grace_hopper/a_mathematical_calling_medium.webp",
-        "medium": "/chapter_art/grace_hopper/a_mathematical_calling_medium.webp",
-        "full": "/chapter_art/grace_hopper/a_mathematical_calling_full.webp",
-        "concept": "A luminous crystalline polyhedron hovers in deep indigo darkness, its translucent planes dividing and recombining with quiet precision. Fine silver filaments radiate from its core, suggesting an expanding order discovered through patient study.",
+        "image": "/chapter_art/grace_hopper/numbers_and_learning_medium.webp",
+        "medium": "/chapter_art/grace_hopper/numbers_and_learning_medium.webp",
+        "full": "/chapter_art/grace_hopper/numbers_and_learning_full.webp",
+        "concept": "A single luminous spiral of fine graphite-like lines tightens inward around a small pearl of light, suspended in deep midnight blue. The surrounding darkness holds faint drifting chalk dust, suggesting curiosity gathering into rigor.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-03"
+        "generated_on": "2026-09-05"
       }
     },
     {
-      "id": "serving_the_mark_i",
-      "headline": "Dienst am Mark I",
-      "date_start": "1943-12",
-      "date_start_precision": "month",
-      "date_end": "1948",
+      "id": "war_and_machines",
+      "headline": "Im Maschinenraum",
+      "date_start": "1943",
+      "date_start_precision": "year",
+      "date_end": "1946",
       "date_end_precision": "year",
       "age_start": 36,
-      "age_end": 41,
+      "age_end": 39,
       "involved_people": [
         "Howard H. Aiken"
       ],
       "location": "Vereinigte Staaten",
       "illustration": {
-        "image": "/chapter_art/grace_hopper/serving_the_mark_i_medium.webp",
-        "medium": "/chapter_art/grace_hopper/serving_the_mark_i_medium.webp",
-        "full": "/chapter_art/grace_hopper/serving_the_mark_i_full.webp",
-        "concept": "A dense field of brass-toned beads travels along parallel dark rails, then gathers into a single glowing current at the center. Cool blue light cuts through the mechanism-like abstraction, evoking disciplined coordination and newly directed force.",
+        "image": "/chapter_art/grace_hopper/war_and_machines_medium.webp",
+        "medium": "/chapter_art/grace_hopper/war_and_machines_medium.webp",
+        "full": "/chapter_art/grace_hopper/war_and_machines_full.webp",
+        "concept": "Interlocking brass planes rotate in measured layers around a glowing central aperture, their edges catching cold white light. Thin pulses travel through the gaps like disciplined currents, suspended against a near-black field.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-03"
+        "generated_on": "2026-09-05"
       }
     },
     {
-      "id": "making_code_speak",
-      "headline": "Code zum Sprechen bringen",
+      "id": "languages_for_business",
+      "headline": "Englisch für Computer",
       "date_start": "1949",
       "date_start_precision": "year",
       "date_end": "1959",
@@ -88,65 +87,63 @@
       ],
       "location": "Vereinigte Staaten",
       "illustration": {
-        "image": "/chapter_art/grace_hopper/making_code_speak_medium.webp",
-        "medium": "/chapter_art/grace_hopper/making_code_speak_medium.webp",
-        "full": "/chapter_art/grace_hopper/making_code_speak_full.webp",
-        "concept": "From a central pool of liquid mercury, soft amber ribbons rise and separate into graceful branching streams. The streams settle into clear, repeating bands of light, transforming a restless substance into an accessible, flowing structure.",
+        "image": "/chapter_art/grace_hopper/languages_for_business_medium.webp",
+        "medium": "/chapter_art/grace_hopper/languages_for_business_medium.webp",
+        "full": "/chapter_art/grace_hopper/languages_for_business_full.webp",
+        "concept": "A dense cloud of loose silver droplets streams toward a clear amber prism at center, emerging from its far side as smooth, evenly spaced ribbons of light. The transformation floats in warm charcoal darkness.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-03"
+        "generated_on": "2026-09-05"
       }
     },
     {
-      "id": "the_navys_language_keeper",
-      "headline": "Hüterin der Marinesprache",
-      "date_start": "1967-08",
-      "date_start_precision": "month",
-      "date_end": "1977",
-      "date_end_precision": "year",
+      "id": "navy_standards",
+      "headline": "Programmieren unter Kommando",
+      "date_start": "1967",
+      "date_start_precision": "year",
+      "date_end": "1985-11-08",
+      "date_end_precision": "day",
       "age_start": 60,
-      "age_end": 70,
+      "age_end": 78,
       "involved_people": null,
       "location": "Vereinigte Staaten",
       "illustration": {
-        "image": "/chapter_art/grace_hopper/the_navys_language_keeper_medium.webp",
-        "medium": "/chapter_art/grace_hopper/the_navys_language_keeper_medium.webp",
-        "full": "/chapter_art/grace_hopper/the_navys_language_keeper_full.webp",
-        "concept": "A taut circular membrane of cobalt light floats against blackness, crossed by countless fine threads. At its center, a bright white ring steadies the vibrating web, while mismatched ripples beyond its edge dissolve into calm alignment.",
+        "image": "/chapter_art/grace_hopper/navy_standards_medium.webp",
+        "medium": "/chapter_art/grace_hopper/navy_standards_medium.webp",
+        "full": "/chapter_art/grace_hopper/navy_standards_full.webp",
+        "concept": "A radiant cobalt grid is stretched taut inside a broken circular frame, while one precise vertical beam aligns every intersection. Dark surrounding space recedes around the cool, controlled geometry and its crisp edges.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-03"
+        "generated_on": "2026-09-05"
       }
     },
     {
-      "id": "admiral_of_the_digital_age",
-      "headline": "Admiralin des digitalen Zeitalters",
-      "date_start": "1983-12-15",
+      "id": "final_service",
+      "headline": "Letzter Dienst",
+      "date_start": "1986-08-14",
       "date_start_precision": "day",
       "date_end": "1992-01-01",
       "date_end_precision": "day",
-      "age_start": 76,
+      "age_start": 79,
       "age_end": 85,
-      "involved_people": [
-        "Ronald Reagan"
-      ],
+      "involved_people": null,
       "location": "Vereinigte Staaten",
       "illustration": {
-        "image": "/chapter_art/grace_hopper/admiral_of_the_digital_age_medium.webp",
-        "medium": "/chapter_art/grace_hopper/admiral_of_the_digital_age_medium.webp",
-        "full": "/chapter_art/grace_hopper/admiral_of_the_digital_age_full.webp",
-        "concept": "A vast midnight wave curls upward into a radiant crest of gold dust, then releases into a widening arc of stars. Beneath it, a single polished horizon line holds steady, suggesting enduring influence carried beyond departure.",
+        "image": "/chapter_art/grace_hopper/final_service_medium.webp",
+        "medium": "/chapter_art/grace_hopper/final_service_medium.webp",
+        "full": "/chapter_art/grace_hopper/final_service_full.webp",
+        "concept": "A broad translucent wave of pale gold rises gently from a dark reflective surface, then dissolves into scattered points of starlike light near the upper edge. At its center, one steady blue ember remains luminous.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-03"
+        "generated_on": "2026-09-05"
       }
     }
   ],
-  "conclusion": "Grace Hopper machte aus dem Programmieren eine Sprache, die Menschen beherrschen konnten, statt einer geheimnisvollen Tätigkeit an der Maschine. Mit ihren Compilern, ihrer führenden Rolle bei COBOL und ihrem unermüdlichen Einsatz im öffentlichen Dienst wurde sie zu einer der grundlegenden Architektinnen des digitalen Zeitalters.",
+  "conclusion": "COBOL wird heute noch in der Datenverarbeitung von Wirtschaft und Verwaltung eingesetzt.",
   "events": [
     {
       "date": "1906-12-09",
       "date_precision": "day",
       "age": 0,
-      "title": "Geburt in New York",
-      "description": "Grace Brewster Murray wurde in New York City als ältestes von drei Kindern geboren. Ihre Familie hatte schottische und niederländische Wurzeln und besuchte die West End Collegiate Church.",
+      "title": "In einer New Yorker Familie geboren",
+      "description": "Sie war das älteste von drei Kindern in einer Familie schottischer und niederländischer Herkunft.",
       "locations": [
         {
           "name_historic": "New York City",
@@ -158,49 +155,44 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Walter Fletcher Murray",
-        "Mary Campbell Van Horne"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "a_mathematical_calling",
-      "weight": 0.3,
+      "chapter": "numbers_and_learning",
+      "weight": 0.2,
       "event_class": {
         "type": "birth",
         "father": "Walter Fletcher Murray",
         "mother": "Mary Campbell Van Horne",
-        "birth_name": "Grace Brewster Murray"
+        "birth_name": "Grace Brewster Murray",
+        "characterization": "bürgerliche Familie"
       }
     },
     {
       "date": "1928",
       "date_precision": "year",
-      "date_end": "1930",
-      "date_end_precision": "year",
       "age": 21,
-      "title": "Studium der Mathematik abgeschlossen",
-      "description": "1928 schloss Grace Murray das Studium am Vassar College mit einem Bachelorabschluss in Mathematik und Physik ab und wurde in die Phi Beta Kappa aufgenommen. 1930 erwarb sie anschließend an der Yale University den Mastergrad.",
+      "title": "Abschluss in Vassar mit Phi Beta Kappa",
+      "description": "Hopper schließt das Vassar College mit einem Bachelorabschluss in Mathematik und Physik und als Mitglied von Phi Beta Kappa ab.",
       "locations": [
         {
-          "name_historic": "Vassar College, Poughkeepsie",
-          "name_modern": "Vassar College, Poughkeepsie, New York, Vereinigte Staaten",
-          "primary": true,
+          "name_historic": "Poughkeepsie",
+          "name_modern": "Poughkeepsie, New York, Vereinigte Staaten",
           "centroid": [
-            -73.8956971,
-            41.686786
-          ]
+            -73.921,
+            41.7
+          ],
+          "primary": true
         },
         {
-          "name_historic": "Yale University, New Haven",
-          "name_modern": "Yale University, New Haven, Connecticut, Vereinigte Staaten",
-          "primary": false,
+          "name_historic": "New Haven",
+          "name_modern": "New Haven, Connecticut, Vereinigte Staaten",
           "centroid": [
-            -72.9231731,
-            41.3135727
-          ]
+            -72.9279,
+            41.3083
+          ],
+          "primary": false
         }
       ],
       "sources": [
@@ -208,24 +200,24 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/NY_376_nb_within_Vassar_College_campus%2C_June_2026.jpg/960px-NY_376_nb_within_Vassar_College_campus%2C_June_2026.jpg",
-          "caption": "Campus des Vassar College in Poughkeepsie, New York",
-          "source": "https://commons.wikimedia.org/wiki/File:NY_376_nb_within_Vassar_College_campus,_June_2026.jpg",
-          "creator": "Mr. Matté (if there is an issue with this image, contact me using this image's Commons talk page, my Commons user talk page, or my English Wikipedia user talk page; I'll know about it a lot faster)",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Vassar_Main_Campus_Drive.jpg/960px-Vassar_Main_Campus_Drive.jpg",
+          "caption": "Hauptgebäude und Zufahrt des Vassar College",
+          "source": "https://commons.wikimedia.org/wiki/File:Vassar_Main_Campus_Drive.jpg",
+          "creator": "BappleBusiness",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
         }
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "a_mathematical_calling",
-      "weight": 0.5
+      "chapter": "numbers_and_learning",
+      "weight": 0.4
     },
     {
       "date": "1930",
       "date_precision": "year",
       "age": 23,
-      "title": "Heirat mit Vincent Hopper",
-      "description": "1930 heiratete Grace Murray, während sie der akademischen Gemeinschaft New Yorks verbunden war; später behielt sie den Nachnamen Hopper.",
+      "title": "Heirat mit dem New Yorker Professor Vincent Hopper",
+      "description": "1930 heiratete sie einen Professor der New York University.",
       "locations": [],
       "involved_people": [
         "Vincent Foster Hopper"
@@ -234,8 +226,8 @@
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "a_mathematical_calling",
-      "weight": 0.35,
+      "chapter": "numbers_and_learning",
+      "weight": 0.3,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
@@ -244,45 +236,11 @@
       }
     },
     {
-      "date": "1931",
-      "date_precision": "year",
-      "age": 24,
-      "title": "Lehrtätigkeit am Vassar College",
-      "description": "1931 begann Hopper, am Vassar College in Poughkeepsie, New York, Mathematik zu unterrichten.",
-      "locations": [
-        {
-          "name_historic": "Poughkeepsie",
-          "name_modern": "Poughkeepsie, New York, USA",
-          "centroid": [
-            -73.921,
-            41.7004
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Grace_Hopper"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Old_Main%2C_Vassar_College_edit1.jpg/960px-Old_Main%2C_Vassar_College_edit1.jpg",
-          "caption": "Old Main am Vassar College",
-          "source": "https://commons.wikimedia.org/wiki/File:Old_Main,_Vassar_College_edit1.jpg",
-          "creator": "Daniel Case",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
-        }
-      ],
-      "event_type_icon": "mdi-school-outline",
-      "chapter": "a_mathematical_calling",
-      "weight": 0.45
-    },
-    {
       "date": "1934",
       "date_precision": "year",
       "age": 27,
       "title": "Promotion in Yale",
-      "description": "1934 veröffentlichte Hopper während ihrer Promotion an der Yale University unter dem Mathematiker Øystein Ore ihre Dissertation über mathematische Kriterien für Irreduzibilität.",
+      "description": "Hopper promovierte an der Yale University bei Øystein Ore in Mathematik. Ihre Dissertation trug den Titel New Types of Irreducibility Criteria.",
       "locations": [
         {
           "name_historic": "New Haven",
@@ -300,47 +258,35 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "event_type_icon": "mdi-file-document",
-      "chapter": "a_mathematical_calling",
-      "weight": 0.55,
-      "event_class": {
-        "type": "publication",
-        "title": "Neue Arten von Irreduzibilitätskriterien",
-        "publication_type": "thesis",
-        "significance": "Doktorarbeit",
-        "source_link": {
-          "url": "https://math.yale.edu/sites/default/files/grace_murray_hopper_thesis_0.pdf",
-          "kind": "full_text",
-          "site": "Full text",
-          "entity": "Q109376154",
-          "resolved_by": "wikidata",
-          "resolved_on": "2026-09-03"
+      "event_type_icon": "mdi-certificate",
+      "chapter": "numbers_and_learning",
+      "weight": 0.5,
+      "background": "Das Graduiertenprogramm für Mathematik in Yale schloss an Hoppers Grundstudium am Vassar College an, wo sie Mathematik und Physik studiert hatte. 1930 erwarb sie in Yale einen Masterabschluss. Im selben Jahr heiratete sie Vincent Foster Hopper, einen Professor der New York University. Die Ehe wurde 1945 geschieden. Den Nachnamen Hopper behielt sie bis zu ihrem Lebensende.\n\nIhre Doktorarbeit fiel mit dem Beginn ihrer akademischen Laufbahn am Vassar College zusammen. 1931 trat sie dort als Mathematiklehrerin in den Lehrkörper ein. 1941 wurde sie zur außerordentlichen Professorin befördert. Ihre Ausbildung in Yale umfasste Mathematik und mathematische Physik. Ihre Dissertation wurde in dem Jahr veröffentlicht, in dem sie den Abschluss erwarb.\n\nDie Jahre am Vassar College verschafften Hopper eine lange Lehrerfahrung, bevor der Kriegsdienst ihre Arbeit auf Maschinen ausrichtete. Später lehnte sie eine ordentliche Professur am Vassar College ab, um als Forschungsstipendiatin an Harvard unter einem Auftrag der Navy weiterzuarbeiten. Das Harvard Computation Laboratory beschäftigte sie nach dem Krieg bis 1949. In ihren späteren Erklärungen zur Computerprogrammierung kehrte sie häufig zu dem Anliegen einer Lehrerin zurück, dass Beschäftigte in der Datenverarbeitung Anweisungen in englischen Wörtern schreiben können sollten.\n\n2024 widmete das IEEE Hoppers späterer Arbeit am A-0-Compiler eine Gedenktafel an der University of Pennsylvania. Auf der Tafel wurde ihr Einfluss auf junge Ingenieure gewürdigt. Yale benannte später ihr zu Ehren eines seiner Wohncolleges in Grace Hopper College um.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Grace_Hopper_College%2C_Yale_University.jpg/960px-Grace_Hopper_College%2C_Yale_University.jpg",
+          "caption": "Grace Hopper College, Yale University. Fassade an der Elm Street, New Haven, Connecticut",
+          "source": "https://commons.wikimedia.org/wiki/File:Grace_Hopper_College,_Yale_University.jpg",
+          "creator": "Kenneth C. Zirkel",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Grace Hopper College Yale"
         }
-      },
-      "background": "Yale bildete nach ihrem Grundstudium am Vassar College die zweite Etappe von Hoppers mathematischer Ausbildung. Dort hatte sie 1930 den Mastergrad erworben und anschließend eine weiterführende Forschung aufgenommen, während sie 1931 zugleich ihre Lehrtätigkeit am Vassar College begann. Diese Überschneidung ist aufschlussreich: Sie war nicht einfach eine Doktorandin, die New Haven nur vorübergehend passierte, sondern eine junge Wissenschaftlerin, die sich während der für eine Forschungsdoktorwürde erforderlichen langwierigen Arbeit zugleich ihre akademische Verankerung bewahrte. Ihre spätere Ernennung zur außerordentlichen Professorin im Jahr 1941 deutet auf den beruflichen Weg hin, den diese Zeit zunächst vorzuzeichnen schien.\n\nDie erhaltenen Berichte nennen Øystein Ore als Betreuer, gehen jedoch kaum auf den eigentlichen Forschungsprozess ein. Die Beschäftigung mit Irreduzibilitätskriterien verortet die Dissertation in der abstrakten Mathematik — weit entfernt von den praktischen Maschinen, mit denen Hopper später in Verbindung gebracht werden sollte. Durch ihre Veröffentlichung wurde die Arbeit Teil der wissenschaftlichen Überlieferung und blieb nicht bloß eine universitäre Pflichtübung. Dieser Gegensatz ist bedeutsam, weil ihr späterer öffentlicher Ruf die frühere Laufbahn wie einen geradlinigen Weg zur Informatik erscheinen lassen kann. Damals jedoch waren ihre Qualifikationen und ihr Alltag die einer Mathematikerin und Hochschullehrerin.\n\nDas Vassar College blieb die institutionelle Verbindung, die dieser Ausbildung unmittelbar Wirkung verlieh. Hopper entschied sich, dort zu bleiben, bis die Kriegsumstände diesen akademischen Weg unterbrachen; später lehnte sie eine ordentliche Professur zugunsten einer Forschungstätigkeit an Harvard ab. Die Promotion gehört damit zum Fundament einer Laufbahn, die wiederholt zwischen Universitäten, Staatsdienst und den entstehenden Computerorganisationen wechselte und mathematische Präzision in Bereiche trug, die das moderne Berufsbild des Programmierens noch gar nicht kannten."
+      ]
     },
     {
-      "date": "1943-12",
-      "date_precision": "month",
+      "date": "1943",
+      "date_precision": "year",
       "age": 36,
-      "title": "Eintritt in die Navy Reserve",
-      "description": "Im Dezember 1943 ließ sich Hopper vom Vassar College beurlauben und wurde in die Reserve der United States Navy vereidigt. Nachdem sie eine Ausnahmegenehmigung von der Mindestgewichtsanforderung der Navy erhalten hatte, trat sie den [[WAVES]] bei und begann ihre Ausbildung an der Naval Reserve Midshipmen’s School am Smith College.",
+      "title": "Über WAVES zur Reserve der Navy",
+      "description": "Hopper beurlaubte sich 1943 vom Vassar College und trat über WAVES der Reserve der United States Navy bei. Die Navy hatte sie zuvor wegen ihres Alters, ihres Verhältnisses von Gewicht zu Körpergröße und ihrer Tätigkeit am Vassar College abgelehnt. Sie erteilte ihr eine Ausnahme von der vorgeschriebenen Mindestgröße.",
       "locations": [
         {
           "name_historic": "Poughkeepsie",
           "name_modern": "Poughkeepsie, New York, Vereinigte Staaten",
           "centroid": [
-            -73.921,
-            41.7
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Northampton",
-          "name_modern": "Northampton, Massachusetts, Vereinigte Staaten",
-          "centroid": [
-            -72.641,
-            42.325
+            -73.9283672,
+            41.7065539
           ],
           "primary": true
         }
@@ -350,31 +296,34 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/d/d9/NU_Midshipmens_School.jpg",
-          "caption": "Ausbildungsschule der US Naval Reserve für Seekadetten im Zweiten Weltkrieg",
-          "source": "https://commons.wikimedia.org/wiki/File:NU_Midshipmens_School.jpg",
-          "creator": "US Navy",
-          "license": "Public domain",
-          "licenseUrl": null
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/On_the_same_team%2C_Enlist_in_the_WAVES%2C_U.S._Navy_poster%2C_1943.jpg",
+          "caption": "Rekrutierungsplakat der U.S. Navy WAVES von 1943",
+          "source": "https://commons.wikimedia.org/wiki/File:On_the_same_team,_Enlist_in_the_WAVES,_U.S._Navy_poster,_1943.jpg",
+          "creator": "John Philip Falter, US Naval Reserve (USNR)",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
       "event_type_icon": "mdi-shield",
-      "chapter": "serving_the_mark_i",
-      "weight": 0.75,
-      "annotations": {
-        "WAVES": {
-          "explanation": "Women Accepted for Volunteer Emergency Service, the U.S. Navy’s World War II women’s reserve.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Women_Accepted_for_Volunteer_Emergency_Service"
-        }
-      }
+      "chapter": "war_and_machines",
+      "weight": 0.7
     },
     {
       "date": "1944",
       "date_precision": "year",
       "age": 37,
       "title": "Programmierung des Harvard Mark I",
-      "description": "Nachdem sie ihren Jahrgang an der Seekadettenschule als Beste abgeschlossen hatte, wurde Leutnantin Hopper dem Computation Project des Bureau of Ships an der Harvard University in Cambridge zugeteilt. Dort schloss sie sich dem Programmierteam von Howard Hathaway Aiken für den [[Harvard Mark I]] an, der auch Automatic Sequence Controlled Calculator genannt wurde.",
+      "description": "Hopper schließt die Naval Reserve Midshipmen's School in Northampton, Massachusetts, als Beste ihres Jahrgangs ab. Die Navy weist sie dem Computation Project des Bureau of Ships an der Harvard University in Cambridge zu. Dort tritt sie dem von Howard Hathaway Aiken geleiteten Programmierteam des Mark I bei.",
       "locations": [
+        {
+          "name_historic": "Northampton",
+          "name_modern": "Northampton, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -72.6412,
+            42.3251
+          ],
+          "primary": false
+        },
         {
           "name_historic": "Cambridge",
           "name_modern": "Cambridge, Massachusetts, Vereinigte Staaten",
@@ -394,37 +343,31 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Harvard_Mark_I_Computer_-_Input-Output_Details.jpg/960px-Harvard_Mark_I_Computer_-_Input-Output_Details.jpg",
-          "caption": "Ein- und Ausgabedetails des Computers Harvard Mark I",
-          "source": "https://commons.wikimedia.org/wiki/File:Harvard_Mark_I_Computer_-_Input-Output_Details.jpg",
-          "creator": "The original uploader was Daderot at English Wikipedia.",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Aiken-IBM_Automatic_Sequence_Controlled_Calculator.jpg/960px-Aiken-IBM_Automatic_Sequence_Controlled_Calculator.jpg",
+          "caption": "Harvard-IBM Mark I Computer, Detailansicht von Ein-/Ausgabe und Steuerung. Diese Maschine steht im Cabot Science Building der Harvard University in Cambridge, Massachusetts.",
+          "source": "https://commons.wikimedia.org/wiki/File:Aiken-IBM_Automatic_Sequence_Controlled_Calculator.jpg",
+          "creator": "Capvideo",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
         }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "serving_the_mark_i",
+      "chapter": "war_and_machines",
       "weight": 0.9,
-      "annotations": {
-        "Harvard Mark I": {
-          "explanation": "A large electromechanical computer completed at Harvard during World War II, designed under Howard H. Aiken’s leadership.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Harvard_Mark_I"
-        }
-      },
-      "background": "Harvards Berechnungsprojekt während des Krieges verband einen Auftrag der Navy, universitäre Forschung sowie die technische und finanzielle Unterstützung durch IBM. Der Mark I war im Februar 1944 fertiggestellt und in Harvard installiert worden — nach jahrelanger Arbeit an einer Maschine, die zunächst Automatic Sequence Controlled Calculator hieß. Seine Entstehung ging auf Aikens frühere Schwierigkeiten mit Differentialgleichungen bei der Erforschung der Raumladungsleitung in Vakuumröhren zurück: Die numerischen Lösungen waren so mühsam, dass sich ein elektromechanisches Gerät anbot, das lange Rechenfolgen ausführen konnte. Charles Babbages Differenzmaschine war dabei eine ausdrückliche Inspiration.\n\nDie Maschine gehörte einer Übergangsgeneration an. Sie war programmierbar, jedoch elektromechanisch und noch nicht vollständig elektronisch. Ihre Nachfolger zeigen, wie schnell sich die Technik weiterentwickelte: Auf den Mark II folgte 1947 der Mark III mit einigen elektronischen Bauteilen, während der Mark IV vollständig elektronisch war. Zum Programmierteam gehörten neben Hopper auch Richard Milton Bloch und Robert Campbell. Ihre Arbeit war so umfangreich, dass Hopper und Aiken später drei gemeinsame Aufsätze über den Mark I verfassten und damit eine technische Dokumentation für ein Gerät hinterließen, dessen Name von ASCC in Harvard Mark I geändert worden war.\n\nDas aufschlussreichste Merkmal des Projekts war seine Entstehung aus einem praktischen mathematischen Engpass und nicht aus einem bereits vorhandenen Fachgebiet der Informatik. Aiken hatte eine Maschine erdacht, die die repetitive Rechenarbeit hinter Gleichungen erleichtern sollte, die sich nicht ohne Weiteres von Hand lösen ließen. IBM stellte anschließend die Mittel bereit, um sie in einem Maßstab zu bauen, in dem Harvard sie installieren und nutzen konnte. Diese Verbindung machte das Labor zu einem Ort, an dem mathematische Probleme, physische Apparaturen und eine neue Spezialdisziplin — das Programmieren — miteinander abgestimmt werden mussten.\n\nDer Einfluss des Labors reichte über die unmittelbare Kriegsarbeit hinaus. Aiken richtete 1947 in Harvard einen Masterstudiengang für Informatik ein, fast ein Jahrzehnt bevor solche Studiengänge an Universitäten üblich wurden. Für Hopper wurde die Stelle in Harvard zudem zur Brücke in die kommerzielle Computerwelt: Sie blieb bis 1949 im Computation Lab, lehnte eine Professur am Vassar College ab, arbeitete unter einem Auftrag der Navy als wissenschaftliche Mitarbeiterin weiter und wechselte anschließend zur UNIVAC-Entwicklung.",
+      "background": "Harvards kriegsbedingte Rechenarbeiten gingen auf ein Problem zurück, mit dem Aiken sich bei der Untersuchung der Elektronenröhrenleitung für seine Promotion in Physik an der Harvard University befasst hatte. Er benötigte numerische Lösungen für Differentialgleichungen. Charles Babbages Differenzmaschine brachte ihn auf die Idee, sich wiederholende Berechnungen von Menschen auf eine Maschine zu verlagern. Das daraus entstandene Projekt hieß zunächst Automatic Sequence Controlled Calculator, kurz ASCC. Später wurde es als Harvard Mark I bekannt.\n\nIBM lieferte die Konstruktion, den Bau und die Finanzierung der Maschine. Der fertige Computer wurde im Februar 1944 an der Harvard University installiert. Mit ihm kam eine programmierbare Großmaschine in ein universitäres Rechenprojekt, das an das Bureau of Ships der Navy angebunden war. Richard Milton Bloch und Robert Campbell stießen ebenfalls als Programmierer zu dem Projekt. Die Arbeit verlangte Verfahren, mit denen man der Maschine eine Folge von Operationen vorgeben und die Ergebnisse langer Berechnungen überprüfen konnte.\n\nAikens Labor entwickelte nach der Inbetriebnahme der ersten Maschine eine Reihe von Nachfolgern. 1947 stellte er den Harvard Mark II fertig. Der Mark III verwendete später einige elektronische Bauteile und einen Magnettrommelspeicher. Der Mark IV war vollständig elektronisch und besaß ebenfalls einen Magnetkernspeicher. Im Computation Laboratory entstanden drei gemeinsam von Hopper und Aiken verfasste Aufsätze. 1947 gründete Aiken außerdem ein Harvard-Masterprogramm für Informatik, fast zehn Jahre bevor solche Studiengänge an anderen Universitäten üblich wurden. Viele spätere Informatiker fertigten ihre Dissertationen unter seiner Leitung an.",
       "background_images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Harvard_Mark_I_Computer_-_Left_Segment.jpg/960px-Harvard_Mark_I_Computer_-_Left_Segment.jpg",
-          "caption": "Harvard-IBM Mark I Computer, linke Seite des Computers. Diese Maschine befindet sich im Cabot Science Building der Harvard University in Cambridge, Massachusetts.",
-          "source": "https://commons.wikimedia.org/wiki/File:Harvard_Mark_I_Computer_-_Left_Segment.jpg",
-          "creator": "Original uploader was Daderot at en.wikipedia",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Harvard_Mark_I_Computer_-_Input-Output_Details.jpg/960px-Harvard_Mark_I_Computer_-_Input-Output_Details.jpg",
+          "caption": "Harvard-IBM Mark I Computer, detail of Input/Output and control. This machine is in the Cabot Science Building, Harvard University, Cambridge, Massachusetts.",
+          "source": "https://commons.wikimedia.org/wiki/File:Harvard_Mark_I_Computer_-_Input-Output_Details.jpg",
+          "creator": "The original uploader was Daderot at English Wikipedia.",
           "license": "CC BY-SA 3.0",
           "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
           "query": "Harvard Mark I computer"
         },
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Babbage_Difference_Engine_%28the_power-supply_end%29.jpg/960px-Babbage_Difference_Engine_%28the_power-supply_end%29.jpg",
-          "caption": "An beiden Enden der Maschine befindet sich ein großer Kurbelgriff — allerdings mit unterschiedlichen Funktionen.",
+          "caption": "There is a large crank handle at both ends of the machine - but for different purposes.",
           "source": "https://commons.wikimedia.org/wiki/File:Babbage_Difference_Engine_(the_power-supply_end).jpg",
           "creator": "Jitze Couperus from Los Altos Hills, California, USA",
           "license": "CC BY 2.0",
@@ -434,20 +377,60 @@
       ]
     },
     {
+      "date": "1946",
+      "date_precision": "year",
+      "age": 39,
+      "title": "Das Handbuch zum Harvard Mark I",
+      "description": "An der Harvard University verfasst Hopper A Manual of Operation for the Automatic Sequence Controlled Calculator. Das Handbuch erklärt die Funktionsweise des Mark I.",
+      "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.1097,
+            42.3736
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grace_Hopper"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Harvard_Mark_I_2.jpg/960px-Harvard_Mark_I_2.jpg",
+          "caption": "Ausgestellter Computer Harvard Mark I",
+          "source": "https://commons.wikimedia.org/wiki/File:Harvard_Mark_I_2.jpg",
+          "creator": "Waldir Pimenta",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "war_and_machines",
+      "weight": 0.7,
+      "event_class": {
+        "type": "publication",
+        "title": "A Manual of Operation for the Automatic Sequence Controlled Calculator",
+        "publication_type": "manuscript",
+        "significance": "erstes Computerhandbuch"
+      }
+    },
+    {
       "date": "1949",
       "date_precision": "year",
       "age": 42,
-      "title": "Im UNIVAC-Team",
-      "description": "Hopper verließ Harvard 1949 und trat in Philadelphia als leitende Mathematikerin der Eckert–Mauchly Computer Corporation bei. Sie arbeitete im Team an der Entwicklung des UNIVAC I und wurde später, nachdem Remington Rand das Unternehmen übernommen hatte, Leiterin der Abteilung für die Entwicklung automatischer Programmierung.",
+      "title": "Im Entwicklungsteam des UNIVAC I",
+      "description": "Hopper trat als leitende Mathematikerin in die Eckert–Mauchly Computer Corporation ein und begann mit der Arbeit am UNIVAC I.",
       "locations": [
         {
           "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, USA",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "primary": true,
           "centroid": [
-            -75.1652,
-            39.9526
-          ],
-          "primary": true
+            -75.1635262,
+            39.9527237
+          ]
         }
       ],
       "involved_people": [
@@ -460,7 +443,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Grace_Hopper_and_UNIVAC.jpg",
-          "caption": "Grace Hopper an der UNIVAC-Tastatur, Juni 1957",
+          "caption": "Grace Hopper an der UNIVAC-Tastatur, 1957",
           "source": "https://commons.wikimedia.org/wiki/File:Grace_Hopper_and_UNIVAC.jpg",
           "creator": "Unknown authorUnknown author",
           "license": "CC BY 2.0",
@@ -468,43 +451,32 @@
         }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "making_code_speak",
-      "weight": 0.8
+      "chapter": "languages_for_business",
+      "weight": 0.8,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Massachusetts",
+        "to_location": "Pennsylvania",
+        "characterization": "Laufbahn in der Informatik"
+      }
     },
     {
       "date": "1952",
       "date_precision": "year",
       "age": 45,
-      "title": "Abschluss des A-0-Compilers",
-      "description": "Bis 1952 hatte Hopper während ihrer Arbeit bei Remington Rand das A-0 System fertiggestellt, einen Programmlinker, den sie ursprünglich [[compiler]] nannte. Damit trieb sie ihr Vorhaben voran, das Programmieren für Datenverarbeiter zugänglicher zu machen.",
-      "locations": [
-        {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
-          "centroid": [
-            -75.1652,
-            39.9526
-          ],
-          "primary": true
-        }
-      ],
+      "title": "Das A-0-Compilersystem fertiggestellt",
+      "description": "Hopper stellte 1952 einen Programmlinker für das A-0 System fertig. Sie nannte den Programmlinker einen Compiler.",
+      "locations": [],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "making_code_speak",
-      "weight": 0.95,
+      "chapter": "languages_for_business",
+      "weight": 1.0,
       "event_class": {
         "type": "invention",
         "title": "A-0 System",
-        "description": "Ein Linker-Compiler, der mathematische Notation in Maschinencode-Routinen übersetzte und Programme aus wiederverwendbaren Unterprogrammen zusammensetzte.",
-        "impact": "Es etablierte ein frühes funktionsfähiges Modell für compilerbasierte Programmiersysteme."
-      },
-      "annotations": {
-        "compiler": {
-          "explanation": "Software that translates instructions written in a programming language into a form a computer can execute.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Compiler"
-        }
+        "description": "A-0 ist ein Link-Loader, der mathematische Schreibweisen in Maschinencode übersetzt und Programmroutinen für den UNIVAC zusammenführt."
       }
     },
     {
@@ -512,21 +484,27 @@
       "date_precision": "year",
       "age": 47,
       "title": "Leitung der automatischen Programmierung",
-      "description": "1954 ernannte Remington Rand Hopper zur ersten Leiterin der Abteilung für automatische Programmierung. Ihre Abteilung brachte compilerbasierte Sprachen wie MATH-MATIC und FLOW-MATIC heraus, die Programmierern leichter lesbare Ausdrucksformen boten.",
+      "description": "Eckert–Mauchly berief Hopper 1954 zur Leiterin der Abteilung für automatische Programmierung. Sie leitete die Veröffentlichung kompilierter Sprachen, darunter FLOW-MATIC.",
       "locations": [],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "making_code_speak",
-      "weight": 0.85
+      "chapter": "languages_for_business",
+      "weight": 0.8,
+      "event_class": {
+        "type": "invention",
+        "title": "FLOW-MATIC",
+        "description": "FLOW-MATIC ist eine compilerbasierte Sprache, mit der Beschäftigte in Unternehmen Anweisungen zur Datenverarbeitung in englischähnlichen Wörtern schreiben können.",
+        "impact": "Ihr Sprachentwurf bildet eine wichtige Grundlage für die spätere COBOL-Spezifikation."
+      }
     },
     {
       "date": "1959",
       "date_precision": "year",
       "age": 52,
-      "title": "Mitentwicklung von COBOL",
-      "description": "Hopper war technische Beraterin bei der [[CODASYL]]-Konferenz, auf der Fachleute aus Industrie und Regierung [[COBOL]] definierten. Die neue Geschäftssprache griff stark auf ihre Arbeit an FLOW-MATIC zurück und verwendete englischähnliche Wörter statt maschinenorientierter Notation.",
+      "title": "An der Entwicklung von COBOL beteiligt",
+      "description": "Im Frühjahr 1959 arbeitet Hopper als technische Beraterin für [[CODASYL]]. Das Komitee entwickelt COBOL als maschinenunabhängige Programmiersprache. Jean E. Sammet gehört zu den Entwicklerinnen und Entwicklern.",
       "locations": [],
       "involved_people": [
         "Jean E. Sammet"
@@ -537,91 +515,78 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f4/COBOL_poster_%281969%29.jpg",
-          "caption": "Plakat von 1969 zur Ankündigung eines Einführungskurses in COBOL",
-          "source": "https://commons.wikimedia.org/wiki/File:COBOL_poster_(1969).jpg",
-          "creator": "Dietmar R. Winkler",
-          "license": "Public domain",
-          "licenseUrl": null
+          "url": "https://live.staticflickr.com/5327/8990248516_11a9f9a4f4_b.jpg",
+          "caption": "Ausgesprochen „Moby Dick“ vielleicht? Ein Modell eines „tragbaren“ Computers für die US Army, etwa 1967.",
+          "source": "https://www.flickr.com/photos/35448539@N00/8990248516",
+          "creator": "blakespot",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
         }
       ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "making_code_speak",
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "languages_for_business",
       "weight": 1.0,
+      "event_class": {
+        "type": "invention",
+        "title": "COBOL",
+        "description": "COBOL ist eine maschinenunabhängige Programmiersprache für Unternehmen, die für Anweisungen zur Datenverarbeitung englischähnliche Wörter verwendet.",
+        "impact": "COBOL wird in Verwaltung und Industrie umfassend für die Verarbeitung geschäftlicher Daten eingesetzt."
+      },
       "annotations": {
         "CODASYL": {
-          "explanation": "A consortium of government and industry representatives formed to develop common data-processing language standards.",
+          "explanation": "The Conference on Data Systems Languages was an industry consortium formed to develop common data-processing languages.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/CODASYL"
-        },
-        "COBOL": {
-          "explanation": "An English-oriented programming language created for business data processing and still used in many legacy systems.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/COBOL"
         }
       },
-      "background": "Geschäftsanwender sahen sich Ende der 1950er-Jahre einer zersplitterten Welt aus Maschinen und Programmiergewohnheiten gegenüber. Der UNIVAC I war 1951 auf den Markt gekommen, doch Anweisungen zu schreiben bedeutete meist noch, in einer spezialisierten, hardwarenahen Notation zu arbeiten. Hoppers früherer Vorschlag, Mitarbeiter in der Datenverarbeitung sollten ihre Aufgaben in gewöhnlichen Wörtern ausdrücken können, war zunächst mit dem Argument abgetan worden, Computer würden „kein Englisch verstehen“. Ihre Arbeit an A-0 und die von ihrer Abteilung für automatische Programmierung entwickelten Sprachen hatten bis zu dem Zeitpunkt, an dem Regierung und Hersteller nach einem gemeinsamen Ansatz suchten, jedoch einen praktischen Präzedenzfall geschaffen.\n\nAn der Entwicklungsarbeit waren außerdem Programmierer beteiligt, deren Wege in die Informatik ungewöhnlich vielfältig waren. Bei Sperry Gyroscope hatte Jean E. Sammet zunächst einen 20-zeiligen Binärlader von Hand in den SPEEDAC eingetippt — eine Aufgabe, die drei Tage dauerte. Später gab sie Programmierkurse am Adelphi College, obwohl die Hochschule keinen Computer besaß und es kaum Programmierlehrbücher gab. 1958 war sie als Beraterin für Programmierforschung bei Sylvania Electric Products in Needham, Massachusetts, tätig. Dort erarbeiteten Sammet und fünf weitere Programmierer 1959 in nur zwei Wochen einen Vorschlag, der weite Teile des Sprachdesigns festlegte; Sylvania’s Kunden aus der US-Regierung akzeptierten ihn.\n\n## Eine gemeinsame Geschäftssprache\n\nDas daraus hervorgegangene Design kopierte nicht einfach das System eines einzigen Unternehmens. Es erweiterte FLOW-MATIC und nahm zugleich Ideen aus IBMs konkurrierender Sprache COMTRAN auf. Dieser Kompromiss war entscheidend: Eine Geschäftssprache musste für die Datenverarbeitung verständlich genug und zugleich auf den inkompatiblen Maschinen verschiedener Hersteller einsetzbar sein. COBOL wurde zur bis dahin allgegenwärtigsten Geschäftssprache, statt ein auf einen einzigen Anbieter zugeschnittenes Experiment zu bleiben. Ihr langes Nachleben schuf zudem den Bedarf an Konformitätsprüfungen: Das spätere Testprogramm der Navy führte die unterschiedlichen COBOL-Dialekte der Hersteller allmählich zusammen; seine Verwaltung ging schließlich an das National Bureau of Standards, heute NIST, über. Die Zusammenarbeit von 1959 begründete daher nicht nur eine Sprache, sondern auch die spätere Forderung, Programme und Compiler müssten gemeinsamen Standards entsprechen.",
+      "background": "Kommerzielle Computerhersteller hatten eigene Programmiersysteme für ihre jeweiligen Maschinen entwickelt. Hoppers frühere Sprache FLOW-MATIC lieferte ein Modell für die Datenverarbeitung mit englischen Wörtern. IBM steuerte mit COMTRAN einen weiteren Ideensatz bei. Die Sprachentwicklung griff auf beide Systeme zurück. Die geplanten Nutzer bearbeiteten Gehaltsabrechnungen, Steuern, Akten und andere große Mengen geschäftlicher Daten. Hopper hatte argumentiert, dass viele Beschäftigte in der Datenverarbeitung englische Anweisungen leichter schreiben könnten als symbolische Befehle. Ihre Arbeit an A-0 hatte mathematische Schreibweisen bereits in Maschinencode übersetzt.\n\nJean E. Sammet kam mit Erfahrung von Sperry Gyroscope, wo sie die erste wissenschaftliche Programmiergruppe geleitet hatte. 1955 gab sie innerhalb von drei Tagen 20 Binärbefehle von Hand ein, um den grundlegenden Lader für den Computer SPEEDAC zu erstellen. Bei Sylvania Electric Products in Needham, Massachusetts, leitete sie unter Carl Hammer die Softwareentwicklung für das MOBIDIC-Projekt. 1959 erarbeiteten Sammet und fünf weitere Programmiererinnen und Programmierer große Teile des Sprachentwurfs in einem über zwei Wochen fertiggestellten Vorschlag. Sylvanias Kunden bei der US-Regierung nahmen den Vorschlag an.\n\nDie daraus entstandene Arbeit erweiterte Hoppers FLOW-MATIC-Ansatz und übernahm Ideen aus IBMs COMTRAN. Sammet wechselte 1961 zu IBM. Dort entwickelte sie 1962 FORMAC zur symbolischen Verarbeitung mathematischer Formeln. Hoppers spätere Navy Programming Languages Group entwickelte Validierungssoftware für COBOL und dessen Compiler. Die Konformitätstests trugen dazu bei, die unterschiedlichen Versionen der großen Computerhersteller einander anzugleichen. Das National Bureau of Standards übernahm in den 1980er-Jahren die Tests und ihre Verwaltung.",
       "background_images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Univac_I_at_Census_Bureau_with_two_operators.jpg/960px-Univac_I_at_Census_Bureau_with_two_operators.jpg",
-          "caption": "Mitarbeiter des U.S. Census Bureau werten Daten mit einem der UNIVAC-Computer der Behörde aus, etwa 1960.",
-          "source": "https://commons.wikimedia.org/wiki/File:Univac_I_at_Census_Bureau_with_two_operators.jpg",
-          "creator": "U.S. Census Bureau employees",
-          "license": "Public domain",
-          "licenseUrl": null,
-          "query": "UNIVAC I computer"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Sylvania_MOBIDIC_model_%282585216399%29.jpg/960px-Sylvania_MOBIDIC_model_%282585216399%29.jpg",
+          "caption": "Pronounced \"Moby Dick\" perhaps? A model of a \"portable\" computer for the US Army c.1967.",
+          "source": "https://commons.wikimedia.org/wiki/File:Sylvania_MOBIDIC_model_(2585216399).jpg",
+          "creator": "Erik Pitti from San Diego, CA, USA",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "query": "MOBIDIC computer"
         }
       ]
     },
     {
-      "date": "1967-08",
-      "date_precision": "month",
+      "date": "1967",
+      "date_precision": "year",
       "date_end": "1977",
       "date_end_precision": "year",
       "age": 60,
-      "title": "Leitung der Sprachstandards der Navy",
-      "description": "Im August 1967 wurde Hopper wieder in den aktiven Dienst zurückberufen und zur Leiterin der Navy Programming Languages Group im Office of Information Systems Planning ernannt. Bis 1977 leitete sie für die Navy die Arbeiten zur Validierung von COBOL-Compilern und an Sprachstandards.",
+      "title": "Leitung der Navy Programming Languages Group",
+      "description": "Hopper leitet die Navy Programming Languages Group im Navy Office of Information Systems Planning. Ihre Gruppe entwickelt Validierungssoftware und Compilertests für die Standardisierung der Navy.",
       "locations": [],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "the_navys_language_keeper",
+      "chapter": "navy_standards",
       "weight": 0.8
     },
     {
-      "date": "1983-12-15",
+      "date": "1985-11-08",
       "date_precision": "day",
-      "date_end": "1985-11-08",
-      "date_end_precision": "day",
-      "age": 76,
-      "title": "Beförderung zum Commodore",
-      "description": "Am 15. Dezember 1983 beförderte Präsident Ronald Reagan Hopper auf der Ruhestandsliste zum Commodore, während sie aufgrund einer besonderen Genehmigung des Kongresses weiterhin im aktiven Dienst blieb. 1985 wurde der Rang in Rear Admiral (lower half) umbenannt.",
+      "age": 78,
+      "title": "Zur Konteradmiralin befördert",
+      "description": "Hopper wird am 8. November 1985 zur Konteradmiralin, untere Hälfte, befördert. Der Kongress genehmigt ihren aktiven Dienst über das reguläre Ruhestandsalter hinaus.",
       "locations": [],
-      "involved_people": [
-        "Ronald Reagan"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Grace_Hopper_being_promoted_to_Commodore.jpg/960px-Grace_Hopper_being_promoted_to_Commodore.jpg",
-          "caption": "Grace Hopper wird im Weißen Haus zum Commodore befördert",
-          "source": "https://commons.wikimedia.org/wiki/File:Grace_Hopper_being_promoted_to_Commodore.jpg",
-          "creator": "Pete Souza",
-          "license": "Public domain",
-          "licenseUrl": null
-        }
-      ],
       "event_type_icon": "mdi-arrow-up-bold",
-      "chapter": "admiral_of_the_digital_age",
-      "weight": 0.65
+      "chapter": "navy_standards",
+      "weight": 0.6
     },
     {
       "date": "1986-08-14",
       "date_precision": "day",
       "age": 79,
-      "title": "Austritt aus der Navy",
-      "description": "Am 14. August 1986 schied Hopper nach mehr als 42 Dienstjahren aus der United States Navy aus. Zu diesem Zeitpunkt war sie das dienstälteste aktive Mitglied der Navy; bei einer Abschiedsfeier in Boston erhielt sie die Defense Distinguished Service Medal.",
+      "title": "Ausscheiden aus der United States Navy",
+      "description": "Hopper scheidet nach mehr als 42 Dienstjahren aus der Navy aus. An Bord der USS Constitution in Boston erhält sie die Defense Distinguished Service Medal. Zu diesem Zeitpunkt ist sie die älteste noch dienende Offizierin der Navy.",
       "locations": [
         {
           "name_historic": "Boston",
@@ -637,35 +602,35 @@
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
       "event_type_icon": "mdi-account-clock",
-      "chapter": "admiral_of_the_digital_age",
+      "chapter": "final_service",
       "weight": 0.6
     },
     {
       "date": "1991",
       "date_precision": "year",
       "age": 84,
-      "title": "Auszeichnung mit der Technologiemedaille",
-      "description": "1991 erhielt Hopper die National Medal of Technology. Mit der Auszeichnung wurden ihre Beiträge zum Computerprogrammieren und zur Entwicklung von Programmiersprachen gewürdigt.",
+      "title": "National Medal of Technology verliehen",
+      "description": "Hopper erhält 1991 die National Medal of Technology. Mit der Auszeichnung wird ihre Arbeit an Programmiersprachen gewürdigt, die Computertechnik vereinfachten und zugänglicher machten.",
       "locations": [],
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
       "event_type_icon": "mdi-medal",
-      "chapter": "admiral_of_the_digital_age",
-      "weight": 0.45
+      "chapter": "final_service",
+      "weight": 0.5
     },
     {
       "date": "1992-01-01",
       "date_precision": "day",
       "age": 85,
-      "title": "Tod in Arlington",
-      "description": "Am Neujahrstag 1992 starb Hopper im Alter von 85 Jahren im Schlaf in ihrem Zuhause in Arlington County, Virginia.",
+      "title": "Zu Hause in Arlington gestorben",
+      "description": "Hopper starb am Neujahrstag 1992 im Schlaf in ihrem Haus im Arlington County, Virginia.",
       "locations": [
         {
           "name_historic": "Arlington County",
-          "name_modern": "Arlington, Virginia, Vereinigte Staaten",
+          "name_modern": "Arlington County, Virginia, USA",
           "centroid": [
-            -77.1067,
+            -77.1068,
             38.8816
           ],
           "primary": true
@@ -674,21 +639,31 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Grace_Hopper"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Gravesite_for_U.S._Navy_Admiral_Grace_Hopper.jpg/960px-Gravesite_for_U.S._Navy_Admiral_Grace_Hopper.jpg",
+          "caption": "Grabstätte der Admiralin der U.S. Navy Grace Hopper",
+          "source": "https://commons.wikimedia.org/wiki/File:Gravesite_for_U.S._Navy_Admiral_Grace_Hopper.jpg",
+          "creator": "Arlington National Cemetery",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
       "event_type_icon": "mdi-cross",
-      "chapter": "admiral_of_the_digital_age",
-      "weight": 0.4,
+      "chapter": "final_service",
+      "weight": 0.5,
       "event_class": {
         "type": "death",
-        "characterization": "im Schlaf",
         "place_of_rest": "Nationalfriedhof Arlington"
-      }
+      },
+      "background": "Nach ihrem Ausscheiden aus der Navy stellte die Digital Equipment Corporation Hopper ein. Rita Yavinsky bot ihr zunächst eine Stelle an. Hopper bestand darauf, das übliche formelle Bewerbungsgespräch zu absolvieren. Sie scherzte, sie würde jeden zweiten Donnerstag arbeiten. Sie schlug vor, sie im Unternehmensmuseum als Pionierin der Informatik auszustellen. Außerdem bat sie um ein großzügiges Gehalt und ein Spesenkonto ohne Begrenzung. DEC stellte sie in Vollzeit als Principal Corporate Consulting Engineer ein. Die Position hatte den Rang einer leitenden Vizepräsidentin im technischen Laufbahnzweig.\n\nBei DEC vertrat Hopper das Unternehmen auf Branchenforen und arbeitete in Ausschüssen der Branche mit. Sie besuchte die meisten technischen Standorte des Unternehmens. Nach ihren Ansprachen erhoben sich die Zuhörer meist zu stehenden Ovationen. Ihre Vorträge griffen auf die frühe Geschichte der Informatik und auf Möglichkeiten zurück, Systeme für die Nutzer einfacher zu machen. Sie forderte junge Menschen auf, sich an schwierige Aufgaben zu wagen. Sie sagte, sie werde sie unterstützen und sie später „aufmischen“, damit sie weiter Risiken eingingen.\n\nBei diesen Auftritten trug Hopper ihre große Uniform der Navy. Die Richtlinien des Verteidigungsministeriums erlaubten einem ehemaligen Offizier die Uniform in diesem Rahmen nicht. Zu ihren Vorführungen gehörten Drahtstücke von knapp einem Fuß Länge. Sie nannte jedes Stück eine Nanosekunde, weil Licht in einer Nanosekunde im Vakuum diese Strecke zurücklegt. Sie erklärte, dass sich Signale in echtem Draht langsamer bewegen. Später nutzte sie die Drähte, um zu erklären, warum Computer für eine höhere Geschwindigkeit klein sein mussten. Bei Vorträgen für DEC verteilte sie außerdem Tütchen mit Pfeffer als Pikosekunden. Sie blieb bis zu ihrem Lebensende bei DEC tätig."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "e1339b5e9370d3ed",
-    "translated_on": "2026-09-03T07:23:46.497390+02:00",
+    "source_fingerprint": "18498836f9c2dc10",
+    "translated_on": "2026-09-05T16:56:02.271557+02:00",
     "translator": "openai:gpt-5.6-luna"
   }
 }

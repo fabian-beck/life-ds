@@ -129,11 +129,11 @@
       }
     },
     "m_translate": {
-      "fingerprint": "bd481892bdfb105d",
+      "fingerprint": "bdc303b25ce35c9c",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Translates a meta story’s text into the target language, saves the localized detail file, and updates the language registry that exposes it. It carries forward event titles and person-name forms already settled in the translated person data, so the story’s chapters and slides use the same wording.",
-        "why_this_design": "Reusing those earlier translations prevents the overview from creating competing names or titles for the people and events it connects."
+        "what_it_does": "Translates a meta story’s detail file into the target language, saves the localized copy, and updates that language’s story registry so it can be found with the rest of the collection.",
+        "why_this_design": "It checks whether both translation records are current before doing work, and updates the registry only after the translated detail file has been saved."
       }
     },
     "p_backgrounds": {
@@ -297,11 +297,11 @@
       }
     },
     "p_translate": {
-      "fingerprint": "dbaced8c030f6d55",
+      "fingerprint": "f176b949ed132ed4",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Translates the text-only parts of a person document while preserving their positions in the larger English record. It carries forward the name glossary and target-language reference evidence so prose uses established local forms for people, places, and institutions.",
-        "why_this_design": "Sending only translatable fields and merging the result back onto the original document prevents identifiers, links, dates, coordinates, and annotation keys from changing, while fixed annotation markers preserve the links the interface depends on."
+        "what_it_does": "Translates the person document’s text while leaving the nontext parts of the English document outside the translation request. It applies the approved person-name glossary and language-specific source evidence so names and places remain consistent with the localized story.",
+        "why_this_design": "It overlays the translated fields onto a copy of the English document, which protects dates, coordinates, URLs, and IDs from translation errors while preserving annotation links and the interface’s document structure."
       }
     },
     "p_wiki_fetch": {

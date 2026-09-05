@@ -696,17 +696,18 @@
     {
       "id": "grace_hopper",
       "name": "Grace_Hopper",
-      "tagline": "Pioneer of machine-independent programming",
-      "summary": "Grace Hopper was an American computer scientist, mathematician, and United States Navy rear admiral. She helped program the Harvard Mark I, developed early compiler systems and FLOW-MATIC, and played a central role in the creation and standardization of COBOL.",
+      "tagline": "Compilers That Read English",
+      "summary": "Grace Hopper was an American computer scientist, mathematician, and United States Navy rear admiral. She programmed the Harvard Mark I, developed compiler systems, led work on FLOW-MATIC, and helped create COBOL.",
       "portrait": {
         "image": "/portraits/grace_hopper_thumbnail.webp",
-        "source": "https://en.wikipedia.org/wiki/Grace_Hopper",
-        "caption": "Stylized portrait based on historical photograph",
-        "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg",
         "thumbnail": "/portraits/grace_hopper_thumbnail.webp",
         "medium": "/portraits/grace_hopper_medium.webp",
-        "full": "/portraits/grace_hopper_full.webp"
+        "full": "/portraits/grace_hopper_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg",
+        "referenceUsed": true
       },
       "primaryRoles": [
         "computer scientist",
@@ -714,7 +715,7 @@
         "naval officer"
       ],
       "created": "2025-11-20T06:24:36+01:00",
-      "lastUpdated": "2026-09-03T07:18:27.968534+02:00",
+      "lastUpdated": "2026-09-05T16:41:48.749142+02:00",
       "birthDate": "1906-12-09",
       "deathDate": "1992-01-01"
     },
