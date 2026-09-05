@@ -624,21 +624,6 @@ STEPS: List[Step] = [
         depends_on=[Dep("p_events_p2", "historic and modern place names")],
     ),
     Step(
-        "p_pub_links",
-        "Link the published works",
-        SHARED,
-        EXTERNAL,
-        "enrich_publication_links.py",
-        "enrich_events",
-        summary=(
-            "Resolves each published work against Wikidata, and against "
-            "Wikipedia when that finds nothing, keeping the answer only when "
-            "both the title and the authorship check out—so a slide names a "
-            "work and offers the place it can be read."
-        ),
-        depends_on=[Dep("p_events_p1", "the works the classification named")],
-    ),
-    Step(
         "p_write",
         "Write the dataset",
         PERSON,
@@ -654,7 +639,6 @@ STEPS: List[Step] = [
             Dep("p_chapters", "chapters + conclusion"),
             Dep("p_img_verify", "per-event images + the verified portrait"),
             Dep("p_geocode", "coordinates"),
-            Dep("p_pub_links", "a link per published work"),
         ],
         outputs=["life_events"],
     ),

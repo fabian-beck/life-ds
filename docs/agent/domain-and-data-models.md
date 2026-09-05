@@ -117,26 +117,18 @@ Events are the core narrative units displayed as slides. Events can optionally b
 
 Markup wins where both could apply, and a name that is already emphasized as a person wins over an unmarked term, since the person's card says more than a gloss would. A term that appears nowhere in the description simply renders nothing. A term is explained once per story: the normalize step drops an annotation whose term an earlier event already annotated or carried in its title, so a reader is not offered a definition of what the previous slides were about.
 
-**Event Classification (`event_class`)**: an optional structured block Phase 1 writes for the recognized kinds of event — `birth`, `marriage_partnership`, `migration`, `invention`, and `publication` — which `EventSlide.svelte` renders as an info box instead of the plain event badge. A publication carries `title`, `publication_type`, and optionally `publisher`, `significance`, and `impact`, plus a resolved link to the work itself:
+**Event Classification (`event_class`)**: an optional structured block Phase 1 writes for the recognized kinds of event — `birth`, `marriage_partnership`, `migration`, `invention`, and `publication` — which `EventSlide.svelte` renders as an info box instead of the plain event badge. A publication carries `title`, `publication_type`, and optionally `publisher`, `significance`, and `impact`:
 
 ```json
 "event_class": {
   "type": "publication",
   "title": "On the Constitution of Atoms and Molecules",
   "publication_type": "paper",
-  "publisher": "Philosophical Magazine",
-  "source_link": {
-    "url": "https://en.wikisource.org/wiki/On_the_Constitution_of_Atoms_and_Molecules",
-    "kind": "wikisource",
-    "site": "Wikisource",
-    "entity": "Q…",
-    "resolved_by": "wikidata",
-    "resolved_on": "2026-08-02"
-  }
+  "publisher": "Philosophical Magazine"
 }
 ```
 
-`source_link` is written by `scripts/enrich_publication_links.py` (Step 11 of the dataset generation, also runnable standalone) and only when both the work's title and its authorship check out — see [Data generation and localization](data-generation-and-localization.md). `kind` is machine-readable (`wikisource`, `wikipedia`, `full_text`, `internet_archive`, `gutenberg`, `doi`, `open_library`, `wikidata`), `site` is the display noun the interface prints, and both are language-independent: every translated copy carries the same link, like the annotation URLs. A publication **without** one is normal — the interface turns it into a Wikipedia search in the reader's language rather than storing a guess.
+The slide names the work and does not link it. The event's own `sources` are about the event, and no step resolves the work itself.
 
 **Chapter Structure**:
 - `headline`: Catchy, story-like title (2-5 words, varied lengths) - ONE unified concept, NOT a list. Vivid and evocative like a book chapter. Avoid commas, "and", or punctuation that creates lists.

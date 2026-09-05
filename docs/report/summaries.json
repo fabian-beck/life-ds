@@ -280,14 +280,6 @@
         "why_this_design": "Uses separate style and identity references so a common illustration language does not erase the historical source portrait or turn decorative frames and source-scene details into part of the person’s image."
       }
     },
-    "p_pub_links": {
-      "fingerprint": "5d721f6045fd4cb1",
-      "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Resolves unlinked publication events to a place where the work can be read, checking Wikidata first and Wikipedia when needed. Adds a link only after the work’s title and the named person’s authorship agree, so publication slides point to the intended work rather than a title match.",
-        "why_this_design": "It treats missing links and failed lookups as normal, while caching results, so an unavailable service or an uncertain match does not interrupt generation or turn repeated searches into repeated network calls."
-      }
-    },
     "p_register": {
       "fingerprint": "c0ca7dd52fe0f244",
       "summary": {

@@ -219,20 +219,6 @@ python scripts/validate_event_prose.py charles_babbage
 
 Every phase that writes a description — Phase 1, Phase 2's refinement, the review — reads one definition of what a description is, `description_contract_prompt()` in `scripts/utils/prose_style.py`: one moment of a life, narrated in its own present, asserted rather than weighed against sources, at the slide's granularity. Before the contract each phase carried its own partial copy of the rules and the copies disagreed, and a description that was accurate, sourced, and written in an encyclopedia's source-critical register passed every validator (issue #141). This reads for the three shapes that shipped: a year later than the event's own span anywhere in the prose, the language of weighing sources ("most likely", "is disputed", "according to"), and a street address or house number where the slide is at city level. It reports by default, because the corpus still carries prose written before the contract, and its count is how a prompt change is judged; `--check` makes it a gate. A sentence that trips a rule and is right belongs in the script's `ACCEPTED` list with the reason.
 
-**Link the published works** (Step 11 of the dataset generation, standalone; no API key, no model):
-
-```bash
-python scripts/enrich_publication_links.py --all
-python scripts/enrich_publication_links.py niels_bohr --verbose
-python scripts/enrich_publication_links.py --all --dry-run
-python scripts/enrich_publication_links.py --report        # what the data holds, no network
-python scripts/enrich_publication_links.py --all --force   # ask again, replace existing links
-```
-
-A publication event names a work on the slide and used to leave the reader with nowhere to go — the event's own `sources` are about the event, not about the work. This resolves each work to one link and writes it as `event_class.source_link` in every copy of the person's events, translations included (a link is language-independent, exactly like the annotation URLs). It asks Wikidata first, since one item carries the transcription, the scan, the DOI, and the encyclopedia articles at once, and falls back to a Wikipedia search when Wikidata is unreachable or has nothing. From a confirmed item the link is ranked for a reader rather than for a catalogue: Wikisource, then a full text or scan, then the encyclopedia article, then a DOI or Open Library record, then the item itself.
-
-Nothing is written on a guess. A candidate is accepted only when its title *is* the work's title — a parenthetical disambiguator aside, so "Propaganda (book)" still matches "Propaganda" — and the author is named in the item's claims or the article's opening. That is what keeps "Das Rhenium" off the article about the element and "The Reynolds Pamphlet (song)" off the pamphlet. Answers are cached in `data/_cache/publication_links.json`, negative ones included, so reruns are free; an existing link is kept unless `--force` replaces it, which leaves a hand-corrected link alone. A work with no record gets no link, and `EventSlide.svelte` offers a Wikipedia search in the reader's language instead — built in the interface so it never goes stale in the data.
-
 **Restyle a meta story** (Phase 9 of `generate_meta_story.py`, standalone):
 
 ```bash
@@ -495,7 +481,7 @@ Meta story `event_title`s are copied verbatim from the person's translated life 
 **What is preserved** (guaranteed by the merge — the model never sees these fields):
 - All dates (dates, timestamps)
 - All coordinates (locations, centroid, bbox)
-- All URLs (sources, wikipedia, images, annotation wikipedia_urls, publication `source_link`s)
+- All URLs (sources, wikipedia, images, annotation wikipedia_urls)
 - All IDs (person_id, chapter IDs, annotation term keys, event_index)
 - `event_type_icon`, `involved_people` list structure
 - Relationship types (e.g., `professional/mentor`) — entirely; the UI localizes them from locale files (the closed vocabulary in `scripts/utils/relationship_vocabulary.py`), and `entity_kind`, where a pre-rule network still carries it, is copied verbatim the same way

@@ -1407,7 +1407,7 @@ def generate_person_events(
 
     # PHASE 1: Generate event skeletons
     print(
-        f"[Step 4/12] PHASE 1: Generating event skeletons (model: {model}, reasoning: {PHASE1_REASONING_EFFORT})..."
+        f"[Step 4/11] PHASE 1: Generating event skeletons (model: {model}, reasoning: {PHASE1_REASONING_EFFORT})..."
     )
     phase1_prompt = build_phase1_prompt(
         page_data,
@@ -1417,11 +1417,11 @@ def generate_person_events(
         deutsche_biographie_text=db_prompt_text,
     )
     life_plan = call_openai_phase1(phase1_prompt, model)
-    print(f"[Step 4/12] Generated {len(life_plan.event_skeletons)} event skeletons")
+    print(f"[Step 4/11] Generated {len(life_plan.event_skeletons)} event skeletons")
 
     # PHASE 2: Research event details (NO images - Phase 3)
     print(
-        f"[Step 5/12] PHASE 2: Researching event details (model: {PHASE2_MODEL}, reasoning: {PHASE2_REASONING_EFFORT})..."
+        f"[Step 5/11] PHASE 2: Researching event details (model: {PHASE2_MODEL}, reasoning: {PHASE2_REASONING_EFFORT})..."
     )
     event_details_list = research_all_event_details(
         event_skeletons=life_plan.event_skeletons,
@@ -1430,15 +1430,15 @@ def generate_person_events(
         deutsche_biographie_text=db_prompt_text,
         subject_article=page_data,
     )
-    print(f"[Step 5/12] Researched details for {len(event_details_list)} events")
+    print(f"[Step 5/11] Researched details for {len(event_details_list)} events")
 
     # MERGE: Combine skeletons + details
-    print("[Step 6/12] Merging event skeletons with details...")
+    print("[Step 6/11] Merging event skeletons with details...")
     merged_events = merge_all_events(life_plan.event_skeletons, event_details_list)
 
     # CHAPTER GENERATION: Create chapters based on established events
     print(
-        f"[Step 7/12] Generating life chapters (model: {model}, reasoning: {CHAPTER_REASONING_EFFORT})..."
+        f"[Step 7/11] Generating life chapters (model: {model}, reasoning: {CHAPTER_REASONING_EFFORT})..."
     )
     chapters, events_with_chapters, conclusion = generate_chapters_for_events(
         merged_events=merged_events,
@@ -1447,11 +1447,11 @@ def generate_person_events(
         death_date=life_plan.person.death_date,
         model=model,
     )
-    print(f"[Step 7/12] Generated {len(chapters)} chapters with conclusion")
+    print(f"[Step 7/11] Generated {len(chapters)} chapters with conclusion")
 
     # PHASE 3: Event-specific image discovery
     print(
-        f"[Step 8/12] PHASE 3: Discovering and assigning event-specific images (model: {assign.PHASE3_IMAGE_SEARCH_MODEL}, reasoning: {assign.PHASE3_IMAGE_SEARCH_REASONING}/{assign.PHASE3_IMAGE_MATCH_REASONING})..."
+        f"[Step 8/11] PHASE 3: Discovering and assigning event-specific images (model: {assign.PHASE3_IMAGE_SEARCH_MODEL}, reasoning: {assign.PHASE3_IMAGE_SEARCH_REASONING}/{assign.PHASE3_IMAGE_MATCH_REASONING})..."
     )
     enriched_events, portrait = research_images_for_all_events(
         merged_events=events_with_chapters,
@@ -1461,7 +1461,7 @@ def generate_person_events(
     )
     images_assigned = sum(1 for e in enriched_events if e.images)
     print(
-        f"[Step 8/12] Assigned images to {images_assigned} / {len(enriched_events)} events"
+        f"[Step 8/11] Assigned images to {images_assigned} / {len(enriched_events)} events"
     )
 
     # Build final payload
@@ -1486,34 +1486,17 @@ def generate_person_events(
     }
 
     # Normalize metadata
-    print("[Step 9/12] Normalizing dataset metadata...")
+    print("[Step 9/11] Normalizing dataset metadata...")
     payload = enforce_metadata(payload, page_data, summary_data)
-    print(f"[Step 9/12] Dataset includes {len(payload['events'])} events")
+    print(f"[Step 9/11] Dataset includes {len(payload['events'])} events")
 
     # Geocode with enhanced logic
-    print("[Step 10/12] Resolving event location coordinates...")
+    print("[Step 10/11] Resolving event location coordinates...")
     payload, geocoded_events = enrich_event_coordinates_v2(payload)
-    print(f"[Step 10/12] Coordinates resolved for {geocoded_events} events")
-
-    # Resolve a link for every published work the story names
-    print("[Step 11/12] Resolving publication source links...")
-    try:
-        from enrich_publication_links import enrich_events as enrich_publication_links
-
-        person_block = payload.get("person") or {}
-        linked = enrich_publication_links(
-            payload["events"],
-            person_name=str(person_block.get("name") or identifier).replace("_", " "),
-            person_article=person_block.get("wikipedia"),
-            person_id=identifier,
-        )
-        print(f"[Step 11/12] Linked {linked} publication(s) to a source")
-    except Exception as error:
-        # A missing link costs the reader a click, not the run its dataset.
-        print(f"Warning: could not resolve publication links ({error})")
+    print(f"[Step 10/11] Coordinates resolved for {geocoded_events} events")
 
     # Write to file
-    print(f"[Step 12/12] Writing dataset for '{identifier}'...")
+    print(f"[Step 11/11] Writing dataset for '{identifier}'...")
     existing_path = PEOPLE_DIR / identifier / "life_events.json"
     old_payload = None
     if existing_path.exists():
