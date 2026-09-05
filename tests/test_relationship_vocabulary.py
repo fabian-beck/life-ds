@@ -23,6 +23,7 @@ from utils.relationship_vocabulary import (  # noqa: E402
     ROLES,
     is_canonical,
     normalize_relationship_type,
+    plain_parent_roles,
 )
 
 DATA_DIR = ROOT / "data"
@@ -203,3 +204,34 @@ class Normalization(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ParentRoles(unittest.TestCase):
+    # Issue #142: offered "biological_father" beside "father" and told to be
+    # specific, the model labeled every ordinary parent biological. The fold
+    # keeps the qualifier only where an adoptive or step parent gives it
+    # something to contrast with.
+    def _network(self, *types):
+        return [
+            {"person_name": f"P{i}", "relationship_type": t}
+            for i, t in enumerate(types)
+        ]
+
+    def test_ordinary_parents_lose_the_qualifier(self):
+        connections = self._network(
+            "family/biological_father", "family/biological_mother", "family/son"
+        )
+        self.assertEqual(plain_parent_roles(connections), ["P0", "P1"])
+        self.assertEqual(
+            [c["relationship_type"] for c in connections],
+            ["family/father", "family/mother", "family/son"],
+        )
+
+    def test_birth_parents_keep_it_beside_adoptive_ones(self):
+        connections = self._network(
+            "family/adoptive_father", "family/biological_mother"
+        )
+        self.assertEqual(plain_parent_roles(connections), [])
+        self.assertEqual(
+            connections[1]["relationship_type"], "family/biological_mother"
+        )

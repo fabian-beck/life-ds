@@ -24,6 +24,13 @@ Two rules shape the role list:
   subject, where an "opponent" would misread one-sided persecution as mutual
   rivalry (issue #119). `opponent`, `rival`, and `adversary` remain for
   genuinely two-sided conflicts.
+- A parent is `father` or `mother` unless the sources say otherwise. The
+  qualified roles mark the exception: `adoptive_*` and `step*` for the
+  parents who raised a subject born to others, `biological_*` for the birth
+  parents in exactly that case. Offered both tokens and asked for the most
+  specific one, a model labeled every ordinary parent "biological" (issue
+  #142), so `plain_parent_roles` below folds the qualifier away whenever the
+  network holds no adoptive or step parent to contrast it with.
 - Extending the vocabulary is a deliberate act: add the role here **and** its
   `network.role.*_one`/`_other` entries to `src/locales/en.json` and
   `de.json`, or the test fails and the interface falls back to a generic
@@ -52,6 +59,8 @@ RelationshipCategory = Literal[
 
 RelationshipRole = Literal[
     # family
+    "adoptive_father",
+    "adoptive_mother",
     "aunt",
     "aunt_by_marriage",
     "biological_father",
@@ -84,6 +93,7 @@ RelationshipRole = Literal[
     "spouse",
     "stepchild",
     "stepfather",
+    "stepmother",
     "uncle",
     "ward",
     # partners and intimates
@@ -206,3 +216,37 @@ def normalize_relationship_type(value: str) -> tuple[str, bool]:
     """
     folded = fold_type(value)
     return folded, is_canonical(folded)
+
+
+_QUALIFIED_PARENTS = {
+    "family/biological_father": "family/father",
+    "family/biological_mother": "family/mother",
+}
+_CONTRASTING_PARENTS = frozenset(
+    {
+        "family/adoptive_father",
+        "family/adoptive_mother",
+        "family/stepfather",
+        "family/stepmother",
+    }
+)
+
+
+def plain_parent_roles(connections: list) -> list:
+    """Fold `biological_*` back to `father`/`mother` where nothing contrasts it.
+
+    The qualifier is meaningful only beside an adoptive or step parent in the
+    same network. Everywhere else it is the model's reading of "most
+    specific" — see the module docstring — and folding it here, in place,
+    means the shipped data never depends on the prompt winning that argument.
+    Returns the names whose role was folded, for the run log.
+    """
+    if any(c.get("relationship_type") in _CONTRASTING_PARENTS for c in connections):
+        return []
+    folded = []
+    for connection in connections:
+        plain = _QUALIFIED_PARENTS.get(connection.get("relationship_type"))
+        if plain:
+            connection["relationship_type"] = plain
+            folded.append(connection.get("person_name"))
+    return folded

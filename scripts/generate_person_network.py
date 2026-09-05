@@ -24,6 +24,7 @@ from utils.relationship_vocabulary import (
     RelationshipCategory,
     RelationshipRole,
     normalize_relationship_type,
+    plain_parent_roles,
 )
 from utils.text import fix_control_characters, slugify
 from utils.wikipedia_cache import (
@@ -96,7 +97,8 @@ class Connection(BaseModel):
     )
     relationship_role: RelationshipRole = Field(
         description="What the other party is or did toward the subject — the "
-        "reader's one-word tag for the tie. Pick the most specific role that fits."
+        "reader's one-word tag for the tie. The unqualified role is the default; "
+        "a qualified one needs a reason the sources document."
     )
     relationship_description: str = Field(
         description="Brief description of the nature of the relationship"
@@ -297,7 +299,10 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "debate alike — and there is no separate intellectual circle.\n"
         f"  Roles: {', '.join(sorted(ROLES))}\n"
         "  The role names what the other party is or did toward the subject, as the reader's one-word tag for the tie. "
-        "Pick the most specific role that fits; 'family' roles are for family, 'employer'/'colleague'/'collaborator' for work, 'friend'/'acquaintance' for social life.\n"
+        "The unqualified role is the default — 'father', 'colleague', 'friend' — and a qualified one "
+        "('adoptive_father', 'close_colleague', 'stepmother') needs a reason the sources document. "
+        "A parent is 'father' or 'mother'; 'biological_father'/'biological_mother' exist only for the "
+        "birth parents of a subject raised by adoptive or step parents, who then take those roles.\n"
         "  CONFLICT DIRECTION: for a relationship with a state or regime official, the role must name the ACTION toward the subject, never the office. "
         "The persecutor, censor, or patron is the person who acted — a minister, a police chief, a denouncing colleague — never the regime, the state, or the police force as such. "
         "Use 'political/censor' (banned or suppressed the subject's work), 'political/persecutor' (interrogated, denounced, drove out, or otherwise acted against the subject), "
@@ -505,6 +510,12 @@ def _normalize_relationship_types(connections: List[Dict[str, Any]]) -> None:
         normalized, known = normalize_relationship_type(original)
         if normalized and normalized != original:
             conn["relationship_type"] = normalized
+    for name in plain_parent_roles(connections):
+        print(
+            f"  Note: {name!r} carried a biological parent role with no adoptive "
+            "or step parent in the network to contrast it; folded to the plain role."
+        )
+    for conn in connections:
         if not known:
             print(
                 f"  Warning: relationship type outside the vocabulary kept as-is: "
