@@ -698,10 +698,12 @@
     }
   }
 
-  // Measure masthead height and update CSS variable
+  // Measure masthead height and update CSS variable. The bounding rect keeps
+  // the fractional part that offsetHeight rounds away; at some zoom levels
+  // that rounding placed the hanging AI tag below the header's real edge.
   function updateMastheadHeight() {
     if (mastheadElement) {
-      mastheadHeight = mastheadElement.offsetHeight;
+      mastheadHeight = mastheadElement.getBoundingClientRect().height;
     }
   }
 
@@ -1871,9 +1873,9 @@
 
   .ai-label-wrapper :global(button) {
     position: absolute;
-    /* The half-pixel overlap keeps fractional header heights at some zoom
-       levels from revealing a seam between header and tag. */
-    top: calc(var(--header-height, 2.5rem) - 0.5px);
+    /* Tuck the tag one pixel under the header, which sits above it, so
+       subpixel layout rounding never opens a seam along the header's border. */
+    top: calc(var(--header-height, 2.5rem) - 1px);
     left: -0.25rem;
     z-index: 2; /* Above slides (z-index: 1), below masthead (z-index: 3) */
   }
