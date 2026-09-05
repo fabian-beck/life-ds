@@ -15,6 +15,11 @@ One Greek letter alongside Latin is exempt — that is how physics writes
 "hν" — but two are not, and one Cyrillic homoglyph is enough to flag,
 because there is no notation that mixes those.
 
+A URL is exempt, because its spelling belongs to the resource it names
+rather than to a language. Commons holds the Houghton shelfmark
+"AC85.Aℓ245" in a file name, and the link that reaches that file has to
+carry the same letter.
+
 Everything under ``data/`` is scanned — English references, translated
 copies, registries, meta stories — except the caches, whose text is quoted
 source material. There is no ACCEPTED list: no legitimate word mixes
@@ -38,6 +43,7 @@ from config import DATA_DIR
 from utils.json_io import read_json
 
 WORD = re.compile(r"[^\W\d_]+", re.UNICODE)
+URL = re.compile(r"https?://\S+", re.UNICODE)
 
 LATIN = (
     (0x0041, 0x005A),
@@ -77,9 +83,13 @@ def control_characters(text: str) -> List[str]:
 
 
 def mixed_script_words(text: str) -> List[str]:
-    """The words whose letters come from more than one writing system."""
+    """The words whose letters come from more than one writing system.
+
+    URLs are blanked out first. A link spells whatever the resource is called,
+    so the mix that is corruption in prose is the address in a link.
+    """
     corrupt: List[str] = []
-    for match in WORD.finditer(text):
+    for match in WORD.finditer(URL.sub(" ", text)):
         word = match.group(0)
         letters = [c for c in word if unicodedata.category(c).startswith("L")]
         scripts = {script_of(c) for c in letters}

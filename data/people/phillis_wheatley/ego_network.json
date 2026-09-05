@@ -1,367 +1,207 @@
 {
-  "dataset": "Phillis Wheatley ego network",
-  "created_on": "2026-07-23",
+  "dataset": "Wikipedia ego network for Phillis Wheatley",
+  "created_on": "2026-09-05",
   "ego": {
     "name": "Phillis Wheatley",
     "birth_year": 1753,
     "death_year": 1784,
     "primary_roles": [
-      "Poet",
-      "Writer"
+      "poet",
+      "writer"
     ],
-    "summary": "Phillis Wheatley Peters was a West African-born American poet and the first African-American author to publish a book of poetry. Enslaved as a child in Boston, she received an exceptional classical education, achieved transatlantic recognition with Poems on Various Subjects, Religious and Moral (1773), and later lived in poverty after her emancipation and marriage.",
+    "summary": "Phillis Wheatley was a West African-born American poet who was enslaved in Boston and educated by the Wheatley family. Her 1773 collection Poems on Various Subjects, Religious and Moral made her the first African-American author to publish a book of poetry.",
     "wikipedia": "https://en.wikipedia.org/wiki/Phillis_Wheatley"
   },
   "connections": [
     {
       "person_name": "John Wheatley",
-      "relationship_type": "enslaver/patron",
-      "relationship_description": "Boston merchant who purchased Wheatley as an enslaved child for his wife, Susanna; the Wheatley household supported her education and the family manumitted her in 1773.",
-      "start_year": 1761,
-      "end_year": 1778,
+      "relationship_description": "Boston merchant who bought Wheatley for Susanna Wheatley in 1761. He participated in her authorship attestation and manumission.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Wheatley household life in Boston",
-        "supporting her education and literary work",
-        "manumission"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Phillis_Wheatley",
         "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
       ],
-      "notes": "The relationship was fundamentally coercive: John Wheatley legally enslaved her until her emancipation in 1773."
+      "notes": "He held Wheatley in slavery within the household that educated her.",
+      "relationship_type": "enslaver/superior"
     },
     {
       "person_name": "Susanna Wheatley",
-      "relationship_type": "enslaver/patron",
-      "relationship_description": "Wheatley’s enslaver and the woman for whom John Wheatley purchased her; Susanna encouraged Wheatley’s poetry, helped pursue London publication, and was among the Wheatleys who manumitted her.",
-      "start_year": 1761,
-      "end_year": 1774,
+      "relationship_description": "John Wheatley’s wife, for whom Wheatley was purchased in 1761. She encouraged Wheatley’s poetry and helped pursue London publication.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Wheatley household life in Boston",
-        "encouraging poetry and education",
-        "arranging the London publication effort",
-        "manumission"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Phillis_Wheatley",
         "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
       ],
-      "notes": "Susanna's fatal illness prompted Wheatley's return from London before the book's publication."
+      "notes": "Illness brought Wheatley back to Boston before the collection appeared.",
+      "relationship_type": "enslaver/superior"
     },
     {
       "person_name": "Mary Wheatley",
-      "relationship_type": "academic/household_tutor",
-      "relationship_description": "The Wheatleys' daughter and Wheatley's first tutor in reading and writing; she helped provide the foundation for Wheatley's literary and classical education.",
-      "start_year": 1761,
-      "end_year": 1767,
+      "relationship_description": "The Wheatleys’ daughter and Wheatley’s first tutor in reading and writing in Boston.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Instruction in reading and writing",
-        "study in the Wheatley household",
-        "early literary education"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Phillis_Wheatley"
       ],
-      "notes": "Mary was about 18 when Wheatley entered the household."
+      "notes": "Mary began Wheatley’s formal instruction.",
+      "relationship_type": "enslaver/teacher"
     },
     {
       "person_name": "Nathaniel Wheatley",
-      "relationship_type": "academic/household_tutor",
-      "relationship_description": "Son of the Wheatley household who tutored Wheatley and accompanied her to London in 1773 while her poetry collection was being prepared for publication.",
-      "start_year": 1761,
-      "end_year": 1773,
+      "relationship_description": "The Wheatleys’ son who tutored Wheatley and accompanied her to London in 1773.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Classical and literary instruction",
-        "London journey in search of publication",
-        "meetings with London supporters"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Phillis_Wheatley",
-        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley"
       ],
-      "notes": "Their London trip was motivated chiefly by the search for a publisher and partly by Wheatley's asthma."
+      "notes": "He traveled with Wheatley during her London publishing visit.",
+      "relationship_type": "enslaver/teacher"
     },
     {
-      "person_name": "George Whitefield",
-      "relationship_type": "artistic/muse",
-      "relationship_description": "Prominent evangelist whose 1770 death prompted Wheatley's widely circulated elegy, On the Death of the Rev. Mr. George Whitefield, which brought her major public attention.",
-      "start_year": 1770,
-      "end_year": 1770,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Wheatley's elegiac poem on Whitefield",
-        "circulation of the elegy in Boston, Philadelphia, and New Haven"
-      ],
+      "person_name": "John Peters",
+      "relationship_description": "Impoverished free Black grocer whom Wheatley married in 1778. He was imprisoned for debt in 1784.",
+      "strength": "strong",
       "sources": [
-        "https://en.wikipedia.org/wiki/Phillis_Wheatley",
-        "https://en.wikipedia.org/wiki/George_Whitefield",
-        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley"
       ],
-      "notes": "The connection was literary and commemorative rather than a documented personal association."
+      "notes": "Wheatley and Peters had three children. The supplied later-life account specifically reports two infant deaths.",
+      "relationship_type": "family/spouse"
     },
     {
       "person_name": "Archibald Bell",
-      "relationship_type": "artistic/publisher",
-      "relationship_description": "London bookseller and printer who published Wheatley’s Poems on Various Subjects, Religious and Moral after evidence of her authorship was provided.",
-      "start_year": 1772,
-      "end_year": 1773,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Preparing evidence of Wheatley's authorship",
-        "printing and publishing Poems on Various Subjects, Religious and Moral"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
-      ],
-      "notes": "Bell preserved the original Boston attestation for consultation at his Aldgate Street shop."
-    },
-    {
-      "person_name": "John Hancock",
-      "relationship_type": "professional/endorser",
-      "relationship_description": "Boston political leader who was among the prominent men attesting in 1772 that they believed Wheatley had written the poems attributed to her, countering racist doubts about her authorship.",
-      "start_year": 1772,
-      "end_year": 1772,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Examination or public attestation of Wheatley's authorship",
-        "signing the attestation published with her 1773 collection"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Phillis_Wheatley",
-        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral",
-        "https://en.wikipedia.org/wiki/John_Hancock"
-      ],
-      "notes": "The attestation was obtained because London publisher Archibald Bell demanded proof that an enslaved African woman was the poems' author."
-    },
-    {
-      "person_name": "Thomas Hutchinson",
-      "relationship_type": "professional/endorser",
-      "relationship_description": "Governor of Massachusetts and one of the Boston luminaries who signed the 1772 attestation affirming their belief that Wheatley wrote the poems published under her name.",
-      "start_year": 1772,
-      "end_year": 1772,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Authorship examination or attestation",
-        "signing the published attestation for Poems on Various Subjects"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Phillis_Wheatley",
-        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral",
-        "https://en.wikipedia.org/wiki/Thomas_Hutchinson_(governor)"
-      ],
-      "notes": "His participation reflects the extraordinary racial skepticism Wheatley had to overcome to publish."
-    },
-    {
-      "person_name": "Andrew Oliver",
-      "relationship_type": "professional/endorser",
-      "relationship_description": "Massachusetts lieutenant governor who joined the 1772 group of prominent Bostonians certifying their belief that Wheatley was the author of her poems.",
-      "start_year": 1772,
-      "end_year": 1772,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Authorship examination or attestation",
-        "signing the preface attestation to Wheatley's 1773 book"
-      ],
+      "relationship_description": "London bookseller who published Poems on Various Subjects, Religious and Moral in 1773.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Phillis_Wheatley",
         "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
       ],
-      "notes": "Oliver was listed as lieutenant governor in the published attestation."
+      "notes": "The volume included the Boston attestation of Wheatley’s authorship.",
+      "relationship_type": "professional/publisher"
     },
     {
-      "person_name": "Selina Hastings, Countess of Huntingdon",
-      "relationship_type": "artistic/patron",
-      "relationship_description": "English Methodist leader and patron who subsidized Wheatley’s 1773 collection, dedicated to her; they corresponded but did not meet because Hastings was ill.",
-      "start_year": 1773,
-      "end_year": 1773,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Correspondence",
-        "patronage of Poems on Various Subjects, Religious and Moral",
-        "London publication network"
-      ],
+      "person_name": "Selina Hastings",
+      "relationship_description": "Methodist leader who subsidized Wheatley’s 1773 London volume. Wheatley dedicated the book to her.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Phillis_Wheatley",
         "https://en.wikipedia.org/wiki/Selina_Hastings,_Countess_of_Huntingdon",
         "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
       ],
-      "notes": "Her financial and social support helped overcome colonial publishers' refusal to publish Wheatley's book."
-    },
-    {
-      "person_name": "Scipio Moorhead",
-      "relationship_type": "artistic/muse",
-      "relationship_description": "Enslaved Black artist addressed in Wheatley’s poem To S. M. a young African Painter, on seeing his Works; he may have engraved her book’s frontispiece, but the attribution is uncertain.",
-      "start_year": 1773,
-      "end_year": 1773,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Wheatley's poem praising Moorhead's art",
-        "possible production of Wheatley's engraved frontispiece",
-        "shared Black artistic milieu in Boston"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Scipio_Moorhead",
-        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
-      ],
-      "notes": "Moorhead is the only Black person explicitly addressed in Wheatley's surviving poetry."
+      "notes": "Hastings was ill, so the two women did not meet.",
+      "relationship_type": "religious/patron"
     },
     {
       "person_name": "Frederick Bull",
-      "relationship_type": "artistic/patron",
-      "relationship_description": "Lord Mayor of London who received Wheatley during her 1773 visit and was among the prominent London figures supporting her growing literary reputation.",
-      "start_year": 1773,
-      "end_year": 1773,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Audience in London",
-        "literary patronage and public recognition"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Phillis_Wheatley",
-        "https://en.wikipedia.org/wiki/Frederick_Bull_(Lord_Mayor_of_London)"
-      ],
-      "notes": "Their documented connection appears limited to Wheatley's London visit."
-    },
-    {
-      "person_name": "Samson Occom",
-      "relationship_type": "artistic/correspondent",
-      "relationship_description": "Mohegan Presbyterian minister and advocate for Indigenous and enslaved peoples with whom Wheatley corresponded; she praised his belief that enslaved people should receive their natural-born rights in America.",
-      "start_year": 1774,
-      "end_year": 1774,
+      "relationship_description": "Lord Mayor of London who received Wheatley during her 1773 visit.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Letter exchange",
-        "discussion of natural rights and the condition of enslaved people",
-        "religious and reform correspondence"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Phillis_Wheatley"
       ],
-      "notes": "Their correspondence gave Wheatley a channel to state antislavery principles directly."
+      "notes": "Their audience took place during Wheatley’s London publishing journey.",
+      "relationship_type": "professional/patron"
+    },
+    {
+      "person_name": "George Washington",
+      "relationship_description": "Wheatley sent Washington To His Excellency, George Washington in 1775. He praised her work and invited her to his Cambridge headquarters in 1776.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley",
+        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
+      ],
+      "notes": "Washington was a prominent respondent to Wheatley’s poetry.",
+      "relationship_type": "professional/correspondent"
+    },
+    {
+      "person_name": "Scipio Moorhead",
+      "relationship_description": "Enslaved Boston artist to whom Wheatley addressed To S. M. a young African Painter, on seeing his Works in her 1773 collection.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral",
+        "https://en.wikipedia.org/wiki/Scipio_Moorhead"
+      ],
+      "notes": "He may have engraved Wheatley’s frontispiece.",
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Samson Occom",
+      "relationship_description": "Mohegan minister and writer to whom Wheatley wrote about the natural-born rights of enslaved people in America.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley"
+      ],
+      "notes": "Their correspondence joined Wheatley’s Christian writing to her antislavery argument.",
+      "relationship_type": "religious/correspondent"
     },
     {
       "person_name": "John Thornton",
-      "relationship_type": "artistic/patron",
-      "relationship_description": "British merchant-philanthropist who exchanged letters with Wheatley and discussed her poetry in correspondence with John Newton.",
-      "start_year": 1774,
-      "end_year": 1784,
+      "relationship_description": "British Christian philanthropist who exchanged letters with Wheatley about poetry and personal concerns.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Transatlantic correspondence",
-        "discussion and circulation of Wheatley's poetry",
-        "evangelical philanthropic network"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Phillis_Wheatley",
         "https://en.wikipedia.org/wiki/John_Thornton_(philanthropist)"
       ],
-      "notes": "The available account documents correspondence but does not establish frequent in-person contact."
+      "notes": "Thornton later discussed Wheatley and her poetry with John Newton.",
+      "relationship_type": "religious/correspondent"
     },
     {
-      "person_name": "George Washington",
-      "relationship_type": "artistic/correspondent",
-      "relationship_description": "Continental Army commander to whom Wheatley sent her 1775 poem To His Excellency, George Washington; he praised her poetic talent and invited her to visit his Cambridge headquarters.",
-      "start_year": 1775,
-      "end_year": 1776,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Exchange concerning To His Excellency, George Washington",
-        "Washington's invitation to his headquarters",
-        "publication of the poem in The Pennsylvania Gazette"
-      ],
+      "person_name": "John Hancock",
+      "relationship_description": "Boston leader who signed the 1772 attestation that Wheatley wrote her poems.",
+      "strength": "weak",
       "sources": [
         "https://en.wikipedia.org/wiki/Phillis_Wheatley",
-        "https://en.wikipedia.org/wiki/George_Washington",
         "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
       ],
-      "notes": "Washington's favorable response made him an important elite admirer of Wheatley's work."
+      "notes": "The attestation appeared in the preface to her 1773 collection.",
+      "relationship_type": "professional/endorser"
     },
     {
-      "person_name": "John Peters",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Free Black grocer whom Wheatley married in 1778; their household endured severe poverty, Peters’s 1784 debt imprisonment, and the deaths of their three children.",
-      "start_year": 1778,
-      "end_year": 1784,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Marriage and shared household in Boston",
-        "parenting three children",
-        "enduring poverty and Peters's debt imprisonment"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Phillis_Wheatley"
-      ],
-      "notes": "Peters was imprisoned for debt in 1784; Wheatley then worked as a scullery maid while caring for their infant son."
-    },
-    {
-      "person_name": "Jupiter Hammon",
-      "relationship_type": "artistic/peer",
-      "relationship_description": "Fellow enslaved African-American poet who admired Wheatley and wrote An Address to Miss Phillis Wheatley in 1778, engaging her work through Christian exhortation.",
-      "start_year": 1778,
-      "end_year": 1778,
+      "person_name": "Thomas Hutchinson",
+      "relationship_description": "Boston official who signed the 1772 attestation that Wheatley wrote her poems.",
       "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "African-American literary exchange",
-        "Hammon's poem addressed to Wheatley",
-        "shared Christian literary concerns"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Phillis_Wheatley",
-        "https://en.wikipedia.org/wiki/Jupiter_Hammon"
+        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
       ],
-      "notes": "They never met, but Hammon's published address is a significant contemporary Black literary response to Wheatley."
+      "notes": "His signature appeared with the other attestations in the 1773 collection.",
+      "relationship_type": "professional/endorser"
+    },
+    {
+      "person_name": "Andrew Oliver",
+      "relationship_description": "Massachusetts official who signed the 1772 attestation of Wheatley’s authorship.",
+      "strength": "weak",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley",
+        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
+      ],
+      "notes": "The attestation was printed in the 1773 collection.",
+      "relationship_type": "professional/endorser"
+    },
+    {
+      "person_name": "Charles Chauncy",
+      "relationship_description": "Boston minister who signed the 1772 attestation of Wheatley’s authorship.",
+      "strength": "weak",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Phillis_Wheatley",
+        "https://en.wikipedia.org/wiki/Poems_on_Various_Subjects,_Religious_and_Moral"
+      ],
+      "notes": "His signature appeared in the collection’s prefatory attestation.",
+      "relationship_type": "professional/endorser"
     }
   ],
   "category_summaries": [
     {
+      "relationship_type": "enslaver",
+      "summary": "Wheatley’s earliest relationships formed in the Boston household that enslaved her. Mary and Nathaniel Wheatley taught her to read and write. The household gave her access to Scripture and classical literature. John and Susanna Wheatley held her in slavery until they manumitted her in November 1773."
+    },
+    {
       "relationship_type": "family",
-      "summary": "Wheatley's documented family network centers on her marriage to John Peters after emancipation. Their life together was marked by poverty, Peters's debt imprisonment, and the early deaths of their three children."
+      "summary": "After emancipation, Wheatley married John Peters. Their household lived in poor conditions. Peters was imprisoned for debt in 1784. Wheatley sought work while caring for an infant son."
     },
     {
       "relationship_type": "professional",
-      "summary": "Wheatley’s formative opportunities arose within the coercive Wheatley household, where she was enslaved but received rare instruction from Mary and Nathaniel Wheatley and support from John and Susanna. Her route to publication also required elite validation, notably the 1772 attestation signed by Hancock, Hutchinson, Oliver, and others."
+      "summary": "Wheatley’s publishing circle linked Boston scrutiny to London print. Boston men signed an attestation of her authorship in 1772. Archibald Bell published her collection in London in 1773 with support from Selina Hastings. George Washington answered her poem, and Scipio Moorhead received a poem in the same collection."
     },
     {
-      "relationship_type": "artistic",
-      "summary": "Wheatley's literary network was transatlantic: London patrons and publisher Archibald Bell enabled her landmark 1773 collection, while prominent readers and correspondents validated, circulated, and responded to her work. Her links to Scipio Moorhead and Jupiter Hammon are especially significant as connections with fellow Black artists and writers."
+      "relationship_type": "religious",
+      "summary": "Christian networks gave Wheatley routes to publication and correspondence. Selina Hastings supported her London volume. Wheatley wrote to Samson Occom about natural-born rights for enslaved people. She also exchanged letters with John Thornton about poetry and personal concerns."
     }
   ]
 }
