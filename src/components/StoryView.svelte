@@ -1871,7 +1871,9 @@
 
   .ai-label-wrapper :global(button) {
     position: absolute;
-    top: var(--header-height, 2.5rem);
+    /* The half-pixel overlap keeps fractional header heights at some zoom
+       levels from revealing a seam between header and tag. */
+    top: calc(var(--header-height, 2.5rem) - 0.5px);
     left: -0.25rem;
     z-index: 2; /* Above slides (z-index: 1), below masthead (z-index: 3) */
   }
