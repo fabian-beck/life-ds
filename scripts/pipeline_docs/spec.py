@@ -861,9 +861,12 @@ STEPS: List[Step] = [
             "target-language naming evidence the glossary saw, which is what "
             "keeps a place name from being invented in prose."
         ),
-        depends_on=[Dep("p_glossary", "the name mapping to apply")],
+        depends_on=[
+            Dep("p_glossary", "the name mapping to apply"),
+            Dep("p_illustrations", "the reports and their illustration captions"),
+        ],
         prompts=["_call_translation_model", "format_reference_for_prompt"],
-        inputs=["life_events", "ego_network"],
+        inputs=["life_events", "ego_network", "persons"],
         outputs=["person_de"],
         skip_flag="--skip-translate",
     ),
