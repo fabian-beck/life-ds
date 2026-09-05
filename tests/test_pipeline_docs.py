@@ -1828,6 +1828,40 @@ class TeaserTests(unittest.TestCase):
         self.assertIn('class="figref" data-part="timeline"', document.html)
         self.assertIn("a chronology", document.html)
 
+    def test_a_reference_is_a_span_that_can_break_across_lines(self) -> None:
+        # A button is an atomic inline: a phrase in one moves to the next line
+        # whole instead of wrapping with the prose around it.
+        document = _compile(
+            self.HEAD + "\n## S\n\nDerived as [[timeline|a chronology]].\n"
+        )
+        self.assertNotIn("<button", document.html)
+        self.assertIn('<span role="button" tabindex="0" class="figref"', document.html)
+
+    def test_glued_phrase_keeps_the_marks_with_their_words(self) -> None:
+        glyph = '<svg class="glyph"/>'
+        self.assertEqual(
+            report.glued_phrase(glyph, "a chronology", marked=True),
+            '<span class="glued"><svg class="glyph"/>a</span> '
+            '<span class="glued figref-end">chronology</span>',
+        )
+        self.assertEqual(
+            report.glued_phrase("", "the discrete events", marked=True),
+            'the discrete <span class="glued figref-end">events</span>',
+        )
+        self.assertEqual(
+            report.glued_phrase(glyph, "theme", marked=True),
+            '<span class="glued figref-end"><svg class="glyph"/>theme</span>',
+        )
+        self.assertEqual(
+            report.glued_phrase(glyph, "theme"),
+            '<span class="glued"><svg class="glyph"/>theme</span>',
+        )
+        self.assertEqual(report.glued_phrase("", "plain words"), "plain words")
+        self.assertEqual(
+            report.glued_phrase("", "a & b", marked=True),
+            'a &amp; <span class="glued figref-end">b</span>',
+        )
+
     def test_a_reference_without_a_phrase_uses_the_part_label(self) -> None:
         document = _compile(self.HEAD + "\n## S\n\nSee [[map]].\n")
         self.assertIn(teaser.part_by_id("map").label, document.html)

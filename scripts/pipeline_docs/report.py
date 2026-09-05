@@ -639,6 +639,36 @@ def concept_glyph(concept_id: str, cls: str = "glyph") -> str:
     )
 
 
+def glued_phrase(glyph: str, label: str, marked: bool = False) -> str:
+    """A phrase that wraps like prose while its marks stay with its words.
+
+    The phrase itself may break across lines, but a mark that stands ahead of
+    it or after it may not be left alone on a line of its own: a glyph at the
+    end of one line with its words on the next names nothing. A word joiner
+    does not hold them together—browsers treat an inline image as breakable on
+    both sides whatever character follows it—so the glyph is tied to the first
+    word, and the trailing marker's host to the last, with `white-space:
+    nowrap` on a span around each. A one-word phrase is one such span.
+
+    `marked` says whether the phrase carries a trailing marker; the last word
+    is then wrapped in a `.figref-end` span for the stylesheet to draw it on.
+    """
+    words = _escape(label).split(" ")
+    if not words[0]:
+        return glyph
+    head = f"{glyph}{words[0]}" if glyph else words[0]
+    if len(words) == 1:
+        cls = "glued figref-end" if marked else "glued"
+        return f'<span class="{cls}">{head}</span>' if glyph or marked else head
+    if glyph:
+        head = f'<span class="glued">{head}</span>'
+    middle = words[1:-1]
+    tail = words[-1]
+    if marked:
+        tail = f'<span class="glued figref-end">{tail}</span>'
+    return " ".join([head, *middle, tail])
+
+
 def substitute_figrefs(
     text: str,
     seen: List[str],
@@ -651,9 +681,14 @@ def substitute_figrefs(
 
     The phrase stays ordinary prose—the sentence has to read the same with the
     figure, without it, and on paper—so the element carries the relation and
-    nothing else. Resolving the id here rather than in the page is what makes a
-    reference into the figure a build-time claim: a part that was renamed or
-    removed stops the build instead of leaving a phrase that lights nothing.
+    nothing else. It is a span with a button's role rather than a button: a
+    button is an atomic inline whatever its display says, so a phrase in one
+    could not break across lines and would jump to the next line whole.
+    `bindRefKeys` in app.js gives the span the keyboard a button has.
+
+    Resolving the id here rather than in the page is what makes a reference
+    into the figure a build-time claim: a part that was renamed or removed
+    stops the build instead of leaving a phrase that lights nothing.
 
     A dotted id, `[[shot.part]]`, points into a screenshot figure instead: the
     first half names a `::: screenshot` block and the second a part its body
@@ -690,11 +725,11 @@ def substitute_figrefs(
             shot_seen.append(part_id)
         label = phrase if phrase else region.label
         return (
-            f'<button type="button" class="figref" '
+            f'<span role="button" tabindex="0" class="figref" '
             f'data-shot="{_escape(shot_id)}" data-part="{_escape(region_id)}" '
             f'aria-label="{_escape(label)}—show '
             f'{_escape(region.label)} in the screenshot">'
-            f"{_escape(label)}</button>"
+            f"{glued_phrase('', label, marked=True)}</span>"
         )
 
     def replace_step(step_id: str, phrase: Optional[str]) -> str:
@@ -709,12 +744,12 @@ def substitute_figrefs(
         label = phrase if phrase else step.label
         column = pipeline_spec.column_of(step)
         return (
-            f'<button type="button" class="figref stepref" '
+            f'<span role="button" tabindex="0" class="figref stepref" '
             f'data-step="{_escape(step_id)}" data-lane="{_escape(column)}" '
             f'aria-label="{_escape(label)}—show the step '
             f"'{_escape(step.label)}' in the "
             f'{_escape(pipeline_spec.LANES[column]["label"].lower())} pipeline">'
-            f"{_escape(label)}</button>"
+            f"{glued_phrase('', label, marked=True)}</span>"
         )
 
     def replace(match: re.Match) -> str:
@@ -733,10 +768,10 @@ def substitute_figrefs(
         seen.append(part_id)
         label = phrase if phrase else part.label
         return (
-            f'<button type="button" class="figref" data-part="{_escape(part_id)}" '
+            f'<span role="button" tabindex="0" class="figref" data-part="{_escape(part_id)}" '
             f'aria-label="{_escape(label)}—show '
             f'{_escape(part.label)} in the figure">'
-            f"{concept_glyph(part.concept)}{_escape(label)}</button>"
+            f"{glued_phrase(concept_glyph(part.concept), label, marked=True)}</span>"
         )
 
     substituted = _outside_fences(text, lambda line: FIGREF.sub(replace, line))
@@ -804,7 +839,7 @@ def substitute_conceptrefs(text: str, seen: List[str], line_hint: str = "") -> s
             f'aria-describedby="concept-{_escape(concept_id)}" '
             f'aria-label="{_escape(label)}—{_escape(concept.label)} in the '
             'legend">'
-            f"{concept_glyph(concept_id)}{_escape(label)}</a>"
+            f"{glued_phrase(concept_glyph(concept_id), label)}</a>"
         )
 
     substituted = _outside_fences(text, lambda line: CONCEPTREF.sub(replace, line))

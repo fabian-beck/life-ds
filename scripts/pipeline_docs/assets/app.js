@@ -1830,6 +1830,23 @@
 
   /* --------------------------------------------------- references into a chart */
 
+  /* A reference into a figure is a span with a button's role rather than a
+     button: a button is an atomic inline whatever its display says, so a phrase
+     in one could not break across lines and would move to the next line whole.
+     A span has none of a button's keyboard, so Enter and Space are given back
+     here, once for every kind of reference, by turning them into the click the
+     handlers below already listen for. */
+  function bindRefKeys() {
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const target = event.target;
+      if (!target || !target.classList || !target.classList.contains("figref"))
+        return;
+      event.preventDefault();
+      target.click();
+    });
+  }
+
   /* A `[[step:id]]` in the prose compiles to a `.figref` carrying the step and
      the pipeline it is drawn in, and pressing it does what pressing the node
      does: the step is selected in the figure and the drawer opens on it. This
@@ -4936,6 +4953,7 @@
   renderTocButton();
   renderPopovers();
   bindPrintDisclosure();
+  bindRefKeys();
   bindStepRefs();
 
   // The page is fully built. `scripts/export_report_pdf.mjs` waits for this

@@ -2315,19 +2315,22 @@ figure.teaser > .cap {
 
 /* A phrase that names a part of the figure. Styled as running text with a
    citation's dotted underline; the square is the only mark that says the
-   figure is the thing on the other end. */
+   figure is the thing on the other end. The element is a span with a button's
+   role, not a button, so that the phrase breaks across lines like the prose
+   around it instead of moving to the next line whole. */
 .figref {
-  padding: 0;
-  border: 0;
   border-bottom: 1px dotted var(--muted);
-  background: none;
   color: inherit;
   cursor: pointer;
-  font: inherit;
-  text-align: left;
 }
 
-.figref::after {
+/* The glyph ahead of a phrase and the marker after it stay on the line of the
+   word they belong to; `glued_phrase` in report.py wraps each pair. */
+.glued {
+  white-space: nowrap;
+}
+
+.figref .figref-end::after {
   content: "";
   display: inline-block;
   width: 5px;
@@ -2344,9 +2347,9 @@ figure.teaser > .cap {
   color: var(--ink);
 }
 
-.figref:hover::after,
-.figref:focus-visible::after,
-.figref.is-lit::after {
+.figref:hover .figref-end::after,
+.figref:focus-visible .figref-end::after,
+.figref.is-lit .figref-end::after {
   border-color: var(--rule-strong);
   background: var(--rule-strong);
 }
@@ -2959,16 +2962,13 @@ figure.teaser > .cap {
     white-space: pre-wrap;
   }
 
-  /* On paper a reference is only a phrase; the marker would point nowhere. The
-     button box goes with it: a button is an atomic inline whatever its display
-     says, and the line breaker treats it as an object, so the comma after one
-     of these phrases would start the next line. `display: contents` drops the
-     box and leaves the words in the paragraph they belong to. */
+  /* On paper a reference is only a phrase; the marker and the underline would
+     point nowhere. */
   .figref {
-    display: contents;
+    border-bottom: 0;
   }
 
-  .figref::after {
+  .figref .figref-end::after {
     content: none;
   }
 
