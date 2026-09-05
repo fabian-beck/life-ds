@@ -1727,7 +1727,7 @@ class TeaserTests(unittest.TestCase):
         # A button is an atomic inline: a phrase in one moves to the next line
         # whole instead of wrapping with the prose around it.
         document = _compile(
-            self.HEAD + "\n## S\n\nDerived as [[timeline|a chronology]].\n"
+            self.HEAD + "\n## S\n\nDerived as [[events|a chronology]].\n"
         )
         self.assertNotIn("<button", document.html)
         self.assertIn('<span role="button" tabindex="0" class="figref"', document.html)
