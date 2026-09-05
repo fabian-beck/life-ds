@@ -2562,15 +2562,6 @@
     z-index: 3;
   }
 
-  /* The loading spinner is the one slide child that hangs off the slide rather
-     than standing in its flow, so it opts out of the rule above. Stated here,
-     and not left to the component that draws it, because the two declarations
-     are equally specific: which one wins would otherwise depend on the order
-     the bundler happens to emit the two stylesheets in. */
-  .slide > :global(.loading-indicator) {
-    position: absolute;
-  }
-
   /* A fold lays out the first screen of a deep event, but it must not become
      the containing block for the event picture: the fold occupies the slide's
      padded content box, which leaves the picture inset from the real corner.

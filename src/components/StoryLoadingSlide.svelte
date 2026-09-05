@@ -115,16 +115,17 @@
     }
   }
 
+  /* The indicator stands in the slide's flow under the skeleton and takes the
+     free space down to the reserve, centering the spinner in it. It does not
+     shrink: on a viewport too short for the skeleton it follows the skeleton
+     down into the slide's own scroll rather than collapsing onto it. */
   .loading-indicator {
-    position: absolute;
-    bottom: 4rem;
-    left: 50%;
-    transform: translateX(-50%);
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
-    z-index: 10;
   }
 
   .spinner {
