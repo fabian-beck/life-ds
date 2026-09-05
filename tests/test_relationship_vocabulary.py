@@ -28,6 +28,17 @@ from utils.relationship_vocabulary import (  # noqa: E402
 
 DATA_DIR = ROOT / "data"
 OUTDATED = (DATA_DIR / "outdated.md").read_text("utf-8")
+# Hidden persons and collections are off the deployed site and are not tracked
+# in data/outdated.md; they are regenerated before they are shown again.
+HIDDEN = {
+    entry["id"]
+    for registry, collection in (
+        ("persons.json", "people"),
+        ("meta_stories.json", "meta_stories"),
+    )
+    for entry in json.loads((DATA_DIR / registry).read_text("utf-8"))[collection]
+    if entry.get("hidden") is True
+}
 LOCALES = {
     lang: json.loads((ROOT / "src" / "locales" / f"{lang}.json").read_text("utf-8"))
     for lang in ("en", "de")
@@ -61,7 +72,8 @@ def carries_retired_category(token):
 
 
 def is_flagged_outdated(path):
-    return f"`{dataset_id(path)}`" in OUTDATED
+    """Flagged in data/outdated.md, or hidden and therefore not tracked there."""
+    return dataset_id(path) in HIDDEN or f"`{dataset_id(path)}`" in OUTDATED
 
 
 class VocabularyLocaleParity(unittest.TestCase):
@@ -122,7 +134,9 @@ class CorpusStaysCanonical(unittest.TestCase):
     # A retired category is not canonical — a run cannot emit it — but a
     # dataset that still carries one is tolerated as long as it is flagged
     # for regeneration in data/outdated.md, where the no-repair rule sends
-    # it. Anything else outside the vocabulary is an offender as before.
+    # it, or hidden, which keeps it off the deployed site until it is
+    # regenerated. Anything else outside the vocabulary is an offender as
+    # before.
     def _classify(self, path, token, offenders, unflagged):
         if is_canonical(token):
             return

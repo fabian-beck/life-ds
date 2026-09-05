@@ -4,7 +4,7 @@
 
 ## Data Generation
 
-Generated data is never repaired in place. When a generator or schema change leaves shipped datasets behind, flag them in `data/outdated.md` with the reason and regenerate them with the current pipeline (see the no-repair rule in `AGENTS.md`).
+Generated data is never repaired in place. When a generator or schema change leaves shipped datasets behind, flag them in `data/outdated.md` with the reason and regenerate them with the current pipeline (see the no-repair rule in `AGENTS.md`). Hidden persons and collections (`"hidden": true` in the registries) are not tracked there: they are off the deployed site, and a session that shows one again first regenerates it or audits it against the entries in that file.
 
 ### Python Environment
 
