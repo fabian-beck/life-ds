@@ -25,7 +25,6 @@ const DYNAMIC_PREFIXES = [
   "network.family.",
   // relationshipLabels.js: `person.${family}_value.${token}`
   "person.strength_value.",
-  "person.frequency_value.",
   // eventClassLabels.js: `story.event_class.${type|subtype}`
   "story.event_class.",
   // eventClassLabels.js: `story.publication_type.${publicationType}`

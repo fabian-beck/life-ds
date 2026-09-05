@@ -104,9 +104,6 @@ class Connection(BaseModel):
     strength: str = Field(
         description="Strength of the relationship: 'strong', 'moderate', or 'weak'"
     )
-    interaction_frequency: str = Field(
-        description="How often they interacted: 'daily', 'weekly', 'monthly', 'yearly', 'occasional', or 'rare'"
-    )
     sources: List[str] = Field(
         description="Array of Wikipedia URLs or references supporting this connection"
     )
@@ -310,7 +307,6 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
         "- relationship_description: Brief description of the relationship — what the two did with or to each other, "
         "and when, if the sources date it\n"
         "- strength: 'strong', 'moderate', or 'weak'\n"
-        "- interaction_frequency: How often they interacted ('daily', 'weekly', 'monthly', 'yearly', 'occasional', 'rare')\n"
         "- sources: Wikipedia URLs supporting this connection\n"
         "- notes: Additional context (optional)\n\n"
         "IMPORTANT BALANCE CONSIDERATIONS:\n"
@@ -443,20 +439,11 @@ def _deduplicate_connections(connections: List[Dict[str, Any]]) -> List[Dict[str
     - Merge relationship descriptions
     - Combine sources (deduplicated)
     - Prefer 'strong' over 'moderate' over 'weak' strength
-    - Prefer more frequent interaction_frequency
     """
     seen_names: Dict[str, int] = {}  # normalized_name -> index in result
     result: List[Dict[str, Any]] = []
 
     strength_priority = {"strong": 3, "moderate": 2, "weak": 1}
-    frequency_priority = {
-        "daily": 6,
-        "weekly": 5,
-        "monthly": 4,
-        "yearly": 3,
-        "occasional": 2,
-        "rare": 1,
-    }
 
     for conn in connections:
         person_name = conn.get("person_name", "")
@@ -492,16 +479,6 @@ def _deduplicate_connections(connections: List[Dict[str, Any]]) -> List[Dict[str
             str2 = strength_priority.get(conn.get("strength", "").lower(), 0)
             if str2 > str1:
                 existing["strength"] = conn["strength"]
-
-            # Use more frequent interaction
-            freq1 = frequency_priority.get(
-                existing.get("interaction_frequency", "").lower(), 0
-            )
-            freq2 = frequency_priority.get(
-                conn.get("interaction_frequency", "").lower(), 0
-            )
-            if freq2 > freq1:
-                existing["interaction_frequency"] = conn["interaction_frequency"]
 
         else:
             # First time seeing this person

@@ -265,11 +265,11 @@
       }
     },
     "p_network": {
-      "fingerprint": "ad5cfba278c97c7c",
+      "fingerprint": "46c58d3252223ada",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a person-centered relationship graph from the subject’s Wikipedia article and related articles, selecting documented direct ties and explaining the main circles of family, work, study, social life, or politics that shaped the person’s story. It leaves the later meta-story pipeline a consistent set of people, relationship types, evidence, and category-level context to merge with other personal material.",
-        "why_this_design": "It excludes institutions, collectives, and one-sided influence so the graph represents encounters between people rather than a mixed map of affiliations, reputation, and historical context."
+        "what_it_does": "Builds the subject’s ego network from the main Wikipedia article and related articles, turning documented direct relationships into a small set of people and ties. It also writes category-level context that lets the later story pipeline treat the network as a narrative map of family, work, social life, and conflict rather than a name list.",
+        "why_this_design": "It excludes organizations and one-sided influence from ties so the graph represents actual person-to-person contact, while the category summaries retain broader institutional or intellectual context without inventing edges."
       }
     },
     "p_portrait": {

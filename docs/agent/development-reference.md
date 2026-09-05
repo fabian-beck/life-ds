@@ -66,8 +66,7 @@ The user-evaluation deployment—the same site in Vite's `evaluation` mode, from
 
 - Follow relationship type conventions (see schema above)
 - Strength: `weak`, `moderate`, `strong`
-- Interaction frequency: `rare`, `occasional`, `monthly`, `weekly`, `daily`, `yearly`
-- A connection is a mutual tie and carries no direction of influence, years, or activity tags
+- A connection is a mutual tie and carries no interaction frequency, direction of influence, years, or activity tags
 
 **Visual style**: Edit `data/person_styles.json`
 

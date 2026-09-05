@@ -102,7 +102,7 @@ This script acts as an AI-powered constructive critic to review and improve the 
 
 **What it reviews**:
 - **Life events**: Event descriptions, titles, chronological accuracy, historical context
-- **Ego network**: Relationship descriptions, connection strength, interaction frequency
+- **Ego network**: Relationship descriptions, connection strength
 - **Visual styles**: Color harmony, font pairings, design coherence
 
 **Features**:

@@ -169,7 +169,6 @@ class ConnectionMetadata(BaseModel):
     """
 
     strength: Optional[str] = None
-    interaction_frequency: Optional[str] = None
     notes: Optional[str] = None
 
 

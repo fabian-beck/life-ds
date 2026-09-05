@@ -96,9 +96,7 @@ test("names the relationship metadata values in the reader's language", () => {
   // used to print them raw, so a German reader got "Stärke: strong".
   expect(relationshipMetaValueLabel(t, "strength", "strong")).toBe("strong");
   expect(relationshipMetaValueLabel(tDe, "strength", "strong")).toBe("stark");
-  expect(relationshipMetaValueLabel(tDe, "frequency", "occasional")).toBe(
-    "gelegentlich"
-  );
+  expect(relationshipMetaValueLabel(tDe, "strength", "weak")).toBe("schwach");
   // An unmapped token still falls back to its humanized form.
   expect(relationshipMetaValueLabel(t, "strength", "overwhelming")).toBe(
     "Overwhelming"
@@ -110,7 +108,6 @@ test("every relationship metadata token in the corpus has both locale entries", 
   // The closed vocabulary, verified across all ego networks.
   const families = {
     strength: ["strong", "moderate", "weak"],
-    frequency: ["daily", "weekly", "monthly", "yearly", "occasional", "rare"],
   };
   for (const [family, tokens] of Object.entries(families)) {
     for (const token of tokens) {

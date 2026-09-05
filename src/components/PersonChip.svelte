@@ -238,38 +238,21 @@
     <p class="tooltip-relationship">
       {person.relationship_description}
     </p>
-    {#if person.strength || person.interaction_frequency}
-      <!-- The values are machine tokens ("strong", "daily") in every
-           language, so they are resolved through the locale like the labels
-           next to them. A connection is a mutual tie, so these two weights
-           are all the metadata the tooltip shows: the datasets that still
-           carry a direction of influence, years, or activity tags predate
-           the schema (see data/outdated.md), and those fields are ignored. -->
+    {#if person.strength}
+      <!-- The value is a machine token ("strong") in every language, so it
+           is resolved through the locale like the label next to it. A
+           connection is a mutual tie, so its strength is all the metadata
+           the tooltip shows: the datasets that still carry an interaction
+           frequency, a direction of influence, years, or activity tags
+           predate the schema (see data/outdated.md), and those fields are
+           ignored. -->
       <div class="tooltip-meta">
-        {#if person.strength}
-          <span class="meta-item">
-            <span class="meta-label">{$_("person.strength")}</span>
-            <span class="meta-value strength-{person.strength}"
-              >{relationshipMetaValueLabel(
-                $_,
-                "strength",
-                person.strength
-              )}</span
-            >
-          </span>
-        {/if}
-        {#if person.interaction_frequency}
-          <span class="meta-item">
-            <span class="meta-label">{$_("person.frequency")}</span>
-            <span class="meta-value"
-              >{relationshipMetaValueLabel(
-                $_,
-                "frequency",
-                person.interaction_frequency
-              )}</span
-            >
-          </span>
-        {/if}
+        <span class="meta-item">
+          <span class="meta-label">{$_("person.strength")}</span>
+          <span class="meta-value strength-{person.strength}"
+            >{relationshipMetaValueLabel($_, "strength", person.strength)}</span
+          >
+        </span>
       </div>
     {/if}
     {#if onOpenNetwork}

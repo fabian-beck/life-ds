@@ -154,15 +154,14 @@ export function relationshipTypeLabel(t, relationshipType) {
 }
 
 /**
- * Name a relationship-metadata value — tie strength or interaction
- * frequency. Like `relationship_type`, these are machine tokens the
- * localized datasets deliberately keep in English (`strong`, `daily`), so
- * the interface resolves them through the locale. The vocabulary is closed
- * and small, but an unmapped token still falls back to its humanized form
- * rather than breaking.
+ * Name a relationship-metadata value — today only the tie strength. Like
+ * `relationship_type`, these are machine tokens the localized datasets
+ * deliberately keep in English (`strong`), so the interface resolves them
+ * through the locale. The vocabulary is closed and small, but an unmapped
+ * token still falls back to its humanized form rather than breaking.
  * @param {Function} t - the translate function from the language store
- * @param {"strength"|"frequency"} family
- * @param {string} token - e.g. "strong", "occasional"
+ * @param {"strength"} family
+ * @param {string} token - e.g. "strong", "moderate"
  * @returns {string}
  */
 export function relationshipMetaValueLabel(t, family, token) {
