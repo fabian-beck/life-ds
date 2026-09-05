@@ -9,10 +9,19 @@
  * want, so that is the one parameter.
  */
 
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
+import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { Protocol } from "pmtiles";
 import { layers, namedFlavor } from "@protomaps/basemaps";
 import { assetUrl } from "./assetUrl.js";
+
+// MapLibre 6 ships as ES modules and finds its worker through
+// `import.meta.url`, which does not survive bundling: the dev server serves
+// the pre-bundled module from a directory that has no worker next to it, and
+// a production build emits none. The `?worker&url` import routes the file
+// through Vite's worker pipeline, which emits a self-contained chunk, and
+// this hands the map its address before any map is created.
+maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
 /**
  * A `public/` asset path as an absolute URL against the page it is loaded on.

@@ -1,7 +1,7 @@
 <script>
   import { onMount, onDestroy } from "svelte";
   import "maplibre-gl/dist/maplibre-gl.css";
-  import maplibregl from "maplibre-gl";
+  import * as maplibregl from "maplibre-gl";
   import { _ } from "../stores/language.js";
   import { displayName } from "../utils/helpers.js";
   import { segmentPersonMentions } from "../utils/personNames.js";
