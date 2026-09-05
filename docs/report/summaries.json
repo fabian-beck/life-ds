@@ -177,11 +177,11 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "67d980dfbb6d56f1",
+      "fingerprint": "60f9f49bf473d868",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the biographical spine from the main article and related context, selecting and ordering the events that make the subject’s life intelligible as a whole. It leaves later phases a compact plan with relative importance, honest date precision, and enough narrative detail to research each event without yet attaching places, images, or citations.",
-        "why_this_design": "Because significance depends on comparison across an entire life, this is the only stage that can rank events against one another; it also detects birth and death after generation so the timeline opens and closes on the subject rather than relying on the draft to do so."
+        "what_it_does": "Builds the biographical spine from the main article and related context, selecting and ranking the events that give the subject’s life its shape. It leaves later phases a chronological set of event skeletons and person metadata, while reserving places, images, and source work for later research.",
+        "why_this_design": "It asks one call to weigh events against each other because significance emerges from the whole life, then sorts the result and explicitly checks for the opening and closing events so the slide sequence remains a life story rather than a list of facts."
       }
     },
     "p_events_p2": {

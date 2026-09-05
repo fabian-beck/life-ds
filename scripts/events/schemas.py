@@ -224,7 +224,9 @@ class Person(BaseModel):
         "Avoid specific titles, company names, or idiosyncratic descriptions."
     )
     tagline: str = Field(
-        description="Catchy, memorable phrase capturing the person's essence (3-7 words)"
+        description="Catchy, memorable phrase capturing the person's essence (3-7 words). "
+        "Name the specific work, idea, or discovery; do not use a generic status noun such as "
+        "'Pioneer of ...', 'Architect of ...', 'Father/Mother of ...', or 'Visionary of ...'."
     )
     summary: str = Field(description="Brief biographical summary")
     wikipedia: Optional[str] = Field(None, description="Wikipedia URL")

@@ -429,8 +429,17 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "- BAD examples: 'Founder of Apple Inc' (too specific), 'King of Germany' (use 'monarch'), 'theoretical biologist' (too niche, use 'biologist'), 'Computer pioneer' (use 'computer scientist')\n"
         "- For royalty/rulers: use 'monarch', 'emperor', or 'ruler' - not specific titles\n"
         "- Avoid adjectives and qualifiers: 'scientist' not 'renowned scientist'\n"
-        "\nThe tagline should be a catchy, memorable phrase (3-7 words) that captures the person's essence or most notable contribution. "
-        "Examples: 'Father of Computer Science', 'The First Programmer', 'Architect of Relativity', 'Pioneer of Structured Programming'."
+        "\nTAGLINE GUIDELINES:\n"
+        "- A catchy, memorable phrase (3-7 words) that captures the person's essence or most notable contribution\n"
+        "- Name the specific thing this person did, made, or found: the work, the idea, the machine, the discovery\n"
+        "- Do NOT use a generic status noun plus 'of': 'Pioneer of ...', 'Architect of ...', 'Father/Mother of ...', "
+        "'Visionary of ...', 'Master of ...', 'Champion of ...', 'Giant of ...'. Such a phrase fits anyone in the field "
+        "and does not tell people apart\n"
+        "- Avoid words that rank the person in history instead of stating what they did: 'greatest', 'legendary', 'genius'. "
+        "'First' is fine only when it is literally true\n"
+        "- GOOD examples: 'The First Programmer', 'Gravity as Curved Spacetime', 'Steam-Powered Calculating Engines', "
+        "'Compilers That Read English', 'Quantum Jumps Inside the Atom'\n"
+        "- BAD examples: 'Father of Computer Science', 'Architect of Relativity', 'Pioneer of Structured Programming', 'Visionary of the Analytical Engine'"
     )
 
     parsed = parse_structured_or_raise(
