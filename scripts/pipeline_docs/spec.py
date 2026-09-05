@@ -184,10 +184,10 @@ GROUPS: List[Group] = [
     Group(
         "event_research",
         "Event research",
-        ["p_events_p1", "p_events_p2", "p_chapters"],
+        ["p_events_p1", "p_events_p2"],
         note=(
-            "The narrative spine: propose the events, research each one, then "
-            "arrange them into chapters."
+            "The narrative spine: propose the events and the chapters they fall "
+            "into, then research each event."
         ),
     ),
     Group(
@@ -435,9 +435,13 @@ STEPS: List[Step] = [
             "Reads the whole article set and proposes 12–16 significant events "
             "with titles, dates and descriptions—the narrative spine, with no "
             "locations, images or sources yet. It also weighs them against each "
-            "other, which only this call can do: it is the one place in the "
-            "pipeline that sees a life whole, and how much of a life an event "
-            "turns on is a comparison, not a property of the event."
+            "other and groups them into 3–6 chapters, naming the chapter on "
+            "each event, and writes the conclusion. Only this call can do that: "
+            "it is the one place in the pipeline that sees a life whole, and "
+            "how much of a life an event turns on, or where one phase of it "
+            "ends, is a comparison, not a property of the event. The chapters "
+            "are dated afterwards from the events they hold, so a chapter can "
+            "never begin after one of its own events."
         ),
         depends_on=[
             Dep("p_wiki_select", "the selected related articles"),
@@ -483,21 +487,6 @@ STEPS: List[Step] = [
         ],
         calls_per_run="12–16 (one per event)",
         inputs=["wiki_cache", "db_cache"],
-    ),
-    Step(
-        "p_chapters",
-        "Group events into chapters",
-        PERSON,
-        AI,
-        "events/pipeline.py",
-        "call_openai_chapter_generation",
-        summary=(
-            "Turns the researched events into 3–5 chapters with headlines that "
-            "read as a story arc rather than a date range."
-        ),
-        depends_on=[Dep("p_events_p2", "the merged, researched events")],
-        prompts=["build_chapter_generation_prompt", "call_openai_chapter_generation"],
-        model_from="generate_person_events.py",
     ),
     Step(
         "p_img_search",
@@ -625,12 +614,12 @@ STEPS: List[Step] = [
         "events/pipeline.py",
         "write_dataset",
         summary=(
-            "Serializes the document the three branches above assembled. This is "
-            "where the run stops being memory: everything downstream reads the "
-            "written life events rather than the payload that produced them."
+            "Serializes the document the three branches above assembled, with "
+            "the chapters and the conclusion Phase 1 wrote. This is where the "
+            "run stops being memory: everything downstream reads the written "
+            "life events rather than the payload that produced them."
         ),
         depends_on=[
-            Dep("p_chapters", "chapters + conclusion"),
             Dep("p_img_verify", "per-event images + the verified portrait"),
             Dep("p_geocode", "coordinates"),
         ],

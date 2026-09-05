@@ -270,18 +270,28 @@ class LifeChapter(BaseModel):
     )
 
 
-class ChapterGenerationOutput(BaseModel):
-    """Output model for chapter generation phase."""
-
-    chapters: List[LifeChapter] = Field(
-        description="List of life chapters grouping the events"
-    )
-    conclusion: str = Field(
-        description="A crisp, powerful conclusion statement about this person's life story (1-2 sentences). Capture their legacy or the essence of their journey."
-    )
-
-
 # Phase 1 Models
+
+
+class ChapterPlan(BaseModel):
+    """Phase 1: a chapter as the plan names it.
+
+    The plan says which events belong to a chapter by naming the chapter on
+    each event skeleton, so the dates and ages of a chapter are not asked of
+    the model at all: they are read off its first and last event once the
+    events are researched.
+    """
+
+    id: str = Field(
+        description="Unique identifier for the chapter (lowercase, snake_case)"
+    )
+    headline: str = Field(
+        description="Catchy, story-like chapter headline (2-5 words). Make it engaging and evocative, like a book chapter title. Avoid using 'and' - prefer vivid, specific headlines."
+    )
+    location: Optional[str] = Field(
+        None,
+        description="Summary of the main geographic area for this chapter (e.g., 'England', 'United States', 'Central Europe') - not a list of places",
+    )
 
 
 class EventSkeleton(BaseModel):
@@ -320,16 +330,28 @@ class EventSkeleton(BaseModel):
         None,
         description="Structured classification for specific event types (marriage_partnership, migration, invention). Omit for standard biographical events.",
     )
+    # Required of the plan and checked after parsing; optional on the model so
+    # the skeleton stays usable as a plain event record elsewhere.
+    chapter: Optional[str] = Field(
+        None,
+        description="ID of the chapter this event belongs to. Chapters are contiguous in time: every event of a chapter comes after every event of the previous chapter.",
+    )
 
 
 class LifePlan(BaseModel):
-    """Phase 1 output: Person metadata and event skeletons."""
+    """Phase 1 output: person metadata, chapters, event skeletons, conclusion."""
 
     dataset: str = Field(description="Name of the dataset")
     created_on: str = Field(description="Creation date in ISO-8601 format")
     person: Person = Field(description="Person metadata")
+    chapters: List[ChapterPlan] = Field(
+        description="3-6 chapters in chronological order, each named by at least one event skeleton"
+    )
     event_skeletons: List[EventSkeleton] = Field(
         description="List of event skeletons (minimal event data)"
+    )
+    conclusion: str = Field(
+        description="A crisp, powerful conclusion statement about this person's life story (1-2 sentences). Capture their legacy or the essence of their journey."
     )
 
 

@@ -1,11 +1,13 @@
 """Generate one person's life events, phase by phase.
 
 The order is the argument. Phase 1 reads the whole article set and proposes
-the events, because how much of a life an event turns on is a comparison only
-that call can make. Phase 2 researches each of them on its own material, side by
-side. The chapter pass groups what came back, the image phase
-illustrates it, the geocoder places it, and `enforce_metadata` brings the whole
-payload into the shape the corpus is read with before it is written.
+the events, groups them into chapters, and writes the conclusion, because how
+much of a life an event turns on, and where one phase of it ends, is a
+comparison only that call can make. Phase 2 researches each event on its own
+material, side by side. The chapters are then dated from their events, the
+image phase illustrates them, the geocoder places them, and `enforce_metadata`
+brings the whole payload into the shape the corpus is read with before it is
+written.
 
 `generate_person_events` is the driver that runs all of it; the module it was
 split out of keeps the command line.
@@ -21,6 +23,7 @@ from typing import (
     Dict,
     List,
     Optional,
+    Sequence,
     Tuple,
     cast,
 )
@@ -37,7 +40,6 @@ from config import (
 from events.event_classes import EVENT_CLASS_CONFIG
 from events.images import assign
 from events.normalize import enforce_metadata, normalize_date_for_comparison
-from events.prompts.chapters import build_chapter_generation_prompt
 from events.prompts.phase1 import build_phase1_prompt
 from events.prompts.phase2 import (
     RELATED_ARTICLE_COUNT,
@@ -47,7 +49,7 @@ from events.prompts.phase2 import (
 )
 from events.schemas import (
     BirthClassification,
-    ChapterGenerationOutput,
+    ChapterPlan,
     DeathClassification,
     EventDetails,
     EventSkeleton,
@@ -87,14 +89,17 @@ enable_utf8_console()
 # Configure model and reasoning effort for each phase of the generation
 # pipeline. This ensures consistent configuration between AI calls and logging.
 #
-# Phase 1 and the chapter pass decide what the life is and read the whole
-# article set, so they take the default model and a reasoning budget. The three
-# phases below them work from material those calls already settled, and every
-# field they return is checked afterwards — icons against the catalog, involved
-# people against known entities, places against the geocoder, image filenames
-# against the fetched candidates — so they take the small model.
+# Phase 1 decides what the life is — its events, its chapters, its conclusion —
+# and reads the whole article set, so it takes the default model and a
+# reasoning budget. The phases below it work from material that call already
+# settled, and every field they return is checked afterwards — icons against
+# the catalog, involved people against known entities, places against the
+# geocoder, image filenames against the fetched candidates — so they take the
+# small model.
 
-PHASE1_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Event skeleton generation (medium)
+PHASE1_REASONING_EFFORT = (
+    DEFAULT_REASONING_EFFORT  # Event skeletons and chapters (medium)
+)
 
 # Event detail research. Every field it returns is checked afterwards — icons
 # against the catalog, people against known entities, places against the
@@ -104,8 +109,6 @@ PHASE1_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Event skeleton generation 
 PHASE2_MODEL = BULK_MODEL
 PHASE2_REASONING_EFFORT = BULK_REASONING_EFFORT
 
-
-CHAPTER_REASONING_EFFORT = DEFAULT_REASONING_EFFORT  # Chapter generation (medium)
 RELATED_ARTICLES_REASONING = LOW_REASONING_EFFORT  # Related article discovery (none)
 
 # Import from cache_wikipedia_materials for related articles functionality
@@ -343,9 +346,9 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
 
     system = (
         "You are a biographer laying out a life as a story told in slides, one event "
-        "to a slide. You choose the events a life turns on and narrate each in its own "
-        "moment; the diligence about evidence lives in the sources and the metadata, "
-        "not in the prose. "
+        "to a slide. You choose the events a life turns on, narrate each in its own "
+        "moment, and group them into the chapters the story is told in; the diligence "
+        "about evidence lives in the sources and the metadata, not in the prose. "
         "Use ISO-8601 dates, include date_precision as 'day', 'month', or 'year'. "
         "The precision is a claim of its own: use 'day' only when the sources state "
         "the day, 'month' only when they state the month, and fall back to 'year' "
@@ -395,12 +398,39 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "descriptions, the conclusion, and the summary alike.\n\n"
         + PROSE_STYLE_INSTRUCTIONS
         + "\n"
+        "\n\nCHAPTERS:\n"
+        "Group the events into 3-6 chapters that tell this person's story, and name the chapter on every event.\n"
+        "- Each chapter represents a distinct phase with a UNIFIED THEME or focus (e.g., education, war service, exile, creative peak, final years)\n"
+        "- ABSOLUTE PROHIBITION: NO chapter headline may contain 'Other', 'Miscellaneous', 'Additional', or 'Various' - these are generic categorizations, not meaningful life phases\n"
+        "- Every chapter must be equally important with a specific, concrete theme - there are no 'other' or secondary chapters\n"
+        "- List the chapters in chronological order. Chapters are contiguous runs of the timeline: "
+        "every event of a chapter comes after every event of the chapter before it, and a chapter never resumes once the next has begun\n"
+        "- Every event belongs to exactly one chapter, named in its chapter field by the chapter's id, and every chapter holds at least one event\n"
+        "- Events within a chapter should feel related - avoid mixing disparate life phases (e.g., don't combine education + early career + major achievement)\n"
+        "- Aim for 3-6 chapters total - too few lacks nuance, too many fragments the story\n"
+        "- If a life phase spans many years with different themes, consider splitting into multiple chapters\n"
+        "- Chapters should flow into each other, creating narrative momentum\n"
+        "- Do not date the chapters: a chapter begins with its first event and ends with its last\n"
+        "CHAPTER STRUCTURE:\n"
+        "- id: Unique identifier (lowercase, snake_case)\n"
+        "- headline: CATCHY, story-like chapter title (2-5 words, VARY THE LENGTH). Each headline should express ONE unified concept or theme - NOT a list. "
+        "Think like a book chapter - vivid, evocative, intriguing. AVOID 'and', commas, or other punctuation that creates lists. "
+        "Be specific and focused on a single idea.\n"
+        "  GOOD examples: 'Breaking the Code' (3), 'Exile in Paris' (3), 'The Vienna Circle' (3), 'Rise to Power' (3), "
+        "'Final Reckoning' (2), 'A Mind Divided' (3), 'Into the Unknown' (3), 'Wartime Service' (2), "
+        "'Building the Future' (3), 'Years of Struggle' (3), 'The Last Battle' (3), 'New Beginnings' (2).\n"
+        "  BAD examples: 'Adoption, Valley Spark' (comma creates list), 'Return, Reinvention, Last Act' (multiple concepts), "
+        "'Dropout, Zen Fire' (comma splits concepts), 'Early Life and Education' ('and' creates list).\n"
+        "- location: A summary of the main geographic area for this chapter - NOT a list of cities, but a regional summary. "
+        "For example: 'England' (not 'London, Cambridge, Manchester'), 'United States' (not 'Princeton, New York, Boston'), "
+        "'Central Europe' (not 'Vienna, Prague, Budapest'). Use the broadest appropriate region.\n"
         "\n\nCONCLUSION FIELD (1-2 sentences):\n"
         "- The one place that looks back over the whole life: what of this person's work "
         "is still in use, still read, still built on, and by whom\n"
         "- Event descriptions = factual, chronological, in-the-moment\n"
         "- Conclusion = what came of the life, stated as facts, after all events are told\n"
-        "- The same prose rules hold: no verdict words, no dash, no 'not X but Y'\n"
+        "- State it as facts. No 'legacy', no 'journey', no dash, no 'not X but Y', "
+        "and no sentence that weighs the life instead of saying what came of it\n"
         "\n\nEVENT CLASSIFICATION (optional):\n"
         f"For each event skeleton, determine if it matches one of these {len(EVENT_CLASS_CONFIG)} specific biographical event types:\n"
         + "".join(
@@ -418,7 +448,7 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         f"Only classify when event CLEARLY matches one of the {len(EVENT_CLASS_CONFIG)} types above.\n"
         "\n\nEach event skeleton must provide: date (start of the event), date_precision, optional date_end/date_end_precision "
         "when the event spans a range, optional date_note for uncertainty, age (null if not applicable), "
-        "title, and description. "
+        "title, description, weight, and the chapter it belongs to. "
         "\nInclude person metadata with name, birth_date, death_date when known, primary_roles, tagline, summary, "
         "wikipedia URL, and portrait info if available.\n"
         "\nPRIMARY_ROLES GUIDELINES (CRITICAL):\n"
@@ -491,6 +521,12 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
 
     # Validate chronological ordering
     _validate_chronological_order(parsed.event_skeletons)
+
+    # The chapters are a partition of that order, and their headlines carry
+    # the story, so both are checked before Phase 2 pays for the research
+    validate_chapter_partition(parsed.chapters, parsed.event_skeletons)
+    _validate_chapter_headlines(parsed.chapters)
+    print(f"  ✓ Chapter partition validated ({len(parsed.chapters)} chapters)")
 
     return parsed
 
@@ -658,7 +694,7 @@ def merge_event_skeleton_and_details(
     # Merge description (prefer Phase 2 if provided with markers, else Phase 1)
     description = details.description if details.description else skeleton.description
 
-    # Create merged event (NO images yet - assigned in Phase 3, NO chapter yet - assigned in Chapter phase)
+    # Create merged event (NO images yet - assigned in Phase 3)
     return LifeEvent(
         date=skeleton.date,
         date_precision=skeleton.date_precision,
@@ -675,7 +711,7 @@ def merge_event_skeleton_and_details(
         # The model invents icon names that render nothing, so resolve whatever
         # it returned to an icon that exists before it reaches disk.
         event_type_icon=normalize_icon(details.event_type_icon),
-        chapter=None,  # Chapter assigned in Chapter generation phase
+        chapter=skeleton.chapter,  # From Phase 1, which laid out the chapters
         annotations=annotations,
         weight=skeleton.weight,  # From Phase 1, which sees the whole life
         event_class=skeleton.event_class,  # From Phase 1, not Phase 2
@@ -696,96 +732,84 @@ def merge_all_events(
 
 
 # ============================================================================
-# CHAPTER GENERATION PHASE
+# CHAPTERS: THE PARTITION PHASE 1 DREW, DATED FROM THE RESEARCHED EVENTS
 # ============================================================================
 
 
-def call_openai_chapter_generation(
-    prompt: str, model: str, retry_count: int = 2
-) -> ChapterGenerationOutput:
+def validate_chapter_partition(
+    chapters: Sequence[ChapterPlan], skeletons: Sequence[EventSkeleton]
+) -> None:
+    """Check that the plan's chapters partition its events into contiguous runs.
+
+    The interface inserts a chapter slide wherever the chapter id changes
+    between two consecutive events, so a chapter that resumes after another
+    has begun renders twice. Every event has to name a chapter that exists,
+    every chapter has to hold an event, and the order in which the chapters
+    first appear along the timeline has to be the order the plan lists them
+    in. A plan that fails any of this is refused before Phase 2 pays for the
+    research.
     """
-    Call OpenAI to generate chapters based on established events.
+    if not chapters:
+        raise RuntimeError("Phase 1 returned no chapters")
+    ids = [chapter.id for chapter in chapters]
+    duplicates = sorted({cid for cid in ids if ids.count(cid) > 1})
+    if duplicates:
+        raise RuntimeError(f"Chapter ids are not unique: {', '.join(duplicates)}")
+    known = set(ids)
 
-    Returns:
-        ChapterGenerationOutput with list of chapters including involved_people and location
+    order_of_appearance: List[str] = []
+    for skeleton in skeletons:
+        if not skeleton.chapter:
+            raise RuntimeError(f"Event '{skeleton.title}' names no chapter")
+        if skeleton.chapter not in known:
+            raise RuntimeError(
+                f"Event '{skeleton.title}' names unknown chapter '{skeleton.chapter}'"
+            )
+        if skeleton.chapter in order_of_appearance:
+            if order_of_appearance[-1] != skeleton.chapter:
+                raise RuntimeError(
+                    f"Chapter '{skeleton.chapter}' resumes at '{skeleton.title}' "
+                    f"after chapter '{order_of_appearance[-1]}' has begun"
+                )
+        else:
+            order_of_appearance.append(skeleton.chapter)
+
+    empty = [cid for cid in ids if cid not in order_of_appearance]
+    if empty:
+        raise RuntimeError(f"Chapters hold no event: {', '.join(empty)}")
+    if order_of_appearance != ids:
+        raise RuntimeError(
+            "Chapters are listed out of order: the plan says "
+            f"{', '.join(ids)} but the events run {', '.join(order_of_appearance)}"
+        )
+
+
+def _validate_chapter_headlines(chapters: Sequence[ChapterPlan]) -> None:
     """
-    client = get_client()
+    Validate that chapter headlines don't contain generic "Other" categorizations.
 
-    system = (
-        "You are a biographer organizing researched life events into chapters. "
-        "Your task is to group the events into phases that read as one story. "
-        "All output must be in American English only. Every text field is plain text "
-        "rendered verbatim by the interface: never write Markdown in it."
-    )
+    Raises RuntimeError if any chapter headline contains prohibited terms.
+    """
+    # Patterns to detect generic "other" categorizations in chapter headlines
+    # Note: We check for "other" as a chapter-starting word to catch patterns like
+    # "Other Events", "Other Achievements", etc., while allowing "Mother of All Demos"
+    prohibited_patterns = [
+        r"^\s*other\s+",  # "other" at the start of the headline
+        r"\bother\s+events?\b",  # "other event" or "other events"
+        r"\bother\s+achievements?\b",  # "other achievement" or "other achievements"
+        r"\bmiscellaneous\b",
+        r"\badditional\s+events?\b",
+        r"\bvarious\s+events?\b",
+    ]
 
-    instructions = (
-        "Based on the established life events provided, create 3-6 compelling life chapters that tell this person's story.\n\n"
-        "CHAPTER REQUIREMENTS:\n"
-        "- Each chapter represents a distinct phase with a UNIFIED THEME or focus (e.g., education, war service, exile, creative peak, final years)\n"
-        "- ABSOLUTE PROHIBITION: NO chapter headline may contain 'Other', 'Miscellaneous', 'Additional', or 'Various' - these are generic categorizations, not meaningful life phases\n"
-        "- Every chapter must be equally important with a specific, concrete theme - there are no 'other' or secondary chapters\n"
-        "- Chapters must be chronologically ordered and non-overlapping\n"
-        "- Events within a chapter should feel related - avoid mixing disparate life phases (e.g., don't combine education + early career + major achievement)\n"
-        "- Aim for 3-6 chapters total - too few lacks nuance, too many fragments the story\n"
-        "- The first chapter should start with or before the first event\n"
-        "- The last chapter should end with or after the last event\n"
-        "- Every event must belong to exactly one chapter based on its date\n"
-        "- Chapters should flow into each other, creating narrative momentum\n"
-        "- If a life phase spans many years with different themes, consider splitting into multiple chapters\n\n"
-        "CHAPTER STRUCTURE:\n"
-        "- id: Unique identifier (lowercase, snake_case)\n"
-        "- headline: CATCHY, story-like chapter title (2-5 words, VARY THE LENGTH). Each headline should express ONE unified concept or theme - NOT a list. "
-        "Think like a book chapter - vivid, evocative, intriguing. AVOID 'and', commas, or other punctuation that creates lists. "
-        "Be specific and focused on a single idea.\n"
-        "  GOOD examples: 'Breaking the Code' (3), 'Exile in Paris' (3), 'The Vienna Circle' (3), 'Rise to Power' (3), "
-        "'Final Reckoning' (2), 'A Mind Divided' (3), 'Into the Unknown' (3), 'Wartime Service' (2), "
-        "'Building the Future' (3), 'Years of Struggle' (3), 'The Last Battle' (3), 'New Beginnings' (2).\n"
-        "  BAD examples: 'Adoption, Valley Spark' (comma creates list), 'Return, Reinvention, Last Act' (multiple concepts), "
-        "'Dropout, Zen Fire' (comma splits concepts), 'Early Life and Education' ('and' creates list).\n"
-        "- date_start, date_start_precision: When this chapter begins\n"
-        "- date_end, date_end_precision: When this chapter ends\n"
-        "- age_start, age_end: Subject's age at chapter start/end (null if not applicable)\n"
-        "- involved_people: Aggregate the key people mentioned across all events in this chapter "
-        "(exclude the main subject, include only significant individuals). "
-        "IMPORTANT: Use each person's most canonical name form ONLY ONCE - avoid duplicates or name variations "
-        "(e.g., use 'Anna Lloyd Jones' not both 'Anna Lloyd Jones' and 'Anna Lloyd Jones Wright')\n"
-        "- location: A summary of the main geographic area for this chapter - NOT a list of cities, but a regional summary. "
-        "For example: 'England' (not 'London, Cambridge, Manchester'), 'United States' (not 'Princeton, New York, Boston'), "
-        "'Central Europe' (not 'Vienna, Prague, Budapest'). Use the broadest appropriate region.\n\n"
-        "CONCLUSION:\n"
-        "- After all chapters, write the closing statement (1-2 sentences)\n"
-        "- It is the one text that looks back over the whole life: say what of this "
-        "person's work is still in use, still read, or still built on, and by whom\n"
-        "- State it as facts. No 'legacy', no 'journey', no dash, no 'not X but Y', "
-        "and no sentence that weighs the life instead of saying what came of it\n\n"
-        "STORYTELLING GUIDELINES:\n"
-        "- Headlines should intrigue and invite the reader in - ONE clear concept, NO lists or comma-separated phrases\n"
-        "- VARY headline length (mix 2-word, 3-word, 4-word, and 5-word titles) to create rhythm and avoid monotony\n"
-        "- Each chapter should have thematic coherence - events should share a common thread or life phase\n"
-        "- Connect chapters so they flow as a continuous story, with each building on the previous\n"
-        "- Use concrete language over abstract generalities\n\n"
-        "Craft chapters that feel like distinct, meaningful phases of this person's life - not arbitrary date ranges.\n\n"
-        + PROSE_STYLE_INSTRUCTIONS
-    )
-
-    chapters = parse_structured(
-        client,
-        model=model,
-        reasoning_effort=CHAPTER_REASONING_EFFORT,
-        input=[
-            {"role": "system", "content": system},
-            {"role": "user", "content": instructions},
-            {"role": "user", "content": prompt},
-        ],
-        text_format=ChapterGenerationOutput,
-        label="chapter generation",
-        attempts=retry_count + 1,
-    )
-    if chapters is None:
-        # Unlike a thin event, a story without chapters has no shape at all,
-        # so this is the one Phase that fails the run rather than degrading.
-        raise RuntimeError("Chapter generation failed")
-    return chapters
+    for chapter in chapters:
+        headline_lower = chapter.headline.lower()
+        for pattern in prohibited_patterns:
+            if re.search(pattern, headline_lower):
+                raise RuntimeError(
+                    f"Chapter headline contains prohibited categorization term: '{chapter.headline}'. "
+                    f"All chapters must represent meaningful life phases, not generic 'other' or 'miscellaneous' groupings."
+                )
 
 
 def deduplicate_person_names(names: List[str]) -> List[str]:
@@ -836,191 +860,60 @@ def deduplicate_person_names(names: List[str]) -> List[str]:
     return result
 
 
-def assign_events_to_chapters(
-    events: List[LifeEvent], chapters: List[LifeChapter]
-) -> List[LifeEvent]:
-    """
-    Assign each event to the appropriate chapter based on date.
-
-    Events are assigned to the chapter whose date range contains the event date.
-    Uses normalized date comparison to handle different date precisions correctly
-    (e.g., "1945-07" vs "1945-07-01").
-    """
-    # Sort chapters by normalized start date
-    sorted_chapters = sorted(
-        chapters,
-        key=lambda c: normalize_date_for_comparison(c.date_start, to_end=False),
-    )
-
-    updated_events = []
-    for event in events:
-        # Normalize event date to start of period for comparison
-        event_date_normalized = normalize_date_for_comparison(event.date, to_end=False)
-        assigned_chapter = None
-
-        # Find the chapter that contains this event's date
-        for chapter in sorted_chapters:
-            chapter_start = normalize_date_for_comparison(
-                chapter.date_start, to_end=False
-            )
-            chapter_end = normalize_date_for_comparison(chapter.date_end, to_end=True)
-
-            if chapter_start <= event_date_normalized <= chapter_end:
-                assigned_chapter = chapter.id
-                break
-
-        # If no chapter found, assign to last chapter
-        if not assigned_chapter and sorted_chapters:
-            assigned_chapter = sorted_chapters[-1].id
-
-        # Copy rather than reconstruct: a field-by-field constructor here must
-        # name every field or silently drop the ones it forgets, and it has —
-        # image attribution once, then background, weight, and
-        # background_images. Every field LifeEvent grows must survive this step.
-        updated_events.append(event.model_copy(update={"chapter": assigned_chapter}))
-
-    return updated_events
-
-
-def clamp_chapter_bounds(
-    chapters: List[LifeChapter], events: List[LifeEvent]
+def build_chapters(
+    plan_chapters: Sequence[ChapterPlan], events: List[LifeEvent]
 ) -> List[LifeChapter]:
-    """Widen each chapter's boundary dates to cover its own events.
+    """Date each chapter from its events and gather the people they name.
 
-    The model dates a chapter as precisely as its anchor event — Planck's
-    last chapter opened on the day his son was executed — while a member
-    event may carry only a year. Read at its own precision, that event then
-    begins before the chapter that contains it, and the assignment fallback
-    above hides the contradiction instead of failing. A chapter boundary may
-    never be more precise than the boundary event it has to cover, so where
-    a member event spills over, the boundary becomes that event's own date
-    at that event's own precision.
+    A chapter begins with the earliest of its events and ends with the latest,
+    each boundary carried at the precision of the event it comes from: a
+    boundary can never be more precise than the event it has to cover, which is
+    what used to let a chapter dated to the day begin after a member event
+    dated to the year. The ages are read off the same two events, and the
+    people are the union of what Phase 2 found on the members, with the name
+    variations folded together.
     """
     events_by_chapter: Dict[str, List[LifeEvent]] = {}
     for event in events:
         if event.chapter:
             events_by_chapter.setdefault(event.chapter, []).append(event)
 
-    clamped = []
-    for chapter in chapters:
-        members = events_by_chapter.get(chapter.id) or []
-        update: Dict[str, Any] = {}
-        if members:
-            first = min(
-                members,
-                key=lambda e: normalize_date_for_comparison(e.date, to_end=False),
+    chapters: List[LifeChapter] = []
+    for plan in plan_chapters:
+        members = events_by_chapter.get(plan.id)
+        if not members:
+            raise RuntimeError(f"Chapter '{plan.id}' holds no event")
+        first = min(
+            members,
+            key=lambda e: normalize_date_for_comparison(e.date, to_end=False),
+        )
+        last = max(
+            members,
+            key=lambda e: normalize_date_for_comparison(
+                e.date_end or e.date, to_end=True
+            ),
+        )
+        end_date = last.date_end or last.date
+        end_precision = (
+            last.date_end_precision if last.date_end else last.date_precision
+        ) or "year"
+        people = [name for member in members for name in (member.involved_people or [])]
+        deduplicated = deduplicate_person_names(people)
+        chapters.append(
+            LifeChapter(
+                id=plan.id,
+                headline=plan.headline,
+                date_start=first.date,
+                date_start_precision=first.date_precision or "year",
+                date_end=end_date,
+                date_end_precision=end_precision,
+                age_start=first.age,
+                age_end=last.age,
+                involved_people=deduplicated or None,
+                location=plan.location,
             )
-            if normalize_date_for_comparison(
-                first.date, to_end=False
-            ) < normalize_date_for_comparison(chapter.date_start, to_end=False):
-                update["date_start"] = first.date
-                update["date_start_precision"] = first.date_precision
-            last = max(
-                members,
-                key=lambda e: normalize_date_for_comparison(
-                    e.date_end or e.date, to_end=True
-                ),
-            )
-            last_date = last.date_end or last.date
-            last_precision = (
-                last.date_end_precision if last.date_end else last.date_precision
-            ) or "year"
-            if normalize_date_for_comparison(
-                last_date, to_end=True
-            ) > normalize_date_for_comparison(chapter.date_end, to_end=True):
-                update["date_end"] = last_date
-                update["date_end_precision"] = last_precision
-        if update:
-            named = ", ".join(f"{k}={v}" for k, v in sorted(update.items()))
-            print(f"  Chapter '{chapter.id}' widened to cover its events: {named}")
-        clamped.append(chapter.model_copy(update=update) if update else chapter)
-    return clamped
-
-
-def _validate_chapter_headlines(chapters: List[LifeChapter]) -> None:
-    """
-    Validate that chapter headlines don't contain generic "Other" categorizations.
-
-    Raises RuntimeError if any chapter headline contains prohibited terms.
-    """
-    import re
-
-    # Patterns to detect generic "other" categorizations in chapter headlines
-    # Note: We check for "other" as a chapter-starting word to catch patterns like
-    # "Other Events", "Other Achievements", etc., while allowing "Mother of All Demos"
-    prohibited_patterns = [
-        r"^\s*other\s+",  # "other" at the start of the headline
-        r"\bother\s+events?\b",  # "other event" or "other events"
-        r"\bother\s+achievements?\b",  # "other achievement" or "other achievements"
-        r"\bmiscellaneous\b",
-        r"\badditional\s+events?\b",
-        r"\bvarious\s+events?\b",
-    ]
-
-    for chapter in chapters:
-        headline_lower = chapter.headline.lower()
-        for pattern in prohibited_patterns:
-            if re.search(pattern, headline_lower):
-                raise RuntimeError(
-                    f"Chapter headline contains prohibited categorization term: '{chapter.headline}'. "
-                    f"All chapters must represent meaningful life phases, not generic 'other' or 'miscellaneous' groupings."
-                )
-
-    print(f"  ✓ Chapter headlines validated ({len(chapters)} chapters)")
-
-
-def generate_chapters_for_events(
-    merged_events: List[LifeEvent],
-    person_name: str,
-    birth_date: Optional[str],
-    death_date: Optional[str],
-    model: str,
-) -> Tuple[List[LifeChapter], List[LifeEvent], str]:
-    """
-    Generate chapters for the established events and assign events to chapters.
-
-    Returns:
-        Tuple of (chapters, events_with_chapter_assignments, conclusion)
-    """
-    # Build prompt with all event information
-    prompt = build_chapter_generation_prompt(
-        merged_events, person_name, birth_date, death_date
-    )
-
-    # Call AI to generate chapters
-    chapter_output = call_openai_chapter_generation(prompt, model)
-
-    # Validate chapter headlines don't contain generic categorization terms
-    _validate_chapter_headlines(chapter_output.chapters)
-
-    # Deduplicate involved_people in chapters (remove name variations)
-    deduplicated_chapters = []
-    for chapter in chapter_output.chapters:
-        if chapter.involved_people:
-            deduplicated_people = deduplicate_person_names(chapter.involved_people)
-            chapter = LifeChapter(
-                id=chapter.id,
-                headline=chapter.headline,
-                date_start=chapter.date_start,
-                date_start_precision=chapter.date_start_precision,
-                date_end=chapter.date_end,
-                date_end_precision=chapter.date_end_precision,
-                age_start=chapter.age_start,
-                age_end=chapter.age_end,
-                involved_people=deduplicated_people,
-                location=chapter.location,
-            )
-        deduplicated_chapters.append(chapter)
-
-    # Assign events to chapters, then widen chapter bounds to cover them —
-    # the assignment's last-chapter fallback would otherwise hide an event
-    # whose coarse date begins before its chapter's precise start.
-    events_with_chapters = assign_events_to_chapters(
-        merged_events, deduplicated_chapters
-    )
-    clamped_chapters = clamp_chapter_bounds(deduplicated_chapters, events_with_chapters)
-
-    return clamped_chapters, events_with_chapters, chapter_output.conclusion
+        )
+    return chapters
 
 
 def research_images_for_all_events(
@@ -1417,7 +1310,10 @@ def generate_person_events(
         deutsche_biographie_text=db_prompt_text,
     )
     life_plan = call_openai_phase1(phase1_prompt, model)
-    print(f"[Step 4/11] Generated {len(life_plan.event_skeletons)} event skeletons")
+    print(
+        f"[Step 4/11] Generated {len(life_plan.event_skeletons)} event skeletons "
+        f"in {len(life_plan.chapters)} chapters"
+    )
 
     # PHASE 2: Research event details (NO images - Phase 3)
     print(
@@ -1436,25 +1332,18 @@ def generate_person_events(
     print("[Step 6/11] Merging event skeletons with details...")
     merged_events = merge_all_events(life_plan.event_skeletons, event_details_list)
 
-    # CHAPTER GENERATION: Create chapters based on established events
-    print(
-        f"[Step 7/11] Generating life chapters (model: {model}, reasoning: {CHAPTER_REASONING_EFFORT})..."
-    )
-    chapters, events_with_chapters, conclusion = generate_chapters_for_events(
-        merged_events=merged_events,
-        person_name=life_plan.person.name,
-        birth_date=life_plan.person.birth_date,
-        death_date=life_plan.person.death_date,
-        model=model,
-    )
-    print(f"[Step 7/11] Generated {len(chapters)} chapters with conclusion")
+    # CHAPTERS: date the partition Phase 1 drew from the researched events
+    print("[Step 7/11] Dating chapters from their events...")
+    chapters = build_chapters(life_plan.chapters, merged_events)
+    conclusion = life_plan.conclusion
+    print(f"[Step 7/11] Dated {len(chapters)} chapters")
 
     # PHASE 3: Event-specific image discovery
     print(
         f"[Step 8/11] PHASE 3: Discovering and assigning event-specific images (model: {assign.PHASE3_IMAGE_SEARCH_MODEL}, reasoning: {assign.PHASE3_IMAGE_SEARCH_REASONING}/{assign.PHASE3_IMAGE_MATCH_REASONING})..."
     )
     enriched_events, portrait = research_images_for_all_events(
-        merged_events=events_with_chapters,
+        merged_events=merged_events,
         event_skeletons=life_plan.event_skeletons,
         event_details_list=event_details_list,
         person_name=life_plan.person.name,

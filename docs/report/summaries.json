@@ -160,14 +160,6 @@
         "why_this_design": "It considers every chapter together so the chapter images use distinct forms and metaphors instead of repeating the same visual language."
       }
     },
-    "p_chapters": {
-      "fingerprint": "76606c6e5c30b0c7",
-      "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Groups the researched events into chronological life phases that give the personal story a narrative arc, with thematic headlines and regional and personal context. It also closes the account by stating what from the person’s work remains in use, read, or built on.",
-        "why_this_design": "It stops the run if chapter generation fails because the event record cannot serve as a shaped personal story without this organizing layer."
-      }
-    },
     "p_db": {
       "fingerprint": "681cb5ef8f6f5ef1",
       "summary": {
@@ -177,11 +169,11 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "60f9f49bf473d868",
+      "fingerprint": "2b961958fa8788f4",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the biographical spine from the main article and related context, selecting and ranking the events that give the subject’s life its shape. It leaves later phases a chronological set of event skeletons and person metadata, while reserving places, images, and source work for later research.",
-        "why_this_design": "It asks one call to weigh events against each other because significance emerges from the whole life, then sorts the result and explicitly checks for the opening and closing events so the slide sequence remains a life story rather than a list of facts."
+        "what_it_does": "Builds the life’s narrative spine from the main article and related context, selecting and ordering the events that matter most, assigning their relative weight, and grouping them into contiguous chapters. It leaves later steps a dated, English-language plan with a conclusion that connects the events into an account of what came from the life.",
+        "why_this_design": "It makes these choices in one pass because significance and chapter boundaries depend on comparing events across the whole life, while later steps can add places, images, and evidence without reshaping that story."
       }
     },
     "p_events_p2": {
@@ -329,11 +321,11 @@
       }
     },
     "p_write": {
-      "fingerprint": "0f7848b99407ab6e",
+      "fingerprint": "1f2c15bad954d8cf",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Writes the assembled life-events document to the person’s directory and returns its path. Downstream work reads this file rather than the in-memory payload, making the dataset the durable handoff from the three upstream branches.",
-        "why_this_design": "Creates the person-specific directory before writing so a new person can complete the pipeline without a separate setup step."
+        "what_it_does": "Writes the assembled personal-story document to the person’s life-events file and returns its path. Later stages read that file rather than the in-memory payload, making the assembled chapters and conclusion a durable pipeline artifact.",
+        "why_this_design": "It creates the person’s directory before writing so a new record can be saved without relying on prior filesystem setup."
       }
     }
   },
