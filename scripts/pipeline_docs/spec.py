@@ -449,7 +449,11 @@ STEPS: List[Step] = [
             Dep("p_wiki_select", "the selected related articles"),
             Dep("p_db", "ADB biography text"),
         ],
-        prompts=["build_phase1_prompt", "call_openai_phase1"],
+        prompts=[
+            "build_phase1_prompt",
+            "call_openai_phase1",
+            "description_contract_prompt",
+        ],
         inputs=["wiki_cache", "db_cache"],
         model_from="generate_person_events.py",
     ),
@@ -477,6 +481,7 @@ STEPS: List[Step] = [
             # anything listed after the base builder is never seen.
             "_subject_article_prompt_section",
             "_related_articles_prompt_section",
+            "description_contract_prompt",
             "build_phase2_prompt_base",
             "build_phase2_prompt_classified",
             "research_event_details",
@@ -778,7 +783,11 @@ STEPS: List[Step] = [
             "are applied automatically."
         ),
         depends_on=[Dep("p_network", "the ego network")],
-        prompts=["get_combined_review_prompt", "review_combined"],
+        prompts=[
+            "get_combined_review_prompt",
+            "review_combined",
+            "description_contract_prompt",
+        ],
         inputs=["life_events", "ego_network", "wiki_cache"],
         outputs=["life_events", "ego_network"],
         skip_flag="--skip-review",

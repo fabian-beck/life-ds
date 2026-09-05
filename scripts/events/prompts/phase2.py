@@ -20,7 +20,7 @@ from urllib.parse import quote
 from events.event_classes import EVENT_CLASS_CONFIG
 from events.schemas import EventSkeleton
 from icon_categories import format_icon_categories_for_prompt
-from utils.prose_style import PROSE_STYLE_INSTRUCTIONS
+from utils.prose_style import PROSE_STYLE_INSTRUCTIONS, description_contract_prompt
 
 
 def filter_related_articles_for_event(
@@ -140,23 +140,12 @@ def build_phase2_prompt_base(
     class_types_str = "/".join(
         [config["display_name"].lower() for config in EVENT_CLASS_CONFIG.values()]
     )
-    prompt += f"   - CRITICAL ANTI-REDUNDANCY RULE for CLASSIFIED events ({class_types_str}):\n"
-    prompt += "     * If this event has a classification (see Event Class below), DO NOT describe technical details\n"
-    prompt += "     * The classification already provides structured metadata - keep description narrative only\n"
-    prompt += "     * Focus ONLY on narrative context: where, when, why, with whom\n"
-    prompt += "     * Good (classified event): 'In his parents' Berlin apartment, Zuse built the Z1 using scavenged materials.'\n"
-    prompt += "     * Bad (classified event): 'Zuse built the Z1, an electrically driven mechanical binary calculating machine...'\n"
-    prompt += "   \n"
-    prompt += "   - DESCRIPTION QUALITY CHECKLIST (when refining descriptions):\n"
+    prompt += "   - Where the Phase 1 description falls short of the definition below, refine it —\n"
+    prompt += "     shorter and more concrete, never longer. The article in front of you is the\n"
     prompt += (
-        "     * ✓ Temporal: No forward references, stays in the chronological moment\n"
+        "     evidence for what the sentence asserts, not a register to write in.\n\n"
     )
-    prompt += "     * ✓ Tone: Event-focused narrative, not meta-commentary or interpretive analysis\n"
-    prompt += "     * ✓ Personal: Includes human context where relevant, not purely professional\n"
-    prompt += "     * ✓ Prose: Every sentence follows HOW THE PROSE READS below - no 'rather than', no colon, no dash, no verdict sentence\n"
-    prompt += "     * ✓ Death events: Factual only if this is a death event (save legacy for conclusion)\n"
-    prompt += "     * If Phase 1 description violates these rules, refine it to fix the issues\n"
-    prompt += "     * Refinements should make descriptions BETTER (more concise, more balanced), not longer\n\n"
+    prompt += description_contract_prompt() + "\n"
     prompt += PROSE_STYLE_INSTRUCTIONS + "\n"
     prompt += "   The rules above hold for the description, every annotation explanation, and every text field of the classification.\n\n"
 

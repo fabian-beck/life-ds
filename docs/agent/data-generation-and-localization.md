@@ -209,6 +209,16 @@ python scripts/validate_event_titles.py emmy_noether
 
 A title is written once, in Phase 1, and nothing downstream revisits it — the Phase 2 schema carries no title field. A title that came back half in German therefore stays that way in the English data, while the translation step renders it into idiomatic German, so the defect survives only in the language nobody re-reads. This flags a German function word left standing in an English title and a city written the German way where English has its own name (Warschau, Zürich). Quoted work titles and name particles ("Nina von Lerchenfeld") are exempt; a title that trips a rule and is still right belongs in the script's `ACCEPTED` list with the reason. It is a lexical check and claims nothing beyond that: a German noun that looks like a place name ("Wölfen" against "Göttingen") is indistinguishable to it.
 
+**Check the event prose against the description contract** (no API key, no model):
+
+```bash
+python scripts/validate_event_prose.py            # report
+python scripts/validate_event_prose.py --check    # exit 1 on any finding
+python scripts/validate_event_prose.py charles_babbage
+```
+
+Every phase that writes a description — Phase 1, Phase 2's refinement, the review — reads one definition of what a description is, `description_contract_prompt()` in `scripts/utils/prose_style.py`: one moment of a life, narrated in its own present, asserted rather than weighed against sources, at the slide's granularity. Before the contract each phase carried its own partial copy of the rules and the copies disagreed, and a description that was accurate, sourced, and written in an encyclopedia's source-critical register passed every validator (issue #141). This reads for the three shapes that shipped: a year later than the event's own span anywhere in the prose, the language of weighing sources ("most likely", "is disputed", "according to"), and a street address or house number where the slide is at city level. It reports by default, because the corpus still carries prose written before the contract, and its count is how a prompt change is judged; `--check` makes it a gate. A sentence that trips a rule and is right belongs in the script's `ACCEPTED` list with the reason.
+
 **Link the published works** (Step 11 of the dataset generation, standalone; no API key, no model):
 
 ```bash
@@ -298,7 +308,7 @@ The life events generation uses a **two-phase AI approach** for improved accurac
 **Phase 1: Event Skeleton Generation** (1 AI call)
 - Identifies 12-16 significant life events (strictly enforced)
 - Organizes events into 3-5 coherent chapters
-- Creates crisp titles (2-6 words) and rich descriptions
+- Creates crisp titles (2-6 words) and writes each description to the shared description contract (`scripts/utils/prose_style.py`), the one definition Phase 2 and the review hold it to as well
 - Uses ALL related articles for broad context
 
 **Phase 2: Event Detail Research** (12-16 AI calls, one per event)

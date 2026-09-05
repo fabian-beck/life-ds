@@ -60,15 +60,15 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "characterization (the household born into, 1-4 words)\n"
         ),
         "phase2_focus": [
-            "DESCRIPTION: Focus on the circumstances — the household, the city, what the family did",
-            "  * DO NOT repeat the parents' names or the birth name (classification has these)",
-            "  * DO NOT annotate the parents' names (use INVOLVED_PEOPLE field instead)",
+            "DESCRIPTION: The household and the city as they were on that day — what the family "
+            "did, where it stood. The classification names the parents and the birth name, and "
+            "the slide shows the city, so the prose carries none of them",
             "  * Good: 'The household was an intellectually active one, with regular gatherings of "
             "university colleagues.'",
             "  * Bad: 'He was born to Christian Bohr, a physiologist, and Ellen Adler Bohr...'",
             "LOCATIONS: Place of birth (city level)",
-            "INVOLVED_PEOPLE: The parents (already in the classification, but also list here) and siblings",
-            "ANNOTATIONS: Never annotate person names (including the parents)",
+            "INVOLVED_PEOPLE: Siblings or others present, if any; the parents are already in the "
+            "classification and are not listed again",
         ],
         "log_format": lambda cls: (
             "BIRTH ("

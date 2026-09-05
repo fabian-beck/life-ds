@@ -8,7 +8,7 @@ with focus on readability, accuracy, and UI optimization.
 import json
 from typing import Dict, Any, List, Set
 
-from utils.prose_style import PROSE_STYLE_INSTRUCTIONS
+from utils.prose_style import PROSE_STYLE_INSTRUCTIONS, description_contract_prompt
 
 # UI Context documentation embedded in prompts
 UI_CONTEXT = """
@@ -16,8 +16,7 @@ DISPLAY CONSTRAINTS:
 - Event titles: Displayed as large headings (h2, 1.35-1.85rem)
   → Should be concise, ~5-10 words max, ~80-100 characters
 - Event descriptions: Constrained to 25vh with fade effect
-  → ~200-400 words visible on mobile, ~400-800 on desktop
-  → Warn if >1000 words (excessive scrolling)
+  → 2-4 sentences; anything longer scrolls behind the fade
 - Chapter headlines: Prominent colored labels, ~2-5 words, max ~50 chars
 - Person chips: Names truncated at 150px (~15-20 chars)
   → Full details shown in tooltip on click
@@ -149,11 +148,10 @@ REVIEW GUIDELINES:
 - Examples of GOOD titles: "Publishes On Computable Numbers", "Breaks Enigma Code", "Flees Nazi Germany"
 - Examples of BAD titles: "Alan Turing publishes his groundbreaking paper...", "The discovery of...", "Important work on..."
 
-**Event Descriptions**:
+**Event Descriptions** — hold every description to this definition, and rewrite via `new_description` where it falls short (a later year in an event's own prose, a disputed birthplace narrated as a dispute, a street address, a restated classification):
+{description_contract_prompt()}
 - 2-4 sentences, each carrying a fact about the event; a description that has grown past that is cut, not paragraphed
 - Remove redundancies between title and opening sentence
-- Active voice, concrete detail, plain words
-- **CRITICAL - Plain text only**: Descriptions must be plain text without markdown syntax (no **bold**, *italic*, `code`, ## headings, etc.)
 
 {PROSE_STYLE_INSTRUCTIONS}
 

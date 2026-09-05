@@ -62,3 +62,47 @@ These rules hold for every field a reader sees, from a two-sentence
 description to a four-paragraph report, and they are not a length target:
 a text that has said its facts in fewer sentences than the range allows is
 finished."""
+
+
+def description_contract_prompt() -> str:
+    """What an event description is, as a prompt block.
+
+    PROSE_STYLE_INSTRUCTIONS says how a sentence reads; this says what a
+    description contains. Three calls may write one — Phase 1, Phase 2's
+    refinement, and the review — and each used to carry its own partial copy
+    of the content rules, grown one incident at a time, so that the rule
+    keeping a description in its own moment was stated in one phase and
+    absent from the class guidance another read last, and a birthplace
+    dispute copied from the article passed every phase (issue #141). Stated
+    as what a description is rather than a list of what it must not be,
+    because a definition generalizes to the next case and a list of banned
+    phrases covers exactly the cases it names. A function rather than a
+    constant so the technical report renders it in every step drawer that
+    lists it.
+    """
+    return (
+        "WHAT AN EVENT DESCRIPTION IS:\n"
+        "A description narrates one moment of a life. The slide around it shows the "
+        "date, the place at city level, the people involved, the sources, and, for a "
+        "classified event, the structured facts — the parents, the partner, the work, "
+        "the destination. The prose says what those fields cannot.\n"
+        "- It stands in the present of the event: what was happening, who was there, why "
+        "it mattered then. Nothing that happened later belongs in it — not a consequence, "
+        "a later move, or a retrospect. The chapters and the conclusion carry those.\n"
+        "- It asserts. The story commits to one telling; the sources carry the evidence "
+        "and the metadata carries the uncertainty (date_precision, date_note). Where the "
+        "sources disagree — about a date, a place, an attribution — state the "
+        "best-supported version at the precision the sources support, and keep the "
+        "disagreement, the historiography, and the talk of sources out of the sentence.\n"
+        "- It stays at the slide's granularity and never repeats the slide: no street "
+        "addresses or house numbers where the location is a city, no restating what "
+        "the classification already holds.\n"
+        "- It is plain text in American English: no Markdown, no emphasis marks, no "
+        "links; a title of a work stands plain in the sentence.\n"
+        "GOOD: 'Schönlein studied medicine in Landshut, learning from Andreas Röschlaub "
+        "and Friedrich Tiedemann.'\n"
+        "BAD (a later year): 'Schönlein studied medicine in Landshut, training that would "
+        "later shape his bedside teaching.'\n"
+        "BAD (talk of sources, street level): 'He was most likely born at 44 Crosby Row, "
+        "though the exact birthplace is disputed.'\n"
+    )
