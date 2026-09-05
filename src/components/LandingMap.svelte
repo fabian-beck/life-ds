@@ -4,7 +4,7 @@
   // This component is loaded on demand, so it must pull in the MapLibre CSS
   // itself rather than relying on StoryMap having been loaded first.
   import "maplibre-gl/dist/maplibre-gl.css";
-  import maplibregl from "maplibre-gl";
+  import * as maplibregl from "maplibre-gl";
   import {
     resolveBasemapUrl,
     createBasemapStyle,
