@@ -2493,6 +2493,17 @@
       });
     },
 
+    /* What a box is configured with, listed under its name. The lines are
+       settings rather than contents, so they are marked with a rule instead of
+       the document glyph the source list carries. */
+    traits: function (host, part) {
+      part.lines.forEach((line, index) => {
+        const y = part.y + 42 + index * 22;
+        host.appendChild(sPath("M" + (part.x + 12) + " " + y + "h8", "trule"));
+        host.appendChild(sText(part.x + 26, y + 4, line, "ttext"));
+      });
+    },
+
     /* One square per documented step, in the color of its kind: the size and
        the composition of a pipeline, without redrawing the pipeline. */
     steps: function (host, part) {
@@ -2610,127 +2621,6 @@
         sPath("M" + (x + 140) + " " + (y + 6) + "v56", "tedge-call")
       );
       arrowHead(host, x + 140, y + 66, "down");
-    },
-
-    prose: function (host, part) {
-      const x = part.x + 16;
-      const width = part.w - 32;
-      [0.92, 1, 0.95, 1, 0.66].forEach((share, index) => {
-        host.appendChild(
-          sRect(x, part.y + 46 + index * 13, width * share, 4, "tbar")
-        );
-      });
-    },
-
-    timeline: function (host, part) {
-      const x = part.x + 16;
-      const width = part.w - 32;
-      const y = part.y + 78;
-      const bands = [0, 0.34, 0.62];
-      const spans = [0.34, 0.28, 0.38];
-      bands.forEach((start, index) => {
-        host.appendChild(
-          sRect(
-            x + width * start,
-            y - 22,
-            width * spans[index] - 3,
-            18,
-            "tband"
-          )
-        );
-      });
-      host.appendChild(sPath("M" + x + " " + y + "h" + width, "trule"));
-      [0.04, 0.14, 0.26, 0.38, 0.47, 0.61, 0.7, 0.86, 0.95].forEach(
-        (at, index) => {
-          host.appendChild(
-            svg("circle", {
-              cx: x + width * at,
-              cy: y,
-              r: index === 4 ? 4 : 2.4,
-              class: index === 4 ? "tdot on" : "tdot",
-            })
-          );
-        }
-      );
-    },
-
-    map: function (host, part) {
-      const x = part.x + 16;
-      const y = part.y + 42;
-      const width = part.w - 32;
-      const height = 62;
-      host.appendChild(sRect(x, y, width, height, "tplate"));
-      // The coastline is drawn for a 224-unit plate and scaled to whatever
-      // width the box has, so the box can be resized without redrawing it.
-      const coast = svg("g", {
-        transform:
-          "translate(" + x + "," + (y + 46) + ") scale(" + width / 224 + ",1)",
-      });
-      coast.appendChild(
-        sPath("M0 0q24 -9 46 -3t44 -10 42 2 40 -11 52 -1", "tcoast")
-      );
-      host.appendChild(coast);
-      [
-        [0.22, 0.34],
-        [0.44, 0.62],
-        [0.62, 0.28],
-        [0.8, 0.55],
-      ].forEach((at, index) => {
-        const px = x + width * at[0];
-        const py = y + height * at[1];
-        host.appendChild(
-          sPath(
-            "M" + px + " " + py + "l-4 -7a4.6 4.6 0 1 1 8 0Z",
-            index === 1 ? "tpin on" : "tpin"
-          )
-        );
-      });
-    },
-
-    graph: function (host, part) {
-      const x = part.x + 16;
-      const y = part.y + 40;
-      const nodes = [
-        [0.5, 0.5, 7],
-        [0.18, 0.24, 4],
-        [0.24, 0.78, 4],
-        [0.52, 0.12, 3.4],
-        [0.78, 0.3, 4],
-        [0.84, 0.74, 3.4],
-        [0.46, 0.9, 3.4],
-      ];
-      const width = part.w - 32;
-      const height = 66;
-      const at = (node) => {
-        return [x + width * node[0], y + height * node[1]];
-      };
-      [
-        [0, 1],
-        [0, 2],
-        [0, 3],
-        [0, 4],
-        [0, 6],
-        [1, 2],
-        [4, 5],
-        [2, 6],
-      ].forEach((edge) => {
-        const a = at(nodes[edge[0]]);
-        const b = at(nodes[edge[1]]);
-        host.appendChild(
-          sPath("M" + a[0] + " " + a[1] + "L" + b[0] + " " + b[1], "tlink")
-        );
-      });
-      nodes.forEach((node, index) => {
-        const point = at(node);
-        host.appendChild(
-          svg("circle", {
-            cx: point[0],
-            cy: point[1],
-            r: node[2],
-            class: index === 0 ? "tnode on" : "tnode",
-          })
-        );
-      });
     },
   };
 
@@ -4757,22 +4647,20 @@
     sync();
   }
 
-  /* --------------------------------------- notes, principles and citations */
+  /* -------------------------------------------- notes and citations */
 
-  /* Three kinds of marker are read the same way. An inline note is authored
-     once and printed as a numbered list closing its section; a design principle
-     is declared once in the introduction and printed as the numbered list every
-     `P3` in the prose points into; a citation is numbered by first use and
-     printed in the references. All three markers are real links into that
-     printed text, so all three work with this file absent and on paper.
+  /* Several kinds of marker are read the same way. An inline note is authored
+     once and printed as a numbered list closing its section; a citation is
+     numbered by first use and printed in the references. Every marker is a real
+     link into that printed text, so all of them work with this file absent and
+     on paper.
 
      What this adds is the screen reading: the marker opens the text it points
-     at in a popover, which keeps an aside—or a principle stated three sections
-     earlier, or a reference the reader has no reason to have memorized—off the
-     measure until it is asked for. The notes list is withdrawn once that is
-     possible; the principles list is the introduction's own content and stays,
-     and so does the reference list, which a reader expects to find at the end
-     whether or not they ever opened a marker.
+     at in a popover, which keeps an aside—or a reference the reader has no
+     reason to have memorized—off the measure until it is asked for. The notes
+     list is withdrawn once that is possible; the reference list stays, which a
+     reader expects to find at the end whether or not they ever opened a
+     marker.
 
      A citation's popover carries the entry's DOI as a live link, so following a
      reference costs the reader neither their place in the sentence nor a trip
@@ -4782,11 +4670,11 @@
      of the text, so the two renderings cannot drift apart. It is positioned in
      document coordinates, so it stays on its marker while the reader
      scrolls. */
-  const POP_REF = ".noteref, .pref, .refref, .cref";
+  const POP_REF = ".noteref, .refref, .cref";
 
   function renderPopovers() {
     const refs = document.querySelectorAll(
-      ".report .noteref, .report .pref, .report .refref, .report .cref"
+      ".report .noteref, .report .refref, .report .cref"
     );
     if (!refs.length) return;
     if (document.querySelector(".report .noteref")) {

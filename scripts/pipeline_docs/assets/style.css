@@ -39,7 +39,7 @@
          the document rather than text in it
      13  tables, captions, controls and code: the smallest size read as prose
      14  apparatus—notes, references, the printed step details
-     15  supporting prose—a callout, a principle, the drawer
+     15  supporting prose—a callout, the drawer
      16  running text, the abstract and lede that open it, and `h4`, the one
          heading that takes its rank from weight and number rather than size
      18  the subtitle; 19, 25 and a clamped 30–44 for the headings above it
@@ -447,7 +447,6 @@ a.author-name:focus-visible {
 .report > blockquote,
 .report > table,
 .callout,
-.principles,
 .references {
   max-width: var(--measure);
 }
@@ -720,92 +719,6 @@ a.author-name:focus-visible {
 .callout-aside {
   border-left-color: var(--rule);
   color: var(--ink-2);
-}
-
-/* ------------------------------------------------------------- principles */
-
-/* The principles are authored prose like a callout, but they are also the
-   target of every `P3` in the report, so they are numbered here rather than by
-   the list's own marker: the number in the sentence and the number in the list
-   have to be the same string in both media. */
-.principles {
-  margin: 24px 0;
-  padding: 2px 0 2px 16px;
-  border-left: 3px solid var(--rule-strong);
-}
-
-.principles-label {
-  margin: 0 0 8px;
-  color: var(--muted);
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.report .principle-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.principle {
-  margin: 0 0 16px;
-  break-inside: avoid;
-}
-
-.principle:last-child {
-  margin-bottom: 0;
-}
-
-.principle-title {
-  display: flex;
-  gap: 8px;
-  margin: 0;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.principle-no {
-  color: var(--muted);
-  font-variant-numeric: lining-nums tabular-nums;
-}
-
-.principle-body p {
-  margin: 0 0 6px;
-  font-size: 15px;
-}
-
-.principle-body p:last-child {
-  margin-bottom: 0;
-}
-
-/* The reference reads as a number in the sentence, not as a word competing with
-   it: the same restraint the bracketed citation shows, with a rule under it to
-   say it opens something. */
-.report .pref {
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 0.8em;
-  font-variant-numeric: lining-nums tabular-nums;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  white-space: nowrap;
-  border-bottom: 1px solid var(--rule);
-}
-
-.report .pref:hover,
-.report .pref.open {
-  border-bottom-color: var(--ink);
-  background: var(--surface);
-}
-
-.report .pref:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 2px;
 }
 
 /* ------------------------------------------------------------------ notes */
@@ -2125,8 +2038,7 @@ figure.teaser > .cap {
 
 /* Contents of the parts. */
 .tglyph,
-.tcard,
-.tplate {
+.tcard {
   fill: var(--paper);
   stroke: var(--rule);
   stroke-width: 1;
@@ -2139,29 +2051,20 @@ figure.teaser > .cap {
 }
 
 .tglyph-fold,
-.trule,
-.tcoast,
-.tlink {
+.trule {
   fill: none;
   stroke: var(--rule);
   stroke-width: 1;
 }
 
-.trule,
-.tlink {
+.trule {
   stroke: var(--ink-2);
-}
-
-.tlink {
-  stroke-width: 0.8;
-  opacity: 0.55;
 }
 
 .tbar {
   fill: var(--rule-soft);
 }
 
-.tband,
 .tpinned {
   fill: var(--surface);
   stroke: var(--rule-soft);
@@ -2180,15 +2083,11 @@ figure.teaser > .cap {
   stroke-width: 1;
 }
 
-.tdot,
-.tnode,
-.tpin {
+.tdot {
   fill: var(--ink-2);
 }
 
-.tdot.on,
-.tnode.on,
-.tpin.on {
+.tdot.on {
   fill: var(--ink);
 }
 
@@ -2862,7 +2761,6 @@ figure.teaser > .cap {
      those together would leave a page empty for no gain. */
   figure.figure,
   .callout,
-  .principles,
   .factgrid,
   .kindlist,
   .empty,
@@ -3003,12 +2901,6 @@ figure.teaser > .cap {
   }
 
   .report .noteref sup {
-    border-bottom: 0;
-  }
-
-  /* On paper a principle's number is resolved by turning back to the list in
-     the introduction, so the rule that said "this opens" comes off it too. */
-  .report .pref {
     border-bottom: 0;
   }
 

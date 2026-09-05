@@ -63,9 +63,10 @@ class Concept:
     perspectives a story is turned into. The input is excluded because that
     section is about what the system derives, and the languages are excluded
     because a language is every one of these perspectives again rather than
-    another one. The theme is listed, because the section covers the
-    second-order story as well, and the theme is the perspective a meta story
-    adds to the ones a biography already carries.
+    another one. The profile and the theme are excluded for the opposite
+    reasons: a profile is the registry metadata that identifies a story rather
+    than a perspective on it, and a theme is the meta story itself rather than
+    something the meta story is turned into.
     """
 
     id: str
@@ -96,45 +97,44 @@ CONCEPTS: Tuple[Concept, ...] = (
         "Who a story is about: a name, a lifespan, the roles a life is "
         "remembered for, and the portrait that stands for it.",
         "The cards on the landing page and the person chips inside a story.",
+        legend=False,
     ),
     Concept(
         "events",
         "Life events",
         "mdi-timeline-text-outline",
         "Dated episodes with a place, the persons involved and the sources "
-        "behind them, grouped into the phases of a life.",
+        "behind them, grouped into phases.",
         "The event slides and the timeline that runs along the foot of them.",
     ),
     Concept(
         "narrative",
         "Narrative text",
         "mdi-text-long",
-        "The written register: an event’s own description, and the article "
-        "prose that surrounds a theme’s components.",
+        "An event’s own description, and the prose that surrounds a story’s "
+        "components.",
         "The long-form text of an event slide and of a meta story’s sections.",
     ),
     Concept(
         "imagery",
         "Imagery",
         "mdi-image-outline",
-        "Licensed illustrations matched to the events they depict, and the "
-        "portrait derived from one of them.",
+        "Licensed illustrations matched to the events they depict.",
         "The pictures on an event slide, the lightbox, and every portrait.",
     ),
     Concept(
         "places",
         "Geography",
         "mdi-map-marker-outline",
-        "Historical toponyms resolved to modern coordinates, so a life can be "
-        "read as a movement through space.",
+        "Historical toponyms resolved to modern coordinates.",
         "The place under an event’s date, and the map the camera flies across.",
     ),
     Concept(
         "network",
         "Social network",
         "mdi-account-multiple-outline",
-        "Typed, weighted and dated relationships—one ego network per subject, "
-        "merged into one graph per theme.",
+        "Typed, weighted and dated relationships between the people a story "
+        "names.",
         "The network button above a story and the force-directed graph it opens.",
     ),
     Concept(
@@ -142,7 +142,7 @@ CONCEPTS: Tuple[Concept, ...] = (
         "Visual identity",
         "mdi-palette-outline",
         "A palette, a typography and a background pattern generated per "
-        "subject, so each story is presented in a register of its own.",
+        "story.",
         "The color and type of every story, injected as CSS custom properties.",
     ),
     Concept(
@@ -152,6 +152,7 @@ CONCEPTS: Tuple[Concept, ...] = (
         "An idea traced across several finished biographies—the second-order "
         "story, and the only one whose inputs are this system’s own output.",
         "The meta stories on the landing page and the lives they link into.",
+        legend=False,
     ),
     Concept(
         "languages",
@@ -168,6 +169,7 @@ CONCEPTS: Tuple[Concept, ...] = (
 # Vendored from @mdi/js. `check_icons()` verifies these against the installed
 # package whenever there is one, so a drift is a build error, not a surprise.
 ICON_PATHS: Dict[str, str] = {
+    "mdi-creation-outline": "M9 4L11.5 9.5L17 12L11.5 14.5L9 20L6.5 14.5L1 12L6.5 9.5L9 4M9 8.83L8 11L5.83 12L8 13L9 15.17L10 13L12.17 12L10 11L9 8.83M19 9L17.74 6.26L15 5L17.74 3.75L19 1L20.25 3.75L23 5L20.25 6.26L19 9M19 23L17.74 20.26L15 19L17.74 17.75L19 15L20.25 17.75L23 19L20.25 20.26L19 23Z",
     "mdi-book": "M18,22A2,2 0 0,0 20,20V4C20,2.89 19.1,2 18,2H12V9L9.5,7.5L7,9V2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18Z",
     "mdi-account-outline": "M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,6A2,2 0 0,0 10,8A2,2 0 0,0 12,10A2,2 0 0,0 14,8A2,2 0 0,0 12,6M12,13C14.67,13 20,14.33 20,17V20H4V17C4,14.33 9.33,13 12,13M12,14.9C9.03,14.9 5.9,16.36 5.9,17V18.1H18.1V17C18.1,16.36 14.97,14.9 12,14.9Z",
     "mdi-timeline-text-outline": "M5 12C5 13.11 4.11 14 3 14C1.9 14 1 13.11 1 12C1 10.9 1.9 10 3 10C4.11 10 5 10.9 5 12M4 2V8H2V2H4M2 22V16H4V22H2M24 6V18C24 19.11 23.11 20 22 20H10C8.9 20 8 19.11 8 18V14L6 12L8 10V6C8 4.89 8.9 4 10 4H22C23.11 4 24 4.89 24 6M22 6H10V10.83L8.83 12L10 13.17V18H22V6M12 9H20V11H12V9M12 13H18V15H12V13Z",
@@ -208,6 +210,17 @@ def icon_of(concept_id: str) -> str:
     if concept is None:
         return ""
     return ICON_PATHS.get(concept.icon, "")
+
+
+def path_of(icon: str) -> str:
+    """The SVG path data for a vendored icon name, or an empty string.
+
+    The figure draws marks for a few boxes that are not concepts—the language
+    model is a part of the system rather than something the system is about—so
+    a part may name a vendored icon directly instead of borrowing one from the
+    vocabulary.
+    """
+    return ICON_PATHS.get(icon, "")
 
 
 def to_json() -> List[Dict[str, object]]:

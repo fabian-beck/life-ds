@@ -294,9 +294,9 @@ def split_parts(body: str) -> Tuple[str, str]:
 def parse_parts(text: str) -> Tuple[ShotPart, ...]:
     """Read part declarations: `@id x,y,w,h Label`, then the blurb under it.
 
-    The same thin grammar the design principles use, because it is read in the
-    same way: an identity the prose points at, a label short enough for a
-    panel, and a sentence to show when the part is focused.
+    A deliberately thin grammar: an identity the prose points at, a label
+    short enough for a panel, and a sentence to show when the part is
+    focused.
     """
     parts: List[ShotPart] = []
     blurbs: List[List[str]] = []

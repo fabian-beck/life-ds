@@ -1042,98 +1042,6 @@ class MarkdownCompilerTests(unittest.TestCase):
         self.assertNotIn("report:notes", document.html)
 
 
-class PrincipleTests(unittest.TestCase):
-    """A principle is declared once, numbered here, and referenced by number."""
-
-    HEAD = "---\ntitle: T\n---\n"
-    BLOCK = (
-        "::: principles\n"
-        "@first One record\n"
-        "The event is the unit.\n"
-        "\n"
-        "@second Revise top-down\n"
-        "A closing pass reads the whole.\n"
-        ":::\n"
-    )
-
-    def test_principles_are_numbered_in_declaration_order(self) -> None:
-        document = _compile(self.HEAD + "\n## S\n\n" + self.BLOCK)
-        self.assertEqual(
-            [(item.number, item.id, item.label) for item in document.principles],
-            [(1, "first", "P1"), (2, "second", "P2")],
-        )
-        self.assertIn('id="principle-1"', document.html)
-        self.assertIn("The event is the unit.", document.html)
-
-    def test_a_reference_renders_as_the_number_and_links_to_the_list(self) -> None:
-        document = _compile(
-            self.HEAD + "\n## S\n\nBecause it holds ((second)).\n\n" + self.BLOCK
-        )
-        self.assertEqual(document.prefs, ["second"])
-        self.assertIn('class="pref" href="#principle-2"', document.html)
-        self.assertIn('data-pop-label="Principle 2"', document.html)
-        self.assertIn(">P2</a>", document.html)
-
-    def test_a_reference_may_stand_above_the_block_that_declares_it(self) -> None:
-        """The declaration is read before compiling, not while walking it."""
-        document = _compile(self.HEAD + "\n## S\n\nUp here ((first)).\n\n" + self.BLOCK)
-        self.assertEqual(document.prefs, ["first"])
-
-    def test_an_unknown_principle_fails_the_build(self) -> None:
-        with self.assertRaises(report.ReportError):
-            _compile(self.HEAD + "\n## S\n\nText ((missing)).\n\n" + self.BLOCK)
-
-    def test_a_reference_with_no_block_fails_the_build(self) -> None:
-        with self.assertRaises(report.ReportError):
-            _compile(self.HEAD + "\n## S\n\nText ((first)).\n")
-
-    def test_two_principles_may_not_share_an_id(self) -> None:
-        with self.assertRaises(report.ReportError):
-            _compile(
-                self.HEAD + "\n## S\n\n::: principles\n@same One\nA.\n\n"
-                "@same Two\nB.\n:::\n"
-            )
-
-    def test_a_principle_without_text_fails_the_build(self) -> None:
-        with self.assertRaises(report.ReportError):
-            _compile(self.HEAD + "\n## S\n\n::: principles\n@lonely Title only\n:::\n")
-
-    def test_a_second_principles_block_fails_the_build(self) -> None:
-        with self.assertRaises(report.ReportError):
-            _compile(self.HEAD + "\n## S\n\n" + self.BLOCK + "\n" + self.BLOCK)
-
-    def test_reference_syntax_inside_a_fenced_block_is_left_alone(self) -> None:
-        document = _compile(
-            self.HEAD + "\n## S\n\n```\n((first))\n```\n\n" + self.BLOCK
-        )
-        self.assertEqual(document.prefs, [])
-        self.assertIn("((first))", document.html)
-
-    def test_an_escaped_reference_prints_as_text(self) -> None:
-        document = _compile(self.HEAD + "\n## S\n\nWrite \\((first)).\n\n" + self.BLOCK)
-        self.assertEqual(document.prefs, [])
-        self.assertIn("((first))", document.html)
-
-    def test_a_principle_body_may_cite_a_measurement(self) -> None:
-        facts = _facts()
-        document = _compile(
-            self.HEAD + "\n## S\n\n::: principles\n@one Localized throughout\n"
-            "Every document exists in {{ app.languages }}.\n:::\n",
-            facts,
-        )
-        self.assertIn(facts["app.languages"].display, document.principles[0].body_html)
-
-    def test_a_principle_nothing_references_is_reported(self) -> None:
-        document = _compile(self.HEAD + "\n## S\n\nText ((first)).\n\n" + self.BLOCK)
-        messages = [
-            problem.message
-            for problem in validate._check_principles(document)
-            if problem.severity == "warning"
-        ]
-        self.assertEqual(len(messages), 1)
-        self.assertIn("second", messages[0])
-
-
 class BibliographyTests(unittest.TestCase):
     """A reference is only a reference if it resolves."""
 
@@ -1457,24 +1365,11 @@ class ReportSourceTests(unittest.TestCase):
         self.assertIn("renderPopovers", js)
         self.assertIn("body.has-note-pop .notes", css)
 
-    def test_every_principle_is_stated_once_and_acted_on_somewhere(self) -> None:
-        """The numbering is only worth having if the report uses it."""
-        self.assertTrue(self.document.principles, "the report states no principle")
-        for item in self.document.principles:
-            self.assertIn(f'id="principle-{item.number}"', self.document.html)
-            self.assertIn(
-                item.id,
-                self.document.prefs,
-                f"principle {item.label} is declared but never referenced",
-            )
-        self.assertIn('class="pref"', self.document.html)
-
-    def test_a_principle_marker_reads_the_same_way_a_note_marker_does(self) -> None:
-        """Both markers are links into printed text the popover copies."""
+    def test_a_note_marker_is_a_link_into_text_the_popover_copies(self) -> None:
+        """The marker is a real link; the popover is the screen reading of it."""
         js = (ASSETS / "app.js").read_text(encoding="utf-8")
         self.assertIn('querySelector(".pop-body")', js)
         self.assertIn("data-pop-label", js)
-        self.assertIn('class="principle-body pop-body"', self.document.html)
         self.assertIn('class="note-body pop-body"', self.document.html)
 
     def test_every_mounted_component_has_a_renderer_in_the_page(self) -> None:
@@ -1822,10 +1717,10 @@ class TeaserTests(unittest.TestCase):
 
     def test_a_reference_becomes_a_control_that_names_its_part(self) -> None:
         document = _compile(
-            self.HEAD + "\n## S\n\nDerived as [[timeline|a chronology]].\n"
+            self.HEAD + "\n## S\n\nDerived as [[events|a chronology]].\n"
         )
-        self.assertIn("timeline", document.figrefs)
-        self.assertIn('class="figref" data-part="timeline"', document.html)
+        self.assertIn("events", document.figrefs)
+        self.assertIn('class="figref" data-part="events"', document.html)
         self.assertIn("a chronology", document.html)
 
     def test_a_reference_is_a_span_that_can_break_across_lines(self) -> None:
@@ -1863,8 +1758,8 @@ class TeaserTests(unittest.TestCase):
         )
 
     def test_a_reference_without_a_phrase_uses_the_part_label(self) -> None:
-        document = _compile(self.HEAD + "\n## S\n\nSee [[map]].\n")
-        self.assertIn(teaser.part_by_id("map").label, document.html)
+        document = _compile(self.HEAD + "\n## S\n\nSee [[geography]].\n")
+        self.assertIn(teaser.part_by_id("geography").label, document.html)
 
     def test_an_unknown_part_fails_the_build(self) -> None:
         """A phrase that lights nothing is the figure's version of a silent gap."""
@@ -1874,15 +1769,15 @@ class TeaserTests(unittest.TestCase):
 
     def test_references_inside_a_fenced_block_are_left_alone(self) -> None:
         document = _compile(
-            self.HEAD + "\n## S\n\n```text\n[[timeline|a chronology]]\n```\n"
+            self.HEAD + "\n## S\n\n```text\n[[events|a chronology]]\n```\n"
         )
-        self.assertIn("[[timeline|a chronology]]", document.html)
+        self.assertIn("[[events|a chronology]]", document.html)
         self.assertEqual(document.figrefs, [])
 
     def test_a_reference_with_no_figure_on_the_page_is_an_error(self) -> None:
         facts = _facts()
         document = report.compile_report(
-            self.HEAD + "\n## S\n\nSee [[map|the map]].\n", facts
+            self.HEAD + "\n## S\n\nSee [[geography|the places]].\n", facts
         )
         problems = [
             problem
@@ -1977,7 +1872,7 @@ class ConceptTests(unittest.TestCase):
 
     def test_a_referenced_part_carries_its_concept_glyph(self) -> None:
         document = _compile(
-            "---\ntitle: T\n---\n\n## S\n\nAs [[graph|a social network]].\n"
+            "---\ntitle: T\n---\n\n## S\n\nAs [[ego-network|a social network]].\n"
         )
         self.assertIn('class="glyph"', document.html)
         self.assertIn(concepts.icon_of("network"), document.html)

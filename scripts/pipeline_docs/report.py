@@ -66,17 +66,6 @@ The authoring surface is small on purpose:
 `::: note` / `::: aside` / `::: decision` / `::: limitation`
     Callouts rendered here in Python; they hold authored text only.
 
-`::: principles`
-    The design principles, declared once as `@id Title` lines with a paragraph
-    under each. Numbering is positional, so reordering the block renumbers
-    every reference to it.
-
-`((id))`
-    A reference to one of those principles, rendered as its number. The prose
-    argues a decision where the system acts on it and points at the principle
-    it instantiates instead of restating it; the page opens the principle in a
-    popover, and on paper the number resolves against the printed list.
-
 `^[an explanation]`
     An inline note: an aside a specialist reader may want and the sentence
     cannot carry. One authored source, two renderings—a numbered note at the
@@ -248,9 +237,6 @@ FIGREF = re.compile(
     r"(?:\|\s*([^\]]+?)\s*)?\]\]"
 )
 CONCEPTREF = re.compile(r"(?<!\\)<<\s*([a-z][a-z0-9-]*)\s*(?:\|\s*([^>]+?)\s*)?>>")
-PRINCIPLE_REF = re.compile(r"(?<!\\)\(\(\s*([a-z][a-z0-9-]*)\s*\)\)")
-PRINCIPLE_ITEM = re.compile(r"^@([a-z][a-z0-9-]*)\s+(\S.*?)\s*$")
-PRINCIPLES_BLOCK = "principles"
 KEY = r"[A-Za-z][A-Za-z0-9_:.-]*"
 REFCITE = re.compile(rf"(?<!\\)\[@\s*({KEY}(?:\s*[;,]\s*@\s*{KEY})*)\s*\]")
 PARAM = re.compile(r"""([a-z][a-z0-9_-]*)=(?:"([^"]*)"|'([^']*)'|(\S+))""")
@@ -338,36 +324,6 @@ class Author:
 
 
 @dataclass
-class Principle:
-    """One numbered design principle, declared once and referenced anywhere.
-
-    The number is the reference: prose writes `((id))` and reads `P3`, so a
-    principle can be pointed at from the section that acts on it without the
-    sentence having to restate it. Numbering is positional, like the headings
-    and the reference list, so nobody maintains a number by hand.
-    """
-
-    number: int
-    id: str
-    title: str
-    body_markdown: str
-    title_html: str = ""
-    body_html: str = ""
-
-    @property
-    def label(self) -> str:
-        return f"P{self.number}"
-
-    def to_json(self) -> Dict[str, Any]:
-        return {
-            "number": self.number,
-            "id": self.id,
-            "label": self.label,
-            "title": self.title,
-        }
-
-
-@dataclass
 class Document:
     front: Dict[str, str]
     html: str
@@ -385,8 +341,6 @@ class Document:
     refcites: List[str] = field(default_factory=list)
     references: List[Reference] = field(default_factory=list)
     prints_references: bool = False
-    principles: List[Principle] = field(default_factory=list)
-    prefs: List[str] = field(default_factory=list)
     authors: List[Author] = field(default_factory=list)
 
     @property
@@ -401,7 +355,6 @@ class Document:
             "abstract": self.front.get("abstract", ""),
             "source": self.source_path,
             "sections": [section.to_json() for section in self.sections],
-            "principles": [item.to_json() for item in self.principles],
             "components": {
                 name: {"summary": spec.summary} for name, spec in COMPONENTS.items()
             },
@@ -781,9 +734,9 @@ def substitute_figrefs(
 def collect_shot_parts(blocks: Sequence[Block]) -> Dict[str, Dict[str, ShotPart]]:
     """Every screenshot's declared parts, read before anything is compiled.
 
-    Like the principles, a reference may stand above or below the block that
-    declares its target—the figures sit where the argument wants them—so the
-    part ids have to be known before the first substitution. Only the id and
+    A reference may stand above or below the block that declares its target—
+    the figures sit where the argument wants them—so the part ids have to be
+    known before the first substitution. Only the id and
     the body are read here; everything else a block may get wrong is parsed
     and reported with better context by `screenshots.parse` and `validate`.
     """
@@ -812,7 +765,7 @@ def substitute_conceptrefs(text: str, seen: List[str], line_hint: str = "") -> s
     gloss is what stops the two from saying the same thing twice: the sentence
     names the perspective, and the entry it points at defines it, once.
 
-    A real link, like a principle's number: the popover is the screen reading,
+    A real link, like a note's marker: the popover is the screen reading,
     and on paper the reference resolves against the printed legend below it.
     """
 
@@ -844,150 +797,6 @@ def substitute_conceptrefs(text: str, seen: List[str], line_hint: str = "") -> s
 
     substituted = _outside_fences(text, lambda line: CONCEPTREF.sub(replace, line))
     return substituted.replace("\\<<", "<<")
-
-
-# ---------------------------------------------------------------------------
-# Design principles
-# ---------------------------------------------------------------------------
-
-
-def parse_principles(text: str, line_hint: str = "") -> List[Principle]:
-    """Read a `::: principles` body: `@id Title`, then the paragraph under it.
-
-    The grammar is deliberately thinner than Markdown. A principle needs an
-    identity the prose can point at, a title short enough to be read in a
-    popover, and a body of running text—nothing that a heading, a list or a
-    nested directive would add belongs in a sentence the report repeats by
-    number.
-    """
-    principles: List[Principle] = []
-    body: List[str] = []
-
-    def close() -> None:
-        if principles:
-            principles[-1].body_markdown = "\n".join(body).strip()
-
-    for raw in text.splitlines():
-        match = PRINCIPLE_ITEM.match(raw)
-        if match:
-            close()
-            body = []
-            principles.append(
-                Principle(len(principles) + 1, match.group(1), match.group(2), "")
-            )
-            continue
-        if not principles:
-            if raw.strip():
-                raise ReportError(
-                    f"{line_hint}'::: {PRINCIPLES_BLOCK}' starts with text before "
-                    "its first principle—every principle opens with a line "
-                    "'@id Title'"
-                )
-            continue
-        body.append(raw)
-    close()
-
-    if not principles:
-        raise ReportError(
-            f"{line_hint}'::: {PRINCIPLES_BLOCK}' declares no principle—write "
-            "'@id Title' and a paragraph under it"
-        )
-    seen: Dict[str, int] = {}
-    for item in principles:
-        if item.id in seen:
-            raise ReportError(
-                f"{line_hint}two principles share the id '{item.id}'—a "
-                "reference could not tell them apart"
-            )
-        seen[item.id] = item.number
-        if not item.body_markdown:
-            raise ReportError(
-                f"{line_hint}principle '{item.id}' has a title and no text—the "
-                "popover would open on nothing"
-            )
-    return principles
-
-
-def collect_principles(blocks: Sequence[Block]) -> List[Principle]:
-    """The declaration, read before anything is compiled.
-
-    A reference may stand above the block that declares it—the principles are
-    stated once, and the sections that act on them run in their own order—so
-    the ids have to be known before the first substitution rather than
-    discovered while walking the document.
-    """
-    declared = [
-        block
-        for block in blocks
-        if block.kind == "component" and block.name == PRINCIPLES_BLOCK
-    ]
-    if not declared:
-        return []
-    if len(declared) > 1:
-        raise ReportError(
-            f"line {declared[1].line}: the report already declares "
-            f"'::: {PRINCIPLES_BLOCK}'—principles are numbered from one list"
-        )
-    hint = f"line {declared[0].line}: "
-    return parse_principles(declared[0].text, hint)
-
-
-def substitute_principle_refs(
-    text: str,
-    principles: Sequence[Principle],
-    seen: List[str],
-    line_hint: str = "",
-) -> str:
-    """Replace `((id))` with the principle's number, linked into the list.
-
-    A real link, like a note's marker: with no JavaScript, and on paper,
-    following it lands on the principle it names. The popover is the screen
-    reading of the same relation, not the only way to resolve it.
-    """
-    index = {item.id: item for item in principles}
-
-    def replace(match: re.Match) -> str:
-        key = match.group(1)
-        item = index.get(key)
-        if item is None:
-            known = ", ".join(sorted(index)) or "no principles"
-            raise ReportError(
-                f"{line_hint}unknown design principle '(({key}))'—"
-                f"'::: {PRINCIPLES_BLOCK}' declares {known}"
-            )
-        seen.append(key)
-        return (
-            f'<a class="pref" href="#principle-{item.number}" '
-            f'data-pop-label="Principle {item.number}" '
-            f'aria-describedby="principle-{item.number}" '
-            f'aria-label="Design principle {item.number}: {_escape(item.title)}">'
-            f"{item.label}</a>"
-        )
-
-    substituted = _outside_fences(text, lambda line: PRINCIPLE_REF.sub(replace, line))
-    return substituted.replace("\\((", "((")
-
-
-def _principles_html(principles: Sequence[Principle]) -> str:
-    """The list every reference points into, on screen and on paper alike."""
-    if not principles:
-        return ""
-    items = "".join(
-        f'<li class="principle" id="principle-{item.number}">'
-        f'<p class="principle-title">'
-        f'<span class="principle-no">{item.label}</span>'
-        f'<span class="principle-name">{item.title_html or _escape(item.title)}</span>'
-        f"</p>"
-        f'<div class="principle-body pop-body">{item.body_html}</div>'
-        "</li>"
-        for item in principles
-    )
-    return (
-        '<aside class="principles" id="principles" aria-label="Design principles">'
-        '<p class="principles-label">Design principles</p>'
-        f'<ol class="principle-list">{items}</ol>'
-        "</aside>"
-    )
 
 
 # ---------------------------------------------------------------------------
@@ -1416,8 +1225,6 @@ def compile_report(
     steprefs: List[str] = []
     conceptrefs: List[str] = []
     refcites: List[str] = []
-    prefs: List[str] = []
-    principles = collect_principles(blocks)
     shot_parts = collect_shot_parts(blocks)
     flat: List[Section] = []
     mounts: List[Mount] = []
@@ -1442,7 +1249,6 @@ def compile_report(
         text = substitute_conceptrefs(text, conceptrefs, hint)
         text = substitute_citations(text, facts, citations, hint)
         text = substitute_refcites(text, works, refcites, hint)
-        text = substitute_principle_refs(text, principles, prefs, hint)
         # Notes last: a note may cite a measurement, a work or point into the
         # figure, and the marker it leaves behind is HTML none of those three
         # may walk into.
@@ -1463,15 +1269,6 @@ def compile_report(
 
         if block.kind == "callout":
             parts.append(_callout_html(block, inner))
-            continue
-
-        if block.name == PRINCIPLES_BLOCK:
-            # Re-read the block now that its text carries the substitutions, and
-            # fill the objects the references were already resolved against.
-            for declared, resolved in zip(principles, parse_principles(text, hint)):
-                declared.title_html = _render_inline(resolved.title)
-                declared.body_html = _render_markdown(resolved.body_markdown)
-            parts.append(_principles_html(principles))
             continue
 
         if block.name == "toc":
@@ -1531,7 +1328,5 @@ def compile_report(
         refcites,
         references,
         references_seen,
-        principles,
-        prefs,
         parse_authors(front.get("authors", "")),
     )

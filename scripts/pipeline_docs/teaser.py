@@ -7,14 +7,15 @@ this module adds is that each region of the drawing has an *identity*—a stable
 id, a label and a sentence—so the authored prose can point at it.
 
 That is what makes the figure linkable. `docs/report/report.md` writes
-`[[timeline|a chronology]]`, the compiler resolves the id against `PARTS`, and
+`[[ego-network|the relationships]]`, the compiler resolves the id against `PARTS`,
+and
 the page then has a two-way relation between a phrase in a sentence and a
 rectangle in a drawing: hovering the phrase lights the part, selecting the part
 finds the phrases. An id that does not resolve fails the build, exactly as an
 unknown `{{ fact }}` does—a reference into a figure is a claim about the figure,
 and a claim the build cannot check is the thing this report is built to avoid.
 
-Geometry is declared rather than laid out, because there are sixteen boxes and a
+Geometry is declared rather than laid out, because there are fourteen boxes and a
 solver would be harder to read than the numbers. Coordinates are in scene units;
 the page scales the whole scene to whatever width it is given, which is why the
 figure needs no breakpoints and why a part can be zoomed to on its own—a
@@ -39,7 +40,7 @@ from . import concepts
 # The scene is a fixed coordinate system, not a pixel size: the page scales it
 # to the width available and zooms into sub-rectangles of it on small screens.
 SCENE_W = 868
-SCENE_H = 524
+SCENE_H = 384
 
 METRIC_KEY = re.compile(r"\{([a-zA-Z0-9_.]+)\}")
 
@@ -57,6 +58,10 @@ class Part:
     made without words: the box that holds the relationships and the box that
     draws them carry the same mark, because they are the same thing recorded
     and shown.
+
+    `glyph` names a vendored icon directly, for the boxes that carry a mark
+    without being one of the concepts—a part of the system rather than
+    something the system is about.
     """
 
     id: str
@@ -70,6 +75,7 @@ class Part:
     parent: str = ""
     frame: str = "line"  # "line" | "soft" | "none"
     concept: str = ""
+    glyph: str = ""
 
     def to_json(self) -> Dict[str, Any]:
         x, y, w, h = self.box
@@ -88,7 +94,11 @@ class Part:
             "parent": self.parent,
             "frame": self.frame,
             "concept": self.concept,
-            "icon": concepts.icon_of(self.concept),
+            "icon": (
+                concepts.path_of(self.glyph)
+                if self.glyph
+                else concepts.icon_of(self.concept)
+            ),
         }
 
 
@@ -97,8 +107,8 @@ class Stage:
     """A heading over a band of the figure, with a rule under it.
 
     Four of them run across the top, naming the four things the system is made
-    of. The fifth heads the row along the foot, which is why `y` exists: a band
-    can be headed wherever it sits.
+    of. `y` keeps the heading independent of that row, so a band can be headed
+    wherever it sits.
     """
 
     label: str
@@ -149,11 +159,6 @@ STAGES: Tuple[Stage, ...] = (
     Stage("Generation", 220, 240),
     Stage("Data", 476, 180),
     Stage("Interface", 672, 188),
-    # The encodings are a stage of their own, headed like the four above it.
-    # That heading is the whole claim the row needs: no arrow ties it to the
-    # data—these are not another artifact—and none ties it to one story type,
-    # because a person story and a meta story are both read through them.
-    Stage("Read in both story types", 8, 852, y=380),
 )
 
 PARTS: Tuple[Part, ...] = (
@@ -170,11 +175,20 @@ PARTS: Tuple[Part, ...] = (
     ),
     Part(
         "inference",
-        "Language model",
-        "The interpretative decisions—which episodes constitute a life, which "
-        "modern place a toponym denotes—are model calls, each returning a "
-        "declared schema rather than free text.",
-        (8, 214, 196, 46),
+        "AI models",
+        "One hosted API answers both kinds of call: the interpretative "
+        "decisions—which episodes constitute a life, which modern place a "
+        "toponym denotes—are text calls returning a declared schema rather "
+        "than free text, and the portraits and chapter art are drawn by the "
+        "image model.",
+        (8, 214, 196, 110),
+        decor="traits",
+        lines=(
+            "OpenAI API",
+            "Text generation",
+            "Image generation",
+        ),
+        glyph="mdi-creation-outline",
     ),
     Part(
         "person-pipeline",
@@ -204,7 +218,7 @@ PARTS: Tuple[Part, ...] = (
         "An inference call, deterministic code, a retrieval from an external "
         "service or an image generation—the classification partitions both "
         "pipelines by cost and by failure mode.",
-        (8, 272, 140, 80),
+        (8, 348, 852, 24),
         decor="kinds",
         frame="none",
     ),
@@ -219,44 +233,64 @@ PARTS: Tuple[Part, ...] = (
         frame="soft",
     ),
     Part(
-        "registry",
-        "Profile",
-        "Who a story is about: the name, lifespan, roles and portrait of each "
-        "person the corpus holds, one for every story written.",
-        (488, 78, 156, 54),
-        decor="concept",
-        parent="artifacts",
-        concept="profile",
-    ),
-    Part(
         "events",
         "Life events",
-        "The narrative spine: dated events with places, persons, sources, images "
-        "and a typed icon, grouped into the chapters of a life.",
-        (488, 142, 156, 54),
+        "The narrative spine: dated events with places, persons, sources and a "
+        "typed icon, grouped into the chapters of a life.",
+        (488, 78, 156, 36),
         decor="concept",
         parent="artifacts",
         concept="events",
+    ),
+    Part(
+        "narrative",
+        "Narrative text",
+        "The written register: an event's own description, and the article "
+        "prose that surrounds a meta story's components.",
+        (488, 120, 156, 36),
+        decor="concept",
+        parent="artifacts",
+        concept="narrative",
+    ),
+    Part(
+        "imagery",
+        "Imagery",
+        "Licensed illustrations matched to the events they depict, and the "
+        "portraits and chapter art drawn from them.",
+        (488, 162, 156, 36),
+        decor="concept",
+        parent="artifacts",
+        concept="imagery",
+    ),
+    Part(
+        "geography",
+        "Geography",
+        "The historical toponyms of the events, resolved to modern coordinates "
+        "a map can fly across.",
+        (488, 204, 156, 36),
+        decor="concept",
+        parent="artifacts",
+        concept="places",
     ),
     Part(
         "ego-network",
         "Social network",
         "The subject's relationships as typed, weighted and dated edges, "
         "generated independently of the narrative.",
-        (488, 206, 156, 54),
+        (488, 246, 156, 36),
         decor="concept",
         parent="artifacts",
         concept="network",
     ),
     Part(
-        "meta-story",
-        "Theme",
-        "A second-order artifact: an idea traced across several biographies, and "
-        "the only family whose inputs are other artifacts of this system.",
-        (488, 270, 156, 54),
+        "identity",
+        "Visual identity",
+        "The palette, typography and background pattern a story is presented "
+        "in, carried in the data rather than in the application.",
+        (488, 288, 156, 36),
         decor="concept",
         parent="artifacts",
-        concept="theme",
+        concept="identity",
     ),
     Part(
         "slides",
@@ -274,43 +308,6 @@ PARTS: Tuple[Part, ...] = (
         "a component while narration cards scroll over it.",
         (672, 206, 188, 128),
         decor="sections",
-    ),
-    Part(
-        "prose",
-        "Narrative text",
-        "The event's own description, and in a meta story the article prose that "
-        "supplies the context around what the components encode.",
-        (8, 400, 204, 112),
-        decor="prose",
-        concept="narrative",
-    ),
-    Part(
-        "timeline",
-        "Timeline",
-        "Every event at its position in the life, banded by chapter. In a "
-        "person's story it doubles as the navigation control.",
-        (224, 400, 204, 112),
-        decor="timeline",
-        concept="events",
-    ),
-    Part(
-        "map",
-        "Map",
-        "The events whose places resolved to coordinates, on a label-free "
-        "basemap whose camera follows the reader rather than the reader panning "
-        "it.",
-        (440, 400, 204, 112),
-        decor="map",
-        concept="places",
-    ),
-    Part(
-        "graph",
-        "Network graph",
-        "The documented relationships as a force-directed graph, typed and "
-        "weighted exactly as the artifact records them.",
-        (656, 400, 204, 112),
-        decor="graph",
-        concept="network",
     ),
 )
 
@@ -334,8 +331,7 @@ LINKS: Tuple[Link, ...] = (
 
 CAPTION = (
     "The system end to end: encyclopedic sources and model inference feed the "
-    "two generation pipelines, whose data the interface reads. Along the foot, "
-    "the four encodings every story is read through."
+    "two generation pipelines, whose data the interface reads."
 )
 
 
