@@ -24,20 +24,32 @@ enable_utf8_console()
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 PEOPLE_DIR = DATA_DIR / "people"
 REGISTER_PATH = DATA_DIR / "persons.json"
+# Every family here is self-hosted by src/fonts.css, and
+# tests/test_font_coverage.py keeps the two lists in step. The set spans
+# registers on purpose — display and book serifs, geometric, neutral, and
+# condensed sans, a slab, a monospace — so that the prompt can ask for the one
+# that fits the person rather than have every story default to the same pair.
 HEADING_FONT_CHOICES = [
     "Playfair Display",
     "DM Serif Display",
+    "Libre Baskerville",
+    "EB Garamond",
+    "Zilla Slab",
     "Space Grotesk",
     "IBM Plex Sans",
+    "Oswald",
     "Unbounded",
     "Archivo Black",
+    "IBM Plex Mono",
 ]
 
 BODY_FONT_CHOICES = [
     "Lora",
     "Source Serif 4",
+    "EB Garamond",
     "Inter",
     "IBM Plex Sans",
+    "Source Sans 3",
     "DM Sans",
     "Manrope",
 ]
@@ -380,12 +392,14 @@ def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
         (
             "- heading_font must be exactly one of: "
             + ", ".join(HEADING_FONT_CHOICES)
-            + ". Choose whichever best reflects the person's tone (e.g., elegant serif for historical figures, geometric sans for scientists)."
+            + ". The list spans registers: Playfair Display and DM Serif Display are high-contrast display serifs, Libre Baskerville a transitional book serif, EB Garamond an old-style serif, Zilla Slab a slab, Space Grotesk a geometric sans, IBM Plex Sans a neutral sans, Oswald a condensed grotesque, Unbounded a wide display sans, Archivo Black a heavy grotesque, and IBM Plex Mono a monospace."
+            + " Choose the register that fits the person's era, field, and temperament — an old-style or book serif for figures before the industrial age, a slab or condensed face for the industrial and interwar decades, a monospace for computing, a geometric or wide sans for modernists — rather than defaulting to the same face for every story."
         ),
         (
             "- body_font must be exactly one of: "
             + ", ".join(BODY_FONT_CHOICES)
-            + ". Choose a readable font that pairs well with the heading_font and suits the content tone."
+            + ". Lora, Source Serif 4, and EB Garamond are text serifs; Source Sans 3 is a humanist sans; Inter, IBM Plex Sans, DM Sans, and Manrope are neutral or geometric sans faces."
+            + " Choose a readable font that pairs well with the heading_font and suits the content tone."
         ),
     ]
     details.append(f"Subject identifier: {person_id}\nRequested subject: {subject}")

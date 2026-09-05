@@ -1,7 +1,7 @@
 /*
  * Self-hosted web fonts.
  *
- * These eleven families used to arrive from fonts.googleapis.com through a
+ * These families used to arrive from fonts.googleapis.com through a
  * render-blocking <link> in index.html. That link gated the first paint on a
  * third party: when the host was reachable-but-hanging — a campus proxy, a DNS
  * blackhole, a content blocker that drops rather than refuses — the page stayed
@@ -28,10 +28,19 @@
  *    scripts/generate_person_style.py. A family the generator can pick but that
  *    is not imported here renders in the fallback font instead.
  *
- * The set below reproduces exactly what the Google request fetched, so this is
- * a like-for-like migration. Adding real italics for the sans body fonts, or a
- * 500 cut, would change how existing stories render and belongs in its own
- * change.
+ * The first eleven families reproduce exactly what the Google request fetched,
+ * so that migration was like-for-like. Adding real italics for those sans body
+ * fonts, or a 500 cut, would change how existing stories render and belongs in
+ * its own change.
+ *
+ * The six families after them were added for range. The original vocabulary
+ * had two display serifs that are close relatives, one geometric sans, and one
+ * heavy grotesque for headings, and only neutral sans faces for body text, so
+ * an 18th-century figure and a Bauhaus architect were dressed alike, and the
+ * style reviewer once reached for a Baskerville the app did not load. Each
+ * addition opens a register the list lacked: a transitional book serif, an
+ * old-style serif, a slab, a condensed grotesque, a monospace, and a humanist
+ * sans for body text.
  */
 
 /* --- Heading faces -------------------------------------------------------- */
@@ -60,6 +69,43 @@
    font-synthesis-weight in app.css for why headings do not fake a bold cut. */
 @import url("@fontsource/archivo-black/latin-400.css");
 @import url("@fontsource/archivo-black/latin-ext-400.css");
+
+/* Libre Baskerville — a transitional book serif, the register the reviewer
+   asked for on Charles Babbage before it was available. */
+@import url("@fontsource/libre-baskerville/latin-600.css");
+@import url("@fontsource/libre-baskerville/latin-ext-600.css");
+@import url("@fontsource/libre-baskerville/latin-700.css");
+@import url("@fontsource/libre-baskerville/latin-ext-700.css");
+
+/* EB Garamond — an old-style serif for figures before the industrial age.
+   Also a body face, with the real italic .impact-text renders. */
+@import url("@fontsource/eb-garamond/latin-400.css");
+@import url("@fontsource/eb-garamond/latin-ext-400.css");
+@import url("@fontsource/eb-garamond/latin-400-italic.css");
+@import url("@fontsource/eb-garamond/latin-ext-400-italic.css");
+@import url("@fontsource/eb-garamond/latin-600.css");
+@import url("@fontsource/eb-garamond/latin-ext-600.css");
+@import url("@fontsource/eb-garamond/latin-700.css");
+@import url("@fontsource/eb-garamond/latin-ext-700.css");
+
+/* Zilla Slab — a slab serif, headings. */
+@import url("@fontsource/zilla-slab/latin-600.css");
+@import url("@fontsource/zilla-slab/latin-ext-600.css");
+@import url("@fontsource/zilla-slab/latin-700.css");
+@import url("@fontsource/zilla-slab/latin-ext-700.css");
+
+/* Oswald — a condensed grotesque, headings. */
+@import url("@fontsource/oswald/latin-600.css");
+@import url("@fontsource/oswald/latin-ext-600.css");
+@import url("@fontsource/oswald/latin-700.css");
+@import url("@fontsource/oswald/latin-ext-700.css");
+
+/* IBM Plex Mono — a monospace for headings, the conventional signal for the
+   computing pioneers; it pairs with the IBM Plex Sans body many of them use. */
+@import url("@fontsource/ibm-plex-mono/latin-600.css");
+@import url("@fontsource/ibm-plex-mono/latin-ext-600.css");
+@import url("@fontsource/ibm-plex-mono/latin-700.css");
+@import url("@fontsource/ibm-plex-mono/latin-ext-700.css");
 
 /* --- Body faces ----------------------------------------------------------- */
 
@@ -106,3 +152,12 @@
 @import url("@fontsource/manrope/latin-ext-400.css");
 @import url("@fontsource/manrope/latin-600.css");
 @import url("@fontsource/manrope/latin-ext-600.css");
+
+/* Source Sans 3 — a humanist sans, the one body sans that is not neutral. It
+   ships a true italic, so that is loaded rather than synthesized. */
+@import url("@fontsource/source-sans-3/latin-400.css");
+@import url("@fontsource/source-sans-3/latin-ext-400.css");
+@import url("@fontsource/source-sans-3/latin-400-italic.css");
+@import url("@fontsource/source-sans-3/latin-ext-400-italic.css");
+@import url("@fontsource/source-sans-3/latin-600.css");
+@import url("@fontsource/source-sans-3/latin-ext-600.css");

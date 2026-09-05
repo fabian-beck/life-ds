@@ -153,7 +153,7 @@ Each person has a custom SVG pattern (stored inline in `person_styles.json`). Th
 
 ### Font Loading
 
-Fonts are self-hosted. `src/fonts.css` imports the eleven families from `@fontsource` packages and is pulled in by `src/main.js`, so the faces are bundled, fingerprinted, and served from our own origin. Nothing is fetched from a third party at runtime.
+Fonts are self-hosted. `src/fonts.css` imports the seventeen families from `@fontsource` packages and is pulled in by `src/main.js`, so the faces are bundled, fingerprinted, and served from our own origin. Nothing is fetched from a third party at runtime.
 
 They used to come from `fonts.googleapis.com` through a render-blocking `<link>` in `index.html`. That gated the first paint on an external host: with the host reachable-but-hanging, first contentful paint measured 12,848 ms instead of 112 ms. `index.html` must stay free of third-party stylesheet links.
 

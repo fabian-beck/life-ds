@@ -10,7 +10,9 @@ It cost Charles Babbage his headings. The reviewer replaced the heading font
 with "Libre Baskerville", a face the app never loads, so the story rendered its
 headings in the fallback font, and the font coverage test went red on `main`.
 The reviewer's font is now held to the same list the generator is, and a
-proposal outside it leaves the existing font standing.
+proposal outside it leaves the existing font standing. Libre Baskerville has
+since joined the vocabulary, so the tests reach for another Google Fonts
+family the app does not load.
 """
 
 from __future__ import annotations
@@ -60,8 +62,8 @@ def _apply(**fonts):
 
 class ReviewedFontTests(unittest.TestCase):
     def test_the_reviewers_unhosted_font_leaves_the_existing_one_standing(self):
-        """The proposal that put Charles Babbage's headings in the fallback."""
-        updated, applied, skipped = _apply(heading_font="Libre Baskerville")
+        """The shape of the proposal that put Babbage's headings in the fallback."""
+        updated, applied, skipped = _apply(heading_font="Cormorant Garamond")
         self.assertEqual((applied, skipped), (0, 1))
         self.assertEqual(updated["heading_font"], "DM Serif Display")
 
@@ -89,7 +91,7 @@ class ReviewedFontTests(unittest.TestCase):
                 confidence=5,
                 rationale="test",
                 new_primary="#FF0000",
-                new_fonts={"heading_font": "Libre Baskerville"},
+                new_fonts={"heading_font": "Cormorant Garamond"},
             ),
             sanitise_pattern=sanitise_pattern_svg,
             font_choices=FONT_CHOICES,
