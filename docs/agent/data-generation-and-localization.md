@@ -310,6 +310,7 @@ The life events generation uses a **two-phase AI approach** for improved accurac
   - People directly involved in this event (excludes main subject)
   - Event-specific images and sources
   - Semantic icon from 100+ MDI categories (e.g., "mdi-crown", "mdi-book")
+- Each call sees only its own event, so it cannot know that a term was the subject of an earlier slide. `drop_repeated_annotations` in `scripts/events/normalize.py` therefore keeps an annotation only where the story first meets its term: once an earlier event annotated a term or named it in its title or classification title, a later annotation of it is removed and its `[[term|display]]` markup unwrapped. The review save path applies the same rule to what the reviewer adds.
 
 **Benefits**:
 - Better accuracy through event-specific context

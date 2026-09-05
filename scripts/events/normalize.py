@@ -219,6 +219,70 @@ def event_sort_key(event: Dict[str, Any]) -> str:
     return str(date_value)
 
 
+_ANNOTATION_MARKER = re.compile(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]")
+
+
+def _term_words(term: str) -> str:
+    """A term as it reads in prose: slugged keys spaced out, case folded."""
+    return re.sub(r"\s+", " ", term.replace("_", " ")).strip().casefold()
+
+
+def _names_term(text: str, term: str) -> bool:
+    words = _term_words(term)
+    return bool(words) and (
+        re.search(rf"(?<!\w){re.escape(words)}(?!\w)", _term_words(text)) is not None
+    )
+
+
+def drop_repeated_annotations(events: List[Dict[str, Any]]) -> List[str]:
+    """Explain a term once, where the story first makes it a subject.
+
+    Phase 2 researches each event on its own, so nothing tells the call that
+    the Analytical Engine already had a slide of its own three events back;
+    it glosses the term again, and the reader who followed the story is
+    offered a definition of what they just read about. A term counts as
+    introduced once an earlier event annotated it or named it in its title
+    or its classification's title. A later annotation of that term is
+    removed and its `[[term|display]]` markup unwrapped to the display text.
+    Events must already be in story order. Returns the dropped terms.
+    """
+    introduced: List[str] = []
+    dropped: List[str] = []
+    for event in events:
+        annotations = event.get("annotations")
+        if isinstance(annotations, dict):
+            for term in list(annotations):
+                if not any(_names_term(text, term) for text in introduced):
+                    continue
+                del annotations[term]
+                dropped.append(term)
+                description = event.get("description")
+                if isinstance(description, str):
+                    event["description"] = _ANNOTATION_MARKER.sub(
+                        lambda m: (
+                            (m.group(2) or m.group(1))
+                            if m.group(1) == term
+                            else m.group(0)
+                        ),
+                        description,
+                    )
+            if not annotations:
+                event.pop("annotations", None)
+            else:
+                introduced.extend(annotations)
+        for text in (
+            event.get("title"),
+            (
+                (event.get("event_class") or {}).get("title")
+                if isinstance(event.get("event_class"), dict)
+                else None
+            ),
+        ):
+            if isinstance(text, str) and text.strip():
+                introduced.append(text)
+    return dropped
+
+
 def _upper_bound_date(value: Optional[str], precision: str) -> Optional[date]:
     """Convert varying precision date strings into a comparable upper bound."""
     if not value:
@@ -525,6 +589,7 @@ def enforce_metadata(
         events.append(event)
 
     events.sort(key=event_sort_key)
+    drop_repeated_annotations(events)
     payload["events"] = events
 
     # Process chapters if present

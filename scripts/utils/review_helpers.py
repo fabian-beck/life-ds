@@ -9,6 +9,8 @@ import json
 import re
 from typing import Any, Callable, Dict, Tuple
 
+from events.normalize import drop_repeated_annotations
+
 from .relationship_vocabulary import normalize_relationship_type
 from .review_models import EventsChanges, NetworkChanges, StyleChanges
 
@@ -150,6 +152,10 @@ def apply_event_changes(
         applied += 1
     elif changes.conclusion:
         skipped += 1
+
+    # The reviewer is asked to annotate a term only where the story first
+    # meets it, and this holds it to that the way generation does.
+    drop_repeated_annotations(updated_data.get("events", []))
 
     return updated_data, applied, skipped
 
