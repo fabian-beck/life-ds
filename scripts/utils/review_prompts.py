@@ -6,7 +6,7 @@ with focus on readability, accuracy, and UI optimization.
 """
 
 import json
-from typing import Dict, Any, List, Set
+from typing import Dict, Any, List, Sequence, Set
 
 from utils.prose_style import PROSE_STYLE_INSTRUCTIONS, description_contract_prompt
 
@@ -231,7 +231,11 @@ Focus on changes that will noticeably improve the reader's experience on mobile 
 
 
 def get_style_review_prompt(
-    style_data: Dict[str, Any], events_data: Dict[str, Any]
+    style_data: Dict[str, Any],
+    events_data: Dict[str, Any],
+    *,
+    heading_fonts: Sequence[str],
+    body_fonts: Sequence[str],
 ) -> str:
     """
     Generate prompt for visual style review.
@@ -239,6 +243,9 @@ def get_style_review_prompt(
     Args:
         style_data: Current style entry from person_styles.json
         events_data: Life events data for context about person
+        heading_fonts: The heading families the generator may pick, which are
+            the ones the app self-hosts; the reviewer is held to the same list
+        body_fonts: The body families, likewise
 
     Returns:
         Formatted prompt string
@@ -288,7 +295,9 @@ REVIEW GUIDELINES:
 **Fonts**:
 - heading_font: Should be distinctive and era-appropriate
 - body_font: Must be highly readable
-- Both must be available on Google Fonts
+- The app self-hosts a fixed set of families and renders any other in a fallback font, so a proposed font must be exactly one of these:
+  - heading_font: {", ".join(heading_fonts)}
+  - body_font: {", ".join(body_fonts)}
 - Consider: Serif for classical/historical, sans-serif for modern/technical
 
 **Cultural Sensitivity**:

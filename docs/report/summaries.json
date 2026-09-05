@@ -305,11 +305,11 @@
       }
     },
     "p_review_style": {
-      "fingerprint": "8e99ec782588c3c2",
+      "fingerprint": "d884863794bde397",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews a person’s existing visual style against the biography’s era, roles, and mood. It identifies meaningful problems in the palette, pattern, and font pairing, then returns targeted changes rather than rebuilding a style that already works.",
-        "why_this_design": "The review treats the SVG as a black-and-white mask because the rendering layer multiplies it by the primary color; transparent or incomplete tiles would erase the intended pattern."
+        "what_it_does": "Reviews a generated visual identity against the person’s life and roles, then recommends changes only when the palette, pattern, or typography weakens the story or readability. It leaves behind a reasoned assessment and a set of style corrections for the interface-building stages.",
+        "why_this_design": "It treats the SVG tile as a two-color mask rather than a standalone image, so the review catches transparent or incomplete patterns that would disappear into a flat primary-color background."
       }
     },
     "p_style": {

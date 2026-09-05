@@ -26,6 +26,8 @@ from config import (  # noqa: E402
 )
 from events.pipeline import enrich_event_coordinates_v2  # noqa: E402
 from generate_person_style import (  # noqa: E402
+    BODY_FONT_CHOICES,
+    HEADING_FONT_CHOICES,
     load_styles,
     sanitise_pattern_svg,
     write_styles,
@@ -252,7 +254,12 @@ def review_style(
 
     client = OpenAI()
 
-    prompt = get_style_review_prompt(style_data, events_data)
+    prompt = get_style_review_prompt(
+        style_data,
+        events_data,
+        heading_fonts=HEADING_FONT_CHOICES,
+        body_fonts=BODY_FONT_CHOICES,
+    )
 
     review_output = parse_structured_or_raise(
         client,
@@ -445,6 +452,10 @@ def review_person_data(
             style_review.proposed_changes,
             min_confidence,
             sanitise_pattern=sanitise_pattern_svg,
+            font_choices={
+                "heading_font": HEADING_FONT_CHOICES,
+                "body_font": BODY_FONT_CHOICES,
+            },
         )
         print(f"  Style: {style_applied} applied, {style_skipped} skipped")
 

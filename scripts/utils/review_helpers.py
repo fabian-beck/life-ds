@@ -7,7 +7,7 @@ structure.
 
 import json
 import re
-from typing import Any, Callable, Dict, Tuple
+from typing import Any, Callable, Dict, Mapping, Sequence, Tuple
 
 from events.normalize import drop_repeated_annotations
 
@@ -249,6 +249,7 @@ def apply_style_changes(
     min_confidence: int = 4,
     *,
     sanitise_pattern: Callable[[str], str],
+    font_choices: Mapping[str, Sequence[str]],
 ) -> Tuple[Dict[str, Any], int, int]:
     """
     Apply changes to style data, preserving JSON structure.
@@ -263,12 +264,23 @@ def apply_style_changes(
     color, so a tile with no ground came out as a flat wash of that color
     instead of a pattern.
 
+    Fonts have the same shape of problem. The generator picks from a fixed
+    vocabulary, and `src/fonts.css` self-hosts exactly those families, so a
+    family outside it renders in the fallback font without anything failing.
+    The reviewer once replaced a heading font with "Libre Baskerville", a face
+    the app never loads, and the story rendered its headings in the fallback.
+    `font_choices` is the generator's vocabulary per field, and a proposal
+    outside it leaves the existing font standing.
+
     Args:
         style_data: Original style data
         changes: Proposed changes
         min_confidence: Minimum confidence to apply
         sanitise_pattern: The generator's pattern sanitiser, applied to a
             proposed pattern; a pattern it rejects is left unchanged.
+        font_choices: The families the generator may pick, keyed by the style
+            field (`heading_font`, `body_font`); a proposal outside the field's
+            list is left unchanged.
 
     Returns:
         Tuple of (updated_data, applied_count, skipped_count)
@@ -304,8 +316,17 @@ def apply_style_changes(
 
     if changes.new_fonts:
         for key, value in changes.new_fonts.items():
-            if key in updated_data:
-                updated_data[key] = value
-                applied += 1
+            if key not in updated_data:
+                continue
+            font = value.strip()
+            if font not in font_choices.get(key, ()):
+                print(
+                    f"  Keeping the existing {key}: {value!r} is not one of "
+                    + ", ".join(font_choices.get(key, ()))
+                )
+                skipped += 1
+                continue
+            updated_data[key] = font
+            applied += 1
 
     return updated_data, applied, skipped

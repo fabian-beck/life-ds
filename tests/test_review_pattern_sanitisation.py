@@ -70,6 +70,12 @@ BASE_STYLE = {
 }
 
 
+FONT_CHOICES = {
+    "heading_font": ["Space Grotesk"],
+    "body_font": ["IBM Plex Sans"],
+}
+
+
 def _changes(**kwargs):
     return StyleChanges(confidence=5, rationale="test", **kwargs)
 
@@ -90,6 +96,7 @@ class ReviewedPatternTests(unittest.TestCase):
             BASE_STYLE,
             _changes(new_pattern_svg=TRANSPARENT),
             sanitise_pattern=sanitise_pattern_svg,
+            font_choices=FONT_CHOICES,
         )
         self.assertEqual(applied, 1)
         self.assertIn(
@@ -105,6 +112,7 @@ class ReviewedPatternTests(unittest.TestCase):
                 new_pattern_svg=TRANSPARENT.replace('stroke="#FFFFFF"', 'stroke="#EEEEEE"')
             ),
             sanitise_pattern=sanitise_pattern_svg,
+            font_choices=FONT_CHOICES,
         )
         self.assertEqual(applied, 1)
         self.assertIn('stroke="#FFFFFF"', updated["background_pattern_svg"])
@@ -124,6 +132,7 @@ class ReviewedPatternTests(unittest.TestCase):
                     BASE_STYLE,
                     _changes(new_pattern_svg=proposed),
                     sanitise_pattern=sanitise_pattern_svg,
+                    font_choices=FONT_CHOICES,
                 )
                 self.assertEqual((applied, skipped), (0, 1))
                 self.assertEqual(updated["background_pattern_svg"], GROUNDED)
@@ -133,6 +142,7 @@ class ReviewedPatternTests(unittest.TestCase):
             BASE_STYLE,
             _changes(new_primary="#FF0000", new_pattern_svg=TRANSPARENT),
             sanitise_pattern=sanitise_pattern_svg,
+            font_choices=FONT_CHOICES,
         )
         self.assertEqual(updated["primary"], "#FF0000")
         self.assertEqual(applied, 2)
