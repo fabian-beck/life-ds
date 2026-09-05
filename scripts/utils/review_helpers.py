@@ -7,12 +7,12 @@ structure.
 
 import json
 import re
-from typing import Any, Callable, Dict, Mapping, Sequence, Tuple
+from typing import Any, Dict, Tuple
 
 from events.normalize import drop_repeated_annotations
 
 from .relationship_vocabulary import normalize_relationship_type
-from .review_models import EventsChanges, NetworkChanges, StyleChanges
+from .review_models import EventsChanges, NetworkChanges
 
 
 def apply_event_changes(
@@ -239,94 +239,5 @@ def apply_network_changes(
                 summary["summary"] = summary_change.new_summary
                 applied += 1
                 break
-
-    return updated_data, applied, skipped
-
-
-def apply_style_changes(
-    style_data: Dict[str, Any],
-    changes: StyleChanges,
-    min_confidence: int = 4,
-    *,
-    sanitise_pattern: Callable[[str], str],
-    font_choices: Mapping[str, Sequence[str]],
-) -> Tuple[Dict[str, Any], int, int]:
-    """
-    Apply changes to style data, preserving JSON structure.
-
-    The reviewer proposes a replacement pattern as free SVG text, and the
-    generator's guarantees about that text — two colors, no opacity, 160x160,
-    and an opaque ground beneath the marks — hold only for the string the
-    generator itself wrote. `sanitise_pattern` is therefore required rather
-    than optional: the reviewer once replaced a tile with a deliberately
-    transparent one, reasoning that the page background should show through,
-    and the story renders the tile by multiplying it against its primary
-    color, so a tile with no ground came out as a flat wash of that color
-    instead of a pattern.
-
-    Fonts have the same shape of problem. The generator picks from a fixed
-    vocabulary, and `src/fonts.css` self-hosts exactly those families, so a
-    family outside it renders in the fallback font without anything failing.
-    The reviewer once replaced a heading font with "Libre Baskerville", a face
-    the app never loads, and the story rendered its headings in the fallback.
-    `font_choices` is the generator's vocabulary per field, and a proposal
-    outside it leaves the existing font standing.
-
-    Args:
-        style_data: Original style data
-        changes: Proposed changes
-        min_confidence: Minimum confidence to apply
-        sanitise_pattern: The generator's pattern sanitiser, applied to a
-            proposed pattern; a pattern it rejects is left unchanged.
-        font_choices: The families the generator may pick, keyed by the style
-            field (`heading_font`, `body_font`); a proposal outside the field's
-            list is left unchanged.
-
-    Returns:
-        Tuple of (updated_data, applied_count, skipped_count)
-    """
-    if changes.confidence < min_confidence:
-        return style_data, 0, 1
-
-    updated_data = json.loads(json.dumps(style_data))  # Deep copy
-    applied = 0
-    skipped = 0
-
-    if changes.new_primary:
-        updated_data["primary"] = changes.new_primary
-        applied += 1
-
-    if changes.new_secondary:
-        updated_data["secondary"] = changes.new_secondary
-        applied += 1
-
-    if changes.new_background:
-        updated_data["background"] = changes.new_background
-        applied += 1
-
-    if changes.new_pattern_svg:
-        try:
-            updated_data["background_pattern_svg"] = sanitise_pattern(
-                changes.new_pattern_svg
-            )
-            applied += 1
-        except ValueError as error:
-            print(f"  Keeping the existing pattern: {error}")
-            skipped += 1
-
-    if changes.new_fonts:
-        for key, value in changes.new_fonts.items():
-            if key not in updated_data:
-                continue
-            font = value.strip()
-            if font not in font_choices.get(key, ()):
-                print(
-                    f"  Keeping the existing {key}: {value!r} is not one of "
-                    + ", ".join(font_choices.get(key, ()))
-                )
-                skipped += 1
-                continue
-            updated_data[key] = font
-            applied += 1
 
     return updated_data, applied, skipped

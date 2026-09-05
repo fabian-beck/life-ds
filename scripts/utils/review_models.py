@@ -228,29 +228,6 @@ class NetworkReviewOutput(BaseModel):
 # ============================================================
 
 
-class StyleChanges(BaseModel):
-    """Proposed changes for visual style"""
-
-    new_primary: Optional[str] = None
-    new_secondary: Optional[str] = None
-    new_background: Optional[str] = None
-    new_pattern_svg: Optional[str] = None
-    new_fonts: Optional[Dict[str, str]] = None
-    confidence: int = Field(ge=1, le=5)
-    rationale: str
-
-
-class StyleReviewOutput(BaseModel):
-    """Complete review output for visual style"""
-
-    overall_assessment: str
-    color_palette_feedback: str
-    pattern_feedback: str
-    font_feedback: str
-    proposed_changes: StyleChanges
-    change_summary: str
-
-
 # ============================================================
 # REVIEW STATISTICS
 # ============================================================

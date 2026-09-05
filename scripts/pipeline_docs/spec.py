@@ -218,12 +218,6 @@ GROUPS: List[Group] = [
         ),
     ),
     Group(
-        "interface_style",
-        "Interface style",
-        ["p_style", "p_review_style"],
-        note="The story's color and type system, and the critic pass over it.",
-    ),
-    Group(
         "localization",
         "Localization",
         ["p_name_evidence", "p_glossary", "p_translate"],
@@ -667,10 +661,12 @@ STEPS: List[Step] = [
         "call_openai",
         summary=(
             "Derives a color and type system for the story from the person's "
-            "era and field."
+            "era and field, and rejects a palette whose text colors fall under "
+            "a computed contrast floor, asking the model once more with the "
+            "reason."
         ),
         depends_on=[Dep("p_write", "person summary + first five events")],
-        prompts=["build_prompt", "call_openai"],
+        prompts=["build_prompt", "build_retry_prompt", "call_openai"],
         inputs=["life_events"],
         outputs=["person_styles"],
         skip_flag="--dataset-only / --network-only",
@@ -774,20 +770,6 @@ STEPS: List[Step] = [
         ],
         inputs=["life_events", "ego_network", "wiki_cache"],
         outputs=["life_events", "ego_network"],
-        skip_flag="--skip-review",
-    ),
-    Step(
-        "p_review_style",
-        "Review interface style",
-        SHARED,
-        AI,
-        "review_person.py",
-        "review_style",
-        summary="Checks color harmony and font pairing against the story's mood.",
-        depends_on=[Dep("p_style", "the generated style config")],
-        prompts=["get_style_review_prompt", "review_style"],
-        inputs=["person_styles", "life_events"],
-        outputs=["person_styles"],
         skip_flag="--skip-review",
     ),
     Step(

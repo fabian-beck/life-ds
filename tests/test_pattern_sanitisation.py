@@ -1,4 +1,4 @@
-"""A pattern the reviewer proposes goes through the generator's own gate.
+"""A background pattern goes through the generator's gate before it is stored.
 
 `generate_person_style.py` guarantees a background pattern is two colors, is
 free of opacity, measures 160x160, and is painted edge to edge over a black
@@ -8,15 +8,16 @@ the marks — and a tile with no ground is not a subtler pattern but an
 inverted one, because the primary shows through everywhere the tile is
 transparent and the marks multiply to the same color.
 
-The review step replaced Grace Hopper's tile with, in its own words, "a
-simpler transparent circuit tile so the navy page background remains visually
-continuous", and wrote it straight into `person_styles.json`. The whole story
-then washed flat primary. The reviewer's SVG is model-written text like any
-other, so it goes through the same sanitiser the generator's does.
+A model once proposed, in its own words, "a simpler transparent circuit tile
+so the navy page background remains visually continuous", and the whole story
+washed flat primary. Model-written SVG is text like any other, so every tile
+goes through the sanitiser, and the corpus test below keeps the shipped ones
+grounded.
 """
 
 from __future__ import annotations
 
+import json
 import sys
 import unittest
 import xml.etree.ElementTree as ET
@@ -25,8 +26,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from generate_person_style import sanitise_pattern_svg  # noqa: E402
-from utils.review_helpers import apply_style_changes  # noqa: E402
-from utils.review_models import StyleChanges  # noqa: E402
 
 
 def _has_opaque_ground(svg: str) -> bool:
@@ -53,31 +52,12 @@ GROUNDED = (
     'xmlns="http://www.w3.org/2000/svg"><rect width="160" height="160" '
     'fill="#000000"/><path d="M0 80H160" stroke="#FFFFFF" stroke-width="4"/></svg>'
 )
-# The shape the reviewer actually proposed: marks, no ground.
+# The shape the model actually proposed: marks, no ground.
 TRANSPARENT = (
     '<svg width="160" height="160" viewBox="0 0 160 160" '
     'xmlns="http://www.w3.org/2000/svg"><path d="M0 80H160" stroke="#FFFFFF" '
     'stroke-width="4"/></svg>'
 )
-
-BASE_STYLE = {
-    "primary": "#49D6FF",
-    "secondary": "#FFC857",
-    "background": "#08121F",
-    "background_pattern_svg": GROUNDED,
-    "heading_font": "Space Grotesk",
-    "body_font": "IBM Plex Sans",
-}
-
-
-FONT_CHOICES = {
-    "heading_font": ["Space Grotesk"],
-    "body_font": ["IBM Plex Sans"],
-}
-
-
-def _changes(**kwargs):
-    return StyleChanges(confidence=5, rationale="test", **kwargs)
 
 
 class PatternGroundTests(unittest.TestCase):
@@ -89,36 +69,14 @@ class PatternGroundTests(unittest.TestCase):
     def test_a_grounded_tile_is_not_given_a_second_ground(self):
         self.assertEqual(sanitise_pattern_svg(GROUNDED).count('fill="#000000"'), 1)
 
-
-class ReviewedPatternTests(unittest.TestCase):
-    def test_the_reviewers_transparent_tile_is_grounded_before_it_is_stored(self):
-        updated, applied, _ = apply_style_changes(
-            BASE_STYLE,
-            _changes(new_pattern_svg=TRANSPARENT),
-            sanitise_pattern=sanitise_pattern_svg,
-            font_choices=FONT_CHOICES,
-        )
-        self.assertEqual(applied, 1)
-        self.assertIn(
-            '<rect width="160" height="160" fill="#000000"',
-            updated["background_pattern_svg"],
-        )
-
     def test_a_gray_is_snapped_rather_than_rejected(self):
         """The sanitiser resolves a near-black or near-white to the real one."""
-        updated, applied, _ = apply_style_changes(
-            BASE_STYLE,
-            _changes(
-                new_pattern_svg=TRANSPARENT.replace('stroke="#FFFFFF"', 'stroke="#EEEEEE"')
-            ),
-            sanitise_pattern=sanitise_pattern_svg,
-            font_choices=FONT_CHOICES,
+        sanitised = sanitise_pattern_svg(
+            TRANSPARENT.replace('stroke="#FFFFFF"', 'stroke="#EEEEEE"')
         )
-        self.assertEqual(applied, 1)
-        self.assertIn('stroke="#FFFFFF"', updated["background_pattern_svg"])
+        self.assertIn('stroke="#FFFFFF"', sanitised)
 
-    def test_an_unusable_tile_leaves_the_existing_one_standing(self):
-        """A pattern the generator would reject is not written in its place."""
+    def test_an_unusable_tile_is_rejected(self):
         for label, proposed in (
             ("a color the palette has no room for",
              '<svg xmlns="http://www.w3.org/2000/svg" width="160" '
@@ -128,24 +86,8 @@ class ReviewedPatternTests(unittest.TestCase):
             ("not svg", "<div>nope</div>"),
         ):
             with self.subTest(label):
-                updated, applied, skipped = apply_style_changes(
-                    BASE_STYLE,
-                    _changes(new_pattern_svg=proposed),
-                    sanitise_pattern=sanitise_pattern_svg,
-                    font_choices=FONT_CHOICES,
-                )
-                self.assertEqual((applied, skipped), (0, 1))
-                self.assertEqual(updated["background_pattern_svg"], GROUNDED)
-
-    def test_the_other_style_fields_still_apply(self):
-        updated, applied, _ = apply_style_changes(
-            BASE_STYLE,
-            _changes(new_primary="#FF0000", new_pattern_svg=TRANSPARENT),
-            sanitise_pattern=sanitise_pattern_svg,
-            font_choices=FONT_CHOICES,
-        )
-        self.assertEqual(updated["primary"], "#FF0000")
-        self.assertEqual(applied, 2)
+                with self.assertRaises(ValueError):
+                    sanitise_pattern_svg(proposed)
 
 
 class CorpusPatternTests(unittest.TestCase):
@@ -156,8 +98,6 @@ class CorpusPatternTests(unittest.TestCase):
         reorders attributes and respaces the markup when it rewrites one, and
         neither is a difference the story can see.
         """
-        import json
-
         styles = json.loads(
             (Path(__file__).resolve().parents[1] / "data" / "person_styles.json")
             .read_text(encoding="utf-8")

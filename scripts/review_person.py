@@ -2,9 +2,11 @@
 """
 Review and improve generated person data.
 
-This script acts as a constructive critic to review life events, ego network,
-and visual style data, proposing improvements for readability, accuracy, and
-storytelling quality.
+This script acts as a constructive critic to review life events and ego
+network data, proposing improvements for readability, accuracy, and
+storytelling quality. The interface style has no critic pass: its constraints
+are checked in code by `generate_person_style.py`, and a style worth replacing
+is regenerated with that script rather than edited by a second model.
 """
 
 import argparse
@@ -22,32 +24,18 @@ sys.path.insert(0, str(Path(__file__).parent))
 from config import (  # noqa: E402
     DEFAULT_MODEL,
     DEFAULT_REASONING_EFFORT,
-    LOW_REASONING_EFFORT,
 )
 from events.pipeline import enrich_event_coordinates_v2  # noqa: E402
-from generate_person_style import (  # noqa: E402
-    BODY_FONT_CHOICES,
-    HEADING_FONT_CHOICES,
-    load_styles,
-    sanitise_pattern_svg,
-    write_styles,
-)
 from utils.model_calls import parse_structured_or_raise  # noqa: E402
-from utils.person_style import STYLES_PATH, load_style  # noqa: E402
 from utils.review_models import (  # noqa: E402
     CombinedReviewOutput,
-    StyleReviewOutput,
     EventsChanges,
     NetworkChanges,
 )
-from utils.review_prompts import (  # noqa: E402
-    get_combined_review_prompt,
-    get_style_review_prompt,
-)
+from utils.review_prompts import get_combined_review_prompt  # noqa: E402
 from utils.review_helpers import (  # noqa: E402
     apply_event_changes,
     apply_network_changes,
-    apply_style_changes,
 )
 from utils.wikipedia_cache import (  # noqa: E402
     get_cached_wikipedia_page,
@@ -118,7 +106,7 @@ def load_person_data(person_id: str) -> Dict[str, Any]:
         person_id: Person identifier
 
     Returns:
-        Dictionary with events, network, style, cache data
+        Dictionary with events, network, cache data
 
     Raises:
         FileNotFoundError: If required files don't exist
@@ -140,10 +128,6 @@ def load_person_data(person_id: str) -> Dict[str, Any]:
         with open(network_path, "r", encoding="utf-8") as f:
             network_data = json.load(f)
 
-    # Load style. The register nests its entries under "styles", so it is read
-    # through the loader that knows that rather than opened here.
-    style_data = load_style(person_id)
-
     # Load cached Wikipedia content
     # Note: We pass empty title since we're always using cache (use_cache=True by default)
     wikipedia_page = get_cached_wikipedia_page(person_id, title="", use_cache=True)
@@ -152,7 +136,6 @@ def load_person_data(person_id: str) -> Dict[str, Any]:
     return {
         "events": events_data,
         "network": network_data,
-        "style": style_data,
         "wikipedia_page": wikipedia_page,
         "related_articles": related_articles or [],
         "person_id": person_id,
@@ -230,49 +213,6 @@ def review_combined(
     return review_output
 
 
-def review_style(
-    style_data: Dict[str, Any],
-    events_data: Dict[str, Any],
-    model: str,
-    reasoning_effort: str,
-) -> StyleReviewOutput:
-    """
-    Review visual style with AI.
-
-    Args:
-        style_data: Style data
-        events_data: Life events data for context
-        model: AI model to use
-        reasoning_effort: Reasoning effort level
-
-    Returns:
-        StyleReviewOutput with proposed changes
-    """
-    print(
-        f"  Reviewing visual style (model: {model}, reasoning: {reasoning_effort})..."
-    )
-
-    client = OpenAI()
-
-    prompt = get_style_review_prompt(
-        style_data,
-        events_data,
-        heading_fonts=HEADING_FONT_CHOICES,
-        body_fonts=BODY_FONT_CHOICES,
-    )
-
-    review_output = parse_structured_or_raise(
-        client,
-        model=model,
-        reasoning_effort=reasoning_effort,
-        input=[{"role": "user", "content": prompt}],
-        text_format=StyleReviewOutput,
-        label="Style review",
-    )
-    print(f"  * Style review complete: {review_output.change_summary}")
-    return review_output
-
-
 def review_person_data(
     person_name_or_id: str,
     aspect: str = "all",
@@ -287,7 +227,7 @@ def review_person_data(
 
     Args:
         person_name_or_id: Person name or ID
-        aspect: Which aspect to review (events/network/style/all)
+        aspect: Which aspect to review (events/network/all)
         dry_run: Show changes without applying
         min_confidence: Lowest confidence (1-5) a change may have to be applied
         model: AI model to use
@@ -307,10 +247,10 @@ def review_person_data(
         print(f"X Person not found: {person_name_or_id}")
         return False
 
-    print(f"[Step 1/6] Resolved person ID: {person_id}")
+    print(f"[Step 1/5] Resolved person ID: {person_id}")
 
     # Load data
-    print("[Step 2/6] Loading person data...")
+    print("[Step 2/5] Loading person data...")
     try:
         person_data = load_person_data(person_id)
     except FileNotFoundError as e:
@@ -318,7 +258,7 @@ def review_person_data(
         return False
 
     # Validate
-    print("[Step 3/6] Validating data...")
+    print("[Step 3/5] Validating data...")
     errors = validate_data(person_data)
     if errors:
         print("X Critical errors found:")
@@ -333,17 +273,12 @@ def review_person_data(
     combined_reasoning = (
         reasoning_effort or DEFAULT_REASONING_EFFORT
     )  # Use configured default for combined review
-    style_reasoning = (
-        reasoning_effort or LOW_REASONING_EFFORT
-    )  # Use low effort for style review
 
-    # Review phases
     combined_review = None
-    style_review = None
 
-    # Phase 1: Combined Events + Network Review
+    # Combined Events + Network Review
     if aspect in ["all", "events", "network"]:
-        print("\n[Step 4/5] PHASE 1: Reviewing life events and network together...")
+        print("\n[Step 4/5] Reviewing life events and network together...")
         try:
             combined_review = review_combined(
                 person_data["events"],
@@ -361,22 +296,7 @@ def review_person_data(
                 traceback.print_exc()
             return False
 
-    # Phase 2: Style
-    if aspect in ["all", "style"] and person_data["style"]:
-        print("\n[Step 5/5] PHASE 2: Reviewing visual style...")
-        try:
-            style_review = review_style(
-                person_data["style"], person_data["events"], model, style_reasoning
-            )
-        except Exception as e:
-            print(f"X Style review failed: {e}")
-            if verbose:
-                import traceback
-
-                traceback.print_exc()
-            return False
-
-    # Create default empty reviews if not run
+    # Create a default empty review if not run
     if not combined_review:
         combined_review = CombinedReviewOutput(
             overall_assessment="Not reviewed",
@@ -385,42 +305,16 @@ def review_person_data(
             change_summary="No changes",
         )
 
-    if not style_review and person_data["style"]:
-        from utils.review_models import StyleChanges
-
-        style_review = StyleReviewOutput(
-            overall_assessment="Not reviewed",
-            color_palette_feedback="",
-            pattern_feedback="",
-            font_feedback="",
-            proposed_changes=StyleChanges(confidence=1, rationale=""),
-            change_summary="No changes",
-        )
-    elif not style_review:
-        from utils.review_models import StyleChanges
-
-        style_review = StyleReviewOutput(
-            overall_assessment="No style data",
-            color_palette_feedback="",
-            pattern_feedback="",
-            font_feedback="",
-            proposed_changes=StyleChanges(confidence=1, rationale=""),
-            change_summary="No changes",
-        )
-
     # Apply changes
-    print(f"\n[Phase 3] Applying changes (min confidence: {min_confidence})...")
+    print(f"\n[Step 5/5] Applying changes (min confidence: {min_confidence})...")
 
     events_applied = 0
     events_skipped = 0
     network_applied = 0
     network_skipped = 0
-    style_applied = 0
-    style_skipped = 0
 
     updated_events = person_data["events"]
     updated_network = person_data["network"]
-    updated_style = person_data["style"]
 
     if aspect in ["all", "events", "network"]:
         # Apply events changes from combined review
@@ -446,19 +340,6 @@ def review_person_data(
             )
             print(f"  Network: {network_applied} applied, {network_skipped} skipped")
 
-    if aspect in ["all", "style"] and person_data["style"]:
-        updated_style, style_applied, style_skipped = apply_style_changes(
-            person_data["style"],
-            style_review.proposed_changes,
-            min_confidence,
-            sanitise_pattern=sanitise_pattern_svg,
-            font_choices={
-                "heading_font": HEADING_FONT_CHOICES,
-                "body_font": BODY_FONT_CHOICES,
-            },
-        )
-        print(f"  Style: {style_applied} applied, {style_skipped} skipped")
-
     # Save or display
     if dry_run:
         print("\n" + "=" * 60)
@@ -469,9 +350,6 @@ def review_person_data(
         )
         print(
             f"  Network: {network_applied} changes would be applied, {network_skipped} skipped"
-        )
-        print(
-            f"  Style: {style_applied} changes would be applied, {style_skipped} skipped"
         )
         # Name each proposed change: a dry run whose output is three counts
         # cannot be reviewed, and reviewing is the mode's whole point.
@@ -508,7 +386,7 @@ def review_person_data(
         return True
 
     # Save files
-    print("\n[Phase 4] Saving changes...")
+    print("\nSaving changes...")
 
     person_dir = PEOPLE_DIR / person_id
 
@@ -539,16 +417,8 @@ def review_person_data(
             json.dump(updated_network, f, indent=2, ensure_ascii=False)
         print(f"  * Updated {network_path.name}")
 
-    if aspect in ["all", "style"] and updated_style:
-        # Update style in styles register, through the same load/write pair the
-        # style generator uses so the entry lands inside "styles".
-        styles_register = load_styles()
-        styles_register["styles"][person_id] = updated_style
-        write_styles(styles_register)
-        print(f"  * Updated {STYLES_PATH.name}")
-
-    total_applied = events_applied + network_applied + style_applied
-    total_skipped = events_skipped + network_skipped + style_skipped
+    total_applied = events_applied + network_applied
+    total_skipped = events_skipped + network_skipped
 
     print(f"\n* Review complete for {person_id}!")
     print(f"  Total changes applied: {total_applied}")
@@ -575,7 +445,7 @@ Examples:
 
     parser.add_argument(
         "--aspect",
-        choices=["all", "events", "network", "style"],
+        choices=["all", "events", "network"],
         default="all",
         help="Which aspect to review (default: all)",
     )

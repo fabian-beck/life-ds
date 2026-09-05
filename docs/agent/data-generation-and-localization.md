@@ -26,7 +26,7 @@ Run scripts with the venv interpreter, e.g. `.venv/Scripts/python.exe scripts/ge
 - `OPENAI_REASONING_EFFORT` / `OPENAI_BULK_REASONING_EFFORT` / `OPENAI_LOW_REASONING_EFFORT` — reasoning effort levels (`medium` / `low` / `none`)
 - Portrait scripts take `--model` separately (default: `gpt-image-2`)
 
-A phase runs on `OPENAI_BULK_MODEL` when a wrong answer cannot quietly become part of the corpus — its output is validated against existing entities afterwards, rewritten by a later phase, or backed by a deterministic fallback. That covers related-article selection, Phase 2 event research, image search and matching, both style generators, meta-story event curation, circle narration, the map branch, and translation. Everything else keeps `OPENAI_MODEL`: Phase 1, chapters, the ego network, story planning, historical context, the depth-layer background reports and their illustration critic, all three review passes, and the name glossary, whose decisions every other document then matches on by exact name. The report's step drawer shows the model and effort each call site actually resolves to; it is generated from the source, so consult it rather than this list when they disagree.
+A phase runs on `OPENAI_BULK_MODEL` when a wrong answer cannot quietly become part of the corpus — its output is validated against existing entities afterwards, rewritten by a later phase, or backed by a deterministic fallback. That covers related-article selection, Phase 2 event research, image search and matching, both style generators, meta-story event curation, circle narration, the map branch, and translation. Everything else keeps `OPENAI_MODEL`: Phase 1, chapters, the ego network, story planning, historical context, the depth-layer background reports and their illustration critic, both review passes, and the name glossary, whose decisions every other document then matches on by exact name. The report's step drawer shows the model and effort each call site actually resolves to; it is generated from the source, so consult it rather than this list when they disagree.
 
 `generate_meta_story.py` exposes the tier as `--bulk-model`, alongside `--model` and `--composer-model`. `cache_wikipedia_materials.py`, `generate_person_style.py`, `generate_meta_story_style.py`, and `meta_story_map_narration.py` do all their AI work at this tier, so their own `--model` flag defaults to it.
 
@@ -100,21 +100,22 @@ python scripts/review_person.py "alan_turing" --aspect events
 python scripts/review_person.py "ada_lovelace" --dry-run
 ```
 
-This script acts as an AI-powered constructive critic to review and improve the quality of generated person data. It can review life events, ego network, and visual styles, proposing improvements for readability, accuracy, and storytelling quality.
+This script acts as an AI-powered constructive critic to review and improve the quality of generated person data. It reviews life events and the ego network, proposing improvements for readability, accuracy, and storytelling quality.
 
 **What it reviews**:
 - **Life events**: Event descriptions, titles, chronological accuracy, historical context
 - **Ego network**: Relationship descriptions, connection strength
-- **Visual styles**: Color harmony, font pairings, design coherence
+
+The interface style is not reviewed. Its rules — a two-color tile over an opaque ground, a self-hosted font, a WCAG contrast floor for the two text colors against the background — are checked in code by `generate_person_style.py`, which asks the model once more with the reason when an answer fails; a style worth replacing is regenerated with that script.
 
 **Features**:
 - Confidence-based changes (only applies high-confidence improvements by default)
 - Dry-run mode for previewing changes without applying them
-- Aspect-specific review (events, network, style, or all)
+- Aspect-specific review (events, network, or all)
 - Uses Wikipedia cache for contextual understanding
 
 **Options**:
-- `--aspect {all,events,network,style}` - Which aspect to review (default: all)
+- `--aspect {all,events,network}` - Which aspect to review (default: all)
 - `--dry-run` - Show proposed changes without applying them
 - `--min-confidence {1,2,3,4,5}` - Lowest confidence a change may have to be applied (default: 4)
 - `--model MODEL` - Override OpenAI model

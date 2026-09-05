@@ -6,7 +6,7 @@ with focus on readability, accuracy, and UI optimization.
 """
 
 import json
-from typing import Dict, Any, List, Sequence, Set
+from typing import Dict, Any, List, Set
 
 from utils.prose_style import PROSE_STYLE_INSTRUCTIONS, description_contract_prompt
 
@@ -225,91 +225,6 @@ MAIN WIKIPEDIA ARTICLE:
 Please provide a comprehensive review with specific, actionable proposed changes for BOTH life events and network.
 Rate each change's confidence 1-5. Ensure consistency between the two perspectives - they should complement each other without redundancy.
 Focus on changes that will noticeably improve the reader's experience on mobile devices.
-"""
-
-    return prompt
-
-
-def get_style_review_prompt(
-    style_data: Dict[str, Any],
-    events_data: Dict[str, Any],
-    *,
-    heading_fonts: Sequence[str],
-    body_fonts: Sequence[str],
-) -> str:
-    """
-    Generate prompt for visual style review.
-
-    Args:
-        style_data: Current style entry from person_styles.json
-        events_data: Life events data for context about person
-        heading_fonts: The heading families the generator may pick, which are
-            the ones the app self-hosts; the reviewer is held to the same list
-        body_fonts: The body families, likewise
-
-    Returns:
-        Formatted prompt string
-    """
-    person = events_data.get("person", {})
-    person_name = person.get("name", "Unknown")
-    birth_year = (person.get("birth_date") or "")[:4]
-    death_year = (person.get("death_date") or "")[:4]
-    primary_roles = person.get("primary_roles") or []
-
-    prompt = f"""You are reviewing visual identity/styling for {person_name} ({birth_year}-{death_year}).
-
-PRIMARY ROLES: {', '.join(primary_roles)}
-
-{CRITICAL_CONSTRAINTS}
-
-{CONFIDENCE_SCALE}
-
-TASK: Review the visual style and propose improvements focused on:
-1. **Color appropriateness**: Do colors suit the person's era and character?
-2. **Contrast**: Is there sufficient contrast between background and primary/secondary colors?
-3. **Pattern quality**: Is the SVG pattern culturally relevant and visually distinctive?
-4. **Font selection**: Are fonts appropriate to the person's era and readable?
-
-CURRENT STYLE DATA:
-```json
-{json.dumps(style_data, indent=2)}
-```
-
-REVIEW GUIDELINES:
-
-**Color Palette**:
-- Primary and secondary colors should be harmonious
-- Background should provide good contrast for readability
-- Consider era-appropriate palettes (muted for historical figures, vibrant for modern)
-- Check accessibility (WCAG contrast ratios)
-
-**SVG Pattern**:
-- Must use ONLY pure black (#000000) and white (#FFFFFF)
-- Must include at least one white element
-- Must paint the whole 160x160 tile: black is the field and white the marks, and the story multiplies the tile against its primary color, so a tile left transparent renders as a flat wash of that color rather than a pattern
-- Should be 160x160 tileable pattern
-- Should reflect person's era, culture, or field
-- Strong strokes preferred over thin lines
-- Examples: geometric patterns for mathematicians, organic for artists, mechanical for engineers
-
-**Fonts**:
-- heading_font: Should be distinctive and era-appropriate
-- body_font: Must be highly readable
-- The app self-hosts a fixed set of families and renders any other in a fallback font, so a proposed font must be exactly one of these:
-  - heading_font: {", ".join(heading_fonts)}
-  - body_font: {", ".join(body_fonts)}
-- Consider: Serif for classical/historical, sans-serif for modern/technical
-
-**Cultural Sensitivity**:
-- Patterns for non-Western figures should avoid stereotypes
-- Colors should respect cultural associations
-- Fonts should match linguistic/regional context when possible
-
-PERSON CONTEXT:
-{(person.get("summary") or "")[:500]}...
-
-Please provide specific, actionable improvements. Only propose changes if there are clear issues or obvious enhancements.
-Most generated styles are already good - focus on genuine problems, not minor tweaks.
 """
 
     return prompt

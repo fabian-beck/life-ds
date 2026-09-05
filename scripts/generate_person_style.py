@@ -16,7 +16,12 @@ from openai import APIStatusError, OpenAI
 
 from config import BULK_MODEL, BULK_REASONING_EFFORT, enable_utf8_console
 from utils import usage
-from utils.person_style import STYLES_PATH, is_hex_color
+from utils.person_style import (
+    MIN_TEXT_CONTRAST,
+    STYLES_PATH,
+    is_hex_color,
+    palette_problems,
+)
 from utils.text import slugify
 
 enable_utf8_console()
@@ -350,7 +355,10 @@ def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
         "Rules:",
         "- primary, secondary, and background must be hex colors in #RRGGBB format.",
         "- background must remain dark (perceived luminance under 0.18).",
-        "- primary and secondary should contrast well against the background and with each other.",
+        "- primary and secondary are set as heading, label, and glyph colors directly on the background, so each must reach a WCAG contrast ratio of at least 4.5:1 against it. A palette in which either falls under "
+        + f"{MIN_TEXT_CONTRAST:g}:1 is rejected and regenerated."
+        + " Prefer a muted, era-appropriate palette for a historical figure and a more saturated one for a modern one, but never at the cost of that contrast.",
+        "- primary and secondary should also be distinguishable from each other; the story uses them for different roles.",
         "- background_pattern_svg must be a 160x160 tileable SVG string that uses ONLY pure black (#000000) and pure white (#FFFFFF).",
         "- The tile must be painted edge to edge over a black ground, with the marks in white. The story multiplies the tile against its primary color, so any part left transparent renders as a flat wash of that color instead of a pattern.",
         "- CRITICAL: NO gray shades allowed—only #000000 (black) and #FFFFFF (white). No #111111, #EEEEEE, or any other color values.",
@@ -382,6 +390,12 @@ def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
         "- Johann Sebastian Bach: Geometric counterpoint—interwoven line patterns, symmetrical but complex geometric fugue-like arrangements, precise mathematical grids.",
         "",
         "- Avoid gradients or colors beyond black and white in the SVG.",
+        "",
+        "CULTURAL GROUNDING:",
+        "- A pattern for a figure outside the Western canon draws on the geometry of their own tradition, era, and work, never on a generic or stereotyped motif for their region.",
+        "- Colors respect the associations of the person's culture, including those of mourning, celebration, and religion.",
+        "- The font pairing suits the linguistic and regional context where the vocabulary allows it.",
+        "",
         "- separator_glyph_svg must be a simple, distinctive glyph designed to work at small sizes (32x32 recommended viewBox).",
         "- The separator glyph should use the primary color as fill/stroke and be characteristic of the person's aesthetic.",
         "- IMPORTANT: Use maximum 2-3 simple geometric shapes (circles, rectangles, lines, triangles) for the separator glyph.",
@@ -476,6 +490,12 @@ def normalize_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
         raise ValueError("secondary must be a #RRGGBB hex color.")
     if not is_hex_color(background):
         raise ValueError("background must be a #RRGGBB hex color.")
+    # The prompt asks for readable text colors; this is where the ask is held.
+    # The style review that used to follow the generator estimated contrast
+    # by reading hex strings, which is not a check, and it is gone.
+    problems = palette_problems(primary, secondary, background)
+    if problems:
+        raise ValueError(" ".join(problems))
     if not isinstance(pattern_svg, str) or "<svg" not in pattern_svg:
         raise ValueError(
             "background_pattern_svg must be an SVG string containing '<svg'."
@@ -530,6 +550,42 @@ def write_styles(data: Dict[str, Any]) -> None:
     )
 
 
+STYLE_ATTEMPTS = 2
+"""How many times the model may answer before a rejected palette fails the step."""
+
+
+def build_retry_prompt(prompt: str, error: Exception) -> str:
+    """The same prompt again, with the reason the last answer was rejected."""
+    return (
+        prompt
+        + "\n\nA previous answer was rejected for this reason: "
+        + str(error)
+        + "\nReturn a corrected JSON object that satisfies every rule above."
+    )
+
+
+def generate_valid_style(prompt: str, model: str) -> Dict[str, Any]:
+    """Call the model until `normalize_payload` accepts the answer, or give up.
+
+    The palette and font rules in the prompt are also checked in code, and a
+    small model at low effort sometimes misses one — a secondary too close to
+    the background, a font outside the vocabulary. One more call that names
+    the rejection is cheaper than a failed step, and far cheaper than a critic
+    pass on the large model, which is what used to follow here.
+    """
+    attempt_prompt = prompt
+    for attempt in range(1, STYLE_ATTEMPTS + 1):
+        payload = call_openai(attempt_prompt, model)
+        try:
+            return normalize_payload(payload)
+        except ValueError as error:
+            if attempt == STYLE_ATTEMPTS:
+                raise
+            print(f"[Step 4/5] Rejected attempt {attempt}: {error}")
+            attempt_prompt = build_retry_prompt(prompt, error)
+    raise AssertionError("unreachable")
+
+
 def generate_style(
     subject: str,
     *,
@@ -552,10 +608,8 @@ def generate_style(
     print(
         f"[Step 3/5] Generating visual identity via {model} (reasoning: {BULK_REASONING_EFFORT})..."
     )
-    payload = call_openai(prompt, model)
-
     print("[Step 4/5] Validating and normalizing style configuration...")
-    style_config = normalize_payload(payload)
+    style_config = generate_valid_style(prompt, model)
     print(
         f"[Step 4/5] Colors: primary={style_config['primary']}, secondary={style_config['secondary']}, background={style_config['background']}"
     )

@@ -296,20 +296,12 @@
         "why_this_design": "Reviewing both datasets together catches contradictions and repeated claims that separate passes would miss, while leaving proposed changes for the confidence gate rather than altering the generated data directly."
       }
     },
-    "p_review_style": {
-      "fingerprint": "d884863794bde397",
-      "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews a generated visual identity against the person’s life and roles, then recommends changes only when the palette, pattern, or typography weakens the story or readability. It leaves behind a reasoned assessment and a set of style corrections for the interface-building stages.",
-        "why_this_design": "It treats the SVG tile as a two-color mask rather than a standalone image, so the review catches transparent or incomplete patterns that would disappear into a flat primary-color background."
-      }
-    },
     "p_style": {
-      "fingerprint": "c8feb470a30dc2e3",
+      "fingerprint": "933cfc5b8d880136",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Creates the personal story’s dark-mode visual identity from the subject’s era, field, and character. It supplies the colors, typography, repeating background motif, and small separator mark that carry those cues through the interface.",
-        "why_this_design": "The pattern uses only black and white because the interface recolors it with the chosen primary color; opaque black ground prevents transparent gaps from becoming a flat colored field."
+        "what_it_does": "Builds a dark-mode visual identity for a person’s story, tying its colors, type, background pattern, and separator mark to the person’s era, field, and cultural context. It returns the design pieces that let the interface carry the same biographical framing as the story.",
+        "why_this_design": "It tests text color contrast and regenerates a failing palette so historical or cultural color cues do not make headings and labels unreadable on the dark background."
       }
     },
     "p_translate": {
