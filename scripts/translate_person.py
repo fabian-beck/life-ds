@@ -687,11 +687,25 @@ def apply_life_events_translations(
             _set_if_source_has(loc, "name_historic", tr_loc.get("name_historic"))
             _set_if_source_has(loc, "name_modern", tr_loc.get("name_modern"))
 
+        # The event's own picture captions, whose only translatable field is the
+        # caption itself. An event that also carries a report reaches the model
+        # with two caption lists, and it answers the shorter one with the longer
+        # one's contents: an event with one image and three report figures came
+        # back with three images. A caption is a leaf here as it is below —
+        # nothing downstream is indexed by one — so a list of the wrong length
+        # is dropped whole rather than zipped onto the wrong pictures, and the
+        # event keeps its English captions instead of costing the document.
         src_images = event.get("images") or []
         tr_images = tr_event.get("images") or []
-        _require_same_length("event.images", src_images, tr_images)
-        for img, tr_img in zip(src_images, tr_images):
-            _set_if_source_has(img, "caption", tr_img.get("caption"))
+        if len(src_images) == len(tr_images):
+            for img, tr_img in zip(src_images, tr_images):
+                _set_if_source_has(img, "caption", tr_img.get("caption"))
+        else:
+            print(
+                f"  Warning: {len(tr_images)} of {len(src_images)} image "
+                f"caption(s) came back for '{event.get('title')}'; that event "
+                f"keeps its source captions."
+            )
 
         # The report's figures, whose captions travelled as bare strings in the
         # order the payload listed them: every background image that carries a
@@ -1343,12 +1357,14 @@ GENERAL RULES:
    short phrases. Translate both, keep both the same length and order as the
    source (rule 1), never merge two paragraphs into one entry, and add no
    headings of your own. The interface reassembles them.
-   "figure_captions" is the captions of the pictures that report carries,
-   one string per picture, and is separate from "images". They are written
-   by whoever uploaded the picture, so one may read as an aside, a question,
-   or a joke, and may say little about the event. Translate each as it
-   stands — rule 2's plainness governs the corpus, not a caption — and
-   return the array at its source length.
+   "figure_captions" is the captions of the pictures that report carries, one
+   string per picture. It is a different list from "images", which holds the
+   captions of the event's own pictures and is usually the shorter of the two.
+   Return each at its own source length and never fill one from the other.
+   Both kinds of caption are written by whoever uploaded the picture, so one
+   may read as an aside, a question, or a joke, and may say little about the
+   event. Translate each as it stands — rule 2's plainness governs the corpus,
+   not a caption.
 4. Descriptions may contain [[term|display]] annotation markers:
    - Keep the marker syntax and the term (before the |) EXACTLY as-is.
    - Translate ONLY the display text (after the |).

@@ -55,18 +55,18 @@
     {
       "id": "alan_turing",
       "name": "Alan_Turing",
-      "tagline": "Father of theoretical computing",
-      "summary": "Alan Turing was an English mathematician and codebreaker whose work founded modern computability theory, helped break German wartime ciphers at Bletchley Park, and shaped early computer design and artificial intelligence research. His later career also produced influential ideas in mathematical biology. He was prosecuted for homosexual acts in 1952 and died in 1954 from cyanide poisoning.",
+      "tagline": "The Universal Computing Machine",
+      "summary": "Alan Turing gave computation a mathematical form through the Turing machine and helped break German naval Enigma messages during World War II. He later designed early computer systems, proposed the imitation game, and developed a mathematical account of biological pattern formation.",
       "portrait": {
         "image": "/portraits/alan_turing_thumbnail.webp",
-        "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg",
-        "caption": "Stylized portrait based on historical photograph",
-        "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Alan_Turing_%281951%29.jpg",
-        "originalCaption": "AI-generated stylized portrait based on historical photograph",
         "thumbnail": "/portraits/alan_turing_thumbnail.webp",
         "medium": "/portraits/alan_turing_medium.webp",
-        "full": "/portraits/alan_turing_full.webp"
+        "full": "/portraits/alan_turing_full.webp",
+        "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Alan_Turing_%281951%29.jpg",
+        "referenceUsed": true
       },
       "primaryRoles": [
         "mathematician",
@@ -74,7 +74,7 @@
         "cryptanalyst"
       ],
       "created": "2025-11-07T16:52:54+01:00",
-      "lastUpdated": "2025-12-20T16:25:06.366776+01:00",
+      "lastUpdated": "2026-09-05T18:17:09.804586+02:00",
       "birthDate": "1912-06-23",
       "deathDate": "1954-06-07"
     },

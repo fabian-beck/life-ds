@@ -1,6 +1,6 @@
 {
-  "dataset": "wiki-egonetwork",
-  "created_on": "2025-11-22",
+  "dataset": "Alan Turing ego network",
+  "created_on": "2026-09-05",
   "ego": {
     "name": "Alan Turing",
     "birth_year": 1912,
@@ -8,437 +8,218 @@
     "primary_roles": [
       "Mathematiker",
       "Informatiker",
-      "Kryptoanalytiker"
+      "Logiker",
+      "Kryptoanalytiker",
+      "Theoretischer Biologe"
     ],
-    "summary": "Alan Mathison Turing (1912–1954) war ein englischer Mathematiker und Logiker, dessen Arbeiten die theoretische Informatik begründeten und entscheidend zum alliierten Entziffern feindlicher Codes im Zweiten Weltkrieg beitrugen. Er entwickelte das Konzept der Turingmaschine und der universellen Maschine, wies die Grenzen des Berechenbaren nach, leitete in Bletchley die entscheidenden Arbeiten zur Enigma, wirkte an der Entwicklung der ersten Rechner mit gespeicherten Programmen mit und leistete später Beiträge zur mathematischen Biologie und zur Philosophie der künstlichen Intelligenz.",
+    "summary": "Alan Turing war ein englischer Mathematiker, Informatiker, Logiker, Kryptoanalytiker und theoretischer Biologe. Mit der Turingmaschine formalisierte er die Begriffe Algorithmus und Berechenbarkeit, wirkte an der Entzifferung des deutschen Marinefunkverkehrs mit und arbeitete an frühen Computern, künstlicher Intelligenz und mathematischer Biologie.",
     "wikipedia": "https://en.wikipedia.org/wiki/Alan_Turing"
   },
   "connections": [
     {
-      "person_name": "Julius Mathison Turing",
-      "relationship_type": "family/father",
-      "relationship_description": "Vater; ein ranghoher Beamter des Indian Civil Service, dessen Dienststellen in Indien und Großbritannien Alans frühe Kindheit und seine schulische Betreuung prägten.",
-      "start_year": 1912,
-      "end_year": 1947,
+      "person_name": "Ethel Sara Turing",
+      "relationship_description": "Turings Mutter sorgte dafür, dass er in England aufwuchs, während sie und Julius Turing in Britisch-Indien arbeiteten. Später veröffentlichte sie eine Biografie über ihn.",
       "strength": "strong",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben",
-        "Erziehung in der Kindheit",
-        "Entscheidungen zur Schulbildung der Kinder",
-        "Reisen zwischen Indien und Großbritannien"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
-      ],
-      "notes": "Sein fortgesetzter Dienst in Indien führte dazu, dass Alan und sein Bruder in England weitgehend von einem pensionierten Ehepaar aus dem Umfeld der Armee aufgezogen wurden, was Turings vergleichsweise selbstständige Haltung begünstigte."
-    },
-    {
-      "person_name": "Ethel Sara Turing (née Stoney)",
-      "relationship_type": "family/mother",
-      "relationship_description": "Mutter; anglo-irische Tochter eines Eisenbahningenieurs. Sie kümmerte sich um Alans frühe Ausbildung und verfasste nach seinem Tod eine Biografie über ihn.",
-      "start_year": 1912,
-      "end_year": 1954,
-      "strength": "strong",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben",
-        "Entscheidungen zur frühen Schulbildung",
-        "Briefwechsel während seiner beruflichen Laufbahn"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
         "https://de.wikipedia.org/wiki/Ethel_Sara_Turing"
       ],
-      "notes": "Während seiner Kindheit in Indien häufig abwesend, blieb sie für ihn doch eine wichtige emotionale Bezugsperson; nach seinem Tod verteidigte sie seinen Ruf in ihrem 1959 erschienenen Buch."
+      "notes": "Veröffentlichte 1959 Alan M. Turing.",
+      "relationship_type": "family/mother"
     },
     {
-      "person_name": "John Ferrier Turing",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Älterer Bruder; teilte mit Alan eine von den Stationierungen des britischen Weltreichs geprägte, wechselhafte Kindheit, schlug beruflich jedoch einen eigenen Weg ein und unterstützte später über seinen Sohn Dermot die Bewahrung von Alans Vermächtnis.",
-      "start_year": 1912,
-      "end_year": 1980,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Kindheit in England während die Eltern in Indien waren",
-        "Familienbesuche",
-        "Gespräche über Alans Leben nach seinem Tod"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://de.wikipedia.org/wiki/Dermot_Turing"
-      ],
-      "notes": "Vater von Sir Dermot Turing, der später mehrere Bücher über Alan und Bletchley verfasste."
-    },
-    {
-      "person_name": "Christopher Collan Morcom",
-      "relationship_type": "social/friend",
-      "relationship_description": "Enger Schulfreund und vermutlich erste Liebe in Sherborne; beide teilten eine leidenschaftliche Begeisterung für Mathematik, Naturwissenschaften und Astronomie, bevor Morcoms früher Tod Turing tief erschütterte.",
-      "start_year": 1928,
-      "end_year": 1930,
+      "person_name": "Christopher Morcom",
+      "relationship_description": "Morcom war Turings enger Freund an der Sherborne School. Bis zu Morcoms Tod im Jahr 1930 teilten sie ihr Interesse an Mathematik und Naturwissenschaften.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Schulbesuch in Sherborne",
-        "Gespräche über Mathematik und Naturwissenschaften",
-        "Astronomische Beobachtungen"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
-      "notes": "Morcoms Tod an Rindertuberkulose trieb Turing dazu, sich noch intensiver der wissenschaftlichen Arbeit zu widmen, und beeinflusste seine späteren Überlegungen zu Geist, Materie und Seele."
+      "notes": "Turing blieb noch viele Jahre nach Morcoms Tod mit dessen Mutter in Kontakt.",
+      "relationship_type": "social/friend"
     },
     {
-      "person_name": "Frances Isobel Morcom",
-      "relationship_type": "social/family_friend",
-      "relationship_description": "Mutter von Christopher Morcom; stand auch nach dem Tod ihres Sohnes über viele Jahre in einem herzlichen Briefwechsel mit Turing und wurde zu einem Resonanzraum für seine Überlegungen zu Wissenschaft und Metaphysik.",
-      "start_year": 1930,
-      "end_year": 1935,
-      "strength": "moderate",
-      "interaction_frequency": "yearly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Briefwechsel zu den Jahrestagen von Christophers Tod und Geburtstag",
-        "Erinnerungen an Christopher austauschen",
-        "Philosophische Überlegungen"
-      ],
+      "person_name": "Joan Clarke",
+      "relationship_description": "Clarke war Turings enge Freundin und Kollegin in Hut 8. Anfang 1941 verlobten sie sich, doch Turing löste die Verlobung, nachdem er seine Homosexualität offenbart hatte.",
+      "strength": "strong",
       "sources": [
+        "https://en.wikipedia.org/wiki/Joan_Clarke",
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
-      "notes": "Turings Briefe an sie geben Aufschluss über seine sich wandelnden Vorstellungen von Geist und Materie sowie über den Einfluss der Trauer auf seine wissenschaftliche Motivation."
-    },
-    {
-      "person_name": "D. G. (David Gawen) Champernowne",
-      "relationship_type": "academic/friend",
-      "relationship_description": "Zeitgenosse aus Cambridge und lebenslanger Freund; Wirtschaftswissenschaftler und Mathematiker, der später gemeinsam mit Turing eines der ersten Schachprogramme, Turochamp, entwickelte.",
-      "start_year": 1931,
-      "end_year": 1954,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Studienzeit am King’s College in Cambridge",
-        "Gespräche über Mathematik und Wirtschaft",
-        "Gemeinsame Entwicklung des Schachprogramms Turochamp 1948"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/D._G._Champernowne"
-      ],
-      "notes": "Ihre Zusammenarbeit an Turochamp nahm das Computerschach um Jahrzehnte vorweg; Champernownes Erinnerungen sind ein wichtiges Zeugnis für Turings Persönlichkeit."
-    },
-    {
-      "person_name": "Max Newman",
-      "relationship_type": "academic/mentor",
-      "relationship_description": "Mathematiker in Cambridge, der über die Grundlagen der Mathematik und den Gödelschen Unvollständigkeitssatz las und damit Turings Arbeit am Entscheidungsproblem anregte; später war er sein Kollege und Leiter des Computing Machine Laboratory in Manchester, wo Turing an frühen Computern arbeitete.",
-      "start_year": 1935,
-      "end_year": 1954,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Vorlesungen über Logik und mathematische Grundlagen in Cambridge",
-        "Besprechung des Entwurfs von Turings Aufsatz von 1936",
-        "Organisation von Turings Aufenthalt in Princeton",
-        "Zusammenarbeit nach dem Krieg in Manchester am Baby und an den Manchester-Mark-I-Computern"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Max_Newman"
-      ],
-      "notes": "Newman erkannte rasch die Bedeutung von Turings Aufsatz „On Computable Numbers“ von 1936 und setzte sich für dessen Veröffentlichung sowie für Turings Studienaufenthalt bei Alonzo Church ein."
+      "notes": "Bis zu Turings Tod im Jahr 1954 blieben sie enge Freunde.",
+      "relationship_type": "social/fiancée"
     },
     {
       "person_name": "Alonzo Church",
-      "relationship_type": "academic/advisor",
-      "relationship_description": "Doktorvater in Princeton; entwickelte unabhängig den Lambda-Kalkül und einen Unentscheidbarkeitssatz zum Entscheidungsproblem. Daraus entstand die Church-Turing-These, die seine und Turings Berechnungsmodelle miteinander verband.",
-      "start_year": 1936,
-      "end_year": 1938,
+      "relationship_description": "Church betreute von 1936 bis 1938 Turings Promotion in Princeton. Unter seiner Betreuung schloss Turing die Arbeit Systems of Logic Based on Ordinals ab.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Doktorandenbetreuung in Princeton",
-        "Forschung zu Logik und Berechenbarkeit",
-        "Vergleich von Lambda-Kalkül und Turingmaschinen",
-        "Gemeinsame Formulierung der Church-Turing-These"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
         "https://en.wikipedia.org/wiki/Alonzo_Church",
-        "https://en.wikipedia.org/wiki/Turing%27s_proof"
+        "https://en.wikipedia.org/wiki/Systems_of_Logic_Based_on_Ordinals"
       ],
-      "notes": "Churchs frühere Veröffentlichung veranlasste Turing, seinen eigenen Aufsatz rasch fertigzustellen. Church hielt Turings maschinenbasierten Ansatz jedoch für zugänglicher und leistungsfähiger und betreute seine Dissertation „Systems of Logic Based on Ordinals“."
+      "notes": "Turing schloss Systems of Logic Based on Ordinals unter Churchs Betreuung ab.",
+      "relationship_type": "academic/teacher"
     },
     {
-      "person_name": "John von Neumann",
-      "relationship_type": "academic/colleague",
-      "relationship_description": "Führender Mathematiker und Universalgelehrter, der in Turings Aufsatz von 1936 das zentrale Konzept des modernen Computers erkannte und ihn als Postdoktorandenassistenten nach Princeton einlud; Turing entschied sich jedoch für die Rückkehr ins Vereinigte Königreich.",
-      "start_year": 1936,
-      "end_year": 1938,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Geistiges Umfeld in Princeton",
-        "Gespräche über logische Grundlagen und Berechnung",
-        "Frühe Überlegungen zu Computern mit gespeicherten Programmen"
+      "person_name": "Max Newman",
+      "relationship_description": "Newmans Vorlesungen über die Grundlagen der Mathematik in Cambridge regten Turing zu seiner Arbeit am Entscheidungsproblem an. Newman erkannte die Bedeutung von Turings Aufsatz aus dem Jahr 1936 und holte ihn später nach Manchester.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Max_Newman",
+        "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
+      "notes": "Ihre Verbindung führte von Turings theoretischer Arbeit über die Berechenbarkeit zur Entwicklung von Computern nach dem Krieg.",
+      "relationship_type": "academic/mentor"
+    },
+    {
+      "person_name": "Robin Gandy",
+      "relationship_description": "Gandy arbeitete mit Turing während des Krieges an Verfahren zur Verschlüsselung von Sprache. Später promovierte er 1952 unter Turing in Cambridge über axiomatische Systeme und Theorien der Physik.",
+      "strength": "strong",
+      "sources": [
+        "https://de.wikipedia.org/wiki/Robin_Gandy"
+      ],
+      "notes": "Gandy wurde später zu einem bedeutenden Interpreten und Herausgeber von Turings geistigem Vermächtnis.",
+      "relationship_type": "academic/student"
+    },
+    {
+      "person_name": "Dillwyn Knox",
+      "relationship_description": "Knox arbeitete vor und nach Turings Eintritt in Bletchley Park im Jahr 1939 mit ihm an der Kryptoanalyse der deutschen Enigma.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
+        "https://en.wikipedia.org/wiki/Dilly_Knox"
       ],
-      "notes": "Von Neumann entwickelte später die von-Neumann-Architektur für Computer mit gespeicherten Programmen und erkannte dabei ausdrücklich Turings Einfluss auf das Konzept der universellen Maschine an."
+      "notes": "Turing wohnte 1939 bei Knox und dessen Frau, während er sie bei der Enigma-Arbeit beriet.",
+      "relationship_type": "professional/collaborator"
     },
     {
       "person_name": "Gordon Welchman",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Ranghoher Mathematiker in Bletchley, der Kryptoanalytiker anwarb und Hut 6 leitete; gemeinsam mit Turing einer der Architekten der britischen Bombe gegen die Enigma und ein maßgeblicher Organisator der Entzifferungsarbeit, auf der Turings Tätigkeit in Hut 8 aufbaute.",
-      "start_year": 1939,
-      "end_year": 1945,
+      "relationship_description": "Welchman und Turing gehörten zu den frühen Mitarbeitern von Bletchley Park. Sie arbeiteten gemeinsam an der Entzifferung der Enigma und unterzeichneten im Oktober 1941 zusammen einen Appell an Winston Churchill, in dem sie mehr Mittel für die Codeknacker forderten.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Kryptoanalyse an der Government Code and Cypher School",
-        "Entwicklung und Einsatz der britischen Bombe",
-        "Koordination zwischen Hut 6 (Heer/Luftwaffe) und Hut 8 (Marine-Enigma)",
-        "Öffentliche Darstellungen von Bletchley nach dem Krieg"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Gordon_Welchman"
+        "https://en.wikipedia.org/wiki/Gordon_Welchman",
+        "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
-      "notes": "Einer der vier „bösen Onkel“ von Bletchley, neben Turing, Hugh Alexander und Philip Stuart Milner-Barry; später verteidigte er Turings Beitrag, als ihm die offiziellen Ehrungen unzureichend erschienen."
+      "notes": "Welchmans Diagonalbrett ergänzte das mit Turing verbundene britische Bombe-Programm.",
+      "relationship_type": "professional/colleague"
+    },
+    {
+      "person_name": "Irving John Good",
+      "relationship_description": "Good arbeitete mit Turing in Hut 8 an der Kryptoanalyse der Marine-Enigma. Später war er mit ihm an der University of Manchester auf den Gebieten Computer, Statistik und verwandten Fragestellungen tätig.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/I._J._Good",
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": "Goods erfolgreiche Lösung eines Problems mit einer Bigrammtafel in Hut 8 brachte ihm Turings fachlichen Respekt ein.",
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Julius Mathison Turing",
+      "relationship_description": "Turings Vater war Beamter im Indian Civil Service. Seine Arbeit in Britisch-Indien führte dazu, dass die Eltern Alan und seinen Bruder während eines großen Teils ihrer Kindheit in England zurückließen.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": "Julius und Ethel Turing sorgten dafür, dass ihre Kinder in Großbritannien aufwuchsen, während sie zwischen Großbritannien und Indien unterwegs waren.",
+      "relationship_type": "family/father"
+    },
+    {
+      "person_name": "John Ferrier Turing",
+      "relationship_description": "Turings älterer Bruder wuchs unter denselben familiären Bedingungen in England auf, während die Eltern in Indien arbeiteten.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": null,
+      "relationship_type": "family/brother"
+    },
+    {
+      "person_name": "Frances Isobel Morcom",
+      "relationship_description": "Nach Christopher Morcoms Tod korrespondierte Turing jahrelang mit Morcoms Mutter, auch an den Jahrestagen des Todes ihres Sohnes.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": "Ihr Briefwechsel dokumentiert Turings anhaltende Trauer und sein Festhalten an den naturwissenschaftlichen Interessen, die er mit Christopher geteilt hatte.",
+      "relationship_type": "social/family_friend"
+    },
+    {
+      "person_name": "Arnold Murray",
+      "relationship_description": "Murray hatte 1951 und 1952 eine sexuelle Beziehung mit Turing. Ihre Verbindung führte zur polizeilichen Untersuchung und zur Strafverfolgung beider Männer wegen homosexueller Handlungen.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing"
+      ],
+      "notes": "Die Strafverfolgung hatte für Turing schwerwiegende persönliche und berufliche Folgen.",
+      "relationship_type": "social/romantic_partner"
     },
     {
       "person_name": "Ludwig Wittgenstein",
-      "relationship_type": "academic/colleague",
-      "relationship_description": "Philosoph, mit dem Turing 1939 an Vorlesungen in Cambridge über die Grundlagen der Mathematik teilnahm und sich lebhaft auseinandersetzte. Turing verteidigte dabei den Formalismus gegen Wittgensteins Auffassung, Mathematik sei Erfindung und nicht die Entdeckung absoluter Wahrheiten.",
-      "start_year": 1939,
-      "end_year": 1939,
+      "relationship_description": "Turing besuchte Wittgensteins Cambridge-Vorlesungen von 1939 über die Grundlagen der Mathematik. Dort stritten die beiden über Formalismus, mathematische Wahrheit und Berechenbarkeit.",
       "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Vorlesungsreihe in Cambridge über die Grundlagen der Mathematik",
-        "Öffentliche Auseinandersetzungen über Wesen mathematischer Wahrheit und Beweise"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
         "https://en.wikipedia.org/wiki/Ludwig_Wittgenstein"
       ],
-      "notes": "Die rekonstruierten Vorlesungsnotizen zeigen Turing als einen der wichtigsten Gesprächspartner Wittgensteins und verdeutlichen, wie intensiv er sich mit philosophischen Fragen im Umfeld seiner eigenen technischen Arbeit beschäftigte."
+      "notes": "Die aufgezeichneten Gespräche belegen eine grundlegende Meinungsverschiedenheit zwischen Turings formalistischer Haltung und Wittgensteins philosophischem Ansatz.",
+      "relationship_type": "academic/field_peer"
     },
     {
-      "person_name": "Harry Hinsley",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Analyst des Marinegeheimdienstes in Hut 4 von Bletchley, dessen Verkehrsanalyse Turings kryptoanalytische Arbeit an der Marine-Enigma ergänzte; später offizieller Historiker des britischen Nachrichtendienstes im Zweiten Weltkrieg.",
-      "start_year": 1939,
-      "end_year": 1945,
+      "person_name": "Abram Samoilowitsch Besikowitsch",
+      "relationship_description": "Abram Samoilowitsch Besikowitsch begutachtete 1935 Turings Dissertation für das King’s-College-Stipendium. Er lobte die Originalität ihrer mathematischen Methoden.",
       "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Nachrichtendienstliche Funkaufklärung in Bletchley während des Krieges",
-        "Koordination zwischen der Enigma-Entzifferung in Hut 8 und der Analyse des Marinegeheimdienstes in Hut 4"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Harry_Hinsley"
-      ],
-      "notes": "Hinsley bewertete später den Einfluss von Ultra auf den Kriegsverlauf und ordnete Turings Beiträge in die umfassendere Arbeit der Signalaufklärung ein."
-    },
-    {
-      "person_name": "König Georg VI.",
-      "relationship_type": "professional/patron",
-      "relationship_description": "Monarch während eines großen Teils von Turings Dienstzeit in Bletchley; als Staatsoberhaupt besuchte er Bletchley später unter Ausschluss der Öffentlichkeit und verlieh Auszeichnungen, darunter Turing den OBE.",
-      "start_year": 1939,
-      "end_year": 1952,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Offizielle Anerkennung kryptoanalytischer Arbeit im Krieg",
-        "Verleihung des OBE für Turings Verdienste"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
-      "notes": "Turing wurde 1946 für seine Arbeit im Krieg zum Officer of the Order of the British Empire ernannt. Darin zeigte sich die Anerkennung seiner Leistungen durch die Krone, auch wenn die Einzelheiten noch jahrzehntelang geheim blieben."
+      "notes": "Sein wohlwollendes Gutachten trug dazu bei, dass Turing Fellow des King’s College in Cambridge wurde.",
+      "relationship_type": "academic/mentor"
     },
     {
-      "person_name": "Hugh Alexander (C. H. O’D. Alexander)",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Schachmeister und Kryptoanalytiker, der unter Turing in Hut 8 arbeitete und ihm später als Leiter von Hut 8 nachfolgte; er galt als bester Banburist, erkannte jedoch zugleich Turings grundlegende Bedeutung an.",
-      "start_year": 1940,
-      "end_year": 1945,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Entzifferungsarbeit in Bletchley",
-        "Banburismus-Angriffe gegen die Marine-Enigma",
-        "Leitung der Arbeit in Hut 8",
-        "Interne Forderung nach mehr Ressourcen (Unterzeichner des Churchill-Memorandums von 1941)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Stuart_Milner-Barry"
-      ],
-      "notes": "Einer der vier Unterzeichner – neben Turing, Welchman und Milner-Barry – des Briefes an Winston Churchill von 1941, in dem größere Unterstützung für Bletchley gefordert wurde."
-    },
-    {
-      "person_name": "Philip Stuart Milner-Barry",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Kryptologe und Schachspieler, der den „Crib Room“ in Hut 6 und anschließend Hut 6 selbst leitete; gemeinsam mit Turing unterzeichnete er 1941 das Memorandum an Churchill, in dem mehr Personal und Mittel für die Enigma-Arbeit gefordert wurden.",
-      "start_year": 1940,
-      "end_year": 1945,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Dienst bei der Government Code and Cypher School",
-        "Ermittlung von Cribs für die Enigma-Bomben",
-        "Einsatz für mehr Bomben-Kapazität und Unterstützungspersonal bei Churchill"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Stuart_Milner-Barry"
-      ],
-      "notes": "Er überbrachte das entscheidende Memorandum persönlich in die Downing Street 10; später schrieb er über Turings Genialität und vertrat die Ansicht, die ihm verliehenen Ehrungen seien unzureichend gewesen."
-    },
-    {
-      "person_name": "Joan Elisabeth Clarke (later Murray)",
-      "relationship_type": "social/fiancée",
-      "relationship_description": "Hervorragende Kryptoanalytikerin in Hut 8 von Bletchley; enge Freundin und einzige Frau, die Banburismus praktizierte. 1941 verlobte sie sich mit Turing, doch er löste die Verlobung, nachdem er ihr seine Homosexualität offenbart hatte.",
-      "start_year": 1940,
-      "end_year": 1954,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Kryptoanalyse der Marine-Enigma in Hut 8",
-        "Arbeit am Banburismus",
-        "Gemeinsame Freizeit und Urlaubsreisen, darunter eine Reise nach Wales",
-        "Informeller emotionaler Beistand während der Kriegsjahre"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Joan_Clarke"
-      ],
-      "notes": "Turing legte die Arbeitsschichten so, dass sie Zeit miteinander verbringen konnten. Clarke sagte später, sie habe seine Homosexualität schon lange vermutet; ihre Freundschaft dauerte bis zu seinem Tod an."
-    },
-    {
-      "person_name": "I. J. (Jack) Good",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Mathematiker und Statistiker, der 1941 zu Hut 8 kam und dort unter Turing an der Marine-Enigma arbeitete; später kooperierte er mit ihm in Manchester an frühen Computern und bayesschen Konzepten.",
-      "start_year": 1941,
-      "end_year": 1950,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Kryptoanalyse in Hut 8 in Bletchley",
-        "Weiterentwicklung des Banburismus",
-        "Nachkriegsarbeit an Rechnerentwurf und Statistik in Manchester"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/I._J._Good"
-      ],
-      "notes": "Good schrieb Turing entscheidende kryptoanalytische Einsichten zu, die seine eigenen Fortschritte anregten. Später entwickelten sie gemeinsam die Good-Turing-Methode zur Häufigkeitsschätzung, die auf ihrer Arbeit im Krieg aufbaute."
-    },
-    {
-      "person_name": "Dermot Turing",
-      "relationship_type": "family/extended_family",
-      "relationship_description": "Neffe (Sohn von Alans Bruder John) und Biograf, der ausführlich über Alan Turing, Bletchley und die Bombe geschrieben und damit geholfen hat, dessen Leben und technische Arbeit zu dokumentieren.",
-      "start_year": 1961,
-      "end_year": null,
+      "person_name": "Donald Michie",
+      "relationship_description": "Michie und Turing arbeiteten während des Krieges gemeinsam an Verfahren zur Sprachverschlüsselung, darunter an einer Maschine mit dem Decknamen Delilah. Später wurde Michie zu einem führenden britischen Forscher auf dem Gebiet der künstlichen Intelligenz.",
       "strength": "moderate",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familiäre Erinnerung an Alan Turing",
-        "Historische Forschung und Veröffentlichungen über Turing und Bletchley"
-      ],
       "sources": [
-        "https://de.wikipedia.org/wiki/Dermot_Turing",
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://de.wikipedia.org/wiki/Donald_Michie",
+        "https://de.wikipedia.org/wiki/Robin_Gandy"
       ],
-      "notes": "Obwohl Dermot erst nach Alans Tod geboren wurde, hat er maßgeblich dazu beigetragen, das heutige historische Verständnis von Turings Beitrag zur Codeentzifferung zu prägen."
+      "notes": null,
+      "relationship_type": "professional/collaborator"
     },
     {
-      "person_name": "Gordon Brown",
-      "relationship_type": "professional/legacy",
-      "relationship_description": "Premierminister des Vereinigten Königreichs, der 2009 die offizielle Entschuldigung der britischen Regierung für Turings Verurteilung und Behandlung aussprach und das ihm zugefügte Unrecht anerkannte.",
-      "start_year": 2009,
-      "end_year": 2009,
+      "person_name": "David Gawen Champernowne",
+      "relationship_description": "Champernowne war Turings Freund aus dem King’s College in Cambridge. 1948 arbeitete er mit ihm an Turochamp, einem frühen Computerprogramm zum Schachspielen.",
       "strength": "moderate",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Öffentliche Anerkennung von Turings Rolle bei der Codeentzifferung im Zweiten Weltkrieg",
-        "Staatliche Entschuldigung für seine Verfolgung nach Gesetzen gegen Homosexualität"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Gordon_Brown"
+        "https://en.wikipedia.org/wiki/D._G._Champernowne"
       ],
-      "notes": "Obwohl Browns Entschuldigung lange nach Turings Tod erfolgte, trug sie wesentlich zu einer breiteren öffentlichen Anerkennung bei und bereitete den Weg für das spätere „Alan-Turing-Gesetz“, durch das andere nach ähnlichen Gesetzen Verurteilte begnadigt wurden."
-    },
-    {
-      "person_name": "Königin Elisabeth II.",
-      "relationship_type": "professional/legacy",
-      "relationship_description": "Monarch, die Turing 2013 auf Empfehlung der Regierung posthum königlich begnadigte und damit symbolisch seine Verurteilung wegen grober Unzucht von 1952 aufhob.",
-      "start_year": 2013,
-      "end_year": 2013,
-      "strength": "moderate",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Königliche Zustimmung zur posthumen Begnadigung",
-        "Offizielle Anerkennung von Turings historischer Bedeutung"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://de.wikipedia.org/wiki/Elisabeth_II."
-      ],
-      "notes": "Die 59 Jahre nach seinem Tod ausgesprochene Begnadigung von 2013 war ein wichtiger Schritt in der Auseinandersetzung des Vereinigten Königreichs mit der historischen Verfolgung homosexueller Männer und erhöhte die öffentliche Bedeutung von Turings Vermächtnis weiter."
+      "notes": "Ihre Zusammenarbeit verband Turings Interesse an maschineller Intelligenz mit einem praktischen Programm für ein Spiel.",
+      "relationship_type": "professional/collaborator"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Familienbeziehungen prägten Turings frühes Leben und sein Vermächtnis nach dem Tod: Der Dienst seiner Eltern im britischen Weltreich führte zu einer weitgehend eigenständigen Kindheit in England; sein Bruder John und sein Neffe Dermot halfen später, die Erinnerung an ihn zu bewahren, während seine Mutter Ethel Sara ihn in ihrer Biografie zu verteidigen suchte."
-    },
-    {
-      "relationship_type": "academic",
-      "summary": "Turings akademisches Netzwerk – Lehrer, Mentoren und Kollegen wie Max Newman, Alonzo Church, John von Neumann, Ludwig Wittgenstein und D. G. Champernowne – beeinflusste seine Arbeiten zu Logik, Berechenbarkeit und den Anfängen der Informatik tiefgreifend und bezog ihn in grundlegende Debatten über die Mathematik ein."
-    },
-    {
-      "relationship_type": "professional",
-      "summary": "Beruflich arbeitete Turing besonders intensiv in Bletchley und Manchester mit anderen zusammen. Kryptoanalytiker wie Gordon Welchman, Hugh Alexander, Philip Stuart Milner-Barry, I. J. Good und Harry Hinsley sowie Partner aus der Nachkriegszeit wie Max Newman ermöglichten gemeinsam seinen nachhaltigen Einfluss auf Codeentzifferung und Rechnerentwurf."
+      "summary": "Julius und Ethel Turing arbeiteten in Britisch-Indien, während Alan und John Turing größtenteils in England aufwuchsen. Ethel Turing veröffentlichte später eine Biografie ihres Sohnes."
     },
     {
       "relationship_type": "social",
-      "summary": "Im sozialen und persönlichen Bereich hinterließen einige wenige emotional bedeutsame Beziehungen – darunter seine Bindung an den Schulfreund Christopher Morcom sowie seine enge Freundschaft und kurze Verlobung mit Joan Clarke – bleibende Spuren in seiner Motivation, seinem Weltbild und seinem Privatleben, auch wenn seine Arbeit ihn häufig an den Rand der konventionellen Gesellschaft stellte."
+      "summary": "Turings persönliche Beziehungen reichten von der Sherborne School über Bletchley Park bis nach Manchester. Christopher Morcom teilte bis zu seinem Tod im Jahr 1930 Turings Interesse an Mathematik und Naturwissenschaften. Joan Clarke arbeitete mit Turing in Hut 8 und blieb mit ihm befreundet, nachdem die Verlobung gelöst worden war. Turings Beziehung zu Arnold Murray führte 1952 zur Strafverfolgung."
     },
     {
-      "relationship_type": "other",
-      "summary": "In den Jahrzehnten nach seinem Tod wurden politische und symbolische Persönlichkeiten wie Gordon Brown und Königin Elisabeth II. durch die offizielle Entschuldigung und die königliche Begnadigung mit Turing verbunden. Sie trugen zu einer umfassenderen Neubewertung seiner Behandlung und dazu bei, dass er öffentlich stärker als nationale und wissenschaftliche Ikone wahrgenommen wurde."
+      "relationship_type": "academic",
+      "summary": "In Cambridge lernte Turing durch Max Newmans Vorlesungen Fragen zu den Grundlagen der Mathematik kennen. Alonzo Church betreute seine Promotion in Princeton über Ordinallogik. Später besuchte Turing Ludwig Wittgensteins Cambridge-Vorlesungen und stritt mit ihm über Mathematik und Berechenbarkeit. Robin Gandy führte die Arbeit an der Logik nach seinem Studium bei Turing weiter."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "In Bletchley Park arbeitete Turing mit Codeknackern an der Entzifferung des deutschen Enigma-Funkverkehrs und an der Kryptoanalyse der Marinekommunikation. Nach dem Krieg führte ihn die Zusammenarbeit mit Kollegen in Manchester zu frühen Computern mit gespeicherten Programmen und zur Programmierung von Schachspielen."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "f244ed3b871ac0ec",
-    "translated_on": "2026-08-10T04:34:40.255903+00:00",
+    "source_fingerprint": "0521a7aff0c7cd4b",
+    "translated_on": "2026-09-05T18:21:45.064751+02:00",
     "translator": "openai:gpt-5.6-luna"
   }
 }

@@ -129,11 +129,11 @@
       }
     },
     "m_translate": {
-      "fingerprint": "bdc303b25ce35c9c",
+      "fingerprint": "57f4e4348e653157",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Translates a meta story’s detail file into the target language, saves the localized copy, and updates that language’s story registry so it can be found with the rest of the collection.",
-        "why_this_design": "It checks whether both translation records are current before doing work, and updates the registry only after the translated detail file has been saved."
+        "what_it_does": "Translates a meta story’s detail file and writes the localized version, then updates the language registry that exposes it. It reuses the person-translation contract so event titles and names match the forms already established elsewhere in the story.",
+        "why_this_design": "It skips current translations unless forced, avoiding unnecessary rewrites while keeping the registry aligned with the saved detail file."
       }
     },
     "p_backgrounds": {
@@ -297,11 +297,11 @@
       }
     },
     "p_translate": {
-      "fingerprint": "f176b949ed132ed4",
+      "fingerprint": "c8a0440922125eaf",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Translates the person document’s text while leaving the nontext parts of the English document outside the translation request. It applies the approved person-name glossary and language-specific source evidence so names and places remain consistent with the localized story.",
-        "why_this_design": "It overlays the translated fields onto a copy of the English document, which protects dates, coordinates, URLs, and IDs from translation errors while preserving annotation links and the interface’s document structure."
+        "what_it_does": "Translates the person document’s prose while preserving its extracted structure for later reassembly. It carries forward the name glossary and target-language reference evidence so people, places, and institutions use forms attested in the target language.",
+        "why_this_design": "It sends only translatable fields and overlays the result on the English document, which prevents identifiers, dates, coordinates, and links from changing while translation remains free to recast prose naturally."
       }
     },
     "p_wiki_fetch": {

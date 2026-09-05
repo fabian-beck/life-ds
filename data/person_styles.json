@@ -1,11 +1,12 @@
 {
   "styles": {
     "alan_turing": {
-      "primary": "#5ED0FF",
-      "secondary": "#9A7BFF",
-      "background": "#040A18",
-      "background_pattern_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"160\" height=\"160\" viewBox=\"0 0 160 160\"><rect width=\"160\" height=\"160\" fill=\"#000000\"/><g fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"6\"><path d=\"M0 40h160M0 120h160\"/><path d=\"M40 0v160M120 0v160\"/></g><g fill=\"#FFFFFF\"><circle cx=\"20\" cy=\"20\" r=\"4\"/><circle cx=\"140\" cy=\"60\" r=\"4\"/><circle cx=\"80\" cy=\"80\" r=\"3\"/><circle cx=\"20\" cy=\"140\" r=\"3\"/><circle cx=\"140\" cy=\"100\" r=\"4\"/></g></svg>",
-      "heading_font": "Space Grotesk",
+      "primary": "#7DE3FF",
+      "secondary": "#FFD166",
+      "background": "#07111A",
+      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M0 20H24V8H56V20H88V44H112V20H160M0 92H32V68H64V92H96V116H128V92H160M20 0V32H44V64H20V96H44V128H20V160M116 0V28H140V52H116V84H140V116H116V160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M56 20V44H88V68H112M32 68H56V44M64 92V124H96V148M44 128H76V104H104V80H140\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M8 8H20M140 8H152M8 152H20M140 152H152M76 0V12M76 148V160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><rect x=\"52\" y=\"16\" width=\"8\" height=\"8\" fill=\"#FFFFFF\" /><rect x=\"108\" y=\"40\" width=\"8\" height=\"8\" fill=\"#FFFFFF\" /><rect x=\"28\" y=\"88\" width=\"8\" height=\"8\" fill=\"#FFFFFF\" /><rect x=\"124\" y=\"112\" width=\"8\" height=\"8\" fill=\"#FFFFFF\" /></svg>",
+      "separator_glyph_svg": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"16\" cy=\"16\" r=\"10\" fill=\"none\" stroke=\"#7DE3FF\" stroke-width=\"3\" /><rect x=\"12\" y=\"12\" width=\"8\" height=\"8\" fill=\"#7DE3FF\" /></svg>",
+      "heading_font": "IBM Plex Mono",
       "body_font": "IBM Plex Sans"
     },
     "ada_lovelace": {

@@ -69,33 +69,33 @@
     {
       "id": "alan_turing",
       "name": "Alan_Turing",
-      "tagline": "Vater der theoretischen Informatik",
-      "summary": "Alan Turing war ein englischer Mathematiker und Kryptoanalytiker. Seine Arbeiten legten die Grundlagen der modernen Berechenbarkeitstheorie, trugen dazu bei, die deutschen Funksprüche während des Zweiten Weltkriegs in Bletchley zu entziffern, und prägten die frühe Entwicklung von Computern und die Forschung zur künstlichen Intelligenz. In seiner späteren Laufbahn entwickelte er zudem einflussreiche Ideen auf dem Gebiet der mathematischen Biologie. 1952 wurde er wegen homosexueller Handlungen strafrechtlich verfolgt; 1954 starb er an einer Zyanidvergiftung.",
+      "tagline": "Die universelle Rechenmaschine",
+      "summary": "Alan Turing gab dem Rechnen mit der Turingmaschine eine mathematische Form und half während des Zweiten Weltkriegs, die mit der deutschen Marine-Enigma verschlüsselten Funksprüche zu entziffern. Später entwarf er frühe Computersysteme, schlug das Imitationsspiel vor und entwickelte eine mathematische Erklärung für die Entstehung biologischer Muster.",
       "portrait": {
         "image": "/portraits/alan_turing_thumbnail.webp",
-        "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg",
-        "caption": "Stylized portrait based on historical photograph",
-        "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Alan_Turing_%281951%29.jpg",
-        "originalCaption": "AI-generated stylized portrait based on historical photograph",
         "thumbnail": "/portraits/alan_turing_thumbnail.webp",
         "medium": "/portraits/alan_turing_medium.webp",
-        "full": "/portraits/alan_turing_full.webp"
+        "full": "/portraits/alan_turing_full.webp",
+        "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Alan_Turing_%281951%29.jpg",
+        "referenceUsed": true
       },
       "primaryRoles": [
         "Mathematiker",
         "Informatiker",
-        "Kryptoanalytiker"
+        "Kryptanalytiker"
       ],
       "created": "2025-11-07T16:52:54+01:00",
-      "lastUpdated": "2026-08-10T04:34:42.203719+00:00",
+      "lastUpdated": "2026-09-05T18:21:47.159566+02:00",
       "birthDate": "1912-06-23",
       "deathDate": "1954-06-07",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "59a4f5efa3c7cf01",
-        "translated_on": "2026-08-10T04:34:42.203834+00:00",
+        "source_fingerprint": "0ad1e28e0b6fb898",
+        "translated_on": "2026-09-05T18:21:47.159566+02:00",
         "translator": "openai:gpt-5.6-luna"
       }
     },
