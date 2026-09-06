@@ -36,6 +36,7 @@ from utils.review_prompts import get_combined_review_prompt  # noqa: E402
 from utils.review_helpers import (  # noqa: E402
     apply_event_changes,
     apply_network_changes,
+    continuity_notes,
 )
 from utils.wikipedia_cache import (  # noqa: E402
     get_cached_wikipedia_page,
@@ -304,6 +305,18 @@ def review_person_data(
             network_changes=NetworkChanges(),
             change_summary="No changes",
         )
+
+    # What the reviewer saw reading the slides in order. Printed before the
+    # changes are applied, because the one finding it cannot act on — a slide
+    # that adds nothing and whose sources add nothing — is the one a human
+    # has to see.
+    notes = continuity_notes(
+        combined_review.event_reviews, person_data["events"].get("events", [])
+    )
+    if notes:
+        print("\n  Story continuity:")
+        for line in notes:
+            print(line)
 
     # Apply changes
     print(f"\n[Step 5/5] Applying changes (min confidence: {min_confidence})...")

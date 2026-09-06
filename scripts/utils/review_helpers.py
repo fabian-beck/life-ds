@@ -7,7 +7,7 @@ structure.
 
 import json
 import re
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, List, Sequence, Tuple
 
 from events.normalize import (
     drop_annotation,
@@ -16,7 +16,48 @@ from events.normalize import (
 )
 
 from .relationship_vocabulary import normalize_relationship_type
-from .review_models import EventsChanges, NetworkChanges
+from .review_models import EventReview, EventsChanges, NetworkChanges
+
+
+def continuity_notes(
+    event_reviews: Sequence[EventReview], events: Sequence[Dict[str, Any]]
+) -> List[str]:
+    """What the reviewer found when it read the slides in order, one line each.
+
+    The reviewer fixes an unexplained term or a restated fact itself, through
+    `new_description`, but a slide that tells nothing the slides before it
+    have not told and whose sources supply nothing more is beyond its powers:
+    it cannot remove an event. These lines are how that finding reaches the
+    person running the review, in the dry run and the real run alike, since a
+    finding that is only in the model's output is a finding nobody sees.
+    """
+    lines: List[str] = []
+    for review in event_reviews:
+        index = review.event_index
+        if index < 0 or index >= len(events):
+            continue
+        label = f'event {index} "{events[index].get("title", "")}"'
+        if review.redundant_with is not None:
+            earlier = review.redundant_with
+            earlier_title = (
+                events[earlier].get("title", "") if 0 <= earlier < len(events) else ""
+            )
+            lines.append(
+                f'  {label}: tells nothing beyond event {earlier} "{earlier_title}", '
+                "and the sources supply nothing more"
+            )
+        if review.unintroduced_terms:
+            lines.append(
+                f"  {label}: leans on {', '.join(map(repr, review.unintroduced_terms))} "
+                "before the story introduced it"
+            )
+        if review.restated_facts:
+            lines.append(
+                f"  {label}: restates {', '.join(map(repr, review.restated_facts))}"
+            )
+        if not review.contribution.strip() and review.redundant_with is None:
+            lines.append(f"  {label}: the reviewer could not say what the slide adds")
+    return lines
 
 
 def apply_event_changes(

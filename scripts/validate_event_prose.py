@@ -29,6 +29,15 @@ actually shipped:
     its content words already stand in the description, the title, or the
     term, the reader taps the term and learns nothing (Turing's Banburismus
     slide defined the method in the sentence and again in the popup)
+  - a sentence that restates a sentence of one of the three slides before it
+    in its content words — "He prepares plans for the Automatic Computing
+    Engine, a stored-program electronic computer" on one slide and "The design
+    sets out a stored-program electronic computer" on the next — where the
+    reader has just read the earlier slide and the later one should carry what
+    changed. Phase 2 refined each description with only its own event in view,
+    so this is the shape a per-event rewrite produces, and the review is the
+    one pass that can see it. The event's own place and people are not counted
+    as shared words, since the contract asks for them in every sentence
 
 It reports and never edits: a finding names a dataset for ``data/outdated.md``,
 and a corpus count before and after a prompt change says whether the change
@@ -263,6 +272,91 @@ def restated_annotations(event: Dict[str, Any]) -> List[str]:
     return found
 
 
+def split_sentences(text: str) -> List[str]:
+    """The sentences a reader counts, cut where count_sentences counts them."""
+    text = re.sub(r"\[\[([^\]|]+)\|([^\]]+)\]\]", r"\2", text)
+    text = re.sub(r"\[\[([^\]]+)\]\]", r"\1", text)
+    sentences: List[str] = []
+    start = 0
+    for match in SENTENCE_END.finditer(text):
+        before = text[: match.start()]
+        word = re.search(r"([A-Za-z]+)\.$", before)
+        if word and (len(word.group(1)) == 1 or word.group(1) in ABBREVIATIONS):
+            continue
+        sentences.append(text[start : match.end()].strip())
+        start = match.end()
+    sentences.append(text[start:].strip())
+    return [sentence for sentence in sentences if sentence]
+
+
+# How many slides back a reader still has in mind. A sentence that re-places
+# the subject at an institution six slides after the story first arrived there
+# is re-anchoring, and the reader needs it; the same sentence on the next
+# slide is repetition.
+LOOKBACK = 3
+RESTATED_SENTENCE_SHARE = 0.55
+RESTATED_SENTENCE_WORDS = 4
+
+
+def _own_words(event: Dict[str, Any], subject_name: str) -> set:
+    """The words the contract asks every sentence to carry: who and where."""
+    names = [subject_name]
+    for location in event.get("locations") or []:
+        if isinstance(location, dict):
+            names.append(str(location.get("name_historic") or ""))
+            names.append(str(location.get("name_modern") or ""))
+    names.extend(str(name) for name in event.get("involved_people") or [])
+    return _content_words(" ".join(names))
+
+
+def restated_sentences(
+    event: Dict[str, Any],
+    earlier_events: List[Dict[str, Any]],
+    subject_name: str = "",
+    lookback: int = LOOKBACK,
+) -> List[str]:
+    """Sentences of this event that repeat a sentence of a recent earlier event.
+
+    Two sentences restate each other when most of the shorter one's content
+    words stand in the longer one's. The subject's name, the event's own
+    places, and its own people are not content words here, because the
+    contract asks for them in the sentence and a slide that names where it
+    happens has not retold the slide before it; a match needs enough shared
+    words beyond those that two sentences about one laboratory are not
+    counted as the same sentence. Only the last few events are compared; see
+    LOOKBACK. The excerpt names the earlier slide, so the finding can be
+    judged without opening the dataset.
+    """
+    own = _own_words(event, subject_name)
+    recent = earlier_events[-lookback:] if lookback else []
+    earlier = [
+        (
+            str(other.get("title") or ""),
+            sentence,
+            _content_words(sentence) - own,
+        )
+        for other in recent
+        for sentence in split_sentences(str(other.get("description") or ""))
+    ]
+    found: List[str] = []
+    for sentence in split_sentences(str(event.get("description") or "")):
+        words = _content_words(sentence) - own
+        if len(words) < RESTATED_SENTENCE_WORDS:
+            continue
+        for title, other_sentence, other_words in earlier:
+            if len(other_words) < RESTATED_SENTENCE_WORDS:
+                continue
+            shared = len(words & other_words)
+            if (
+                shared >= RESTATED_SENTENCE_WORDS
+                and shared / min(len(words), len(other_words))
+                >= RESTATED_SENTENCE_SHARE
+            ):
+                found.append(f'{sentence} (after "{title}": {other_sentence})')
+                break
+    return found
+
+
 RULES = (
     ("a later year in the event's own prose", later_years),
     ("the language of weighing sources", source_talk),
@@ -271,16 +365,24 @@ RULES = (
     ("an annotation that restates the description", restated_annotations),
 )
 CONCLUSION_RULE = "a conclusion of one sentence"
+SEQUENCE_RULE = "restates an earlier slide"
 
 
 def check_person(person_id: str, data: Dict[str, Any]) -> List[ProseFinding]:
     findings: List[ProseFinding] = []
-    for event in data.get("events") or []:
+    events = data.get("events") or []
+    subject_name = str((data.get("person") or {}).get("name") or "")
+    for index, event in enumerate(events):
+        date = str(event.get("date") or "")
         for rule, read in RULES:
-            if (person_id, str(event.get("date") or ""), rule) in ACCEPTED:
+            if (person_id, date, rule) in ACCEPTED:
                 continue
             for quote in read(event):
                 findings.append(ProseFinding(person_id, event, rule, quote))
+        if (person_id, date, SEQUENCE_RULE) in ACCEPTED:
+            continue
+        for quote in restated_sentences(event, events[:index], subject_name):
+            findings.append(ProseFinding(person_id, event, SEQUENCE_RULE, quote))
     if (person_id, "", CONCLUSION_RULE) not in ACCEPTED:
         for quote in thin_conclusion(data):
             conclusion = {"date": "", "title": "Conclusion"}
@@ -309,7 +411,7 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     for finding in findings:
         print(finding)
-    rules = [rule for rule, _ in RULES] + [CONCLUSION_RULE]
+    rules = [rule for rule, _ in RULES] + [CONCLUSION_RULE, SEQUENCE_RULE]
     by_rule = {rule: sum(f.rule == rule for f in findings) for rule in rules}
     print(
         f"\nChecked {checked} person dataset(s), {len(findings)} finding(s): {by_rule}"

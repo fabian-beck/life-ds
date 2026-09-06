@@ -223,5 +223,99 @@ class RestatedAnnotations(unittest.TestCase):
         self.assertEqual(found, [])
 
 
+class RestatedSentences(unittest.TestCase):
+    """The shape a per-event rewrite produces: the slide before, told again."""
+
+    def test_the_turing_ace_slides_are_the_finding(self) -> None:
+        earlier = event(
+            "Turing joins the National Physical Laboratory in Teddington. He "
+            "prepares plans for the Automatic Computing Engine, a stored-program "
+            "electronic computer.",
+            title="Joins the National Physical Laboratory",
+        )
+        later = event(
+            "At the National Physical Laboratory in Teddington, Turing completes "
+            "the Automatic Computing Engine design. The design sets out a "
+            "stored-program electronic computer.",
+            title="Completes the Automatic Computing Engine Design",
+        )
+        found = prose.restated_sentences(later, [earlier], "Alan Turing")
+        self.assertEqual(len(found), 2)
+        self.assertIn('after "Joins the National Physical Laboratory"', found[0])
+
+    def test_the_event_s_own_place_and_people_are_not_shared_words(self) -> None:
+        # The contract asks every sentence to name where and with whom, so a
+        # slide that opens at the laboratory the slide before it joined has
+        # not retold that slide.
+        earlier = event("Turing joins the National Physical Laboratory in Teddington.")
+        later = event(
+            "At the National Physical Laboratory in Teddington, Turing completes "
+            "the design with John Womersley.",
+            locations=[
+                {"name_historic": "Teddington, Middlesex", "primary": True},
+                {"name_historic": "National Physical Laboratory", "primary": False},
+            ],
+            involved_people=["John Womersley"],
+        )
+        self.assertEqual(prose.restated_sentences(later, [earlier], "Alan Turing"), [])
+
+    def test_the_subject_name_is_not_a_shared_word(self) -> None:
+        earlier = event("Alan Turing wins the school mathematics prize.")
+        later = event("Alan Turing runs the Bletchley section.")
+        self.assertEqual(prose.restated_sentences(later, [earlier], "Alan Turing"), [])
+
+    def test_a_slide_far_back_is_re_anchoring(self) -> None:
+        # Bohr's chair six slides after his enrollment names the university
+        # again for a reader who has read five slides since.
+        first = event(
+            "Bohr enrolled at the University of Copenhagen to study physics "
+            "under Christian Christiansen."
+        )
+        between = [event(f"Sentence {i} about nothing shared.") for i in range(5)]
+        later = event(
+            "Bohr took the chair of theoretical physics at the University of "
+            "Copenhagen, where he had studied under Christian Christiansen."
+        )
+        self.assertEqual(
+            prose.restated_sentences(later, [first, *between], "Niels Bohr"), []
+        )
+        self.assertEqual(len(prose.restated_sentences(later, [first], "Niels Bohr")), 1)
+
+    def test_annotation_markup_is_read_as_its_display_text(self) -> None:
+        earlier = event("Turing develops Banburismus for the naval Enigma traffic.")
+        later = event(
+            "Turing develops [[Banburismus|the Banburismus method]] for the "
+            "naval Enigma traffic."
+        )
+        self.assertEqual(len(prose.restated_sentences(later, [earlier], "")), 1)
+
+    def test_check_person_reads_the_events_in_order(self) -> None:
+        data = {
+            "person": {"name": "Alan Turing"},
+            "events": [
+                event(
+                    "Turing joins the National Physical Laboratory in Teddington. "
+                    "He prepares plans for the Automatic Computing Engine, a "
+                    "stored-program electronic computer with a large mercury memory."
+                ),
+                event(
+                    "Turing completes the design of the Automatic Computing Engine. "
+                    "The design sets out a stored-program electronic computer with "
+                    "a large mercury memory and a small instruction set.",
+                    date="1946",
+                ),
+            ],
+        }
+        findings = prose.check_person("alan_turing", data)
+        self.assertEqual([f.rule for f in findings], [prose.SEQUENCE_RULE])
+        self.assertEqual(findings[0].date, "1946")
+        key = ("alan_turing", "1946", prose.SEQUENCE_RULE)
+        prose.ACCEPTED[key] = "test"
+        try:
+            self.assertEqual(prose.check_person("alan_turing", data), [])
+        finally:
+            del prose.ACCEPTED[key]
+
+
 if __name__ == "__main__":
     unittest.main()

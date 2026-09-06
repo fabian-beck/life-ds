@@ -177,11 +177,11 @@
       }
     },
     "p_events_p2": {
-      "fingerprint": "cabbad45eeec117e",
+      "fingerprint": "428601a1393339eb",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Researches each event against the subject’s article and event-specific related articles, turning a skeletal entry into grounded narrative, places, participants, evidence, explanatory terms, an icon, and image search leads. It keeps an event in the story when research fails, but leaves that event explicitly unresolved rather than inventing details.",
-        "why_this_design": "The subject’s article takes precedence over recall and related material so every event remains anchored to the account the timeline is built from, while per-event failures do not discard the surrounding story."
+        "what_it_does": "Researches each event against the subject’s article and event-specific related articles, turning a preliminary event into a grounded account with its places, participants, evidence, explanatory terms, icon, and image-search leads. It also revises thin event prose so each slide explains what happened at that moment rather than repeating adjacent slides or importing later consequences.",
+        "why_this_design": "It keeps a failed event in the story with empty research fields and a neutral icon, so one failed call does not halt the biography or erase its chronology."
       }
     },
     "p_geocode": {
@@ -281,11 +281,11 @@
       }
     },
     "p_review": {
-      "fingerprint": "457a118d3837a9aa",
+      "fingerprint": "17932d4e3e355ae5",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews the generated life events and relationship network against the available biography, then proposes corrections that tighten prose, fill gaps, and keep the two views of a person consistent. It leaves behind a single set of suggested changes and an assessment for the downstream change applicator.",
-        "why_this_design": "Reviewing the event story and network together exposes people, claims, and repeated context that would look complete when each dataset is checked alone, while keeping uncertain suggestions separate from the high-confidence changes applied automatically."
+        "what_it_does": "Reviews the completed event sequence and ego network against the available biography sources, looking for factual errors, weak prose, missing context, and contradictions between the two views. It returns proposed edits and a shared assessment that later code can use to update both the timeline and the relationship data.",
+        "why_this_design": "It reviews the finished sequence as a whole because gaps in context and repeated facts only become visible in the order a person reads the slides, while the paired network check catches people who appear in one view but not the other."
       }
     },
     "p_style": {

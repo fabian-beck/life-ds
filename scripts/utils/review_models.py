@@ -22,9 +22,43 @@ class MetadataIssue(BaseModel):
 
 
 class EventReview(BaseModel):
-    """Review assessment for a single event"""
+    """Review assessment for a single event.
+
+    The continuity fields hold the reviewer to reading the event where the
+    reader meets it, after the slides before it. Phase 2 refined each
+    description with only its own event in view, so this pass is the first
+    that can see a slide lean on a term no earlier slide introduced, or tell
+    a fact the slide before it already told.
+    """
 
     event_index: int
+    contribution: str = Field(
+        "",
+        description=(
+            "What this slide adds to the story that the slides before it have "
+            "not told, in one sentence. Empty when it adds nothing."
+        ),
+    )
+    unintroduced_terms: List[str] = Field(
+        default_factory=list,
+        description=(
+            "Names the description leans on that no earlier slide has "
+            "introduced and this one does not explain (a section, a machine, "
+            "a method, an office, a work)."
+        ),
+    )
+    restated_facts: List[str] = Field(
+        default_factory=list,
+        description="Facts in this description that an earlier slide already told.",
+    )
+    redundant_with: Optional[int] = Field(
+        None,
+        description=(
+            "Index of the earlier event whose slide already tells everything "
+            "this one tells, when the sources supply nothing that would give "
+            "this slide a contribution of its own."
+        ),
+    )
     title_issue: Optional[str] = None
     description_issues: List[str] = Field(default_factory=list)
     annotation_issues: List[str] = Field(default_factory=list)

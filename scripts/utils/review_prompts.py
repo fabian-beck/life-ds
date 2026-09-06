@@ -120,13 +120,14 @@ def get_combined_review_prompt(
 
 TASK: Review BOTH the life events and ego network data below together, ensuring consistency and complementary perspectives. Propose improvements focused on:
 1. **Prose**: Rewrite every sentence that breaks HOW THE PROSE READS below - a "rather than" or "not X but Y", a colon or dash carrying an aside, a closing sentence that says what the event "marked" or "reflected" - keeping its facts and dropping the construction. This is the most common change and needs no source: the fact is already there, only the wording goes
-2. **Factual Accuracy**: Cross-reference all claims against the Wikipedia sources provided
-3. **Completeness**: Fill in missing information from Wikipedia sources (dates, locations, people, annotations)
-4. **Storytelling Quality**: Ensure narrative flow, proper pacing, emotional resonance
-5. **UI Optimization**: Respect display constraints (event titles, description length, annotations)
-6. **Metadata Quality**: Verify and complete dates, locations, involved people, icons
-7. **Annotation Cleanup**: Resolve orphaned [[term]] references - remove trivial ones, add definitions for important ones
-8. **Cross-File Consistency**: Ensure people mentioned in events appear in network and vice versa; avoid redundancy between event descriptions and relationship descriptions
+2. **Story Continuity**: Read the events in order, as the reader does, and hold each description to THE STORY SO FAR below. You are the first pass that sees the finished sequence: Phase 2 refined every description with only its own event in view, so a slide can lean on a term the story never introduced, or tell again what the slide before it told
+3. **Factual Accuracy**: Cross-reference all claims against the Wikipedia sources provided
+4. **Completeness**: Fill in missing information from Wikipedia sources (dates, locations, people, annotations)
+5. **Storytelling Quality**: Ensure narrative flow, proper pacing, emotional resonance
+6. **UI Optimization**: Respect display constraints (event titles, description length, annotations)
+7. **Metadata Quality**: Verify and complete dates, locations, involved people, icons
+8. **Annotation Cleanup**: Resolve orphaned [[term]] references - remove trivial ones, add definitions for important ones
+9. **Cross-File Consistency**: Ensure people mentioned in events appear in network and vice versa; avoid redundancy between event descriptions and relationship descriptions
 
 CURRENT DATA SUMMARY:
 - Person: {person_name}
@@ -153,6 +154,14 @@ REVIEW GUIDELINES:
 {description_contract_prompt()}
 - 2-4 sentences, each carrying a fact about the event; a description of one sentence is extended from the sources, with the people and the place named and what led to the event, and a description that has grown past four is cut, not paragraphed
 - The title and the opening sentence do not say the same thing twice, but a name the title carries stays in the sentence as well, because the prose is read on its own
+
+**The Story So Far** — every description is read after the ones before it, and the reader knows what those said and nothing else. Walk the events in order and, for every event, fill an `event_reviews` entry in order:
+- `contribution`: what this slide adds to the story that the slides before it have not told, in one sentence. If you cannot name it, the slide has a problem, and the fields below say which
+- `unintroduced_terms`: what the description leans on that no earlier slide has introduced and this one does not explain. A section (Hut 8), a machine, a method, an office, a work, a group. The reader who has not met the term reads a sentence about nothing. Rewrite via `new_description` so the description names the thing for what it is where the story first meets it, in a phrase, from what the sources say it was. The naming belongs in the sentence, because an annotation is opened by choice and most readers never open it; an annotation may add depth to a term the sentence has already placed, and never stands in for placing it
+- `restated_facts`: what this description tells that an earlier slide already told. The reader has just read that slide. Rewrite via `new_description` so the slide carries what changed at this moment and drops the repetition, unless the one fact is the hinge the new sentence needs
+- `redundant_with`: when a slide tells nothing the slides before it have not told, look for what the sources say happened at this moment and write that into `new_description`. When the sources supply nothing, set `redundant_with` to the index of the earlier event that already covers it and leave the description alone. The review cannot remove events; the run prints this so a human can decide
+- A description that merely restates its own title, or places the event where the map already places it, has the same problem in miniature: its sentences must carry the facts the slide does not already show
+- Example of the problem: after "Joined Bletchley Park" and "Designs the Bombe for Enigma", a slide reading "Turing leads Hut 8 at Bletchley Park. The section works on German naval Enigma messages." adds nothing the reader can use, and "Hut 8" is a name the story never explained. Rewritten, it says what Hut 8 was, what made the naval traffic harder than the traffic the bombe was designed against, and what changed when Turing took charge, all from the sources
 
 **Birth and Death Descriptions** — the two boundary events carry the slide's facts in their `event_class`, so their prose is held to a definition of its own. Rewrite via `new_description` a birth that narrates the birth the slide already shows, or a death that restates the cause, from what the Wikipedia sources say about the household or about the road to the end:
 {boundary_description_prompt()}
@@ -227,6 +236,7 @@ MAIN WIKIPEDIA ARTICLE:
 [Full article available in context]
 
 Please provide a comprehensive review with specific, actionable proposed changes for BOTH life events and network.
+Give every event an `event_reviews` entry, in order, with its `contribution` filled in, so that no slide is judged without the slides before it in view.
 Rate each change's confidence 1-5. Ensure consistency between the two perspectives - they should complement each other without redundancy.
 Focus on changes that will noticeably improve the reader's experience on mobile devices.
 """
