@@ -1992,26 +1992,11 @@
     if (summary.why_this_design) {
       body.appendChild(el("p", { text: summary.why_this_design }));
     }
-    /* Whose words those were. Everything under "Record from the source" is
-       measured from the code; the explanation above it is not, and a report
-       that argues for traceability cannot print generated prose unattributed.
-       `spec.py` marks the hand-written fallback, which needs no notice.
-
-       The attribution alone, because the appendix prints this line under every
-       one of the steps: how the explanation is cached against the source it
-       describes is said once, in the colophon, where a claim about the whole
-       build belongs. */
-    if (summary.source && summary.source !== "spec.py") {
-      body.appendChild(
-        el("p", {
-          class: "sub",
-          text:
-            "Explanation written by " +
-            summary.source +
-            " from this step's source; the record below is measured.",
-        })
-      );
-    }
+    /* The explanation above is written by a language model from the step's
+       source; everything under "Record from the source" is measured from the
+       code. That the report's prose is AI-written is said once, in the
+       statement on AI use after the references, rather than under every one
+       of the steps the appendix prints. */
 
     body.appendChild(el("h3", { text: "Record from the source" }));
     const table = el("table", { class: "facts" });
@@ -4493,8 +4478,8 @@
     const host = document.getElementById("meta-row");
     if (!host) return;
     // The report is versioned by date and by nothing else. A commit and a
-    // build time answer "which build is this", which is a question for the
-    // colophon; the reader at the top of the page is asking "how current is
+    // build time answer "which build is this", which only `::: buildinfo`
+    // prints; the reader at the top of the page is asking "how current is
     // what I am about to read".
     host.appendChild(
       el("span", { class: "chip" }, [
@@ -4503,18 +4488,6 @@
         }),
       ])
     );
-
-    const build = document.getElementById("colophon-build");
-    if (build) {
-      build.textContent =
-        "This rendering was built on " +
-        DATA.generated_at +
-        " from commit " +
-        (DATA.commit || "an unknown revision") +
-        " of branch " +
-        (DATA.branch || "—") +
-        ".";
-    }
   }
 
   /* The rail mirrors the heading tree the Markdown produced, so it cannot list

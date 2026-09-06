@@ -322,13 +322,12 @@ class WrittenExplanationTests(unittest.TestCase):
         )
         self.assertEqual([], problems)
 
-    def test_the_drawer_attributes_what_a_model_wrote(self) -> None:
-        """Generated prose is disclosed where it is read, not only in the payload."""
+    def test_the_drawer_does_not_attribute_each_explanation(self) -> None:
+        """AI use is disclosed once, after the references, not under every step."""
         script = (ASSETS / "app.js").read_text(encoding="utf-8")
         detail = script[script.index("function stepDetail") :]
         detail = detail[: detail.index("\n  function ", 1)]
-        self.assertIn("summary.source", detail)
-        self.assertIn("Explanation written by", detail)
+        self.assertNotIn("Explanation written by", detail)
 
 
 class ExplanationFreshnessTests(unittest.TestCase):
@@ -815,6 +814,30 @@ class PayloadAndRenderTests(unittest.TestCase):
             "__AUTHORS__",
         ):
             self.assertNotIn(marker, html)
+
+    def test_the_statement_on_ai_use_follows_the_references(self) -> None:
+        """The disclaimer is authored in the front matter and served as HTML."""
+        codebase = _codebase()
+        facts = facts_module.collect(codebase)
+        document = report.compile_report(
+            REPORT_SOURCE.read_text(encoding="utf-8"), facts
+        )
+        payload = build_payload(codebase, {}, document, facts)
+        html = render.render(payload, document)
+        statement = document.front.get("disclaimer", "")
+        self.assertIn("co-written with AI", statement)
+        self.assertIn("agentic engineering", statement)
+        self.assertNotIn("__DISCLAIMER__", html)
+        self.assertLess(html.index("doc-bibliography"), html.index(statement))
+        self.assertNotIn("colophon-build", html)
+
+    def test_a_source_without_a_statement_prints_no_footer(self) -> None:
+        document = _compile("---\ntitle: T\n---\n\n## S\n\nBody.\n")
+        html = render.render(
+            build_payload(_codebase(), {}, document, _facts()), document
+        )
+        self.assertNotIn('class="colophon"', html)
+        self.assertNotIn("__DISCLAIMER__", html)
 
     def test_the_title_block_names_the_authors_without_scripting(self) -> None:
         """The byline is served HTML: no reader should have to run JS for it."""

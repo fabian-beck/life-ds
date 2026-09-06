@@ -6,7 +6,7 @@ file works from `file://`, from a repo checkout, or attached to an email, with n
 build step and no network access.
 
 The shell here is deliberately thin: a title block, a contents rail, the compiled
-report body, and a colophon. It holds no content of its own. Prose comes from
+report body, and a statement on AI use. It holds no content of its own. Prose comes from
 `docs/report/report.md`; every number, table and figure comes from the payload
 and is written into the body's mount points by `app.js`. Adding a section to the
 report therefore means editing the Markdown, never this file.
@@ -78,18 +78,7 @@ __AUTHORS__
 __BODY__
     </div>
 
-    <footer class="colophon">
-      <p>
-        Authored prose lives in <code>__SOURCE__</code>. Every figure, table
-        and count in this report is computed at build time by
-        <code>scripts/generate_report.py</code>—from the abstract syntax trees
-        of <code>scripts/</code> and from the repository itself. Step
-        explanations are written by a language model from the source and cached
-        against a fingerprint of it. Nothing here is transcribed by hand except
-        the prose.
-      </p>
-      <p id="colophon-build"></p>
-    </footer>
+__DISCLAIMER__
   </main>
 </div>
 
@@ -171,6 +160,27 @@ def _abstract_html(document: Document) -> str:
     return "\n".join(f"<p>{_escape(part)}</p>" for part in paragraphs)
 
 
+def _disclaimer_html(document: Optional[Document]) -> str:
+    """The statement on AI use, after the references.
+
+    It is authored in the front matter, as the abstract is, and written into
+    the page as the byline is: a statement about who wrote the report has to
+    reach a reader without JavaScript and a printer alike. A source without one
+    prints no footer at all.
+    """
+    text = document.front.get("disclaimer", "").strip() if document else ""
+    if not text:
+        return ""
+    paragraphs = [part.strip() for part in text.split("\n\n") if part.strip()]
+    body = "\n".join(f"      <p>{_escape(part)}</p>" for part in paragraphs)
+    return (
+        '    <footer class="colophon" role="doc-afterword">\n'
+        '      <p class="colophon-label">Statement on AI use</p>\n'
+        f"{body}\n"
+        "    </footer>"
+    )
+
+
 def _authors_html(document: Optional[Document]) -> str:
     """The byline, written into the page rather than hydrated into it.
 
@@ -235,6 +245,7 @@ def render(payload: Dict[str, Any], document: Optional[Document] = None) -> str:
         .replace("__H1__", _escape(title))
         .replace("__SUBTITLE__", _escape(subtitle))
         .replace("__AUTHORS__", _authors_html(document))
+        .replace("__DISCLAIMER__", _disclaimer_html(document))
         .replace("__DESCRIPTION__", _escape(description))
         .replace("__SOURCE__", _escape(source))
         .replace("__DATA__", data)

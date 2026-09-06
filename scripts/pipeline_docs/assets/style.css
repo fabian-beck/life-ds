@@ -2509,6 +2509,13 @@ figure.teaser > .cap {
   max-width: var(--measure);
 }
 
+.colophon .colophon-label {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
 /* The rail stops being a column before the text measure gets squeezed. Rather
    than becoming an overlay the reader has to dismiss, it hands over to the
    report's own contents section, which is plain document content. */
