@@ -107,6 +107,110 @@ class MatchPromptTests(unittest.TestCase):
         self.assertEqual(listing.count("Searched for:"), 1)
 
 
+class PresentDayPhotographTests(unittest.TestCase):
+    """The year a photograph was taken, which a filename never says.
+
+    Turing's 1952 conviction carried "Facade of Manchester County Court
+    Offices", photographed in 2016: Phase 2 had searched for a court in
+    Manchester, Commons answered with the court building that stands there
+    today, and the matcher read the name against "a court in Manchester" as
+    the building where it happened. The date was in the file's metadata and
+    in none of the three lines the matcher was shown.
+    """
+
+    def test_the_listing_says_when_a_photograph_was_taken(self) -> None:
+        prompt = match_prompt(
+            [
+                {
+                    "filename": "Facade_of_Manchester_County_Court_Offices.jpg",
+                    "caption": "Facade of Manchester County Court Offices",
+                    "dateTimeOriginal": "2016-01-03",
+                },
+                {"filename": "Bombe.jpg", "caption": "A bombe"},
+            ]
+        )
+        listing = prompt[prompt.index("AVAILABLE IMAGES:") : prompt.index("TASK:")]
+        self.assertIn("Taken: 2016", listing)
+        # Openverse reports no date; a line invented for it would be the hint
+        # pointing at nothing.
+        self.assertEqual(listing.count("Taken:"), 1)
+
+    def test_the_year_is_read_from_the_commons_field(self) -> None:
+        self.assertEqual(assign.image_year_taken({"dateTimeOriginal": "1952"}), 1952)
+        self.assertEqual(
+            assign.image_year_taken({"dateTimeOriginal": "3 January 2016"}), 2016
+        )
+        self.assertIsNone(assign.image_year_taken({"dateTimeOriginal": ""}))
+        self.assertIsNone(assign.image_year_taken({}))
+
+    def test_the_matcher_is_told_what_the_year_means(self) -> None:
+        rules = match_prompt()
+        rules = rules[rules.index("ASSIGNMENT RULES:") : rules.index("GOOD MATCHES:")]
+        self.assertIn("'Taken: YEAR'", rules)
+        self.assertIn("decades after the event", rules)
+
+    def test_a_building_of_a_kind_in_a_city_is_a_stand_in(self) -> None:
+        """Reached by both choosers, since the rule lives in the shared list."""
+        rules = assign.STAND_IN_REJECTION_INSTRUCTIONS
+        self.assertIn("'a court in Manchester'", rules)
+        self.assertIn("the kind of place and the city is not a match", rules)
+
+    def test_a_building_is_a_good_match_only_when_the_event_names_it(self) -> None:
+        good = match_prompt()
+        good = good[good.index("GOOD MATCHES:") : good.index("NEVER ASSIGN:")]
+        self.assertNotIn("Building photo", good)
+        self.assertIn("a building the event NAMES", good)
+        self.assertIn("stood at the time", good)
+
+    def test_phase2_is_told_to_name_a_particular_thing(self) -> None:
+        """The pool decides the outcome: a query for a kind of place in a city
+        returns the building of that kind standing there today."""
+        from events.prompts.phase2 import build_phase2_prompt_base
+
+        prompt = build_phase2_prompt_base(SKELETONS[1], "Alan Turing", [])
+        queries = prompt[prompt.index("6. IMAGE_SEARCH_QUERIES") :]
+        queries = queries[: queries.index("AVAILABLE ICONS")]
+        self.assertIn("Name a PARTICULAR thing", queries)
+        self.assertIn("'Manchester court'", queries)
+
+    def test_the_report_critic_sees_the_year_too(self) -> None:
+        import generate_event_backgrounds as backgrounds
+
+        candidates = [
+            {
+                "url": "https://example.org/facade.jpg",
+                "caption": "Facade of Manchester County Court Offices",
+                "query": "Manchester court",
+                "_filename": "Facade.jpg",
+                "_taken": 2016,
+            },
+            {
+                "url": "https://example.org/bombe.jpg",
+                "caption": "A bombe",
+                "query": "bombe",
+                "_filename": "Bombe.jpg",
+                "_taken": None,
+            },
+        ]
+        with (
+            mock.patch.object(
+                backgrounds, "_background_candidates", return_value=candidates
+            ),
+            mock.patch.object(backgrounds, "parse_structured") as parse,
+        ):
+            parse.return_value = None
+            backgrounds.fetch_background_images(
+                mock.MagicMock(), "A report.", ["Manchester court"], set()
+            )
+        sent = parse.call_args.kwargs["input"][1]["content"]
+        self.assertIn(
+            "[0] Facade.jpg — Facade of Manchester County Court Offices (taken 2016)",
+            sent,
+        )
+        self.assertIn("[1] Bombe.jpg — A bombe\n", sent)
+        self.assertIn("'(taken YEAR)'", sent)
+
+
 class SearchPlanningTests(unittest.TestCase):
     def test_commemoration_is_forbidden_to_the_planner(self) -> None:
         """The pool decides the outcome before the matcher ever reads it.

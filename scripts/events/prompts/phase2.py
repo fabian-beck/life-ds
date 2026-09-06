@@ -248,6 +248,10 @@ def build_phase2_prompt_base(
     prompt += "   - 2-5 words each, the words a photograph of it would be filed under\n"
     prompt += "     * GOOD: 'Bombe machine Bletchley Park', 'Enigma machine naval four-rotor'\n"
     prompt += "     * BAD: 'Alan Turing portrait', 'cryptanalysis', 'World War II'\n"
+    prompt += "   - Name a PARTICULAR thing the material names. A kind of place with a city —\n"
+    prompt += "     'Manchester court', 'Vienna hospital', 'Cambridge laboratory' — returns whatever\n"
+    prompt += "     building of that kind stands there today, photographed this decade. When the\n"
+    prompt += "     material names no particular building, machine, or document, leave that angle out\n"
     prompt += "   - Each query names a DIFFERENT thing the event's material mentions. Four searches\n"
     prompt += (
         "     for four angles on one machine return the same photograph four times\n"

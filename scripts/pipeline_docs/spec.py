@@ -562,9 +562,14 @@ STEPS: List[Step] = [
             "Matches the retrieved Commons images to events and writes captions, "
             "preserving the attribution each image requires. The same call picks "
             "the person's reference portrait. It is told which event a candidate "
-            "was searched for, and it is given no quota: an event with no "
-            "picture is a correct answer, and the earlier instruction to fill "
-            "40–60% of the slides is what put a gravestone under fifteen deaths."
+            "was searched for and the year each photograph was taken, and it is "
+            "given no quota: an event with no picture is a correct answer, and "
+            "the earlier instruction to fill 40–60% of the slides is what put a "
+            "gravestone under fifteen deaths. The year is what a filename "
+            "cannot say: a 2016 photograph of the Manchester County Court "
+            "Offices reached Turing's 1952 conviction as the court where it "
+            "happened, and a building found by its kind and its city is now "
+            "among the stand-ins the shared rejection list names."
         ),
         depends_on=[Dep("p_img_filter", "the ranked image candidates")],
         prompts=[

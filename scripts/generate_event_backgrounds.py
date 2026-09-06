@@ -45,7 +45,7 @@ from config import (
     DEFAULT_REASONING_EFFORT,
     enable_utf8_console,
 )
-from events.images.assign import STAND_IN_REJECTION_INSTRUCTIONS
+from events.images.assign import STAND_IN_REJECTION_INSTRUCTIONS, image_year_taken
 from events.images.scoring import filter_images_by_quality
 from events.images.sources import search_wikimedia_commons
 from events.pipeline import PEOPLE_DIR
@@ -328,6 +328,10 @@ def _background_candidates(
                     # upload rather than about the subject, and the filename is
                     # the one field that always names the thing.
                     "_filename": candidate.get("filename") or "",
+                    # Shown to the critic for the same reason: a present-day
+                    # photograph of a building names the building as if it had
+                    # always stood there, and only its date says otherwise.
+                    "_taken": image_year_taken(candidate),
                 }
             )
             seen.add(background_image_key(url))
@@ -356,6 +360,11 @@ def fetch_background_images(
 
     listing = "\n".join(
         f"[{index}] {candidate['_filename'] or '(no filename)'} — {candidate['caption']}"
+        + (
+            f" (taken {candidate['_taken']})"
+            if candidate.get("_taken") is not None
+            else ""
+        )
         for index, candidate in enumerate(candidates)
     )
     parsed = parse_structured(
@@ -374,7 +383,10 @@ def fetch_background_images(
                     "Which of these pictures illustrate the report below?\n\n"
                     "Each candidate is given as its Commons filename and its "
                     "caption. Read both: a caption is often about the upload, "
-                    "and the filename is what names the thing.\n\n"
+                    "and the filename is what names the thing. A '(taken "
+                    "YEAR)' note is when the photograph was made, from the "
+                    "file's own metadata: a photograph taken decades after "
+                    "the report's events shows what stands there now.\n\n"
                     "KEEP a picture that shows a thing the report actually "
                     "names: the machine, the building, the room, the document, "
                     "the instrument, the place. Ask of each one: could this "

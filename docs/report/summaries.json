@@ -201,11 +201,11 @@
       }
     },
     "p_illustrations": {
-      "fingerprint": "4935ae1af34a63ee",
+      "fingerprint": "a25934c77b1557a6",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reads Commons search results against the background report and keeps only images that directly show a named, relevant thing. It returns a small set of distinct illustrations, excluding the event image already shown and allowing the report to go without a background image when the search has no honest match.",
-        "why_this_design": "It treats search results as leads rather than evidence because keyword matches often point to unrelated people, places, or objects, and code prevents several results from one query from repeating the same illustration."
+        "what_it_does": "Reads Commons search results against the background report and keeps only images that directly show a named thing or place in the account. It excludes the event’s existing image and returns a small set of distinct illustrations, or none when the search results do not fit.",
+        "why_this_design": "It treats search results as unreliable word matches, using filenames alongside captions and enforcing one image per query so related names, later views, and duplicate subjects do not become false illustrations."
       }
     },
     "p_img_fetch": {
@@ -225,11 +225,11 @@
       }
     },
     "p_img_match": {
-      "fingerprint": "f06fef48312259bf",
+      "fingerprint": "93ee4aff9a0d046c",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Matches retrieved image metadata to biography events only when it supports the event directly, and writes restrained captions from that metadata. It also selects one usable likeness for the profile and keeps it out of the event images.",
-        "why_this_design": "Treating search results as leads rather than evidence—and validating unique image and event choices in code—prevents commemorative stand-ins and loose associations from filling the timeline."
+        "what_it_does": "Selects one usable reference portrait and pairs retrieved Commons images with life events only when their metadata supports a direct connection. It leaves unsupported events unillustrated and writes cautious captions for the images it keeps.",
+        "why_this_design": "It separates a candidate’s search target from evidence of a match and rejects commemorative or present-day stand-ins, preventing familiar but misleading images from substituting for the event itself."
       }
     },
     "p_img_search": {

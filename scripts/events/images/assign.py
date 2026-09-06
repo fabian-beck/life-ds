@@ -11,6 +11,16 @@ An event with no picture is a correct answer. The instruction that asked for
 40-60% of slides to be filled is what put a gravestone under fifteen deaths,
 and the prompts here say so at length because the matcher judges by filenames
 and captions and will otherwise reach for a memorial.
+
+The matcher is also told when each photograph was taken, because a filename
+cannot say so. Turing's 1952 conviction carried the facade of the Manchester
+County Court Offices: Phase 2 had searched for a court in Manchester, Commons
+answered with the court building that stands there today, and the matcher,
+shown "Facade of Manchester County Court Offices" against "a court in
+Manchester convicted Turing", read it as the building where it happened. The
+file's own metadata dated the photograph to 2016. That year is now a line of
+the listing, and a building found by its kind and its city is named among the
+stand-ins no slide may carry.
 """
 
 import os
@@ -25,6 +35,7 @@ from config import (
     LOW_REASONING_EFFORT,
 )
 from events.images import sources
+from events.images.scoring import parse_year_from_date_string
 from events.schemas import EventSkeleton
 from utils.concurrency import map_concurrently
 from utils.model_calls import get_client, parse_structured
@@ -356,6 +367,13 @@ STAND_IN_REJECTION_INSTRUCTIONS = (
     "- a present-day photograph of an institution's buildings, campus, or "
     "signage standing in for the institution. A university logo on a wall is "
     "a picture of a wall\n"
+    "- a photograph of whatever building of some kind now stands in a city "
+    "the text names: the county court offices found for 'a court in "
+    "Manchester', the hospital found for 'a hospital in Vienna', the station "
+    "found for 'arrived in Berlin'. A building illustrates an event only when "
+    "the text names THAT building and it stood at the time. A match between "
+    "the kind of place and the city is not a match, and a photograph taken "
+    "decades after the event shows what stands there now, whatever its name\n"
     "- a picture that merely shares a name or a word with the text. A firm "
     "called Morcom is not Christopher Morcom, and a map of the town of "
     "Banbury is not the Banbury sheets. A place that lent its name to a thing "
@@ -364,6 +382,13 @@ STAND_IN_REJECTION_INSTRUCTIONS = (
     "letter, a laboratory bench — standing in for the particular one the text "
     "describes. Anybody's apple is not a picture of that apple\n"
 )
+
+
+def image_year_taken(img: Dict[str, Any]) -> Optional[int]:
+    """The year a candidate photograph was made, or None when the source did
+    not say. Commons reports it as `DateTimeOriginal`; Openverse reports no
+    date at all."""
+    return parse_year_from_date_string(str(img.get("dateTimeOriginal") or ""))
 
 
 def build_image_match_prompt(
@@ -392,6 +417,16 @@ def build_image_match_prompt(
         prompt += f"[Image {idx}]\n"
         prompt += f"  Filename: {img['filename']}\n"
         prompt += f"  Caption: {img['caption'][:200]}\n"
+        # When the photograph was made, from the file's own metadata. The
+        # filename of a present-day photograph names the thing as if it were
+        # timeless, and the one fact that gave the Manchester court facade
+        # away — taken in 2016, for a conviction in 1952 — was in a field the
+        # matcher was never shown. Left out when the source reports no date,
+        # which is most of Openverse; a guessed year would be a hint pointing
+        # at nothing.
+        taken = image_year_taken(img)
+        if taken is not None:
+            prompt += f"  Taken: {taken}\n"
         # Where the picture came from, when it came from one event's own
         # searches rather than from the twenty written for the whole life. The
         # per-event searches name things — the machine, the building, the
@@ -429,6 +464,7 @@ def build_image_match_prompt(
     prompt += "  • Each event can have AT MOST one image\n"
     prompt += "  • Only assign if the image DIRECTLY relates to that specific event\n"
     prompt += "  • A candidate marked 'Searched for: Event N' was retrieved by a query written for that event. Treat it as a lead, not an instruction — it still has to pass every rule below\n"
+    prompt += "  • A candidate's 'Taken: YEAR' line is when the photograph was made, from the file's own metadata. A photograph taken decades after the event shows what stands there now. It can still show the thing itself — a preserved machine, a document, a building the event names that stood then — but it is never a picture of a place the event names only by its kind and its city\n"
     # No quota. The old one read "Aim for 40-60% of events to have images", and
     # a quota asked of a call that cannot see its candidates is a quota met with
     # whatever shares a word with the event: the corpus landed on 47% and paid
@@ -439,7 +475,7 @@ def build_image_match_prompt(
 
     prompt += "GOOD MATCHES:\n"
     prompt += "  • Document/publication image → event about publishing that work\n"
-    prompt += "  • Building photo → event that took place at that building\n"
+    prompt += "  • Photograph of a building the event NAMES, where the event happened inside it and it stood at the time\n"
     prompt += "  • Machine/device → event about inventing or working with it\n"
     prompt += "  • Historical photo from specific year → event from that year\n"
     prompt += "  • A picture of a person or object the event NAMES, where that person is not the subject\n\n"
