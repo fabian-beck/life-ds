@@ -151,8 +151,8 @@ REVIEW GUIDELINES:
 
 **Event Descriptions** — hold every description to this definition, and rewrite via `new_description` where it falls short (a later year in an event's own prose, a disputed birthplace narrated as a dispute, a street address, a restated classification):
 {description_contract_prompt()}
-- 2-4 sentences, each carrying a fact about the event; a description that has grown past that is cut, not paragraphed
-- Remove redundancies between title and opening sentence
+- 2-4 sentences, each carrying a fact about the event; a description of one sentence is extended from the sources, with the people and the place named and what led to the event, and a description that has grown past four is cut, not paragraphed
+- The title and the opening sentence do not say the same thing twice, but a name the title carries stays in the sentence as well, because the prose is read on its own
 
 **Birth and Death Descriptions** — the two boundary events carry the slide's facts in their `event_class`, so their prose is held to a definition of its own. Rewrite via `new_description` a birth that narrates the birth the slide already shows, or a death that restates the cause, from what the Wikipedia sources say about the household or about the road to the end:
 {boundary_description_prompt()}

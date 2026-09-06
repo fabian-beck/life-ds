@@ -351,7 +351,7 @@ class LifePlan(BaseModel):
         description="List of event skeletons (minimal event data)"
     )
     conclusion: str = Field(
-        description="A crisp, powerful conclusion statement about this person's life story (1-2 sentences). Capture their legacy or the essence of their journey."
+        description="What came of this person's life, stated as facts in 2-4 sentences: what of their work is still in use, still read, still built on, and by whom, one sentence per strand of the work that persists."
     )
 
 

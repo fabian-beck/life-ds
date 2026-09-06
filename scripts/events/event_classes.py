@@ -84,13 +84,14 @@ DEATH_DESCRIPTION_GUIDANCE = (
     "that had reshaped physics.'"
 )
 
-# Phase 2 is told in its base prompt to refine a description "shorter and more
-# concrete, never longer". A boundary skeleton that narrates the fact the slide
-# already shows has nothing to shorten, so its class block lifts that rule.
+# Phase 2 is told in its base prompt to rewrite a description that falls short
+# of the contract. A boundary skeleton that narrates the fact the slide already
+# shows has nothing worth keeping, so its class block says the rewrite starts
+# from the definition, not from the skeleton.
 BOUNDARY_REWRITE_NOTE = (
-    "  * This event is the exception to 'never longer': a Phase 1 description that "
-    "narrates the fact the slide already shows is rewritten to the definition above "
-    "from the article in front of you, within 2-4 sentences"
+    "  * A Phase 1 description that narrates the fact the slide already shows is "
+    "replaced, not trimmed: write the definition above from the article in front "
+    "of you, within 2-4 sentences"
 )
 
 
@@ -209,10 +210,13 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
         "phase2_focus": [
             "INVOLVED_PEOPLE: Include the partner's name (already in classification, but also list here)",
             "LOCATIONS: Wedding venue city (keep to city level, e.g., 'London' not full venue name)",
-            "DESCRIPTION: Focus on ceremony details, circumstances, social context",
-            "  * DO NOT repeat partner name, duration, children count (classification has these)",
+            "DESCRIPTION: Name the partner in the sentence and say who they were, what they did, "
+            "how the two had met, and where the marriage took place; the prose is read without the card",
+            "  * The card holds the duration and the number of children; the prose does not restate them",
             "  * DO NOT annotate the partner's name (use INVOLVED_PEOPLE field instead)",
-            "  * Example: 'The ceremony took place at a small chapel, attended by close family.'",
+            "  * GOOD: 'In 1930 she married Vincent Foster Hopper, who taught English at New York "
+            "University. She had just finished her master's degree in mathematics at Yale.'",
+            "  * BAD (leans on the card): 'In 1930, she married a New York University professor.'",
             "ANNOTATIONS: Never annotate person names (including partner)",
         ],
         "log_format": lambda cls: f"MARRIAGE ({cls.partner})",
@@ -258,8 +262,9 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "  * Use city-level names (e.g., 'Berlin, Germany' → 'New York, USA')",
             "  * name_historic: City name at time of migration",
             "  * name_modern: Modern name for geocoding",
-            "DESCRIPTION: Focus on reasons, journey details, immediate aftermath",
-            "  * DO NOT repeat from/to locations or characterization (classification has these)",
+            "DESCRIPTION: Name where the person left and where they arrived, and say why they went, "
+            "how they traveled, and who went with them; the prose is read without the card",
+            "  * The card holds the characterization of the move; the prose does not restate it",
             "  * DO NOT annotate destination country (classification provides location context)",
             "  * Example: 'Fleeing political persecution, the family traveled by ship, arriving with few possessions.'",
             "INVOLVED_PEOPLE: People who traveled together or helped with migration",
@@ -345,8 +350,9 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "    - No documented impact -> omit the field rather than paraphrase the plot\n"
         ),
         "phase2_focus": [
-            "DESCRIPTION: Focus on publication context, reception, circumstances",
-            "  * DO NOT repeat title, publication type, or publisher (classification has these)",
+            "DESCRIPTION: Name the work in the sentence and say what it is about, how it came to be "
+            "written, and how it was received at the time; the prose is read without the card",
+            "  * The card holds the publication type and the publisher; the prose does not restate them",
             "  * DO NOT annotate the work's title (classification provides this)",
             "  * DO NOT retell the work's content in detail — a sentence on what it is about is enough; the classification's impact field is reserved for reception and influence, never content",
             "  * Good: 'The paper was presented at a mathematics symposium and initially met with skepticism.'",

@@ -100,16 +100,79 @@ class StreetLevel(unittest.TestCase):
         )
 
 
+class ThinProse(unittest.TestCase):
+    def test_the_shipped_sentence_is_the_finding(self) -> None:
+        found = prose.thin_description(
+            event("In 1930, she married a New York University professor.")
+        )
+        self.assertEqual(len(found), 1)
+
+    def test_two_sentences_carrying_facts_are_enough(self) -> None:
+        self.assertEqual(
+            prose.thin_description(
+                event(
+                    "In 1930 she married Vincent Foster Hopper, who taught English at "
+                    "New York University. She had just finished her master's degree."
+                )
+            ),
+            [],
+        )
+
+    def test_a_long_single_sentence_is_not_thin(self) -> None:
+        self.assertEqual(
+            prose.thin_description(
+                event(
+                    "In 1842, Schönlein was appointed personal physician to King "
+                    "Friedrich Wilhelm IV of Prussia, a role that brought him into "
+                    "regular contact with the Prussian court while he continued his "
+                    "clinical and teaching work in Berlin."
+                )
+            ),
+            [],
+        )
+
+    def test_an_initial_or_a_title_does_not_end_a_sentence(self) -> None:
+        self.assertEqual(
+            prose.count_sentences("He met J. Robert Oppenheimer and Dr. Bohr there."),
+            1,
+        )
+        self.assertEqual(prose.count_sentences("It cost 3.5 million marks."), 1)
+
+    def test_a_quoted_sentence_end_counts(self) -> None:
+        self.assertEqual(
+            prose.count_sentences(
+                'She called the linker a "compiler." The name stuck.'
+            ),
+            2,
+        )
+
+    def test_a_one_sentence_conclusion_is_a_finding(self) -> None:
+        data = {
+            "events": [],
+            "conclusion": "COBOL remains in use today in business and government computing.",
+        }
+        found = prose.check_person("x", data)
+        self.assertEqual([f.rule for f in found], [prose.CONCLUSION_RULE])
+
+    def test_a_missing_conclusion_is_not_thin(self) -> None:
+        self.assertEqual(prose.check_person("x", {"events": [], "conclusion": ""}), [])
+
+
 class Findings(unittest.TestCase):
     def test_an_accepted_sentence_is_skipped(self) -> None:
         data = {"events": [event("They moved in 1808.")]}
-        self.assertEqual(len(prose.check_person("x", data)), 1)
-        key = ("x", "1791-12-26", "a later year in the event's own prose")
-        prose.ACCEPTED[key] = "test"
+        later = "a later year in the event's own prose"
+        self.assertEqual(
+            [f.rule for f in prose.check_person("x", data)],
+            [later, "a description under twenty words"],
+        )
+        prose.ACCEPTED[("x", "1791-12-26", later)] = "test"
+        prose.ACCEPTED[("x", "1791-12-26", "a description under twenty words")] = "test"
         try:
             self.assertEqual(prose.check_person("x", data), [])
         finally:
-            del prose.ACCEPTED[key]
+            del prose.ACCEPTED[("x", "1791-12-26", later)]
+            del prose.ACCEPTED[("x", "1791-12-26", "a description under twenty words")]
 
 
 if __name__ == "__main__":

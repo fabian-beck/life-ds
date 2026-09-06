@@ -82,7 +82,7 @@ class Phase1Tests(unittest.TestCase):
 
 
 class Phase2Tests(unittest.TestCase):
-    def test_birth_prompt_lifts_the_never_longer_rule(self) -> None:
+    def test_birth_prompt_replaces_the_skeleton(self) -> None:
         prompt = build_phase2_prompt_classified(
             skeleton("Born in London", "1912-06-23", BirthClassification()),
             "Alan Turing",
@@ -91,7 +91,7 @@ class Phase2Tests(unittest.TestCase):
         self.assertIn(BIRTH_DESCRIPTION_GUIDANCE, prompt)
         self.assertIn(BOUNDARY_REWRITE_NOTE, prompt)
         self.assertLess(
-            prompt.index("never longer"), prompt.index(BOUNDARY_REWRITE_NOTE)
+            prompt.index("0. DESCRIPTION"), prompt.index(BOUNDARY_REWRITE_NOTE)
         )
 
     def test_death_prompt_carries_the_definition(self) -> None:
@@ -103,7 +103,7 @@ class Phase2Tests(unittest.TestCase):
         self.assertIn(DEATH_DESCRIPTION_GUIDANCE, prompt)
         self.assertIn(BOUNDARY_REWRITE_NOTE, prompt)
 
-    def test_other_classes_keep_the_shortening_rule(self) -> None:
+    def test_other_classes_keep_their_own_guidance(self) -> None:
         prompt = build_phase2_prompt_classified(
             skeleton(
                 "Marries Joan Clarke",

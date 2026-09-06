@@ -19,6 +19,12 @@ actually shipped:
     and left the evidence to the sources list
   - a street address or house number, in the title or the prose, where the
     slide places the event at city level
+  - a description under twenty words, and a conclusion of one sentence — the
+    prompts ask for two to four sentences each carrying a fact, and a text
+    under that has left out a fact the sources hold: "In 1930, she married a
+    New York University professor." under a card naming the partner, "COBOL
+    remains in use today in business and government computing." for a whole
+    life
 
 It reports and never edits: a finding names a dataset for ``data/outdated.md``,
 and a corpus count before and after a prompt change says whether the change
@@ -62,6 +68,41 @@ ADDRESS = re.compile(
 # A named street in a title is street-level granularity, unless the street
 # word is itself part of a longer proper name ("Rumbach Street Synagogue").
 TITLE_STREET = re.compile(r"\b[A-Z][\w'’-]*\s+" + STREET_WORDS + r"\b(?!\s+[A-Z])")
+# A sentence ends on a terminal mark followed by space and a capital, a quote,
+# or the end of the text. A single capital before the period is an initial
+# ("J. Robert Oppenheimer"), and a title or a rank is an abbreviation; neither
+# ends a sentence.
+ABBREVIATIONS = {
+    "Dr",
+    "Mr",
+    "Mrs",
+    "Ms",
+    "St",
+    "Jr",
+    "Sr",
+    "No",
+    "Prof",
+    "Gen",
+    "Col",
+    "Capt",
+    "Lt",
+    "Sgt",
+    "Rev",
+    "Hon",
+    "Mt",
+    "Ft",
+    "ca",
+    "vs",
+    "cf",
+    "etc",
+}
+SENTENCE_END = re.compile(r"(?<=[.!?])[\"'’”)]*(?=\s+[A-Z\"'“(]|\s*$)")
+# Two sentences that each carry a fact run to twenty words and more; the
+# descriptions the corpus shipped under that name the event and nothing
+# around it. A conclusion is measured in sentences, since one sentence is one
+# strand of a life whatever its length.
+MIN_DESCRIPTION_WORDS = 20
+MIN_CONCLUSION_SENTENCES = 2
 
 
 class ProseFinding:
@@ -124,11 +165,40 @@ def street_level(event: Dict[str, Any]) -> List[str]:
     return found
 
 
+def count_sentences(text: str) -> int:
+    """How many sentences a reader counts in the text."""
+    count = 0
+    for match in SENTENCE_END.finditer(text):
+        before = text[: match.start()]
+        word = re.search(r"([A-Za-z]+)\.$", before)
+        if word and (len(word.group(1)) == 1 or word.group(1) in ABBREVIATIONS):
+            continue
+        count += 1
+    return count
+
+
+def thin_description(event: Dict[str, Any]) -> List[str]:
+    text = str(event.get("description") or "").strip()
+    if not text or len(text.split()) >= MIN_DESCRIPTION_WORDS:
+        return []
+    return [text]
+
+
+def thin_conclusion(data: Dict[str, Any]) -> List[str]:
+    """The conclusion as a finding when it is one sentence; absent is not thin."""
+    text = str(data.get("conclusion") or "").strip()
+    if not text or count_sentences(text) >= MIN_CONCLUSION_SENTENCES:
+        return []
+    return [text]
+
+
 RULES = (
     ("a later year in the event's own prose", later_years),
     ("the language of weighing sources", source_talk),
     ("street-level place in a city-level slide", street_level),
+    ("a description under twenty words", thin_description),
 )
+CONCLUSION_RULE = "a conclusion of one sentence"
 
 
 def check_person(person_id: str, data: Dict[str, Any]) -> List[ProseFinding]:
@@ -139,6 +209,10 @@ def check_person(person_id: str, data: Dict[str, Any]) -> List[ProseFinding]:
                 continue
             for quote in read(event):
                 findings.append(ProseFinding(person_id, event, rule, quote))
+    if (person_id, "", CONCLUSION_RULE) not in ACCEPTED:
+        for quote in thin_conclusion(data):
+            conclusion = {"date": "", "title": "Conclusion"}
+            findings.append(ProseFinding(person_id, conclusion, CONCLUSION_RULE, quote))
     return findings
 
 
@@ -163,7 +237,8 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     for finding in findings:
         print(finding)
-    by_rule = {rule: sum(f.rule == rule for f in findings) for rule, _ in RULES}
+    rules = [rule for rule, _ in RULES] + [CONCLUSION_RULE]
+    by_rule = {rule: sum(f.rule == rule for f in findings) for rule in rules}
     print(
         f"\nChecked {checked} person dataset(s), {len(findings)} finding(s): {by_rule}"
     )

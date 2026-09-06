@@ -140,11 +140,13 @@ def build_phase2_prompt_base(
     class_types_str = "/".join(
         [config["display_name"].lower() for config in EVENT_CLASS_CONFIG.values()]
     )
-    prompt += "   - Where the Phase 1 description falls short of the definition below, refine it —\n"
-    prompt += "     shorter and more concrete, never longer. The article in front of you is the\n"
-    prompt += (
-        "     evidence for what the sentence asserts, not a register to write in.\n\n"
-    )
+    prompt += "   - Where the Phase 1 description falls short of the definition below, rewrite it.\n"
+    prompt += "     You hold more of the article than Phase 1 saw. Add the fact the definition asks\n"
+    prompt += "     for and the skeleton lacks, such as the name of the partner or the collaborator,\n"
+    prompt += "     what they did, the place, or what led to the event, and cut what the definition\n"
+    prompt += "     excludes. The result is 2-4 sentences; a skeleton of one sentence is extended,\n"
+    prompt += "     never returned as it is. The article in front of you is the evidence for what\n"
+    prompt += "     the sentence asserts, not a register to write in.\n\n"
     prompt += description_contract_prompt() + "\n"
     prompt += PROSE_STYLE_INSTRUCTIONS + "\n"
     prompt += "   The rules above hold for the description, every annotation explanation, and every text field of the classification.\n\n"

@@ -59,9 +59,10 @@ or when, in plain words, and stops.
   "transformative", "enduring". No triad of adjectives or nouns set out for
   rhythm. One concept keeps one name throughout a text.
 These rules hold for every field a reader sees, from a two-sentence
-description to a four-paragraph report, and they are not a length target:
-a text that has said its facts in fewer sentences than the range allows is
-finished."""
+description to a four-paragraph report. They say how a sentence reads, not how
+many there are: each prompt states the length its text needs, and a text under
+that length has left out a fact the sources hold. Cut the construction, keep
+the fact it carried."""
 
 
 def description_contract_prompt() -> str:
@@ -94,9 +95,17 @@ def description_contract_prompt() -> str:
         "sources disagree — about a date, a place, an attribution — state the "
         "best-supported version at the precision the sources support, and keep the "
         "disagreement, the historiography, and the talk of sources out of the sentence.\n"
-        "- It stays at the slide's granularity and never repeats the slide: no street "
-        "addresses or house numbers where the location is a city, no restating what "
-        "the classification already holds.\n"
+        "- It stands on its own. A reader who sees the prose alone learns who did what, "
+        "with whom, and where, so the partner, the collaborator, the institution, and "
+        "the place are named in the sentence even when a chip or a card beside it shows "
+        "them too. What it does not restate is the structured detail the card holds: "
+        "the duration of a marriage, the number of children, the cause of death as a "
+        "term, the specification of an invention, the publisher of a work.\n"
+        "- It is complete in two to four sentences: the event, the people and the place "
+        "named, and what led to it or what it was for. One sentence is a caption, and a "
+        "description of one sentence has left out a fact the sources hold.\n"
+        "- It stays at the slide's granularity: no street addresses or house numbers "
+        "where the location is a city.\n"
         "- It is plain text in American English: no Markdown, no emphasis marks, no "
         "links; a title of a work stands plain in the sentence.\n"
         "GOOD: 'Schönlein studied medicine in Landshut, learning from Andreas Röschlaub "
@@ -105,4 +114,9 @@ def description_contract_prompt() -> str:
         "later shape his bedside teaching.'\n"
         "BAD (talk of sources, street level): 'He was most likely born at 44 Crosby Row, "
         "though the exact birthplace is disputed.'\n"
+        "BAD (leans on the card, one sentence): 'In 1930, she married a New York "
+        "University professor.'\n"
+        "GOOD: 'In 1930 she married Vincent Foster Hopper, who taught English at New "
+        "York University. She had just finished her master's degree in mathematics at "
+        "Yale.'\n"
     )

@@ -169,19 +169,19 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "2b961958fa8788f4",
+      "fingerprint": "deb6dc8c2d0f4073",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the life’s narrative spine from the main article and related context, selecting and ordering the events that matter most, assigning their relative weight, and grouping them into contiguous chapters. It leaves later steps a dated, English-language plan with a conclusion that connects the events into an account of what came from the life.",
-        "why_this_design": "It makes these choices in one pass because significance and chapter boundaries depend on comparing events across the whole life, while later steps can add places, images, and evidence without reshaping that story."
+        "what_it_does": "Builds the first account of a person’s life by selecting and ordering the events that form its narrative spine, ranking their importance against one another, and grouping contiguous phases into chapters. It leaves later steps a shared plan for researching each event’s places, images, and evidence, while reserving the conclusion for what persisted after the life ended.",
+        "why_this_design": "It reads the main article alongside related context in one pass because deciding what changed a life and where one phase gives way to another requires comparison across the whole biography; chapter dates can then derive safely from their events."
       }
     },
     "p_events_p2": {
-      "fingerprint": "4e0ec676a81f3829",
+      "fingerprint": "cabbad45eeec117e",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Researches each event against the subject’s article and event-specific related articles, then adds grounded prose, places, participants, evidence, visual search leads, and reader-facing glosses. It preserves an event with empty research fields when the call fails, so one failure does not remove a moment from the story.",
-        "why_this_design": "It filters related articles before the call and treats the subject’s article as the authority, which keeps loosely related material from turning into evidence for the wrong event."
+        "what_it_does": "Researches each event against the subject’s article and event-specific related articles, turning a skeletal entry into grounded narrative, places, participants, evidence, explanatory terms, an icon, and image search leads. It keeps an event in the story when research fails, but leaves that event explicitly unresolved rather than inventing details.",
+        "why_this_design": "The subject’s article takes precedence over recall and related material so every event remains anchored to the account the timeline is built from, while per-event failures do not discard the surrounding story."
       }
     },
     "p_geocode": {
@@ -281,11 +281,11 @@
       }
     },
     "p_review": {
-      "fingerprint": "54d985a1588c62f5",
+      "fingerprint": "1838eb029b149df8",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews the drafted life story and relationship network together against the cached Wikipedia material. It returns proposed corrections to prose, facts, metadata, annotations, and links between the two views so later processing can revise the data without treating either view in isolation.",
-        "why_this_design": "Reviewing both records in one pass exposes mismatched people and repeated or conflicting claims that separate reviews would miss, while leaving the critic’s changes as proposals preserves the high-confidence gate before automatic edits."
+        "what_it_does": "Reviews the life-event narrative and relationship network against the available Wikipedia material, looking for factual errors, missing context, awkward prose, and mismatches between the two views of a person. It returns proposed edits and an overall assessment, leaving the pipeline to apply only changes that clear its confidence threshold.",
+        "why_this_design": "Reviewing the event timeline and network together catches people, relationships, and repeated claims that would look complete when each dataset is checked alone."
       }
     },
     "p_style": {
