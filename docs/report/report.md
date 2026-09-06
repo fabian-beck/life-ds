@@ -41,7 +41,7 @@ A meta story refers to the data of the lives it draws on and adds perspectives o
 
 ## Generation
 
-The generation process is split into two stages. The first stage reads an encyclopedia article and writes the data of an individual biography; a second reads the individuals data and writes a meta story connecting multiple individuals. Both pipelines run offline as Python command-line scripts, one entry point per story type, invoked for one life or one theme at a time. Each step reads the documents earlier steps wrote and writes its own back to disk. A run leaves behind the directory of JSON documents the previous section described. Every step is one of [[kinds|four kinds]]. The kind of a step says how it can fail and what it costs to run again, separating the steps that repeat freely from those that are paid for by the call, depend on an external service, or are verifiable by assertion. Model calls stay in the steps that require judgment, so clustering, geocoding, chapter dating, network merging, and translation bookkeeping are deterministic. 
+The generation process is split into two stages. The first stage reads an encyclopedia article and writes the data of an individual biography. A second stage reads the individuals data and writes a meta story connecting multiple individuals. Both pipelines run offline as Python command-line scripts, one entry point per story type, invoked for one life or one theme at a time. Each step reads the documents earlier steps wrote and writes its own back to disk. A run writes the data the previous section described as JSON documents. Every step is one of [[kinds|four kinds]]. 
 
 ::: kindlegend
 :::
@@ -52,7 +52,7 @@ Both pipelines follow the same pattern: material is derived bottom-up by steps t
 
 ### Personal story pipeline
 
-[[person-pipeline|The personal pipeline]] derives one biography in full, from [[sources|an encyclopedia article]] to a translated, illustrated, and individually styled story. Its order follows what each step has to read. Research runs per event, so the events are proposed before they are researched, and places and pictures are resolved once the events name them. The descriptions of a life as a whole—its social network, its look—are settled last, when there is a whole life to describe. Imagery, the social network, and the visual identity each read the written life and nothing else the run produces, which bounds a failure to a single concern and makes partial regeneration—new imagery for an unchanged narrative, a revised palette for an unchanged network—an ordinary operation rather than a full rebuild.^[Three of those concerns are addressable from the command line as they are derived here: `--dataset-only`, `--style-only`, and `--network-only` each run one of them against the subject's existing data.]
+[[person-pipeline|The personal pipeline]] derives one biography in full, from [[sources|an encyclopedia article]] to the data needed for an illustrated and individually styled story. Events are proposed first and researched afterwards, and their places and pictures are resolved along the way. What describes a life as a whole—its imagery, its social network, its visual identity—is derived once the events and their structure stand, and translation closes the run.^[Each of those three is addressable from the command line: `--dataset-only`, `--style-only`, and `--network-only` each run one of them against the subject's existing data.]
 
 ::: pipeline lane=person
 :::
