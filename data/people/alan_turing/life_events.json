@@ -1,6 +1,6 @@
 {
-  "dataset": "Biographical Timeline",
-  "created_on": "2026-09-05",
+  "dataset": "Alan Turing Biographical Timeline",
+  "created_on": "2026-09-06",
   "person": {
     "name": "Alan_Turing",
     "birth_date": "1912-06-23",
@@ -10,8 +10,8 @@
       "computer scientist",
       "cryptanalyst"
     ],
-    "tagline": "The Universal Computing Machine",
-    "summary": "Alan Turing gave computation a mathematical form through the Turing machine and helped break German naval Enigma messages during World War II. He later designed early computer systems, proposed the imitation game, and developed a mathematical account of biological pattern formation.",
+    "tagline": "The Machine That Computes Anything",
+    "summary": "Alan Turing gave a mathematical account of general computation and helped break German naval Enigma messages during World War II. He later designed early computer systems, proposed a test for machine intelligence, and developed a mathematical explanation for biological pattern formation.",
     "wikipedia": "https://en.wikipedia.org/wiki/Alan_Turing",
     "portrait": {
       "image": "/portraits/alan_turing_thumbnail.webp",
@@ -27,128 +27,132 @@
   },
   "chapters": [
     {
-      "id": "southern_england",
+      "id": "southern_english_childhood",
       "headline": "A Restless Young Mind",
       "date_start": "1912-06-23",
       "date_start_precision": "day",
-      "date_end": "1930-02-13",
-      "date_end_precision": "day",
+      "date_end": "1930-02",
+      "date_end_precision": "month",
       "age_start": 0,
       "age_end": 17,
       "involved_people": [
-        "Christopher Morcom"
+        "John Ferrier Turing",
+        "Christopher Collan Morcom",
+        "Frances Isobel Morcom"
       ],
       "location": "Southern England",
       "illustration": {
-        "image": "/chapter_art/alan_turing/southern_england_medium.webp",
-        "medium": "/chapter_art/alan_turing/southern_england_medium.webp",
-        "full": "/chapter_art/alan_turing/southern_england_full.webp",
-        "concept": "A small, luminous crystal suspended in darkness sends fine branching fractures through a surrounding slate-blue sphere; one fracture becomes a precise, bright filament reaching outward, while the others fade into deep shadow.",
+        "image": "/chapter_art/alan_turing/southern_english_childhood_medium.webp",
+        "medium": "/chapter_art/alan_turing/southern_english_childhood_medium.webp",
+        "full": "/chapter_art/alan_turing/southern_english_childhood_full.webp",
+        "concept": "A small bright mineral sphere hangs in deep blue-black space, sending out restless branching sparks; one branch abruptly fades into a fine dust trail while the remaining filaments intensify, reaching outward in uneven arcs.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-05"
+        "generated_on": "2026-09-06"
       }
     },
     {
-      "id": "cambridge_logic",
-      "headline": "Machines of Thought",
-      "date_start": "1934",
-      "date_start_precision": "year",
-      "date_end": "1936-11",
-      "date_end_precision": "month",
-      "age_start": 22,
-      "age_end": 24,
-      "involved_people": [
-        "Abram Besicovitch"
-      ],
-      "location": "England",
-      "illustration": {
-        "image": "/chapter_art/alan_turing/cambridge_logic_medium.webp",
-        "medium": "/chapter_art/alan_turing/cambridge_logic_medium.webp",
-        "full": "/chapter_art/alan_turing/cambridge_logic_full.webp",
-        "concept": "At the center of a black field, an endless ivory ribbon loops through a narrow aperture and returns altered into a clean geometric coil, its edges glowing softly as if thought has found a new route.",
-        "creator": "AI generated artwork",
-        "generated_on": "2026-09-05"
-      }
-    },
-    {
-      "id": "princeton_years",
-      "headline": "Across the Atlantic",
-      "date_start": "1938",
-      "date_start_precision": "year",
+      "id": "logic_across_the_atlantic",
+      "headline": "Defining Computation",
+      "date_start": "1931-02",
+      "date_start_precision": "month",
       "date_end": "1938",
       "date_end_precision": "year",
-      "age_start": 26,
-      "age_end": 26,
+      "age_start": 18,
+      "age_end": 24,
       "involved_people": [
-        "Alonzo Church"
+        "Alonzo Church",
+        "Max Newman"
       ],
-      "location": "United States",
+      "location": "England and United States",
       "illustration": {
-        "image": "/chapter_art/alan_turing/princeton_years_medium.webp",
-        "medium": "/chapter_art/alan_turing/princeton_years_medium.webp",
-        "full": "/chapter_art/alan_turing/princeton_years_full.webp",
-        "concept": "A solitary obsidian arch floats above a dark reflective plane, with a band of pale light passing through its opening and splitting into two subtly divergent currents that recede in opposite directions.",
+        "image": "/chapter_art/alan_turing/logic_across_the_atlantic_medium.webp",
+        "medium": "/chapter_art/alan_turing/logic_across_the_atlantic_medium.webp",
+        "full": "/chapter_art/alan_turing/logic_across_the_atlantic_full.webp",
+        "concept": "An endless pale ribbon enters a dark void, folding through a sequence of identical luminous apertures and emerging as ever-new geometric paths. At the center, one open loop contains the entire shifting procession.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-05"
+        "generated_on": "2026-09-06"
       }
     },
     {
-      "id": "wartime_cryptanalysis",
+      "id": "war_against_enigma",
       "headline": "Breaking Naval Enigma",
       "date_start": "1939-09",
       "date_start_precision": "month",
-      "date_end": "1941",
+      "date_end": "1942",
       "date_end_precision": "year",
       "age_start": 27,
-      "age_end": 29,
+      "age_end": 27,
       "involved_people": [
         "Dilly Knox",
-        "I. J. Good",
         "Gordon Welchman",
-        "Hugh Alexander",
-        "Stuart Milner-Barry"
-      ],
-      "location": "United Kingdom",
-      "illustration": {
-        "image": "/chapter_art/alan_turing/wartime_cryptanalysis_medium.webp",
-        "medium": "/chapter_art/alan_turing/wartime_cryptanalysis_medium.webp",
-        "full": "/chapter_art/alan_turing/wartime_cryptanalysis_full.webp",
-        "concept": "A dense knot of copper filaments hangs in darkness, tangled around a single concealed point; from one edge, a narrow beam of cold light threads through the maze, steadily loosening the entire web.",
-        "creator": "AI generated artwork",
-        "generated_on": "2026-09-05"
-      }
-    },
-    {
-      "id": "computing_final_years",
-      "headline": "Questions for Machines",
-      "date_start": "1945",
-      "date_start_precision": "year",
-      "date_end": "1954-06-07",
-      "date_end_precision": "day",
-      "age_start": 33,
-      "age_end": 41,
-      "involved_people": [
-        "Max Newman"
+        "Joan Clarke"
       ],
       "location": "England",
       "illustration": {
-        "image": "/chapter_art/alan_turing/computing_final_years_medium.webp",
-        "medium": "/chapter_art/alan_turing/computing_final_years_medium.webp",
-        "full": "/chapter_art/alan_turing/computing_final_years_full.webp",
-        "concept": "A smooth pool of black liquid holds a centered drop of silver light; concentric ripples expand outward, then spontaneously gather into alternating pale spots and dark bands before dissolving at the edge.",
+        "image": "/chapter_art/alan_turing/war_against_enigma_medium.webp",
+        "medium": "/chapter_art/alan_turing/war_against_enigma_medium.webp",
+        "full": "/chapter_art/alan_turing/war_against_enigma_full.webp",
+        "concept": "A dense storm of copper filaments twists around a single dark core. One narrow beam of cold light passes through the tangle, separating the knots into orderly, radiating strands against a black field.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-05"
+        "generated_on": "2026-09-06"
+      }
+    },
+    {
+      "id": "machines_after_war",
+      "headline": "Building Thinking Machines",
+      "date_start": "1945-10",
+      "date_start_precision": "month",
+      "date_end": "1950-10",
+      "date_end_precision": "month",
+      "age_start": 33,
+      "age_end": 38,
+      "involved_people": [
+        "David Gawen Champernowne",
+        "Max Newman",
+        "Frederic Williams",
+        "Tom Kilburn"
+      ],
+      "location": "England",
+      "illustration": {
+        "image": "/chapter_art/alan_turing/machines_after_war_medium.webp",
+        "medium": "/chapter_art/alan_turing/machines_after_war_medium.webp",
+        "full": "/chapter_art/alan_turing/machines_after_war_full.webp",
+        "concept": "Suspended glass tiles drift in a silent grid, each catching and passing a pulse of blue-white light to the next. The pulses gather into a clear expanding wave, then scatter into countless possible routes.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-06"
+      }
+    },
+    {
+      "id": "final_years",
+      "headline": "Patterns Under Pressure",
+      "date_start": "1952-03-31",
+      "date_start_precision": "day",
+      "date_end": "1954-06-07",
+      "date_end_precision": "day",
+      "age_start": 39,
+      "age_end": 41,
+      "involved_people": [
+        "Arnold Murray"
+      ],
+      "location": "England",
+      "illustration": {
+        "image": "/chapter_art/alan_turing/final_years_medium.webp",
+        "medium": "/chapter_art/alan_turing/final_years_medium.webp",
+        "full": "/chapter_art/alan_turing/final_years_full.webp",
+        "concept": "On a matte black surface, milky droplets bloom outward from a still center, colliding into zebra-like bands, spirals, and cellular edges. A faint pressure wave compresses the living pattern toward one luminous rim.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-06"
       }
     }
   ],
-  "conclusion": "The Turing machine remains a basic model for studying algorithms and the limits of computation. Turing’s work continues to influence computer science, artificial intelligence, cryptography, and mathematical biology.",
+  "conclusion": "Alan Turing gave computer science a formal way to describe what machines can calculate and what no general method can decide. His wartime work helped British codebreakers read German naval Enigma traffic. His ideas about machine intelligence and biological patterns continue to guide research.",
   "events": [
     {
       "date": "1912-06-23",
       "date_precision": "day",
       "age": 0,
-      "title": "Born in Maida Vale, London",
-      "description": "Alan Turing is born in Maida Vale, London, while his father is on leave from the Indian Civil Service in British India.",
+      "title": "Birth in Maida Vale",
+      "description": "His father, Julius Mathison Turing, served in the [[Indian Civil Service]] and was home in England on leave. His mother, Ethel Sara Turing, came from a Protestant Anglo-Irish family with ties to engineering and public administration. Alan joined his older brother John in a family whose parents traveled between India and England.",
       "locations": [
         {
           "name_historic": "London",
@@ -160,34 +164,63 @@
           "primary": true
         }
       ],
+      "involved_people": [
+        "Julius Mathison Turing",
+        "Ethel Sara Turing",
+        "John Ferrier Turing"
+      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "southern_england",
-      "weight": 0.25,
+      "chapter": "southern_english_childhood",
+      "annotations": {
+        "Indian Civil Service": {
+          "explanation": "The Indian Civil Service was the senior civil administration of British India. Julius Turing served in the Madras Presidency.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Indian_Civil_Service"
+        }
+      },
+      "weight": 0.2,
       "event_class": {
         "type": "birth",
         "father": "Julius Mathison Turing",
-        "mother": "Ethel Sara Turing, née Stoney",
-        "characterization": "civil service family"
+        "mother": "Ethel Sara Turing (née Stoney)",
+        "characterization": "colonial service family"
       }
     },
     {
       "date": "1926",
       "date_precision": "year",
       "age": 13,
-      "title": "Begins Studies at Sherborne School",
-      "description": "Turing enters Sherborne School as a boarder. He pursues mathematics and science in a school culture centered on classical studies.",
+      "title": "Enters Sherborne School",
+      "description": "Turing entered Sherborne School in Dorset as a boarder after attending Hazelhurst Preparatory School. The first day of term coincided with the British General Strike. He bicycled about 60 miles from Southampton to reach the school and continued to pursue mathematics and science there.",
       "locations": [
         {
           "name_historic": "Sherborne",
           "name_modern": "Sherborne, UK",
           "centroid": [
-            -2.5175,
-            50.9456
+            -2.517,
+            -50.945
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Frant",
+          "name_modern": "Frant, East Sussex, UK",
+          "centroid": [
+            0.205,
+            51.074
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Southampton",
+          "name_modern": "Southampton, UK",
+          "centroid": [
+            -1.404,
+            50.909
+          ],
+          "primary": false
         }
       ],
       "sources": [
@@ -204,18 +237,29 @@
         }
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "southern_england",
-      "weight": 0.2
+      "chapter": "southern_english_childhood",
+      "weight": 0.35
     },
     {
-      "date": "1930-02-13",
-      "date_precision": "day",
+      "date": "1930-02",
+      "date_precision": "month",
       "age": 17,
-      "title": "Lost Christopher Morcom",
-      "description": "Christopher Morcom dies from complications of bovine tuberculosis. Turing gives greater attention to mathematics and science after his friend’s death.",
-      "locations": [],
+      "title": "Loses Christopher Morcom",
+      "description": "Christopher Collan Morcom died in February 1930 from complications of [[bovine tuberculosis]]. Turing was a pupil at Sherborne School and wrote to Morcom's mother, Frances Isobel Morcom. He worked more intensely on the mathematics and science that he and Morcom had shared.",
+      "locations": [
+        {
+          "name_historic": "Sherborne",
+          "name_modern": "Sherborne, UK",
+          "centroid": [
+            -2.5175,
+            50.9451
+          ],
+          "primary": true
+        }
+      ],
       "involved_people": [
-        "Christopher Morcom"
+        "Christopher Collan Morcom",
+        "Frances Isobel Morcom"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
@@ -223,17 +267,23 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Christopher_Morcom_%28right%29_with_Reginald_Keble_Swan_%28left%29_and_Frances_Isobel_Swan_%28center%29%2C_circa_1927.jpg",
-          "caption": "Christopher Morcom with school friends, circa 1927",
+          "caption": "Christopher Morcom with friends, circa 1927",
           "source": "https://commons.wikimedia.org/wiki/File:Christopher_Morcom_(right)_with_Reginald_Keble_Swan_(left)_and_Frances_Isobel_Swan_(center),_circa_1927.jpg",
           "creator": "This UK artistic or literary work, of which the author is unknown and cannot be ascertained by reasonable enquiry, is in the public domain because it is one of the following: A photograph, which has never previously been made available to the public (e.g. by publication or display at an exhibition) and which was taken more than 70 years ago (before 1 January 1956); or A photograph, which was made available to the public (e.g. by publication or display at an exhibition) more than 70 years ago (before 1 January 1956); or An artistic work other than a photograph (e.g. a painting), or a literary work, which was made available to the public (e.g. by publication or display at an exhibition) more than 70 years ago (before 1 January 1956). This tag can be used only when the author cannot be ascertained by reasonable enquiry. If you wish to rely on it, please specify in the image description the research you have carried out to find who the author was. The above is all subject to any overriding publication right which may exist. In practice, publication right will often override the first of the bullet points listed. Unpublished anonymous paintings remain in copyright until at least 1 January 2040. This tag does not apply to engravings or musical works. More information",
           "license": "Public domain",
           "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-cross",
-      "chapter": "southern_england",
-      "weight": 0.45,
-      "background": "Sherborne School’s teachers placed their highest value on classical education. Turing’s aptitude for mathematics and science won little respect from some of them. His headmaster warned his parents that a boy who became only a scientific specialist was wasting his time at a public school. Turing nevertheless worked through advanced problems in 1927 without having studied elementary calculus. At 16, he read Albert Einstein’s work and appears to have derived Einstein’s challenge to Newton’s laws from a text that did not state it outright. The friendship gave those private scientific interests a companion within the boarding school.\n\nMorcom had introduced Turing to astronomy. In the letter sent to Morcom’s mother, Frances Isobel Morcom, Turing called him brilliant, charming, and unassuming. He wrote that he had regarded his own work and astronomy as interests to share with him. He also believed Morcom had felt something similar. The illness had been contracted years earlier through infected cow’s milk. Turing kept in touch with Mrs. Morcom for years after her son’s death. She sent him gifts, and he wrote to her, often on Morcom’s birthday.\n\nOn February 12, 1933, Turing wrote to Mrs. Morcom before the third anniversary. He told her that he would be thinking of Christopher and of her the following day. He said he was sure Christopher was as happy as he had been while alive. In another letter, Turing considered whether spirit could survive bodily death. He wrote that a living and awake body held a spirit firmly. He thought death ended the bodily mechanism that held it. He supposed that the spirit might find a new body immediately or later. His later views became atheistic and materialist, though the article says his beliefs at this point still included a spirit independent of the body.\n\nTuring told Mrs. Morcom that he would put as much energy into his work as though Christopher were alive. He said that this was what Christopher would have wanted him to do. The connection with Mrs. Morcom remained part of his life long after Sherborne.",
+      "event_type_icon": "mdi-heart-broken",
+      "chapter": "southern_english_childhood",
+      "annotations": {
+        "bovine tuberculosis": {
+          "explanation": "Bovine tuberculosis is an infectious disease caused by bacteria that primarily affect cattle. People could contract it through infected milk.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Mycobacterium_bovis"
+        }
+      },
+      "weight": 0.65,
+      "background": "Sherborne School treated the classics as the center of a proper education. Several teachers had little use for Turing's preference for mathematics and science. His headmaster warned his parents that a student who became solely a scientific specialist was wasting his time at a public school. Turing nevertheless worked through advanced problems in 1927 before learning elementary calculus. At sixteen he read Albert Einstein's work and may have inferred Einstein's challenge to Newton's laws of motion from a text that left it unstated. In this setting, Christopher Morcom offered an intellectual companionship that Turing did not find elsewhere. Morcom introduced him to astronomy. Turing later called him brilliant, charming, and unpretentious.\n\nThe friendship gave Turing a person with whom to share his interests in scientific work. In his letter to Frances Morcom, he said that he had regarded his work and astronomy as subjects to share with Christopher. He believed Christopher had felt something similar. The letter also set a demanding rule for his own work. Turing wrote that he must put into it as much energy, if not the same interest, as he would if Christopher were alive. He thought that was what Christopher would have wanted.\n\nTuring continued writing to Frances Morcom for years. The correspondence included gifts from her and letters from him, especially around Christopher's birthday. On February 12, 1933, the day before the third anniversary, he wrote that he would be thinking of both Christopher and Frances the following day. In another letter, he considered whether a spirit could survive bodily death. He wrote that matter and spirit were eternally connected, though he could not say what happened during sleep. He imagined that death ended the bodily mechanism holding a spirit, after which the spirit found a new body. Later observers have connected the loss with Turing's atheism and materialism. The article says that, at this point, he still entertained ideas of a spirit independent of the body.",
       "background_images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Christopher_Morcom%E2%80%99s_photograph_of_the_Big_Schoolroom%2C_Sherborne_School%2C_c.1929.jpg/960px-Christopher_Morcom%E2%80%99s_photograph_of_the_Big_Schoolroom%2C_Sherborne_School%2C_c.1929.jpg",
@@ -247,11 +297,13 @@
       ]
     },
     {
-      "date": "1934",
-      "date_precision": "year",
-      "age": 22,
-      "title": "Graduated from King's College",
-      "description": "Turing completed his mathematics degree at King’s College, Cambridge, with first-class honors. His senior dissertation proved a version of the central limit theorem.",
+      "date": "1931-02",
+      "date_precision": "month",
+      "date_end": "1934-11",
+      "date_end_precision": "month",
+      "age": 18,
+      "title": "Studies at King's College",
+      "description": "Turing began studying mathematics at King’s College, Cambridge, on a scholarship in February 1931. His dissertation on the Gaussian error function proved a version of the [[central limit theorem]]. He completed the course with first-class honors in 1934.",
       "locations": [
         {
           "name_historic": "Cambridge",
@@ -263,96 +315,43 @@
           "primary": true
         }
       ],
-      "involved_people": [],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "cambridge_logic",
-      "weight": 0.45
-    },
-    {
-      "date": "1935",
-      "date_precision": "year",
-      "age": 23,
-      "title": "Elected a Fellow of King's College",
-      "description": "King's College elects Turing a Fellow after considering his dissertation on the Gaussian error function. He begins the Part III mathematics course at Cambridge that spring.",
-      "locations": [
-        {
-          "name_historic": "Cambridge",
-          "name_modern": "Cambridge, UK",
-          "centroid": [
-            0.1218,
-            52.2053
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Abram Besicovitch"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
-      ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "cambridge_logic",
-      "weight": 0.55
-    },
-    {
-      "date": "1936-11",
-      "date_precision": "month",
-      "age": 24,
-      "title": "Publishes On Computable Numbers",
-      "description": "Turing publishes On Computable Numbers, with an Application to the [[Entscheidungsproblem|Entscheidungsproblem]]. The paper proves that no general method can solve every instance of Hilbert’s decision problem.",
-      "locations": [
-        {
-          "name_historic": "Cambridge",
-          "name_modern": "Cambridge, UK",
-          "centroid": [
-            0.1218,
-            52.2053
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Turing%27s_proof"
-      ],
-      "event_type_icon": "mdi-file-document",
-      "chapter": "cambridge_logic",
-      "weight": 1.0,
-      "event_class": {
-        "type": "publication",
-        "title": "On Computable Numbers, with an Application to the Entscheidungsproblem",
-        "publication_type": "paper",
-        "publisher": "Proceedings of the London Mathematical Society",
-        "significance": "foundational computing paper",
-        "impact": "The paper became a foundation for theoretical computer science by giving a formal model of computation and establishing limits on what algorithms can decide."
-      },
-      "date_end": "1936-12",
-      "date_end_precision": "month",
+      "chapter": "logic_across_the_atlantic",
       "annotations": {
-        "Entscheidungsproblem": {
-          "explanation": "Hilbert’s question of whether a general procedure can determine the truth of every statement in a formal logical system.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Entscheidungsproblem"
+        "central limit theorem": {
+          "explanation": "The central limit theorem describes how averages of many independent observations tend to follow a normal, bell-shaped distribution under broad conditions. Turing’s dissertation proved a version of this result using the Gaussian error function.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Central_limit_theorem"
         }
       },
-      "background": "At King’s College, Cambridge, Turing was working through questions raised by Kurt Gödel’s incompleteness theorems while completing Part III mathematics. David Hilbert had posed the decision problem in 1928. Max Newman received the first draft of Turing’s investigation in mid-April 1936. Alonzo Church had published a result reaching a similar conclusion that month through lambda calculus, a symbolic system for representing functions. Turing’s account used a deliberately spare model of a worker following written instructions. The paper ran to 36 pages when he completed it on May 28. It appeared in two installments, dated November 30 and December 23.\n\nThe central objects were machines that read and alter symbols on a tape under a finite table of instructions. Turing gave each machine a standard description made from a restricted alphabet. He also encoded such descriptions as numbers. A universal machine could read one of those descriptions and carry out the specified operations. This made a machine’s instructions into data that another machine could inspect and execute.\n\nFor the decisive argument, Turing considered a proposed machine that could classify every machine as either “circle-free,” meaning it would continue printing binary digits, or circular, meaning it would fail to do so. He then constructed a further machine that would use the classifier’s answers to assemble a diagonal sequence from the outputs of the machines judged circle-free. Applied to its own encoded description, the construction produced a contradiction. The assumed classifier could not exist. Turing then connected this result to formulas in Principia Mathematica. He showed that a general way to determine whether the associated formula was provable would yield the impossible machine classifier. The final conclusion on Hilbert’s question took only 64 words and symbols in the paper’s proof.\n\nJohn von Neumann later credited the paper’s central idea as the source of the modern computer’s basic concept. The equivalence later established between Turing’s machines and Church’s lambda calculus became known as the Church–Turing thesis. Turing carried the work to Princeton, where he studied under Church from September 1936 to July 1938."
+      "weight": 0.6
     },
     {
-      "date": "1938",
-      "date_precision": "year",
-      "age": 26,
-      "title": "Completes Doctorate at Princeton University",
-      "description": "At Princeton University, Turing completed his doctoral work under Alonzo Church. The dissertation examined formal mathematical systems in light of Gödel’s incompleteness theorem.",
+      "date": "1936-09",
+      "date_precision": "month",
+      "date_end": "1938",
+      "date_end_precision": "year",
+      "age": 24,
+      "title": "Studies at Princeton",
+      "description": "In September 1936, Turing left Cambridge, England, for Princeton University in Princeton, New Jersey, where he studied under Alonzo Church. He pursued doctoral research in [[ordinal logic|ordinal logic]], built an electromechanical binary multiplier, and completed his doctorate in June 1938.",
       "locations": [
+        {
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, UK",
+          "centroid": [
+            0.1218,
+            52.2053
+          ],
+          "primary": false
+        },
         {
           "name_historic": "Princeton",
           "name_modern": "Princeton, New Jersey, USA",
           "centroid": [
             -74.659,
-            40.357
+            40.3573
           ],
           "primary": true
         }
@@ -365,35 +364,96 @@
         "https://en.wikipedia.org/wiki/Systems_of_Logic_Based_on_Ordinals",
         "https://en.wikipedia.org/wiki/Alonzo_Church"
       ],
-      "event_type_icon": "mdi-book-open-variant",
-      "chapter": "princeton_years",
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/1/17/Alan_Turing_%281912-1954%29_in_1936_at_Princeton_University.jpg",
+          "caption": "Alan Turing at Princeton University in 1936",
+          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1912-1954)_in_1936_at_Princeton_University.jpg",
+          "creator": "Unknown photographer",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "logic_across_the_atlantic",
+      "annotations": {
+        "ordinal logic": {
+          "explanation": "Ordinal logic extends formal mathematical systems by adding axioms through successive finite and transfinite stages indexed by ordinal numbers. Turing studied this approach in his Princeton dissertation.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Systems_of_Logic_Based_on_Ordinals"
+        }
+      },
       "weight": 0.55,
       "event_class": {
-        "type": "publication",
-        "title": "Systems of Logic Based on Ordinals",
-        "publication_type": "thesis",
-        "publisher": "Princeton University",
-        "significance": "ordinal logic"
-      },
-      "background": "Princeton’s mathematics and philosophy departments were a meeting place for work on the limits of formal proof and mechanical calculation. Church had developed lambda calculus, a symbolic way to represent calculation, and used it in 1936 to establish that Hilbert’s decision problem could not have a general solution. Turing spent most of September 1936 through July 1938 at Princeton as a Jane Eliza Procter Visiting Fellow. Alongside his logic research, he studied cryptology and constructed three stages of an electromechanical binary multiplier. John von Neumann sought to retain him as a postdoctoral assistant, but Turing returned to Britain.\n\nGödel’s result supplied the problem’s starting point. Any formal system strong enough to express arithmetic contains a true statement it cannot prove. A mathematician may add that statement as a new axiom, creating a stronger system. The stronger system then has its own true but unprovable statement. Turing examined an endless progression of such systems through the ordinal numbers, including transfinite stages beyond every finite number. He used Cantor’s method of infinities in this investigation.\n\nThe dissertation also introduced relative computing through machines supplied with “oracles.” An oracle was a hypothetical source that could answer questions beyond the reach of an ordinary computing machine. This allowed problems to be compared by the extra information needed to solve them. Martin Davis later identified this use of oracles as highly influential in theoretical computer science, including work on the polynomial-time hierarchy. Church and Turing also established that lambda calculus and Turing machines had equivalent computing power, a result associated with the Church–Turing thesis.",
-      "background_images": [
+        "type": "migration",
+        "from_location": "England",
+        "to_location": "United States",
+        "characterization": "doctoral study"
+      }
+    },
+    {
+      "date": "1936-11",
+      "date_precision": "month",
+      "age": 24,
+      "title": "Publishes Computable Numbers",
+      "description": "Turing published On Computable Numbers, with an Application to the [[Entscheidungsproblem]] in November 1936. Before leaving Cambridge, he had sent an early draft to Max Newman. The paper introduced the [[universal computing machine|universal computing machine]], a machine that can carry out the operations of any other computing machine. It proved that no general method can solve the Entscheidungsproblem.",
+      "locations": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/SemanticCalculation-TheDogBarkedAtTheCat.png/960px-SemanticCalculation-TheDogBarkedAtTheCat.png",
-          "caption": "A calculation of the lambda-calculus-like semantics of 'the dog barked at the cat",
-          "source": "https://commons.wikimedia.org/wiki/File:SemanticCalculation-TheDogBarkedAtTheCat.png",
-          "creator": "Augur",
-          "license": "CC0",
-          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-          "query": "lambda calculus notation"
+          "name_historic": "Cambridge",
+          "name_modern": "Cambridge, UK",
+          "centroid": [
+            0.1218,
+            52.2053
+          ],
+          "primary": true
         }
-      ]
+      ],
+      "involved_people": [
+        "Max Newman"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Turing%27s_proof",
+        "https://en.wikipedia.org/wiki/Max_Newman"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Turing_machine_Turing%27s_first_machine.JPG/960px-Turing_machine_Turing%27s_first_machine.JPG",
+          "caption": "Turing machine, associated with Computable Numbers",
+          "source": "https://commons.wikimedia.org/wiki/File:Turing_machine_Turing's_first_machine.JPG",
+          "creator": "User:Wvbailey",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+        }
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "logic_across_the_atlantic",
+      "annotations": {
+        "universal computing machine": {
+          "explanation": "A universal computing machine is a theoretical machine that can imitate any other computing machine when given its instructions. Turing used the concept to describe computation in general terms.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Universal_Turing_machine"
+        },
+        "Entscheidungsproblem": {
+          "explanation": "The Entscheidungsproblem asked whether a general method could determine the logical validity of every statement in a formal system. Turing proved that no such method exists.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Entscheidungsproblem"
+        }
+      },
+      "weight": 1.0,
+      "event_class": {
+        "type": "publication",
+        "title": "On Computable Numbers, with an Application to the Entscheidungsproblem",
+        "publication_type": "paper",
+        "publisher": "Proceedings of the London Mathematical Society",
+        "significance": "foundational computing paper",
+        "impact": "The paper established a formal model of general computation and proved that no general algorithm can solve the Entscheidungsproblem."
+      },
+      "background": "At Cambridge, Max Newman’s 1935 lectures on the foundations of mathematics and Gödel’s theorem gave students a live problem left by David Hilbert and Wilhelm Ackermann in 1928. Gödel had established limits on formal systems. Turing began investigating whether a procedure could settle every question of the kind Hilbert had posed. He worked on the problem from the spring of 1935 through 1936 while completing Part III of the Mathematical Tripos. Alonzo Church reached a related conclusion through lambda calculus. Church’s article appeared in April 1936, when Turing’s work was still in draft.\n\nTuring made his argument depend on deliberately spare imaginary devices. Each had a tape divided into squares, a read-and-write head, and a finite table of instructions governing its next move. He gave every machine a standard description made from a small alphabet of symbols. The description could also be converted into an octal number. That pairing let the argument treat instructions as data that another machine could inspect.\n\nThe central construction assumed a deciding machine called D. D would classify the descriptions of machines according to whether they continued printing binary digits without end. A second machine, H, would use D to examine descriptions one by one. H would simulate each successful machine long enough to copy a selected digit onto its own tape. The resulting diagonal sequence would have to differ from every sequence in H’s list. Yet H itself belonged among the machines being classified. The contradiction came from the assumed existence of D.\n\nNewman recognized the importance of Turing’s draft and helped secure rapid publication. Turing finished the 36-page manuscript on May 28, 1936. Its two parts appeared on November 30 and December 23. Newman also arranged Turing’s visit to Princeton, where Church was working on the same question. John von Neumann later credited the paper’s central idea as the basis of the modern computer."
     },
     {
       "date": "1939-09",
       "date_precision": "month",
       "age": 27,
-      "title": "Joined Bletchley Park",
-      "description": "Turing joins the Government Code and Cypher School at [[Bletchley Park|Bletchley Park]]. He works with Dilly Knox on German Enigma communications.",
+      "title": "Joins Bletchley Park",
+      "description": "On 4 September 1939, the day after Britain declared war on Germany, Alan Turing reported to [[Bletchley Park|Bletchley Park]], the wartime center of the [[Government Code and Cypher School|British codebreaking organization]]. He began working with Dilly Knox on [[Enigma machine|German Enigma communications]], signing the Official Secrets Act as he joined the secret effort.",
       "locations": [
         {
           "name_historic": "Bletchley",
@@ -413,46 +473,55 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/4/44/Arriving_at_Bletchley_Park_-_geograph.org.uk_-_2594753.jpg",
-          "caption": "Arriving at Bletchley Park",
-          "source": "https://commons.wikimedia.org/wiki/File:Arriving_at_Bletchley_Park_-_geograph.org.uk_-_2594753.jpg",
-          "creator": "Basher Eyre",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Bletchley_Park_Mansion.jpg/960px-Bletchley_Park_Mansion.jpg",
+          "caption": "Bletchley Park Mansion, wartime codebreaking headquarters",
+          "source": "https://commons.wikimedia.org/wiki/File:Bletchley_Park_Mansion.jpg",
+          "creator": "DeFacto",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "wartime_cryptanalysis",
+      "chapter": "war_against_enigma",
       "annotations": {
         "Bletchley Park": {
-          "explanation": "A wartime British codebreaking center operated by the Government Code and Cypher School.",
+          "explanation": "Bletchley Park was the British wartime codebreaking center where the Government Code and Cypher School analyzed intercepted enemy communications.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Bletchley_Park"
+        },
+        "Government Code and Cypher School": {
+          "explanation": "The Government Code and Cypher School was Britain's codebreaking organization during World War II. It later became the Government Communications Headquarters.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Government_Code_and_Cypher_School"
+        },
+        "Enigma machine": {
+          "explanation": "The Enigma machine was a German cipher device that encrypted military and government messages. Turing and other codebreakers developed methods to recover its settings and read the messages.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Enigma_machine"
         }
       },
       "weight": 0.8
     },
     {
-      "date": "1939-11",
-      "date_precision": "month",
+      "date": "1940",
+      "date_precision": "year",
       "age": 27,
-      "title": "Designs the Bombe for Enigma",
-      "description": "Turing designs the bombe to help find Enigma settings. Its approach builds on the prewar Polish bomba method.",
+      "title": "Designs the Bombe",
+      "description": "In early 1940 at Bletchley Park, Turing specified the British bombe, an electromechanical machine that searched possible Enigma settings. Gordon Welchman added the diagonal board, which made the search more efficient. The design built on earlier work by Polish cryptanalysts against German Enigma messages.",
       "locations": [
         {
           "name_historic": "Bletchley",
-          "name_modern": "Bletchley, Milton Keynes, UK",
+          "name_modern": "Bletchley, UK",
           "centroid": [
-            -0.7325655,
-            51.9943694
+            -0.736,
+            51.997
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Dilly Knox"
+        "Gordon Welchman"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Gordon_Welchman"
       ],
       "images": [
         {
@@ -465,182 +534,91 @@
         }
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "wartime_cryptanalysis",
+      "chapter": "war_against_enigma",
       "weight": 0.95,
       "event_class": {
         "type": "invention",
-        "title": "Bombe",
-        "description": "An electromechanical machine tested possible Enigma rotor settings against a suspected message fragment to eliminate impossible configurations.",
-        "impact": "Bombes accelerated the search for Enigma settings used by German military networks."
+        "title": "Turing bombe",
+        "description": "An electromechanical machine tests Enigma rotor settings against a suspected message fragment and rejects settings that create logical contradictions.",
+        "impact": "Bombes gave Bletchley Park a practical way to recover Enigma settings quickly enough for wartime intelligence work."
       },
-      "annotations": {
-        "Bombe": {
-          "explanation": "An electromechanical codebreaking machine that tested possible Enigma settings against a suspected piece of message text.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Bombe"
+      "background": "Before the war, the Government Code and Cypher School had studied commercial Enigma machines. In July 1939, Polish cryptanalysts met British and French representatives near Warsaw and disclosed their work on the German system. Their bomba relied on an indicator procedure that German operators changed in May 1940. Turing and Dilly Knox developed a broader approach based on cribs, short pieces of likely plaintext in an intercepted message. A message ending with a routine weather report or a standard military phrase could supply such a clue.\n\nThe first British bombe entered service on March 18, 1940. Its searches depended on a crib and on the internal connections implied by an Enigma message. Enigma could never turn a letter into itself. The machine used that rule to discard impossible settings. Welchman’s diagonal board used the plugboard’s reciprocal wiring. A plugboard connection from B to G necessarily also connected G to B. The board allowed the plugboard connections to be solved separately from the rotor settings. Complete settings could then be found in hours after previously requiring days.\n\nBy late 1941, the codebreakers had a working system, though too few staff members and bombes to read every signal. Turing, Welchman, Hugh Alexander, and Stuart Milner-Barry wrote directly to Winston Churchill on October 28. They asked for people and machines after ordinary channels had failed. Churchill sent General Ismay an “Action This Day” instruction to give the work extreme priority. More than two hundred bombes were operating by the end of the war. Welchman later supervised their construction, deployment, and operation, and coordinated with the United States so British and American machines did not work on the same keys.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/9/99/A_Turing_Bombe%2C_Bletchley_Park_-_geograph.org.uk_-_1590899.jpg",
+          "caption": "A Turing Bombe, Bletchley Park - geograph.org.uk - 1590899",
+          "source": "https://commons.wikimedia.org/wiki/File:A_Turing_Bombe,_Bletchley_Park_-_geograph.org.uk_-_1590899.jpg",
+          "creator": "Ian Petticrew",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+          "query": "British bombe machine"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/ARKIVET_Peace_and_Human_Rights_Centre_Kristiansand_Norway._Museum_WWII_Exhibition._Gestapo_office._German_3-rotor_Enigma_I_cipher_machine_ChiMaAG_No_A_5111_1936_Wooden_case_Instructions_control_panel_keyboard_plugboard_cables.jpg/960px-thumbnail.jpg",
+          "caption": "Items from the permanent exhibition about German-occupied Norway during World War II at ARKIVET Peace and Human Rights Center in Kristiansand, Norway: ARKIVET P.",
+          "source": "https://commons.wikimedia.org/wiki/File:ARKIVET_Peace_and_Human_Rights_Centre_Kristiansand_Norway._Museum_WWII_Exhibition._Gestapo_office._German_3-rotor_Enigma_I_cipher_machine_ChiMaAG_No_A_5111_1936_Wooden_case_Instructions_control_panel_keyboard_plugboard_cables.jpg",
+          "creator": "Wolfmann",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Enigma machine plugboard"
         }
-      }
+      ]
     },
     {
       "date": "1940",
       "date_precision": "year",
-      "age": 28,
-      "title": "Takes Charge of Hut 8",
-      "description": "Turing leads Hut 8 at Bletchley Park. The section works on German naval Enigma messages.",
+      "date_end": "1942",
+      "date_end_precision": "year",
+      "age": 27,
+      "title": "Leads Hut 8",
+      "description": "In 1940, Turing took charge of Hut 8, the Bletchley Park section responsible for German naval Enigma traffic. He worked with Joan Clarke and other cryptanalysts on naval messages. He developed Banburismus, a statistical method that reduced the number of Enigma settings that bombes needed to test as the German Navy strengthened protection for U-boat communications.",
       "locations": [
         {
           "name_historic": "Bletchley",
-          "name_modern": "Bletchley, Milton Keynes, UK",
+          "name_modern": "Milton Keynes, UK",
           "centroid": [
-            -0.736,
-            51.997
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Alan_Turing%27s_Office_in_Hut_8_at_Bletchley_Park_-_geograph.org.uk_-_5111900.jpg",
-          "caption": "Alan Turing's office in Hut 8",
-          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing's_Office_in_Hut_8_at_Bletchley_Park_-_geograph.org.uk_-_5111900.jpg",
-          "creator": "David Dixon",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
-        }
-      ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "wartime_cryptanalysis",
-      "weight": 0.9
-    },
-    {
-      "date": "1941",
-      "date_precision": "year",
-      "age": 29,
-      "title": "Develops Banburismus for Naval Enigma",
-      "description": "Turing develops [[Banburismus]], a statistical method for reducing bombe work on German naval Enigma messages. Hut 8 uses the method to read naval traffic more quickly.",
-      "locations": [
-        {
-          "name_historic": "Bletchley",
-          "name_modern": "Bletchley, Milton Keynes, UK",
-          "centroid": [
-            -0.756,
-            51.997
+            -0.75,
+            51.99
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "I. J. Good",
-        "Gordon Welchman",
-        "Hugh Alexander",
-        "Stuart Milner-Barry"
+        "Joan Clarke"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Joan_Clarke",
-        "https://en.wikipedia.org/wiki/I._J._Good"
+        "https://en.wikipedia.org/wiki/Joan_Clarke"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Bletchley_Park_Naval_Enigma_IMG_3604.JPG/960px-Bletchley_Park_Naval_Enigma_IMG_3604.JPG",
-          "caption": "Four-rotor German naval Enigma at Bletchley Park",
-          "source": "https://commons.wikimedia.org/wiki/File:Bletchley_Park_Naval_Enigma_IMG_3604.JPG",
-          "creator": "Magnus Manske",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
-        }
-      ],
-      "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "wartime_cryptanalysis",
-      "weight": 1.0,
-      "annotations": {
-        "Banburismus": {
-          "explanation": "A statistical cryptanalytic method used at Hut 8 to reduce the number of Enigma settings that bombes had to test.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Banburismus"
-        }
-      },
-      "background": "German naval traffic posed a problem with immediate consequences at sea. The Navy’s Enigma procedures were more secure than those used by the German Army and Air Force. Hut 8 often needed three to seven days to read a naval message, which made the intelligence operationally useless. From March through June 1941, U-boat wolf packs sank 282,000 tons of shipping a month. The section had limited staff and too few bombes to keep pace with German changes. In October, Turing, Gordon Welchman, Hugh Alexander, and Stuart Milner-Barry wrote directly to Winston Churchill for more people and machines. Churchill ordered that their needs receive extreme priority. More than two hundred bombes were operating by the war’s end.\n\nThe method rested on a running measure of how strongly intercepted material supported a possible rotor sequence. Turing called the unit a ban, and one tenth of a ban a deciban. Accumulated evidence could eliminate rotor sequences before a bombe was assigned to test them. In 1941, I. J. Good found that German telegraphists showed preferences when adding dummy letters to message indicators selected from the Kenngruppenbuch. He checked broken messages for these preferences and found that a bigram table producing a commonly chosen dummy letter was likely the right one. His observation became part of the Hut 8 procedure.\n\nCaptured trawlers also yielded cipher equipment and code materials during 1941. By November, Hut 8 had helped reduce monthly shipping losses to 62,000 tons. Joan Clarke became the only woman in the section to practice the method. Hugh Alexander later called her one of Hut 8’s best Banburists. A four-rotor naval Enigma introduced in 1942 again blocked Hut 8’s reading of traffic until further work on captured code papers opened a way forward.",
-      "background_images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Marinemuseet_%28Royal_Norwegian_Navy_Museum%29_Horten_Norway._German_Enigma_cipher_device_4_rotor_code_machine_used_by_the_military_of_Nazi_Germany_during_WW2_etc_4-Rotor-Chiffriermaschine_%282021%29_IMG_0874.jpg/960px-thumbnail.jpg",
-          "caption": "Marinemuseet (Royal Norwegian Navy Museum) Horten Norway. German Enigma cipher device 4 rotor code machine used by the military of Nazi Germany during WW2 etc 4-Rotor-Chiffriermaschine (2021) IMG 0874",
-          "source": "https://commons.wikimedia.org/wiki/File:Marinemuseet_(Royal_Norwegian_Navy_Museum)_Horten_Norway._German_Enigma_cipher_device_4_rotor_code_machine_used_by_the_military_of_Nazi_Germany_during_WW2_etc_4-Rotor-Chiffriermaschine_(2021)_IMG_0874.jpg",
-          "creator": "Wolfmann",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Part_of_a_Banbury_Sheet_as_used_in_Banburismus.jpg/960px-Part_of_a_Banbury_Sheet_as_used_in_Banburismus.jpg",
+          "caption": "Banbury sheet used in Turing's Banburismus",
+          "source": "https://commons.wikimedia.org/wiki/File:Part_of_a_Banbury_Sheet_as_used_in_Banburismus.jpg",
+          "creator": "TedColes",
           "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-          "query": "German naval Enigma machine"
-        },
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Zuteilungsliste_B_from_Kenngruppenbuch.jpg",
-          "caption": "Image of Zuteilungsliste from the Kenngruppenbuch (w:Discriminant Book).",
-          "source": "https://commons.wikimedia.org/wiki/File:Zuteilungsliste_B_from_Kenngruppenbuch.jpg",
-          "creator": "Micheal Hörenberg, Uferstr. 29, D-78343 Hemmenhofen",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-          "query": "Kenngruppenbuch codebook"
-        },
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Hut_8%2C_Bletchley_Park_-_geograph.org.uk_-_3419764.jpg/960px-Hut_8%2C_Bletchley_Park_-_geograph.org.uk_-_3419764.jpg",
-          "caption": "Hut 8, Bletchley Park",
-          "source": "https://commons.wikimedia.org/wiki/File:Hut_8,_Bletchley_Park_-_geograph.org.uk_-_3419764.jpg",
-          "creator": "Paul Gillett",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-          "query": "Bletchley Park Hut 8"
-        }
-      ]
-    },
-    {
-      "date": "1945",
-      "date_precision": "year",
-      "age": 33,
-      "title": "Joins the National Physical Laboratory",
-      "description": "Turing joins the National Physical Laboratory in Teddington. He prepares plans for the Automatic Computing Engine, a stored-program electronic computer.",
-      "locations": [
-        {
-          "name_historic": "Teddington, Middlesex",
-          "name_modern": "Teddington, London, UK",
-          "primary": true,
-          "centroid": [
-            -0.333653,
-            51.4277844
-          ]
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/The_National_Physical_Laboratory%2C_Teddington_-_geograph.org.uk_-_4048376.jpg/960px-The_National_Physical_Laboratory%2C_Teddington_-_geograph.org.uk_-_4048376.jpg",
-          "caption": "The National Physical Laboratory, Teddington",
-          "source": "https://commons.wikimedia.org/wiki/File:The_National_Physical_Laboratory,_Teddington_-_geograph.org.uk_-_4048376.jpg",
-          "creator": "David Howard",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "computing_final_years",
-      "weight": 0.7
+      "chapter": "war_against_enigma",
+      "weight": 0.9
     },
     {
-      "date": "1946",
-      "date_precision": "year",
-      "age": 34,
-      "title": "Completes the Automatic Computing Engine Design",
-      "description": "At the National Physical Laboratory in Teddington, Turing completes the Automatic Computing Engine design. The design sets out a stored-program electronic computer.",
+      "date": "1945-10",
+      "date_precision": "month",
+      "age": 33,
+      "title": "Designs the Automatic Computing Engine",
+      "description": "In October 1945, Turing joined the National Physical Laboratory, a government research laboratory in London, after completing his wartime work. He drafted plans for the Automatic Computing Engine, an electronic stored-program computer. The design aimed to make his ideas about general-purpose computation practical.",
       "locations": [
         {
-          "name_historic": "Teddington, Middlesex",
-          "name_modern": "Teddington, London, UK",
-          "primary": true,
+          "name_historic": "London",
+          "name_modern": "London, UK",
           "centroid": [
-            -0.333653,
-            51.4277844
-          ]
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
         }
       ],
       "sources": [
@@ -649,7 +627,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Pilot_ACE3.jpg/960px-Pilot_ACE3.jpg",
-          "caption": "Pilot ACE at the Science Museum, London",
+          "caption": "Pilot ACE computer at the Science Museum",
           "source": "https://commons.wikimedia.org/wiki/File:Pilot_ACE3.jpg",
           "creator": "Antoine Taveneaux",
           "license": "CC BY-SA 3.0",
@@ -657,31 +635,83 @@
         }
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "computing_final_years",
+      "chapter": "machines_after_war",
       "weight": 0.85,
       "event_class": {
         "type": "invention",
         "title": "Automatic Computing Engine",
-        "description": "A stored-program electronic computer design used high-speed electronic memory to hold instructions and numerical data for general-purpose calculations.",
-        "impact": "The ACE design guided British postwar computer development and influenced later stored-program machines."
+        "description": "A stored-program electronic computer design used high-speed electronic memory to hold instructions and numerical data for general calculations.",
+        "impact": "Its design influenced British computer engineering and informed later work on practical stored-program machines."
       }
     },
     {
       "date": "1948-05",
       "date_precision": "month",
       "age": 35,
-      "title": "Joins Manchester's Computing Machine Laboratory",
-      "description": "Turing joins Max Newman's Computing Machine Laboratory at the University of Manchester. He begins writing programs for early computers.",
+      "title": "Moves to Manchester",
+      "description": "In May 1948, Alan Turing left London for Manchester to join Max Newman’s Computing Machine Laboratory at the University of Manchester. There, Turing worked with Frederic Williams and Tom Kilburn on the [[Manchester Baby|Manchester Baby]], an early stored-program computer, and its successor, the Manchester Mark I.",
       "locations": [
         {
-          "name_historic": "Teddington, Middlesex",
-          "name_modern": "Teddington, London, UK",
-          "primary": false,
+          "name_historic": "London",
+          "name_modern": "London, UK",
           "centroid": [
-            -0.333653,
-            51.4277844
-          ]
+            -0.1276,
+            51.5074
+          ],
+          "primary": false
         },
+        {
+          "name_historic": "Manchester",
+          "name_modern": "Manchester, UK",
+          "centroid": [
+            -2.2426,
+            53.4808
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Max Newman",
+        "Frederic Williams",
+        "Tom Kilburn"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Max_Newman"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/SSEM_Replica.jpg/960px-SSEM_Replica.jpg",
+          "caption": "Manchester University SSEM Baby replica",
+          "source": "https://commons.wikimedia.org/wiki/File:SSEM_Replica.jpg",
+          "creator": "Users Ian Dunster, Racklever on en.wikipedia",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "machines_after_war",
+      "annotations": {
+        "Manchester Baby": {
+          "explanation": "The Manchester Baby was the first working stored-program electronic computer. Built at the University of Manchester in 1948, it tested Williams and Kilburn’s memory system and supported the laboratory’s early computer research.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Manchester_Baby"
+        }
+      },
+      "weight": 0.75,
+      "event_class": {
+        "type": "migration",
+        "from_location": "London, England",
+        "to_location": "Manchester, England",
+        "characterization": "computer laboratory post"
+      }
+    },
+    {
+      "date": "1948",
+      "date_precision": "year",
+      "age": 35,
+      "title": "Creates Turochamp",
+      "description": "In 1948, Turing and his former King’s College friend David Champernowne devised Turochamp, a program for playing chess. They worked at the University of Manchester. No available computer could run the program at a useful speed.",
+      "locations": [
         {
           "name_historic": "Manchester",
           "name_modern": "Manchester, UK",
@@ -693,66 +723,82 @@
         }
       ],
       "involved_people": [
-        "Max Newman"
+        "David Gawen Champernowne"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Max_Newman"
+        "https://en.wikipedia.org/wiki/D._G._Champernowne"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Manchester_MOSI_Baby_%28Small-Scale_Experimental_Machine%29_18-10-2009.jpg/960px-Manchester_MOSI_Baby_%28Small-Scale_Experimental_Machine%29_18-10-2009.jpg",
-          "caption": "Manchester Small-Scale Experimental Machine",
-          "source": "https://commons.wikimedia.org/wiki/File:Manchester_MOSI_Baby_(Small-Scale_Experimental_Machine)_18-10-2009.jpg",
-          "creator": "Paul Hermans",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/TUROCHAMP_vs_Glennie%2C_1952.gif",
+          "caption": "Chess game calculated by the TUROCHAMP program",
+          "source": "https://commons.wikimedia.org/wiki/File:TUROCHAMP_vs_Glennie,_1952.gif",
+          "creator": "Morn",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
         }
       ],
-      "event_type_icon": "mdi-home-switch-outline",
-      "chapter": "computing_final_years",
-      "weight": 0.75,
+      "event_type_icon": "mdi-chess-knight",
+      "chapter": "machines_after_war",
+      "weight": 0.45,
       "event_class": {
-        "type": "migration",
-        "from_location": "London, England",
-        "to_location": "Manchester, England",
-        "characterization": "computing research"
+        "type": "invention",
+        "title": "Turochamp",
+        "description": "A chess-playing algorithm evaluates candidate moves with rules for material, mobility, threats, and positional advantage.",
+        "impact": "It became one of the earliest designs for a computer chess program."
       }
     },
     {
       "date": "1950-10",
       "date_precision": "month",
       "age": 38,
-      "title": "Proposes the Imitation Game in Mind",
-      "description": "Turing asks whether machines can think. He proposes the imitation game, a written conversation in which a human judge tries to identify the machine.",
-      "locations": [],
+      "title": "Proposes the Imitation Game",
+      "description": "In October 1950, Turing published Computing Machinery and Intelligence in Mind. The paper proposed the [[Imitation Game|Imitation Game]], in which a human judge communicates by text with a person and a computer and tries to distinguish between them.",
+      "locations": [
+        {
+          "name_historic": "Manchester",
+          "name_modern": "Manchester, UK",
+          "primary": true,
+          "centroid": [
+            -2.2324547,
+            53.4424618
+          ]
+        }
+      ],
       "involved_people": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://en.wikipedia.org/wiki/Computing_Machinery_and_Intelligence"
+        "https://en.wikipedia.org/wiki/Computing_Machinery_and_Intelligence",
+        "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Turing-test.gif",
-          "caption": "Diagram illustrating the Turing test",
+          "caption": "Diagram explaining the Turing test",
           "source": "https://commons.wikimedia.org/wiki/File:Turing-test.gif",
           "creator": "Holly Bellman",
           "license": "CC BY-SA 3.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
         }
       ],
-      "event_type_icon": "mdi-file-document",
-      "chapter": "computing_final_years",
+      "event_type_icon": "mdi-book",
+      "chapter": "machines_after_war",
+      "annotations": {
+        "Imitation Game": {
+          "explanation": "The Imitation Game is Turing's proposed practical test for machine intelligence. It later became widely known as the Turing test.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Computing_Machinery_and_Intelligence"
+        }
+      },
       "weight": 0.95,
       "event_class": {
         "type": "publication",
         "title": "Computing Machinery and Intelligence",
         "publication_type": "paper",
         "publisher": "Mind",
-        "significance": "artificial intelligence",
-        "impact": "The imitation game became known as the Turing test. It remains a central reference point in discussions of machine intelligence."
+        "significance": "artificial intelligence paper",
+        "impact": "The imitation game became known as the Turing test and remains a reference point in debates about machine intelligence."
       },
-      "background": "British researchers had discussed machine intelligence for roughly a decade before artificial intelligence became a named field in 1956. Turing had been considering computer intelligence by 1941 and used the phrase in 1947. Members of the Ratio Club, an informal circle of British cybernetics and electronics researchers, also treated the subject as a live question. The paper confined its attention to digital machines, which manipulate binary digits and rewrite them in memory according to simple rules. It treated such machines as universal in principle. Given sufficient memory and time, one digital computer could simulate any other digital machine.\n\nThe game had begun as a three-person party exercise. A male player and a female player communicated with an interrogator through written messages. The interrogator knew them only as X and Y and tried to determine their sex. The male player tried to produce the wrong identification, while the female player helped the interrogator reach the right one. Turing adapted this setup because typed messages removed clues from voice and appearance. He then framed a technical question about a particular digital computer, its storage capacity, speed, and program. The standard was a machine’s performance in the conversation, not a prior definition of thought.\n\nThe paper answered nine objections in detail. They included arguments from theology, human fear of machine intelligence, mathematical limits associated with Gödel’s work, consciousness, Lady Lovelace’s claim that machines could only follow orders, and the informality of human behavior. Turing also considered claims that machines lacked particular capacities, including kindness, humor, initiative, and learning from experience. He predicted that by about 2000, a computer with a storage capacity of about one billion units would perform well enough in a five-minute exchange that an average interrogator would have no more than a 70 percent chance of making the right identification.",
+      "background": "British researchers had discussed machine intelligence for almost a decade before the field acquired the name artificial intelligence in 1956. The Ratio Club, an informal circle of cybernetics and electronics researchers, treated the subject as a common concern. Turing had been considering it by 1941 and used the phrase “computer intelligence” in 1947. His work at the University of Manchester also put the question beside actual early digital computers, whose speed and memory were still sharply limited.\n\nThe paper narrowed its attention to digital machinery. Such machines stored and rewrote binary digits, 1 and 0, by fixed rules. Turing argued that a digital computer with enough storage, speed, and an appropriate program could simulate any other digital machine. He therefore framed the issue around the capacities of an imaginable future machine, not the performance of the few machines then available. The discussion joined a practical account of computing to questions usually handled by philosophers, including what people mean when they call something intelligent.\n\nTuring devoted much of the paper to nine anticipated objections. One came from Ada Lovelace’s claim that the Analytical Engine could only carry out instructions supplied by its programmer. He answered that machines could produce results that surprised their programmers. He also addressed arguments based on consciousness, the limits of formal mathematics, the apparent informality of human behavior, and extrasensory perception. He gave a dated forecast for the new criterion. He expected that by about 2000, a machine with roughly 10^9 units of storage would allow an average interrogator only a 70 percent chance of making the right identification after five minutes of questioning. The question continued into philosophy of artificial intelligence, where John Searle’s Chinese room argument became one prominent criticism.",
       "background_images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Manchester_Mk1%2A_TNMOC-CP.jpg/960px-Manchester_Mk1%2A_TNMOC-CP.jpg",
@@ -766,11 +812,11 @@
       ]
     },
     {
-      "date": "1952-03",
-      "date_precision": "month",
+      "date": "1952-03-31",
+      "date_precision": "day",
       "age": 39,
-      "title": "Convicted of Gross Indecency",
-      "description": "Turing was prosecuted for homosexual acts in 1952. He accepted hormone treatment as an alternative to imprisonment.",
+      "title": "Convicted in Manchester",
+      "description": "On March 31, 1952, a court in Manchester convicted Turing of [[gross indecency]] after he reported a burglary involving Arnold Murray. The charge criminalized sexual acts between men. Turing accepted a year of [[chemical castration|hormone treatment]], an alternative to imprisonment.",
       "locations": [
         {
           "name_historic": "Manchester",
@@ -781,6 +827,9 @@
           ],
           "primary": true
         }
+      ],
+      "involved_people": [
+        "Arnold Murray"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
@@ -796,51 +845,90 @@
         }
       ],
       "event_type_icon": "mdi-gavel",
-      "chapter": "computing_final_years",
-      "weight": 0.85,
-      "involved_people": [
-        "Arnold Murray"
-      ]
+      "chapter": "final_years",
+      "annotations": {
+        "gross indecency": {
+          "explanation": "“Gross indecency” was a criminal offense used in the United Kingdom to prosecute sexual acts between men.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Gross_indecency"
+        },
+        "chemical castration": {
+          "explanation": "Chemical castration uses hormone treatment to reduce sexual drive. Turing accepted it for one year as an alternative to prison.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Alan_Turing"
+        }
+      },
+      "weight": 0.85
     },
     {
-      "date": "1952",
-      "date_precision": "year",
-      "age": 39,
-      "title": "Publishes a Theory of Morphogenesis",
-      "description": "Turing proposes that a [[reaction-diffusion system]] can produce organized patterns from an even chemical state. Chemical reactions and diffusion create the changing concentrations in the model.",
-      "locations": [],
+      "date": "1952-08-14",
+      "date_precision": "day",
+      "age": 40,
+      "title": "Explains Biological Patterns",
+      "description": "Turing published The Chemical Basis of Morphogenesis in 1952. The paper described a [[reaction-diffusion|reaction-diffusion system]] in which chemicals react and spread through tissue. The model explained how patterns such as stripes and spirals can arise from an initially uniform state.",
+      "locations": [
+        {
+          "name_historic": "Manchester",
+          "name_modern": "Manchester, UK",
+          "primary": true,
+          "centroid": [
+            -2.2324547,
+            53.4424618
+          ]
+        }
+      ],
+      "involved_people": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/The_Chemical_Basis_of_Morphogenesis",
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/The_Chemical_Basis_of_Morphogenesis"
       ],
       "event_type_icon": "mdi-file-document",
-      "chapter": "computing_final_years",
-      "weight": 0.8,
+      "chapter": "final_years",
+      "annotations": {
+        "reaction-diffusion": {
+          "explanation": "A reaction-diffusion system describes substances that change through local chemical reactions while spreading through space. Turing used this model to account for regular patterns in developing organisms.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Reaction%E2%80%93diffusion_system"
+        }
+      },
+      "weight": 0.9,
       "event_class": {
         "type": "publication",
         "title": "The Chemical Basis of Morphogenesis",
-        "publication_type": "article",
-        "publisher": "Philosophical Transactions of the Royal Society of London",
-        "significance": "reaction-diffusion theory",
-        "impact": "The article helped establish reaction-diffusion models as a way to study biological pattern formation."
+        "publication_type": "paper",
+        "publisher": "Philosophical Transactions of the Royal Society",
+        "significance": "mathematical biology paper",
+        "impact": "The paper established reaction-diffusion models as a major approach to studying biological pattern formation."
       },
-      "annotations": {
-        "reaction-diffusion system": {
-          "explanation": "A mathematical model in which chemical substances react and spread through space at different rates, producing changing spatial patterns.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Reaction%E2%80%93diffusion_system"
+      "background": "At the University of Manchester, Turing worked in Max Newman’s Computing Machine Laboratory after the war and contributed to its early computers. His attention then turned to mathematical biology. The new subject asked how an embryo could acquire organized features while developing from material that initially appeared uniform. His work brought the methods of mathematical analysis into a field concerned with animal coats, skin pigmentation, and the growth of living structures.\n\nThe argument treated pattern formation as a problem that could be expressed with nonlinear partial differential equations. Such equations track change across space and time. They can produce fronts, spirals, targets, hexagons, and stripes under different local chemical conditions. The same general framework remained open to analytical treatment even when the local reactions differed greatly. That made it useful to theorists studying visible biological forms.\n\nTuring also predicted oscillating chemical reactions. The Belousov–Zhabotinsky reaction, an example of such chemical oscillation, was first observed during the 1960s. Later researchers applied Turing-pattern ideas to particular developmental questions. One proposal holds that the protein VEGFC can form such patterns during the growth of lymphatic vessels in zebrafish embryos. Reaction–diffusion processes have also remained one explanation used in studies of embryonic animal-coat development and skin pigmentation.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Belousov-Zhabotinsky_reaction.jpg/960px-Belousov-Zhabotinsky_reaction.jpg",
+          "caption": "Well-evolved stage of the centrally-initiated Belousov–Zhabotinsky reaction in the Petri dish",
+          "source": "https://commons.wikimedia.org/wiki/File:Belousov-Zhabotinsky_reaction.jpg",
+          "creator": "Wiktor (Uncle Azane)",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Belousov Zhabotinsky reaction"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Zebrafish_Blood_and_Lymphatic_Vessels_%2849949760521%29.jpg/960px-Zebrafish_Blood_and_Lymphatic_Vessels_%2849949760521%29.jpg",
+          "caption": "Zebrafish are an excellent model for studying the development and function of blood and lymphatic vessels.",
+          "source": "https://commons.wikimedia.org/wiki/File:Zebrafish_Blood_and_Lymphatic_Vessels_(49949760521).jpg",
+          "creator": "Daniel Castranova, National Institute of Child Health and Human Development, NIH",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "zebrafish lymphatic vessels"
         }
-      }
+      ]
     },
     {
       "date": "1954-06-07",
       "date_precision": "day",
       "age": 41,
-      "title": "Dies at His Wilmslow Home",
-      "description": "Turing dies from cyanide poisoning. An inquest rules his death a suicide.",
+      "title": "Death in Wilmslow",
+      "description": "The 1952 conviction had cost Turing his security clearance. The court had ordered a year of hormone treatment. He lived alone in Wilmslow. His housekeeper found him dead in bed.",
       "locations": [
         {
-          "name_historic": "Wilmslow, Cheshire",
-          "name_modern": "Wilmslow, England, UK",
+          "name_historic": "Wilmslow",
+          "name_modern": "Wilmslow, UK",
           "centroid": [
             -2.231,
             53.326
@@ -851,14 +939,24 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Alan_Turing%27s_House_from_1950_to_1954.jpg/960px-Alan_Turing%27s_House_from_1950_to_1954.jpg",
+          "caption": "Alan Turing's house from 1950 to 1954",
+          "source": "https://commons.wikimedia.org/wiki/File:Alan_Turing's_House_from_1950_to_1954.jpg",
+          "creator": null,
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+        }
+      ],
       "event_type_icon": "mdi-cross",
-      "chapter": "computing_final_years",
+      "chapter": "final_years",
       "weight": 0.7,
       "event_class": {
         "type": "death",
         "cause": "cyanide poisoning",
         "characterization": "ruled a suicide",
-        "place_of_rest": "Woking Crematorium"
+        "place_of_rest": "Woking Crematorium, Surrey"
       }
     }
   ]

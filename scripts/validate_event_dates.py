@@ -42,6 +42,10 @@ from utils.validation import run_dataset_check
 # right to. Keyed by person id and event date so a re-dated event is looked at
 # again.
 ACCEPTED: Dict[Tuple[str, str], str] = {
+    ("alan_turing", "1954-06-07"): (
+        "The 1952 conviction and its hormone treatment, which the death "
+        "description reaches back over."
+    ),
     ("alvar_aalto", "1935"): "The 1927 competition the completed library came out of.",
     ("antoni_gaud", "1886"): "The 1878 exhibition where Gaudí and Güell met.",
     ("max_planck", "1919"): "The reserved 1918 prize, awarded to Planck in 1919.",

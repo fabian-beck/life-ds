@@ -1,6 +1,6 @@
 {
   "dataset": "Alan Turing ego network",
-  "created_on": "2026-09-05",
+  "created_on": "2026-09-06",
   "ego": {
     "name": "Alan Turing",
     "birth_year": 1912,
@@ -12,207 +12,175 @@
       "Cryptanalyst",
       "Theoretical biologist"
     ],
-    "summary": "Alan Turing was an English mathematician, computer scientist, logician, cryptanalyst, and theoretical biologist. He formalized the concepts of algorithm and computation with the Turing machine, helped break German naval Enigma communications, and worked on early computers, artificial intelligence, and mathematical biology.",
+    "summary": "Alan Turing was an English mathematician, computer scientist, logician, and wartime cryptanalyst. He formalized general computation through the Turing machine, led major work against German naval Enigma at Bletchley Park, contributed to early stored-program computing, and proposed influential ideas about machine intelligence and biological pattern formation.",
     "wikipedia": "https://en.wikipedia.org/wiki/Alan_Turing"
   },
   "connections": [
     {
       "person_name": "Ethel Sara Turing",
-      "relationship_description": "Turing's mother helped arrange for him to be raised in England while she and Julius Turing worked in British India. She later published a biography of him.",
+      "relationship_description": "Turing's mother raised him amid the family's moves between England and India and later wrote a biography of him after his death.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
         "https://de.wikipedia.org/wiki/Ethel_Sara_Turing"
       ],
-      "notes": "Published Alan M. Turing in 1959.",
+      "notes": "She published Alan M. Turing in 1959.",
       "relationship_type": "family/mother"
     },
     {
       "person_name": "Christopher Morcom",
-      "relationship_description": "Morcom was Turing's close friend at Sherborne School. They shared interests in mathematics and science until Morcom's death in 1930.",
+      "relationship_description": "Morcom was Turing's close Sherborne School friend and first love. After Morcom died in February 1930, Turing worked more intensely on the mathematics and science they had shared.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
-      "notes": "Turing remained in contact with Morcom's mother for many years after Morcom's death.",
-      "relationship_type": "social/friend"
+      "notes": "Turing responded to Morcom's death by intensifying the scientific work they had shared.",
+      "relationship_type": "social/romantic_partner"
     },
     {
       "person_name": "Joan Clarke",
-      "relationship_description": "Clarke was Turing's close friend and Hut 8 colleague. They became engaged in early 1941, but Turing ended the engagement after disclosing his homosexuality.",
+      "relationship_description": "Clarke was Turing's close friend and Hut 8 colleague at Bletchley Park. They became engaged in early 1941, but Turing ended the engagement after telling her that he was homosexual.",
       "strength": "strong",
       "sources": [
-        "https://en.wikipedia.org/wiki/Joan_Clarke",
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Joan_Clarke"
       ],
       "notes": "They remained close friends until Turing's death in 1954.",
       "relationship_type": "social/fiancée"
     },
     {
       "person_name": "Alonzo Church",
-      "relationship_description": "Church supervised Turing's doctoral work at Princeton from 1936 to 1938. Turing completed Systems of Logic Based on Ordinals under his supervision.",
+      "relationship_description": "Church supervised Turing's doctoral work at Princeton from 1936 to 1938, including the dissertation Systems of Logic Based on Ordinals.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
         "https://en.wikipedia.org/wiki/Alonzo_Church",
         "https://en.wikipedia.org/wiki/Systems_of_Logic_Based_on_Ordinals"
       ],
-      "notes": "Turing completed Systems of Logic Based on Ordinals under Church.",
+      "notes": "Their work on equivalent models of computation became associated with the Church-Turing thesis.",
       "relationship_type": "academic/teacher"
     },
     {
       "person_name": "Max Newman",
-      "relationship_description": "Newman's Cambridge lectures on the foundations of mathematics helped inspire Turing's work on the Entscheidungsproblem. He recognized the importance of Turing's 1936 paper and later recruited him to Manchester.",
+      "relationship_description": "Newman's Cambridge lectures helped direct Turing toward the Entscheidungsproblem. He supported publication of Turing's 1936 paper and recruited him to the University of Manchester in 1948.",
       "strength": "strong",
       "sources": [
-        "https://en.wikipedia.org/wiki/Max_Newman",
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Max_Newman"
       ],
-      "notes": "Their relationship connected Turing's theoretical work on computation with postwar computer construction.",
+      "notes": "Their association connected Turing's theoretical work with the postwar development of practical stored-program computers.",
       "relationship_type": "academic/mentor"
     },
     {
-      "person_name": "Robin Gandy",
-      "relationship_description": "Gandy worked with Turing on wartime speech-encryption methods and later completed a 1952 doctorate under Turing at Cambridge on axiomatic systems and theories in physics.",
-      "strength": "strong",
-      "sources": [
-        "https://de.wikipedia.org/wiki/Robin_Gandy"
-      ],
-      "notes": "Gandy later became a major interpreter and editor of Turing's intellectual legacy.",
-      "relationship_type": "academic/student"
-    },
-    {
       "person_name": "Dilly Knox",
-      "relationship_description": "Knox worked with Turing on German Enigma cryptanalysis before and after Turing joined Bletchley Park in 1939.",
+      "relationship_description": "Knox worked with Turing on German Enigma cryptanalysis when Turing began at Bletchley Park in September 1939 and had earlier discussed Enigma problems with him.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
         "https://en.wikipedia.org/wiki/Dilly_Knox"
       ],
-      "notes": "Turing stayed with Knox and his wife in 1939 while consulting on Enigma work.",
-      "relationship_type": "professional/collaborator"
-    },
-    {
-      "person_name": "Gordon Welchman",
-      "relationship_description": "Welchman and Turing were early Bletchley Park recruits, collaborated in the Enigma effort, and jointly signed the October 1941 appeal to Winston Churchill for more codebreaking resources.",
-      "strength": "strong",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Gordon_Welchman",
-        "https://en.wikipedia.org/wiki/Alan_Turing"
-      ],
-      "notes": "Welchman's diagonal board complemented the British bombe program associated with Turing.",
+      "notes": "Knox was an experienced cryptanalyst whose prewar Enigma work formed part of the setting for Turing's wartime efforts.",
       "relationship_type": "professional/colleague"
     },
     {
-      "person_name": "Irving John Good",
-      "relationship_description": "Good served with Turing in Hut 8 on naval Enigma cryptanalysis and later worked with him at the University of Manchester on computers, statistics, and related problems.",
+      "person_name": "Gordon Welchman",
+      "relationship_description": "Welchman worked with Turing on the British bombe at Bletchley Park. His diagonal board was a major enhancement to the machine Turing specified.",
       "strength": "strong",
       "sources": [
-        "https://en.wikipedia.org/wiki/I._J._Good",
-        "https://en.wikipedia.org/wiki/Alan_Turing"
+        "https://en.wikipedia.org/wiki/Alan_Turing",
+        "https://en.wikipedia.org/wiki/Gordon_Welchman"
       ],
-      "notes": "Good's successful solution to a Hut 8 bigram-table problem won Turing's professional respect.",
+      "notes": "They were among the four Bletchley Park colleagues who signed the 1941 appeal to Winston Churchill for additional resources.",
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "I. J. Good",
+      "relationship_description": "Good worked under Turing in Hut 8 on German naval Enigma and later worked with him at the University of Manchester on computing and Bayesian statistics.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/I._J._Good"
+      ],
+      "notes": "Good contributed an important improvement to the Banburismus procedure after Turing initially criticized him for sleeping during a shift.",
+      "relationship_type": "professional/colleague"
+    },
+    {
+      "person_name": "Robin Gandy",
+      "relationship_description": "Gandy was Turing's friend, collaborator, and doctoral student; during World War II they worked together on speech-encryption methods, including the Delilah project.",
+      "strength": "strong",
+      "sources": [
+        "https://de.wikipedia.org/wiki/Robin_Gandy"
+      ],
+      "notes": "Gandy later became an important editor and custodian of Turing's papers.",
       "relationship_type": "professional/collaborator"
     },
     {
       "person_name": "Julius Mathison Turing",
-      "relationship_description": "Turing's father was an Indian Civil Service official whose work in British India led the parents to leave Alan and his brother in England for much of their childhood.",
+      "relationship_description": "Turing's father was an Indian Civil Service official whose work required the family to divide its time between British India and England during Alan's childhood.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
-      "notes": "Julius and Ethel Turing arranged for their children to be raised in Britain while they traveled between Britain and India.",
+      "notes": "Julius and Ethel arranged for Alan and his brother to be raised principally in Britain.",
       "relationship_type": "family/father"
     },
     {
       "person_name": "John Ferrier Turing",
-      "relationship_description": "Turing's elder brother shared the family's childhood arrangements in England while their parents worked in India.",
+      "relationship_description": "John was Turing's older brother and shared the family childhood divided between Britain and India.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
-      "notes": null,
+      "notes": "John was the father of Dermot Turing.",
       "relationship_type": "family/brother"
     },
     {
       "person_name": "Frances Isobel Morcom",
-      "relationship_description": "After Christopher Morcom's death, Turing corresponded with Morcom's mother for years, including on anniversaries of her son's death.",
+      "relationship_description": "After Christopher Morcom's death, Turing maintained a long correspondence with Morcom's mother. He wrote to her especially around Christopher's birthday.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing"
       ],
-      "notes": "Their correspondence records Turing's continuing grief and his commitment to the scientific interests he had shared with Christopher.",
-      "relationship_type": "social/family_friend"
-    },
-    {
-      "person_name": "Arnold Murray",
-      "relationship_description": "Murray had a sexual relationship with Turing in 1951–1952; their association led to the police investigation and prosecution of both men for homosexual acts.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
-      ],
-      "notes": "The prosecution had grave personal and professional consequences for Turing.",
-      "relationship_type": "social/romantic_partner"
+      "notes": "Their letters show that Turing continued to process his loss through this relationship.",
+      "relationship_type": "social/correspondent"
     },
     {
       "person_name": "Ludwig Wittgenstein",
-      "relationship_description": "Turing attended Wittgenstein's 1939 Cambridge lectures on the foundations of mathematics, where the two argued over formalism, mathematical truth, and computation.",
+      "relationship_description": "Turing attended Wittgenstein's 1939 Cambridge lectures on the foundations of mathematics, where the two argued over formalism, mathematical truth, and logic.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Alan_Turing",
         "https://en.wikipedia.org/wiki/Ludwig_Wittgenstein"
       ],
-      "notes": "Their recorded exchanges show a substantive disagreement between Turing's formalist outlook and Wittgenstein's philosophical approach.",
+      "notes": "Their exchanges represented contrasting approaches to the philosophical foundations of mathematics.",
       "relationship_type": "academic/field_peer"
     },
     {
-      "person_name": "Abram Besicovitch",
-      "relationship_description": "Besicovitch assessed Turing's dissertation for the King's College fellowship in 1935. He praised the originality of its mathematical methods.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alan_Turing"
-      ],
-      "notes": "His favorable report helped establish Turing as a Fellow of King's College, Cambridge.",
-      "relationship_type": "academic/mentor"
-    },
-    {
-      "person_name": "Donald Michie",
-      "relationship_description": "Michie and Turing worked together during the war on speech-encryption methods, including a machine code-named Delilah, before Michie became a leading British artificial-intelligence researcher.",
-      "strength": "moderate",
-      "sources": [
-        "https://de.wikipedia.org/wiki/Donald_Michie",
-        "https://de.wikipedia.org/wiki/Robin_Gandy"
-      ],
-      "notes": null,
-      "relationship_type": "professional/collaborator"
-    },
-    {
       "person_name": "David Gawen Champernowne",
-      "relationship_description": "Champernowne was Turing's friend from King's College, Cambridge, and worked with him in 1948 on Turochamp, an early chess-playing computer program.",
+      "relationship_description": "Champernowne was Turing's Cambridge friend and collaborated with him in 1948 on Turochamp, an early chess-playing computer program.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/D._G._Champernowne"
       ],
-      "notes": "Their collaboration linked Turing's interest in machine intelligence to a practical game-playing program.",
+      "notes": "Their collaboration joined Turing's computing interests to Champernowne's mathematical and economic work.",
       "relationship_type": "professional/collaborator"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Julius and Ethel Turing worked in British India while Alan and John Turing were raised largely in England. Ethel Turing later published a biography of her son."
+      "summary": "Turing's childhood was shaped by his father's Indian Civil Service post. Julius and Ethel Turing spent much of their time in India while Alan and his older brother John grew up in Britain. Ethel later preserved a personal account of her son's early life."
     },
     {
       "relationship_type": "social",
-      "summary": "Turing’s personal relationships ran from Sherborne School to Bletchley Park and Manchester. Christopher Morcom shared his interest in mathematics and science until his death in 1930. Joan Clarke worked with Turing at Hut 8 and remained his friend after their engagement ended. Turing’s relationship with Arnold Murray led to the 1952 prosecution."
+      "summary": "Turing's closest personal relationships often joined affection with shared intellectual interests. Christopher Morcom's death in 1930 followed years of shared work in mathematics and science, and Turing later corresponded with Morcom's mother. At Bletchley Park, Joan Clarke was both a trusted colleague and Turing's brief fiancée."
     },
     {
       "relationship_type": "academic",
-      "summary": "At Cambridge, Max Newman’s lectures introduced Turing to questions about the foundations of mathematics. Alonzo Church supervised Turing’s Princeton doctorate on ordinal logic. Turing later attended Ludwig Wittgenstein’s Cambridge lectures and argued with him about mathematics and computation. Robin Gandy carried forward work on logic after studying under Turing."
+      "summary": "Cambridge and Princeton gave Turing the teachers and debates that shaped his work in mathematical logic. Max Newman's lectures led him toward the Entscheidungsproblem, and Alonzo Church supervised his Princeton doctorate. Turing also debated Ludwig Wittgenstein at Cambridge over mathematical truth and formal systems."
     },
     {
       "relationship_type": "professional",
-      "summary": "At Bletchley Park, Turing worked with codebreakers on German Enigma communications and naval cryptanalysis. After the war, work with colleagues in Manchester connected him to early stored-program computers and chess programming."
+      "summary": "Turing's professional circle linked wartime codebreaking with postwar computer research. At Bletchley Park, colleagues helped turn cryptanalytic ideas into methods for reading German naval Enigma traffic. In Manchester, collaborators developed early stored-program computers and explored problems in computing, chess, and probability."
     }
   ]
 }

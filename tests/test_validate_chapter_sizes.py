@@ -50,11 +50,11 @@ class ChapterSizeTests(unittest.TestCase):
         self.assertEqual(sizes.check_person("someone", {"events": [{}]}), [])
 
     def test_the_script_reports_by_default_and_gates_under_check(self) -> None:
-        # phillis_wheatley ships with an empty chapter and alan_turing with a
-        # single-event one (data/outdated.md); the corpus still carries the
-        # finding, so the default run has to stay green.
-        self.assertEqual(sizes.main(["alan_turing"]), 0)
-        self.assertEqual(sizes.main(["alan_turing", "--check"]), 1)
+        # phillis_wheatley ships with an empty chapter and a single-event one
+        # (data/outdated.md); the corpus still carries the finding, so the
+        # default run has to stay green.
+        self.assertEqual(sizes.main(["phillis_wheatley"]), 0)
+        self.assertEqual(sizes.main(["phillis_wheatley", "--check"]), 1)
 
 
 if __name__ == "__main__":
