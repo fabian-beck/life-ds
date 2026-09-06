@@ -281,11 +281,11 @@
       }
     },
     "p_review": {
-      "fingerprint": "365944a6ca27ea66",
+      "fingerprint": "c98de2386405af7f",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews the generated event timeline and relationship network against the available Wikipedia material as one story. It returns proposed corrections to facts, prose, metadata, annotations, and links between the two views, along with an assessment of their balance and gaps.",
-        "why_this_design": "Reviewing both datasets together catches contradictions and repeated claims that separate passes would miss, while leaving proposed changes for the confidence gate rather than altering the generated data directly."
+        "what_it_does": "Reviews the generated life events and relationship network against the available Wikipedia material, finding factual, metadata, prose, and annotation problems. Returns proposed edits that keep the biography’s timeline and its account of the person’s relationships consistent with each other.",
+        "why_this_design": "Reviews both records together so a person mentioned in the narrative can be checked against the network, while leaving proposed changes for a separate high-confidence application pass."
       }
     },
     "p_style": {

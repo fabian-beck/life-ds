@@ -8,6 +8,7 @@ with focus on readability, accuracy, and UI optimization.
 import json
 from typing import Dict, Any, List, Set
 
+from events.event_classes import boundary_description_prompt
 from utils.prose_style import PROSE_STYLE_INSTRUCTIONS, description_contract_prompt
 
 # UI Context documentation embedded in prompts
@@ -152,6 +153,9 @@ REVIEW GUIDELINES:
 {description_contract_prompt()}
 - 2-4 sentences, each carrying a fact about the event; a description that has grown past that is cut, not paragraphed
 - Remove redundancies between title and opening sentence
+
+**Birth and Death Descriptions** — the two boundary events carry the slide's facts in their `event_class`, so their prose is held to a definition of its own. Rewrite via `new_description` a birth that narrates the birth the slide already shows, or a death that restates the cause, from what the Wikipedia sources say about the household or about the road to the end:
+{boundary_description_prompt()}
 
 {PROSE_STYLE_INSTRUCTIONS}
 

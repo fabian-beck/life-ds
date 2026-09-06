@@ -6,7 +6,9 @@ times: Phase 1 builds its detection guidelines out of the entries, Phase 2
 builds the research focus that tells a call not to repeat what the
 classification already holds, and the run log formats what was found. Keeping
 the three in one table is what stops a kind from being detected under one
-description and researched under another.
+description and researched under another. The birth and the death carry a
+fourth reader: their `description_guidance` defines what the prose of the two
+boundary events tells, and the review holds the shipped description to it.
 
 The models these entries describe live in `events/schemas.py`; nothing here
 imports them, because the table is read as data.
@@ -35,6 +37,68 @@ from typing import Any, Dict
 # - phase2_focus: List of research focus areas (emphasize what NOT to repeat)
 # - log_format: lambda cls: str for formatting log output
 
+# What the prose of the two boundary events tells. Both slides already show
+# the fact itself, the date and the city on every slide, the parents on the
+# birth card and the cause on the death card, so a description that narrates
+# the birth or the death repeats the slide: the Turing story opened on "Alan
+# Turing is born in Maida Vale, London" under a card naming both parents, and
+# closed on "Turing dies from cyanide poisoning. An inquest rules his death a
+# suicide." under a card holding both facts. Phase 1 writes the skeleton from
+# this definition, Phase 2 rewrites a skeleton that fell short of it, and the
+# review holds the shipped description to it, so it is stated once here and
+# read from the table like everything else about the kind.
+BIRTH_DESCRIPTION_GUIDANCE = (
+    "DESCRIPTION: The slide already says that the subject was born, when, where, and "
+    "to whom. The prose tells the world the child enters and grows up in: what the "
+    "parents did and where the family stood, its means, faith, and language, the "
+    "siblings already in the house, and the circumstances of the moment, such as a "
+    "father posted abroad, a war, or a business in debt. The standing conditions of "
+    "the early home hold in the present of a birth. An event dated to a later year, "
+    "such as a move, a school, or a parent's death, does not\n"
+    "  * GOOD: 'The father served as a magistrate in the Indian Civil Service and was "
+    "home on leave. The parents spent most of each year in India and left both sons "
+    "in England in the care of a retired army couple.'\n"
+    "  * GOOD: 'The household was an intellectually active one, with regular gatherings "
+    "of university colleagues.'\n"
+    "  * BAD (restates the slide): 'Alan Turing is born in Maida Vale, London, while his "
+    "father is on leave from the Indian Civil Service.'\n"
+    "  * BAD (a later year): 'His father was a banking partner, and the family later "
+    "moved to East Teignmouth in 1808.'"
+)
+
+DEATH_DESCRIPTION_GUIDANCE = (
+    "DESCRIPTION: The slide already says that the subject died, when, where, of what, "
+    "and where they rest. The prose tells what led to the death and the conditions of "
+    "the end: the illness and its course, the years of decline, a prosecution, a duel, "
+    "an accident, how the person lived in the last period, and who was there. The "
+    "present of a death reaches back over what brought it about. Nothing after it "
+    "belongs in it, neither the funeral, nor the reaction, nor a retrospect of the "
+    "career, which the conclusion carries\n"
+    "  * GOOD: 'A 1952 conviction for gross indecency had cost him his security "
+    "clearance, and the court had ordered a year of hormone treatment. He lived alone "
+    "in Wilmslow. His housekeeper found him dead in bed.'\n"
+    "  * GOOD: 'He spent his last afternoon at home in Carlsberg, resting after lunch.'\n"
+    "  * BAD (restates the slide): 'Turing dies from cyanide poisoning. An inquest rules "
+    "his death a suicide.'\n"
+    "  * BAD (a retrospect): 'Bohr died of heart failure in Copenhagen, closing a career "
+    "that had reshaped physics.'"
+)
+
+# Phase 2 is told in its base prompt to refine a description "shorter and more
+# concrete, never longer". A boundary skeleton that narrates the fact the slide
+# already shows has nothing to shorten, so its class block lifts that rule.
+BOUNDARY_REWRITE_NOTE = (
+    "  * This event is the exception to 'never longer': a Phase 1 description that "
+    "narrates the fact the slide already shows is rewritten to the definition above "
+    "from the article in front of you, within 2-4 sentences"
+)
+
+
+def _as_bullet(guidance: str) -> str:
+    """A guidance block as one Phase 1 bullet, its examples nested under it."""
+    return "  * " + guidance.replace("\n", "\n  ")
+
+
 EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
     "birth": {
         "name": "BIRTH",
@@ -58,14 +122,16 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "  * mother: Full name of the mother, with maiden name when documented, omit when undocumented\n"
             "  * Optional: birth_name (only when it differs from the name the person is known by), "
             "characterization (the household born into, 1-4 words)\n"
+            + _as_bullet(BIRTH_DESCRIPTION_GUIDANCE)
+            + "\n"
         ),
+        "description_guidance": BIRTH_DESCRIPTION_GUIDANCE,
         "phase2_focus": [
-            "DESCRIPTION: The household and the city as they were on that day — what the family "
-            "did, where it stood. The classification names the parents and the birth name, and "
-            "the slide shows the city, so the prose carries none of them",
-            "  * Good: 'The household was an intellectually active one, with regular gatherings of "
-            "university colleagues.'",
-            "  * Bad: 'He was born to Christian Bohr, a physiologist, and Ellen Adler Bohr...'",
+            BIRTH_DESCRIPTION_GUIDANCE,
+            "  * The classification names the parents and the birth name, and the slide shows "
+            "the city, so the prose carries none of them",
+            "  * BAD: 'He was born to Christian Bohr, a physiologist, and Ellen Adler Bohr...'",
+            BOUNDARY_REWRITE_NOTE,
             "LOCATIONS: Place of birth (city level)",
             "INVOLVED_PEOPLE: Siblings or others present, if any; the parents are already in the "
             "classification and are not listed again",
@@ -103,13 +169,14 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "  * When the cause is contested, give the documented one and say so in characterization "
             "('ruled a suicide', 'cause disputed')\n"
             "  * Optional: characterization (1-4 words), place_of_rest (burial or resting place)\n"
+            + _as_bullet(DEATH_DESCRIPTION_GUIDANCE)
+            + "\n"
         ),
+        "description_guidance": DEATH_DESCRIPTION_GUIDANCE,
         "phase2_focus": [
-            "DESCRIPTION: Focus on the final days, the setting, and who was there",
+            DEATH_DESCRIPTION_GUIDANCE,
             "  * DO NOT repeat the cause of death or the resting place (classification has these)",
-            "  * DO NOT add legacy analysis or career retrospectives — those belong in the conclusion",
-            "  * Good: 'He spent his last afternoon at home in Carlsberg, resting after lunch.'",
-            "  * Bad: 'Bohr died of heart failure in Copenhagen, closing a career that had reshaped physics.'",
+            BOUNDARY_REWRITE_NOTE,
             "LOCATIONS: Where the person died (city level)",
             "INVOLVED_PEOPLE: People present or closely involved at the end",
             "ANNOTATIONS: A medical term may be annotated; never annotate the person's own name",
@@ -293,3 +360,16 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
         "log_format": lambda cls: f"PUBLICATION ({cls.title})",
     },
 }
+
+
+def boundary_description_prompt() -> str:
+    """The birth and death description definitions as one block for the review.
+
+    Phase 1 and Phase 2 read them through the table; the review reads the whole
+    dataset at once and needs both definitions in one place, named by kind.
+    """
+    return "\n".join(
+        f"{config['name']} {config['description_guidance']}"
+        for config in EVENT_CLASS_CONFIG.values()
+        if config.get("description_guidance")
+    )
