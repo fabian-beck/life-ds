@@ -60,7 +60,7 @@ CRITICAL CONSTRAINTS - YOU MUST FOLLOW THESE:
 3. EDIT & COMPLETE existing data:
    - Can modify/improve existing text strings, dates, metadata values
    - Can fill in EMPTY/NULL fields with missing information from Wikipedia
-   - Can add missing annotations to resolve orphaned [[term]] references
+   - Can add missing annotations, both for orphaned [[term]] references and for terms a general reader would not know from the sentence
    - Can add missing people to existing events' "involved_people" arrays (if empty or incomplete)
    - Can add missing location data to existing events (if null/empty)
    - CANNOT add new events or new network connections
@@ -160,16 +160,16 @@ REVIEW GUIDELINES:
 {PROSE_STYLE_INSTRUCTIONS}
 
 **Annotations**:
-- Use [[term]] or [[term|display text]] format
-- Provide helpful, concise explanations (not Wikipedia dumps)
-- Only annotate terms on first occurrence
-- Include Wikipedia URL if helpful for further reading
-- Focus on technical terms, foreign words, historical concepts
+- An annotation is a tap-to-open gloss under the slide, the reader's only way to learn what a term in the description is
+- The test for a missing annotation: would an educated general reader who is not a specialist in this person's field know from the sentence what the term is and why it matters? If not, the event needs one. The standard terms of a field count ('central limit theorem', 'general relativity'): a mathematician knows them, the reader does not
+- Read every description for such terms — technical and scientific concepts, inventions and machines, institutions whose role the name does not tell, movements and laws, foreign and regional terms, works named by title — and add each via `new_annotations`, with the `[[term|display text]]` marker inserted into the description via `new_description` so the term is tappable
+- Never annotate a person name, the subject of the event's classification, a well-known place or period, or a common term
+- Only annotate a term at its first occurrence in the story
+- Provide helpful, concise explanations (1-2 sentences, not Wikipedia dumps), with a Wikipedia URL if helpful for further reading
 - **CRITICAL - No redundancy**: Annotation explanations must NOT repeat information already in the event description. Provide additional context or clarification only.
 - **IMPORTANT - Orphaned Annotations**: If you find [[term]] markup in description but no annotation definition:
   * For trivial info (city names, common terms): Remove the [[]] markup entirely
   * For important concepts: Add a proper annotation definition with explanation
-- **IMPORTANT - Missing Annotations**: Look for technical terms, historical events, or concepts that should be annotated but aren't
 
 **Chapter Structure**:
 - Headlines: 2-5 words, evocative and story-like (NOT lists)

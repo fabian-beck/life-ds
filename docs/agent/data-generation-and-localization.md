@@ -307,6 +307,7 @@ The life events generation uses a **two-phase AI approach** for improved accurac
   - People directly involved in this event (excludes main subject)
   - Event-specific images and sources
   - Semantic icon from 100+ MDI categories (e.g., "mdi-crown", "mdi-book")
+  - Annotations for the terms an educated general reader would not know from the sentence. Section 5 of the prompt tests reader benefit, not obscurity: the standard terms of a field (`central limit theorem`, `general relativity`) get a gloss, while person names, the classified subject, well-known places and periods, and terms the sentence itself explains do not. An earlier prompt annotated "only truly obscure terms" and defaulted to none, and the persons generated under it (July to September 2026) carry a third of the annotations older ones do; `data/outdated.md` lists them. The review pass (`scripts/utils/review_prompts.py`) applies the same test and adds what Phase 2 missed, merging into the event's existing annotations.
 - Each call sees only its own event, so it cannot know that a term was the subject of an earlier slide. `drop_repeated_annotations` in `scripts/events/normalize.py` therefore keeps an annotation only where the story first meets its term: once an earlier event annotated a term or named it in its title or classification title, a later annotation of it is removed and its `[[term|display]]` markup unwrapped. The review save path applies the same rule to what the reviewer adds.
 
 **Benefits**:

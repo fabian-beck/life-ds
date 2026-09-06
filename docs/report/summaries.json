@@ -177,11 +177,11 @@
       }
     },
     "p_events_p2": {
-      "fingerprint": "ff5ed7f583544477",
+      "fingerprint": "4e0ec676a81f3829",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Researches one life event against the subject’s article and event-specific related articles, adding a concise account, places, participants, evidence, interpretive links, an event icon, and image-search leads. It keeps the event in the story when research fails, but leaves its added detail unresolved.",
-        "why_this_design": "It treats the subject’s article as the authority and admits related articles only when they document the event, preventing nearby but irrelevant material from changing the account."
+        "what_it_does": "Researches each event against the subject’s article and event-specific related articles, then adds grounded prose, places, participants, evidence, visual search leads, and reader-facing glosses. It preserves an event with empty research fields when the call fails, so one failure does not remove a moment from the story.",
+        "why_this_design": "It filters related articles before the call and treats the subject’s article as the authority, which keeps loosely related material from turning into evidence for the wrong event."
       }
     },
     "p_geocode": {
@@ -281,11 +281,11 @@
       }
     },
     "p_review": {
-      "fingerprint": "c98de2386405af7f",
+      "fingerprint": "54d985a1588c62f5",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews the generated life events and relationship network against the available Wikipedia material, finding factual, metadata, prose, and annotation problems. Returns proposed edits that keep the biography’s timeline and its account of the person’s relationships consistent with each other.",
-        "why_this_design": "Reviews both records together so a person mentioned in the narrative can be checked against the network, while leaving proposed changes for a separate high-confidence application pass."
+        "what_it_does": "Reviews the drafted life story and relationship network together against the cached Wikipedia material. It returns proposed corrections to prose, facts, metadata, annotations, and links between the two views so later processing can revise the data without treating either view in isolation.",
+        "why_this_design": "Reviewing both records in one pass exposes mismatched people and repeated or conflicting claims that separate reviews would miss, while leaving the critic’s changes as proposals preserves the high-confidence gate before automatic edits."
       }
     },
     "p_style": {

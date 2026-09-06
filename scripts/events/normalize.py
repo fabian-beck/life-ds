@@ -234,6 +234,61 @@ def _names_term(text: str, term: str) -> bool:
     )
 
 
+def _unwrap_marker(description: str, term: str) -> str:
+    """Reduce this term's `[[term|display]]` markup to its display text."""
+    return _ANNOTATION_MARKER.sub(
+        lambda m: ((m.group(2) or m.group(1)) if m.group(1) == term else m.group(0)),
+        description,
+    )
+
+
+def _drop_annotation(event: Dict[str, Any], term: str) -> None:
+    annotations = event.get("annotations")
+    if isinstance(annotations, dict):
+        annotations.pop(term, None)
+        if not annotations:
+            event.pop("annotations", None)
+    description = event.get("description")
+    if isinstance(description, str):
+        event["description"] = _unwrap_marker(description, term)
+
+
+def _classification_subject(event: Dict[str, Any]) -> Optional[str]:
+    """The name the event's classification card explains, if it has one."""
+    event_class = event.get("event_class")
+    title = event_class.get("title") if isinstance(event_class, dict) else None
+    if not isinstance(title, str) or not title.strip():
+        return None
+    # "Zahlbericht (report on algebraic number theory)" names the Zahlbericht.
+    return re.sub(r"\s*\([^)]*\)\s*$", "", title).strip() or None
+
+
+def drop_classified_annotations(events: List[Dict[str, Any]]) -> List[str]:
+    """Drop a gloss of what the event's own classification card explains.
+
+    An invention or publication event carries a card under its description
+    that names its subject and says what it is. Phase 2 is told not to
+    annotate that subject, and does anyway: Turing's Bombe slide glossed
+    "bombe" in the sentence directly above a card headed "Bombe" that says
+    the same thing. An annotation is dropped when its term is the whole
+    classification title (a trailing parenthetical aside), and its markup
+    unwrapped. A term that only sits inside a longer title stays, since a
+    card about "On Computable Numbers" does not explain the
+    Entscheidungsproblem. Returns the dropped terms.
+    """
+    dropped: List[str] = []
+    for event in events:
+        subject = _classification_subject(event)
+        annotations = event.get("annotations")
+        if not subject or not isinstance(annotations, dict):
+            continue
+        for term in list(annotations):
+            if _term_words(term) == _term_words(subject):
+                _drop_annotation(event, term)
+                dropped.append(term)
+    return dropped
+
+
 def drop_repeated_annotations(events: List[Dict[str, Any]]) -> List[str]:
     """Explain a term once, where the story first makes it a subject.
 
@@ -254,22 +309,10 @@ def drop_repeated_annotations(events: List[Dict[str, Any]]) -> List[str]:
             for term in list(annotations):
                 if not any(_names_term(text, term) for text in introduced):
                     continue
-                del annotations[term]
+                _drop_annotation(event, term)
                 dropped.append(term)
-                description = event.get("description")
-                if isinstance(description, str):
-                    event["description"] = _ANNOTATION_MARKER.sub(
-                        lambda m: (
-                            (m.group(2) or m.group(1))
-                            if m.group(1) == term
-                            else m.group(0)
-                        ),
-                        description,
-                    )
-            if not annotations:
-                event.pop("annotations", None)
-            else:
-                introduced.extend(annotations)
+            if event.get("annotations"):
+                introduced.extend(event["annotations"])
         for text in (
             event.get("title"),
             (
@@ -589,6 +632,7 @@ def enforce_metadata(
         events.append(event)
 
     events.sort(key=event_sort_key)
+    drop_classified_annotations(events)
     drop_repeated_annotations(events)
     payload["events"] = events
 

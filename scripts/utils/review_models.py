@@ -94,7 +94,15 @@ class EventChanges(BaseModel):
             "impact is documented."
         ),
     )
-    new_annotations: Optional[Dict[str, Annotation]] = None
+    new_annotations: Optional[Dict[str, Annotation]] = Field(
+        None,
+        description=(
+            "Annotations to add to or correct on this event, keyed by the "
+            "term as it appears in the [[term|display]] marker. Merged into "
+            "the event's existing annotations: a term already annotated is "
+            "replaced, every other one is kept."
+        ),
+    )
     new_involved_people: Optional[List[str]] = None
     new_locations: Optional[List[LocationObject]] = None
     new_event_type_icon: Optional[str] = None

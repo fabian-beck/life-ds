@@ -9,7 +9,10 @@ import json
 import re
 from typing import Any, Dict, Tuple
 
-from events.normalize import drop_repeated_annotations
+from events.normalize import (
+    drop_classified_annotations,
+    drop_repeated_annotations,
+)
 
 from .relationship_vocabulary import normalize_relationship_type
 from .review_models import EventsChanges, NetworkChanges
@@ -105,14 +108,17 @@ def apply_event_changes(
 
         if event_change.new_annotations:
             # Convert Pydantic models to dicts
-            event["annotations"] = {
-                term: (
+            # Merge so a reviewer who adds one gloss cannot drop the
+            # others: the model returns what it changed, not the full map.
+            existing = event.get("annotations")
+            merged = dict(existing) if isinstance(existing, dict) else {}
+            for term, ann in event_change.new_annotations.items():
+                merged[term] = (
                     {"explanation": ann.explanation, "wikipedia_url": ann.wikipedia_url}
                     if hasattr(ann, "explanation")
                     else ann
                 )
-                for term, ann in event_change.new_annotations.items()
-            }
+            event["annotations"] = merged
             applied += 1
 
         if event_change.new_involved_people is not None:
@@ -155,6 +161,7 @@ def apply_event_changes(
 
     # The reviewer is asked to annotate a term only where the story first
     # meets it, and this holds it to that the way generation does.
+    drop_classified_annotations(updated_data.get("events", []))
     drop_repeated_annotations(updated_data.get("events", []))
 
     return updated_data, applied, skipped

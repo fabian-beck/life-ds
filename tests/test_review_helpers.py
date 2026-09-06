@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from utils.review_helpers import apply_event_changes  # noqa: E402
 from utils.review_models import (  # noqa: E402
+    Annotation,
     EventChanges,
     EventsChanges,
     LocationObject,
@@ -138,6 +139,39 @@ class ApplyEventChangesTests(unittest.TestCase):
         self.assertEqual((applied, skipped), (0, 1))
         self.assertEqual(
             updated["events"][0]["locations"][0]["name_historic"], "Berlin"
+        )
+
+    def test_added_annotation_keeps_the_ones_the_event_already_had(self) -> None:
+        """A reviewer returns the gloss it adds, not the whole map."""
+        data = {
+            "events": [
+                {
+                    "title": "Graduated from King's College",
+                    "description": (
+                        "His dissertation proved a version of the [[central limit "
+                        "theorem|central limit theorem]] at [[King's College|King's]]."
+                    ),
+                    "annotations": {
+                        "King's College": {"explanation": "A Cambridge college."}
+                    },
+                }
+            ]
+        }
+        changes = _change(
+            new_annotations={
+                "central limit theorem": Annotation(
+                    explanation="Sums of many independent quantities tend to a normal distribution."
+                )
+            }
+        )
+        updated, applied, _ = apply_event_changes(data, changes)
+        annotations = updated["events"][0]["annotations"]
+
+        self.assertEqual(applied, 1)
+        self.assertEqual(set(annotations), {"King's College", "central limit theorem"})
+        self.assertEqual(
+            annotations["central limit theorem"]["explanation"],
+            "Sums of many independent quantities tend to a normal distribution.",
         )
 
 

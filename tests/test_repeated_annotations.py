@@ -14,7 +14,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from events.normalize import drop_repeated_annotations  # noqa: E402
+from events.normalize import (  # noqa: E402
+    drop_classified_annotations,
+    drop_repeated_annotations,
+)
 from utils.review_helpers import apply_event_changes  # noqa: E402
 from utils.review_models import EventsChanges  # noqa: E402
 
@@ -113,6 +116,65 @@ class RepeatedAnnotationTests(unittest.TestCase):
             updated["events"][1]["description"],
             "Funding for the Difference Engine followed.",
         )
+
+
+class ClassifiedAnnotationTests(unittest.TestCase):
+    def test_gloss_of_the_classified_subject_is_dropped(self) -> None:
+        events = [
+            {
+                "title": "Designs the Bombe for Enigma",
+                "description": "Turing designs the [[Bombe|bombe]] to help find Enigma settings.",
+                "annotations": {"Bombe": _gloss("An electromechanical codebreaking machine.")},
+                "event_class": {"type": "invention", "title": "Bombe"},
+            },
+            {
+                "title": "Publishes the Zahlbericht",
+                "description": "Hilbert's [[Zahlbericht]] appears.",
+                "annotations": {"Zahlbericht": _gloss("A report on number theory.")},
+                "event_class": {
+                    "type": "publication",
+                    "title": "Zahlbericht (report on algebraic number theory)",
+                },
+            },
+        ]
+        self.assertEqual(drop_classified_annotations(events), ["Bombe", "Zahlbericht"])
+        self.assertNotIn("annotations", events[0])
+        self.assertEqual(
+            events[0]["description"],
+            "Turing designs the bombe to help find Enigma settings.",
+        )
+        self.assertEqual(events[1]["description"], "Hilbert's Zahlbericht appears.")
+
+    def test_term_inside_a_longer_title_keeps_its_gloss(self) -> None:
+        events = [
+            {
+                "title": "Publishes On Computable Numbers",
+                "description": "The paper settles the [[Entscheidungsproblem]].",
+                "annotations": {"Entscheidungsproblem": _gloss("Hilbert's decision problem.")},
+                "event_class": {
+                    "type": "publication",
+                    "title": "On Computable Numbers, with an Application to the Entscheidungsproblem",
+                },
+            }
+        ]
+        self.assertEqual(drop_classified_annotations(events), [])
+        self.assertIn("Entscheidungsproblem", events[0]["annotations"])
+        self.assertIn("[[Entscheidungsproblem]]", events[0]["description"])
+
+    def test_review_save_path_applies_the_rule(self) -> None:
+        data = {
+            "events": [
+                {
+                    "title": "Designs the Bombe for Enigma",
+                    "description": "Turing designs the [[Bombe|bombe]].",
+                    "annotations": {"Bombe": _gloss("A codebreaking machine.")},
+                    "event_class": {"type": "invention", "title": "Bombe"},
+                }
+            ]
+        }
+        updated, _, _ = apply_event_changes(data, EventsChanges(events=[]))
+        self.assertNotIn("annotations", updated["events"][0])
+        self.assertEqual(updated["events"][0]["description"], "Turing designs the bombe.")
 
 
 if __name__ == "__main__":
