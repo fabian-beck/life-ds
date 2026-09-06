@@ -345,7 +345,7 @@ class LifePlan(BaseModel):
     created_on: str = Field(description="Creation date in ISO-8601 format")
     person: Person = Field(description="Person metadata")
     chapters: List[ChapterPlan] = Field(
-        description="3-6 chapters in chronological order, each named by at least one event skeleton"
+        description="3-6 chapters in chronological order, each named by at least two event skeletons"
     )
     event_skeletons: List[EventSkeleton] = Field(
         description="List of event skeletons (minimal event data)"

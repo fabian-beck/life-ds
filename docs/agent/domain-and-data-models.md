@@ -147,6 +147,7 @@ The slide names the work and does not link it. The event's own `sources` are abo
 
   It depicts nothing that happened: no people, no places, no text, only a metaphor for what the chapter is about. That is why it carries no caption and no alt text — `ChapterSlide.svelte` prints it translucent above the headline and hides it from assistive technology, which also means none of these fields are translated. Every language copy carries the same paths and the same `concept`, the way portrait metadata does; `concept` is kept so the picture can be redrawn without a second text call.
 - Each chapter should have thematic coherence - events share a common thread or life phase
+- Each chapter holds at least two events (`MIN_CHAPTER_EVENTS` in `scripts/events/pipeline.py`): a chapter slide announces a phase, and a phase with one event would announce that event and then tell it once more on the next slide
 - Aim for 3-6 chapters total that flow together to create narrative momentum
 - `conclusion`: What came of the life, stated as facts in 2-4 sentences: what of the person's work is still in use, still read, still built on, and by whom, one sentence per strand of the work that persists
 

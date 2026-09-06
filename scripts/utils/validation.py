@@ -23,17 +23,25 @@ def run_dataset_check(
     *,
     description: Optional[str],
     argv: Optional[List[str]] = None,
+    report_only: bool = False,
 ) -> int:
     """Run a per-person check over the corpus and report its findings.
 
     Findings only need a ``__str__`` that names the person and the defect.
-    Returns 1 when anything was found, so the scripts compose with CI.
+    Returns 1 when anything was found, so the scripts compose with CI. A
+    ``report_only`` validator instead gains a ``--check`` flag and fails only
+    under it: that is the shape for a rule the shipped corpus still breaks,
+    whose count says whether a generator change worked until it reads zero.
     """
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument(
         "person_ids", nargs="*", help="Specific person ids to check (default: all)"
     )
     parser.add_argument("--verbose", action="store_true")
+    if report_only:
+        parser.add_argument(
+            "--check", action="store_true", help="Exit 1 when anything was found"
+        )
     args = parser.parse_args(argv)
 
     findings: List[Any] = []
@@ -54,4 +62,6 @@ def run_dataset_check(
         print(f"ERROR: {finding}")
 
     print(f"\nChecked {checked} person dataset(s), {len(findings)} finding(s).")
+    if report_only and not args.check:
+        return 0
     return 1 if findings else 0

@@ -14,13 +14,23 @@ from __future__ import annotations
 import sys
 import unittest
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from events.schemas import ChapterPlan, EventSkeleton, LifeEvent  # noqa: E402
 from events.pipeline import (  # noqa: E402
+    MIN_CHAPTER_EVENTS,
+    PHASE1_ATTEMPTS,
     build_chapters,
+    call_openai_phase1,
     validate_chapter_partition,
+)
+from events.schemas import (  # noqa: E402
+    ChapterPlan,
+    EventSkeleton,
+    LifeEvent,
+    LifePlan,
+    Person,
 )
 
 
@@ -85,6 +95,23 @@ class PartitionTests(unittest.TestCase):
         skeletons = [skeleton("Birth", "1858", "beginnings")]
         with self.assertRaisesRegex(RuntimeError, "hold no event: berlin"):
             validate_chapter_partition(plan("beginnings", "berlin"), skeletons)
+
+    def test_a_single_event_chapter_is_refused(self) -> None:
+        # Turing's plan: a Princeton chapter holding the doctorate alone.
+        skeletons = [
+            skeleton("Birth", "1912-06-23", "southern_england"),
+            skeleton("Sherborne", "1926", "southern_england"),
+            skeleton("Doctorate", "1938", "princeton_years"),
+            skeleton("Bletchley", "1939-09", "wartime"),
+            skeleton("Bombe", "1939-11", "wartime"),
+        ]
+        self.assertEqual(MIN_CHAPTER_EVENTS, 2)
+        with self.assertRaisesRegex(
+            RuntimeError, "fewer than 2 events: princeton_years \\(1\\)"
+        ):
+            validate_chapter_partition(
+                plan("southern_england", "princeton_years", "wartime"), skeletons
+            )
 
     def test_chapters_listed_out_of_timeline_order_are_refused(self) -> None:
         skeletons = [
@@ -166,6 +193,52 @@ class BuildChaptersTests(unittest.TestCase):
     def test_an_empty_chapter_fails(self) -> None:
         with self.assertRaisesRegex(RuntimeError, "holds no event"):
             build_chapters(plan("a"), [event("1900", "year", "b")])
+
+
+def life_plan(*chapter_of_event: str) -> LifePlan:
+    """A plan of dated events, each naming its chapter, in the given order."""
+    events = [
+        skeleton(f"Event {i}", str(1900 + i), chapter)
+        for i, chapter in enumerate(chapter_of_event)
+    ]
+    ids = list(dict.fromkeys(chapter_of_event))
+    return LifePlan(
+        dataset="Biographical Timeline",
+        created_on="2026-09-06",
+        person=Person(
+            name="Someone", primary_roles=["writer"], tagline="A life", summary=""
+        ),
+        chapters=plan(*ids),
+        event_skeletons=events,
+        conclusion="",
+    )
+
+
+class Phase1RetryTests(unittest.TestCase):
+    """A refused plan is asked for once more, with the reason; then it fails."""
+
+    def test_a_refused_plan_is_asked_again_with_the_reason(self) -> None:
+        thin = life_plan("a", "a", "b")
+        sound = life_plan("a", "a", "b", "b")
+        with mock.patch(
+            "events.pipeline.parse_structured_or_raise", side_effect=[thin, sound]
+        ) as call, mock.patch("events.pipeline.get_client"):
+            result = call_openai_phase1("the article", "a-model")
+        self.assertIs(result, sound)
+        self.assertEqual(call.call_count, 2)
+        first, second = (c.kwargs["input"] for c in call.call_args_list)
+        self.assertEqual(len(second), len(first) + 1)
+        self.assertIn("fewer than 2 events: b (1)", second[-1]["content"])
+
+    def test_a_plan_refused_twice_fails_the_run(self) -> None:
+        self.assertEqual(PHASE1_ATTEMPTS, 2)
+        with mock.patch(
+            "events.pipeline.parse_structured_or_raise",
+            side_effect=[life_plan("a", "b", "b"), life_plan("a", "b", "b")],
+        ) as call, mock.patch("events.pipeline.get_client"):
+            with self.assertRaisesRegex(RuntimeError, "fewer than 2 events: a"):
+                call_openai_phase1("the article", "a-model")
+        self.assertEqual(call.call_count, PHASE1_ATTEMPTS)
 
 
 if __name__ == "__main__":

@@ -408,7 +408,9 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "- Every chapter must be equally important with a specific, concrete theme - there are no 'other' or secondary chapters\n"
         "- List the chapters in chronological order. Chapters are contiguous runs of the timeline: "
         "every event of a chapter comes after every event of the chapter before it, and a chapter never resumes once the next has begun\n"
-        "- Every event belongs to exactly one chapter, named in its chapter field by the chapter's id, and every chapter holds at least one event\n"
+        "- Every event belongs to exactly one chapter, named in its chapter field by the chapter's id\n"
+        f"- Every chapter holds at least {MIN_CHAPTER_EVENTS} events. A chapter slide opens on a phase of the life, and a phase "
+        "with one event in it is that event told twice: fold such an event into the chapter before or after it\n"
         "- Events within a chapter should feel related - avoid mixing disparate life phases (e.g., don't combine education + early career + major achievement)\n"
         "- Aim for 3-6 chapters total - too few lacks nuance, too many fragments the story\n"
         "- If a life phase spans many years with different themes, consider splitting into multiple chapters\n"
@@ -487,19 +489,58 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "- BAD examples: 'Father of Computer Science', 'Architect of Relativity', 'Pioneer of Structured Programming', 'Visionary of the Analytical Engine'"
     )
 
-    parsed = parse_structured_or_raise(
-        client,
-        model=model,
-        reasoning_effort=PHASE1_REASONING_EFFORT,
-        input=[
-            {"role": "system", "content": system},
-            {"role": "user", "content": instructions},
-            {"role": "user", "content": prompt},
-        ],
-        text_format=LifePlan,
-        label="Phase 1",
-    )
+    messages: List[Dict[str, Any]] = [
+        {"role": "system", "content": system},
+        {"role": "user", "content": instructions},
+        {"role": "user", "content": prompt},
+    ]
+    for attempt in range(1, PHASE1_ATTEMPTS + 1):
+        parsed = parse_structured_or_raise(
+            client,
+            model=model,
+            reasoning_effort=PHASE1_REASONING_EFFORT,
+            input=messages,
+            text_format=LifePlan,
+            label="Phase 1",
+        )
+        try:
+            return accept_life_plan(parsed)
+        except RuntimeError as error:
+            if attempt == PHASE1_ATTEMPTS:
+                raise
+            print(f"  Phase 1: Rejected plan {attempt}: {error}")
+            messages = messages + [phase1_rejection_message(error)]
+    raise AssertionError("unreachable")
 
+
+PHASE1_ATTEMPTS = 2
+"""How many plans the model may propose before a refused one fails the run.
+
+The chapter and order rules in the prompt are also checked in code, and a plan
+that breaks one used to end the whole generation before Phase 2 had run. One
+more call that names the rejection is cheaper than a failed run.
+"""
+
+
+def phase1_rejection_message(error: Exception) -> Dict[str, Any]:
+    """The turn that asks for a corrected plan, naming why the last was refused."""
+    return {
+        "role": "user",
+        "content": (
+            "The previous plan was rejected for this reason: "
+            + str(error)
+            + "\nReturn a corrected plan that satisfies every rule above. Keep the "
+            "events and chapters that were not at fault as they were."
+        ),
+    }
+
+
+def accept_life_plan(parsed: LifePlan) -> LifePlan:
+    """Classify the boundaries of a plan and refuse one whose structure is wrong.
+
+    Raises RuntimeError when the events are out of order or the chapters do
+    not partition them into contiguous runs of at least MIN_CHAPTER_EVENTS.
+    """
     # Ensure events are sorted chronologically (defensive programming)
     parsed.event_skeletons.sort(key=lambda e: e.date)
 
@@ -751,6 +792,17 @@ def merge_all_events(
 # ============================================================================
 
 
+MIN_CHAPTER_EVENTS = 2
+"""The fewest events a chapter may hold.
+
+A chapter slide announces a phase of the life and the event slides then tell
+it. A chapter with one event announces that event and tells it once more on
+the next slide, with the same year and the same place on both — the Turing
+dataset opened "Across the Atlantic" on his Princeton doctorate alone. Such an
+event belongs to the chapter before or after it.
+"""
+
+
 def validate_chapter_partition(
     chapters: Sequence[ChapterPlan], skeletons: Sequence[EventSkeleton]
 ) -> None:
@@ -759,10 +811,10 @@ def validate_chapter_partition(
     The interface inserts a chapter slide wherever the chapter id changes
     between two consecutive events, so a chapter that resumes after another
     has begun renders twice. Every event has to name a chapter that exists,
-    every chapter has to hold an event, and the order in which the chapters
-    first appear along the timeline has to be the order the plan lists them
-    in. A plan that fails any of this is refused before Phase 2 pays for the
-    research.
+    every chapter has to hold at least MIN_CHAPTER_EVENTS events, and the
+    order in which the chapters first appear along the timeline has to be the
+    order the plan lists them in. A plan that fails any of this is refused
+    before Phase 2 pays for the research.
     """
     if not chapters:
         raise RuntimeError("Phase 1 returned no chapters")
@@ -773,6 +825,7 @@ def validate_chapter_partition(
     known = set(ids)
 
     order_of_appearance: List[str] = []
+    members: Dict[str, int] = {cid: 0 for cid in ids}
     for skeleton in skeletons:
         if not skeleton.chapter:
             raise RuntimeError(f"Event '{skeleton.title}' names no chapter")
@@ -780,6 +833,7 @@ def validate_chapter_partition(
             raise RuntimeError(
                 f"Event '{skeleton.title}' names unknown chapter '{skeleton.chapter}'"
             )
+        members[skeleton.chapter] += 1
         if skeleton.chapter in order_of_appearance:
             if order_of_appearance[-1] != skeleton.chapter:
                 raise RuntimeError(
@@ -796,6 +850,13 @@ def validate_chapter_partition(
         raise RuntimeError(
             "Chapters are listed out of order: the plan says "
             f"{', '.join(ids)} but the events run {', '.join(order_of_appearance)}"
+        )
+    thin = [
+        f"{cid} ({members[cid]})" for cid in ids if members[cid] < MIN_CHAPTER_EVENTS
+    ]
+    if thin:
+        raise RuntimeError(
+            f"Chapters hold fewer than {MIN_CHAPTER_EVENTS} events: {', '.join(thin)}"
         )
 
 

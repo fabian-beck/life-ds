@@ -220,6 +220,16 @@ python scripts/validate_event_prose.py charles_babbage
 
 Every phase that writes a description — Phase 1, Phase 2's refinement, the review — reads one definition of what a description is, `description_contract_prompt()` in `scripts/utils/prose_style.py`: one moment of a life, narrated in its own present, asserted rather than weighed against sources, at the slide's granularity. Before the contract each phase carried its own partial copy of the rules and the copies disagreed, and a description that was accurate, sourced, and written in an encyclopedia's source-critical register passed every validator (issue #141). This reads for the shapes that shipped: a year later than the event's own span anywhere in the prose, the language of weighing sources ("most likely", "is disputed", "according to"), a street address or house number where the slide is at city level, a description under twenty words, and a conclusion of one sentence. The two length floors came from the datasets generated on 2026-09-05, whose median description had fallen to 23 words from the 60 of the first datasets: the prose block said its range was "not a length target", Phase 2 was told to refine a skeleton "shorter, never longer" although it holds more of the article than Phase 1, the class guidance forbade the partner's name in the prose because the card carries it, and a marriage came out as "In 1930, she married a New York University professor." The prompts now state the floor, let Phase 2 extend a thin skeleton, and keep the people and the place in the sentence; the card holds only the structured detail. It reports by default, because the corpus still carries prose written before the contract, and its count is how a prompt change is judged; `--check` makes it a gate. A sentence that trips a rule and is right belongs in the script's `ACCEPTED` list with the reason.
 
+**Check the chapter sizes** (no API key, no model):
+
+```bash
+python scripts/validate_chapter_sizes.py            # report
+python scripts/validate_chapter_sizes.py --check    # exit 1 on any finding
+python scripts/validate_chapter_sizes.py alan_turing
+```
+
+A chapter slide announces a phase of the life and the event slides after it tell that phase, so a chapter with one event announces the event and then tells it once more, with the same year and place on both slides; a chapter with no event never renders, because the interface inserts a chapter slide only where an event names it. Phase 1 now refuses such a plan (`MIN_CHAPTER_EVENTS` in `scripts/events/pipeline.py`), and this reads the corpus for the datasets written before the floor. It reports by default and gates under `--check` once the count reads zero.
+
 **Restyle a meta story** (Phase 9 of `generate_meta_story.py`, standalone):
 
 ```bash
@@ -294,7 +304,7 @@ The life events generation uses a **two-phase AI approach** for improved accurac
 
 **Phase 1: Event Skeleton Generation** (1 AI call)
 - Identifies 12-16 significant life events (strictly enforced)
-- Groups them into 3-6 coherent chapters by naming the chapter on each event, and writes the conclusion; the chapters are dated afterwards from the events they hold, and `validate_chapter_partition` refuses a plan whose chapters do not form contiguous runs of the timeline before Phase 2 pays for any research
+- Groups them into 3-6 coherent chapters by naming the chapter on each event, and writes the conclusion; the chapters are dated afterwards from the events they hold, and `validate_chapter_partition` refuses a plan whose chapters do not form contiguous runs of at least two events (`MIN_CHAPTER_EVENTS`) before Phase 2 pays for any research. A refused plan is asked for once more with the reason (`PHASE1_ATTEMPTS`); a second refusal fails the run
 - Creates crisp titles (2-6 words) and writes each description to the shared description contract (`scripts/utils/prose_style.py`), the one definition Phase 2 and the review hold it to as well: 2-4 sentences that name the people and the place and stand without the card beside them
 - Uses ALL related articles for broad context
 

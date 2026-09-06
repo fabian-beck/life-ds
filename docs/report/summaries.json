@@ -169,11 +169,11 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "deb6dc8c2d0f4073",
+      "fingerprint": "6f8d6ed357409a2f",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the first account of a person’s life by selecting and ordering the events that form its narrative spine, ranking their importance against one another, and grouping contiguous phases into chapters. It leaves later steps a shared plan for researching each event’s places, images, and evidence, while reserving the conclusion for what persisted after the life ended.",
-        "why_this_design": "It reads the main article alongside related context in one pass because deciding what changed a life and where one phase gives way to another requires comparison across the whole biography; chapter dates can then derive safely from their events."
+        "what_it_does": "Builds the narrative spine from the full article set, selecting and ordering the life events that matter most, assigning their relative weight, and grouping them into successive chapters. It leaves later steps a dated account of the subject’s life and a conclusion that connects the central work to what endures after it.",
+        "why_this_design": "It makes these choices in one pass because significance and chapter boundaries depend on comparing events across the whole life, while later steps can safely add evidence, places, and media to that settled structure."
       }
     },
     "p_events_p2": {

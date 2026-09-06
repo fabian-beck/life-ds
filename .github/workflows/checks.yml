@@ -159,6 +159,12 @@ jobs:
         if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: python scripts/validate_event_prose.py
 
+      # Report only for the same reason: the corpus still carries chapters
+      # written before Phase 1 refused a chapter of fewer than two events.
+      - name: Every chapter holds at least two events
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
+        run: python scripts/validate_chapter_sizes.py
+
       - name: Event dates agree with their descriptions
         if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: python scripts/validate_event_dates.py
