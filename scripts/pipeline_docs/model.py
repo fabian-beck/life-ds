@@ -27,22 +27,30 @@ from .report import Document
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
-KIND_META: Dict[str, Dict[str, str]] = {
+# The payload is serialized with sorted keys, so the reading order a legend,
+# a filter row, and the teaser figure share is carried by `order`, not by the
+# order the entries are written in here. It follows the pipeline: material
+# arrives, a model interprets it, code turns the result into artifacts.
+KIND_META: Dict[str, Dict[str, Any]] = {
+    spec.EXTERNAL: {
+        "order": 0,
+        "label": "External source",
+        "description": "Fetches data from Wikipedia, Deutsche Biographie, Commons, or Nominatim.",
+    },
     spec.AI: {
+        "order": 1,
         "label": "AI call",
-        "description": "Sends a prompt to a language model and parses a structured result.",
+        "description": "Sends a prompt to a language model and parses the structured result.",
     },
     spec.CODE: {
+        "order": 2,
         "label": "Deterministic",
-        "description": "Plain code—same inputs, same outputs, no model involved.",
-    },
-    spec.EXTERNAL: {
-        "label": "External source",
-        "description": "Fetches from Wikipedia, Deutsche Biographie, Commons or Nominatim.",
+        "description": "Runs plain code, so the same input always yields the same output.",
     },
     spec.IMAGE: {
+        "order": 3,
         "label": "Image model",
-        "description": "Generates or edits an image rather than text.",
+        "description": "Generates or edits an image.",
     },
 }
 

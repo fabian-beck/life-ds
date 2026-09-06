@@ -420,6 +420,19 @@
     return "var(--kind-" + kind + ")";
   }
 
+  // The payload arrives with its keys sorted, so every place that shows the
+  // kinds—the legend, the filter row, the teaser figure—reads them through
+  // here and gets the one authored reading order.
+  function kindEntries() {
+    return Object.keys(DATA.kinds)
+      .sort(function (a, b) {
+        return DATA.kinds[a].order - DATA.kinds[b].order;
+      })
+      .map(function (kind) {
+        return [kind, DATA.kinds[kind]];
+      });
+  }
+
   // What an artifact is called where it is drawn. The concept is the wider
   // family it belongs to and is printed under the name only where the two
   // differ—"Ego network", of the social network; "Portrait", of the imagery.
@@ -511,7 +524,7 @@
     function renderToolbar() {
       clear(filters);
 
-      Object.entries(DATA.kinds).forEach((entry) => {
+      kindEntries().forEach((entry) => {
         const kind = entry[0];
         const info = entry[1];
         const button = el("button", {
@@ -2534,7 +2547,8 @@
     kinds: function (host, part) {
       let x = part.x;
       let y = part.y + 12;
-      Object.keys(DATA.kinds).forEach((kind) => {
+      kindEntries().forEach((entry) => {
+        const kind = entry[0];
         const width = DATA.kinds[kind].label.length * 6.6 + 26;
         if (x > part.x && x + width > part.x + part.w) {
           x = part.x;
@@ -4309,7 +4323,7 @@
 
     kindlegend: function (mount) {
       const list = el("dl", { class: "kindlist" });
-      Object.entries(DATA.kinds).forEach((entry) => {
+      kindEntries().forEach((entry) => {
         list.appendChild(
           el("dt", {}, [
             el("span", {
