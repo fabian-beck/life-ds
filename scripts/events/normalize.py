@@ -242,7 +242,8 @@ def _unwrap_marker(description: str, term: str) -> str:
     )
 
 
-def _drop_annotation(event: Dict[str, Any], term: str) -> None:
+def drop_annotation(event: Dict[str, Any], term: str) -> None:
+    """Remove one term's annotation and unwrap its marker in the description."""
     annotations = event.get("annotations")
     if isinstance(annotations, dict):
         annotations.pop(term, None)
@@ -284,7 +285,7 @@ def drop_classified_annotations(events: List[Dict[str, Any]]) -> List[str]:
             continue
         for term in list(annotations):
             if _term_words(term) == _term_words(subject):
-                _drop_annotation(event, term)
+                drop_annotation(event, term)
                 dropped.append(term)
     return dropped
 
@@ -309,7 +310,7 @@ def drop_repeated_annotations(events: List[Dict[str, Any]]) -> List[str]:
             for term in list(annotations):
                 if not any(_names_term(text, term) for text in introduced):
                     continue
-                _drop_annotation(event, term)
+                drop_annotation(event, term)
                 dropped.append(term)
             if event.get("annotations"):
                 introduced.extend(event["annotations"])

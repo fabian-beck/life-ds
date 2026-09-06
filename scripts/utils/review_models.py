@@ -103,6 +103,14 @@ class EventChanges(BaseModel):
             "replaced, every other one is kept."
         ),
     )
+    dropped_annotations: Optional[List[str]] = Field(
+        None,
+        description=(
+            "Terms whose annotation is removed from this event because its "
+            "explanation only restates the description. The [[term|display]] "
+            "marker is unwrapped to its display text."
+        ),
+    )
     new_involved_people: Optional[List[str]] = None
     new_locations: Optional[List[LocationObject]] = None
     new_event_type_icon: Optional[str] = None

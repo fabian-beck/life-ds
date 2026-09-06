@@ -25,6 +25,10 @@ actually shipped:
     New York University professor." under a card naming the partner, "COBOL
     remains in use today in business and government computing." for a whole
     life
+  - an annotation whose explanation restates the description: when most of
+    its content words already stand in the description, the title, or the
+    term, the reader taps the term and learns nothing (Turing's Banburismus
+    slide defined the method in the sentence and again in the popup)
 
 It reports and never edits: a finding names a dataset for ``data/outdated.md``,
 and a corpus count before and after a prompt change says whether the change
@@ -192,11 +196,79 @@ def thin_conclusion(data: Dict[str, Any]) -> List[str]:
     return [text]
 
 
+STOPWORDS = frozenset(
+    """a an the of to in on at for and or by with from as is was were be been
+    being it its this that these those his her their he she they them into over
+    under than then there here which who whom whose what when where while not
+    no nor so such but if also very more most much many some any each both all
+    one first later early after before during between within without through
+    about against among across per via up out off""".split()
+)
+RESTATED_SHARE = 0.6
+_SUFFIXES = (
+    "ically",
+    "ical",
+    "ing",
+    "ions",
+    "ion",
+    "ies",
+    "ers",
+    "er",
+    "ed",
+    "es",
+    "s",
+    "al",
+    "ly",
+)
+
+
+def _stem(word: str) -> str:
+    for suffix in _SUFFIXES:
+        if word.endswith(suffix) and len(word) - len(suffix) >= 4:
+            return word[: -len(suffix)]
+    return word
+
+
+def _content_words(text: str) -> set:
+    return {
+        _stem(word)
+        for word in re.findall(r"[a-z0-9]+", text.lower())
+        if word not in STOPWORDS and len(word) > 1
+    }
+
+
+def restated_annotations(event: Dict[str, Any]) -> List[str]:
+    """Explanations whose content words mostly already stand in the slide.
+
+    A lexical share catches the restatement written in the same words; a
+    paraphrase in fresh words passes, which is why the reviewer reads the
+    rest. The share is against the description, the title, and the term, so
+    a gloss that names the term it explains is not charged for that.
+    """
+    annotations = event.get("annotations")
+    if not isinstance(annotations, dict):
+        return []
+    context = _content_words(
+        f"{event.get('title') or ''} {event.get('description') or ''}"
+    )
+    found = []
+    for term, annotation in annotations.items():
+        explanation = str((annotation or {}).get("explanation") or "")
+        words = _content_words(explanation)
+        if not words:
+            continue
+        known = words & (context | _content_words(term))
+        if len(known) / len(words) >= RESTATED_SHARE:
+            found.append(f"{term}: {explanation}".replace("\n", " "))
+    return found
+
+
 RULES = (
     ("a later year in the event's own prose", later_years),
     ("the language of weighing sources", source_talk),
     ("street-level place in a city-level slide", street_level),
     ("a description under twenty words", thin_description),
+    ("an annotation that restates the description", restated_annotations),
 )
 CONCLUSION_RULE = "a conclusion of one sentence"
 

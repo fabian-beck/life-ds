@@ -281,11 +281,11 @@
       }
     },
     "p_review": {
-      "fingerprint": "1838eb029b149df8",
+      "fingerprint": "457a118d3837a9aa",
       "summary": {
         "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews the life-event narrative and relationship network against the available Wikipedia material, looking for factual errors, missing context, awkward prose, and mismatches between the two views of a person. It returns proposed edits and an overall assessment, leaving the pipeline to apply only changes that clear its confidence threshold.",
-        "why_this_design": "Reviewing the event timeline and network together catches people, relationships, and repeated claims that would look complete when each dataset is checked alone."
+        "what_it_does": "Reviews the generated life events and relationship network against the available biography, then proposes corrections that tighten prose, fill gaps, and keep the two views of a person consistent. It leaves behind a single set of suggested changes and an assessment for the downstream change applicator.",
+        "why_this_design": "Reviewing the event story and network together exposes people, claims, and repeated context that would look complete when each dataset is checked alone, while keeping uncertain suggestions separate from the high-confidence changes applied automatically."
       }
     },
     "p_style": {

@@ -175,5 +175,53 @@ class Findings(unittest.TestCase):
             del prose.ACCEPTED[("x", "1791-12-26", "a description under twenty words")]
 
 
+class RestatedAnnotations(unittest.TestCase):
+    def test_a_gloss_in_the_slides_own_words_is_a_restatement(self) -> None:
+        found = prose.restated_annotations(
+            event(
+                "Mackintosh exhibits with The Four, the Glasgow group of Mackintosh, "
+                "Margaret Macdonald, Frances Macdonald, and Herbert MacNair.",
+                annotations={
+                    "The Four": {
+                        "explanation": "A Glasgow group of Mackintosh, Margaret "
+                        "Macdonald, Frances Macdonald, and Herbert MacNair."
+                    }
+                },
+            )
+        )
+        self.assertEqual(len(found), 1)
+        self.assertTrue(found[0].startswith("The Four: "))
+
+    def test_a_gloss_that_goes_past_the_sentence_is_left_alone(self) -> None:
+        found = prose.restated_annotations(
+            event(
+                "Turing develops Banburismus to reduce bombe work on naval Enigma.",
+                annotations={
+                    "Banburismus": {
+                        "explanation": "A Bayesian scoring procedure on punched "
+                        "sheets printed in Banbury, which is where the name comes "
+                        "from; it weighed the likelihood of rotor orders in units "
+                        "Turing called bans."
+                    }
+                },
+            )
+        )
+        self.assertEqual(found, [])
+
+    def test_naming_the_term_is_not_charged(self) -> None:
+        found = prose.restated_annotations(
+            event(
+                "He passes the Abitur.",
+                annotations={
+                    "Abitur": {
+                        "explanation": "The Abitur is the German school-leaving "
+                        "examination that qualifies for university admission."
+                    }
+                },
+            )
+        )
+        self.assertEqual(found, [])
+
+
 if __name__ == "__main__":
     unittest.main()

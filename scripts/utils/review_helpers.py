@@ -10,6 +10,7 @@ import re
 from typing import Any, Dict, Tuple
 
 from events.normalize import (
+    drop_annotation,
     drop_classified_annotations,
     drop_repeated_annotations,
 )
@@ -119,6 +120,11 @@ def apply_event_changes(
                     else ann
                 )
             event["annotations"] = merged
+            applied += 1
+
+        if event_change.dropped_annotations:
+            for term in event_change.dropped_annotations:
+                drop_annotation(event, term)
             applied += 1
 
         if event_change.new_involved_people is not None:

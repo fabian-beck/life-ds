@@ -174,6 +174,30 @@ class ApplyEventChangesTests(unittest.TestCase):
             "Sums of many independent quantities tend to a normal distribution.",
         )
 
+    def test_dropped_annotation_unwraps_its_marker(self) -> None:
+        data = {
+            "events": [
+                {
+                    "title": "Develops Banburismus",
+                    "description": "Turing develops [[Banburismus]], a statistical method.",
+                    "annotations": {
+                        "Banburismus": {"explanation": "A statistical method."},
+                        "Hut 8": {"explanation": "The naval Enigma section."},
+                    },
+                }
+            ]
+        }
+        updated, applied, _ = apply_event_changes(
+            data, _change(dropped_annotations=["Banburismus"])
+        )
+        event = updated["events"][0]
+
+        self.assertEqual(applied, 1)
+        self.assertEqual(set(event["annotations"]), {"Hut 8"})
+        self.assertEqual(
+            event["description"], "Turing develops Banburismus, a statistical method."
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -166,7 +166,7 @@ REVIEW GUIDELINES:
 - Never annotate a person name, the subject of the event's classification, a well-known place or period, or a common term
 - Only annotate a term at its first occurrence in the story
 - Provide helpful, concise explanations (1-2 sentences, not Wikipedia dumps), with a Wikipedia URL if helpful for further reading
-- **CRITICAL - No redundancy**: Annotation explanations must NOT repeat information already in the event description. Provide additional context or clarification only.
+- **CRITICAL - No redundancy**: Read every existing explanation against its description. One that says the sentence again in other words (a description reading 'Banburismus, a statistical method for reducing bombe work' with a popup reading 'a statistical cryptanalytic method that reduced the settings bombes had to test') is removed: name the term in `dropped_annotations`, and its marker is unwrapped for you. Where the term deserves more than the sentence gives, rewrite the explanation via `new_annotations` so it adds what the description lacks and repeats none of it.
 - **IMPORTANT - Orphaned Annotations**: If you find [[term]] markup in description but no annotation definition:
   * For trivial info (city names, common terms): Remove the [[]] markup entirely
   * For important concepts: Add a proper annotation definition with explanation
