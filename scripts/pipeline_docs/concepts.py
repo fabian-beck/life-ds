@@ -103,46 +103,42 @@ CONCEPTS: Tuple[Concept, ...] = (
         "events",
         "Life events",
         "mdi-timeline-text-outline",
-        "Dated episodes with a place, the persons involved and the sources "
-        "behind them, grouped into phases.",
+        "Dated episodes grouped into phases.",
         "The event slides and the timeline that runs along the foot of them.",
     ),
     Concept(
         "narrative",
         "Narrative text",
         "mdi-text-long",
-        "An event’s own description, and the prose that surrounds a story’s "
-        "components.",
+        "Prose describing each event and framing the story.",
         "The long-form text of an event slide and of a meta story’s sections.",
     ),
     Concept(
         "imagery",
         "Imagery",
         "mdi-image-outline",
-        "Licensed illustrations matched to the events they depict.",
+        "Licensed pictures matched to events.",
         "The pictures on an event slide, the lightbox, and every portrait.",
     ),
     Concept(
         "places",
         "Geography",
         "mdi-map-marker-outline",
-        "Historical toponyms resolved to modern coordinates.",
+        "Historical place names on a modern map.",
         "The place under an event’s date, and the map the camera flies across.",
     ),
     Concept(
         "network",
         "Social network",
         "mdi-account-multiple-outline",
-        "Typed, weighted and dated relationships between the people a story "
-        "names.",
+        "Typed and weighted relationships between the persons involved.",
         "The network button above a story and the force-directed graph it opens.",
     ),
     Concept(
         "identity",
         "Visual identity",
         "mdi-palette-outline",
-        "A palette, a typography and a background pattern generated per "
-        "story.",
+        "A palette, typography, and background pattern per story.",
         "The color and type of every story, injected as CSS custom properties.",
     ),
     Concept(

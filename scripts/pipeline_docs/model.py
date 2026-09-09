@@ -35,17 +35,17 @@ KIND_META: Dict[str, Dict[str, Any]] = {
     spec.EXTERNAL: {
         "order": 0,
         "label": "External source",
-        "description": "Fetches data from Wikipedia, Deutsche Biographie, Commons, or Nominatim.",
+        "description": "Fetches data from public sources.",
     },
     spec.AI: {
         "order": 1,
-        "label": "AI call",
+        "label": "Language model",
         "description": "Sends a prompt to a language model and parses the structured result.",
     },
     spec.CODE: {
         "order": 2,
         "label": "Deterministic",
-        "description": "Runs plain code, so the same input always yields the same output.",
+        "description": "Runs plain code to aggregate or check results through heuristics.",
     },
     spec.IMAGE: {
         "order": 3,
