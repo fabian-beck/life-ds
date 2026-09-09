@@ -59,6 +59,10 @@ class Part:
     draws them carry the same mark, because they are the same thing recorded
     and shown.
 
+    `legend` marks a part that explains the drawing rather than depicting the
+    system, such as the row of step kinds. The prose may point at it but need
+    not; every other part is drawn to be referenced.
+
     `glyph` names a vendored icon directly, for the boxes that carry a mark
     without being one of the concepts—a part of the system rather than
     something the system is about.
@@ -76,6 +80,7 @@ class Part:
     frame: str = "line"  # "line" | "soft" | "none"
     concept: str = ""
     glyph: str = ""
+    legend: bool = False
 
     def to_json(self) -> Dict[str, Any]:
         x, y, w, h = self.box
@@ -221,6 +226,7 @@ PARTS: Tuple[Part, ...] = (
         (8, 348, 852, 24),
         decor="kinds",
         frame="none",
+        legend=True,
     ),
     Part(
         "artifacts",
@@ -342,6 +348,11 @@ CAPTION = (
 
 def part_ids() -> List[str]:
     return [part.id for part in PARTS]
+
+
+def linkable_part_ids() -> List[str]:
+    """The parts the prose is expected to reference: everything but a legend."""
+    return [part.id for part in PARTS if not part.legend]
 
 
 def part_by_id(part_id: str) -> Optional[Part]:

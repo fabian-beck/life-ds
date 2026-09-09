@@ -510,7 +510,7 @@ def _check_teaser(document: Document, facts: Dict[str, Fact]) -> List[Problem]:
         problems.append(Problem(problem.severity, problem.where, problem.message))
 
     if mounted:
-        for part_id in teaser.part_ids():
+        for part_id in teaser.linkable_part_ids():
             if part_id not in document.figrefs:
                 problems.append(
                     Problem(

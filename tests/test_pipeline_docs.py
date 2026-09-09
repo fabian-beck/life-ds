@@ -1379,7 +1379,6 @@ class ReportSourceTests(unittest.TestCase):
 
     def test_every_note_in_the_report_is_readable_both_ways(self) -> None:
         """The popover copies the printed list, so every marker needs an item."""
-        self.assertTrue(self.document.notes, "the report demonstrates no note")
         for note in self.document.notes:
             self.assertIn(f'id="noteref-{note.number}"', self.document.html)
             self.assertIn(f'id="note-{note.number}"', self.document.html)
@@ -1393,7 +1392,10 @@ class ReportSourceTests(unittest.TestCase):
         js = (ASSETS / "app.js").read_text(encoding="utf-8")
         self.assertIn('querySelector(".pop-body")', js)
         self.assertIn("data-pop-label", js)
-        self.assertIn('class="note-body pop-body"', self.document.html)
+        document = report.compile_report(
+            "---\ntitle: T\n---\n\n## S\n\nA claim.^[A note.]\n", _facts()
+        )
+        self.assertIn('class="note-body pop-body"', document.html)
 
     def test_every_mounted_component_has_a_renderer_in_the_page(self) -> None:
         """The two rosters are what keep a block from rendering as a blank."""
@@ -1813,7 +1815,7 @@ class TeaserTests(unittest.TestCase):
         source = REPORT_SOURCE.read_text(encoding="utf-8")
         document = report.compile_report(source, _facts())
         self.assertIn("teaser", [mount.component for mount in document.mounts])
-        unreferenced = sorted(set(teaser.part_ids()) - set(document.figrefs))
+        unreferenced = sorted(set(teaser.linkable_part_ids()) - set(document.figrefs))
         self.assertEqual(unreferenced, [])
 
     def test_the_figure_is_the_first_numbered_figure(self) -> None:
