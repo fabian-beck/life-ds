@@ -34,19 +34,30 @@ node, which is how the meta chart shows that it consumes what the person chart
 produces. Each artifact declares the concept it carries, and the report draws
 that concept—its name and its glyph—rather than the path it is stored at.
 
-`GROUPS` names the concerns that span several layers—planning image searches,
-running them and matching the results are three layers of one job—and the chart
-aligns each group's steps so they read as one strand under a banded label. The
-group names the whole concern; the chart aligns only the parts of it that are
-continuous, so a member several layers below the rest (the portrait, generated
-long after the images it was picked from) is placed on its own. Grouping is
-presentation only: it never changes a layer, and the layer is still the longest
-dependency path.
+`HUBS` are the two places where a pipeline's strands become one document and
+every later step reads that document instead of the memory that produced it:
+the life events of a person, the story of a theme. Each is drawn as an artifact
+node in the flow, with the strands arriving above it and the phases that read
+it leaving below. Serializing the document is not a step—every step writes
+something—so the join is the artifact itself, and steps depend on a hub the
+way they depend on a step.
+
+`GROUPS` are the phases of each pipeline. Every step belongs to exactly one,
+and a phase names a concern that spans several layers—planning image searches,
+running them and matching the results are three layers of one job—so the chart
+aligns each phase's steps to read as one strand under a banded label. The chart
+aligns only the parts of a phase that are continuous, so a member separated
+from the rest by layers the phase has no step in is placed on its own. A hub
+may belong to a phase, so that a phase which runs through the document (the
+composition, which writes the story and then styles it) is banded across it.
+Grouping is presentation only: it never changes a layer, and the layer is
+still the longest dependency path.
 
 Each step names a `script` and a `function`. `validate.py` checks that both
-still exist, that the dependency graph is acyclic, and that no AI call site in
-the codebase is left unclaimed, so a step added to the pipeline without a spec
-entry fails the docs build instead of quietly going undocumented.
+still exist, that the dependency graph is acyclic, that every step is in one
+phase, and that no AI call site in the codebase is left unclaimed, so a step
+added to the pipeline without a spec entry fails the docs build instead of
+quietly going undocumented.
 """
 
 from __future__ import annotations
@@ -142,7 +153,6 @@ class Step:
     calls_per_run: str = "1"
     skip_flag: Optional[str] = None
     model_note: Optional[str] = None
-    phase_label: Optional[str] = None
     model_from: Optional[str] = None
     """Script whose `--model` default supplies this step's model.
 
@@ -154,14 +164,15 @@ class Step:
 
 @dataclass
 class Group:
-    """Steps of one concern that the chart aligns into one strand.
+    """One phase of a pipeline: steps of one concern, aligned into one strand.
 
-    A group is a reading aid, not a dependency: its members usually form a
+    A phase is a reading aid, not a dependency: its members usually form a
     chain, but they may also sit in the same layer (two sourcing calls that do
     not see each other), in which case they are simply placed side by side
-    inside the group. Members separated by layers the group has no step in are
-    aligned and banded separately—see `imagery`, whose portrait step runs long
-    after the rest. Every member must be drawn in the same pipeline column.
+    inside the phase. Members separated by layers the phase has no step in are
+    aligned and banded separately. Every member must be drawn in the same
+    pipeline column, and every step of a pipeline belongs to exactly one phase.
+    A member may be a hub as well as a step.
     """
 
     id: str
@@ -171,10 +182,29 @@ class Group:
     """Why these steps belong together—shown as the band's tooltip."""
 
 
+@dataclass
+class Hub:
+    """The document a pipeline's strands assemble, drawn as a node in the flow.
+
+    A hub is an artifact of this pipeline that is written once, where several
+    strands meet, and read by everything after. Steps depend on it by id, as
+    they depend on a step, and it depends on the steps whose results it holds.
+    Its column comes from the id prefix, like a step's.
+    """
+
+    id: str
+    artifact: str
+    """Which entry of `ARTIFACTS` the hub is."""
+    depends_on: List[Dep] = field(default_factory=list)
+    note: str = ""
+    """What the document settles at this point—shown as the node's tooltip."""
+
+
 GROUPS: List[Group] = [
+    # ---------------------------------------------------------------- person
     Group(
-        "sourcing",
-        "Source material",
+        "sources",
+        "Sources",
         ["p_wiki_fetch", "p_wiki_select", "p_db"],
         note=(
             "Everything the pipeline learns about the person before any writing "
@@ -182,39 +212,56 @@ GROUPS: List[Group] = [
         ),
     ),
     Group(
-        "event_research",
-        "Event research",
-        ["p_events_p1", "p_events_p2"],
+        "events",
+        "Events",
+        ["p_events_p1", "p_events_p2", "p_geocode"],
         note=(
             "The narrative spine: propose the events and the chapters they fall "
-            "into, then research each event."
+            "into, research each event, and put its places on the map."
         ),
     ),
     Group(
-        "imagery",
-        "Imagery",
+        "images",
+        "Images",
+        ["p_img_search", "p_img_fetch", "p_img_match", "p_img_verify"],
+        note=(
+            "One job: plan the searches, run and rank them, match the survivors "
+            "to events, and check the portrait the match picked."
+        ),
+    ),
+    Group(
+        "presentation",
+        "Presentation",
         [
-            "p_img_search",
-            "p_img_fetch",
-            "p_img_filter",
-            "p_img_match",
-            "p_img_verify",
+            "p_register",
+            "p_style",
+            "p_chapter_concepts",
             "p_portrait",
+            "p_chapter_art",
         ],
         note=(
-            "One job: plan the searches, run them, score what comes back, match "
-            "the survivors to events, and style-transfer the portrait the "
-            "match picked—which happens far "
-            "enough downstream that the chart bands it separately."
+            "How the story is listed and how it looks: the landing-page entry, "
+            "the color and type system, and the pictures drawn in it—the "
+            "portrait and one abstract image per chapter."
         ),
     ),
     Group(
-        "chapter_art",
-        "Chapter art",
-        ["p_chapter_concepts", "p_chapter_art"],
+        "network",
+        "Network and review",
+        ["p_network", "p_review"],
         note=(
-            "Decide what each chapter looks like as an abstract image, then "
-            "draw it in the collection's own style."
+            "The second derived dataset, then the critic pass that reads both: "
+            "the relationships the article implies, and a review of events and "
+            "network together."
+        ),
+    ),
+    Group(
+        "depth",
+        "Depth",
+        ["p_backgrounds", "p_illustrations"],
+        note=(
+            "The layer beneath the slides: a background report for roughly one "
+            "event per chapter, and the pictures a critic keeps for it."
         ),
     ),
     Group(
@@ -226,18 +273,28 @@ GROUPS: List[Group] = [
             "then apply that decision to every document."
         ),
     ),
+    # ------------------------------------------------------------------ meta
+    Group(
+        "planning",
+        "Planning",
+        ["m_p1", "m_p2"],
+        note=(
+            "Decide whom the theme is about, then gather every event of those "
+            "people."
+        ),
+    ),
     Group(
         "event_curation",
-        "Event curation",
-        ["m_p2", "m_p3", "m_p3b", "m_p4"],
+        "Events",
+        ["m_p3", "m_p4"],
         note=(
-            "Collect every event of the selected people, judge them against the "
-            "theme, refit the chapters to the survivors, then give them a period."
+            "Judge the events against the theme, refit the chapters to the "
+            "survivors, then give each chapter its period."
         ),
     ),
     Group(
         "social_network",
-        "Social network",
+        "Network",
         ["m_p5", "m_p5b", "m_clusters", "m_p6"],
         note=(
             "The network branch end to end: merge the ego networks, review the "
@@ -255,11 +312,49 @@ GROUPS: List[Group] = [
     ),
     Group(
         "composition",
-        "Composition and output",
-        ["m_p8", "m_save", "m_images", "m_translate"],
+        "Composition",
+        ["m_p8", "m_meta_story", "m_style"],
         note=(
             "Where the branches become one story: rewrite every text in one "
-            "voice, save it, translate it."
+            "voice, write the document, and give it its visual identity."
+        ),
+    ),
+    Group(
+        "meta_localization",
+        "Localization",
+        ["m_images", "m_translate"],
+        note=(
+            "Settle how the story's recurring images read in the target "
+            "language, then translate every passage against that decision."
+        ),
+    ),
+]
+
+
+HUBS: List[Hub] = [
+    Hub(
+        "p_life_events",
+        "life_events",
+        depends_on=[
+            Dep("p_img_verify", "per-event images + the verified portrait"),
+            Dep("p_geocode", "coordinates"),
+        ],
+        note=(
+            "The three strands above become one document here, with the "
+            "chapters and the conclusion the proposal wrote. This is where the "
+            "run stops being memory: every later step reads the written life "
+            "events rather than the payload that produced them, which is what "
+            "makes a run resumable and a single concern regenerable."
+        ),
+    ),
+    Hub(
+        "m_meta_story",
+        "meta_story",
+        depends_on=[Dep("m_p8", "the composed story document")],
+        note=(
+            "The composed story is written here, and the landing-page registry "
+            "is updated with it. The style and the translation read the "
+            "document, not the composition's memory."
         ),
     ),
 ]
@@ -341,9 +436,10 @@ ARTIFACTS: List[Artifact] = [
     Artifact(
         "meta_story",
         "Meta story",
-        "data/meta_stories/{id}.json",
+        "data/meta_stories/{id}.json, data/meta_stories.json",
         "dataset",
-        "Chapters, social network, geo map and composed prose for one theme.",
+        "Chapters, social network, geo map and composed prose for one theme, "
+        "and the landing-page index entry written with it.",
         concept="theme",
     ),
     Artifact(
@@ -353,14 +449,6 @@ ARTIFACTS: List[Artifact] = [
         "registry",
         "Per-story colors, fonts and the SVG marks that punctuate its prose.",
         concept="identity",
-    ),
-    Artifact(
-        "meta_registry",
-        "Meta story registry",
-        "data/meta_stories.json",
-        "registry",
-        "Index of meta stories for the landing page.",
-        concept="theme",
     ),
     Artifact(
         "meta_de",
@@ -377,20 +465,20 @@ STEPS: List[Step] = [
     # ---------------------------------------------------------------- person
     Step(
         "p_wiki_fetch",
-        "Fetch Wikipedia material",
+        "Fetch Wikipedia",
         SHARED,
         EXTERNAL,
         "cache_wikipedia_materials.py",
         "main",
         summary=(
             "Pulls the main article, its candidate related articles and Commons "
-            "image metadata, and caches them so later phases and reruns are free."
+            "image metadata, and caches them so later steps and reruns are free."
         ),
         outputs=["wiki_cache"],
     ),
     Step(
         "p_wiki_select",
-        "Select related articles",
+        "Select articles",
         SHARED,
         AI,
         "cache_wikipedia_materials.py",
@@ -425,12 +513,11 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_events_p1",
-        "Phase 1—event skeletons",
+        "Propose events",
         PERSON,
         AI,
         "events/pipeline.py",
         "call_openai_phase1",
-        phase_label="Phase 1",
         summary=(
             "Reads the whole article set and proposes 12–16 significant events "
             "with titles, dates and descriptions—the narrative spine, with no "
@@ -438,7 +525,7 @@ STEPS: List[Step] = [
             "other and groups them into 3–6 chapters, naming the chapter on "
             "each event, and writes the conclusion. Only this call can do that: "
             "it is the one place in the pipeline that sees a life whole, and "
-            "how much of a life an event turns on, or where one phase of it "
+            "how much of a life an event turns on, or where one period of it "
             "ends, is a comparison, not a property of the event. The chapters "
             "are dated afterwards from the events they hold, so a chapter can "
             "never begin after one of its own events."
@@ -457,12 +544,11 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_events_p2",
-        "Phase 2—research each event",
+        "Research events",
         PERSON,
         AI,
         "events/pipeline.py",
         "research_event_details",
-        phase_label="Phase 2",
         summary=(
             "One call per event, given the subject's own article at 30000 "
             "characters as the primary source and the articles relevant to "
@@ -508,7 +594,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_img_fetch",
-        "Search image sources",
+        "Search and rank images",
         SHARED,
         EXTERNAL,
         "events/images/assign.py",
@@ -516,11 +602,22 @@ STEPS: List[Step] = [
         summary=(
             "Runs every planned query against Wikimedia Commons and Openverse "
             "and deduplicates the hits by URL, keeping the Commons record when "
-            "both services return the same picture. The searches Phase 2 wrote "
-            "for each event run too, and first, so that the tag saying which "
-            "event a picture was found for survives the deduplication—two per "
-            "event, Commons only, because a query naming a machine or a "
-            "document is a query Commons indexes well."
+            "both services return the same picture. The searches the research "
+            "wrote for each event run too, and first, so that the tag saying "
+            "which event a picture was found for survives the deduplication—two "
+            "per event, Commons only, because a query naming a machine or a "
+            "document is a query Commons indexes well. The pool is then scored "
+            "in code (`filter_images_by_quality` in `events/images/scoring.py`) "
+            "on resolution, file efficiency, how informative the filename is, "
+            "and whether the picture shows a commemoration; hits under a "
+            "permissive threshold are dropped and the rest ranked, so the "
+            "matching call sees candidates rather than noise. The "
+            "commemoration penalty is what keeps a well-lit modern photograph "
+            "of a plaque or a grave from outranking a scanned period "
+            "photograph, which it beats on every other measure; it reads the "
+            "filename and the caption as well as the categories, because "
+            "Openverse reports no categories at all. The scores are computed "
+            "once for the whole pool, and the pool serves every event at once."
         ),
         depends_on=[
             Dep("p_img_search", "the planned search strings"),
@@ -528,32 +625,8 @@ STEPS: List[Step] = [
         ],
     ),
     Step(
-        "p_img_filter",
-        "Score and rank the candidates",
-        SHARED,
-        CODE,
-        "events/images/scoring.py",
-        "filter_images_by_quality",
-        summary=(
-            "Scores every hit on resolution, file efficiency, how informative "
-            "its filename is, and whether it shows a commemoration, then drops "
-            "the ones under a permissive threshold and ranks the rest—so the "
-            "matching call sees candidates rather than noise. The "
-            "commemoration penalty is what keeps a well-lit modern photograph "
-            "of a plaque or a grave from outranking a scanned period "
-            "photograph, which it beats on every other measure; it reads the "
-            "filename and the caption as well as the categories, because "
-            "Openverse reports no categories at all. The function can also "
-            "weigh how close a picture falls to the event and what its Commons "
-            "categories say about it, but both callers leave that off: the "
-            "scores are computed once for the whole pool, and the pool serves "
-            "every event at once."
-        ),
-        depends_on=[Dep("p_img_fetch", "every hit the queries returned")],
-    ),
-    Step(
         "p_img_match",
-        "Assign images to events",
+        "Match images",
         PERSON,
         AI,
         "events/images/assign.py",
@@ -571,7 +644,7 @@ STEPS: List[Step] = [
             "happened, and a building found by its kind and its city is now "
             "among the stand-ins the shared rejection list names."
         ),
-        depends_on=[Dep("p_img_filter", "the ranked image candidates")],
+        depends_on=[Dep("p_img_fetch", "the ranked image candidates")],
         prompts=[
             "build_image_match_prompt",
             "STAND_IN_REJECTION_INSTRUCTIONS",
@@ -580,7 +653,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_img_verify",
-        "Verify the portrait",
+        "Verify portrait",
         PERSON,
         AI,
         "events/images/assign.py",
@@ -599,40 +672,21 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_geocode",
-        "Geocode locations",
+        "Geocode places",
         SHARED,
         EXTERNAL,
         "utils/geocode.py",
         "geocode_location",
         summary=(
             "Resolves each place through Nominatim, preferring the modern name "
-            "Phase 2 supplied—which is why historic places with renamed "
+            "the research supplied—which is why historic places with renamed "
             "successors still land on the map."
         ),
         depends_on=[Dep("p_events_p2", "historic and modern place names")],
     ),
     Step(
-        "p_write",
-        "Write the dataset",
-        PERSON,
-        CODE,
-        "events/pipeline.py",
-        "write_dataset",
-        summary=(
-            "Serializes the document the three branches above assembled, with "
-            "the chapters and the conclusion Phase 1 wrote. This is where the "
-            "run stops being memory: everything downstream reads the written "
-            "life events rather than the payload that produced them."
-        ),
-        depends_on=[
-            Dep("p_img_verify", "per-event images + the verified portrait"),
-            Dep("p_geocode", "coordinates"),
-        ],
-        outputs=["life_events"],
-    ),
-    Step(
         "p_register",
-        "Update the persons registry",
+        "Register person",
         PERSON,
         CODE,
         "events/pipeline.py",
@@ -642,13 +696,13 @@ STEPS: List[Step] = [
             "portrait reference the image matching picked—which is where the "
             "portrait step later reads it from."
         ),
-        depends_on=[Dep("p_write", "the written dataset")],
+        depends_on=[Dep("p_life_events", "the written life events")],
         inputs=["life_events"],
         outputs=["persons"],
     ),
     Step(
         "p_style",
-        "Generate interface style",
+        "Design interface style",
         PERSON,
         AI,
         "generate_person_style.py",
@@ -659,7 +713,7 @@ STEPS: List[Step] = [
             "a computed contrast floor, asking the model once more with the "
             "reason."
         ),
-        depends_on=[Dep("p_write", "person summary + first five events")],
+        depends_on=[Dep("p_life_events", "person summary + first five events")],
         prompts=["build_prompt", "build_retry_prompt", "call_openai"],
         inputs=["life_events"],
         outputs=["person_styles"],
@@ -667,7 +721,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_network",
-        "Generate ego network",
+        "Build ego network",
         PERSON,
         AI,
         "generate_person_network.py",
@@ -676,7 +730,7 @@ STEPS: List[Step] = [
             "Builds the person's relationship graph with typed, weighted and "
             "described ties—the input the meta story pipeline later merges."
         ),
-        depends_on=[Dep("p_write", "the finished life events as context")],
+        depends_on=[Dep("p_life_events", "the finished life events as context")],
         prompts=["build_prompt", "call_openai"],
         inputs=["wiki_cache", "life_events"],
         outputs=["ego_network"],
@@ -684,7 +738,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_portrait",
-        "Generate portrait",
+        "Draw portrait",
         PERSON,
         IMAGE,
         "generate_person_portrait.py",
@@ -705,7 +759,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_chapter_concepts",
-        "Write chapter art concepts",
+        "Draft chapter concepts",
         PERSON,
         AI,
         "generate_chapter_illustrations.py",
@@ -716,14 +770,14 @@ STEPS: List[Step] = [
             "chapters are read in one call so the metaphors differ from one "
             "another."
         ),
-        depends_on=[Dep("p_write", "chapters and the events in each")],
+        depends_on=[Dep("p_life_events", "chapters and the events in each")],
         prompts=["CONCEPT_SYSTEM_PROMPT", "build_concept_prompt"],
         inputs=["life_events"],
         skip_flag="--skip-chapter-art",
     ),
     Step(
         "p_chapter_art",
-        "Generate chapter illustrations",
+        "Draw chapter art",
         PERSON,
         IMAGE,
         "generate_chapter_illustrations.py",
@@ -747,7 +801,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_review",
-        "Review events and network",
+        "Review data",
         SHARED,
         AI,
         "review_person.py",
@@ -768,7 +822,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_name_evidence",
-        "Read the target language's own names",
+        "Collect name evidence",
         SHARED,
         CODE,
         "translate_person.py",
@@ -809,7 +863,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_translate",
-        "Translate person data",
+        "Translate data",
         SHARED,
         AI,
         "translate_person.py",
@@ -832,7 +886,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_backgrounds",
-        "Write the depth-layer reports",
+        "Write background reports",
         PERSON,
         AI,
         "generate_event_backgrounds.py",
@@ -870,7 +924,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_illustrations",
-        "Illustrate a background report",
+        "Illustrate reports",
         PERSON,
         AI,
         "generate_event_backgrounds.py",
@@ -905,12 +959,11 @@ STEPS: List[Step] = [
     # ------------------------------------------------------------------ meta
     Step(
         "m_p1",
-        "Phase 1—story planning",
+        "Plan story",
         META,
         AI,
         "generate_meta_story.py",
         "phase1_story_planning",
-        phase_label="Phase 1",
         summary=(
             "Picks which people the theme is actually about, proposes subtopics "
             "and chapters, and names people missing from the dataset that would "
@@ -921,27 +974,27 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p2",
-        "Phase 2—collect events",
+        "Collect events",
         META,
         CODE,
         "generate_meta_story.py",
         "phase2_event_collection",
-        phase_label="Phase 2",
         summary="Gathers every dated event of the selected people, unfiltered.",
         depends_on=[Dep("m_p1", "the selected person ids")],
         inputs=["life_events"],
     ),
     Step(
         "m_p3",
-        "Phase 3—curate events",
+        "Curate events",
         META,
         AI,
         "generate_meta_story.py",
         "_filter_event_batch",
-        phase_label="Phase 3",
         summary=(
             "Judges each event against the theme in batches and records why it "
-            "belongs, so a chapter is a claim rather than a date filter."
+            "belongs, so a chapter is a claim rather than a date filter. The "
+            "planned chapter boundaries are then re-fitted in code "
+            "(`fit_chapters_to_events`) to the events that actually survived."
         ),
         depends_on=[Dep("m_p2", "the unfiltered event pool")],
         prompts=["_filter_event_batch"],
@@ -949,43 +1002,28 @@ STEPS: List[Step] = [
         skip_flag="--skip-ai-filtering",
     ),
     Step(
-        "m_p3b",
-        "Fit chapters to survivors",
-        META,
-        CODE,
-        "generate_meta_story.py",
-        "fit_chapters_to_events",
-        summary=(
-            "Re-fits the planned chapter boundaries to the events that actually "
-            "survived curation."
-        ),
-        depends_on=[Dep("m_p3", "the surviving events")],
-    ),
-    Step(
         "m_p4",
-        "Phase 4—historical context",
+        "Add historical context",
         META,
         AI,
         "generate_meta_story.py",
         "phase4_historical_context",
-        phase_label="Phase 4",
         summary=(
             "Adds the world events a chapter sits inside, so the biography reads "
             "against its period."
         ),
-        depends_on=[Dep("m_p3b", "one chapter per call")],
+        depends_on=[Dep("m_p3", "one chapter of surviving events per call")],
         prompts=["phase4_historical_context"],
         calls_per_run="one per chapter",
         skip_flag="--skip-historical-context",
     ),
     Step(
         "m_p5",
-        "Phase 5—derive social network",
+        "Merge networks",
         META,
         CODE,
         "meta_story_network.py",
         "build_social_network",
-        phase_label="Phase 5",
         summary=(
             "Merges the individual ego networks by normalized name into one graph "
             "of main people plus the acquaintances that bridge them. Purely "
@@ -996,12 +1034,11 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p5b",
-        "Phase 5b—review network",
+        "Review network",
         META,
         AI,
         "meta_story_network_review.py",
         "review_social_network",
-        phase_label="Phase 5b",
         summary=(
             "Adds direct ties the ego networks missed and prunes vague or indirect "
             "ones, with guidance that adapts to how dense the graph already is. "
@@ -1022,34 +1059,33 @@ STEPS: List[Step] = [
         "derive_clusters",
         summary=(
             "Community detection over the reviewed graph produces the story's "
-            "circles. Called from the narration phase and mirrored by the client, "
+            "circles. Called from the narration step and mirrored by the client, "
             "so the circles are never stored—they are always re-derived."
         ),
         depends_on=[Dep("m_p5b", "the reviewed graph")],
     ),
     Step(
         "m_p6",
-        "Phase 6—narrate circles",
+        "Narrate circles",
         META,
         AI,
         "generate_meta_story.py",
         "phase6_network_narration",
-        phase_label="Phase 6",
         summary=(
-            "Writes the card text for each circle. Phase 8 rewrites these later; "
-            "keeping Phase 6 means the story still reads when composition is skipped."
+            "Writes the card text for each circle. The composition rewrites "
+            "these later; keeping this step means the story still reads when "
+            "composition is skipped."
         ),
         depends_on=[Dep("m_clusters", "one circle per card")],
         prompts=["phase6_network_narration"],
     ),
     Step(
         "m_p7b",
-        "Phase 7—rate map events",
+        "Rate map events",
         META,
         AI,
         "meta_story_map_narration.py",
         "rate_map_events",
-        phase_label="Phase 7",
         summary=(
             "Scores how much each located event carries the theme. Runs first in "
             "the map branch because the scores are the weights the clustering uses."
@@ -1061,12 +1097,11 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p7a",
-        "Phase 7—cluster places",
+        "Cluster places",
         META,
         CODE,
         "meta_story_map.py",
         "cluster_located_events",
-        phase_label="Phase 7",
         summary=(
             "Groups the story's located events geographically into candidate map "
             "stops, weighted by the ratings, and keeps only the clusters that qualify."
@@ -1076,12 +1111,11 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p7c",
-        "Phase 7—narrate map stops",
+        "Narrate map stops",
         META,
         AI,
         "meta_story_map_narration.py",
         "narrate_map_clusters",
-        phase_label="Phase 7",
         summary=(
             "Narrates the top clusters as map stops and can discard accidental "
             "groupings, which cascades into pruning the map."
@@ -1092,12 +1126,11 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_p8",
-        "Phase 8—compose the story",
+        "Compose story",
         META,
         AI,
         "compose_meta_story.py",
         "run_composition",
-        phase_label="Phase 8",
         summary=(
             "Reads the assembled story top-down, the way a reader meets it, and "
             "rewrites every text in one voice: the prose between components, the "
@@ -1114,19 +1147,8 @@ STEPS: List[Step] = [
         model_note="Uses OPENAI_COMPOSER_MODEL, not OPENAI_MODEL.",
     ),
     Step(
-        "m_save",
-        "Save story and registry",
-        META,
-        CODE,
-        "generate_meta_story.py",
-        "save_meta_story",
-        summary="Writes the story document and updates the landing-page registry.",
-        depends_on=[Dep("m_p8", "the composed story document")],
-        outputs=["meta_story", "meta_registry"],
-    ),
-    Step(
         "m_style",
-        "Generate story style",
+        "Design story style",
         META,
         AI,
         "generate_meta_story_style.py",
@@ -1136,7 +1158,7 @@ STEPS: List[Step] = [
             "theme itself—including the separator glyph and the ornamental "
             "rule its prose is punctuated with."
         ),
-        depends_on=[Dep("m_save", "the saved story's framing and opening")],
+        depends_on=[Dep("m_meta_story", "the saved story's framing and opening")],
         prompts=["build_prompt", "call_openai"],
         inputs=["meta_story"],
         outputs=["meta_story_styles"],
@@ -1144,7 +1166,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "m_images",
-        "Settle the story's recurring images",
+        "Settle recurring images",
         SHARED,
         AI,
         "meta_story_translation.py",
@@ -1160,7 +1182,9 @@ STEPS: List[Step] = [
             "glossary — what has to read the same in every passage is settled "
             "once rather than re-derived per field."
         ),
-        depends_on=[Dep("m_save", "the story's own text, as the images to judge")],
+        depends_on=[
+            Dep("m_meta_story", "the story's own text, as the images to judge")
+        ],
         prompts=["build_image_glossary", "format_image_glossary_for_prompt"],
         inputs=["meta_story"],
         skip_flag="--skip-translate",
@@ -1189,10 +1213,18 @@ STEPS: List[Step] = [
 ]
 
 
-def group_of(step_id: str) -> Optional[Group]:
+def group_of(node_id: str) -> Optional[Group]:
+    """The phase a step or hub belongs to."""
     for group in GROUPS:
-        if step_id in group.steps:
+        if node_id in group.steps:
             return group
+    return None
+
+
+def hub_by_id(hub_id: str) -> Optional[Hub]:
+    for hub in HUBS:
+        if hub.id == hub_id:
+            return hub
     return None
 
 
@@ -1210,11 +1242,11 @@ def step_by_id(step_id: str) -> Optional[Step]:
     return None
 
 
-def column_of(step: Step) -> str:
-    """Which pipeline column a step is drawn in.
+def column_of(node: "Step | Hub") -> str:
+    """Which pipeline column a step or hub is drawn in.
 
     Lane records *ownership*—several shared subsystems (sourcing, review,
     translation) are their own scripts—but the reader wants to see them at the
-    point in the flow where they run, so the drawn column comes from the step id.
+    point in the flow where they run, so the drawn column comes from the id.
     """
-    return PERSON if step.id.startswith("p_") else META
+    return PERSON if node.id.startswith("p_") else META

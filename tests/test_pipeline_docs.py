@@ -408,21 +408,21 @@ class ExplanationFreshnessTests(unittest.TestCase):
 
 
 def _layers() -> dict:
-    """Longest-path layer per step—the same rule the chart applies."""
-    steps = {step.id: step for step in spec.STEPS}
+    """Longest-path layer per step and hub—the same rule the chart applies."""
+    nodes = {node.id: node for node in [*spec.STEPS, *spec.HUBS]}
     layers: dict = {}
 
-    def layer(step_id: str) -> int:
-        if step_id in layers:
-            return layers[step_id]
-        layers[step_id] = 0
-        layers[step_id] = max(
-            (layer(dep.on) + 1 for dep in steps[step_id].depends_on), default=0
+    def layer(node_id: str) -> int:
+        if node_id in layers:
+            return layers[node_id]
+        layers[node_id] = 0
+        layers[node_id] = max(
+            (layer(dep.on) + 1 for dep in nodes[node_id].depends_on), default=0
         )
-        return layers[step_id]
+        return layers[node_id]
 
-    for step_id in steps:
-        layer(step_id)
+    for node_id in nodes:
+        layer(node_id)
     return layers
 
 
@@ -454,9 +454,9 @@ class DependencyGraphTests(unittest.TestCase):
     def tearDown(self) -> None:
         spec.STEPS[:] = self.original_steps
 
-    def test_every_edge_points_at_a_known_step_in_the_same_pipeline(self) -> None:
-        known = {step.id: step for step in spec.STEPS}
-        for step in spec.STEPS:
+    def test_every_edge_points_at_a_known_node_in_the_same_pipeline(self) -> None:
+        known = {node.id: node for node in [*spec.STEPS, *spec.HUBS]}
+        for step in [*spec.STEPS, *spec.HUBS]:
             for dep in step.depends_on:
                 self.assertIn(dep.on, known, f"{step.id} depends on unknown {dep.on}")
                 self.assertEqual(
@@ -472,7 +472,7 @@ class DependencyGraphTests(unittest.TestCase):
 
     def test_a_cycle_fails_the_build(self) -> None:
         step = next(item for item in spec.STEPS if item.id == "m_p1")
-        step.depends_on = [spec.Dep("m_save", "an impossible back-edge")]
+        step.depends_on = [spec.Dep("m_translate", "an impossible back-edge")]
         try:
             messages = [str(problem) for problem in validate._check_graph()]
             self.assertTrue(any("cycle" in message for message in messages))
@@ -500,8 +500,7 @@ class DependencyGraphTests(unittest.TestCase):
             ]
             self.assertEqual(1, len(messages))
             self.assertIn(
-                "p_events_p1 -> p_img_search -> p_img_fetch -> p_img_filter "
-                "-> p_img_match",
+                "p_events_p1 -> p_img_search -> p_img_fetch -> p_img_match",
                 messages[0],
             )
         finally:
@@ -574,12 +573,12 @@ class GroupTests(unittest.TestCase):
         self.assertEqual(problems, [], str(problems))
 
     def test_a_step_in_two_groups_fails_the_build(self) -> None:
-        spec.GROUPS.append(spec.Group("clash", "Clash", ["p_img_match", "p_write"]))
+        spec.GROUPS.append(spec.Group("clash", "Clash", ["p_img_match", "p_geocode"]))
         messages = [str(problem) for problem in validate._check_groups()]
         self.assertTrue(any("already in group" in message for message in messages))
 
     def test_a_group_across_both_pipelines_fails_the_build(self) -> None:
-        spec.GROUPS.append(spec.Group("mixed", "Mixed", ["p_write", "m_save"]))
+        spec.GROUPS.append(spec.Group("mixed", "Mixed", ["p_geocode", "m_p1"]))
         messages = [str(problem) for problem in validate._check_groups()]
         self.assertTrue(any("spans both pipelines" in message for message in messages))
 
@@ -597,21 +596,44 @@ class GroupTests(unittest.TestCase):
                 f"group '{group.id}' has no run of consecutive layers to align",
             )
 
-    def test_the_imagery_group_splits_around_the_portrait(self) -> None:
-        """The case the run-splitting exists for, pinned to the real graph."""
-        group = spec.group_of("p_img_search")
-        self.assertIsNotNone(group)
-        assert group is not None
-        runs = _group_runs(group)
-        self.assertEqual(
-            [len(run) for run in runs],
-            [5, 1],
-            "expected the five image steps to align and the portrait to detach",
-        )
-        self.assertEqual(runs[-1], ["p_portrait"])
+    def test_every_phase_is_one_continuous_run(self) -> None:
+        """The phases were cut so that each is banded whole, pinned to the graph.
 
-    def test_every_group_stays_within_two_steps_per_layer(self) -> None:
-        """Two members in one layer is legal but should not be the normal case."""
+        The run-splitting still exists for a phase that a future step breaks
+        apart; the current spec has none, and a phase that silently split would
+        show up as two bands where the report describes one.
+        """
+        for group in spec.GROUPS:
+            runs = _group_runs(group)
+            self.assertEqual(
+                1,
+                len(runs),
+                f"phase '{group.id}' splits into {len(runs)} runs: {runs}",
+            )
+
+    def test_every_step_belongs_to_a_phase(self) -> None:
+        """The phases are comprehensive: no step is left outside a band."""
+        claimed = {step_id for group in spec.GROUPS for step_id in group.steps}
+        for step in spec.STEPS:
+            self.assertIn(step.id, claimed, f"step '{step.id}' is in no phase")
+
+    def test_a_step_in_no_phase_fails_the_build(self) -> None:
+        spec.GROUPS[:] = [
+            spec.Group(
+                group.id, group.label, [s for s in group.steps if s != "p_geocode"]
+            )
+            for group in spec.GROUPS
+        ]
+        messages = [str(problem) for problem in validate._check_groups()]
+        self.assertTrue(any("belongs to no phase" in message for message in messages))
+
+    def test_every_phase_stays_within_three_steps_per_layer(self) -> None:
+        """Several members in one layer is legal but should stay the exception.
+
+        The presentation phase opens with three independent steps—the registry
+        entry, the style, and the chapter concepts—which is the widest a band
+        gets.
+        """
         layers = _layers()
         for group in spec.GROUPS:
             counts: dict = {}
@@ -619,9 +641,47 @@ class GroupTests(unittest.TestCase):
                 counts[layers[step_id]] = counts.get(layers[step_id], 0) + 1
             self.assertLessEqual(
                 max(counts.values()),
-                2,
-                f"group '{group.id}' would be drawn more than two steps wide",
+                3,
+                f"phase '{group.id}' would be drawn more than three steps wide",
             )
+
+
+class HubTests(unittest.TestCase):
+    """A hub is the document the strands assemble; the chart draws it as a node."""
+
+    def test_hubs_pass_the_spec_check(self) -> None:
+        self.assertEqual([], [str(p) for p in validate._check_hubs()])
+
+    def test_each_pipeline_has_its_document_where_the_strands_meet(self) -> None:
+        layers = _layers()
+        life = spec.hub_by_id("p_life_events")
+        story = spec.hub_by_id("m_meta_story")
+        assert life is not None and story is not None
+        self.assertEqual(life.artifact, "life_events")
+        self.assertEqual(story.artifact, "meta_story")
+        for hub in (life, story):
+            for dep in hub.depends_on:
+                self.assertLess(layers[dep.on], layers[hub.id])
+        readers = [
+            step.id
+            for step in spec.STEPS
+            if any(d.on == "p_life_events" for d in step.depends_on)
+        ]
+        self.assertEqual(
+            sorted(readers),
+            ["p_chapter_concepts", "p_network", "p_register", "p_style"],
+        )
+
+    def test_a_hub_naming_an_unknown_artifact_fails_the_build(self) -> None:
+        original = list(spec.HUBS)
+        spec.HUBS.append(
+            spec.Hub("p_ghost", "no_such_file", [spec.Dep("p_geocode", "x")])
+        )
+        try:
+            messages = [str(problem) for problem in validate._check_hubs()]
+            self.assertTrue(any("unknown artifact" in message for message in messages))
+        finally:
+            spec.HUBS[:] = original
 
 
 class PayloadAndRenderTests(unittest.TestCase):
@@ -642,14 +702,19 @@ class PayloadAndRenderTests(unittest.TestCase):
         groups = {group["id"]: group for group in self.payload["groups"]}
         self.assertEqual(len(groups), len(spec.GROUPS))
         by_id = {step["id"]: step for step in self.payload["steps"]}
+        hubs = {hub["id"]: hub for hub in self.payload["hubs"]}
+        by_id.update(hubs)
         for group in self.payload["groups"]:
             for step_id in group["steps"]:
                 self.assertEqual(by_id[step_id]["group"], group["id"])
-        self.assertIsNone(by_id["p_write"]["group"])
+        self.assertEqual(len(hubs), len(spec.HUBS))
+        self.assertIsNone(hubs["p_life_events"]["group"])
+        self.assertEqual(hubs["m_meta_story"]["group"], "composition")
 
     def test_payload_carries_the_graph_the_chart_lays_out(self) -> None:
         by_id = {step["id"]: step for step in self.payload["steps"]}
-        for step in self.payload["steps"]:
+        by_id.update({hub["id"]: hub for hub in self.payload["hubs"]})
+        for step in self.payload["steps"] + self.payload["hubs"]:
             for dep in step["depends_on"]:
                 self.assertIn(dep["on"], by_id)
                 self.assertTrue(dep["data"])

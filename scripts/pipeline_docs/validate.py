@@ -24,7 +24,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Optional, Set, Union
 
 from . import bibliography, concepts, screenshots, spec, summarize, teaser
 from .facts import Fact
@@ -82,35 +82,70 @@ def _implying_path(
     return None
 
 
-def _check_graph() -> List[Problem]:
-    """Dangling edges, self-loops, cycles, redundant edges and cross-pipeline ones."""
+def _check_hubs() -> List[Problem]:
+    """A hub names a real artifact and an id no step uses, in one column."""
     problems: List[Problem] = []
-    known = {step.id for step in spec.STEPS}
+    steps = {step.id for step in spec.STEPS}
+    artifacts = {artifact.id for artifact in spec.ARTIFACTS}
+    seen: Set[str] = set()
+    for hub in spec.HUBS:
+        where = f"hub '{hub.id}'"
+        if hub.id in seen:
+            problems.append(Problem("error", "spec", f"duplicate hub id '{hub.id}'"))
+        seen.add(hub.id)
+        if hub.id in steps:
+            problems.append(Problem("error", where, "shares its id with a step"))
+        if hub.id[:2] not in ("p_", "m_"):
+            problems.append(Problem("error", where, "id must start with 'p_' or 'm_'"))
+        if hub.artifact not in artifacts:
+            problems.append(
+                Problem("error", where, f"unknown artifact '{hub.artifact}'")
+            )
+        if not hub.depends_on:
+            problems.append(Problem("error", where, "nothing flows into it"))
+    return problems
+
+
+def _check_graph() -> List[Problem]:
+    """Dangling edges, self-loops, cycles, redundant edges and cross-pipeline ones.
+
+    Hubs are nodes of the graph like steps: they depend on the steps whose
+    results they hold, and steps depend on them.
+    """
+    problems: List[Problem] = []
+    nodes: List[Union[spec.Step, spec.Hub]] = [*spec.STEPS, *spec.HUBS]
+    known = {node.id for node in nodes}
     edges: Dict[str, List[str]] = {}
 
-    for step in spec.STEPS:
+    for node in nodes:
+        noun = "hub" if isinstance(node, spec.Hub) else "step"
         targets: List[str] = []
-        for dep in step.depends_on:
-            where = f"step '{step.id}'"
+        for dep in node.depends_on:
+            where = f"{noun} '{node.id}'"
             if dep.on not in known:
                 problems.append(
-                    Problem("error", where, f"depends on unknown step '{dep.on}'")
+                    Problem("error", where, f"depends on unknown node '{dep.on}'")
                 )
                 continue
-            if dep.on == step.id:
+            if dep.on == node.id:
                 problems.append(Problem("error", where, "depends on itself"))
+                continue
+            if dep.on[:2] != node.id[:2]:
+                problems.append(
+                    Problem("error", where, f"depends across pipelines on '{dep.on}'")
+                )
                 continue
             if not dep.data:
                 problems.append(
                     Problem("warning", where, f"edge from '{dep.on}' has no data label")
                 )
             targets.append(dep.on)
-        edges[step.id] = targets
+        edges[node.id] = targets
 
     # Depth-first cycle detection: the layout assigns a layer by longest path,
     # which never terminates on a cycle.
     WHITE, GRAY, BLACK = 0, 1, 2
-    color = {step_id: WHITE for step_id in edges}
+    color = {node_id: WHITE for node_id in edges}
 
     def visit(node: str, trail: List[str]) -> None:
         color[node] = GRAY
@@ -122,22 +157,22 @@ def _check_graph() -> List[Problem]:
                 visit(parent, trail + [parent])
         color[node] = BLACK
 
-    for step_id in edges:
-        if color[step_id] == WHITE:
-            visit(step_id, [step_id])
+    for node_id in edges:
+        if color[node_id] == WHITE:
+            visit(node_id, [node_id])
 
     # An edge another chain already implies changes no layer—the longest path is
     # the same with or without it—so it is clutter rather than an error: two
     # lines where the reader needed one. Naming the implying path lets the
     # maintainer see what would carry the meaning instead.
-    for step_id, parents in edges.items():
+    for node_id, parents in edges.items():
         for parent in parents:
-            path = _implying_path(edges, step_id, parent)
+            path = _implying_path(edges, node_id, parent)
             if path:
                 problems.append(
                     Problem(
                         "warning",
-                        f"step '{step_id}'",
+                        f"node '{node_id}'",
                         f"the edge from '{parent}' is already implied by "
                         + " -> ".join(reversed(path))
                         + "; drop it and let the summary carry the detail",
@@ -148,14 +183,16 @@ def _check_graph() -> List[Problem]:
 
 
 def _check_groups() -> List[Problem]:
-    """Groups must name real steps, claim each one once, and stay in one column.
+    """Phases must name real nodes, claim each once, cover every step, and
+    stay in one column.
 
     A group is drawn as one band across several layers, so a member from the
     other pipeline—or a step claimed twice—would have the layout reserving a
-    column that cannot exist.
+    column that cannot exist. A step in no phase would be the one node the
+    chart leaves unexplained, so every step must be claimed; a hub may be.
     """
     problems: List[Problem] = []
-    known = {step.id for step in spec.STEPS}
+    known = {step.id for step in spec.STEPS} | {hub.id for hub in spec.HUBS}
     owner: Dict[str, str] = {}
     seen_ids: Set[str] = set()
 
@@ -174,7 +211,7 @@ def _check_groups() -> List[Problem]:
         for step_id in group.steps:
             if step_id not in known:
                 problems.append(
-                    Problem("error", where, f"names unknown step '{step_id}'")
+                    Problem("error", where, f"names unknown node '{step_id}'")
                 )
                 continue
             if step_id in owner:
@@ -195,6 +232,11 @@ def _check_groups() -> List[Problem]:
                     where,
                     "spans both pipelines: " + ", ".join(sorted(columns)),
                 )
+            )
+    for step in spec.STEPS:
+        if step.id not in owner:
+            problems.append(
+                Problem("error", f"step '{step.id}'", "belongs to no phase")
             )
     return problems
 
@@ -271,6 +313,7 @@ def check(codebase: Codebase) -> List[Problem]:
         if ids.count(step_id) > 1:
             problems.append(Problem("error", "spec", f"duplicate step id '{step_id}'"))
 
+    problems.extend(_check_hubs())
     problems.extend(_check_graph())
     problems.extend(_check_groups())
 
