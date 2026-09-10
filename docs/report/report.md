@@ -76,19 +76,11 @@ The [[meta-pipeline|meta pipeline]] traces a theme across many lives and consume
 ::: pipeline lane=meta
 :::
 
-### Models, prompts, and structured output
+### AI models and prompting
 
-The generation side uses {{ pipeline.models }}. We configure the model per [[inference|call site]], so that high-volume and quality-critical steps need not share one setting. We assign the largest model to composition, the one step that reads a whole assembled story, the image model to the portrait step, and divide the remaining steps between a reasoning tier and a small one by whether a wrong answer can quietly become part of the corpus. A step uses the small model when its output is validated against existing entities, rewritten by a later step, or backed by a deterministic fallback: article selection, event research, image matching, event curation, narration, and translation. Proposing the events of a life, selecting the people of a theme, reviewing another step's output, and the glossary use the reasoning tier.
+The generation side uses {{ pipeline.models }}. We configure the model per [[inference|call site]] to only spend frontier intelligence and reasoning effort where needed and keep generation costs manageable (below 1 EUR per generated story). We assign the largest model to composition, the one step that reads a whole assembled story, the image model to the portrait step, and divide the remaining steps between a reasoning tier and a small one by whether a wrong answer can quietly become part of the corpus. A step uses the small model when its output is validated against existing entities, rewritten by a later step, or backed by a deterministic fallback. More advanced tasks such as proposing the events of a life, selecting the people of a theme, reviewing another step's output, and the glossary use the reasoning tier. Analogously, reasoning effort is differentiated between different calls.
 
-We configure reasoning effort per call site as well. Proposing the events of a life is an inference problem and receives a reasoning budget; writing search strings is slot filling and receives none; the threshold and selection decisions of the small model receive a small budget.
-
-Every schema-filling step reaches the API through one function that takes both settings and returns the parsed object or nothing. Earlier, six steps used a second API without an effort parameter and ran at the default while the configuration claimed a per-step setting. There we also state the retry policy once: connection errors and rate limits are retried, malformed requests and refusals are not. What a failure means we leave to the step: article selection falls back to the first candidates, an optional section is skipped, a stale translation is left for the parity check to report, and curation stops the run.
-
-We write prompts as Python functions, since they require conditionals and injected data. Every step that writes text a reader sees appends a shared block that names the habits of model prose, such as a contrast against an alternative nobody proposed or a closing sentence on what an event "marked", and gives the plain sentence to write instead; a generic instruction to be concise changed nothing. We declare structured output as Pydantic models, so that the shape of a response is a type and validation precedes use. Model output is applied deterministically: identifiers are matched against existing entities, unknown references are discarded with a warning, and coordinates, URLs, and graph structure are copied.
-
-::: schemalist names=LifePlan,EventDetails,EgoNetwork,MetaStoryPlan
-The four schemas central to the two pipelines are expanded field by field from the Pydantic models the API is asked to populate: the plan of a life, a single researched event, a person's ego network, and a meta story's plan.
-:::
+For prompt design and context engineering, we tried to anticipate which materials a call needs and to limit the prompt to those, while still providing sufficient background. The material shared by all calls of a step is placed at the start of the prompt and the event-specific part at the end, so that the API's prefix caching covers the repeated part. All steps that produce text a reader sees share one instruction block on writing style. It discourages typical patterns of AI-generated prose, for instance, contrasting a fact with an alternative nobody proposed. Every response is requested as structured output against a [Pydantic](https://docs.pydantic.dev/) schema, so that it is parsed and validated.
 
 ## Interface
 
