@@ -1026,8 +1026,9 @@ STEPS: List[Step] = [
         byline="Greedy modularity clustering",
         summary=(
             "Community detection over the reviewed graph produces the story's "
-            "circles. Called from the narration step and mirrored by the client, "
-            "so the circles are never stored—they are always re-derived."
+            "circles. Called from the narration step, which stores each "
+            "circle's members with its text; the client reads the stored "
+            "circles and never repeats the detection."
         ),
         depends_on=[Dep("m_p5b", "the reviewed graph")],
     ),

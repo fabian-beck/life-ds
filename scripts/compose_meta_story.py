@@ -586,9 +586,9 @@ def build_story_wikipedia_context(
 def _current_circles(dataset: Dict[str, Any]) -> List[Dict[str, Any]]:
     """The story's current circle organization, for the brief.
 
-    A composed story stores explicit ``member_ids`` per circle; otherwise the
-    circles are the deterministically derived clusters, with any Phase 6
-    narration matched by key.
+    Both Phase 6 and a previous composition store explicit ``member_ids`` per
+    circle. Only when the narration carries none (Phase 6 failed) are the
+    circles derived here, with any narration matched by key.
     """
     network = dataset.get("social_network") or {}
     narration = network.get("narration") or {}

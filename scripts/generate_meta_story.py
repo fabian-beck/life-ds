@@ -1575,11 +1575,13 @@ def phase6_network_narration(
 ) -> None:
     """Phase 6: Write short story texts for the network's clusters ("circles").
 
-    The UI narrates the social network with scroll-over cards, one per cluster
-    (derived deterministically by ``derive_clusters``, mirroring the client).
-    This phase asks the model for a short narrative per circle, stored as
+    The UI narrates the social network with scroll-over cards, one per cluster.
+    The clusters are detected here by ``derive_clusters`` and stored with the
+    narration as ``member_ids`` per circle, so the client only resolves the
+    stored members against the graph and never repeats the detection. This
+    phase asks the model for a short narrative per circle, stored as
     ``social_network.narration``. Failures are non-fatal — without narration
-    the UI falls back to listing the ties.
+    the section shows no circle cards.
     """
     network = dataset.get("social_network") or {}
     clusters = derive_clusters(network)
@@ -1669,6 +1671,7 @@ REQUIREMENTS:
             "circles": [
                 {
                     "key": c["key"],
+                    "member_ids": [n["id"] for n in c["mains"]],
                     "title": by_key[c["key"]].title,
                     "text": by_key[c["key"]].text,
                 }
