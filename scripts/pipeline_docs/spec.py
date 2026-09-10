@@ -951,9 +951,8 @@ STEPS: List[Step] = [
             "Adds the world events a chapter sits inside, so the biography reads "
             "against its period."
         ),
-        depends_on=[Dep("m_p3", "one chapter of surviving events per call")],
+        depends_on=[Dep("m_p3", "the fitted chapters with their surviving events")],
         prompts=["phase4_historical_context"],
-        calls_per_run="one per chapter",
         skip_flag="--skip-historical-context",
     ),
     Step(

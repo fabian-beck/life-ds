@@ -46,11 +46,11 @@
       }
     },
     "m_p4": {
-      "fingerprint": "27d49967286586d8",
+      "fingerprint": "e4b761c30e6ea952",
       "summary": {
-        "description": "Places each chapter in the wider events that directly changed the featured people’s lives or work. It leaves empty space when no event clears that test, keeping the background tied to the biography instead of filling the period with famous history.",
-        "input": "the chapters and selected people",
-        "output": "chapters with relevant historical context",
+        "description": "Places each chapter against historical events that directly changed the featured people’s lives or work. It leaves chapters with sparse background landmarks, favoring concrete personal links over famous events that only share the same period.",
+        "input": "the fitted chapters and selected people",
+        "output": "historical context for each chapter",
         "source": "gpt-5.6-terra"
       }
     },
