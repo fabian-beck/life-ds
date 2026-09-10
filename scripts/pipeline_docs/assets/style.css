@@ -1997,6 +1997,14 @@ figure.teaser > .cap {
   white-space: nowrap;
 }
 
+/* A figure cited by number, `[[figure:id]]` in the source. On screen the
+   phrase before it already points into the figure and lights it, so the
+   citation is withheld; the print rules show it, where a phrase points
+   nowhere and a reader has to be told which figure is meant. */
+.figcite {
+  display: none;
+}
+
 .figref .figref-end::after {
   content: "";
   display: inline-block;
@@ -2653,6 +2661,11 @@ figure.teaser > .cap {
 
   .figref .figref-end::after {
     content: none;
+  }
+
+  /* The figure's number, where the source asked for it on paper. */
+  .figcite {
+    display: inline;
   }
 
   /* The appendix the step note stands in for on screen. It opens a page of its

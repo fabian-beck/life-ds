@@ -340,12 +340,15 @@ Nor does an inventory count. How many steps, layers, edges, schemas, or concepts
 | `{{ some.fact }}` | A measurement from `facts.py`, rendered with its source as a tooltip. An unknown key fails the build. |
 | `[[part\|phrase]]`, `[[part]]` | A phrase that names a part of the teaser figure (`teaser.PARTS`). An unknown id fails the build; a part no phrase names is a warning. Where the part carries a concept, the phrase is marked with that concept's glyph. |
 | `[[shot.part\|phrase]]`, `[[shot.part]]` | The same reference into a part of a screenshot figure, resolved against the `@id x,y,w,h Label` lines of the named `::: screenshot` block. An unknown id fails the build; a part no phrase names is a warning. |
+| `[[figure:id]]` | A figure cited by number, on paper only: `The chart[[figure:pipeline-person]] bands` prints "The chart (Figure 2) bands" and reads "The chart bands" on screen, where the references above already point into the figure. Written directly after the word it follows, since it carries its own space and parenthesis. The id is a screenshot's, `teaser`, or `pipeline-<lane>`; a figure the report does not draw fails the build. Cite a figure once, at its first mention in a section, and only where the context does not name it. |
 | `::: component key=value` … `:::` | A computed block. The block's body is authored prose kept above the computed part. |
 | `::: note` / `aside` / `decision` / `limitation` | An authored callout. Holds prose only. |
 | `^[an explanation]` | An inline note. Brackets nest, `\^[` escapes the syntax, and the body is collapsed to one line, so a note is inline-level by construction. |
 | `[@key]`, `[@key; @other]` | A citation of published work from `docs/report/references.bib`, numbered by first use. An unknown key fails the build, and the whole bracket has to sit on one line. Place the bracket directly after the name it credits—`Segel and Heer [1]`, `VisKonnect [2]`—rather than at the end of the sentence. |
 | `::: toc` | The table of contents. |
 | `::: references` | The list of cited works, in citation order. |
+
+**A phrase points on screen, a number points on paper.** A `[[part]]` reference lights its figure when pressed, so the screen prose never says which figure it means. Paper has no press, so the source cites the figure by number with `[[figure:id]]` where a printed reader could not tell—once per figure, at its first mention. The citation is withheld on screen by `.figcite` in `style.css`, shown by the print rules, and written as `Figure~\ref{}` in the LaTeX rendering.
 
 **Notes are authored once and read two ways.** The compiler emits the printed form—a numbered list closing the section that raised the note, with every marker a real link into it—and `app.js` then withdraws that list on screen and shows the same text in a popover on the marker. The popover copies the list item it points at rather than carrying its own copy, so the two renderings cannot disagree, and with JavaScript off or on paper the notes are still there. A note belongs to a `##` section, decided from its position in the rendered page rather than from the order the compiler collected it in.
 

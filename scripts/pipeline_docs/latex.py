@@ -929,12 +929,21 @@ class Writer:
             return f"\\includegraphics[width=\\linewidth]{{{src}}}"
         if tag == "a":
             return self.link(node)
+        if tag == "span" and node.has_class("figcite"):
+            return self.figcite(node)
         if tag == "span" and node.has_class("stepref"):
             color = KIND_COLORS.get(node.attrs.get("data-kind", ""), "ink")
             return f"\\stepref{{{color}}}{{{self.inline(node.children)}}}"
         if tag in BLOCK_TAGS:
             return self.block(node)
         return self.inline(node.children)
+
+    def figcite(self, node: Node) -> str:
+        """A figure cited by number: the label the figure environment carries."""
+        cited = node.attrs.get("data-figure", "")
+        component = node.attrs.get("data-component", "")
+        label = f"fig:shot-{cited}" if component == "screenshot" else f"fig:{cited}"
+        return f" (Figure~\\ref{{{label}}})"
 
     def link(self, node: Node) -> str:
         inner = self.inline(node.children)

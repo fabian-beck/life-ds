@@ -1144,6 +1144,63 @@ class MarkdownCompilerTests(unittest.TestCase):
         self.assertNotIn("report:notes", document.html)
 
 
+class FigureCitationTests(unittest.TestCase):
+    """A figure cited by number, on paper only.
+
+    The number is the one the mount is given in document order, resolved
+    after every mount is known, so a citation may stand above its figure.
+    """
+
+    HEAD = "---\ntitle: T\n---\n\n## S\n\n"
+
+    def test_a_citation_resolves_to_the_figures_number_either_side_of_it(self) -> None:
+        source = (
+            self.HEAD + "Above[[figure:pipeline-meta]].\n\n::: teaser\n:::\n\n"
+            "::: pipeline lane=meta\n:::\n\nBelow[[figure:teaser]].\n"
+        )
+        document = _compile(source)
+        self.assertEqual(["pipeline-meta", "teaser"], document.figcites)
+        self.assertIn(
+            '<span class="figcite" data-figure="pipeline-meta" '
+            'data-component="pipeline"> (Figure&nbsp;2)</span>',
+            document.html,
+        )
+        self.assertIn(
+            'data-figure="teaser" data-component="teaser"> (Figure&nbsp;1)',
+            document.html,
+        )
+        self.assertIn("Above<span", document.html)
+
+    def test_a_citation_of_an_undrawn_figure_stops_the_build(self) -> None:
+        with self.assertRaises(report.ReportError) as caught:
+            _compile(self.HEAD + "See[[figure:nowhere]].\n\n::: teaser\n:::\n")
+        self.assertIn("[[figure:nowhere]]", str(caught.exception))
+        self.assertIn("teaser", str(caught.exception))
+
+    def test_a_screenshot_is_cited_by_its_own_id(self) -> None:
+        source = (
+            self.HEAD + '::: screenshot id=shot route="#/en" caption="C"\n:::\n\n'
+            "The page[[figure:shot]] shows.\n"
+        )
+        document = _compile(source)
+        self.assertIn(
+            'data-figure="shot" data-component="screenshot"> (Figure&nbsp;1)',
+            document.html,
+        )
+
+    def test_the_citation_is_withheld_on_screen_and_printed(self) -> None:
+        css = (ASSETS / "style.css").read_text(encoding="utf-8")
+        screen, print_rules = css.split("@media print {", 1)
+        self.assertRegex(screen, r"\.figcite \{\s*display: none;")
+        self.assertRegex(print_rules, r"\.figcite \{\s*display: inline;")
+
+    def test_the_real_report_cites_each_figure_at_most_once(self) -> None:
+        """One per figure at its first mention, and no more."""
+        document = _compile(REPORT_SOURCE.read_text(encoding="utf-8"))
+        self.assertTrue(document.figcites)
+        self.assertEqual(len(document.figcites), len(set(document.figcites)))
+
+
 class BibliographyTests(unittest.TestCase):
     """A reference is only a reference if it resolves."""
 
@@ -2319,6 +2376,22 @@ class LatexTests(unittest.TestCase):
         self.assertLess(
             self.tex.index("\\measurechart{"), self.tex.index("\\pipelinechart{")
         )
+
+    def test_a_figure_citation_names_the_figures_label(self) -> None:
+        source = (
+            "---\ntitle: T\n---\n\n## S\n\n"
+            "The chart[[figure:pipeline-person]] and the page[[figure:shot]].\n\n"
+            "::: pipeline lane=person\n:::\n\n"
+            '::: screenshot id=shot route="#/en" caption="C"\n:::\n'
+        )
+        document = report.compile_report(source, self.facts)
+        tex = latex.render(self.payload, document)
+        self.assertIn(
+            "The chart (Figure~\\ref{fig:pipeline-person}) and the page (Figure~\\ref{fig:shot-shot}).",
+            tex,
+        )
+        self.assertIn("\\label{fig:pipeline-person}", tex)
+        self.assertIn("\\label{fig:shot-shot}", tex)
 
     def test_the_draft_band_is_one_text(self) -> None:
         html = render.render(self.payload, self.document)

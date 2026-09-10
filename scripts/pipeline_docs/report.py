@@ -47,6 +47,16 @@ The authoring surface is small on purpose:
     many steps, and a report that also explained each of them in the sentence
     would say everything twice.
 
+`[[figure:id]]`
+    A citation of a figure by number, printed only on paper. On screen the
+    references above point into a figure and light it, so a sentence never
+    has to say which figure it means; on paper a phrase points nowhere, and
+    where the context does not name the figure this writes " (Figure 4)"
+    after the word it follows. The id is a screenshot's, `teaser`, or
+    `pipeline-<lane>`, and it resolves against the report's own mounts, so a
+    citation of a figure the report does not draw stops the build. One per
+    figure, at its first mention in a section, is enough.
+
 `<<concept|phrase>>` / `<<concept>>`
     A reference from a phrase into an entry of the concept legend, resolved
     against `concepts.CONCEPTS`. It carries the concept's glyph and reads as
@@ -236,6 +246,7 @@ FIGREF = re.compile(
     r"(?<!\\)\[\[\s*(step:[a-z][a-z0-9_]*|[a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*)?)\s*"
     r"(?:\|\s*([^\]]+?)\s*)?\]\]"
 )
+FIGCITE = re.compile(r"(?<!\\)\[\[\s*figure:([a-z][a-z0-9-]*)\s*\]\]")
 CONCEPTREF = re.compile(r"(?<!\\)<<\s*([a-z][a-z0-9-]*)\s*(?:\|\s*([^>]+?)\s*)?>>")
 KEY = r"[A-Za-z][A-Za-z0-9_:.-]*"
 REFCITE = re.compile(rf"(?<!\\)\[@\s*({KEY}(?:\s*[;,]\s*@\s*{KEY})*)\s*\]")
@@ -337,6 +348,8 @@ class Document:
     # References into pipeline steps, as bare step ids.
     steprefs: List[str] = field(default_factory=list)
     conceptrefs: List[str] = field(default_factory=list)
+    # Figures cited by number, as figure ids.
+    figcites: List[str] = field(default_factory=list)
     notes: List[Note] = field(default_factory=list)
     refcites: List[str] = field(default_factory=list)
     references: List[Reference] = field(default_factory=list)
@@ -750,6 +763,68 @@ def substitute_figrefs(
 
     substituted = _outside_fences(text, lambda line: FIGREF.sub(replace, line))
     return substituted.replace("\\[[", "[[")
+
+
+# Where a figure citation asked for a number. A citation may stand above the
+# figure it names, so the number is written in once every mount is known.
+FIGCITE_PLACEHOLDER = "<!--report:figcite:{id}-->"
+
+
+def figure_id(mount: Mount) -> Optional[str]:
+    """The id a `[[figure:id]]` citation names a mount's figure by, or None.
+
+    A screenshot is cited by its own id, the teaser as `teaser`, and a
+    pipeline chart as `pipeline-<lane>`—the names the LaTeX rendering files
+    the drawings under.
+    """
+    if not COMPONENTS[mount.component].figures:
+        return None
+    if mount.component == "screenshot":
+        return mount.params.get("id") or None
+    if mount.component == "pipeline":
+        return f"pipeline-{mount.params.get('lane', '')}"
+    return mount.component
+
+
+def substitute_figcites(text: str, seen: List[str], line_hint: str = "") -> str:
+    """Replace `[[figure:id]]` with a placeholder for the figure's number.
+
+    The citation is printed only on paper (see `.figcite` in `style.css`): on
+    screen the phrase before it already points into the figure. It carries
+    its own parenthesis and the space before it, so the source writes it
+    right after the word it follows and the screen prose reads unchanged.
+    """
+
+    def replace(match: re.Match) -> str:
+        figure_id_cited = match.group(1)
+        seen.append(figure_id_cited)
+        return FIGCITE_PLACEHOLDER.format(id=figure_id_cited)
+
+    return _outside_fences(text, lambda line: FIGCITE.sub(replace, line))
+
+
+def place_figcites(html: str, mounts: Sequence[Mount], line_hint: str = "") -> str:
+    """Write each cited figure's number in, once every figure is numbered."""
+    numbers: Dict[str, Tuple[int, str]] = {}
+    for mount in mounts:
+        cited_as = figure_id(mount)
+        if cited_as:
+            numbers[cited_as] = (mount.figure_start, mount.component)
+
+    def replace(match: re.Match) -> str:
+        cited = match.group(1)
+        if cited not in numbers:
+            raise ReportError(
+                f"{line_hint}unknown figure '[[figure:{cited}]]'—the report "
+                "draws " + (", ".join(sorted(numbers)) or "no figure")
+            )
+        number, component = numbers[cited]
+        return (
+            f'<span class="figcite" data-figure="{_escape(cited)}" '
+            f'data-component="{_escape(component)}"> (Figure&nbsp;{number})</span>'
+        )
+
+    return re.sub(r"<!--report:figcite:([a-z][a-z0-9-]*)-->", replace, html)
 
 
 def collect_shot_parts(blocks: Sequence[Block]) -> Dict[str, Dict[str, ShotPart]]:
@@ -1246,6 +1321,7 @@ def compile_report(
     steprefs: List[str] = []
     conceptrefs: List[str] = []
     refcites: List[str] = []
+    figcites: List[str] = []
     shot_parts = collect_shot_parts(blocks)
     flat: List[Section] = []
     mounts: List[Mount] = []
@@ -1262,11 +1338,11 @@ def compile_report(
 
     for block in blocks:
         hint = f"line {block.line}: " if block.line else ""
-        # Figure references first: a reference's phrase is plain prose, and a
-        # citation inside one should still resolve.
-        text = substitute_figrefs(
-            block.text, figrefs, hint, shot_parts, shotrefs, steprefs
-        )
+        # Figure citations before the references, since the reference syntax
+        # would otherwise read `figure:` as a part; then the references, whose
+        # phrase is plain prose, so that a citation inside one still resolves.
+        text = substitute_figcites(block.text, figcites, hint)
+        text = substitute_figrefs(text, figrefs, hint, shot_parts, shotrefs, steprefs)
         text = substitute_conceptrefs(text, conceptrefs, hint)
         text = substitute_citations(text, facts, citations, hint)
         text = substitute_refcites(text, works, refcites, hint)
@@ -1332,6 +1408,7 @@ def compile_report(
     sections = _tree(flat)
     references = [entry for entry in (works.get(key) for key in refcites) if entry]
     html = place_notes("\n".join(parts), notes)
+    html = place_figcites(html, mounts)
     html = html.replace(toc_placeholder, _toc_html(sections))
     html = html.replace(REFERENCES_PLACEHOLDER, references_html(references))
     return Document(
@@ -1345,6 +1422,7 @@ def compile_report(
         shotrefs,
         steprefs,
         conceptrefs,
+        figcites,
         notes,
         refcites,
         references,
