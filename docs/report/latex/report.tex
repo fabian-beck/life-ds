@@ -143,6 +143,30 @@
 \setul{0.25ex}{1.2pt}
 \newcommand{\stepref}[2]{\begingroup\setulcolor{#1}\ul{#2}\endgroup}
 
+%% ---- The pipeline charts at one scale. The page draws both pipelines at the
+%% same scale so that they can be compared directly, and so does this: every
+%% chart is measured up front, the factor that fits the largest to the sheet
+%% is found once, and each chart is set at that factor rather than fitted to
+%% the sheet on its own. e-TeX scales a length by a ratio of two lengths in
+%% one `\dimexpr`, so no floating-point number is ever written.
+\newsavebox{\chartbox}
+\newlength{\chartsheight}
+\newlength{\chartswidth}
+\newlength{\chartheight}
+\newcommand{\measurechart}[1]{%
+  \sbox{\chartbox}{\includegraphics{#1}}%
+  \ifdim\ht\chartbox>\chartsheight\setlength{\chartsheight}{\ht\chartbox}\fi
+  \ifdim\wd\chartbox>\chartswidth\setlength{\chartswidth}{\wd\chartbox}\fi}
+\newcommand{\pipelinechart}[1]{%
+  \sbox{\chartbox}{\includegraphics{#1}}%
+  \setlength{\chartheight}{\dimexpr\chartsheight*\number\textwidth/\number\chartswidth\relax}%
+  \ifdim\chartheight>0.86\textheight
+    \setlength{\chartheight}{\dimexpr\ht\chartbox*\number\dimexpr0.86\textheight\relax/\number\chartsheight\relax}%
+  \else
+    \setlength{\chartheight}{\dimexpr\ht\chartbox*\number\textwidth/\number\chartswidth\relax}%
+  \fi
+  \includegraphics[height=\chartheight]{#1}}
+
 %% ---- A block that reaches past the measure to the sheet's own margins.
 \newsavebox{\widebox}
 \newenvironment{wide}{\begin{lrbox}{\widebox}\begin{minipage}{\widewidth}}{\end{minipage}\end{lrbox}\noindent\makebox[\textwidth][c]{\usebox{\widebox}}}
@@ -195,6 +219,9 @@
 
 \begin{document}
 
+\measurechart{pipeline-person.pdf}
+\measurechart{pipeline-meta.pdf}
+
 \begin{tcolorbox}[enhanced,sharp corners,boxrule=0pt,colback=draftwash,colframe=draftwash,borderline south={1.5pt}{0pt}{draftline},left=6pt,right=6pt,top=6pt,bottom=6pt,before skip=0pt,after skip=18pt,fontupper=\sffamily\small\color{draftink}]
 \eyebrow{Draft}\quad\textbf{Preliminary version---work in progress.} This report is written alongside the system it describes. Its prose, figures, and measurements are incomplete and under active revision, and any part of it may change or be withdrawn.
 \end{tcolorbox}
@@ -207,7 +234,7 @@
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/}{\textbf{Leah Mühlöder}}\\{\sffamily\scriptsize\color{muted}University of Bamberg}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0009-0000-3510-1686}{0009-0000-3510-1686}}\end{minipage}\hfill%
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://services.informatik.hs-mannheim.de/~nagel/}{\textbf{Till Nagel}}\\{\sffamily\scriptsize\color{muted}Mannheim University of Applied Sciences}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0000-0001-5400-091X}{0000-0001-5400-091X}}\end{minipage}\hfill%
 \par
-\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 10, 2026  \textperiodcentered{}  commit 146d9bc\par}
+\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 10, 2026  \textperiodcentered{}  commit 70c4c2b\par}
 \vspace{14pt}{\color{rulestrong}\hrule}\vspace{8pt}
 \eyebrow{Abstract}\par\vspace{4pt}
 Life Data Stories transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides in which a life is presented as a multi-faceted representation that combines narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous document in which the same three visual encodings are read by scrolling. The system separates two concerns. First, generation is performed offline by staged pipelines that combine intelligent language-model inference with deterministic transformation. Second, the presentation is rendered deterministically by an interactive web application. This report documents the implemented solution and provides a basic scientific contextualization.
@@ -268,7 +295,7 @@ The personal pipeline derives data for one biography, from an \glyphof{sources}e
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=\textwidth,height=0.86\textheight,keepaspectratio]{pipeline-person.pdf}
+\pipelinechart{pipeline-person.pdf}
 \caption{Personal story pipeline as a dependency graph. A shaded band gathers the steps of one phase.}\label{fig:pipeline-person}
 \end{figure}
 
@@ -292,7 +319,7 @@ The meta pipeline traces a theme across many lives and consumes the output of th
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=\textwidth,height=0.86\textheight,keepaspectratio]{pipeline-meta.pdf}
+\pipelinechart{pipeline-meta.pdf}
 \caption{Meta story pipeline as a dependency graph. A shaded band gathers the steps of one phase.}\label{fig:pipeline-meta}
 \end{figure}
 
@@ -340,7 +367,7 @@ A meta story is structured as an opening scene, up to three component sections, 
 
 \begin{figure}[tbp]
 \centering
-\shotframe{\includegraphics[width=103.2mm,height=0.55\textheight,keepaspectratio]{../screenshots/meta-network.jpg}}{Address \#/en/meta/organic\_shapes\_in\_architecture  \textperiodcentered{}  viewport 390\texttimes{}844  \textperiodcentered{}  2\texttimes{} density  \textperiodcentered{}  captured 2026-08-28}
+\shotframe{\includegraphics[width=103.2mm,height=0.4\textheight,keepaspectratio]{../screenshots/meta-network.jpg}}{Address \#/en/meta/organic\_shapes\_in\_architecture  \textperiodcentered{}  viewport 390\texttimes{}844  \textperiodcentered{}  2\texttimes{} density  \textperiodcentered{}  captured 2026-08-28}
 \caption{The network: architects as nodes, one card in front naming the cluster currently lit.}\label{fig:shot-meta-network}
 \end{figure}
 
@@ -348,7 +375,7 @@ Tapping on a dot representing an event opens a brief description of it. Tapping 
 
 \begin{figure}[tbp]
 \centering
-\shotframe{\includegraphics[width=103.2mm,height=0.55\textheight,keepaspectratio]{../screenshots/meta-map.jpg}}{Address \#/en/meta/organic\_shapes\_in\_architecture  \textperiodcentered{}  viewport 390\texttimes{}874  \textperiodcentered{}  2\texttimes{} density  \textperiodcentered{}  captured 2026-08-28}
+\shotframe{\includegraphics[width=103.2mm,height=0.4\textheight,keepaspectratio]{../screenshots/meta-map.jpg}}{Address \#/en/meta/organic\_shapes\_in\_architecture  \textperiodcentered{}  viewport 390\texttimes{}874  \textperiodcentered{}  2\texttimes{} density  \textperiodcentered{}  captured 2026-08-28}
 \caption{A location card, with the map flown in above and its linked events listed below.}\label{fig:shot-meta-map}
 \end{figure}
 
@@ -362,7 +389,7 @@ The meta story concludes with a brief summary that ties the nine lives together.
 
 \begin{figure}[tbp]
 \centering
-\shotframe{\includegraphics[width=103.2mm,height=0.55\textheight,keepaspectratio]{../screenshots/gaudi-relationship-card.jpg}}{Address \#/en/story/antoni\_gaud?slide=10  \textperiodcentered{}  viewport 390\texttimes{}844  \textperiodcentered{}  2\texttimes{} density  \textperiodcentered{}  captured 2026-08-28}
+\shotframe{\includegraphics[width=103.2mm,height=0.4\textheight,keepaspectratio]{../screenshots/gaudi-relationship-card.jpg}}{Address \#/en/story/antoni\_gaud?slide=10  \textperiodcentered{}  viewport 390\texttimes{}844  \textperiodcentered{}  2\texttimes{} density  \textperiodcentered{}  captured 2026-08-28}
 \caption{The classic format of the slide includes text in the middle, a map beneath, and an outline consisting of icons at the bottom.}\label{fig:shot-gaudi-relationship-card}
 \end{figure}
 

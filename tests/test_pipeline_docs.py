@@ -2303,6 +2303,23 @@ class LatexTests(unittest.TestCase):
             self.tex.split("\\begin{document}")[1].split("\\section")[0],
         )
 
+    def test_the_pipeline_charts_share_one_scale(self) -> None:
+        """The page draws both pipelines at one scale, and so does the PDF."""
+        charts = [
+            figure
+            for figure in latex.figures_of(self.document, self.payload)
+            if figure.id.startswith("pipeline-")
+        ]
+        self.assertGreater(len(charts), 1)
+        for figure in charts:
+            self.assertIn(f"\\measurechart{{{figure.file}}}", self.tex)
+            self.assertIn(f"\\pipelinechart{{{figure.file}}}", self.tex)
+        # Measured before any is set, so the first chart already knows the
+        # largest.
+        self.assertLess(
+            self.tex.index("\\measurechart{"), self.tex.index("\\pipelinechart{")
+        )
+
     def test_the_draft_band_is_one_text(self) -> None:
         html = render.render(self.payload, self.document)
         self.assertIn(render.DRAFT_LEAD, html)
