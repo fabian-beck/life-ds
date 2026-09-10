@@ -1249,7 +1249,9 @@ def render_conceptlegend(writer: Writer, mount: Mount) -> str:
         if not concept.get("legend"):
             continue
         glyph = writer.glyphs.macro(concept.get("path", ""))
-        term = f"\\label{{concept:{concept['id']}}}{glyph} {escape(concept['label'])}"
+        # The label after the term: a cell that opens with one starts its
+        # paragraph a line late.
+        term = f"{glyph} {escape(concept['label'])}\\label{{concept:{concept['id']}}}"
         rows.append((term, escape(concept.get("blurb", ""))))
     return writer.legend(rows)
 
@@ -1682,7 +1684,7 @@ __GLYPHS__
 \newcommand{\lanerow}[1]{\eyebrow{#1}}
 
 %% ---- A legend: a marked term and what it means, between two hairlines.
-\newenvironment{legend}{\par\vspace{4pt}\noindent\sffamily\small\renewcommand{\arraystretch}{1.2}\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\leavevmode\raggedright\arraybackslash\color{inktwo}}p{\dimexpr 0.72\linewidth-2\tabcolsep\relax}@{}}\arrayrulecolor{rule}\specialrule{0.4pt}{0pt}{3pt}}{\arrayrulecolor{rule}\specialrule{0.4pt}{3pt}{0pt}\end{tabular}\par\vspace{4pt}}
+\newenvironment{legend}{\par\vspace{4pt}\noindent\sffamily\small\renewcommand{\arraystretch}{1.2}\begin{tabular}{@{}>{\leavevmode\raggedright\arraybackslash}p{0.28\linewidth}>{\leavevmode\raggedright\arraybackslash\color{inktwo}}p{\dimexpr 0.72\linewidth-2\tabcolsep\relax}@{}}\arrayrulecolor{rule}\specialrule{0.4pt}{0pt}{3pt}}{\arrayrulecolor{rule}\specialrule{0.4pt}{3pt}{0pt}\end{tabular}\par\vspace{4pt}}
 
 %% ---- A screenshot in its frame, with the declaration it was taken from
 %% under it in the faintest type on the page.

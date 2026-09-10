@@ -184,7 +184,7 @@
 \newcommand{\lanerow}[1]{\eyebrow{#1}}
 
 %% ---- A legend: a marked term and what it means, between two hairlines.
-\newenvironment{legend}{\par\vspace{4pt}\noindent\sffamily\small\renewcommand{\arraystretch}{1.2}\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\leavevmode\raggedright\arraybackslash\color{inktwo}}p{\dimexpr 0.72\linewidth-2\tabcolsep\relax}@{}}\arrayrulecolor{rule}\specialrule{0.4pt}{0pt}{3pt}}{\arrayrulecolor{rule}\specialrule{0.4pt}{3pt}{0pt}\end{tabular}\par\vspace{4pt}}
+\newenvironment{legend}{\par\vspace{4pt}\noindent\sffamily\small\renewcommand{\arraystretch}{1.2}\begin{tabular}{@{}>{\leavevmode\raggedright\arraybackslash}p{0.28\linewidth}>{\leavevmode\raggedright\arraybackslash\color{inktwo}}p{\dimexpr 0.72\linewidth-2\tabcolsep\relax}@{}}\arrayrulecolor{rule}\specialrule{0.4pt}{0pt}{3pt}}{\arrayrulecolor{rule}\specialrule{0.4pt}{3pt}{0pt}\end{tabular}\par\vspace{4pt}}
 
 %% ---- A screenshot in its frame, with the declaration it was taken from
 %% under it in the faintest type on the page.
@@ -234,7 +234,7 @@
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/}{\textbf{Leah Mühlöder}}\\{\sffamily\scriptsize\color{muted}University of Bamberg}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0009-0000-3510-1686}{0009-0000-3510-1686}}\end{minipage}\hfill%
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://services.informatik.hs-mannheim.de/~nagel/}{\textbf{Till Nagel}}\\{\sffamily\scriptsize\color{muted}Mannheim University of Applied Sciences}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0000-0001-5400-091X}{0000-0001-5400-091X}}\end{minipage}\hfill%
 \par
-\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 10, 2026  \textperiodcentered{}  commit 70c4c2b\par}
+\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 10, 2026  \textperiodcentered{}  commit 6eca74c\par}
 \vspace{14pt}{\color{rulestrong}\hrule}\vspace{8pt}
 \eyebrow{Abstract}\par\vspace{4pt}
 Life Data Stories transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides in which a life is presented as a multi-faceted representation that combines narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous document in which the same three visual encodings are read by scrolling. The system separates two concerns. First, generation is performed offline by staged pipelines that combine intelligent language-model inference with deterministic transformation. Second, the presentation is rendered deterministically by an interactive web application. This report documents the implemented solution and provides a basic scientific contextualization.
@@ -266,12 +266,12 @@ To achieve this, we heavily rely on large language models (LLMs) for interpretin
 The data that connects generation and interface is a semi-structured representation of a biography and the central abstraction of the system. For a single life it holds several structured perspectives: the \hyperref[concept:events]{\glyphof{events}events} that mark the turning points of a life, the \hyperref[concept:narrative]{\glyphof{narrative}text} that describes them, the \hyperref[concept:imagery]{\glyphof{imagery}pictures} that illustrate them, and the \hyperref[concept:places]{\glyphof{places}geography} connected to them. While these parts are relatively straightforward derivatives of the textual biographical source, two further perspectives are more interpretive: the \hyperref[concept:network]{\glyphof{network}social network} around the subject, which the text rarely describes explicitly, and the \hyperref[concept:identity]{\glyphof{identity}visual identity} the story is presented in, which gives it a recognizable look.
 
 \begin{legend}
-\label{concept:events}\glyphof{events} Life events & Dated episodes grouped into phases. \\
-\label{concept:narrative}\glyphof{narrative} Narrative text & Prose describing each event and framing the story. \\
-\label{concept:imagery}\glyphof{imagery} Imagery & Licensed pictures matched to events. \\
-\label{concept:places}\glyphof{places} Geography & Historical place names on a modern map. \\
-\label{concept:network}\glyphof{network} Social network & Typed and weighted relationships between the persons involved. \\
-\label{concept:identity}\glyphof{identity} Visual identity & A palette, typography, and background pattern per story. \\
+\glyphof{events} Life events\label{concept:events} & Dated episodes grouped into phases. \\
+\glyphof{narrative} Narrative text\label{concept:narrative} & Prose describing each event and framing the story. \\
+\glyphof{imagery} Imagery\label{concept:imagery} & Licensed pictures matched to events. \\
+\glyphof{places} Geography\label{concept:places} & Historical place names on a modern map. \\
+\glyphof{network} Social network\label{concept:network} & Typed and weighted relationships between the persons involved. \\
+\glyphof{identity} Visual identity\label{concept:identity} & A palette, typography, and background pattern per story. \\
 \end{legend}
 
 A meta story refers to the data of the lives it connects and adds perspectives of its own. It names its cast of subjects and groups them into subtopics. Its chapters cut across those lives into shared periods, and each chapter references \hyperref[concept:events]{\glyphof{events}events} that stay in the subjects' own data, annotated with what each one contributes to it. The subjects' ego networks are merged into one \hyperref[concept:network]{\glyphof{network}social network}, and the \hyperref[concept:places]{\glyphof{places}geography} of all of those lives is clustered into the places important to the theme. The \hyperref[concept:narrative]{\glyphof{narrative}text} is written for the theme, and the \hyperref[concept:imagery]{\glyphof{imagery}pictures} that illustrate it are selected from the events of the individual stories. Like a life, a theme is presented in an \hyperref[concept:identity]{\glyphof{identity}visual identity} of its own.
