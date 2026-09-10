@@ -2613,12 +2613,15 @@
       });
     },
 
-    /* The four step kinds, laid out by the width each label actually needs and
-       wrapped when the box runs out—equal cells fit the shortest name and
-       clipped the longest. */
+    /* The four step kinds behind a label that says what the row classifies,
+       laid out by the width each entry actually needs and wrapped when the box
+       runs out—equal cells fit the shortest name and clipped the longest. */
     kinds: function (host, part) {
       let x = part.x;
       let y = part.y + 12;
+      const heading = "Processing steps:";
+      host.appendChild(sText(x, y + 10, heading, "ttext"));
+      x += heading.length * 6.6 + 14;
       kindEntries().forEach((entry) => {
         const kind = entry[0];
         const width = DATA.kinds[kind].label.length * 6.6 + 26;
