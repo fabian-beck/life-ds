@@ -9,7 +9,7 @@ description:
   Technical report on the Life Data Stories system: its data model, its two
   generation pipelines and its interface.
 disclaimer:
-  This report was co-written with AI. Its prose was drafted and revised with language models under the authors' direction, and every figure, table, and count in it is computed from the repository at build time. The system it describes was implemented by AI through agentic engineering: coding agents wrote the code, and the authors specified, reviewed, and directed the work.
+  This report was co-written with AI. Its text and figures were drafted and revised with language models under the authors' direction, along manual edits. The system the report describes was implemented by AI through agentic engineering.
 abstract:
   Life Data Stories transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides in which a life is presented as a multi-faceted representation that combines narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous document in which the same three visual encodings are read by scrolling. The system separates two concerns. First, generation is performed offline by staged pipelines that combine intelligent language-model inference with deterministic transformation. Second, the presentation is rendered deterministically by an interactive web application. This report documents the implemented solution and provides a basic scientific contextualization.
 ---
