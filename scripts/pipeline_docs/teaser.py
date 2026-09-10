@@ -39,7 +39,9 @@ from . import concepts
 
 # The scene is a fixed coordinate system, not a pixel size: the page scales it
 # to the width available and zooms into sub-rectangles of it on small screens.
-SCENE_W = 868
+# The four columns stand 48 units apart, which is what an edge label such as
+# "material" needs to sit in the channel it crosses rather than on the boxes.
+SCENE_W = 964
 SCENE_H = 384
 
 METRIC_KEY = re.compile(r"\{([a-zA-Z0-9_.]+)\}")
@@ -161,18 +163,18 @@ class Link:
 
 STAGES: Tuple[Stage, ...] = (
     Stage("Sources", 8, 196),
-    Stage("Generation", 220, 240),
-    Stage("Data", 476, 180),
-    Stage("Interface", 672, 188),
+    Stage("Generation", 252, 240),
+    Stage("Data", 540, 180),
+    Stage("Interface", 768, 188),
 )
 
 PARTS: Tuple[Part, ...] = (
     Part(
         "sources",
         "Source material",
-        "Article prose, images and place names are fetched from Wikipedia, "
-        "Deutsche Biographie, Commons and Nominatim, and cached before any step "
-        "reads them.",
+        "Article prose, images, and place names are fetched from Wikipedia, "
+        "the Deutsche Biographie, Wikimedia Commons, Openverse, and Nominatim, "
+        "and cached before any step reads them.",
         (8, 40, 196, 150),
         decor="sources",
         lines=("Article prose", "Images", "Place names"),
@@ -198,13 +200,14 @@ PARTS: Tuple[Part, ...] = (
     Part(
         "person-pipeline",
         "Personal story pipeline",
-        "One biography end to end. After sourcing it forks into a narrative, an "
-        "imagery, a network and an identity branch, reconverging at review and "
-        "translation.",
+        "One biography end to end. After sourcing, the events are proposed, "
+        "researched, and illustrated; then the style with its generated art and "
+        "the ego network branch off side by side, and review, background "
+        "reports, and translation close the run.",
         # Exactly the box the person story gets in the interface column: the
         # two halves of the system are drawn at the same size because neither
         # is the larger half.
-        (220, 40, 240, 150),
+        (252, 40, 240, 150),
         decor="steps",
         lane="person",
     ),
@@ -213,17 +216,17 @@ PARTS: Tuple[Part, ...] = (
         "Meta story pipeline",
         "A theme across several finished biographies. A network branch and a map "
         "branch run independently and meet in the composition step.",
-        (220, 206, 240, 128),
+        (252, 206, 240, 128),
         decor="steps",
         lane="meta",
     ),
     Part(
         "kinds",
         "Four kinds of step",
-        "An inference call, deterministic code, a retrieval from an external "
-        "service or an image generation—the classification partitions both "
-        "pipelines by cost and by failure mode.",
-        (8, 348, 852, 24),
+        "A retrieval from an external source, a language model call, "
+        "deterministic code, or an image model call—the classification "
+        "partitions both pipelines by cost and by failure mode.",
+        (8, 348, 948, 24),
         decor="kinds",
         frame="none",
         legend=True,
@@ -231,19 +234,19 @@ PARTS: Tuple[Part, ...] = (
     Part(
         "artifacts",
         "Generated data",
-        "One record per subject and one per theme, written once and read as it "
-        "stands. The two halves of the system communicate through this and "
-        "through nothing else: no database, no server.",
-        (476, 40, 180, 294),
+        "A set of documents and images per subject and per theme, written once "
+        "and read as they stand. The two halves of the system communicate "
+        "through this and through nothing else: no database, no server.",
+        (540, 40, 180, 294),
         decor="frame",
         frame="soft",
     ),
     Part(
         "events",
         "Life events",
-        "The narrative spine: dated events with places, persons, sources and a "
+        "The narrative spine: dated events with places, people, sources, and a "
         "typed icon, grouped into the chapters of a life.",
-        (488, 78, 156, 36),
+        (552, 78, 156, 36),
         decor="concept",
         parent="artifacts",
         concept="events",
@@ -253,7 +256,7 @@ PARTS: Tuple[Part, ...] = (
         "Narrative text",
         "The written register: an event's own description, and the article "
         "prose that surrounds a meta story's components.",
-        (488, 120, 156, 36),
+        (552, 120, 156, 36),
         decor="concept",
         parent="artifacts",
         concept="narrative",
@@ -261,9 +264,10 @@ PARTS: Tuple[Part, ...] = (
     Part(
         "imagery",
         "Imagery",
-        "Licensed illustrations matched to the events they depict, and the "
-        "portraits and chapter art drawn from them.",
-        (488, 162, 156, 36),
+        "Licensed illustrations matched to the events they depict, a portrait "
+        "redrawn from a reference picture in one shared style, and chapter art "
+        "drawn from each chapter's concept.",
+        (552, 162, 156, 36),
         decor="concept",
         parent="artifacts",
         concept="imagery",
@@ -273,7 +277,7 @@ PARTS: Tuple[Part, ...] = (
         "Geography",
         "The historical toponyms of the events, resolved to modern coordinates "
         "a map can fly across.",
-        (488, 204, 156, 36),
+        (552, 204, 156, 36),
         decor="concept",
         parent="artifacts",
         concept="places",
@@ -281,9 +285,9 @@ PARTS: Tuple[Part, ...] = (
     Part(
         "ego-network",
         "Social network",
-        "The subject's relationships as typed, weighted and dated edges, "
-        "generated independently of the narrative.",
-        (488, 246, 156, 36),
+        "The subject's relationships as typed, weighted, and described ties, "
+        "derived in a step of their own once the events are settled.",
+        (552, 246, 156, 36),
         decor="concept",
         parent="artifacts",
         concept="network",
@@ -291,9 +295,9 @@ PARTS: Tuple[Part, ...] = (
     Part(
         "identity",
         "Visual identity",
-        "The palette, typography and background pattern a story is presented "
+        "The palette, typography, and background pattern a story is presented "
         "in, carried in the data rather than in the application.",
-        (488, 288, 156, 36),
+        (552, 288, 156, 36),
         decor="concept",
         parent="artifacts",
         concept="identity",
@@ -301,24 +305,25 @@ PARTS: Tuple[Part, ...] = (
     Part(
         "slides",
         "Person story",
-        "Full-screen, scroll-snapped slides—overview, chapter, event, "
-        "conclusion—advanced one unit at a time, every position a citable "
+        "Full-screen slides swiped sideways one at a time—an overview, the "
+        "chapters, the events, a closing slide—every position a citable "
         "address.",
-        (672, 40, 188, 150),
+        (768, 40, 188, 150),
         decor="slides",
     ),
     Part(
         "sections",
         "Meta story",
-        "A continuous document advanced by scrolling, whose visual sections pin "
-        "a component while narration cards scroll over it.",
-        (672, 206, 188, 128),
+        "A continuous document read by scrolling, whose timeline, network, and "
+        "map sections each keep a visualization in view while narration cards "
+        "lead the reader through it.",
+        (768, 206, 188, 128),
         decor="sections",
     ),
 )
 
 LINKS: Tuple[Link, ...] = (
-    Link("sources", "person-pipeline", label="material", source_at=0.5, jog=0.35),
+    Link("sources", "person-pipeline", label="material", source_at=0.5),
     Link("inference", "person-pipeline", kind="call", source_at=0.35, jog=0.78),
     Link("inference", "meta-pipeline", kind="call", source_at=0.65, jog=0.56),
     Link("person-pipeline", "artifacts", label="writes", target_at=0.3, jog=0.5),
@@ -331,7 +336,7 @@ LINKS: Tuple[Link, ...] = (
         jog=0.5,
     ),
     Link("artifacts", "slides", label="loads", source_at=0.25, jog=0.5),
-    Link("artifacts", "sections", source_at=0.8, jog=0.32),
+    Link("artifacts", "sections", label="loads", source_at=0.8),
 )
 
 

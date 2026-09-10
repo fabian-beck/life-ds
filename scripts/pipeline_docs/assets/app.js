@@ -2346,7 +2346,7 @@
       "aria-label":
         "The system end to end: sources and language-model inference, two " +
         "generation pipelines, the data they write, the interface that reads " +
-        "it, and along the foot the four encodings every story is read through.",
+        "it, and along the foot the four kinds of step the pipelines are made of.",
     });
     root.style.aspectRatio = TEASER.width + " / " + TEASER.height;
 
