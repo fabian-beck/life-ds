@@ -286,7 +286,7 @@ Alignment holds only where a group is **continuous**. The layers a group occupie
 
 Horizontal placement runs in two stages and uses **continuous positions, not a column grid**:
 
-1. Blocks—one per group run, one per ungrouped node—are placed as rigid rectangles with a single x across every layer they cross. A leftmost packing gives a feasible start; blocks are then relaxed toward the mean position of their graph neighbors, each clamped to the room its neighbors in every layer it occupies actually leave. Feasibility is therefore invariant, and sparse layers center themselves under the layers they feed.
+1. Blocks—one per group run, one per ungrouped node—are placed as rigid rectangles with a single x across every layer they cross. A leftmost packing gives a feasible start and fixes the chart's width. Inside it, the blocks are moved to minimize the summed squared horizontal offset of the edges, measured between the centers of the steps each joins: a block is pulled to the mean of the positions its edges ask for and clamped to the room its neighbors in every layer it occupies actually leave, and blocks that jam against each other are moved as one by the edges that leave the pair. Feasibility is therefore invariant, and a strand fed from one side of the chart moves under what feeds it instead of staying where the packing left it.
 2. Nodes are centered inside their block, which is what lines a group up: a run with one step per layer puts every step at the same x.
 
 Adding a phase is a `spec.py` edit; `--check` rejects one that names an unknown step, claims a step twice, mixes the two pipelines, or leaves a step in no phase.

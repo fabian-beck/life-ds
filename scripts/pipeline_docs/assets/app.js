@@ -31,8 +31,8 @@
    a job that takes three layers reads as one vertical strand instead of
    drifting across the chart. Every step is in a phase.
    Alignment holds only where a group is continuous: a member several
-   layers below the rest is placed on its own. Positions are continuous and
-   relaxed toward the center, not slots in a grid. */
+   layers below the rest is placed on its own. Positions are continuous, not
+   slots in a grid, and are relaxed to keep the edges short. */
 
 (function () {
   "use strict";
@@ -548,7 +548,7 @@
               first: layer,
               rank: 0,
               cx: 0,
-              near: [],
+              links: [], // the edges leaving the block, one entry per edge end
             };
             byKey[key] = block;
             blocks.push(block);
@@ -579,6 +579,22 @@
               M.COL_GAP * (list.length - 1)
           );
         }, 0);
+        // Where each member's center sits relative to the block's: the members
+        // of one layer are centered on the block, so the offset is fixed by the
+        // block's shape and the placement only ever moves the block.
+        block.layers.forEach((layer) => {
+          const list = block.byLayer[layer];
+          const total =
+            list.reduce((sum, node) => {
+              return sum + node.w;
+            }, 0) +
+            M.COL_GAP * (list.length - 1);
+          let x = -total / 2;
+          list.forEach((node) => {
+            node.offset = x + node.w / 2;
+            x += node.w + M.COL_GAP;
+          });
+        });
         if (block.members.length < 2) block.group = null;
       });
       // One order for the whole chart, so a block that spans layers cannot be
@@ -592,15 +608,21 @@
     /* Horizontal placement, in two stages. The layer decides how far *down* a
        node goes; the graph says nothing about how far across, and that freedom is
        spent on meaning—the steps of one concern are aligned so they read as a
-       single vertical strand.
+       single vertical strand—and on short edges.
 
        Stage one places the blocks: group runs and lone nodes alike, each a rigid
        rectangle with one x for every layer it crosses. Positions are continuous,
-       not slots in a grid. A leftmost packing gives a feasible start, then blocks
-       are relaxed toward the average position of their graph neighbors, each one
-       clamped to the room its neighbors in every layer it occupies actually
-       leave. That keeps the arrangement valid at every step while letting sparse
-       layers center themselves under the layers they feed.
+       not slots in a grid. A leftmost packing gives a feasible start and fixes
+       the chart's width, since every block is then as far left as it can go.
+       Inside that width, the blocks are moved to minimize the summed squared
+       horizontal offset of the edges, each measured between the centers of the
+       two steps it joins. A block is pulled to the mean of the positions its
+       edges ask for and clamped to the room its neighbors in every layer it
+       occupies leave, so the arrangement stays valid at every step. Two blocks
+       that jam against each other—one pulled toward the other, which has
+       nowhere to go on its own—are then moved as one, by their edges to the
+       rest of the chart; otherwise a strand fed from one side would stay
+       pressed against the margin because the strand beside it holds it there.
 
        Stage two places the nodes inside each block, centered on it, which is what
        makes a group's steps line up: a run with one step per layer puts every
@@ -617,14 +639,6 @@
           perLayer[layer].push(block);
         });
       });
-      // Who sits either side of a block, per layer: the only constraints there
-      // are, and they never change, since the order does not.
-      const bounds = [];
-      perLayer.forEach((list) => {
-        list.forEach((block, index) => {
-          if (index) bounds.push([list[index - 1], block]);
-        });
-      });
 
       const nodeById = {};
       rows.forEach((row) => {
@@ -632,20 +646,32 @@
           nodeById[node.id] = node;
         });
       });
-      function connect(a, b) {
-        if (!a || !b || a === b) return;
-        if (a.near.indexOf(b) === -1) a.near.push(b);
-        if (b.near.indexOf(a) === -1) b.near.push(a);
-      }
+      // An edge inside a block never changes length, so only the ones between
+      // blocks pull. Each is recorded at both ends, as the offset the near end
+      // has inside its block and the far end's node.
       graph.steps.forEach((step) => {
         (graph.parents[step.id] || []).forEach((edge) => {
           const from = nodeById[edge.from];
           const to = nodeById[step.id];
-          if (from && to) connect(from.block, to.block);
+          if (!from || !to || from.block === to.block) return;
+          from.block.links.push({ offset: from.offset, other: to });
+          to.block.links.push({ offset: to.offset, other: from });
         });
       });
       function gap(left, right) {
         return (left.width + right.width) / 2 + M.COL_GAP;
+      }
+      function centerOf(node) {
+        return node.block.cx + node.offset;
+      }
+      // The x the block's edges ask for: where its center would have to be for
+      // each edge to run straight, averaged.
+      function target(block) {
+        return (
+          block.links.reduce((sum, link) => {
+            return sum + centerOf(link.other) - link.offset;
+          }, 0) / block.links.length
+        );
       }
 
       // Leftmost feasible packing. Pushing one block right can invalidate a layer
@@ -668,30 +694,113 @@
           });
         });
       }
+      // The packing is as narrow as the order allows, and the chart stays that
+      // wide: nothing below moves a block past its right edge.
+      const extent = blocks.reduce((best, block) => {
+        return Math.max(best, block.cx + block.width / 2);
+      }, 0);
 
-      // Relax. A block may move only inside the room its neighbors leave, so the
-      // arrangement stays valid; alternating the sweep direction keeps the result
-      // from leaning the way it was traversed.
-      for (let pass = 0; pass < 24; pass += 1) {
-        const order = pass % 2 ? blocks.slice().reverse() : blocks;
-        order.forEach((block) => {
-          if (!block.near.length) return;
-          let low = block.width / 2;
-          let high = Infinity;
+      // The room a set of blocks has either side, from the nearest block outside
+      // the set in any layer a member occupies, or from the chart's edge.
+      function room(set) {
+        let left = Infinity;
+        let right = Infinity;
+        set.forEach((block) => {
+          left = Math.min(left, block.cx - block.width / 2);
+          right = Math.min(right, extent - block.width / 2 - block.cx);
           block.layers.forEach((layer) => {
             const list = perLayer[layer];
             const index = list.indexOf(block);
             const before = list[index - 1];
             const after = list[index + 1];
-            if (before) low = Math.max(low, before.cx + gap(before, block));
-            if (after) high = Math.min(high, after.cx - gap(block, after));
+            if (before && set.indexOf(before) === -1) {
+              left = Math.min(left, block.cx - before.cx - gap(before, block));
+            }
+            if (after && set.indexOf(after) === -1) {
+              right = Math.min(right, after.cx - block.cx - gap(block, after));
+            }
           });
-          const target =
-            block.near.reduce((sum, other) => {
-              return sum + other.cx;
-            }, 0) / block.near.length;
-          block.cx = Math.min(Math.max(target, low), Math.max(low, high));
         });
+        return { left: Math.max(0, left), right: Math.max(0, right) };
+      }
+      const EPS = 0.01;
+
+      // Relax. A block may move only inside the room its neighbors leave, so the
+      // arrangement stays valid; alternating the sweep direction keeps the result
+      // from leaning the way it was traversed. Every move shortens the edges, so
+      // the passes settle, and the guard only bounds the cost of one drawing.
+      for (let pass = 0; pass < 60; pass += 1) {
+        moved = false;
+        const order = pass % 2 ? blocks.slice().reverse() : blocks;
+        order.forEach((block) => {
+          if (!block.links.length) return;
+          const free = room([block]);
+          const next = Math.min(
+            Math.max(target(block), block.cx - free.left),
+            block.cx + free.right
+          );
+          if (Math.abs(next - block.cx) > EPS) {
+            block.cx = next;
+            moved = true;
+          }
+        });
+
+        // Blocks that are jammed: a block still pulled past a neighbor it already
+        // touches is joined with that neighbor, transitively, and the set is moved
+        // by the edges that leave it, as far as the room around the set allows.
+        const setOf = new Map();
+        blocks.forEach((block) => {
+          setOf.set(block, [block]);
+        });
+        function join(a, b) {
+          const setA = setOf.get(a);
+          const setB = setOf.get(b);
+          if (setA === setB) return;
+          setB.forEach((block) => {
+            setA.push(block);
+            setOf.set(block, setA);
+          });
+        }
+        blocks.forEach((block) => {
+          if (!block.links.length) return;
+          const pull = target(block) - block.cx;
+          if (Math.abs(pull) <= EPS) return;
+          block.layers.forEach((layer) => {
+            const list = perLayer[layer];
+            const index = list.indexOf(block);
+            const next = pull > 0 ? list[index + 1] : list[index - 1];
+            if (!next) return;
+            const touching =
+              pull > 0
+                ? next.cx - block.cx - gap(block, next) <= EPS
+                : block.cx - next.cx - gap(next, block) <= EPS;
+            if (touching) join(block, next);
+          });
+        });
+        const seen = new Set();
+        blocks.forEach((block) => {
+          const set = setOf.get(block);
+          if (seen.has(set) || set.length < 2) return;
+          seen.add(set);
+          let sum = 0;
+          let count = 0;
+          set.forEach((member) => {
+            member.links.forEach((link) => {
+              if (set.indexOf(link.other.block) !== -1) return;
+              sum += centerOf(link.other) - link.offset - member.cx;
+              count += 1;
+            });
+          });
+          if (!count) return;
+          const free = room(set);
+          const shift = Math.min(Math.max(sum / count, -free.left), free.right);
+          if (Math.abs(shift) <= EPS) return;
+          set.forEach((member) => {
+            member.cx += shift;
+          });
+          moved = true;
+        });
+        if (!moved) break;
       }
 
       let left = Infinity;
@@ -704,18 +813,8 @@
       blocks.forEach((block) => {
         block.cx += origin;
         // Stage two: the members of one layer, centered on the block.
-        block.layers.forEach((layer) => {
-          const list = block.byLayer[layer];
-          const total =
-            list.reduce((sum, node) => {
-              return sum + node.w;
-            }, 0) +
-            M.COL_GAP * (list.length - 1);
-          let x = block.cx - total / 2;
-          list.forEach((node) => {
-            node.px = x;
-            x += node.w + M.COL_GAP;
-          });
+        block.members.forEach((node) => {
+          node.px = block.cx + node.offset - node.w / 2;
         });
       });
 
