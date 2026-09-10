@@ -207,10 +207,16 @@ GROUPS: List[Group] = [
     Group(
         "images",
         "Images",
-        ["p_img_search", "p_img_fetch", "p_img_match", "p_img_verify"],
+        [
+            "p_img_search",
+            "p_img_fetch",
+            "p_img_filter",
+            "p_img_match",
+            "p_img_verify",
+        ],
         note=(
-            "One job: plan the searches, run and rank them, match the survivors "
-            "to events, and check the portrait the match picked."
+            "One job: plan the searches, run them, rank what comes back, match "
+            "the survivors to events, and check the portrait the match picked."
         ),
     ),
     Group(
@@ -544,7 +550,7 @@ STEPS: List[Step] = [
     ),
     Step(
         "p_img_fetch",
-        "Search and rank images",
+        "Search image sources",
         SHARED,
         EXTERNAL,
         "events/images/assign.py",
@@ -557,11 +563,25 @@ STEPS: List[Step] = [
             "wrote for each event run too, and first, so that the tag saying "
             "which event a picture was found for survives the deduplication—two "
             "per event, Commons only, because a query naming a machine or a "
-            "document is a query Commons indexes well. The pool is then scored "
-            "in code (`filter_images_by_quality` in `events/images/scoring.py`) "
-            "on resolution, file efficiency, how informative the filename is, "
-            "and whether the picture shows a commemoration; hits under a "
-            "permissive threshold are dropped and the rest ranked, so the "
+            "document is a query Commons indexes well."
+        ),
+        depends_on=[
+            Dep("p_img_search", "the planned search strings"),
+            Dep("p_events_p2", "the searches each event asked for"),
+        ],
+    ),
+    Step(
+        "p_img_filter",
+        "Rank candidates",
+        SHARED,
+        CODE,
+        "events/images/scoring.py",
+        "filter_images_by_quality",
+        byline="Quality and commemoration score",
+        summary=(
+            "Scores every hit on resolution, file efficiency, how informative "
+            "its filename is, and whether it shows a commemoration, then drops "
+            "the ones under a permissive threshold and ranks the rest—so the "
             "matching call sees candidates rather than noise. The "
             "commemoration penalty is what keeps a well-lit modern photograph "
             "of a plaque or a grave from outranking a scanned period "
@@ -570,10 +590,7 @@ STEPS: List[Step] = [
             "Openverse reports no categories at all. The scores are computed "
             "once for the whole pool, and the pool serves every event at once."
         ),
-        depends_on=[
-            Dep("p_img_search", "the planned search strings"),
-            Dep("p_events_p2", "the searches each event asked for"),
-        ],
+        depends_on=[Dep("p_img_fetch", "every hit the queries returned")],
     ),
     Step(
         "p_img_match",
@@ -595,7 +612,7 @@ STEPS: List[Step] = [
             "happened, and a building found by its kind and its city is now "
             "among the stand-ins the shared rejection list names."
         ),
-        depends_on=[Dep("p_img_fetch", "the ranked image candidates")],
+        depends_on=[Dep("p_img_filter", "the ranked image candidates")],
         prompts=[
             "build_image_match_prompt",
             "STAND_IN_REJECTION_INSTRUCTIONS",
@@ -772,7 +789,7 @@ STEPS: List[Step] = [
         "p_name_evidence",
         "Collect name evidence",
         SHARED,
-        CODE,
+        EXTERNAL,
         "translate_person.py",
         "build_translation_reference",
         byline="Wikipedia language links",
