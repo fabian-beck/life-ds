@@ -21,7 +21,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = REPO_ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
-from pipeline_docs import bibliography, concepts  # noqa: E402
+from pipeline_docs import bibliography, concepts, latex  # noqa: E402
 from pipeline_docs import facts as facts_module  # noqa: E402
 from pipeline_docs import render, report, screenshots  # noqa: E402
 from pipeline_docs import spec, summarize, teaser, validate  # noqa: E402
@@ -2197,6 +2197,172 @@ class PrintTests(unittest.TestCase):
         script = (SCRIPTS_DIR / "export_report_pdf.mjs").read_text(encoding="utf-8")
         self.assertIn("data-report-ready", script)
         self.assertIn("data-report-ready", self.js)
+
+
+class LatexTests(unittest.TestCase):
+    """The LaTeX rendering is the same report again, so it is held to it.
+
+    What the page shows has to reach the LaTeX source through the same compiled
+    body and the same payload, block for block: a computed block with no LaTeX
+    renderer, a reference construct the walker drops, or a drawing the payload
+    moved away from would each leave the PDF quietly short of the page.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.codebase = _codebase()
+        cls.facts = facts_module.collect(cls.codebase)
+        cls.document = report.compile_report(
+            REPORT_SOURCE.read_text(encoding="utf-8"), cls.facts
+        )
+        cls.payload = build_payload(
+            cls.codebase,
+            {},
+            cls.document,
+            cls.facts,
+            screenshots.payload(screenshots.collect(cls.document)),
+        )
+        cls.tex = latex.render(cls.payload, cls.document)
+
+    def test_every_mounted_component_has_a_latex_renderer(self) -> None:
+        """The second roster, checked like the first."""
+        for name in sorted(report.COMPONENTS):
+            self.assertIn(
+                name, latex.RENDERERS, f"latex.py has no renderer for '::: {name}'"
+            )
+        self.assertEqual(set(latex.RENDERERS), set(report.COMPONENTS))
+
+    def test_escaping_defuses_every_special_character(self) -> None:
+        self.assertEqual(
+            latex.escape("a & b % c # d _ e { } ~ ^ \\"),
+            "a \\& b \\% c \\# d \\_ e \\{ \\} \\textasciitilde{} "
+            "\\textasciicircum{} \\textbackslash{}",
+        )
+        self.assertEqual(
+            latex.escape("\u201cquoted\u201d\u2014dash"), "``quoted''---dash"
+        )
+        # A flag keeps its hyphens apart, and may break after one.
+        self.assertEqual(
+            latex.escape_code("--shots"), "{-}\\allowbreak{}{-}\\allowbreak{}shots"
+        )
+
+    def test_colors_are_the_pages_own(self) -> None:
+        """The kind colors come from `style.css`, not from a second list."""
+        tokens = latex.design_tokens()
+        definitions = "\n".join(latex.color_definitions(tokens))
+        for kind, name in latex.KIND_COLORS.items():
+            self.assertIn(f"kind-{kind}", tokens)
+            value = tokens[f"kind-{kind}"].lstrip("#").upper()
+            self.assertIn(f"\\definecolor{{{name}}}{{HTML}}{{{value}}}", definitions)
+            self.assertIn(f"\\definecolor{{{name}}}", self.tex)
+        with self.assertRaises(latex.LatexError):
+            latex.color_definitions({})
+
+    def test_the_authoring_surface_reaches_the_source(self) -> None:
+        source = (
+            "---\ntitle: T\n---\n\n## One\n\n"
+            "A [[step:p_wiki_fetch|fetch]] and <<events|events>> and "
+            "Segel and Heer [@segel2010narrative] say.^[A note.] `--flag` here.\n\n"
+            "::: kindlegend\n:::\n\n::: note\nHold on.\n:::\n\n"
+            "## References\n\n::: references\n:::\n"
+        )
+        document = report.compile_report(source, self.facts)
+        tex = latex.render(self.payload, document)
+        self.assertIn("\\section{One}\\label{sec:one}", tex)
+        self.assertIn("\\stepref{kindexternal}{fetch}", tex)
+        self.assertIn("\\glyphof{events}events", tex)
+        self.assertEqual(1, tex.count("\\csname glyph@events\\endcsname"))
+        self.assertIn("\\hyperref[ref:1]{1}", tex)
+        self.assertIn("\\item\\label{ref:1}", tex)
+        self.assertIn("\\footnote{A note.}", tex)
+        self.assertNotIn("noteref", tex)
+        self.assertIn("\\code{{-}\\allowbreak{}{-}\\allowbreak{}flag}", tex)
+        self.assertIn("\\begin{legend}", tex)
+        self.assertIn("\\swatch{kindai}", tex)
+        self.assertIn("\\begin{callout}{note}{Note}", tex)
+        self.assertIn("\\section{Step details}", tex)
+
+    def test_every_block_of_the_real_report_is_written(self) -> None:
+        """One figure environment per figure the page numbers, in order."""
+        figures = sum(
+            report.COMPONENTS[mount.component].figures for mount in self.document.mounts
+        )
+        self.assertEqual(figures, self.tex.count("\\begin{figure}"))
+        for mount in self.document.mounts:
+            if mount.component == "screenshot":
+                self.assertIn(f"\\label{{fig:shot-{mount.params['id']}}}", self.tex)
+        for figure in latex.figures_of(self.document, self.payload):
+            self.assertIn(f"{{{figure.file}}}", self.tex)
+            self.assertIn(f"\\label{{fig:{figure.id}}}", self.tex)
+        # Nothing the page mounts is left to a fallback sentence.
+        self.assertNotIn("This block is computed when the report is built", self.tex)
+        self.assertNotIn("widget", self.tex)
+        # The contents is dropped, as on paper.
+        self.assertNotIn(
+            "Introduction}{",
+            self.tex.split("\\begin{document}")[1].split("\\section")[0],
+        )
+
+    def test_the_draft_band_is_one_text(self) -> None:
+        html = render.render(self.payload, self.document)
+        self.assertIn(render.DRAFT_LEAD, html)
+        self.assertIn(latex.escape(render.DRAFT_LEAD), self.tex)
+        self.assertIn(latex.escape(render.DRAFT_TEXT), self.tex)
+
+    def test_a_drawing_is_fingerprinted_by_what_it_draws(self) -> None:
+        before = latex.pipeline_figure("person", self.payload).fingerprint
+        moved = json.loads(json.dumps(self.payload))
+        step = next(step for step in moved["steps"] if step["column"] == "person")
+        step["summary"] = {"description": "reworded", "input": "x", "output": "y"}
+        step["line"] = 999
+        self.assertEqual(before, latex.pipeline_figure("person", moved).fingerprint)
+        step["label"] = "Renamed step"
+        self.assertNotEqual(before, latex.pipeline_figure("person", moved).fingerprint)
+        self.assertNotEqual(
+            latex.pipeline_figure("meta", self.payload).fingerprint, before
+        )
+
+    def test_a_printed_drawing_is_current_stale_or_missing(self) -> None:
+        figure = latex.teaser_figure(self.payload)
+        with tempfile.TemporaryDirectory() as workspace:
+            directory = Path(workspace)
+            self.assertEqual("missing", latex.figure_status(figure, {}, directory))
+            export = latex.Export(figure.file, "0000", "2026-01-01T00:00:00Z")
+            self.assertEqual(
+                "missing", latex.figure_status(figure, {figure.id: export}, directory)
+            )
+            (directory / figure.file).write_bytes(b"%PDF")
+            self.assertEqual(
+                "stale", latex.figure_status(figure, {figure.id: export}, directory)
+            )
+            export.fingerprint = figure.fingerprint
+            latex.save_figure_index({figure.id: export}, directory)
+            self.assertEqual(
+                "current",
+                latex.figure_status(
+                    figure, latex.load_figure_index(directory), directory
+                ),
+            )
+            self.assertEqual(
+                [], latex.select_figures([figure], latex.STALE, directory=directory)
+            )
+            self.assertEqual(
+                [figure], latex.select_figures([figure], latex.ALL, directory=directory)
+            )
+            with self.assertRaises(latex.LatexError):
+                latex.select_figures([figure], "nothing", directory=directory)
+            self.assertEqual([], latex.figure_problems([figure], directory))
+
+    def test_the_committed_drawings_are_current(self) -> None:
+        """What `--check` warns about, and what the LaTeX compile refuses."""
+        problems = latex.figure_problems(latex.figures_of(self.document, self.payload))
+        self.assertEqual([], problems)
+
+    def test_the_figure_export_waits_for_the_page_to_finish(self) -> None:
+        """Printing a half-hydrated page yields empty drawings."""
+        script = (SCRIPTS_DIR / "export_report_figures.mjs").read_text(encoding="utf-8")
+        self.assertIn("data-report-ready", script)
+        self.assertIn('emulateMedia({ media: "screen" })', script)
 
 
 if __name__ == "__main__":

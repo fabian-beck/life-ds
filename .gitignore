@@ -21,5 +21,17 @@ evaluation/out/
 # Printed from docs/report/index.html by `npm run report:pdf`. Regenerate it
 # rather than tracking a binary that changes on every report build.
 docs/report/*.pdf
+# Compiled from docs/report/latex/report.tex by `npm run report:latex`, with
+# the engine's intermediate files. The vector figures under latex/figures/
+# are tracked, like the screenshots: a browser prints them, and a checkout
+# without one still compiles.
+docs/report/latex/*.pdf
+docs/report/latex/*.aux
+docs/report/latex/*.log
+docs/report/latex/*.out
+docs/report/latex/*.fls
+docs/report/latex/*.fdb_latexmk
+docs/report/latex/*.toc
+docs/report/latex/*.synctex.gz
 # Interaction logs the dev server's emulation of the evaluation API writes.
 .evaluation-logs/

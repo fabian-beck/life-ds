@@ -45,10 +45,7 @@ __CSS__
 <div class="draftbanner" role="note" aria-label="Document status">
   <p class="draftbanner-tag">Draft</p>
   <p class="draftbanner-text">
-    <strong>Preliminary version—work in progress.</strong> This report is
-    written alongside the system it describes. Its prose, figures, and
-    measurements are incomplete and under active revision, and any part of it
-    may change or be withdrawn.
+    <strong>__DRAFT_LEAD__</strong> __DRAFT_TEXT__
   </p>
 </div>
 
@@ -115,6 +112,15 @@ __JS__
 """
 
 FALLBACK_ABSTRACT = "<p>No abstract was written in the report's front matter.</p>"
+
+# The draft band's wording, shared with the LaTeX rendering so the two
+# documents carry one warning.
+DRAFT_LEAD = "Preliminary version—work in progress."
+DRAFT_TEXT = (
+    "This report is written alongside the system it describes. Its prose, "
+    "figures, and measurements are incomplete and under active revision, and "
+    "any part of it may change or be withdrawn."
+)
 
 # The ORCID mark, drawn in ink rather than in the organization's green: the page
 # spends color on the step kinds alone, and an author's identifier is not one of
@@ -237,6 +243,8 @@ def render(payload: Dict[str, Any], document: Optional[Document] = None) -> str:
         .replace("__AUTHORS__", _authors_html(document))
         .replace("__DISCLAIMER__", _disclaimer_html(document))
         .replace("__DESCRIPTION__", _escape(description))
+        .replace("__DRAFT_LEAD__", _escape(DRAFT_LEAD))
+        .replace("__DRAFT_TEXT__", _escape(DRAFT_TEXT))
         .replace("__SOURCE__", _escape(source))
         .replace("__DATA__", data)
     )

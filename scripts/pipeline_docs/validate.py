@@ -24,9 +24,9 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set
 
-from . import bibliography, concepts, screenshots, spec, summarize, teaser
+from . import bibliography, concepts, latex, screenshots, spec, summarize, teaser
 from .facts import Fact
 from .introspect import AiCall, Codebase
 from .report import COMPONENTS, Document
@@ -715,6 +715,22 @@ def _check_screenshots(
             )
         )
     return problems
+
+
+def check_figures(
+    document: Document, payload: Dict[str, Any], directory: Optional[Path] = None
+) -> List[Problem]:
+    """The drawn figures the LaTeX rendering includes, printed and current.
+
+    Warnings, not errors: the page builds without them, and the LaTeX compile
+    step is what refuses to run with one missing. See `latex.figure_problems`.
+    """
+    figures = latex.figures_of(document, payload)
+    where_dir = directory or latex.FIGURES_DIR
+    return [
+        Problem(severity, where, message)
+        for severity, where, message in latex.figure_problems(figures, where_dir)
+    ]
 
 
 def _split_list(value: object) -> List[str]:

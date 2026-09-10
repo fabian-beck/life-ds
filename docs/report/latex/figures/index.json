@@ -1,0 +1,29 @@
+{
+  "note": "Written by scripts/generate_report.py --figures. Each entry records the fingerprint of the payload the figure was printed from, which is how a build knows the drawing is stale.",
+  "figures": {
+    "pipeline-meta": {
+      "file": "pipeline-meta.pdf",
+      "fingerprint": "869bccaf9ebb",
+      "exported": "2026-09-10T13:13:50Z",
+      "width": 464,
+      "height": 741,
+      "bytes": 36813
+    },
+    "pipeline-person": {
+      "file": "pipeline-person.pdf",
+      "fingerprint": "6e61193a41f3",
+      "exported": "2026-09-10T13:13:50Z",
+      "width": 660,
+      "height": 963,
+      "bytes": 39979
+    },
+    "teaser": {
+      "file": "teaser.pdf",
+      "fingerprint": "225ec4e67107",
+      "exported": "2026-09-10T13:13:50Z",
+      "width": 868,
+      "height": 384,
+      "bytes": 31726
+    }
+  }
+}

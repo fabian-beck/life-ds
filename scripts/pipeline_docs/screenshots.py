@@ -524,6 +524,9 @@ def payload(album: Album) -> Dict[str, Dict[str, Any]]:
             "declaration": shot.describe(),
             "status": status,
             "captured": capture.captured if capture else "",
+            # The picture's file beside the index, for the LaTeX rendering,
+            # which shares the pictures with the page rather than copying them.
+            "file": capture.file if capture and status != "missing" else "",
             "src": "",
         }
         if capture is not None and status != "missing":

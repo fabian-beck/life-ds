@@ -309,6 +309,7 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | Bibliography | `bibliography.py` | Parses `docs/report/references.bib` and prints it in IEEE form with every author named. Every entry needs a DOI; `[@key]` is resolved against it and numbered by first use. |
 | Teaser figure | `teaser.py` | The scene of Figure 1—its parts, their boxes, labels, sentences, and arrows—declared once and drawn by `app.js`. Part ids are what the prose points at. |
 | Explanations | `summarize.py` | AI-written per-step documentation—two or three sentences on what the step contributes and, where one stands out, why it is built that way, plus a phrase each for its input and output—cached in `docs/report/summaries.json` against a fingerprint of that step's source, prompt, schema, and declared data flow. Only changed steps are re-summarized, and each records the model that wrote it in the payload; the page discloses AI-written prose once, in the statement on AI use after the references. |
+| LaTeX rendering | `latex.py` | Writes the same report as `docs/report/latex/report.tex` from the compiled body and the payload, with the page's design tokens read from `style.css`, and keeps the drawn figures a browser prints for it fingerprinted against the payload. See [The LaTeX Rendering](#the-latex-rendering). |
 | Screenshots | `screenshots.py` | Reads the `::: screenshot` blocks—including the `@id x,y,w,h Label` part declarations the prose points into—pairs each with the picture on disk, embeds it as a data URI, and decides whether it is stale. Capture itself is `scripts/capture_report_screenshots.mjs` (Playwright). |
 
 `spec.py`, `report.md`, and `references.bib` are the only hand-maintained inputs.
@@ -449,13 +450,35 @@ Both routes render the same `@media print` rules at the foot of `assets/style.cs
 
 **Appendix A is the step note on paper.** `renderStepAppendix` in `app.js` builds one table with a row per documented step, set in a small type so eight columns fit the sheet, from `stepRecord` and `stepDescription`—the same functions that fill the step note. It is in the DOM but hidden on screen, where the note already answers the question in place; `?appendix=0` skips building it. Anything added to the record therefore reaches the PDF for free, and anything printed outside it will drift.
 
+### The LaTeX Rendering
+
+The browser's print has one limit no stylesheet lifts: CSS has no page floats. A figure that does not fit the rest of a sheet is pushed whole onto the next one, and the space it leaves behind stays empty—two and a half of the printed report's pages, measured. LaTeX places a figure at the next position where it fits and lets the text run on, so the report is also written as LaTeX.
+
+```bash
+python scripts/generate_report.py            # writes docs/report/latex/report.tex beside the page
+npm run report:figures                       # prints the drawn figures it includes (stale and missing)
+python scripts/generate_report.py --figures all
+npm run report:latex                         # compiles docs/report/latex/report.pdf (untracked)
+npm run report:latex -- --engine latexmk     # a particular engine
+```
+
+**One report, rendered twice.** `pipeline_docs/latex.py` reads what the page reads—the body `report.py` compiled and the payload `model.py` built—and walks the compiled body as a tree, writing each element in LaTeX. It does not compile the Markdown again, so a phrase, a fact, a citation, a note, and a reference reach paper exactly as they reach the screen, and a new authoring construct is added once in `report.py` and then given a LaTeX form in the walker. The computed blocks are written by `RENDERERS`, a roster of the same names as `COMPONENTS` in `app.js`; a block with no LaTeX renderer fails the tests, as one with no page renderer does. Appendix A is built from the same step record. A note becomes a footnote, the contents is dropped as it is on paper, and the statement on AI use closes the document.
+
+**What the browser draws, the browser prints.** The teaser and the pipeline charts are laid out in `app.js`, and a second layout in Python would be a second drawing to keep in step. `scripts/export_report_figures.mjs` opens the built page, waits for it to finish drawing, and prints each chart's SVG to a vector PDF of its own size under `docs/report/latex/figures/`—type kept as type, so the drawing stays sharp and its faces embed like the rest of the document. `latex/figures/index.json` records, per figure, a fingerprint of the payload it was printed from: the steps, edges, groups, and kinds a chart draws, or the teaser scene and the facts it cites. A figure whose data moved is *stale*, reported by `--check` with the command that reprints it, and a missing one is what `npm run report:latex` refuses to compile without. The screenshots are shared with the page rather than copied. Like a screenshot, a printed drawing cannot tell that the drawing code changed under an unchanged payload; reprint with `--figures all` after changing how `app.js` draws.
+
+**The styling is the page's.** The colors—the four kind colors, the rules, the inks—are read from the tokens under `:root` in `style.css` at build time, so the two renderings cannot drift apart in color. The running text is set in Charter, the second face of the page's serif stack; captions, legends, tables, and labels in a sans-serif; code in a typewriter face; black on white, hairline rules, square corners, and color for the step kind alone. A step reference keeps the page's underline in its kind's color, a concept reference its glyph, drawn by TikZ from the same Material Design path data the page inlines. The text is set to the page's measure, and a drawing or a wide table reaches out to the sheet's margins the way the page lets a figure past the column. Faces are declared per engine, so pdfTeX and XeTeX (Tectonic) produce the same document.
+
+**`report.tex` is committed and checked.** It is derived, like `index.html`, and never edited by hand: `--check` rebuilds it in memory and compares it with the committed file, and reports the printed drawings' status after it. The compiled PDF and the engine's intermediate files are untracked; the figures under `latex/figures/` are tracked, as the screenshots are, so a checkout without a browser still compiles.
+
+`scripts/compile_report_latex.py` runs whichever engine is installed—[Tectonic](https://tectonic-typesetting.github.io), one binary that fetches the packages it needs on first use, then `latexmk`, then `pdflatex` twice—after checking the drawn figures.
+
 ### When the Pipeline Changes
 
 1. Add or update the step in `scripts/pipeline_docs/spec.py`, including the `depends_on` edges into it *and* any existing step that now reads its output, and put it in one of the phases in `GROUPS`. An edge is a real data dependency, not "runs after"; a step that reads the assembled document depends on the last step of the run that writes it.
-2. Run `python scripts/generate_report.py`—the summary cache refreshes only the steps whose source changed.
-3. Commit the regenerated `docs/report/index.html` and `summaries.json`.
+2. Run `python scripts/generate_report.py --figures`—the summary cache refreshes only the steps whose source changed, and the pipeline chart the step belongs to is reprinted for the LaTeX rendering.
+3. Commit the regenerated `docs/report/index.html`, `summaries.json`, `docs/report/latex/report.tex`, and the reprinted figures under `docs/report/latex/figures/`.
 
-Everything except `spec.py`, `report.md`, and the page's own styling is derived, so never hand-edit `docs/report/index.html`.
+Everything except `spec.py`, `report.md`, and the page's own styling is derived, so never hand-edit `docs/report/index.html` or `docs/report/latex/report.tex`.
 
 ## Key Files for Context
 

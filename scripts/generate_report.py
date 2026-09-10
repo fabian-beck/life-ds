@@ -5,8 +5,12 @@
     python scripts/generate_report.py --check      # drift check only
     python scripts/generate_report.py --skip-ai    # no API calls
     python scripts/generate_report.py --shots      # retake stale screenshots
+    python scripts/generate_report.py --figures    # reprint stale drawings for LaTeX
 
-The page is written to `docs/report/index.html` as one self-contained file.
+The page is written to `docs/report/index.html` as one self-contained file,
+and the same report as LaTeX to `docs/report/latex/report.tex`, for a PDF whose
+figures float (see `pipeline_docs/latex.py`; `compile_report_latex.py` runs
+the engine).
 
 The report is half written and half measured, and the two halves never mix.
 
@@ -22,15 +26,18 @@ The report is half written and half measured, and the two halves never mix.
 5. Screenshots of the running application, declared in the markdown as a
    position to photograph and taken from it by a browser, so a figure of the
    interface can be retaken instead of being pasted in.
+6. The drawn figures—the teaser and the pipeline charts—printed by a browser
+   from the built page to vector PDFs the LaTeX rendering includes, each
+   fingerprinted against the data it draws so a chart that moved is reported.
 
 `--check` runs only the drift checks: it fails when a documented step no longer
 exists, when a model call site is not claimed by any step in `spec.py`, when the
 report cites a fact or mounts a component that no longer resolves, when a
 cached step explanation names a model that step does not resolve, or when one
-was written from source that has since changed. Finally it rebuilds the page in
-memory and compares it, build stamp aside, with the committed
-`docs/report/index.html`, so a page describing source that has moved fails the
-check instead of shipping. It reads the summary cache rather than writing it,
+was written from source that has since changed. Finally it rebuilds the page
+and the LaTeX source in memory and compares them, build stamp aside, with the
+committed `docs/report/index.html` and `docs/report/latex/report.tex`, so a
+document describing source that has moved fails the check instead of shipping. It reads the summary cache rather than writing it,
 so it needs no API key to run—but a stale explanation is fixed by a rebuild
 that does, because the explanation it names has to be written again.
 """
@@ -48,13 +55,14 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 
 from config import enable_utf8_console  # noqa: E402
 from pipeline_docs import facts as facts_module  # noqa: E402
-from pipeline_docs import render, report, screenshots, validate  # noqa: E402
+from pipeline_docs import latex, render, report, screenshots, validate  # noqa: E402
 from pipeline_docs.introspect import scan_codebase  # noqa: E402
 from pipeline_docs.model import build_payload  # noqa: E402
 from pipeline_docs.summarize import cached_summaries, summarize_steps  # noqa: E402
 
 OUT_DIR = REPO_ROOT / "docs" / "report"
 DEFAULT_OUT = OUT_DIR / "index.html"
+DEFAULT_LATEX_OUT = latex.LATEX_DIR / "report.tex"
 DEFAULT_SOURCE = OUT_DIR / "report.md"
 SUMMARY_CACHE = OUT_DIR / "summaries.json"
 
@@ -109,6 +117,23 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         help="Capture against this running server instead of starting one.",
     )
     parser.add_argument(
+        "--latex-out",
+        type=Path,
+        default=DEFAULT_LATEX_OUT,
+        help=f"LaTeX output file (default: {DEFAULT_LATEX_OUT}).",
+    )
+    parser.add_argument(
+        "--figures",
+        nargs="?",
+        const=latex.STALE,
+        metavar="WHICH",
+        help=(
+            "Print the drawn figures the LaTeX rendering includes from the "
+            "built page: missing and stale ones by default, 'all' for every "
+            "one, or a comma-separated list of ids. Needs a browser."
+        ),
+    )
+    parser.add_argument(
         "--verbose", action="store_true", help="Log each step summarized."
     )
     return parser.parse_args(list(argv))
@@ -117,8 +142,10 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
 def main(argv: Sequence[str] | None = None) -> int:
     enable_utf8_console()
     args = parse_args(sys.argv[1:] if argv is None else argv)
-    if args.check and args.shots:
-        print("--check writes nothing, and --shots writes pictures. Pick one.")
+    if args.check and (args.shots or args.figures):
+        print(
+            "--check writes nothing, and --shots and --figures write pictures. Pick one."
+        )
         return 2
 
     print("Scanning scripts/ ...")
@@ -227,6 +254,32 @@ def main(argv: Sequence[str] | None = None) -> int:
             )
             return 1
         print("  The committed page matches a rebuild: no drift.")
+
+        # The LaTeX source is the same report again, so it is held to the
+        # same standard: a committed source the payload has moved away from
+        # fails the check.
+        print(f"Checking {args.latex_out.name} against a rebuild ...")
+        try:
+            stored_latex = args.latex_out.read_text(encoding="utf-8")
+        except OSError:
+            print(f"  ERROR: cannot read {args.latex_out}.")
+            print("\nWrite it: python scripts/generate_report.py")
+            return 1
+        try:
+            fresh_latex = latex.render(fresh, document)
+        except latex.LatexError as error:
+            print(f"  ERROR in the LaTeX rendering: {error}")
+            return 1
+        if fresh_latex != stored_latex:
+            print(
+                "  The committed LaTeX source no longer matches the page. "
+                "Rebuild it: python scripts/generate_report.py"
+            )
+            return 1
+        print("  The committed LaTeX source matches a rebuild: no drift.")
+        validate.report(
+            validate.check_figures(document, fresh), subject="Drawn figures"
+        )
         return 0
 
     print("Collecting step summaries ...")
@@ -257,6 +310,18 @@ def main(argv: Sequence[str] | None = None) -> int:
     out = render.write(payload, args.out, document)
     size_kb = out.stat().st_size / 1024
     print(f"\nWrote {out} ({size_kb:.0f} KB).")
+
+    # After the page, since the drawings are printed from it.
+    if args.figures and _print_figures(document, payload, args) != 0:
+        return 1
+
+    try:
+        latex_out = latex.write(payload, args.latex_out, document)
+    except latex.LatexError as error:
+        print(f"  ERROR in the LaTeX rendering: {error}")
+        return 1
+    print(f"Wrote {latex_out} ({latex_out.stat().st_size / 1024:.0f} KB).")
+    validate.report(validate.check_figures(document, payload), subject="Drawn figures")
     return 0
 
 
@@ -286,6 +351,33 @@ def _capture_shots(document: report.Document, args: argparse.Namespace) -> int:
         return 1
     if failures:
         print("\nSome screenshots could not be taken:")
+        for failure in failures:
+            print(f"  {failure}")
+        return 1
+    return 0
+
+
+def _print_figures(
+    document: report.Document, payload: dict, args: argparse.Namespace
+) -> int:
+    """Print the drawn figures the `--figures` argument asks for."""
+    figures = latex.figures_of(document, payload)
+    try:
+        wanted = latex.select_figures(figures, args.figures)
+    except latex.LatexError as error:
+        print(f"  ERROR: {error}")
+        return 1
+    if not wanted:
+        print("Drawn figures: every one is printed and current.")
+        return 0
+    print(f"Printing {len(wanted)} drawn figure(s) from {args.out.name} ...")
+    try:
+        _, failures = latex.export_figures(wanted, page=args.out, verbose=args.verbose)
+    except latex.LatexError as error:
+        print(f"  ERROR: {error}")
+        return 1
+    if failures:
+        print("\nSome figures could not be printed:")
         for failure in failures:
             print(f"  {failure}")
         return 1
