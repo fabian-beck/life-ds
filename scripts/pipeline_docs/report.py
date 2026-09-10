@@ -19,8 +19,9 @@ The authoring surface is small on purpose:
     derived, so reordering a section renumbers the report.
 
 `{{ some.fact }}`
-    A citable measurement from `facts.py`, rendered with its provenance as a
-    tooltip. An unknown key fails the build rather than printing
+    A citable measurement from `facts.py`, rendered as plain running text;
+    its provenance stays in `facts.py` and in the span's `data-fact`
+    attribute. An unknown key fails the build rather than printing
     nothing—a hole in a sentence is worse than a broken build.
 
 `[[part|phrase]]` / `[[part]]`
@@ -581,8 +582,8 @@ def substitute_citations(
                 "pipeline_docs/facts.py or fix the citation"
             )
         return (
-            f'<span class="cite" title="{_escape(fact.source)}" '
-            f'data-fact="{_escape(key)}">{cited_value(fact.display)}</span>'
+            f'<span class="cite" data-fact="{_escape(key)}">'
+            f'{cited_value(fact.display)}</span>'
         )
 
     substituted = _outside_fences(text, lambda line: CITATION.sub(replace, line))

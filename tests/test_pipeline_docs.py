@@ -995,14 +995,16 @@ class MarkdownCompilerTests(unittest.TestCase):
         with self.assertRaises(report.ReportError):
             _compile(self.HEAD + "\n#### Orphan\n")
 
-    def test_a_citation_renders_with_its_provenance(self) -> None:
+    def test_a_citation_renders_as_plain_text(self) -> None:
+        """A cited value is prose, not a control: no tooltip carries its source."""
         facts = _facts()
         document = _compile(
             self.HEAD + "\n## S\n\nThere are {{ app.languages }}.\n", facts
         )
         self.assertIn("app.languages", document.citations)
         self.assertIn(report.cited_value(facts["app.languages"].display), document.html)
-        self.assertIn(facts["app.languages"].source.split(" ")[0], document.html)
+        self.assertIn('<span class="cite" data-fact="app.languages">', document.html)
+        self.assertNotIn("title=", document.html)
 
     def test_a_cited_list_breaks_only_at_its_separators(self) -> None:
         """A value never splits at a hyphen, and a separator never starts a line."""

@@ -3649,7 +3649,7 @@
         const fact = factOf(key);
         if (!fact) return;
         grid.appendChild(
-          el("div", { class: "factcell", title: fact.source }, [
+          el("div", { class: "factcell" }, [
             el("div", { class: "value", text: fact.display }),
             el("div", { class: "label", text: key }),
           ])

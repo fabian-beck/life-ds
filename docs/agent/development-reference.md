@@ -337,7 +337,7 @@ Nor does an inventory count. How many steps, layers, edges, schemas, or concepts
 | Syntax | Meaning |
 | --- | --- |
 | `## Heading`, `### Heading` | Section and subsection. Numbers, ids, the contents, and the sidebar are all derived from document order. Skipping a level is a build error. |
-| `{{ some.fact }}` | A measurement from `facts.py`, rendered with its source as a tooltip. An unknown key fails the build. |
+| `{{ some.fact }}` | A measurement from `facts.py`, rendered as plain running text without an underline or a tooltip; its source stays in `facts.py`. An unknown key fails the build. |
 | `[[part\|phrase]]`, `[[part]]` | A phrase that names a part of the teaser figure (`teaser.PARTS`). An unknown id fails the build; a part no phrase names is a warning. Where the part carries a concept, the phrase is marked with that concept's glyph. |
 | `[[shot.part\|phrase]]`, `[[shot.part]]` | The same reference into a part of a screenshot figure, resolved against the `@id x,y,w,h Label` lines of the named `::: screenshot` block. An unknown id fails the build; a part no phrase names is a warning. |
 | `[[figure:id]]` | A figure cited by number, on paper only: `The chart[[figure:pipeline-person]] bands` prints "The chart (Figure 2) bands" and reads "The chart bands" on screen, where the references above already point into the figure. Written directly after the word it follows, since it carries its own space and parenthesis. The id is a screenshot's, `teaser`, or `pipeline-<lane>`; a figure the report does not draw fails the build. Cite a figure once, at its first mention in a section, and only where the context does not name it. |

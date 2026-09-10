@@ -4,8 +4,9 @@
 The authored markdown never writes such a value down. It writes
 `{{ app.languages }}` and this module supplies it, so a sentence about the
 system cannot rot the way a hard-coded one would. Every fact carries the place
-it was measured, which the page prints on hover—a claim in the report is
-therefore always traceable to a file, a directory or a spec entry.
+it was measured, kept for the build and its checks rather than printed—a
+claim in the report is therefore always traceable to a file, a directory or a
+spec entry.
 
 Facts are deliberately few: something is measured here because the prose argues
 with it, not because it can be counted. Inventory is not argument. Corpus sizes
@@ -40,7 +41,8 @@ class Fact:
 
     `display` is what the sentence gets; `value` keeps the raw number so a
     component can chart it. `source` names where it was measured, in
-    repo-relative terms, and is shown as the citation's tooltip.
+    repo-relative terms; the page renders the value as plain text and keeps
+    the source out of it.
     """
 
     key: str

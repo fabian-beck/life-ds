@@ -568,13 +568,12 @@ a.author-name:focus-visible {
   font-size: 14px;
 }
 
-/* A cited measurement. Underdotted rather than colored: it is a normal part of
-   the sentence, and the dots only say that its provenance is on hover. It wraps
-   like the sentence, too; `cited_value` in report.py keeps each value in one
-   piece, so a list breaks only at its separators. */
+/* A cited measurement. Set as a normal part of the sentence, with no underline
+   and nothing on hover: a mark would promise an interaction the value does not
+   have, and its provenance is a build-time concern. It wraps like the sentence,
+   too; `cited_value` in report.py keeps each value in one piece, so a list
+   breaks only at its separators. */
 .cite {
-  border-bottom: 1px dotted var(--muted);
-  cursor: help;
   font-variant-numeric: tabular-nums lining-nums;
 }
 
@@ -1022,10 +1021,6 @@ p.cap {
   padding: 14px 0;
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule-strong);
-}
-
-.factcell {
-  cursor: help;
 }
 
 .factcell .value {
@@ -1980,8 +1975,8 @@ figure.teaser > .cap {
 }
 
 /* A phrase that names a part of the figure. Styled as running text with a
-   citation's dotted underline; the square is the only mark that says the
-   figure is the thing on the other end. The element is a span with a button's
+   dotted underline; the square is the only mark that says the figure is the
+   thing on the other end. The element is a span with a button's
    role, not a button, so that the phrase breaks across lines like the prose
    around it instead of moving to the next line whole. */
 .figref {
