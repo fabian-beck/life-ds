@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """The one place the pipeline talks to a model.
 
-Every phase that fills a schema calls :func:`parse_structured`, which is a thin
+Every step that fills a schema calls :func:`parse_structured`, which is a thin
 layer over the Responses API. It exists to make three things true of every call
 in the pipeline rather than of whichever call a maintainer happened to write
 carefully:
 
-**One API.** The pipeline used two — ``responses.parse`` in most phases and
+**One API.** The pipeline used two — ``responses.parse`` in most steps and
 ``beta.chat.completions.parse`` in six — and the second silently ran at the
 model's default reasoning effort while `config.py` documented effort as a
-per-phase setting. Effort is now a required argument, so a call site cannot
+per-step setting. Effort is now a required argument, so a call site cannot
 omit it and inherit whatever the model does by default.
 
 **Retry what is worth retrying.** A connection that dropped, a rate limit, a
@@ -20,16 +20,16 @@ delay; the second returns immediately.
 
 **One shape for failure.** The call returns the parsed object, or ``None`` when
 the model produced nothing usable — for any reason, already logged with the
-phase's name. Callers decide what that means, because only they know: some fall
+step's name. Callers decide what that means, because only they know: some fall
 back to a deterministic answer, some skip an optional section, and curation
 stops the run rather than let a story keep every event of every life. The
-phases in that last group call :func:`parse_structured_or_raise`, which is the
+steps in that last group call :func:`parse_structured_or_raise`, which is the
 same call ending in a :class:`ModelCallFailed` instead of a ``None`` nobody
 downstream would know how to interpret.
 
 The parsed object is *not* validated here beyond its schema. Identifiers still
 have to be matched against real entities, and lists against the source they
-must align with, in the phase that knows what they mean.
+must align with, in the step that knows what they mean.
 """
 
 from __future__ import annotations
@@ -64,7 +64,7 @@ class MissingApiKey(RuntimeError):
 class ModelCallFailed(RuntimeError):
     """A call that had to succeed did not.
 
-    Subclasses RuntimeError because that is what the phases raised when each
+    Subclasses RuntimeError because that is what the steps raised when each
     of them classified its own API errors, and their callers still catch it.
     """
 
@@ -73,7 +73,7 @@ def get_client() -> OpenAI:
     """The one OpenAI client the process shares.
 
     Every ``OpenAI(...)`` construction opens its own HTTP connection pool, so
-    a script that builds a client per phase — or per call, inside a loop —
+    a script that builds a client per step — or per call, inside a loop —
     pays a fresh TLS handshake for requests that could have reused a
     connection. Subclassing RuntimeError keeps the callers that guarded the
     old per-site constructions with ``except RuntimeError`` working unchanged.
@@ -145,7 +145,7 @@ def parse_structured(
 ) -> Optional[ParsedT]:
     """Fill ``text_format`` from the model, or return ``None`` having said why.
 
-    ``label`` names the phase in log lines, so a warning in a run of thirty
+    ``label`` names the step in log lines, so a warning in a run of thirty
     calls says which one gave up. ``attempts`` bounds only the retryable
     failures; a refusal or a bad request ends the call at once.
     """
@@ -171,7 +171,7 @@ def parse_structured_or_raise(
     label: str,
     attempts: int = DEFAULT_ATTEMPTS,
 ) -> ParsedT:
-    """The same call for the phases that must stop the run rather than go on.
+    """The same call for the steps that must stop the run rather than go on.
 
     Most callers can absorb a ``None``: an optional section is skipped, a
     deterministic answer stands in, a batch is left unrated. Curation cannot.
@@ -179,9 +179,9 @@ def parse_structured_or_raise(
     reports nothing — each is worse than no output at all, because it would be
     written to disk and read later as a finding.
 
-    Those phases raised before this wrapper existed and still do. What changes
+    Those steps raised before this wrapper existed and still do. What changes
     is that they now retry the failures worth retrying first, and that the
-    reason they give is the same sentence every other phase would have logged.
+    reason they give is the same sentence every other step would have logged.
     """
     parsed, reason = _parse_structured(
         client,

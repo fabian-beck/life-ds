@@ -1,4 +1,4 @@
-"""What Phase 2 is told about one event, and which articles it is shown.
+"""What the research is told about one event, and which articles it is shown.
 
 The budget is the design. The subject's own article goes in at 30000
 characters as the primary source; the articles relevant to this event go in at
@@ -9,7 +9,7 @@ the Commons searches that would illustrate the event, written while its
 material is still in front of the call.
 
 When the event carries a classification, the class-specific block is appended
-by `build_phase2_prompt_classified`, and it says what not to research: a field
+by `build_research_prompt_classified`, and it says what not to research: a field
 the classification already holds is a field the prose must not repeat.
 """
 
@@ -65,7 +65,7 @@ def filter_related_articles_for_event(
     return [article for score, article in scored_articles[:max_articles]]
 
 
-# How much of each related article Phase 2 is shown, and how many it sees. The
+# How much of each related article the research is shown, and how many it sees. The
 # budget was 1000 characters of five articles — a lead paragraph each, enough to
 # place a term and not enough to say what changed because of an event. The
 # background writer (generate_event_backgrounds.py) reads the same material
@@ -76,7 +76,7 @@ def filter_related_articles_for_event(
 RELATED_ARTICLE_CHARS = 6000
 RELATED_ARTICLE_COUNT = 8
 
-# How much of the subject's own article Phase 2 and the background writer are
+# How much of the subject's own article the research and the background writer are
 # shown. The article is the primary source of the whole dataset and was, until
 # this constant existed, not in either prompt at all — every location name,
 # involved person, and source rested on model recall, with the related
@@ -87,7 +87,7 @@ RELATED_ARTICLE_COUNT = 8
 SUBJECT_ARTICLE_CHARS = 30000
 
 
-def build_phase2_prompt_base(
+def build_research_prompt_base(
     event_skeleton: EventSkeleton,
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
@@ -95,10 +95,10 @@ def build_phase2_prompt_base(
     subject_article: Optional[Dict[str, Any]] = None,
 ) -> str:
     """
-    Build base Phase 2 prompt (common sections for all event types).
+    Build base research prompt (common sections for all event types).
 
     Used for standard events (no classification) and as foundation for class-specific prompts.
-    Focus on specific details for THIS event only (NO images - Phase 3).
+    Focus on specific details for THIS event only (no images; the image step adds them).
     """
     # The material first, the event last. Every event of a life is researched
     # against the same article, the same second source and the same task
@@ -140,8 +140,8 @@ def build_phase2_prompt_base(
     class_types_str = "/".join(
         [config["display_name"].lower() for config in EVENT_CLASS_CONFIG.values()]
     )
-    prompt += "   - Where the Phase 1 description falls short of the definition below, rewrite it.\n"
-    prompt += "     You hold more of the article than Phase 1 saw. Add the fact the definition asks\n"
+    prompt += "   - Where the proposed description falls short of the definition below, rewrite it.\n"
+    prompt += "     You hold more of the article than the proposal saw. Add the fact the definition asks\n"
     prompt += "     for and the skeleton lacks, such as the name of the partner or the collaborator,\n"
     prompt += "     what they did, the place, or what led to the event, and cut what the definition\n"
     prompt += "     excludes. The result is 2-4 sentences; a skeleton of one sentence is extended,\n"
@@ -307,7 +307,7 @@ def _subject_article_prompt_section(subject_article: Optional[Dict[str, Any]]) -
 def _related_articles_prompt_section(
     filtered_related_articles: List[Dict[str, Any]],
 ) -> str:
-    """Helper to add related articles section to Phase 2 prompts."""
+    """Helper to add related articles section to research prompts."""
     if not filtered_related_articles:
         return ""
 
@@ -332,7 +332,7 @@ def _related_articles_prompt_section(
     return prompt
 
 
-def build_phase2_prompt_classified(
+def build_research_prompt_classified(
     event_skeleton: EventSkeleton,
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
@@ -340,11 +340,11 @@ def build_phase2_prompt_classified(
     subject_article: Optional[Dict[str, Any]] = None,
 ) -> str:
     """
-    Generic Phase 2 prompt builder for classified events.
+    Generic research prompt builder for classified events.
     Uses EVENT_CLASS_CONFIG to generate event-class-specific guidance.
     """
     # Get base prompt (sections 0-5) — DB text included via base
-    base = build_phase2_prompt_base(
+    base = build_research_prompt_base(
         event_skeleton,
         person_name,
         [],
@@ -365,14 +365,14 @@ def build_phase2_prompt_classified(
     # Build class-specific guidance section
     prompt = base + f"\n\n{config['display_name']} EVENT SPECIFIC GUIDANCE:\n"
     prompt += "=" * 60 + "\n"
-    prompt += f"This event has been classified as {config['name']} in Phase 1.\n"
+    prompt += f"This event has been classified as {config['name']} by the proposal.\n"
 
     # List what the classification already contains
     fields_list = ", ".join(config["fields"].keys())
     prompt += f"The classification already contains: {fields_list}.\n\n"
 
-    prompt += "Your Phase 2 research should focus on:\n"
-    for focus_item in config["phase2_focus"]:
+    prompt += "Your research should focus on:\n"
+    for focus_item in config["research_focus"]:
         prompt += f"{focus_item}\n"
     prompt += "\n"
 

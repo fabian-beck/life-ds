@@ -120,7 +120,7 @@ def get_combined_review_prompt(
 
 TASK: Review BOTH the life events and ego network data below together, ensuring consistency and complementary perspectives. Propose improvements focused on:
 1. **Prose**: Rewrite every sentence that breaks HOW THE PROSE READS below - a "rather than" or "not X but Y", a colon or dash carrying an aside, a closing sentence that says what the event "marked" or "reflected" - keeping its facts and dropping the construction. This is the most common change and needs no source: the fact is already there, only the wording goes
-2. **Story Continuity**: Read the events in order, as the reader does, and hold each description to THE STORY SO FAR below. You are the first pass that sees the finished sequence: Phase 2 refined every description with only its own event in view, so a slide can lean on a term the story never introduced, or tell again what the slide before it told
+2. **Story Continuity**: Read the events in order, as the reader does, and hold each description to THE STORY SO FAR below. You are the first pass that sees the finished sequence: the research refined every description with only its own event in view, so a slide can lean on a term the story never introduced, or tell again what the slide before it told
 3. **Factual Accuracy**: Cross-reference all claims against the Wikipedia sources provided
 4. **Completeness**: Fill in missing information from Wikipedia sources (dates, locations, people, annotations)
 5. **Storytelling Quality**: Ensure narrative flow, proper pacing, emotional resonance

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Check that an event's date agrees with the year its own description states.
 
-Phase 1 produces the date, the precision, and the description in one call, and
-nothing downstream can revise the date: the Phase 2 schema carries no date
-field, so when Phase 2's research disagrees the disagreement can only land in
+The proposal produces the date, the precision, and the description in one call, and
+nothing downstream can revise the date: the research schema carries no date
+field, so when the research disagrees the disagreement can only land in
 the prose. The reader then sees the date on the slide and a contradicting year
 in the sentence directly beneath it.
 

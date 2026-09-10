@@ -11,7 +11,7 @@ the rule changes.
 Two deliberate differences from the interface:
 
 - The interface still derives a fallback weight for datasets written before
-  Phase 1 weighed the events. The pipeline never sees such a dataset — Phase 1
+  the proposal weighed the events. The pipeline never sees such a dataset — the proposal
   writes the weight — so an event without one simply scores zero here, and a
   dataset where that happens is outdated data to flag in ``data/outdated.md``
   and regenerate, not to select against.
@@ -39,7 +39,7 @@ _TIFF = re.compile(r"\.tiff?(\?|$)", re.I)
 
 
 def get_event_weight(event: Dict[str, Any]) -> float:
-    """The stored Phase 1 weight, clamped to 0..1. Zero when absent."""
+    """The stored proposal weight, clamped to 0..1. Zero when absent."""
     weight = event.get("weight")
     if isinstance(weight, (int, float)):
         return min(max(float(weight), 0.0), 1.0)

@@ -14,7 +14,7 @@ and captions and will otherwise reach for a memorial.
 
 The matcher is also told when each photograph was taken, because a filename
 cannot say so. Turing's 1952 conviction carried the facade of the Manchester
-County Court Offices: Phase 2 had searched for a court in Manchester, Commons
+County Court Offices: the research had searched for a court in Manchester, Commons
 answered with the court building that stands there today, and the matcher,
 shown "Facade of Manchester County Court Offices" against "a court in
 Manchester convicted Turing", read it as the building where it happened. The
@@ -42,17 +42,17 @@ from utils.model_calls import get_client, parse_structured
 
 # Image search string generation: writing Commons queries, which the search
 # itself judges by returning something or nothing.
-PHASE3_IMAGE_SEARCH_MODEL = BULK_MODEL
-PHASE3_IMAGE_SEARCH_REASONING = LOW_REASONING_EFFORT
+IMAGE_SEARCH_MODEL = BULK_MODEL
+IMAGE_SEARCH_REASONING = LOW_REASONING_EFFORT
 
 # Image-to-event matching. Low rather than none because the same call picks the
-# reference portrait — the one output of this phase that a reader sees on every
+# reference portrait — the one output of this step that a reader sees on every
 # slide, and the input the portrait step spends an image call on.
-PHASE3_IMAGE_MATCH_MODEL = BULK_MODEL
-PHASE3_IMAGE_MATCH_REASONING = BULK_REASONING_EFFORT
+IMAGE_MATCH_MODEL = BULK_MODEL
+IMAGE_MATCH_REASONING = BULK_REASONING_EFFORT
 
 # Portrait verification. The matcher judges by filenames and captions alone,
-# and its portrait pick is the one Phase 3 output nothing downstream checks —
+# and its portrait pick is the one output of the image step nothing downstream checks —
 # a wrong yes quietly becomes the face of the story, which is the config's own
 # test for the default model. One call that actually looks at the chosen file.
 PORTRAIT_VERIFY_MODEL = DEFAULT_MODEL
@@ -122,7 +122,7 @@ class ImageAssignmentResult(BaseModel):
 def generate_image_search_strings(
     event_skeletons: List[EventSkeleton],
     person_name: str,
-    model: str = PHASE3_IMAGE_SEARCH_MODEL,
+    model: str = IMAGE_SEARCH_MODEL,
 ) -> List[str]:
     """
     Use AI to generate 20 optimized search strings for finding images
@@ -195,7 +195,7 @@ def generate_image_search_strings(
     parsed = parse_structured(
         client,
         model=model,
-        reasoning_effort=PHASE3_IMAGE_SEARCH_REASONING,
+        reasoning_effort=IMAGE_SEARCH_REASONING,
         input=[
             {
                 "role": "system",
@@ -213,7 +213,7 @@ def generate_image_search_strings(
     return [person_name]
 
 
-# Two searches per event, not the three or four Phase 2 wrote. They are ordered,
+# Two searches per event, not the three or four the research wrote. They are ordered,
 # the first names what the report is most about, and every one of them costs a
 # request now and a line of the matcher's prompt afterwards.
 EVENT_IMAGE_QUERIES_PER_EVENT = 2
@@ -225,7 +225,7 @@ def plan_event_image_searches(
 ) -> Dict[int, List[str]]:
     """The per-event Commons searches, as a map from event index to queries.
 
-    Phase 2 already names what would illustrate each event while it still has
+    The research already names what would illustrate each event while it still has
     the researched material in front of it — the machine, the building, the
     document — and those searches went to the background report and nowhere
     else. The twenty searches written for the whole life cannot do that job:
@@ -506,7 +506,7 @@ def match_images_to_events(
     candidate_images: List[Dict[str, Any]],
     event_skeletons: List[EventSkeleton],
     person_name: str,
-    model: str = PHASE3_IMAGE_MATCH_MODEL,
+    model: str = IMAGE_MATCH_MODEL,
 ) -> Tuple[Dict[int, Dict[str, Any]], Optional[Dict[str, Any]]]:
     """
     Use AI to match images to events based on caption and filename.
@@ -529,7 +529,7 @@ def match_images_to_events(
         result = parse_structured(
             client,
             model=model,
-            reasoning_effort=PHASE3_IMAGE_MATCH_REASONING,
+            reasoning_effort=IMAGE_MATCH_REASONING,
             input=[
                 {
                     "role": "system",
@@ -603,7 +603,7 @@ def verify_portrait_depicts_person(
     """One look at the selected portrait before it becomes the face of a story.
 
     The matcher chooses from filenames and captions alone, and its portrait
-    pick is the one Phase 3 output nothing downstream checks — with Openverse
+    pick is the one output of the image step nothing downstream checks — with Openverse
     in the candidate pool, a photograph of the subject's spouse carries the
     subject's name in its caption. This shows the chosen file itself to the
     model. Returns None when the call fails, and the caller keeps the

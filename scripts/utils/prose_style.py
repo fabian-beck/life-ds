@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 """How the prose the reader sees is written, stated once.
 
-Every phase that writes for a reader imports this block into its prompt: the
+Every step that writes for a reader imports this block into its prompt: the
 event descriptions and the conclusion, the background reports, the review
 pass, the composer's article text, and the circle and stop cards of a meta
 story. The translator carries the same rules for German. Stating them in one
-place keeps the phases from asking for different prose, and keeps a rule that
+place keeps the steps from asking for different prose, and keeps a rule that
 turns out to be wrong from having to be found in seven prompts.
 
 Each rule names a habit of model prose by the shape it takes on the slide,
 with the sentence to write instead. Generic instructions moved nothing: the
-Phase 1 prompt asked for "no verbose constructions" for a year while its
+proposal prompt asked for "no verbose constructions" for a year while its
 descriptions kept contrasting each fact against an alternative nobody had
 proposed, and the background prompt asked for "tension" and "what is
 contested" and got "not X but Y" in three reports of four. The composer, the
-one prompt that named the constructions it did not want, was the one phase
+one prompt that named the constructions it did not want, was the one step
 whose prose had none of them.
 """
 
@@ -69,12 +69,12 @@ def description_contract_prompt() -> str:
     """What an event description is, as a prompt block.
 
     PROSE_STYLE_INSTRUCTIONS says how a sentence reads; this says what a
-    description contains. Three calls may write one — Phase 1, Phase 2's
+    description contains. Three calls may write one — the proposal, the research's
     refinement, and the review — and each used to carry its own partial copy
     of the content rules, grown one incident at a time, so that the rule
-    keeping a description in its own moment was stated in one phase and
+    keeping a description in its own moment was stated in one step and
     absent from the class guidance another read last, and a birthplace
-    dispute copied from the article passed every phase (issue #141). Stated
+    dispute copied from the article passed every step (issue #141). Stated
     as what a description is rather than a list of what it must not be,
     because a definition generalizes to the next case and a list of banned
     phrases covers exactly the cases it names. A function rather than a

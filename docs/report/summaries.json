@@ -136,11 +136,11 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "77317e55feeb2838",
+      "fingerprint": "d6c8e05fb70ae0bb",
       "summary": {
-        "description": "Writes a deeper report for each event the story offers for expansion, using the reviewed article, event material, and story context. It also revisits each event’s citations and image searches, keeping only source URLs already present in the supplied material so the depth layer can show event-specific provenance.",
-        "input": "reviewed events, sources, and story context",
-        "output": "background reports, sources, and image searches",
+        "description": "Writes background reports for the reviewed events the story offers in depth. It adds context beyond each event panel and replaces event citations only with URLs from the supplied material, so the displayed provenance can document that event.",
+        "input": "reviewed events, articles, and network material",
+        "output": "background reports, event sources, and image searches",
         "source": "gpt-5.6-terra"
       }
     },
@@ -172,20 +172,20 @@
       }
     },
     "p_events_p1": {
-      "fingerprint": "832afe9691d2bd4c",
+      "fingerprint": "f959e8377414b689",
       "summary": {
-        "description": "Builds the narrative spine from the article set and biography material. It compares events across the whole life, assigns their importance, and groups contiguous periods into chapters. This full-life view also supports a conclusion about the work that endures.",
-        "input": "the article set and biography material",
-        "output": "a chaptered, weighted life timeline and conclusion",
+        "description": "Selects the events that carry a life’s story and arranges them into chapters. It compares events across the full record, so importance and phase boundaries reflect the life as a whole.",
+        "input": "the selected articles and biographical material",
+        "output": "a chaptered timeline and conclusion",
         "source": "gpt-5.6-terra"
       }
     },
     "p_events_p2": {
-      "fingerprint": "523662c2fc24b159",
+      "fingerprint": "3addb13a02a774cf",
       "summary": {
-        "description": "Researches each proposed event against the subject’s article and event-specific related material. It expands the event into grounded prose, places, people, evidence, annotations, an icon, and image searches. It keeps an unresolved event in the story when research fails.",
-        "input": "event skeletons and biographical material",
-        "output": "researched events with sources and illustration searches",
+        "description": "Researches each proposed event against the subject’s article and event-specific related material. It expands the event into grounded prose, places, people, evidence, annotations, and image search terms while keeping the event in the story if a call fails.",
+        "input": "an event skeleton and biographical articles",
+        "output": "researched details for each event",
         "source": "gpt-5.6-terra"
       }
     },
@@ -226,27 +226,27 @@
       }
     },
     "p_img_match": {
-      "fingerprint": "77777320632f1dac",
+      "fingerprint": "5fe56a3b7fe8d89a",
       "summary": {
-        "description": "Matches candidate images to life events and selects one reference portrait. It leaves events blank when metadata cannot support a direct link, which blocks memorials, generic city buildings, and other stand-ins from carrying the story.",
+        "description": "Selects a reference portrait and pairs candidate images with life events only when their metadata supports a direct link. It leaves weak matches unfilled and rejects stand-ins such as memorials or generic city buildings, so images carry evidence about the event itself.",
         "input": "the ranked image candidates and life events",
-        "output": "event images, captions, and a reference portrait",
+        "output": "a portrait and event images with captions",
         "source": "gpt-5.6-terra"
       }
     },
     "p_img_search": {
-      "fingerprint": "cb7130986804e436",
+      "fingerprint": "24b4c3b7ca53b7bc",
       "summary": {
-        "description": "Plans Commons searches across the life, separating portrait candidates from event-specific subjects. It favors named things over places or later memorials, because simple keyword matching otherwise pulls commemorations into the story.",
+        "description": "Plans image searches across the life from the event skeletons. It favors named things from each event over places or later commemorations, so image selection can show the person’s work and world.",
         "input": "the event skeletons",
-        "output": "portrait and event image searches",
+        "output": "searches for portraits and event subjects",
         "source": "gpt-5.6-terra"
       }
     },
     "p_img_verify": {
-      "fingerprint": "a20776b12b5b5bca",
+      "fingerprint": "1ad50a82088ee563",
       "summary": {
-        "description": "Checks the chosen portrait against the image itself before it becomes the face of the story. A rejection removes a clear mismatch, while a failed check preserves the pick so a service failure cannot discard it.",
+        "description": "Checks the selected portrait against the person in the story. It can reject an image whose caption misidentifies its subject, while a failed check preserves the original pick for the final document and person index.",
         "input": "the portrait pick",
         "output": "a verified portrait decision",
         "source": "gpt-5.6-terra"
@@ -280,11 +280,11 @@
       }
     },
     "p_review": {
-      "fingerprint": "b2c9d4fc85f84ae9",
+      "fingerprint": "171d99c61e955cf2",
       "summary": {
-        "description": "Reviews the life story and relationship network as one reader-facing account against the available source material. It proposes corrections and prose changes across both, while the pipeline applies only high-confidence changes automatically.",
-        "input": "the life events, network, and Wikipedia material",
-        "output": "reviewed changes to events and relationships",
+        "description": "Reviews the life events and ego network as one story against the available source material. It proposes corrections and prose changes, while limiting automatic edits to high-confidence findings.",
+        "input": "the life events, ego network, and sources",
+        "output": "reviewed events and network changes",
         "source": "gpt-5.6-terra"
       }
     },

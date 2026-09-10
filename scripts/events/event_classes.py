@@ -2,7 +2,7 @@
 
 One entry per kind of event that is more than prose—a birth, a death, a
 marriage, a migration, an invention, a publication. Each entry is read three
-times: Phase 1 builds its detection guidelines out of the entries, Phase 2
+times: the proposal builds its detection guidelines out of the entries, the research
 builds the research focus that tells a call not to repeat what the
 classification already holds, and the run log formats what was found. Keeping
 the three in one table is what stops a kind from being detected under one
@@ -22,8 +22,8 @@ from typing import Any, Dict
 # 3. Add a configuration entry below
 #
 # The system automatically handles:
-# - Phase 1 prompts (detection guidelines)
-# - Phase 2 prompts (class-specific research guidance)
+# - proposal prompts (detection guidelines)
+# - research prompts (class-specific research guidance)
 # - Logging (formatted output)
 #
 # CONFIGURATION KEYS:
@@ -33,8 +33,8 @@ from typing import Any, Dict
 # - keywords: Detection keywords (documentation only)
 # - detection_rules: When to apply this classification
 # - fields: {field_name: description} of what classification contains
-# - phase1_guidance: Multi-line detection guidelines for AI
-# - phase2_focus: List of research focus areas (emphasize what NOT to repeat)
+# - proposal_guidance: Multi-line detection guidelines for AI
+# - research_focus: List of research focus areas (emphasize what NOT to repeat)
 # - log_format: lambda cls: str for formatting log output
 
 # What the prose of the two boundary events tells. Both slides already show
@@ -43,8 +43,8 @@ from typing import Any, Dict
 # the birth or the death repeats the slide: the Turing story opened on "Alan
 # Turing is born in Maida Vale, London" under a card naming both parents, and
 # closed on "Turing dies from cyanide poisoning. An inquest rules his death a
-# suicide." under a card holding both facts. Phase 1 writes the skeleton from
-# this definition, Phase 2 rewrites a skeleton that fell short of it, and the
+# suicide." under a card holding both facts. The proposal writes the skeleton from
+# this definition, the research rewrites a skeleton that fell short of it, and the
 # review holds the shipped description to it, so it is stated once here and
 # read from the table like everything else about the kind.
 BIRTH_DESCRIPTION_GUIDANCE = (
@@ -84,19 +84,19 @@ DEATH_DESCRIPTION_GUIDANCE = (
     "that had reshaped physics.'"
 )
 
-# Phase 2 is told in its base prompt to rewrite a description that falls short
+# The research is told in its base prompt to rewrite a description that falls short
 # of the contract. A boundary skeleton that narrates the fact the slide already
 # shows has nothing worth keeping, so its class block says the rewrite starts
 # from the definition, not from the skeleton.
 BOUNDARY_REWRITE_NOTE = (
-    "  * A Phase 1 description that narrates the fact the slide already shows is "
+    "  * A proposed description that narrates the fact the slide already shows is "
     "replaced, not trimmed: write the definition above from the article in front "
     "of you, within 2-4 sentences"
 )
 
 
 def _as_bullet(guidance: str) -> str:
-    """A guidance block as one Phase 1 bullet, its examples nested under it."""
+    """A guidance block as one bullet of the proposal prompt, its examples nested under it."""
     return "  * " + guidance.replace("\n", "\n  ")
 
 
@@ -116,7 +116,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "birth_name": "Optional: full name given at birth, only when it differs from the known name",
             "characterization": "Optional: the household born into, e.g. 'academic family', 'farming household' (1-4 words)",
         },
-        "phase1_guidance": (
+        "proposal_guidance": (
             "- BIRTH: The SUBJECT's own birth — never the birth of a child, sibling, or anyone else\n"
             "  * Exactly one event per life story carries this classification\n"
             "  * father: Full name of the father, omit when undocumented\n"
@@ -127,7 +127,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             + "\n"
         ),
         "description_guidance": BIRTH_DESCRIPTION_GUIDANCE,
-        "phase2_focus": [
+        "research_focus": [
             BIRTH_DESCRIPTION_GUIDANCE,
             "  * The classification names the parents and the birth name, and the slide shows "
             "the city, so the prose carries none of them",
@@ -160,7 +160,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "characterization": "Optional: the circumstances, e.g. 'after long illness', 'sudden' (1-4 words)",
             "place_of_rest": "Optional: burial or resting place",
         },
-        "phase1_guidance": (
+        "proposal_guidance": (
             "- DEATH: The SUBJECT's own death — never the death of a parent, spouse, child, or anyone else\n"
             "  * Exactly one event per life story carries this classification\n"
             "  * cause: The cause of death as a noun phrase of 1-6 words ('heart failure', "
@@ -174,7 +174,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             + "\n"
         ),
         "description_guidance": DEATH_DESCRIPTION_GUIDANCE,
-        "phase2_focus": [
+        "research_focus": [
             DEATH_DESCRIPTION_GUIDANCE,
             "  * DO NOT repeat the cause of death or the resting place (classification has these)",
             BOUNDARY_REWRITE_NOTE,
@@ -199,7 +199,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "children": "Optional: integer count",
             "characterization": "Optional: character of the bond, e.g., 'devoted partnership', 'political alliance', 'strained' (1-4 words); not a purely professional label",
         },
-        "phase1_guidance": (
+        "proposal_guidance": (
             "- MARRIAGE_PARTNERSHIP: Event title/description contains 'married', 'marriage', 'wed', 'wedding', 'spouse'\n"
             "  * subtype: 'marriage' (legal/ceremonial) OR 'partnership' (domestic/romantic)\n"
             "  * partner: Full name of spouse/partner\n"
@@ -207,7 +207,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "  * characterization describes the bond itself (e.g., 'devoted partnership', 'political alliance', 'strained'),\n"
             "    never a purely professional label such as 'close collaboration' or 'work partnership'\n"
         ),
-        "phase2_focus": [
+        "research_focus": [
             "INVOLVED_PEOPLE: Include the partner's name (already in classification, but also list here)",
             "LOCATIONS: Wedding venue city (keep to city level, e.g., 'London' not full venue name)",
             "DESCRIPTION: Name the partner in the sentence and say who they were, what they did, "
@@ -246,7 +246,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "to_location": "Destination country/region",
             "characterization": "Optional: e.g., 'political exile', 'career opportunity', 'refugee flight' (1-4 words)",
         },
-        "phase1_guidance": (
+        "proposal_guidance": (
             "- MIGRATION: Permanent or significant relocation to different country/region\n"
             "  * Words like: 'emigrated', 'immigrated', 'fled', 'moved to', 'settled in', 'exile', 'refuge', 'relocated'\n"
             "  * Includes: emigration, immigration, exile, refugee movement, major relocations\n"
@@ -255,7 +255,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "  * to_location: Destination country/region\n"
             "  * Optional: characterization (e.g., 'political exile', 'career opportunity', 'refugee flight')\n"
         ),
-        "phase2_focus": [
+        "research_focus": [
             "LOCATIONS: Provide TWO locations (departure and arrival cities)",
             "  * First location: Origin city/region (mark as primary=false)",
             "  * Second location: Destination city/region (mark as primary=true)",
@@ -286,7 +286,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "description": "What it is and how it works (1 sentence, 15-25 words)",
             "impact": "Optional: Historical/practical impact (1 sentence, 12-20 words)",
         },
-        "phase1_guidance": (
+        "proposal_guidance": (
             "- INVENTION: Creating/building/patenting tangible invention, device, machine, algorithm\n"
             "  * Words like: 'invented', 'patented', 'built', 'designed', 'created' + technical artifact\n"
             "  * MUST be novel creation with clear technical output (not just ideas/theories)\n"
@@ -294,7 +294,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "  * description: What it is and how it works (1 sentence, 15-25 words)\n"
             "  * Optional: impact (1 sentence, 12-20 words)\n"
         ),
-        "phase2_focus": [
+        "research_focus": [
             "DESCRIPTION: Focus ONLY on narrative context (where, when, why, with whom)",
             "  * DO NOT repeat technical specifications or features (classification has these)",
             "  * DO NOT annotate the invention name (classification provides full technical details)",
@@ -336,7 +336,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "significance": "Optional: e.g., 'seminal work', 'controversial', 'bestseller' (1-4 words)",
             "impact": "Optional: What happened BECAUSE OF the work — reception, influence, consequences (1-2 sentences); NEVER what the work depicts or contains; omit when no impact is documented",
         },
-        "phase1_guidance": (
+        "proposal_guidance": (
             "- PUBLICATION: Publishing books, papers, articles, manuscripts, theses, or essays\n"
             "  * Words like: 'published', 'wrote', 'authored', 'released', 'paper', 'book', 'article'\n"
             "  * MUST be actual publication event (not just writing/working on it)\n"
@@ -349,7 +349,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "    - BAD (content, not impact): 'The novella presented a family crisis through Gregor Samsa's sudden and grotesque transformation.'\n"
             "    - No documented impact -> omit the field rather than paraphrase the plot\n"
         ),
-        "phase2_focus": [
+        "research_focus": [
             "DESCRIPTION: Name the work in the sentence and say what it is about, how it came to be "
             "written, and how it was received at the time; the prose is read without the card",
             "  * The card holds the publication type and the publisher; the prose does not restate them",
@@ -371,7 +371,7 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
 def boundary_description_prompt() -> str:
     """The birth and death description definitions as one block for the review.
 
-    Phase 1 and Phase 2 read them through the table; the review reads the whole
+    The proposal and the research read them through the table; the review reads the whole
     dataset at once and needs both definitions in one place, named by kind.
     """
     return "\n".join(

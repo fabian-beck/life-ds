@@ -122,7 +122,7 @@ def current_step() -> str:
 def step(name: str) -> Iterator[None]:
     """Attribute every call made inside the block to ``name``.
 
-    Nests, so a step that delegates to a sub-phase can open its own block
+    Nests, so a step that delegates to a sub-step can open its own block
     without losing the outer attribution when it closes.
     """
     _step_stack.append(name)

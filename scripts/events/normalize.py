@@ -268,7 +268,7 @@ def drop_classified_annotations(events: List[Dict[str, Any]]) -> List[str]:
     """Drop a gloss of what the event's own classification card explains.
 
     An invention or publication event carries a card under its description
-    that names its subject and says what it is. Phase 2 is told not to
+    that names its subject and says what it is. The research is told not to
     annotate that subject, and does anyway: Turing's Bombe slide glossed
     "bombe" in the sentence directly above a card headed "Bombe" that says
     the same thing. An annotation is dropped when its term is the whole
@@ -293,7 +293,7 @@ def drop_classified_annotations(events: List[Dict[str, Any]]) -> List[str]:
 def drop_repeated_annotations(events: List[Dict[str, Any]]) -> List[str]:
     """Explain a term once, where the story first makes it a subject.
 
-    Phase 2 researches each event on its own, so nothing tells the call that
+    The research takes each event on its own, so nothing tells the call that
     the Analytical Engine already had a slide of its own three events back;
     it glosses the term again, and the reader who followed the story is
     offered a definition of what they just read about. A term counts as

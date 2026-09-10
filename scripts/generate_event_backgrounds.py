@@ -6,12 +6,12 @@ selection in ``src/utils/story/eventDepth.js``, ported in
 ``scripts/utils/event_depth.py`` — and the layer it opens is a written report
 plus the pictures that illustrate it. This step runs after the events and the
 ego network exist, computes that selection, and writes a report exactly for
-the events the story will offer one on. Phase 2 used to write a report for
+the events the story will offer one on. The research used to write a report for
 every event; most of them could never be reached, and each cost the run a
 long-prose call and an illustration critic.
 
 The report is the one thing in the pipeline written for a reader rather than
-extracted for a schema. Its material is the same material Phase 2 sees — the
+extracted for a schema. Its material is the same material the research sees — the
 event, the subject, the cached related articles filtered down to the ones
 about this event, the Deutsche Biographie text where it is cached — plus what
 only this later step can know: the annotations, chips, and citations already
@@ -49,7 +49,7 @@ from events.images.assign import STAND_IN_REJECTION_INSTRUCTIONS, image_year_tak
 from events.images.scoring import filter_images_by_quality
 from events.images.sources import search_wikimedia_commons
 from events.pipeline import PEOPLE_DIR
-from events.prompts.phase2 import (
+from events.prompts.research import (
     RELATED_ARTICLE_COUNT,
     _related_articles_prompt_section,
     _subject_article_prompt_section,
@@ -591,7 +591,7 @@ def _wikipedia_page(person_id: str) -> Optional[Dict[str, Any]]:
 
 
 def _deutsche_biographie_text(person_id: str) -> Optional[str]:
-    """The cached Deutsche Biographie context, formatted as Phase 2 saw it."""
+    """The cached Deutsche Biographie context, formatted as the research saw it."""
     try:
         data = get_cached_deutsche_biographie(person_id)
     except Exception:  # noqa: BLE001 — an absent cache is a normal state here
@@ -871,7 +871,7 @@ def generate_event_backgrounds(
     if unweighted:
         print(
             f"  {person_id}: {unweighted} event(s) carry no weight — the dataset "
-            "predates Phase 1 weighting. Flag it in data/outdated.md and "
+            "predates proposal weighting. Flag it in data/outdated.md and "
             "regenerate it instead of filling reports here."
         )
         return 0

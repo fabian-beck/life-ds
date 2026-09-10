@@ -1,4 +1,4 @@
-"""What Phase 1 is told: read the whole article set and propose the events.
+"""What the proposal is told: read the whole article set and propose the events.
 
 This is the one call that sees a life whole, which is why it is also the one
 asked to weigh the events against each other. How much of a life an event turns
@@ -8,7 +8,7 @@ on is a comparison, not a property of the event.
 from typing import Any, Dict, List, Optional
 
 
-def build_phase1_prompt(
+def build_proposal_prompt(
     page_data: Dict[str, Any],
     summary_data: Dict[str, Any],
     subject: str,
@@ -16,10 +16,10 @@ def build_phase1_prompt(
     deutsche_biographie_text: Optional[str] = None,
 ) -> str:
     """
-    Build Phase 1 prompt for generating event skeletons and chapters.
+    Build proposal prompt for generating event skeletons and chapters.
 
     Focus on identifying significant life events and organizing them into chapters.
-    NO location/image/source details (Phase 2 will research these).
+    NO location/image/source details (the research call adds these).
     """
     summary_text = summary_data.get("extract", "").strip()
     extract_text = page_data.get("extract", "").strip()

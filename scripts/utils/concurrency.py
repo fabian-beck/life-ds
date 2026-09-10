@@ -11,11 +11,11 @@ was the sum of their latencies because nothing said otherwise.
 runs the same function over each in a small thread pool, and returns the
 results in the items' own order, so a caller reads them exactly as it did
 from the loop this replaces. Threads rather than asyncio, because the SDK
-client, ``requests``, and every phase are synchronous, and the wait is on the
+client, ``requests``, and every step are synchronous, and the wait is on the
 network rather than on the interpreter.
 
 What stays serial is what has to: the geocoder, whose usage policy allows one
-request a second, and the phases that read each other's output. The number
+request a second, and the steps that read each other's output. The number
 of workers is one setting for the whole pipeline (``LIFE_DS_WORKERS``), and
 ``1`` restores the old order call for call, which is the first thing to try
 when the provider starts answering 429.

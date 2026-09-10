@@ -18,7 +18,7 @@ enable_utf8_console()
 
 def parse_args(argv: Any) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate life event datasets using two-phase AI approach."
+        description="Generate life event datasets using a proposal call and a research call per event."
     )
     parser.add_argument(
         "subject", help="Person to research, e.g. 'Ada Lovelace' or 'henry_II'."

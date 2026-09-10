@@ -1,6 +1,6 @@
 """A term is explained once, where the story first makes it a subject.
 
-Phase 2 researches every event in isolation, so an event three slides after
+The research takes every event in isolation, so an event three slides after
 the one titled for the Analytical Engine annotated the engine again. The
 normalize step drops such repeats deterministically; the review save path
 applies the same rule.
@@ -124,7 +124,9 @@ class ClassifiedAnnotationTests(unittest.TestCase):
             {
                 "title": "Designs the Bombe for Enigma",
                 "description": "Turing designs the [[Bombe|bombe]] to help find Enigma settings.",
-                "annotations": {"Bombe": _gloss("An electromechanical codebreaking machine.")},
+                "annotations": {
+                    "Bombe": _gloss("An electromechanical codebreaking machine.")
+                },
                 "event_class": {"type": "invention", "title": "Bombe"},
             },
             {
@@ -150,7 +152,9 @@ class ClassifiedAnnotationTests(unittest.TestCase):
             {
                 "title": "Publishes On Computable Numbers",
                 "description": "The paper settles the [[Entscheidungsproblem]].",
-                "annotations": {"Entscheidungsproblem": _gloss("Hilbert's decision problem.")},
+                "annotations": {
+                    "Entscheidungsproblem": _gloss("Hilbert's decision problem.")
+                },
                 "event_class": {
                     "type": "publication",
                     "title": "On Computable Numbers, with an Application to the Entscheidungsproblem",
@@ -174,7 +178,9 @@ class ClassifiedAnnotationTests(unittest.TestCase):
         }
         updated, _, _ = apply_event_changes(data, EventsChanges(events=[]))
         self.assertNotIn("annotations", updated["events"][0])
-        self.assertEqual(updated["events"][0]["description"], "Turing designs the bombe.")
+        self.assertEqual(
+            updated["events"][0]["description"], "Turing designs the bombe."
+        )
 
 
 if __name__ == "__main__":

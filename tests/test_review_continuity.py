@@ -1,7 +1,7 @@
 """Tests for the review's reading of the slides in order.
 
 A slide is read after the ones before it, and the reader knows what those
-said and nothing else. Phase 2 refined each description with only its own
+said and nothing else. The research refined each description with only its own
 event in view, so a slide could lean on a name the story never introduced
 ("Hut 8") or tell again what the slide before it told, and the review, the
 one pass that sees the finished sequence, was not asked to look. These hold
@@ -18,7 +18,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from events.prompts.phase2 import build_phase2_prompt_base  # noqa: E402
+from events.prompts.research import build_research_prompt_base  # noqa: E402
 from events.schemas import EventSkeleton  # noqa: E402
 from utils.prose_style import description_contract_prompt  # noqa: E402
 from utils.review_helpers import continuity_notes  # noqa: E402
@@ -60,7 +60,7 @@ class ContractTests(unittest.TestCase):
         self.assertIn("what happened on an earlier slide is not told again", contract)
         self.assertIn("Hut 8", contract)
 
-    def test_phase2_reads_the_rule_from_the_contract(self) -> None:
+    def test_the_research_reads_the_rule_from_the_contract(self) -> None:
         skeleton = EventSkeleton(
             date="1940",
             date_precision="year",
@@ -68,7 +68,7 @@ class ContractTests(unittest.TestCase):
             title="Takes Charge of Hut 8",
             description="Turing leads Hut 8 at Bletchley Park.",
         )
-        prompt = build_phase2_prompt_base(skeleton, "Alan Turing", [])
+        prompt = build_research_prompt_base(skeleton, "Alan Turing", [])
         self.assertIn("It is read in sequence", prompt)
 
 

@@ -4,7 +4,7 @@
 Everything in here is derived from the source with `ast`—no imports of the
 generators, so it runs without an API key and without triggering module-level
 side effects. That matters because the whole point of this layer is to be the
-thing that *cannot* drift from the code: if a phase changes its model, its
+thing that *cannot* drift from the code: if a step changes its model, its
 reasoning effort, its output schema, or its prompt wording, the chart changes
 with it on the next run.
 
@@ -56,7 +56,7 @@ AI_CALL_SUFFIXES: Dict[Tuple[str, ...], str] = {
 TRANSPORT_MODULE = "model_calls.py"
 """The module whose whole job is making the call, rather than being a step.
 
-Its `responses.parse` belongs to no phase — every phase's call reaches the wire
+Its `responses.parse` belongs to no step — every step's call reaches the wire
 through it — so counting it would leave the coverage check demanding a step in
 `spec.py` for the transport layer, and the figures drawing a node for it.
 """
@@ -187,7 +187,7 @@ class SchemaField:
 
 @dataclass
 class Schema:
-    """A structured-output model a phase asks the API to fill in."""
+    """A structured-output model a step asks the API to fill in."""
 
     name: str
     script: str
@@ -346,7 +346,7 @@ def _resolve_constant(
 ) -> Optional[str]:
     """Follow `A = B = os.getenv("X", "default")` chains down to a literal.
 
-    The generators layer their model configuration—`PHASE1_REASONING_EFFORT =
+    The generators layer their model configuration—`PROPOSAL_REASONING_EFFORT =
     DEFAULT_REASONING_EFFORT` in the script, `DEFAULT_REASONING_EFFORT =
     os.getenv(...)` in `config.py`—so a single hop is never enough.
     """
@@ -371,7 +371,7 @@ def _resolve_constant(
 def _parameter_defaults(node: ast.FunctionDef | ast.AsyncFunctionDef) -> Dict[str, str]:
     """Map parameter name -> default expression source.
 
-    Every phase takes its model and reasoning effort as a parameter defaulting
+    Every step takes its model and reasoning effort as a parameter defaulting
     to the module constant, so without this hop the extracted model for each
     call site is the useless string "model".
     """
@@ -743,7 +743,7 @@ def scan_script(path: Path, shared_constants: Dict[str, str]) -> ScriptFacts:
             self.defaults.pop()
             self.stack.pop()
             # Named builders are prompts by convention; so is any function that
-            # calls the API directly, because several phases assemble their
+            # calls the API directly, because several steps assemble their
             # instructions inline at the call site instead of in a builder.
             calls_api_here = any(
                 call.function == qualified for call in ai_calls[before:]
@@ -808,7 +808,7 @@ def scan_script(path: Path, shared_constants: Dict[str, str]) -> ScriptFacts:
 
     Visitor().visit(tree)
 
-    # Phases take `model` as a plain parameter with no default—the value is
+    # Steps take `model` as a plain parameter with no default—the value is
     # whatever the entry point passed. Falling back to the script's own
     # `--model` default is what makes the chart show a real model name instead
     # of the word "model", and the source is labeled so the distinction stays

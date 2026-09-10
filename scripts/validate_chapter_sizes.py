@@ -9,7 +9,7 @@ alone. A chapter with no event never renders at all, because the interface
 inserts a chapter slide only where an event names it, so the reader loses the
 chapter and its illustration without a trace.
 
-Phase 1 of ``scripts/events/pipeline.py`` now refuses such a plan
+The proposal in ``scripts/events/pipeline.py`` now refuses such a plan
 (``MIN_CHAPTER_EVENTS``), so this reads the corpus for the datasets written
 before that floor. It reports and never edits: a finding names a dataset for
 ``data/outdated.md``, and ``--check`` turns it into a gate once the count

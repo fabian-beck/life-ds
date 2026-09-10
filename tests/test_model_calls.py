@@ -1,6 +1,6 @@
 """The shared model call: what it retries, and what it says when it gives up.
 
-Every phase reaches the API through ``parse_structured``, so its retry policy
+Every step reaches the API through ``parse_structured``, so its retry policy
 is the pipeline's retry policy. The distinction it draws is between a failure
 that a second identical request could survive — a dropped connection, a rate
 limit, a 502 — and one it cannot: a malformed request is malformed on the third
@@ -62,7 +62,7 @@ def _call(client: Mock, **kwargs):
         reasoning_effort="low",
         input=[{"role": "user", "content": "prompt"}],
         text_format=Answer,
-        label="a phase",
+        label="a step",
         **kwargs,
     )
 
@@ -141,20 +141,20 @@ class ParseStructuredTests(unittest.TestCase):
         self.assertEqual(kwargs["model"], "gpt-test")
         self.assertIs(kwargs["text_format"], Answer)
 
-    def test_the_label_names_the_phase_in_the_failure(self) -> None:
+    def test_the_label_names_the_step_in_the_failure(self) -> None:
         client = _client(_status_error(400))
         with patch("builtins.print") as printed:
             _call(client)
         said = " ".join(str(call.args[0]) for call in printed.call_args_list)
-        self.assertIn("a phase", said)
+        self.assertIn("a step", said)
 
 
 class ParseStructuredOrRaiseTests(unittest.TestCase):
-    """The variant for phases that must stop rather than write a stub.
+    """The variant for steps that must stop rather than write a stub.
 
     Curation cannot absorb a ``None``: a dataset with no events, or a review
     that reports nothing, would be written to disk and read later as a
-    finding. These phases raised before the wrapper existed and still do.
+    finding. These steps raised before the wrapper existed and still do.
     """
 
     def setUp(self) -> None:
@@ -169,7 +169,7 @@ class ParseStructuredOrRaiseTests(unittest.TestCase):
             reasoning_effort="low",
             input=[{"role": "user", "content": "hello"}],
             text_format=Answer,
-            label="a phase",
+            label="a step",
         )
 
     def test_a_parsed_answer_is_returned_unwrapped(self) -> None:
@@ -182,17 +182,17 @@ class ParseStructuredOrRaiseTests(unittest.TestCase):
 
     def test_the_reason_travels_with_the_exception(self) -> None:
         # The log line is far from where a caller reports the failure, so the
-        # exception has to carry the phase and the cause on its own.
+        # exception has to carry the step and the cause on its own.
         with patch("builtins.print"):
             with self.assertRaises(model_calls.ModelCallFailed) as caught:
                 self._call(_client(_refused("I can't help with that")))
         message = str(caught.exception)
-        self.assertIn("a phase", message)
+        self.assertIn("a step", message)
         self.assertIn("refused", message)
 
     def test_it_retries_before_it_raises(self) -> None:
         # The point of routing these sites through the wrapper: a rate limit
-        # mid-run used to kill the phase outright.
+        # mid-run used to kill the step outright.
         client = _client(_status_error(429), _ok("recovered"))
         with patch("builtins.print"):
             self.assertEqual(self._call(client).value, "recovered")

@@ -1,11 +1,11 @@
-"""Generate one person's life events, phase by phase.
+"""Generate one person's life events, step by step.
 
-The order is the argument. Phase 1 reads the whole article set and proposes
+The order is the argument. The proposal reads the whole article set and proposes
 the events, groups them into chapters, and writes the conclusion, because how
 much of a life an event turns on, and where one phase of it ends, is a
-comparison only that call can make. Phase 2 researches each event on its own
+comparison only that call can make. The research takes each event on its own
 material, side by side. The chapters are then dated from their events, the
-image phase illustrates them, the geocoder places them, and `enforce_metadata`
+image step illustrates them, the geocoder places them, and `enforce_metadata`
 brings the whole payload into the shape the corpus is read with before it is
 written.
 
@@ -40,11 +40,11 @@ from config import (
 from events.event_classes import EVENT_CLASS_CONFIG
 from events.images import assign
 from events.normalize import enforce_metadata, normalize_date_for_comparison
-from events.prompts.phase1 import build_phase1_prompt
-from events.prompts.phase2 import (
+from events.prompts.propose import build_proposal_prompt
+from events.prompts.research import (
     RELATED_ARTICLE_COUNT,
-    build_phase2_prompt_base,
-    build_phase2_prompt_classified,
+    build_research_prompt_base,
+    build_research_prompt_classified,
     filter_related_articles_for_event,
 )
 from events.schemas import (
@@ -86,18 +86,18 @@ enable_utf8_console()
 # ============================================================================
 # AI MODEL AND REASONING EFFORT CONFIGURATION
 # ============================================================================
-# Configure model and reasoning effort for each phase of the generation
+# Configure model and reasoning effort for each step of the generation
 # pipeline. This ensures consistent configuration between AI calls and logging.
 #
-# Phase 1 decides what the life is — its events, its chapters, its conclusion —
+# The proposal decides what the life is — its events, its chapters, its conclusion —
 # and reads the whole article set, so it takes the default model and a
-# reasoning budget. The phases below it work from material that call already
+# reasoning budget. The steps below it work from material that call already
 # settled, and every field they return is checked afterwards — icons against
 # the catalog, involved people against known entities, places against the
 # geocoder, image filenames against the fetched candidates — so they take the
 # small model.
 
-PHASE1_REASONING_EFFORT = (
+PROPOSAL_REASONING_EFFORT = (
     DEFAULT_REASONING_EFFORT  # Event skeletons and chapters (medium)
 )
 
@@ -106,8 +106,8 @@ PHASE1_REASONING_EFFORT = (
 # geocoder — which is what qualifies it for the small model. The background
 # passage, the one output checked by nobody, is written in a step of its own
 # (generate_event_backgrounds.py) on the default model.
-PHASE2_MODEL = BULK_MODEL
-PHASE2_REASONING_EFFORT = BULK_REASONING_EFFORT
+RESEARCH_MODEL = BULK_MODEL
+RESEARCH_REASONING_EFFORT = BULK_REASONING_EFFORT
 
 RELATED_ARTICLES_REASONING = LOW_REASONING_EFFORT  # Related article discovery (none)
 
@@ -153,7 +153,7 @@ def fetch_wikipedia_summary(title: str) -> Dict[str, Any]:
 
 
 # ============================================================================
-# PHASE 1: EVENT SKELETON GENERATION
+# PROPOSAL: EVENT SKELETONS AND CHAPTERS
 # ============================================================================
 
 
@@ -195,7 +195,7 @@ def find_birth_event_index(
     own age, never zero — and it is why the date is asked before the model's
     own classification, which is only consulted when no event is dated there.
 
-    Works on Phase 1 skeletons, merged events, and the plain dicts a stored
+    Works on event skeletons, merged events, and the plain dicts a stored
     ``life_events.json`` holds.
     """
     birth_day = (birth_date or "").strip()[:10]
@@ -237,7 +237,7 @@ def find_death_event_index(
     closing event whose *title* names a death qualifies. The model's own
     classification is consulted last.
 
-    Works on Phase 1 skeletons, merged events, and the plain dicts a stored
+    Works on event skeletons, merged events, and the plain dicts a stored
     ``life_events.json`` holds.
     """
     death_day = (death_date or "").strip()[:10]
@@ -335,9 +335,9 @@ def _validate_chronological_order(event_skeletons: List[EventSkeleton]) -> None:
     print(f"  ✓ Chronological order validated ({len(event_skeletons)} events)")
 
 
-def call_openai_phase1(prompt: str, model: str) -> LifePlan:
+def propose_events(prompt: str, model: str) -> LifePlan:
     """
-    Call OpenAI for Phase 1 using structured outputs.
+    Call OpenAI for the proposal using structured outputs.
 
     Returns:
         LifePlan with person metadata and event skeletons
@@ -377,8 +377,8 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         "- Use active, specific language that captures the essence of the event\n"
         "- Avoid generic titles like 'Major Achievement' or 'Important Work'\n"
         "- Examples: 'Birth in London', 'Graduated from Oxford', 'Published First Novel', 'Appointed Prime Minister'\n"
-        "- Write the description as defined below; Phase 2 researches the exact locations, images, and sources\n"
-        "- DO NOT add annotations - Phase 2 will handle all annotations\n"
+        "- Write the description as defined below; the research call adds the exact locations, images, and sources\n"
+        "- DO NOT add annotations - the research call adds them\n"
         "\n\nWEIGHT - how much of the life the event turns on:\n"
         "- Give every event a weight from 0.0 to 1.0\n"
         "- Judge it against the OTHER EVENTS OF THIS LIFE, not against history at large: "
@@ -459,7 +459,10 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         + "\n"
         "Detection guidelines:\n"
         + "".join(
-            [config["phase1_guidance"] + "\n" for config in EVENT_CLASS_CONFIG.values()]
+            [
+                config["proposal_guidance"] + "\n"
+                for config in EVENT_CLASS_CONFIG.values()
+            ]
         )
         + "For other events (education, appointments, awards): OMIT classification.\n"
         f"Only classify when event CLEARLY matches one of the {len(EVENT_CLASS_CONFIG)} types above.\n"
@@ -494,35 +497,35 @@ def call_openai_phase1(prompt: str, model: str) -> LifePlan:
         {"role": "user", "content": instructions},
         {"role": "user", "content": prompt},
     ]
-    for attempt in range(1, PHASE1_ATTEMPTS + 1):
+    for attempt in range(1, PROPOSAL_ATTEMPTS + 1):
         parsed = parse_structured_or_raise(
             client,
             model=model,
-            reasoning_effort=PHASE1_REASONING_EFFORT,
+            reasoning_effort=PROPOSAL_REASONING_EFFORT,
             input=messages,
             text_format=LifePlan,
-            label="Phase 1",
+            label="Event proposal",
         )
         try:
             return accept_life_plan(parsed)
         except RuntimeError as error:
-            if attempt == PHASE1_ATTEMPTS:
+            if attempt == PROPOSAL_ATTEMPTS:
                 raise
-            print(f"  Phase 1: Rejected plan {attempt}: {error}")
-            messages = messages + [phase1_rejection_message(error)]
+            print(f"  Proposal: rejected plan {attempt}: {error}")
+            messages = messages + [proposal_rejection_message(error)]
     raise AssertionError("unreachable")
 
 
-PHASE1_ATTEMPTS = 2
+PROPOSAL_ATTEMPTS = 2
 """How many plans the model may propose before a refused one fails the run.
 
 The chapter and order rules in the prompt are also checked in code, and a plan
-that breaks one used to end the whole generation before Phase 2 had run. One
+that breaks one used to end the whole generation before the research had run. One
 more call that names the rejection is cheaper than a failed run.
 """
 
 
-def phase1_rejection_message(error: Exception) -> Dict[str, Any]:
+def proposal_rejection_message(error: Exception) -> Dict[str, Any]:
     """The turn that asks for a corrected plan, naming why the last was refused."""
     return {
         "role": "user",
@@ -550,20 +553,20 @@ def accept_life_plan(parsed: LifePlan) -> LifePlan:
         parsed.event_skeletons, parsed.person.birth_date
     )
     if birth_index is None:
-        print("  Phase 1: No birth event found in the plan")
+        print("  Proposal: no birth event found in the plan")
     death_index = ensure_death_classification(
         parsed.event_skeletons, parsed.person.death_date
     )
     if death_index is None:
-        print("  Phase 1: No death event found in the plan")
+        print("  Proposal: no death event found in the plan")
 
-    # Log classifications from Phase 1 (using centralized config)
+    # Log classifications from the proposal (using centralized config)
     classified_count = sum(
         1 for skeleton in parsed.event_skeletons if skeleton.event_class
     )
     if classified_count > 0:
         print(
-            f"  Phase 1: Classified {classified_count}/{len(parsed.event_skeletons)} events"
+            f"  Proposal: classified {classified_count}/{len(parsed.event_skeletons)} events"
         )
         for skeleton in parsed.event_skeletons:
             if skeleton.event_class:
@@ -579,7 +582,7 @@ def accept_life_plan(parsed: LifePlan) -> LifePlan:
     _validate_chronological_order(parsed.event_skeletons)
 
     # The chapters are a partition of that order, and their headlines carry
-    # the story, so both are checked before Phase 2 pays for the research
+    # the story, so both are checked before the research is paid for
     validate_chapter_partition(parsed.chapters, parsed.event_skeletons)
     _validate_chapter_headlines(parsed.chapters)
     print(f"  ✓ Chapter partition validated ({len(parsed.chapters)} chapters)")
@@ -588,7 +591,7 @@ def accept_life_plan(parsed: LifePlan) -> LifePlan:
 
 
 # ============================================================================
-# PHASE 2: EVENT DETAIL RESEARCH
+# RESEARCH: THE DETAILS OF EACH EVENT
 # ============================================================================
 
 
@@ -596,7 +599,7 @@ def research_event_details(
     event_skeleton: EventSkeleton,
     person_name: str,
     all_related_articles: List[Dict[str, Any]],
-    model: str = PHASE2_MODEL,
+    model: str = RESEARCH_MODEL,
     retry_count: int = 2,
     deutsche_biographie_text: Optional[str] = None,
     subject_article: Optional[Dict[str, Any]] = None,
@@ -606,7 +609,7 @@ def research_event_details(
     Uses event-class-specific prompts for targeted research.
 
     Returns:
-        EventDetails with locations, involved_people, sources, icon (NO images - Phase 3)
+        EventDetails with locations, involved_people, sources, icon (no images; the image step adds them)
     """
     # Filter articles
     filtered_articles = filter_related_articles_for_event(
@@ -616,7 +619,7 @@ def research_event_details(
     # Route to event-class-specific prompt builder (using centralized config)
     if event_skeleton.event_class:
         # All classified events use the generic builder with config
-        prompt = build_phase2_prompt_classified(
+        prompt = build_research_prompt_classified(
             event_skeleton,
             person_name,
             filtered_articles,
@@ -625,7 +628,7 @@ def research_event_details(
         )
     else:
         # Standard event (no classification)
-        prompt = build_phase2_prompt_base(
+        prompt = build_research_prompt_base(
             event_skeleton,
             person_name,
             filtered_articles,
@@ -647,13 +650,13 @@ def research_event_details(
     details = parse_structured(
         get_client(),
         model=model,
-        reasoning_effort=PHASE2_REASONING_EFFORT,
+        reasoning_effort=RESEARCH_REASONING_EFFORT,
         input=[
             {"role": "system", "content": system},
             {"role": "user", "content": prompt},
         ],
         text_format=EventDetails,
-        label=f"Phase 2 research of '{event_skeleton.title}'",
+        label=f"Research of '{event_skeleton.title}'",
         attempts=retry_count + 1,
     )
     if details is not None:
@@ -674,11 +677,11 @@ def research_all_event_details(
     event_skeletons: List[EventSkeleton],
     person_name: str,
     all_related_articles: List[Dict[str, Any]],
-    model: str = PHASE2_MODEL,
+    model: str = RESEARCH_MODEL,
     deutsche_biographie_text: Optional[str] = None,
     subject_article: Optional[Dict[str, Any]] = None,
 ) -> List[EventDetails]:
-    """Research details for all events (NO images - Phase 3).
+    """Research details for all events (no images; the image step adds them).
 
     The events are researched side by side: no event's research reads
     another's, and each call carries the same article set, so the step's
@@ -688,13 +691,11 @@ def research_all_event_details(
     # Log classification routing info
     classified_count = sum(1 for skeleton in event_skeletons if skeleton.event_class)
     print(
-        f"  Phase 2: Using class-specific prompts for {classified_count}/{len(event_skeletons)} classified events"
+        f"  Research: using class-specific prompts for {classified_count}/{len(event_skeletons)} classified events"
     )
     workers = min(worker_count(), max(1, len(event_skeletons)))
     if workers > 1:
-        print(
-            f"  Phase 2: Researching {len(event_skeletons)} events, {workers} at a time"
-        )
+        print(f"  Research: {len(event_skeletons)} events, {workers} at a time")
 
     def research(indexed: Tuple[int, EventSkeleton]) -> EventDetails:
         idx, skeleton = indexed
@@ -729,7 +730,7 @@ def research_all_event_details(
 def merge_event_skeleton_and_details(
     skeleton: EventSkeleton, details: EventDetails
 ) -> LifeEvent:
-    """Merge Phase 1 skeleton with Phase 2 details (NO images - Phase 3)."""
+    """Merge event skeleton with researched details (no images; the image step adds them)."""
 
     # Build locations array from EventDetails.locations
     locations = []
@@ -744,13 +745,13 @@ def merge_event_skeleton_and_details(
                 }
             )
 
-    # Annotations come ONLY from Phase 2 (Phase 1 doesn't generate them)
+    # Annotations come ONLY from the research (the proposal doesn't generate them)
     annotations = details.annotations
 
-    # Merge description (prefer Phase 2 if provided with markers, else Phase 1)
+    # Merge description (prefer the research if provided with markers, else the proposal)
     description = details.description if details.description else skeleton.description
 
-    # Create merged event (NO images yet - assigned in Phase 3)
+    # Create merged event (no images yet; the image step assigns them)
     return LifeEvent(
         date=skeleton.date,
         date_precision=skeleton.date_precision,
@@ -763,14 +764,14 @@ def merge_event_skeleton_and_details(
         locations=locations,
         involved_people=details.involved_people,
         sources=details.sources if details.sources else [],
-        images=None,  # Images assigned in Phase 3
+        images=None,  # assigned by the image step
         # The model invents icon names that render nothing, so resolve whatever
         # it returned to an icon that exists before it reaches disk.
         event_type_icon=normalize_icon(details.event_type_icon),
-        chapter=skeleton.chapter,  # From Phase 1, which laid out the chapters
+        chapter=skeleton.chapter,  # From the proposal, which laid out the chapters
         annotations=annotations,
-        weight=skeleton.weight,  # From Phase 1, which sees the whole life
-        event_class=skeleton.event_class,  # From Phase 1, not Phase 2
+        weight=skeleton.weight,  # From the proposal, which sees the whole life
+        event_class=skeleton.event_class,  # From the proposal, not the research
     )
 
 
@@ -788,7 +789,7 @@ def merge_all_events(
 
 
 # ============================================================================
-# CHAPTERS: THE PARTITION PHASE 1 DREW, DATED FROM THE RESEARCHED EVENTS
+# CHAPTERS: THE PARTITION THE PROPOSAL DREW, DATED FROM THE RESEARCHED EVENTS
 # ============================================================================
 
 
@@ -814,10 +815,10 @@ def validate_chapter_partition(
     every chapter has to hold at least MIN_CHAPTER_EVENTS events, and the
     order in which the chapters first appear along the timeline has to be the
     order the plan lists them in. A plan that fails any of this is refused
-    before Phase 2 pays for the research.
+    before the research is paid for.
     """
     if not chapters:
-        raise RuntimeError("Phase 1 returned no chapters")
+        raise RuntimeError("The proposal returned no chapters")
     ids = [chapter.id for chapter in chapters]
     duplicates = sorted({cid for cid in ids if ids.count(cid) > 1})
     if duplicates:
@@ -946,7 +947,7 @@ def build_chapters(
     boundary can never be more precise than the event it has to cover, which is
     what used to let a chapter dated to the day begin after a member event
     dated to the year. The ages are read off the same two events, and the
-    people are the union of what Phase 2 found on the members, with the name
+    people are the union of what the research found on the members, with the name
     variations folded together.
     """
     events_by_chapter: Dict[str, List[LifeEvent]] = {}
@@ -999,7 +1000,7 @@ def research_images_for_all_events(
     person_name: str,
 ) -> Tuple[List[LifeEvent], Optional[Dict[str, Any]]]:
     """
-    Phase 3: Batch image discovery and AI-driven assignment.
+    The image step: batch image discovery and AI-driven assignment.
 
     New approach:
     1. AI generates 20 optimized search strings for all events
@@ -1010,16 +1011,16 @@ def research_images_for_all_events(
     Returns:
         Tuple of (enriched_events, portrait_dict or None)
     """
-    print("  [Phase 3a] Generating image search strings...")
+    print("  [Images] Planning the searches...")
     search_strings = assign.generate_image_search_strings(event_skeletons, person_name)
     print(f"    Generated {len(search_strings)} search strings")
 
     event_queries = assign.plan_event_image_searches(
         [details.image_search_queries or [] for details in event_details_list]
     )
-    print(f"    Plus searches for {len(event_queries)} event(s) from Phase 2")
+    print(f"    Plus searches for {len(event_queries)} event(s) from the research")
 
-    print("  [Phase 3b] Searching image sources (Commons + Openverse)...")
+    print("  [Images] Searching Commons and Openverse...")
     candidate_images = assign.execute_batch_image_search(
         search_strings, images_per_query=10, event_queries=event_queries
     )
@@ -1031,7 +1032,7 @@ def research_images_for_all_events(
     print(f"    Found {len(candidate_images)} candidate images")
 
     # Quality pre-filtering (permissive - AI makes final decisions)
-    print("  [Phase 3b+] Applying quality pre-filtering...")
+    print("  [Images] Scoring and ranking the candidates...")
     filtered_images = filter_images_by_quality(
         candidate_images,
         person_name=person_name,
@@ -1058,7 +1059,7 @@ def research_images_for_all_events(
         )
 
     print(
-        f"  [Phase 3c] AI matching {len(filtered_images)} images to {len(event_skeletons)} events..."
+        f"  [Images] Matching {len(filtered_images)} images to {len(event_skeletons)} events..."
     )
     assignments, portrait = assign.match_images_to_events(
         filtered_images, event_skeletons, person_name
@@ -1253,7 +1254,7 @@ def generate_person_events(
     use_deutsche_biographie: bool = True,
 ) -> Tuple[Path, str]:
     """
-    Generate person life events dataset using two-phase approach.
+    Generate person life events dataset using proposal-and-research approach.
 
     Args:
         subject: Person name or Wikipedia URL to research
@@ -1275,7 +1276,7 @@ def generate_person_events(
     # Use provided person_id or generate from article title
     identifier = person_id or slugify(article_title)
 
-    # Load cache (NO Commons images - fetched later in Phase 3)
+    # Load cache (no Commons images; the image step fetches them)
     print(f"[Step 2/10] Loading cached materials for '{identifier}'...")
     related_articles = None
     summary_data = {}
@@ -1374,26 +1375,26 @@ def generate_person_events(
     elif not use_deutsche_biographie:
         print("[Step 3b/10] Deutsche Biographie skipped by request")
 
-    # PHASE 1: Generate event skeletons
+    # PROPOSAL: the event skeletons and chapters
     print(
-        f"[Step 4/11] PHASE 1: Generating event skeletons (model: {model}, reasoning: {PHASE1_REASONING_EFFORT})..."
+        f"[Step 4/11] Proposing the events (model: {model}, reasoning: {PROPOSAL_REASONING_EFFORT})..."
     )
-    phase1_prompt = build_phase1_prompt(
+    proposal_prompt = build_proposal_prompt(
         page_data,
         summary_data,
         subject,
         related_articles,
         deutsche_biographie_text=db_prompt_text,
     )
-    life_plan = call_openai_phase1(phase1_prompt, model)
+    life_plan = propose_events(proposal_prompt, model)
     print(
         f"[Step 4/11] Generated {len(life_plan.event_skeletons)} event skeletons "
         f"in {len(life_plan.chapters)} chapters"
     )
 
-    # PHASE 2: Research event details (NO images - Phase 3)
+    # RESEARCH: the details of each event (no images yet)
     print(
-        f"[Step 5/11] PHASE 2: Researching event details (model: {PHASE2_MODEL}, reasoning: {PHASE2_REASONING_EFFORT})..."
+        f"[Step 5/11] Researching the events (model: {RESEARCH_MODEL}, reasoning: {RESEARCH_REASONING_EFFORT})..."
     )
     event_details_list = research_all_event_details(
         event_skeletons=life_plan.event_skeletons,
@@ -1408,15 +1409,15 @@ def generate_person_events(
     print("[Step 6/11] Merging event skeletons with details...")
     merged_events = merge_all_events(life_plan.event_skeletons, event_details_list)
 
-    # CHAPTERS: date the partition Phase 1 drew from the researched events
+    # CHAPTERS: date the partition the proposal drew from the researched events
     print("[Step 7/11] Dating chapters from their events...")
     chapters = build_chapters(life_plan.chapters, merged_events)
     conclusion = life_plan.conclusion
     print(f"[Step 7/11] Dated {len(chapters)} chapters")
 
-    # PHASE 3: Event-specific image discovery
+    # IMAGES: search, rank, match, verify
     print(
-        f"[Step 8/11] PHASE 3: Discovering and assigning event-specific images (model: {assign.PHASE3_IMAGE_SEARCH_MODEL}, reasoning: {assign.PHASE3_IMAGE_SEARCH_REASONING}/{assign.PHASE3_IMAGE_MATCH_REASONING})..."
+        f"[Step 8/11] Finding images for the events (model: {assign.IMAGE_SEARCH_MODEL}, reasoning: {assign.IMAGE_SEARCH_REASONING}/{assign.IMAGE_MATCH_REASONING})..."
     )
     enriched_events, portrait = research_images_for_all_events(
         merged_events=merged_events,

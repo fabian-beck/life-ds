@@ -461,7 +461,7 @@ STEPS: List[Step] = [
         PERSON,
         AI,
         "events/pipeline.py",
-        "call_openai_phase1",
+        "propose_events",
         summary=(
             "Reads the whole article set and proposes 12–16 significant events "
             "with titles, dates and descriptions—the narrative spine, with no "
@@ -479,8 +479,8 @@ STEPS: List[Step] = [
             Dep("p_db", "ADB biography text"),
         ],
         prompts=[
-            "build_phase1_prompt",
-            "call_openai_phase1",
+            "build_proposal_prompt",
+            "propose_events",
             "description_contract_prompt",
         ],
         inputs=["wiki_cache", "db_cache"],
@@ -510,8 +510,8 @@ STEPS: List[Step] = [
             "_subject_article_prompt_section",
             "_related_articles_prompt_section",
             "description_contract_prompt",
-            "build_phase2_prompt_base",
-            "build_phase2_prompt_classified",
+            "build_research_prompt_base",
+            "build_research_prompt_classified",
             "research_event_details",
             "format_icon_categories_for_prompt",
         ],

@@ -146,7 +146,7 @@ class TrEventClass(BaseModel):
 class TrEvent(BaseModel):
     title: str
     description: str
-    # The report Phase 2 writes, taken apart into the two things it is made of
+    # The report the research writes, taken apart into the two things it is made of
     # and put back together on merge. Both lists default to empty: a life the
     # report step has not reached carries no report fields in its payload at
     # all, and must not be asked to invent a paragraph to keep the shape.

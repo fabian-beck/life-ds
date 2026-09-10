@@ -74,7 +74,7 @@ class DeepEventSelectionTests(unittest.TestCase):
 
     def test_an_unweighted_event_scores_zero(self) -> None:
         # The interface still derives a fallback for datasets that predate
-        # Phase 1 weighting; the pipeline never sees one — such a dataset is
+        # proposal weighting; the pipeline never sees one — such a dataset is
         # flagged in data/outdated.md and regenerated instead.
         events = [event("Old data", "one", None)]
         self.assertEqual(select_deep_event_indexes(events, {}), set())
@@ -378,7 +378,10 @@ class FigureCaptionMergeTests(unittest.TestCase):
 
     def translated(self, captions):
         return {
-            "person": {"summary": "Eine Zusammenfassung.", "primary_roles": ["Architekt"]},
+            "person": {
+                "summary": "Eine Zusammenfassung.",
+                "primary_roles": ["Architekt"],
+            },
             "chapters": [],
             "events": [
                 {
@@ -400,9 +403,7 @@ class FigureCaptionMergeTests(unittest.TestCase):
             self.translated(["Das Haus vom Bach aus"]),
             {},
         )
-        captions = [
-            img["caption"] for img in result["events"][0]["background_images"]
-        ]
+        captions = [img["caption"] for img in result["events"][0]["background_images"]]
         self.assertEqual(captions, ["Das Haus vom Bach aus"])
 
     def test_a_short_array_keeps_the_source_captions_instead_of_failing(self) -> None:
@@ -412,9 +413,7 @@ class FigureCaptionMergeTests(unittest.TestCase):
             self.translated(["Das Haus vom Bach aus"]),
             {},
         )
-        captions = [
-            img["caption"] for img in result["events"][0]["background_images"]
-        ]
+        captions = [img["caption"] for img in result["events"][0]["background_images"]]
         self.assertEqual(
             captions, ["The house from the creek", "A joke about the roof"]
         )

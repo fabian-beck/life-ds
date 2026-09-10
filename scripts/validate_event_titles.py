@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Check that English event titles are actually written in English.
 
-An event title is written once, in Phase 1, and nothing downstream revisits it:
-the Phase 2 schema carries no title field, so a title that came back half in
+An event title is written once, in the proposal, and nothing downstream revisits it:
+the research schema carries no title field, so a title that came back half in
 German stays that way. The translation step then renders it into idiomatic
 German, which is why the German corpus reads correctly while the English one
 keeps the odd German preposition or place name — the defect is only visible in

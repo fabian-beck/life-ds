@@ -1,7 +1,7 @@
 """Tests for the chapter-size checker.
 
 The floor itself is one comparison; what the tests pin down is that the
-checker reads the same number Phase 1 refuses on, that an empty chapter counts
+checker reads the same number the proposal refuses on, that an empty chapter counts
 as a finding rather than being skipped, and that the script reports by default
 and gates only under ``--check``.
 """
@@ -26,7 +26,7 @@ def dataset(*chapter_ids: str, events: list[str]) -> dict:
 
 
 class ChapterSizeTests(unittest.TestCase):
-    def test_the_floor_is_the_one_phase_one_refuses_on(self) -> None:
+    def test_the_floor_is_the_one_the_proposal_refuses_on(self) -> None:
         self.assertEqual(MIN_CHAPTER_EVENTS, 2)
 
     def test_chapters_at_the_floor_pass(self) -> None:
@@ -44,7 +44,9 @@ class ChapterSizeTests(unittest.TestCase):
     def test_an_empty_chapter_is_reported(self) -> None:
         data = dataset("a", "b", events=["a", "a"])
         findings = [str(f) for f in sizes.check_person("someone", data)]
-        self.assertEqual(findings, ["someone: chapter 'b' holds no event, fewer than 2"])
+        self.assertEqual(
+            findings, ["someone: chapter 'b' holds no event, fewer than 2"]
+        )
 
     def test_a_dataset_without_chapters_has_nothing_to_report(self) -> None:
         self.assertEqual(sizes.check_person("someone", {"events": [{}]}), [])

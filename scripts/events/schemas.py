@@ -1,11 +1,11 @@
 """The shapes a life takes on its way from a model call to disk.
 
 Two families live here. The dataset models—`Person`, `LifeChapter`,
-`EventSkeleton`, `LifePlan`, `EventDetails`, `LifeEvent`—are what the phases
+`EventSkeleton`, `LifePlan`, `EventDetails`, `LifeEvent`—are what the steps
 hand each other and what the written file is a dump of, so a field this module
 does not name is a field the corpus cannot carry. The classification models are
 the structured blocks a few kinds of event carry instead of prose; the rubric
-that tells the phases how to detect and research them is a table of plain data
+that tells the steps how to detect and research them is a table of plain data
 in `events/event_classes.py`.
 """
 
@@ -54,7 +54,7 @@ class Annotation(BaseModel):
 
 
 # ============================================================================
-# EVENT CLASSIFICATION MODELS (Phase 2 - Optional)
+# EVENT CLASSIFICATION MODELS (research - optional)
 # ============================================================================
 
 
@@ -270,11 +270,11 @@ class LifeChapter(BaseModel):
     )
 
 
-# Phase 1 Models
+# Proposal models
 
 
 class ChapterPlan(BaseModel):
-    """Phase 1: a chapter as the plan names it.
+    """Proposal: a chapter as the plan names it.
 
     The plan says which events belong to a chapter by naming the chapter on
     each event skeleton, so the dates and ages of a chapter are not asked of
@@ -295,7 +295,7 @@ class ChapterPlan(BaseModel):
 
 
 class EventSkeleton(BaseModel):
-    """Phase 1: Minimal event structure for planning the narrative."""
+    """Proposal: minimal event structure for planning the narrative."""
 
     date: str = Field(description="ISO-8601 date string (YYYY-MM-DD, YYYY-MM, or YYYY)")
     date_precision: str = Field(
@@ -339,7 +339,7 @@ class EventSkeleton(BaseModel):
 
 
 class LifePlan(BaseModel):
-    """Phase 1 output: person metadata, chapters, event skeletons, conclusion."""
+    """Proposal output: person metadata, chapters, event skeletons, conclusion."""
 
     dataset: str = Field(description="Name of the dataset")
     created_on: str = Field(description="Creation date in ISO-8601 format")
@@ -355,7 +355,7 @@ class LifePlan(BaseModel):
     )
 
 
-# Phase 2 Models
+# Research models
 
 
 class LocationInfo(BaseModel):
@@ -377,7 +377,7 @@ class LocationInfo(BaseModel):
 
 
 class EventDetails(BaseModel):
-    """Phase 2: Research details for a specific event (NO images - handled in Phase 3)."""
+    """Research: the details of a specific event (no images; the image step adds them)."""
 
     description: Optional[str] = Field(
         None,

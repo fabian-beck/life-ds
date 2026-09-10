@@ -3,8 +3,8 @@
 The two boundary slides already show the fact itself, the parents on the birth
 card and the cause on the death card, so their prose is defined as the
 household the child enters and the road to the death. The definition lives once
-in the class table; these tests hold that every phase that writes or judges a
-description reads it from there, and that Phase 2 is allowed to widen a
+in the class table; these tests hold that every step that writes or judges a
+description reads it from there, and that the research is allowed to widen a
 skeleton that only restated the slide.
 """
 
@@ -23,7 +23,7 @@ from events.event_classes import (  # noqa: E402
     EVENT_CLASS_CONFIG,
     boundary_description_prompt,
 )
-from events.prompts.phase2 import build_phase2_prompt_classified  # noqa: E402
+from events.prompts.research import build_research_prompt_classified  # noqa: E402
 from events.schemas import (  # noqa: E402
     BirthClassification,
     DeathClassification,
@@ -64,26 +64,26 @@ class GuidanceTests(unittest.TestCase):
         self.assertEqual(defined, {"birth", "death"})
 
 
-class Phase1Tests(unittest.TestCase):
+class ProposalTests(unittest.TestCase):
     def test_detection_guidance_carries_the_definition(self) -> None:
         self.assertIn(
             BIRTH_DESCRIPTION_GUIDANCE.split("\n")[0],
-            EVENT_CLASS_CONFIG["birth"]["phase1_guidance"],
+            EVENT_CLASS_CONFIG["birth"]["proposal_guidance"],
         )
         self.assertIn(
             DEATH_DESCRIPTION_GUIDANCE.split("\n")[0],
-            EVENT_CLASS_CONFIG["death"]["phase1_guidance"],
+            EVENT_CLASS_CONFIG["death"]["proposal_guidance"],
         )
 
     def test_examples_are_nested_under_the_description_bullet(self) -> None:
-        guidance = EVENT_CLASS_CONFIG["birth"]["phase1_guidance"]
+        guidance = EVENT_CLASS_CONFIG["birth"]["proposal_guidance"]
         self.assertIn("\n  * DESCRIPTION:", guidance)
         self.assertIn("\n    * GOOD:", guidance)
 
 
-class Phase2Tests(unittest.TestCase):
+class ResearchTests(unittest.TestCase):
     def test_birth_prompt_replaces_the_skeleton(self) -> None:
-        prompt = build_phase2_prompt_classified(
+        prompt = build_research_prompt_classified(
             skeleton("Born in London", "1912-06-23", BirthClassification()),
             "Alan Turing",
             [],
@@ -95,7 +95,7 @@ class Phase2Tests(unittest.TestCase):
         )
 
     def test_death_prompt_carries_the_definition(self) -> None:
-        prompt = build_phase2_prompt_classified(
+        prompt = build_research_prompt_classified(
             skeleton("Dies in Wilmslow", "1954-06-07", DeathClassification()),
             "Alan Turing",
             [],
@@ -104,7 +104,7 @@ class Phase2Tests(unittest.TestCase):
         self.assertIn(BOUNDARY_REWRITE_NOTE, prompt)
 
     def test_other_classes_keep_their_own_guidance(self) -> None:
-        prompt = build_phase2_prompt_classified(
+        prompt = build_research_prompt_classified(
             skeleton(
                 "Marries Joan Clarke",
                 "1941-01-01",

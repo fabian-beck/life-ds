@@ -25,7 +25,7 @@ class EventReview(BaseModel):
     """Review assessment for a single event.
 
     The continuity fields hold the reviewer to reading the event where the
-    reader meets it, after the slides before it. Phase 2 refined each
+    reader meets it, after the slides before it. The research refined each
     description with only its own event in view, so this pass is the first
     that can see a slide lean on a term no earlier slide introduced, or tell
     a fact the slide before it already told.

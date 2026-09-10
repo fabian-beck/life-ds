@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Check that the Wikipedia links in the generated data point at real articles.
 
-Phase 2 of the person pipeline asks a model for the sources behind each event,
+The research step of the person pipeline asks a model for the sources behind each event,
 and the annotations it writes carry article links of their own. Both go straight
 into ``life_events.json`` and are rendered as links the reader can follow, and
 nothing has ever checked that they resolve. A model recalling an article title

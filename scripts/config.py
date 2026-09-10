@@ -75,8 +75,8 @@ def enable_utf8_console() -> None:
 
     On Windows the default encoding is cp1252 whenever output is redirected
     (a log file, a subprocess pipe), so a status line containing a check mark
-    raises UnicodeEncodeError. In a phase wrapped in a broad except that shows
-    up as the phase "failing" for a reason unrelated to its work — that is how
+    raises UnicodeEncodeError. In a step wrapped in a broad except that shows
+    up as the step "failing" for a reason unrelated to its work — that is how
     a meta story's translation step got skipped while the run still reported
     success.
 

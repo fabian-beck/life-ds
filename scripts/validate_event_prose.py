@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Check the event prose against the description contract.
 
-Every phase that writes a description reads the same definition of one
+Every step that writes a description reads the same definition of one
 (``scripts/utils/prose_style.py``): it narrates one moment, it
 asserts rather than weighs sources, and it stays at the slide's granularity.
 Nothing downstream read the output for that register — the validators checked
@@ -34,7 +34,7 @@ actually shipped:
     Engine, a stored-program electronic computer" on one slide and "The design
     sets out a stored-program electronic computer" on the next — where the
     reader has just read the earlier slide and the later one should carry what
-    changed. Phase 2 refined each description with only its own event in view,
+    changed. The research refined each description with only its own event in view,
     so this is the shape a per-event rewrite produces, and the review is the
     one pass that can see it. The event's own place and people are not counted
     as shared words, since the contract asks for them in every sentence

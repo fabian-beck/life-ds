@@ -1,6 +1,6 @@
-"""Chapters are a partition Phase 1 draws and the pipeline dates.
+"""Chapters are a partition the proposal draws and the pipeline dates.
 
-Phase 1 names a chapter on every event skeleton instead of dating the chapters,
+The proposal names a chapter on every event skeleton instead of dating the chapters,
 so the pipeline has two deterministic jobs the model used to be asked for:
 refuse a plan whose chapters are not contiguous runs of the timeline, and read
 each chapter's dates, ages, and people off its own events. The Planck case is
@@ -20,9 +20,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from events.pipeline import (  # noqa: E402
     MIN_CHAPTER_EVENTS,
-    PHASE1_ATTEMPTS,
+    PROPOSAL_ATTEMPTS,
     build_chapters,
-    call_openai_phase1,
+    propose_events,
     validate_chapter_partition,
 )
 from events.schemas import (  # noqa: E402
@@ -214,16 +214,19 @@ def life_plan(*chapter_of_event: str) -> LifePlan:
     )
 
 
-class Phase1RetryTests(unittest.TestCase):
+class ProposalRetryTests(unittest.TestCase):
     """A refused plan is asked for once more, with the reason; then it fails."""
 
     def test_a_refused_plan_is_asked_again_with_the_reason(self) -> None:
         thin = life_plan("a", "a", "b")
         sound = life_plan("a", "a", "b", "b")
-        with mock.patch(
-            "events.pipeline.parse_structured_or_raise", side_effect=[thin, sound]
-        ) as call, mock.patch("events.pipeline.get_client"):
-            result = call_openai_phase1("the article", "a-model")
+        with (
+            mock.patch(
+                "events.pipeline.parse_structured_or_raise", side_effect=[thin, sound]
+            ) as call,
+            mock.patch("events.pipeline.get_client"),
+        ):
+            result = propose_events("the article", "a-model")
         self.assertIs(result, sound)
         self.assertEqual(call.call_count, 2)
         first, second = (c.kwargs["input"] for c in call.call_args_list)
@@ -231,14 +234,17 @@ class Phase1RetryTests(unittest.TestCase):
         self.assertIn("fewer than 2 events: b (1)", second[-1]["content"])
 
     def test_a_plan_refused_twice_fails_the_run(self) -> None:
-        self.assertEqual(PHASE1_ATTEMPTS, 2)
-        with mock.patch(
-            "events.pipeline.parse_structured_or_raise",
-            side_effect=[life_plan("a", "b", "b"), life_plan("a", "b", "b")],
-        ) as call, mock.patch("events.pipeline.get_client"):
+        self.assertEqual(PROPOSAL_ATTEMPTS, 2)
+        with (
+            mock.patch(
+                "events.pipeline.parse_structured_or_raise",
+                side_effect=[life_plan("a", "b", "b"), life_plan("a", "b", "b")],
+            ) as call,
+            mock.patch("events.pipeline.get_client"),
+        ):
             with self.assertRaisesRegex(RuntimeError, "fewer than 2 events: a"):
-                call_openai_phase1("the article", "a-model")
-        self.assertEqual(call.call_count, PHASE1_ATTEMPTS)
+                propose_events("the article", "a-model")
+        self.assertEqual(call.call_count, PROPOSAL_ATTEMPTS)
 
 
 if __name__ == "__main__":

@@ -231,7 +231,7 @@ def _event_payload(event: Dict[str, Any]) -> Dict[str, Any]:
 
     The long-form ``background`` prose is left out here and extracted as its
     own unit: it is several times the length of everything else in the event,
-    it is written by a different phase, and keeping it apart lets a round say
+    it is written by a different step, and keeping it apart lets a round say
     how the depth layer compares with the slide it sits behind.
 
     Three fields are left out as provenance rather than assertion: the
