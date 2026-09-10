@@ -1001,8 +1001,17 @@ class MarkdownCompilerTests(unittest.TestCase):
             self.HEAD + "\n## S\n\nThere are {{ app.languages }}.\n", facts
         )
         self.assertIn("app.languages", document.citations)
-        self.assertIn(facts["app.languages"].display, document.html)
+        self.assertIn(report.cited_value(facts["app.languages"].display), document.html)
         self.assertIn(facts["app.languages"].source.split(" ")[0], document.html)
+
+    def test_a_cited_list_breaks_only_at_its_separators(self) -> None:
+        """A value never splits at a hyphen, and a separator never starts a line."""
+        self.assertEqual(
+            report.cited_value("gpt-5.6-luna, gpt-image-2"),
+            '<span class="glued">gpt-5.6-luna,</span> '
+            '<span class="glued">gpt-image-2</span>',
+        )
+        self.assertEqual(report.cited_value("de"), '<span class="glued">de</span>')
 
     def test_an_unknown_citation_fails_the_build(self) -> None:
         """A hole in a sentence is worse than a broken build."""
@@ -1098,7 +1107,10 @@ class MarkdownCompilerTests(unittest.TestCase):
             self.HEAD + "\n## S\n\nText.^[In `code`, and {{ app.languages }}.]\n", facts
         )
         self.assertIn("<code>code</code>", document.html)
-        self.assertIn(facts["app.languages"].display, document.notes[0].body_html)
+        self.assertIn(
+            report.cited_value(facts["app.languages"].display),
+            document.notes[0].body_html,
+        )
 
     def test_a_note_body_spanning_several_lines_becomes_one_line(self) -> None:
         document = _compile(

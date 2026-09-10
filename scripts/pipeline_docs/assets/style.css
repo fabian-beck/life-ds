@@ -569,12 +569,13 @@ a.author-name:focus-visible {
 }
 
 /* A cited measurement. Underdotted rather than colored: it is a normal part of
-   the sentence, and the dots only say that its provenance is on hover. */
+   the sentence, and the dots only say that its provenance is on hover. It wraps
+   like the sentence, too; `cited_value` in report.py keeps each value in one
+   piece, so a list breaks only at its separators. */
 .cite {
   border-bottom: 1px dotted var(--muted);
   cursor: help;
   font-variant-numeric: tabular-nums lining-nums;
-  white-space: nowrap;
 }
 
 /* ------------------------------------------------------------- contents */
@@ -1990,7 +1991,8 @@ figure.teaser > .cap {
 }
 
 /* The glyph ahead of a phrase and the marker after it stay on the line of the
-   word they belong to; `glued_phrase` in report.py wraps each pair. */
+   word they belong to, and a cited value stays in one piece; `glued_phrase`
+   and `cited_value` in report.py wrap each. */
 .glued {
   white-space: nowrap;
 }
