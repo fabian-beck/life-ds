@@ -211,6 +211,10 @@ def _check_groups() -> List[Problem]:
     return problems
 
 
+# The width of a node's fact line, in characters, at the size that prints it.
+BYLINE_MAX = 32
+
+
 def check(codebase: Codebase) -> List[Problem]:
     problems: List[Problem] = []
     known_scripts = set(codebase.scripts)
@@ -257,6 +261,21 @@ def check(codebase: Codebase) -> List[Problem]:
 
         if step.lane not in spec.LANES:
             problems.append(Problem("error", where, f"unknown lane '{step.lane}'"))
+
+        # A model step's node says which model it calls; a step without one
+        # would say only "Deterministic" or "External source", which names
+        # nothing. The byline says what it does instead.
+        if step.kind in (spec.CODE, spec.EXTERNAL) and not step.byline:
+            problems.append(Problem("error", where, "calls no model and has no byline"))
+        if step.byline and len(step.byline) > BYLINE_MAX:
+            problems.append(
+                Problem(
+                    "error",
+                    where,
+                    f"byline is longer than {BYLINE_MAX} characters and would "
+                    "be cut off in the figure",
+                )
+            )
 
     # Every model call in the repo should belong to a documented step.
     by_key: Dict[str, List[AiCall]] = {}

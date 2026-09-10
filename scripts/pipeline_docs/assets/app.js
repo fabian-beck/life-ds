@@ -1,6 +1,6 @@
 /* Technical report—computed content and interaction.
    The page is a pure function of window.PIPELINE, which the Python build emits.
-   Layout runs client-side so filters can re-flow the chart.
+   Layout runs client-side so the chart can be sized to its column.
 
    The document body is compiled from Markdown and arrives already written; this
    file only fills the holes left in it. Every `div.widget[data-component]` the
@@ -12,9 +12,9 @@
 
    Both pipelines are drawn, as two subsections rather than two tabs, so the
    report reads straight through and either chart can be cited from anywhere in
-   the prose. Each chart is an independent instance with its own filters, search
-   and selection; the step note is shared, and opening it from one chart clears
-   the other's selection. Color encodes the step kind and nothing else.
+   the prose. Each chart is an independent instance with its own selection;
+   the step note is shared, and opening it from one chart clears the other's
+   selection. Color encodes the step kind and nothing else.
 
    The chart is a layered DAG, not a sequence. A step's layer is the longest
    path of real data dependencies reaching it, so steps drawn side by side are
@@ -22,8 +22,8 @@
    story really do run without seeing each other. Only edges the spec declares
    directly are drawn—one a longer chain already implies is left out there, so
    the chart never carries a line beside a strand that says the same thing.
-   Files a step writes are drawn inside its node; files that arrive from the
-   other pipeline become source nodes, since nothing in this chart produces them.
+   The files a step reads and writes are not drawn: the step note and the
+   appendix list them, so the chart carries the steps, the flow, and the phases.
 
    The vertical axis is the dependency graph; the horizontal axis is free, and
    `spec.GROUPS` spends it on meaning: the phases. Steps of one concern—plan
@@ -40,63 +40,43 @@
   const DATA = window.PIPELINE;
   const SVG_NS = "http://www.w3.org/2000/svg";
 
-  /* Chart geometry, in SVG user units, at three levels of detail.
+  /* Chart geometry, in SVG user units, at two levels of detail.
 
      They are the same graph—same layers, same order, same bands—drawn with
      more or less written inside a node, and sized to match:
 
-       full     the step's name, the script it lives in, its kind, the model it
-                calls and what it writes. 990 units.
-       mid      the name, the kind and the model. No script, no writes. 660.
+       mid      the name, the kind and the model. 660 units.
        compact  the name. 398.
 
-     A reduced drawing is not the full one shrunk. Fitting a 990-unit figure
-     into a 350-unit column would put 13px type on screen at 4px, which is not
-     a reduced figure but an unreadable one. Each is a drawing with less in it,
-     laid out at its own size, so what survives stays legible; the full one is
-     always a press away in the modal.
+     Both scale to the column they are given, and the one whose names come out
+     largest is drawn. A reduced drawing is not a larger one shrunk: fitting
+     the mid drawing into a 350-unit column would put its 11px type on screen
+     at 6px, which is not a reduced figure but an unreadable one. Each is a
+     drawing with less in it, laid out at its own size, so what survives stays
+     legible; what either leaves out is one selection away, in the step note.
 
-     Three rather than two because the gap between them is where most windows
-     are. A 1010-unit column takes the full chart and a 350-unit one takes the
-     compact, but the 650-to-950 range in between—a tablet, a half-screen
-     window, a laptop beside the contents rail—had to take the compact drawing
-     and a great deal of white space around it. */
+     The chart once had a third, full-size level with the script, the model,
+     and the files written inside every node, opened over the whole viewport.
+     It was the drawing of an engineer's wall chart rather than a figure in a
+     report, and it went. */
   const METRICS = {
-    full: {
-      TITLE_PX: 13, // the step-name type; mirrors style.css
-      RAIL_W: 58,
-      RAIL_GAP: 20, // rule to node: where the layer number is written
-      RAIL_DX: 7,
-      RAIL_DY: 13,
-      NODE_W: 268,
-      NODE_H: 66,
-      FILE_H: 15,
-      ART_W: 214,
-      ART_H: 38,
-      COL_GAP: 26,
-      LAYER_GAP: 52,
-      MARGIN_CH: 26, // side channels for edges that skip a layer
-      PAD: 12,
-      BAND_PAD: 9,
-      BAND_HEAD: 20, // room for a group band's label above its first step
-    },
     mid: {
-      TITLE_PX: 11,
+      TITLE_PX: 11, // the step-name type; mirrors style.css
       RAIL_W: 40,
-      RAIL_GAP: 14,
+      RAIL_GAP: 14, // rule to node: where the layer number is written
       RAIL_DX: 6,
       RAIL_DY: 11,
       NODE_W: 176,
       NODE_H: 44,
-      FILE_H: 0, // files are not drawn at this size
-      ART_W: 140,
-      ART_H: 30,
       COL_GAP: 20,
       LAYER_GAP: 30,
-      MARGIN_CH: 18,
+      MARGIN_CH: 18, // side channels for edges that skip a layer
       PAD: 8,
       BAND_PAD: 7,
-      BAND_HEAD: 19, // the group label still fits above the first step here
+      BAND_HEAD: 19, // room for a phase band's label above its first step
+      BAND_LABEL_CH: 6, // width per character of the label's box
+      BAND_LABEL_H: 15,
+      BAND_LABEL_DY: 13, // the label's baseline, down from the band's top
       LABEL_PAD: 10,
       LABEL_LINES: 2,
       LINE_H: 13,
@@ -110,15 +90,15 @@
       RAIL_DY: 9,
       NODE_W: 104,
       NODE_H: 34,
-      FILE_H: 0,
-      ART_W: 92,
-      ART_H: 24,
       COL_GAP: 12,
       LAYER_GAP: 26,
       MARGIN_CH: 12,
       PAD: 6,
       BAND_PAD: 5,
-      BAND_HEAD: 8, // no band label to leave room for, only the band's corner
+      BAND_HEAD: 14, // the phase label, set smaller, still names the band
+      BAND_LABEL_CH: 4.6,
+      BAND_LABEL_H: 11,
+      BAND_LABEL_DY: 9.5,
       LABEL_PAD: 9,
       LABEL_LINES: 2,
       LINE_H: 11,
@@ -130,8 +110,8 @@
     METRICS[size].HEAD_H = METRICS[size].BAND_HEAD + 4;
   });
 
-  // Largest first: the reduced sizes, in the order they are offered a column.
-  const SIZES = ["full", "mid", "compact"];
+  // Largest first: the sizes, in the order they are offered a column.
+  const SIZES = ["mid", "compact"];
 
   // A reduced node wraps the step's name to `LABEL_LINES`; `fitLines` measures
   // the rest. The character count is only the fallback for a chart drawn where
@@ -305,18 +285,6 @@
   const stepById = {};
   DATA.steps.forEach((step, index) => {
     step._order = index;
-    step._search = [
-      step.label,
-      step.script,
-      step.function,
-      step.spec_summary || "",
-      (step.summary && step.summary.description) || "",
-      (step.summary && step.summary.input) || "",
-      (step.summary && step.summary.output) || "",
-      (step.schemas || []).join(" "),
-    ]
-      .join(" ")
-      .toLowerCase();
     stepById[step.id] = step;
   });
 
@@ -434,74 +402,48 @@
       });
   }
 
-  // What an artifact is called where it is drawn. The concept is the wider
-  // family it belongs to and is printed under the name only where the two
-  // differ—"Ego network", of the social network; "Portrait", of the imagery.
-  function artifactConceptLine(artifact) {
-    const concept = conceptOf(artifact);
-    if (!concept || concept.label === artifact.label) return "";
-    return concept.label;
-  }
-
   /* -------------------------------------------------- pipeline chart */
 
-  /* One interactive chart, mounted into `host` and owning its own filter state.
+  /* One interactive chart, mounted into `host` and owning its own selection.
 
      Everything from here to the end of `createChart` is per-instance: the two
-     pipelines are drawn side by side in the document, and a filter applied to
-     one must not re-flow the other. The layout itself is unchanged—the layer
-     rule, the group blocks and the edge routing are the same code that drew the
+     pipelines are drawn side by side in the document, and a selection in one
+     must not redraw the other. The layout itself is unchanged—the layer rule,
+     the group blocks and the edge routing are the same code that drew the
      single tabbed chart—it simply closes over an instance `state` and instance
      DOM nodes instead of the page's.
 
-     `options.size` picks the level of detail—"full", "mid" or "compact". The
-     two reduced sizes drop the toolbar, the artifact lines and, at compact, the
-     group labels and everything written inside a node but its name; they are
-     scaled to the column rather than scrolled sideways. What they drop is
-     detail, never structure—the reader still sees every step, every dependency
-     and every band, and `options.expandable` puts the full version one press
-     away in the modal. */
+     `options.size` picks the level of detail—"mid" or "compact". Compact drops
+     everything written inside a node but its name; both are scaled to the
+     column rather than scrolled sideways. What they drop is detail, never
+     structure—the reader still sees every step, every dependency and every
+     band with its label. */
   function createChart(host, laneId, figureNumber, options) {
     const settings = options || {};
-    const size = settings.size || "full";
+    const size = settings.size || "mid";
     const M = METRICS[size];
-    // Two questions get asked of the size often enough to name: whether this is
-    // a drawing that scales to its column, and whether it carries only the name.
-    const reduced = size !== "full";
+    // Asked of the size often enough to name: whether the node carries only
+    // the step's name.
     const compact = size === "compact";
     // Declared up front so `select` can name the instance the step note belongs to
     // before the instance is finished being built.
     const instance = { lane: laneId, size: size, host: host };
     const state = {
       tab: laneId,
-      kinds: new Set(Object.keys(DATA.kinds)),
-      showShared: true,
-      // The files are the first thing to go: they are the widest text in a node
-      // and a whole extra column of source boxes beside it.
-      showArtifacts: !reduced,
-      query: "",
       selected: null,
     };
 
     const lane = DATA.lanes[laneId];
-    const wrapCache = {}; // step id → the lines a reduced node prints
+    const wrapCache = {}; // step id → the lines a node prints
     let naturalSize = null; // the drawing's own size, in SVG user units
     const flow = svg("svg", {
-      class: "flow" + (reduced ? " flow-reduced flow-" + size : ""),
+      class: "flow flow-reduced flow-" + size,
       role: "img",
       "aria-label": "Flow chart of the " + lane.label + " pipeline",
     });
-    const hint = el("p", { class: "hint" });
     // Named for the element rather than for the helper, which the drawing
     // routine below calls to refill it.
     const captionNode = el("figcaption", { class: "cap cap-figure" });
-    const search = el("input", {
-      class: "search",
-      type: "search",
-      placeholder: "Search steps, schemas…",
-      "aria-label": "Search the " + lane.label + " pipeline",
-    });
-    const filters = el("div", { class: "filters" });
 
     function stepsInTab() {
       return DATA.steps.filter((step) => {
@@ -509,131 +451,26 @@
       });
     }
 
-    function matchesFilters(step) {
-      if (!state.kinds.has(step.kind)) return false;
-      if (!state.showShared && step.lane === "shared") return false;
-      return true;
-    }
-
-    function matchesQuery(step) {
-      if (!state.query) return true;
-      return step._search.indexOf(state.query) !== -1;
-    }
-
-    /* ---------------------------------------------------------- toolbar */
-
-    function renderToolbar() {
-      clear(filters);
-
-      kindEntries().forEach((entry) => {
-        const kind = entry[0];
-        const info = entry[1];
-        const button = el("button", {
-          class: "toggle",
-          type: "button",
-          "aria-pressed": state.kinds.has(kind) ? "true" : "false",
-          title: info.description,
-          onclick: function () {
-            if (state.kinds.has(kind)) state.kinds.delete(kind);
-            else state.kinds.add(kind);
-            button.setAttribute(
-              "aria-pressed",
-              state.kinds.has(kind) ? "true" : "false"
-            );
-            draw();
-          },
-        });
-        button.appendChild(
-          el("span", {
-            class: "swatch",
-            style: "background:" + kindColor(kind),
-          })
-        );
-        button.appendChild(el("span", { text: info.label }));
-        filters.appendChild(button);
-      });
-
-      const shared = el("button", {
-        class: "toggle",
-        type: "button",
-        "aria-pressed": state.showShared ? "true" : "false",
-        title:
-          "Steps that belong to shared subsystems rather than one pipeline.",
-        text: "Shared subsystems",
-        onclick: function () {
-          state.showShared = !state.showShared;
-          shared.setAttribute(
-            "aria-pressed",
-            state.showShared ? "true" : "false"
-          );
-          draw();
-        },
-      });
-      filters.appendChild(shared);
-
-      const artifacts = el("button", {
-        class: "toggle",
-        type: "button",
-        "aria-pressed": state.showArtifacts ? "true" : "false",
-        title:
-          "Show what each step writes, and what this pipeline reads from the " +
-          "other one.",
-        text: "Data",
-        onclick: function () {
-          state.showArtifacts = !state.showArtifacts;
-          artifacts.setAttribute(
-            "aria-pressed",
-            state.showArtifacts ? "true" : "false"
-          );
-          draw();
-        },
-      });
-      filters.appendChild(artifacts);
-    }
-
     /* ------------------------------------------------------------ chart */
 
-    /* Resolve a step's dependencies against the *visible* set. A filtered-out
-       step must not break the chain, so its own dependencies are inherited and
-       the resulting edge is marked indirect and drawn dashed. */
-    function resolveDeps(step, visibleIds, seen) {
+    /* A step's dependencies as the spec declares them, one edge per parent. */
+    function directDeps(step) {
       const out = [];
-      (step.depends_on || []).forEach((dep) => {
-        const parent = stepById[dep.on];
-        if (!parent) return;
-        if (visibleIds.has(dep.on)) {
-          out.push({ from: dep.on, data: dep.data, indirect: false });
-          return;
-        }
-        if (seen.indexOf(dep.on) !== -1) return;
-        resolveDeps(parent, visibleIds, seen.concat([dep.on])).forEach(
-          (edge) => {
-            out.push({ from: edge.from, data: edge.data, indirect: true });
-          }
-        );
-      });
-      // One edge per source; keep the first (most direct) label.
-      const unique = [];
       const taken = new Set();
-      out.forEach((edge) => {
-        if (taken.has(edge.from)) return;
-        taken.add(edge.from);
-        unique.push(edge);
+      (step.depends_on || []).forEach((dep) => {
+        if (!stepById[dep.on] || taken.has(dep.on)) return;
+        taken.add(dep.on);
+        out.push({ from: dep.on, data: dep.data });
       });
-      return unique;
+      return out;
     }
 
     function buildGraph() {
-      const steps = stepsInTab().filter(matchesFilters);
-      const visibleIds = new Set(
-        steps.map((step) => {
-          return step.id;
-        })
-      );
+      const steps = stepsInTab();
 
       const parents = {};
       steps.forEach((step) => {
-        parents[step.id] = resolveDeps(step, visibleIds, [step.id]);
+        parents[step.id] = directDeps(step);
       });
 
       // Layer = longest dependency path, so nothing is ever drawn above
@@ -653,60 +490,11 @@
         layer(step.id);
       });
 
-      // A file read but never written in this pipeline comes from the other one;
-      // it becomes a source node so the hand-off is visible rather than implied.
-      const sources = {};
-      if (state.showArtifacts) {
-        const produced = new Set();
-        steps.forEach((step) => {
-          (step.outputs || []).forEach((id) => {
-            produced.add(id);
-          });
-        });
-        steps.forEach((step) => {
-          (step.inputs || []).forEach((id) => {
-            if (produced.has(id) || !artifactById[id]) return;
-            if (!sources[id])
-              sources[id] = { artifact: artifactById[id], to: [] };
-            sources[id].to.push(step.id);
-          });
-        });
-      }
-
-      // Source files sit one layer above their earliest reader rather than all at
-      // the top: a file only needed by the last step should be read as arriving
-      // late, not as an input to the whole pipeline.
-      let shift = 0;
-      Object.values(sources).forEach((source) => {
-        const earliest = Math.min.apply(
-          null,
-          source.to.map((id) => {
-            return layerOf[id];
-          })
-        );
-        source.layer = earliest - 1;
-        if (source.layer < 0) shift = 1;
-      });
-      if (shift) {
-        steps.forEach((step) => {
-          layerOf[step.id] += 1;
-        });
-        Object.values(sources).forEach((source) => {
-          source.layer += 1;
-        });
-      }
-
       return {
         steps: steps,
         parents: parents,
         layerOf: layerOf,
-        sources: sources,
       };
-    }
-
-    function nodeHeight(step) {
-      const files = state.showArtifacts ? (step.outputs || []).length : 0;
-      return M.NODE_H + (files ? 6 + files * M.FILE_H : 0);
     }
 
     /* A group is only aligned where it is actually continuous. The layers a group
@@ -856,14 +644,6 @@
           if (from && to) connect(from.block, to.block);
         });
       });
-      Object.values(graph.sources).forEach((source) => {
-        const from = nodeById["file:" + source.artifact.id];
-        source.to.forEach((stepId) => {
-          const to = nodeById[stepId];
-          if (from && to) connect(from.block, to.block);
-        });
-      });
-
       function gap(left, right) {
         return (left.width + right.width) / 2 + M.COL_GAP;
       }
@@ -982,22 +762,10 @@
           id: step.id,
           step: step,
           w: M.NODE_W,
-          h: nodeHeight(step),
+          h: M.NODE_H,
           order: step._order,
         });
       });
-      Object.entries(graph.sources).forEach((entry) => {
-        rowFor(entry[1].layer).push({
-          type: "artifact",
-          id: "file:" + entry[0],
-          artifact: entry[1].artifact,
-          to: entry[1].to,
-          w: M.ART_W,
-          h: M.ART_H,
-          order: -1,
-        });
-      });
-
       // Two barycenter passes: order each row by the average position of its
       // parents, which is enough to untangle graphs this small.
       const indexOf = {};
@@ -1017,14 +785,9 @@
       for (let pass = 0; pass < 2; pass += 1) {
         rows.forEach((row) => {
           row.forEach((node) => {
-            const upstream =
-              node.type === "artifact"
-                ? node.to.map((id) => {
-                    return indexOf[id];
-                  })
-                : (graph.parents[node.id] || []).map((edge) => {
-                    return indexOf[edge.from];
-                  });
+            const upstream = (graph.parents[node.id] || []).map((edge) => {
+              return indexOf[edge.from];
+            });
             const known = upstream.filter((value) => {
               return value !== undefined;
             });
@@ -1081,21 +844,6 @@
             from: byId[edge.from],
             to: byId[step.id],
             data: edge.data,
-            indirect: edge.indirect,
-            file: false,
-          });
-        });
-      });
-      Object.values(graph.sources).forEach((source) => {
-        source.to.forEach((stepId) => {
-          const from = byId["file:" + source.artifact.id];
-          if (!from || !byId[stepId]) return;
-          edges.push({
-            from: from,
-            to: byId[stepId],
-            data: source.artifact.label,
-            indirect: false,
-            file: true,
           });
         });
       });
@@ -1253,12 +1001,11 @@
       });
     }
 
-    /* Compact drops the label, not the band. A group's name needs more width
-       than a compact node has, and set small enough to fit it would be a smear
-       across the top of the band; the band itself still shows that those steps
-       are one concern, and its tooltip still names it. */
+    /* The phase's name, in the band's head, at both sizes: a compact figure
+       that showed the bands without naming them left the reader to guess what
+       the prose's phases were. Its box is sized from the character count, in
+       the size's own units, so the label never runs past the band. */
     function drawBandLabels(root, bands) {
-      if (compact) return;
       bands.forEach((band) => {
         const text = truncateLabel(band.group.label, 30);
         root.appendChild(
@@ -1266,15 +1013,15 @@
             class: "band-label-bg",
             x: band.x0 + 7,
             y: band.y0 + 2,
-            width: text.length * 6 + 12,
-            height: 15,
+            width: text.length * M.BAND_LABEL_CH + 12,
+            height: M.BAND_LABEL_H,
             rx: 3,
           })
         );
         const label = svg("text", {
           class: "band-label",
           x: band.x0 + 13,
-          y: band.y0 + 13,
+          y: band.y0 + M.BAND_LABEL_DY,
         });
         label.textContent = text;
         root.appendChild(label);
@@ -1371,15 +1118,8 @@
     function drawEdges(root, edges) {
       edges.forEach((edge) => {
         const active = edgeActive(edge);
-        const ends = [edge.from.step, edge.to.step].filter(Boolean);
-        const dim = !ends.some(matchesQuery);
         const path = svg("path", {
-          class:
-            "edge" +
-            (edge.file ? " edge-file" : "") +
-            (edge.indirect ? " edge-indirect" : "") +
-            (active ? " active" : "") +
-            (dim && !active ? " dim" : ""),
+          class: "edge" + (active ? " active" : ""),
           d: edgePath(edge),
         });
         const tip = svg("title");
@@ -1390,10 +1130,7 @@
         root.appendChild(path);
         root.appendChild(
           svg("path", {
-            class:
-              "edge-arrow" +
-              (active ? " active" : "") +
-              (dim && !active ? " dim" : ""),
+            class: "edge-arrow" + (active ? " active" : ""),
             d:
               "M" +
               (edge.x2 - 4) +
@@ -1440,48 +1177,10 @@
       });
     }
 
-    function drawArtifactNode(root, node) {
-      const group = svg("g", {
-        class: "artifact source",
-        transform: "translate(" + node.x + "," + node.y + ")",
-      });
-      group.appendChild(svg("rect", { width: node.w, height: node.h }));
-      const concept = conceptOf(node.artifact);
-      const family = artifactConceptLine(node.artifact);
-      const mark = concept
-        ? sceneGlyph(concept.path, 9, family ? 6 : 13, 14)
-        : null;
-      if (mark) group.appendChild(mark);
-      const indent = mark ? 29 : 10;
-      const label = svg("text", { x: indent, y: family ? 16 : 23 });
-      label.textContent = truncateLabel(node.artifact.label, 28);
-      group.appendChild(label);
-      if (family) {
-        const line = svg("text", { x: indent, y: 29, class: "sub" });
-        line.setAttribute("font-size", "9.5");
-        line.setAttribute("fill", "var(--muted)");
-        line.textContent = truncateLabel(family, 30);
-        group.appendChild(line);
-      }
-      const tip = svg("title");
-      tip.textContent =
-        node.artifact.label +
-        (concept ? " — " + concept.label : "") +
-        "\n" +
-        node.artifact.note +
-        "\nProduced by the other pipeline; read here.";
-      group.appendChild(tip);
-      root.appendChild(group);
-    }
-
     function drawNode(root, node) {
       const step = node.step;
-      const dim = !matchesQuery(step);
       const group = svg("g", {
-        class:
-          "node" +
-          (dim ? " dim" : "") +
-          (state.selected === step.id ? " selected" : ""),
+        class: "node" + (state.selected === step.id ? " selected" : ""),
         transform: "translate(" + node.x + "," + node.y + ")",
         tabindex: "0",
         role: "button",
@@ -1503,15 +1202,15 @@
         })
       );
 
-      /* A reduced node carries the step's name, wrapped, and at mid the one
-         line that says what kind of step it is and which model it calls.
+      /* A node carries the step's name, wrapped, and at mid the one line that
+         says what kind of step it is and which model it calls.
 
          Compact stops at the name deliberately. The script, the kind and the
          model are one line of small type each, and three of those in a
-         104-unit box is a grey block rather than a label. What is
-         left out of either is still on the node—in its tooltip and its
-         accessible name—and set out in full in the step note and the modal. */
-      if (reduced) {
+         104-unit box is a grey block rather than a label. What is left out of
+         either is still on the node—in its tooltip and its accessible name—and
+         set out in full in the step note. */
+      {
         // Measured once per step: the node's width never changes within an
         // instance, and `draw` runs again on every selection.
         if (!wrapCache[step.id]) {
@@ -1538,10 +1237,15 @@
         });
 
         if (M.FACT_UP) {
-          const facts = [DATA.kinds[step.kind].label];
+          // The kind alone names nothing for a step that calls no model, so
+          // such a step prints its byline instead: the service it asks, the
+          // rule it applies. The color bar still carries the kind.
+          const facts = [step.byline || DATA.kinds[step.kind].label];
+          // The model before the per-run marker, so that a line the node has
+          // to cut loses the marker rather than the model.
+          if (step.model) facts.push(step.model.split(" (")[0]);
           if (step.calls_per_run && step.calls_per_run !== "1")
             facts.push("×N");
-          if (step.model) facts.push(step.model.split(" (")[0]);
           const factLine = svg("text", {
             class: "metric",
             x: M.LABEL_PAD,
@@ -1568,62 +1272,7 @@
         group.appendChild(tip);
         bindNode(group, step);
         root.appendChild(group);
-        return;
       }
-
-      const title = svg("text", { class: "title", x: 16, y: 22 });
-      title.textContent = truncateLabel(step.label, 33);
-      group.appendChild(title);
-
-      const sub = svg("text", { class: "sub", x: 16, y: 38 });
-      sub.textContent = truncateLabel(step.script.replace(".py", ""), 32);
-      group.appendChild(sub);
-
-      const facts = [];
-      facts.push(DATA.kinds[step.kind].label);
-      if (step.lane === "shared") facts.push("shared");
-      if (step.calls_per_run && step.calls_per_run !== "1") facts.push("×N");
-      // Bare model id only—where it was resolved from belongs in the step note.
-      if (step.model) facts.push(truncateLabel(step.model.split(" (")[0], 18));
-      const factLine = svg("text", { class: "metric", x: 16, y: 55 });
-      factLine.textContent = truncateLabel(facts.join(" · "), 40);
-      group.appendChild(factLine);
-
-      // What the step writes belongs to the step, not beside it: this is where
-      // the pipeline's state actually changes. Each line carries the glyph of
-      // the concept it advances, so a branch can be followed by its mark alone.
-      const written = state.showArtifacts ? step.outputs || [] : [];
-      written.forEach((artifactId, index) => {
-        const artifact = artifactById[artifactId];
-        if (!artifact) return;
-        const concept = conceptOf(artifact);
-        const rowY = M.NODE_H + index * M.FILE_H;
-        const row = svg("g", { class: "writes" });
-        row.appendChild(
-          svg("path", {
-            class: "writes-rule",
-            d: "M12 " + (rowY - 6) + " L" + (node.w - 12) + " " + (rowY - 6),
-          })
-        );
-        const mark = concept
-          ? sceneGlyph(concept.path, 16, rowY - 5, 12)
-          : null;
-        if (mark) row.appendChild(mark);
-        const text = svg("text", { x: mark ? 33 : 16, y: rowY + 5 });
-        text.textContent = "writes  " + truncateLabel(artifact.label, 30);
-        row.appendChild(text);
-        const tip = svg("title");
-        tip.textContent =
-          artifact.label +
-          (concept ? " — " + concept.label : "") +
-          "\n" +
-          artifact.note;
-        row.appendChild(tip);
-        group.appendChild(row);
-      });
-
-      bindNode(group, step);
-      root.appendChild(group);
     }
 
     function bindNode(group, step) {
@@ -1643,10 +1292,9 @@
        The width it is given is a hard limit—a reduced chart that scrolls
        sideways has failed at its one job—while the viewport's height and the
        ceiling only hold it back, and the floor stops a short window shrinking
-       it away. The full chart is not sized here: it is drawn at its natural
-       size and scrolled, which is why it is the one that stops fitting. */
+       it away. */
     function refit() {
-      if (!reduced || !naturalSize) return;
+      if (!naturalSize) return;
       const available = (host && host.clientWidth) || naturalSize.width;
       // `fitScale` reads the largest pipeline, so the meta graph comes out
       // smaller than the personal one because it is smaller—not because it was
@@ -1668,11 +1316,8 @@
       );
       host.setAttribute("width", geometry.width);
       host.setAttribute("height", geometry.height);
-      // The full chart is drawn at its natural size and scrolled sideways when
-      // the column is too narrow for it. The compact one must never scroll—that
-      // is the whole point of it—so it is given no minimum and the stylesheet
-      // fits it to the column.
-      host.style.minWidth = reduced ? "" : geometry.width + "px";
+      // The drawing must never scroll sideways—that is the whole point of it—so
+      // it is given no minimum and the stylesheet fits it to the column.
       naturalSize = { width: geometry.width, height: geometry.height };
       refit();
       host.setAttribute(
@@ -1684,54 +1329,21 @@
       drawRails(host, geometry.rails);
       drawEdges(host, geometry.edges);
       geometry.nodes.forEach((node) => {
-        if (node.type === "artifact") drawArtifactNode(host, node);
-      });
-      geometry.nodes.forEach((node) => {
-        if (node.type === "step") drawNode(host, node);
+        drawNode(host, node);
       });
       drawBandLabels(host, geometry.bands);
-
-      const stepNodes = geometry.nodes.filter((node) => {
-        return node.type === "step";
-      });
-      const visible = stepNodes.filter((node) => {
-        return matchesQuery(node.step);
-      }).length;
-      hint.textContent = state.query
-        ? visible +
-          " of " +
-          stepNodes.length +
-          " visible steps match “" +
-          state.query +
-          "”"
-        : "Click any step for what it does and the record read out of its " +
-          "source. Hovering a shaded band names its phase; selecting a " +
-          "step labels its arrows with the data that travels along them.";
 
       /* What the figure is, and then the marks that carry no label of their
          own. The layer semantics, the branch structure and what a step node
          prints belong to the prose and to the drawing itself, and a caption
          that repeated them argued with both. A mark is named only when it is
-         actually drawn.
-
-         Each caption describes the drawing it is under. Naming the artifact
-         lines and the script under a figure that has neither would be
-         describing another version of itself, so a reduced caption says
-         instead that it is reduced and where the rest is. */
-      const sourceCount = geometry.nodes.length - stepNodes.length;
-      const bands = geometry.bands.length;
-      const marks = reduced
-        ? [
-            compact ? "The color bar gives the step kind." : "",
-            "The drawing is reduced to fit the column; the full chart adds " +
-              "the detail it leaves out.",
-          ]
-        : [
-            sourceCount
-              ? "Gray boxes are data the other pipeline produces."
-              : "",
-            bands ? "A shaded band gathers the steps of one phase." : "",
-          ];
+         actually drawn. */
+      const marks = [
+        compact ? "The color bar gives the step kind." : "",
+        geometry.bands.length
+          ? "A shaded band gathers the steps of one phase."
+          : "",
+      ];
 
       fillCaption(
         captionNode,
@@ -1741,13 +1353,8 @@
           .concat(marks.filter(Boolean))
           .join(" ")
       );
-      // The caption is rewritten from scratch on every draw, so the way to the
-      // full chart is put back at the end of it. Appended rather than rebuilt,
-      // so a reader who has tabbed to the button still has it under the cursor
-      // after a filter redraws the figure.
-      if (expand) captionNode.appendChild(expand);
-      // A redraw replaces the node the note is anchored to, or filters it
-      // away; either way the note is placed again against what is drawn now.
+      // A redraw replaces the node the note is anchored to, so the note is
+      // placed again against what is drawn now.
       placeStepTip();
     }
 
@@ -1763,54 +1370,15 @@
       openStepTip(stepById[stepId], instance);
     }
 
-    search.addEventListener("input", () => {
-      state.query = search.value.trim().toLowerCase();
-      draw();
-    });
-
     /* Measuring only: the caller wants to know how much room this pipeline's
-       full drawing needs, and no chart is mounted. The layout is arithmetic over
-       the spec—no text is measured, nothing is appended—so asking is cheap, and
-       it is the only honest way to decide whether the full chart fits. */
+       drawing needs at this size, and no chart is mounted. The layout is
+       arithmetic over the spec—no text is measured, nothing is appended—so
+       asking is cheap, and it is the only honest way to size the figure. */
     if (settings.measure) {
       const geometry = layout();
       return { width: geometry.width, height: geometry.height };
     }
 
-    /* The way to the full-screen chart. It is offered in both versions, for the
-       same reason in each: the graph is wider than what it is drawn into. On a
-       phone that is the compact figure's missing detail; in the report's text
-       column it is the right-hand third of a chart that has to be scrolled to
-       be seen at all.
-
-       It reads as the last clause of the caption rather than as a control of
-       its own. A caption already says what the figure is and what its marks
-       mean, and where the drawing is reduced it says so and points at the full
-       one—the button is that sentence made pressable, and it belongs where the
-       sentence is. `draw()` puts it back after each rewrite. */
-    const expand = settings.expandable
-      ? el("button", {
-          class: "expand",
-          type: "button",
-          text: reduced ? "Open the full chart" : "Full screen",
-          title:
-            "Open " +
-            lane.label +
-            " pipeline as a full-screen chart, with the toolbar and every detail.",
-          onclick: function () {
-            openChartModal(laneId, figureNumber);
-          },
-        })
-      : null;
-
-    // A reduced figure gets no toolbar: a search field and six filter toggles
-    // cost more height than the figure they filter, and filtering a chart this
-    // reduced answers nothing that opening the full one does not answer better.
-    if (!reduced) {
-      host.appendChild(el("div", { class: "toolbar" }, [search, filters]));
-      host.appendChild(hint);
-      renderToolbar();
-    }
     host.appendChild(
       el("figure", { class: "figure" }, [
         captionNode,
@@ -1835,9 +1403,9 @@
     // Re-fitting is not re-drawing: the layout is unchanged, only the size the
     // finished drawing is rendered at, so a resize costs one style write.
     instance.refit = refit;
-    // A chart can be replaced—the page crossing into the compact size, or the
-    // modal closing—and a dead instance left in `charts` would go on drawing
-    // into a detached node every time the step note cleared the other selection.
+    // A chart can be replaced—the page crossing into the compact size—and a
+    // dead instance left in `charts` would go on drawing into a detached node
+    // every time the step note cleared the other selection.
     instance.destroy = function () {
       const index = charts.indexOf(instance);
       if (index !== -1) charts.splice(index, 1);
@@ -1874,22 +1442,16 @@
      the note keep what it is, which model it calls and what it reads. */
 
   function chartForLane(laneId) {
-    let inline = null;
-    let inModal = null;
-    const modal = document.getElementById("chart-modal");
-    charts.forEach((chart) => {
-      if (chart.lane !== laneId || !chart.host) return;
-      if (modal && modal.contains(chart.host)) inModal = chart;
-      else if (!inline) inline = chart;
-    });
-    // The full-screen chart covers the page while it is open, so a reference
-    // pressed there has to point into the drawing the reader is looking at.
-    return chartModalIsOpen() && inModal ? inModal : inline;
+    return (
+      charts.find((chart) => {
+        return chart.lane === laneId && chart.host;
+      }) || null
+    );
   }
 
   /* Bring the selected node into view. Two scrolls, because a chart sits in two
      of them: the page, which the figure may be off, and the figure's own
-     horizontal scroller, which the full chart is wider than. */
+     scroller, kept in case a drawing ever outgrows its box. */
   function revealStep(chart) {
     const node = chart.host && chart.host.querySelector(".node.selected");
     if (!node) return;
@@ -2059,16 +1621,16 @@
   /* ----------------------------------------------------------- step note */
 
   /* The entry of the selected step, as a note anchored to its node. One note
-     serves both charts and the full chart in the modal, because two open at
-     once would ask the reader which figure they are looking at; `owner` is the
+     serves both charts, because two open at once would ask the reader which
+     figure they are looking at; `owner` is the
      chart that raised it, and every other chart drops its selection so only
      one node on the page is ever highlighted.
 
      The note is placed above the node where there is room and below it
      otherwise, kept inside the viewport, and placed again on every scroll and
      resize while it is open, so it follows the node through the figure's own
-     scroller and the page's. It is fixed to the viewport rather than absolute
-     in the page because the full chart is a fixed layer of its own. */
+     scroller and the page's. It is fixed to the viewport, so that it can be
+     placed against the node wherever the page has scrolled to. */
   const tipState = { owner: null };
 
   function stepTip() {
@@ -2105,8 +1667,7 @@
   }
 
   /* The node the note belongs to, or null once the figure no longer draws it:
-     a filter can hide the selected step, and closing the full chart destroys
-     the drawing it was pressed in. */
+     a resize can replace the drawing it was pressed in. */
   function stepTipAnchor() {
     const host = tipState.owner && tipState.owner.host;
     if (!host || !host.isConnected) return null;
@@ -2177,70 +1738,6 @@
     });
   }
 
-  /* ---------------------------------------------------------- chart modal */
-
-  /* The full chart, over the whole viewport, on demand.
-
-     A column too narrow for the full chart gets a reduced figure inline, and
-     this is where the detail it gave up is kept: the chart at full size, with
-     its toolbar,
-     its search and its artifact lines, scrollable in both directions because a
-     dependency graph is simply wider than a phone. It is built when it is
-     opened and torn down when it is closed—the report already draws two charts
-     on load, and a third held in reserve behind every figure would be paid for
-     by every reader whether or not they ever pressed the button. */
-  const modalState = { chart: null, opener: null };
-
-  function chartModal() {
-    return document.getElementById("chart-modal");
-  }
-
-  function openChartModal(laneId, figureNumber) {
-    const modal = chartModal();
-    const mount = document.getElementById("chart-modal-body");
-    closeChartModal(); // never two charts of the same lane at once
-    modalState.opener = document.activeElement;
-    document.getElementById("chart-modal-title").textContent =
-      "Figure " + figureNumber + "—" + laneLabel(laneId) + " pipeline";
-    // Shown before it is filled: a chart built inside a `display:none` panel
-    // measures every string and every scroll extent as zero.
-    modal.classList.add("open");
-    modal.removeAttribute("aria-hidden");
-    modalState.chart = createChart(mount, laneId, figureNumber, {
-      size: "full",
-    });
-    // Opened at the left edge, a chart wider than the panel shows its empty
-    // margin channel and nothing else. Start in the middle, where the graph is.
-    const scroller = mount.querySelector(".chart-scroll");
-    if (scroller) {
-      scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
-    }
-    // The page behind must not scroll under the overlay; on a phone it is the
-    // difference between closing the modal and losing your place in the report.
-    document.body.classList.add("modal-open");
-    document.getElementById("chart-modal-close").focus();
-  }
-
-  function closeChartModal() {
-    const modal = chartModal();
-    // The note is anchored in the drawing about to be destroyed.
-    if (tipState.owner && tipState.owner === modalState.chart) closeStepTip();
-    if (modalState.chart) {
-      modalState.chart.destroy();
-      modalState.chart = null;
-    }
-    if (!modal.classList.contains("open")) return;
-    modal.classList.remove("open");
-    modal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
-    if (modalState.opener && modalState.opener.focus) modalState.opener.focus();
-    modalState.opener = null;
-  }
-
-  function chartModalIsOpen() {
-    return chartModal().classList.contains("open");
-  }
-
   /* ------------------------------------------------- shared computed parts */
 
   function stepsOf(laneId) {
@@ -2249,15 +1746,7 @@
     });
   }
 
-  /* The room the widest pipeline's full drawing needs, in CSS pixels—the full
-     chart is drawn one user unit to the pixel, so its layout size is the space
-     it asks the page for.
-
-     Measured from the spec rather than written down, so adding a step that
-     widens a layer moves the point at which the figures go compact, with
-     nothing to remember to update. Measured once: it depends on the data, not
-     on the window, so a resize never recomputes it. */
-  /* The factor a reduced drawing is rendered at, in a column this wide.
+  /* The factor a drawing is rendered at, in a column this wide.
 
      One function, so the size that gets chosen and the size that gets drawn can
      never be worked out differently: `sizeFor` asks it what each size would
@@ -2273,6 +1762,12 @@
     );
   }
 
+  /* The room the widest pipeline's drawing needs at a size, in user units.
+
+     Measured from the spec rather than written down, so adding a step that
+     widens a layer moves the point at which the figures go compact, with
+     nothing to remember to update. Measured once: it depends on the data, not
+     on the window, so a resize never recomputes it. */
   const widestCache = {};
   function widestPipeline(size) {
     if (widestCache[size]) return widestCache[size];
@@ -2345,8 +1840,7 @@
     return fillCaption(el("figcaption", {}), kind, number, text);
   }
 
-  /* Rewritable, because a chart redraws its own caption whenever the filters
-     change what is on the canvas. */
+  /* Rewritable, because a chart redraws its own caption on every draw. */
   function fillCaption(node, kind, number, text) {
     clear(node);
     node.className = "cap cap-" + kind.toLowerCase();
@@ -4179,24 +3673,19 @@
       }
     },
 
-    /* The figure follows the space it is given: the largest drawing the column
-       can actually hold. The full chart needs 990 units and the report's column
-       is that wide only past about 1366px of viewport; the mid drawing needs
-       660, which is most windows; below that the compact one, scaled to fit.
+    /* The figure follows the space it is given: the drawing whose names come
+       out largest in the column. The mid drawing needs 660 units, which is
+       most windows; below that the compact one, scaled to fit.
 
        A measurement, not a breakpoint, because a breakpoint is a guess at this
-       number and goes stale the moment a step is added to the spec.
-
-       Width alone chooses between the full chart and a reduced one, since the
-       full chart is drawn at its natural size and scrolls—it is a good deal
-       taller than any viewport, so a height test would refuse it always. Among
-       the reduced sizes height does decide, because they scale: a mid drawing
-       squeezed to 0.72 of itself by a short window carries more than the
-       compact one and reads worse, so the compact one is used instead.
+       number and goes stale the moment a step is added to the spec. Height
+       decides too, because the drawings scale: a mid drawing squeezed to 0.72
+       of itself by a short window carries more than the compact one and reads
+       worse, so the compact one is used instead.
 
        Both figures answer together. The prose promises them "at the same scale,
        so that the pipelines may be compared directly", and a page that drew one
-       full and the other reduced would quietly break that comparison. */
+       mid and the other compact would quietly break that comparison. */
     pipeline: function (mount, params, numbers) {
       let chart = null;
       let showing = null;
@@ -4205,19 +3694,16 @@
         const available = mount.clientWidth;
         // Before layout there is no width to measure; nothing is decided on a
         // zero, and the resize pass below settles it once there is a page.
-        if (available <= 0) return "full";
-        // The full chart is drawn one unit to the pixel and scrolls; either the
-        // column holds it or it does not.
-        if (widestPipeline("full").width <= available) return "full";
+        if (available <= 0) return "mid";
 
-        /* The reduced sizes all scale to the room, so the winner is not the one
-           that carries the most but the one that still sets its names largest
-           once fitted—and ties go to the one carrying more. It is a real
-           question, not a formality: in a 980-unit column 768px tall, mid comes
-           out at 9.3px type and compact at 9.5px, so mid wins on a tie; give
-           the same column a 900px window and compact grows to 11.2px while mid
-           is still held at 10.9px by the same height, and compact takes it. */
-        const options = SIZES.filter((name) => name !== "full").map((name) => {
+        /* The sizes all scale to the room, so the winner is not the one that
+           carries the most but the one that still sets its names largest once
+           fitted—and ties go to the one carrying more. It is a real question,
+           not a formality: in a 980-unit column 768px tall, mid comes out at
+           9.3px type and compact at 9.5px, so mid wins on a tie; give the same
+           column a 900px window and compact grows to 11.2px while mid is still
+           held at 10.9px by the same height, and compact takes it. */
+        const options = SIZES.map((name) => {
           return {
             name: name,
             type: METRICS[name].TITLE_PX * fitScale(name, available),
@@ -4243,7 +3729,6 @@
         showing = wanted;
         chart = createChart(mount, params.lane, numbers.figure, {
           size: wanted,
-          expandable: true,
         });
       }
 
@@ -4918,24 +4403,9 @@
   }
 
   bindStepTip();
-  document
-    .getElementById("chart-modal-close")
-    .addEventListener("click", closeChartModal);
-  // No click-outside to bind for the modal: the panel covers the whole
-  // viewport, so there is no outside. Escape and the close button are the ways
-  // back. One Escape, one layer: the step note opens over the modal, so it
-  // closes first and a second press closes the chart behind it.
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
     clearTeaserFocus();
-    if (stepTipIsOpen()) {
-      closeStepTip();
-      return;
-    }
-    if (chartModalIsOpen()) {
-      closeChartModal();
-      return;
-    }
     closeStepTip();
   });
 

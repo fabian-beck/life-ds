@@ -103,19 +103,6 @@ __DISCLAIMER__
   <div class="steptip-body" id="steptip-body"></div>
 </div>
 
-<!-- Where the pipeline figures keep the detail the compact drawing gives up on
-     a narrow display: the full chart, over the whole viewport, built by app.js
-     when the reader asks for it and torn down when they close it. -->
-<div class="chart-modal" id="chart-modal" role="dialog" aria-modal="true" aria-labelledby="chart-modal-title" aria-hidden="true">
-  <div class="chart-modal-panel">
-    <div class="chart-modal-head">
-      <h2 id="chart-modal-title">Pipeline</h2>
-      <button class="panel-close" id="chart-modal-close" type="button" aria-label="Close the full chart">&times;</button>
-    </div>
-    <div class="chart-modal-body" id="chart-modal-body"></div>
-  </div>
-</div>
-
 <script id="payload" type="application/json">__DATA__</script>
 <script>
 window.PIPELINE = JSON.parse(document.getElementById("payload").textContent);

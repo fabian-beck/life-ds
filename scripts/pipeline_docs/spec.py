@@ -28,11 +28,9 @@ skipped connection whenever a filter hides the steps in between, so a strand
 never breaks.
 
 `Step.inputs` and `Step.outputs` name the artifacts a step consumes and
-produces. An artifact written by a step in the same pipeline is already implied
-by an edge; one that arrives from the *other* pipeline is drawn as a source
-node, which is how the meta chart shows that it consumes what the person chart
-produces. Each artifact declares the concept it carries, and the report draws
-that concept—its name and its glyph—rather than the path it is stored at.
+produces. The chart does not draw them; the step note and the appendix list
+them. Each artifact declares the concept it carries, and the report names that
+concept—its name and its glyph—rather than the path it is stored at.
 
 Writing a document is not a step—every step writes something—so the point
 where a pipeline's strands become the document every later step reads is not
@@ -152,6 +150,12 @@ class Step:
     calls_per_run: str = "1"
     skip_flag: Optional[str] = None
     model_note: Optional[str] = None
+    byline: Optional[str] = None
+    """The one line the figure prints under the step's name in place of its
+    kind: what a step that calls no model actually does—the service it asks,
+    the rule it applies. A model step prints its kind and its model instead,
+    which already say as much. Required for deterministic and external steps,
+    and kept to about thirty characters, the width of a node."""
     model_from: Optional[str] = None
     """Script whose `--model` default supplies this step's model.
 
@@ -414,6 +418,7 @@ STEPS: List[Step] = [
         EXTERNAL,
         "cache_wikipedia_materials.py",
         "main",
+        byline="Wikipedia and Commons APIs",
         summary=(
             "Pulls the main article, its candidate related articles and Commons "
             "image metadata, and caches them so later steps and reruns are free."
@@ -443,6 +448,7 @@ STEPS: List[Step] = [
         EXTERNAL,
         "utils/deutsche_biographie.py",
         "format_for_prompt",
+        byline="Deutsche Biographie API",
         summary=(
             "Adds a second biographical source for German and European figures, "
             "with a per-record license check that drops NDB text."
@@ -543,6 +549,7 @@ STEPS: List[Step] = [
         EXTERNAL,
         "events/images/assign.py",
         "execute_batch_image_search",
+        byline="Commons and Openverse APIs",
         summary=(
             "Runs every planned query against Wikimedia Commons and Openverse "
             "and deduplicates the hits by URL, keeping the Commons record when "
@@ -630,6 +637,7 @@ STEPS: List[Step] = [
         EXTERNAL,
         "utils/geocode.py",
         "geocode_location",
+        byline="Nominatim geocoder",
         summary=(
             "Resolves each place through Nominatim, preferring the modern name "
             "the research supplied—which is why historic places with renamed "
@@ -767,6 +775,7 @@ STEPS: List[Step] = [
         CODE,
         "translate_person.py",
         "build_translation_reference",
+        byline="Wikipedia language links",
         summary=(
             "Reads the person's article in the language being translated into, "
             "plus one language link per person and place in the data, and hands "
@@ -918,6 +927,7 @@ STEPS: List[Step] = [
         CODE,
         "generate_meta_story.py",
         "phase2_event_collection",
+        byline="Read from the life events",
         summary="Gathers every dated event of the selected people, unfiltered.",
         depends_on=[Dep("m_p1", "the selected person ids")],
         inputs=["life_events"],
@@ -962,6 +972,7 @@ STEPS: List[Step] = [
         CODE,
         "meta_story_network.py",
         "build_social_network",
+        byline="Joined by normalized name",
         summary=(
             "Merges the individual ego networks by normalized name into one graph "
             "of main people plus the acquaintances that bridge them. Purely "
@@ -995,6 +1006,7 @@ STEPS: List[Step] = [
         CODE,
         "meta_story_network.py",
         "derive_clusters",
+        byline="Greedy modularity clustering",
         summary=(
             "Community detection over the reviewed graph produces the story's "
             "circles. Called from the narration step and mirrored by the client, "
@@ -1040,6 +1052,7 @@ STEPS: List[Step] = [
         CODE,
         "meta_story_map.py",
         "cluster_located_events",
+        byline="Weighted geographic clustering",
         summary=(
             "Groups the story's located events geographically into candidate map "
             "stops, weighted by the ratings, and keeps only the clusters that qualify."

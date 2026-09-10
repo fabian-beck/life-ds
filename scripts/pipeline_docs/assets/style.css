@@ -1193,90 +1193,6 @@ p.cap {
 
 /* --------------------------------------------------------------- toolbar */
 
-.toolbar {
-  position: sticky;
-  z-index: 20;
-  top: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-  align-items: center;
-  margin: 24px 0 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--rule);
-  background: var(--paper);
-}
-
-.search {
-  flex: 1 1 220px;
-  min-width: 190px;
-  padding: 6px 10px;
-  border: 1px solid var(--rule);
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 13px;
-}
-
-.search:focus {
-  border-color: var(--rule-strong);
-  outline: 1px solid var(--rule-strong);
-}
-
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.toggle {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  padding: 6px 10px;
-  border: 1px solid var(--rule);
-  background: var(--paper);
-  color: var(--ink-2);
-  font-family: var(--sans);
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.toggle[aria-pressed="true"] {
-  border-color: var(--rule-strong);
-  color: var(--ink);
-}
-
-.toggle[aria-pressed="false"] {
-  border-style: dashed;
-  color: var(--muted);
-}
-
-.toggle[aria-pressed="false"] .swatch {
-  opacity: 0.3;
-}
-
-.swatch {
-  width: 10px;
-  height: 10px;
-  flex: none;
-}
-
-/* Both of these lines are a `<p>` inside the report, so `.report p` reaches them
-   and outranks a rule written on the class alone—which is how they came to be
-   set at reading size while claiming a chrome size here. They are named with the
-   report ahead of them so the size on the page is the size in the file. `.cap`
-   solves the same problem the other way, by also matching `p.cap`. */
-.hint,
-.report .hint {
-  margin: 0 0 12px;
-  max-width: var(--measure);
-  color: var(--muted);
-  font-family: var(--sans);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
 /* ----------------------------------------------------------------- chart */
 
 .chart-scroll {
@@ -1290,17 +1206,17 @@ p.cap {
   font-family: var(--sans);
 }
 
-/* A reduced chart is never scrolled sideways—that is its one job. Its width is
-   set inline by `refit`, which weighs the room in the column against the height
-   of the viewport; here it only keeps its aspect ratio and sits in the middle
-   of whatever is left over. */
+/* A chart is never scrolled sideways—that is its one job. Its width is set
+   inline by `refit`, which weighs the room in the column against the height of
+   the viewport; here it only keeps its aspect ratio and sits in the middle of
+   whatever is left over. */
 .chart-scroll > svg.flow-reduced {
   max-width: 100%;
   height: auto;
   margin-inline: auto;
 }
 
-/* Type for the reduced drawings, set in user units and then scaled with the
+/* Type for the two drawings, set in user units and then scaled with the
    drawing. Each size is set for what its node actually holds: mid has room for
    the name and a line naming the kind and the model, compact for the name
    alone. Everything either leaves out is one selection away.
@@ -1335,27 +1251,11 @@ p.cap {
   font-size: 8px;
 }
 
-/* The way back to the full chart, set as the caption's last clause rather than
-   as a control beside the figure: it follows the sentence that says the drawing
-   is reduced, on the same line where the line has room for it. Sized under the
-   caption's own type so it reads as a word with a border around it and does not
-   open up the line it sits on. */
-.cap .expand {
-  display: inline-block;
-  margin-left: 8px;
-  padding: 1px 8px;
-  border: 1px solid var(--rule-strong);
-  background: var(--paper);
-  color: var(--ink);
-  font-family: inherit;
-  font-size: 12px;
-  line-height: 1.45;
-  vertical-align: baseline;
-  cursor: pointer;
-}
-
-.cap .expand:hover {
-  background: var(--surface);
+/* The phase label at compact: small, but still a word rather than a smear,
+   because its box is sized from its character count in `app.js`. */
+.flow-compact .band-label {
+  font-size: 7px;
+  letter-spacing: 0.06em;
 }
 
 figure.figure {
@@ -1445,27 +1345,9 @@ figure.figure > .cap {
   stroke-width: 1;
 }
 
-/* A hidden intermediate step still has to show the dependency it carried. */
-.edge-indirect {
-  stroke-dasharray: 4 4;
-  opacity: 0.6;
-}
-
-/* Dotted, not dashed: dashed already means "drawn through a hidden step". */
-.edge-file {
-  stroke: var(--muted);
-  stroke-dasharray: 1.5 3;
-}
-
-.edge.active,
-.edge-file.active {
+.edge.active {
   stroke: var(--rule-strong);
   stroke-width: 2;
-  stroke-dasharray: none;
-}
-
-.edge.dim {
-  opacity: 0.14;
 }
 
 .edge-arrow {
@@ -1474,10 +1356,6 @@ figure.figure > .cap {
 
 .edge-arrow.active {
   fill: var(--rule-strong);
-}
-
-.edge-arrow.dim {
-  opacity: 0.14;
 }
 
 .edge-label {
@@ -1527,40 +1405,6 @@ figure.figure > .cap {
   font-size: 10.5px;
   fill: var(--ink-2);
   font-variant-numeric: tabular-nums;
-}
-
-.node.dim {
-  opacity: 0.2;
-}
-
-/* Files the step writes, printed inside its node—the pipeline's state
-   changes here, not in a box floating beside it. */
-.node .writes text {
-  font-size: 9.5px;
-  fill: var(--ink-2);
-  font-family: var(--mono);
-}
-
-.node .writes-rule {
-  stroke: var(--rule-soft);
-  stroke-width: 1;
-}
-
-.artifact rect {
-  fill: none;
-  stroke: var(--rule);
-  stroke-width: 1;
-  stroke-dasharray: 3 2.5;
-}
-
-.artifact text {
-  font-size: 10.5px;
-  fill: var(--ink-2);
-}
-
-/* A file this pipeline only reads: the other pipeline wrote it. */
-.artifact.source rect {
-  fill: var(--surface);
 }
 
 /* ------------------------------------------------------------- step note */
@@ -1761,81 +1605,6 @@ details.block .inner {
   display: inline-block;
   padding: 2px 6px;
   background: var(--surface);
-}
-
-/* ----------------------------------------------------------- chart modal */
-
-/* The full chart over the whole viewport, edge to edge, with nothing framing
-   it. The reader opened this because the chart was bigger than the space it
-   had; inset in a lit backdrop it would hand back the very margin it was opened
-   to reclaim, and draw a second border around a figure that already has one.
-
-   It sits below the step note, not above it: a step pressed in the modal has
-   to be readable without the modal being closed first, so the note opens over
-   this. */
-.chart-modal {
-  position: fixed;
-  z-index: 50;
-  inset: 0;
-  display: none;
-  background: var(--paper);
-}
-
-.chart-modal.open {
-  display: block;
-}
-
-/* Locks the page behind the overlay: without it a scroll gesture that misses
-   the chart scrolls the report, and the reader loses their place. */
-body.modal-open {
-  overflow: hidden;
-}
-
-.chart-modal-panel {
-  display: flex;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  background: var(--paper);
-  flex-direction: column;
-}
-
-.chart-modal-head {
-  display: flex;
-  gap: 12px;
-  align-items: baseline;
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--rule-strong);
-}
-
-.chart-modal-head h2 {
-  margin: 0;
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.chart-modal-head .panel-close {
-  align-self: center;
-}
-
-/* Both axes scroll here: a dependency graph is wider than a phone whatever is
-   done to it, and inside the modal that is the honest answer rather than a
-   reason to leave anything out. */
-.chart-modal-body {
-  overflow: auto;
-  padding: 16px 20px 24px;
-  flex: 1;
-  overscroll-behavior: contain;
-}
-
-/* Inside the modal the toolbar sticks to the panel, not to the page. */
-.chart-modal-body .toolbar {
-  margin-top: 0;
-}
-
-.chart-modal-body figure.figure {
-  margin-bottom: 0;
 }
 
 /* Wide tables scroll inside their own box so the page body never does. */
@@ -2654,24 +2423,13 @@ figure.teaser > .cap {
   /* Chrome that offers an interaction paper cannot take. */
   .skip,
   .rail,
-  .toolbar,
-  .hint,
   .steptip,
-  .chart-modal,
-  .cap .expand,
   .toc-fab,
   .toc-pop,
   .figpeek,
   .note-pop,
   .teaser-status {
     display: none !important;
-  }
-
-  /* The chart modal is hidden above, but the scroll lock it puts on the body is
-     a screen measure: printing with it still applied would clip the report to
-     whatever fits one viewport. */
-  body.modal-open {
-    overflow: visible;
   }
 
   .shell {
