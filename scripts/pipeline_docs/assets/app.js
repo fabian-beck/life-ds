@@ -2214,10 +2214,10 @@
       let y = part.y + 12;
       const heading = "Processing steps:";
       host.appendChild(sText(x, y + 10, heading, "ttext"));
-      x += heading.length * 6.6 + 14;
+      x += heading.length * 6.6 + 28;
       kindEntries().forEach((entry) => {
         const kind = entry[0];
-        const width = DATA.kinds[kind].label.length * 6.6 + 26;
+        const width = DATA.kinds[kind].label.length * 7.2 + 44;
         if (x > part.x && x + width > part.x + part.w) {
           x = part.x;
           y += 19;
