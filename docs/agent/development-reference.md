@@ -278,9 +278,9 @@ The page is styled as an academic report: black on white, square corners, and co
 
 The chart is a **layered DAG, not a sequence**. An arrow means one step consumes what another produced (`Step.depends_on` in `spec.py`, with a label for the data that travels along it); a step's layer is the longest such chain reaching it, so steps drawn side by side are genuinely independent—the meta story's map branch and network branch really do run without seeing each other. The artifacts a step writes are printed inside its node, each behind its concept's glyph; an artifact the pipeline only reads becomes a source node, which is how the meta chart shows that it consumes person-pipeline output. Orchestrator `main()` functions are deliberately not steps: they impose an order without creating a dependency, and drawing them made a fork look like a chain.
 
-The document a pipeline's strands assemble—the life events of a person, the story of a theme—is a **hub** (`spec.HUBS`): an artifact drawn as a node in the flow, which depends on the steps whose results it holds and which later steps depend on by id, exactly as they depend on a step. Serializing the document is not a step, since every step writes something, so the join is the artifact itself.
+Writing a document is not a step, since every step writes something, so the point where a pipeline's strands become the document every later step reads is not a node. The steps that read the finished life events depend on the last call of the run that produces them, the portrait check; the geocoder is a leaf whose coordinates are read by the application and the meta pipeline, not by a later step of its own pipeline. The meta story's style and translation depend on the composition the same way.
 
-The vertical axis is the dependency graph; the horizontal axis carries no graph meaning, so `spec.GROUPS` spends it on **phases**. A phase names steps that do one job across several layers—planning the image searches, running them, matching the results—and the layout aligns them and draws a labeled band behind them, so the strand can be read straight down instead of being tracked as it drifts sideways. The phases are comprehensive: every step belongs to exactly one, and `--check` rejects a step in none. A hub may belong to a phase too, so the meta story's composition is banded across the document it writes. Grouping is presentation only: it never moves a layer.
+The vertical axis is the dependency graph; the horizontal axis carries no graph meaning, so `spec.GROUPS` spends it on **phases**. A phase names steps that do one job across several layers—planning the image searches, running them, matching the results—and the layout aligns them and draws a labeled band behind them, so the strand can be read straight down instead of being tracked as it drifts sideways. The phases are comprehensive: every step belongs to exactly one, and `--check` rejects a step in none. Grouping is presentation only: it never moves a layer.
 
 Alignment holds only where a group is **continuous**. The layers a group occupies are cut into runs of consecutive layers, and each run is aligned and banded on its own, so the portrait—four layers below the last image step, with unrelated work in between—is placed by the graph rather than dragged into the imagery strand under a band stretched over the gap. A run of one step is not banded at all, which is also what happens to a group most of whose steps a filter has hidden.
 
@@ -289,7 +289,7 @@ Horizontal placement runs in two stages and uses **continuous positions, not a c
 1. Blocks—one per group run, one per ungrouped node—are placed as rigid rectangles with a single x across every layer they cross. A leftmost packing gives a feasible start; blocks are then relaxed toward the mean position of their graph neighbors, each clamped to the room its neighbors in every layer it occupies actually leave. Feasibility is therefore invariant, and sparse layers center themselves under the layers they feed.
 2. Nodes are centered inside their block, which is what lines a group up: a run with one step per layer puts every step at the same x.
 
-Adding a phase is a `spec.py` edit; `--check` rejects one that names an unknown step or hub, claims a step twice, mixes the two pipelines, or leaves a step in no phase.
+Adding a phase is a `spec.py` edit; `--check` rejects one that names an unknown step, claims a step twice, mixes the two pipelines, or leaves a step in no phase.
 
 ```bash
 python scripts/generate_report.py            # rebuild the page
@@ -302,7 +302,7 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 | Layer | File | What it contributes |
 | --- | --- | --- |
 | Static analysis | `introspect.py` | Parses `scripts/*.py` with `ast`: model call sites, resolved models and reasoning efforts, Pydantic output schemas, prompt templates, CLI flags. Never imports the generators, so it needs no API key. |
-| Pipeline shape | `spec.py` | Which steps exist, what data flows between them (`depends_on`), which artifacts they read and write, where a pipeline's strands become one document (`HUBS`), and which phase each step belongs to (`GROUPS`). Each step points at a real function. |
+| Pipeline shape | `spec.py` | Which steps exist, what data flows between them (`depends_on`), which artifacts they read and write, and which phase each step belongs to (`GROUPS`). Each step points at a real function. |
 | Vocabulary | `concepts.py` | The concepts the report speaks in—source material, profile, life events, the social network, geography, and the rest—each marked as read from outside or derived, and each with the interface's own Material Design icon, vendored as path data. |
 | Measurements | `facts.py` | The few values the prose cites—the models the pipelines call, the languages the corpus is published in—each with the place it was measured. Counts are deliberately not among them. |
 | Authored prose | `report.py` | Compiles `docs/report/report.md`: sections and numbering, `{{ fact }}` citations, `[[part]]` figure references, `[@key]` reference citations, `::: component` mount points, callouts. |
@@ -315,7 +315,7 @@ It is built from these layers, in `scripts/pipeline_docs/`:
 
 ### Keeping It Honest
 
-`--check` fails when `spec.py` no longer matches the source: a documented step whose function was renamed, a dead prompt symbol, a dependency edge pointing at a step or hub that does not exist, a cycle in the graph, a step in no phase, or—most importantly—a model call site that **no step claims**. Adding a step without documenting it is therefore an error rather than a silent omission.
+`--check` fails when `spec.py` no longer matches the source: a documented step whose function was renamed, a dead prompt symbol, a dependency edge pointing at a step that does not exist, a cycle in the graph, a step in no phase, or—most importantly—a model call site that **no step claims**. Adding a step without documenting it is therefore an error rather than a silent omission.
 
 It also fails when a **written step explanation names a model the step does not resolve**. Those explanations are generated from each step's own source, so a model name left in a comment reaches the page as a claim—one said `GPT-5.1` while the same note printed the resolved model beside it. Model names therefore do not belong in the generation scripts' comments, and the summarizer is told not to repeat one; the payload records the model that wrote each explanation, and the statement on AI use after the references, authored as `disclaimer:` in the report's front matter, discloses that the report's prose is written with language models. `--check` reads the cache without writing it, so the rule holds without an API key.
 
@@ -451,7 +451,7 @@ Both routes render the same `@media print` rules at the foot of `assets/style.cs
 
 ### When the Pipeline Changes
 
-1. Add or update the step in `scripts/pipeline_docs/spec.py`, including the `depends_on` edges into it *and* any existing step that now reads its output, and put it in one of the phases in `GROUPS`. An edge is a real data dependency, not "runs after"; a step that reads the assembled document depends on the pipeline's hub.
+1. Add or update the step in `scripts/pipeline_docs/spec.py`, including the `depends_on` edges into it *and* any existing step that now reads its output, and put it in one of the phases in `GROUPS`. An edge is a real data dependency, not "runs after"; a step that reads the assembled document depends on the last step of the run that writes it.
 2. Run `python scripts/generate_report.py`—the summary cache refreshes only the steps whose source changed.
 3. Commit the regenerated `docs/report/index.html` and `summaries.json`.
 

@@ -24,15 +24,12 @@
    the chart never carries a line beside a strand that says the same thing.
    Files a step writes are drawn inside its node; files that arrive from the
    other pipeline become source nodes, since nothing in this chart produces them.
-   The document a pipeline's strands assemble—the life events, the meta
-   story—is a hub: an artifact node in the flow, its producers above it and
-   the steps that read it below, placed by the same layering as a step.
 
    The vertical axis is the dependency graph; the horizontal axis is free, and
    `spec.GROUPS` spends it on meaning: the phases. Steps of one concern—plan
    the image searches, run them, match the results—are aligned and banded, so
    a job that takes three layers reads as one vertical strand instead of
-   drifting across the chart. Every step is in a phase, and a hub may be.
+   drifting across the chart. Every step is in a phase.
    Alignment holds only where a group is continuous: a member several
    layers below the rest is placed on its own. Positions are continuous and
    relaxed toward the center, not slots in a grid. */
@@ -328,11 +325,6 @@
     artifactById[artifact.id] = artifact;
   });
 
-  const hubById = {};
-  (DATA.hubs || []).forEach((hub) => {
-    hubById[hub.id] = hub;
-  });
-
   /* The concept vocabulary and its glyphs.
 
      Every artifact carries a concept, every concept carries the icon the
@@ -517,14 +509,6 @@
       });
     }
 
-    /* A hub is never filtered away: it is the document the visible steps
-       read, and hiding it would leave their edges pointing at nothing. */
-    function hubsInTab() {
-      return (DATA.hubs || []).filter((hub) => {
-        return hub.column === state.tab;
-      });
-    }
-
     function matchesFilters(step) {
       if (!state.kinds.has(step.kind)) return false;
       if (!state.showShared && step.lane === "shared") return false;
@@ -615,7 +599,7 @@
     function resolveDeps(step, visibleIds, seen) {
       const out = [];
       (step.depends_on || []).forEach((dep) => {
-        const parent = stepById[dep.on] || hubById[dep.on];
+        const parent = stepById[dep.on];
         if (!parent) return;
         if (visibleIds.has(dep.on)) {
           out.push({ from: dep.on, data: dep.data, indirect: false });
@@ -641,16 +625,15 @@
 
     function buildGraph() {
       const steps = stepsInTab().filter(matchesFilters);
-      const hubs = hubsInTab();
       const visibleIds = new Set(
-        steps.concat(hubs).map((node) => {
-          return node.id;
+        steps.map((step) => {
+          return step.id;
         })
       );
 
       const parents = {};
-      steps.concat(hubs).forEach((node) => {
-        parents[node.id] = resolveDeps(node, visibleIds, [node.id]);
+      steps.forEach((step) => {
+        parents[step.id] = resolveDeps(step, visibleIds, [step.id]);
       });
 
       // Layer = longest dependency path, so nothing is ever drawn above
@@ -666,8 +649,8 @@
         layerOf[id] = best;
         return best;
       }
-      steps.concat(hubs).forEach((node) => {
-        layer(node.id);
+      steps.forEach((step) => {
+        layer(step.id);
       });
 
       // A file read but never written in this pipeline comes from the other one;
@@ -679,9 +662,6 @@
           (step.outputs || []).forEach((id) => {
             produced.add(id);
           });
-        });
-        hubs.forEach((hub) => {
-          produced.add(hub.artifact);
         });
         steps.forEach((step) => {
           (step.inputs || []).forEach((id) => {
@@ -708,8 +688,8 @@
         if (source.layer < 0) shift = 1;
       });
       if (shift) {
-        steps.concat(hubs).forEach((node) => {
-          layerOf[node.id] += 1;
+        steps.forEach((step) => {
+          layerOf[step.id] += 1;
         });
         Object.values(sources).forEach((source) => {
           source.layer += 1;
@@ -718,7 +698,6 @@
 
       return {
         steps: steps,
-        hubs: hubs,
         parents: parents,
         layerOf: layerOf,
         sources: sources,
@@ -870,10 +849,10 @@
         if (a.near.indexOf(b) === -1) a.near.push(b);
         if (b.near.indexOf(a) === -1) b.near.push(a);
       }
-      graph.steps.concat(graph.hubs).forEach((node) => {
-        (graph.parents[node.id] || []).forEach((edge) => {
+      graph.steps.forEach((step) => {
+        (graph.parents[step.id] || []).forEach((edge) => {
           const from = nodeById[edge.from];
-          const to = nodeById[node.id];
+          const to = nodeById[step.id];
           if (from && to) connect(from.block, to.block);
         });
       });
@@ -1007,19 +986,6 @@
           order: step._order,
         });
       });
-      // The hub sits in its layer like a step: it is placed by what flows
-      // into it, and its readers are placed by it.
-      graph.hubs.forEach((hub, index) => {
-        rowFor(graph.layerOf[hub.id]).push({
-          type: "hub",
-          id: hub.id,
-          hub: hub,
-          artifact: artifactById[hub.artifact],
-          w: M.ART_W,
-          h: M.ART_H,
-          order: DATA.steps.length + index,
-        });
-      });
       Object.entries(graph.sources).forEach((entry) => {
         rowFor(entry[1].layer).push({
           type: "artifact",
@@ -1107,19 +1073,16 @@
 
       // Edges leave and enter along the node's edge, fanned out and sorted by the
       // other end's position so parallel links do not cross inside a gap.
-      // What leaves a hub is a file being read, so those edges are drawn
-      // dotted like the hand-offs from the other pipeline; what enters it is a
-      // result still in memory, drawn as any step's edge.
       const edges = [];
-      graph.steps.concat(graph.hubs).forEach((node) => {
-        (graph.parents[node.id] || []).forEach((edge) => {
-          if (!byId[edge.from] || !byId[node.id]) return;
+      graph.steps.forEach((step) => {
+        (graph.parents[step.id] || []).forEach((edge) => {
+          if (!byId[edge.from] || !byId[step.id]) return;
           edges.push({
             from: byId[edge.from],
-            to: byId[node.id],
+            to: byId[step.id],
             data: edge.data,
             indirect: edge.indirect,
-            file: Boolean(hubById[edge.from]),
+            file: false,
           });
         });
       });
@@ -1477,14 +1440,9 @@
       });
     }
 
-    /* A source (a file the other pipeline wrote) and a hub (the document this
-       pipeline assembles) are the same box with a different border and a
-       different explanation: the source is dashed, arriving from outside; the
-       hub is solid, the one file every step below it reads. */
     function drawArtifactNode(root, node) {
-      const hub = node.type === "hub";
       const group = svg("g", {
-        class: "artifact " + (hub ? "hub" : "source"),
+        class: "artifact source",
         transform: "translate(" + node.x + "," + node.y + ")",
       });
       group.appendChild(svg("rect", { width: node.w, height: node.h }));
@@ -1511,8 +1469,7 @@
         (concept ? " — " + concept.label : "") +
         "\n" +
         node.artifact.note +
-        "\n" +
-        (hub ? node.hub.note : "Produced by the other pipeline; read here.");
+        "\nProduced by the other pipeline; read here.";
       group.appendChild(tip);
       root.appendChild(group);
     }
@@ -1727,7 +1684,7 @@
       drawRails(host, geometry.rails);
       drawEdges(host, geometry.edges);
       geometry.nodes.forEach((node) => {
-        if (node.type !== "step") drawArtifactNode(host, node);
+        if (node.type === "artifact") drawArtifactNode(host, node);
       });
       geometry.nodes.forEach((node) => {
         if (node.type === "step") drawNode(host, node);
@@ -1761,12 +1718,7 @@
          lines and the script under a figure that has neither would be
          describing another version of itself, so a reduced caption says
          instead that it is reduced and where the rest is. */
-      const sourceCount = geometry.nodes.filter((node) => {
-        return node.type === "artifact";
-      }).length;
-      const hubCount = geometry.nodes.filter((node) => {
-        return node.type === "hub";
-      }).length;
+      const sourceCount = geometry.nodes.length - stepNodes.length;
       const bands = geometry.bands.length;
       const marks = reduced
         ? [
@@ -1775,10 +1727,6 @@
               "the detail it leaves out.",
           ]
         : [
-            hubCount
-              ? "The boxed document is where the strands become one file " +
-                "that every later step reads."
-              : "",
             sourceCount
               ? "Gray boxes are data the other pipeline produces."
               : "",

@@ -173,10 +173,8 @@ def _flow_block(step: spec.Step) -> str:
     vocabulary for the data, so the phrases the summarizer writes for input
     and output stay in the words the figures use.
     """
-    artifacts = {item.id: item.label for item in spec.ARTIFACTS}
     labels = {item.id: item.label for item in spec.STEPS}
-    # A hub reads as the document it is: "reads from 'Life events'".
-    labels.update({hub.id: artifacts.get(hub.artifact, hub.id) for hub in spec.HUBS})
+    artifacts = {item.id: item.label for item in spec.ARTIFACTS}
     lines: List[str] = []
     for dep in step.depends_on:
         lines.append(f"  - reads from '{labels.get(dep.on, dep.on)}': {dep.data}")

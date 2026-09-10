@@ -191,19 +191,6 @@ def _call_sites(codebase: Codebase) -> List[Dict[str, Any]]:
     return rows
 
 
-def _hub_row(hub: spec.Hub) -> Dict[str, Any]:
-    """A hub as the chart draws it: an artifact node with parents and a phase."""
-    group = spec.group_of(hub.id)
-    return {
-        "id": hub.id,
-        "artifact": hub.artifact,
-        "column": spec.column_of(hub),
-        "group": group.id if group else None,
-        "depends_on": [{"on": dep.on, "data": dep.data} for dep in hub.depends_on],
-        "note": hub.note,
-    }
-
-
 def build_payload(
     codebase: Codebase,
     summaries: Dict[str, Dict[str, Any]],
@@ -287,7 +274,6 @@ def build_payload(
         "teaser": teaser.scene(),
         "screenshots": shots or {},
         "steps": steps,
-        "hubs": [_hub_row(hub) for hub in spec.HUBS],
         "groups": [group.__dict__ for group in spec.GROUPS],
         "concepts": concepts_module.to_json(),
         # Deliberately without `path`: the spec knows where an artifact is

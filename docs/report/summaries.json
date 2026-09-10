@@ -10,11 +10,11 @@
       }
     },
     "m_images": {
-      "fingerprint": "9e503f787f812476",
+      "fingerprint": "66b253490d2e3540",
       "summary": {
-        "description": "Identifies the metaphors that carry the story’s argument and settles their target-language wording before translation begins. It keeps a source image only when the target language uses it; otherwise it replaces the image with its plain meaning, so repeated passages share one usable choice.",
-        "input": "the meta story",
-        "output": "a recurring-image glossary",
+        "description": "Identifies recurring metaphors in the composed story and settles their target-language wording before translation begins. It keeps a metaphor only when the target language uses it; otherwise it replaces the image with its plain meaning so the same choice can guide every passage.",
+        "input": "the composed story and meta story",
+        "output": "settled renderings for recurring images",
         "source": "gpt-5.6-terra"
       }
     },
@@ -109,20 +109,20 @@
       }
     },
     "m_p8": {
-      "fingerprint": "f19d03947af94970",
+      "fingerprint": "33c5ff985f74afba",
       "summary": {
-        "description": "Rewrites the assembled material as one story, from the header through the timeline, network, map, and conclusion. It sets the reading order and curates component text and map stops after seeing the whole, so the story follows a single argument instead of preserving earlier drafts.",
-        "input": "the circle narration, map stops, and background material",
-        "output": "a unified story and curated map stops",
+        "description": "Rewrites the assembled material as one story, from the opening through the timeline, network, and map. It sets the reading order and redistributes emphasis across captions and prose. It can drop map stops that do not support the story’s arc.",
+        "input": "the circle narration, map stops, and source material",
+        "output": "a composed story with curated map stops",
         "source": "gpt-5.6-terra"
       }
     },
     "m_style": {
-      "fingerprint": "9c0fa665466570b8",
+      "fingerprint": "5fabb28c1fb84460",
       "summary": {
-        "description": "Derives a dark visual system from the story’s theme and period. It leaves the article with colors, type, background geometry, and matching punctuation marks; the shared geometric motif keeps the long read and its interactive sections visually tied together.",
+        "description": "Derives the article’s dark visual identity from its theme and opening. It carries the theme into the page pattern, typography, box geometry, and repeated marks so the interface frames the biographies as one story.",
         "input": "the story’s framing and opening",
-        "output": "a visual identity for the story",
+        "output": "the story’s visual identity",
         "source": "gpt-5.6-terra"
       }
     },
@@ -154,11 +154,11 @@
       }
     },
     "p_chapter_concepts": {
-      "fingerprint": "49bee66ed693cc1f",
+      "fingerprint": "3d3990a5de620906",
       "summary": {
-        "description": "Frames each chapter with an abstract image concept drawn from its events and theme. It reads the full life at once so the chapter metaphors remain distinct, then leaves only concepts tied to known chapters.",
-        "input": "the life chapters and their events",
-        "output": "an abstract concept per chapter",
+        "description": "Develops abstract opening images for each life chapter from the verified events. It keeps chapters together so their metaphors use distinct forms and motifs, while excluding people, places, and literal scenes.",
+        "input": "the finished life events",
+        "output": "abstract chapter illustration concepts",
         "source": "gpt-5.6-terra"
       }
     },
@@ -190,20 +190,20 @@
       }
     },
     "p_geocode": {
-      "fingerprint": "c1646c337ee1f7ce",
+      "fingerprint": "822db410ff5be786",
       "summary": {
-        "description": "Resolves each event’s place name to map coordinates. It prefers the researcher's modern name, so renamed historic places can appear at their current location.",
+        "description": "Resolves each event’s place name to map coordinates for the life-event record. It favors the research’s modern place name so renamed historic places can appear on current maps, while caching results and confirmed misses to limit repeated lookup requests.",
         "input": "historic and modern place names",
-        "output": "map coordinates for resolved places",
+        "output": "map coordinates for life events",
         "source": "gpt-5.6-terra"
       }
     },
     "p_glossary": {
-      "fingerprint": "4665b3f8678b05ce",
+      "fingerprint": "8305ea976ff1c0e4",
       "summary": {
-        "description": "Decides the target-language form of each person name before the biography is translated. It uses source evidence when available and preserves titles, epithets, and regnal numbers, so every document can reuse the same names.",
-        "input": "name evidence and person records",
-        "output": "a shared glossary of localized names",
+        "description": "Decides how each person’s name appears in the target language and records only changes from the original form. The shared glossary keeps names identical across biographies, events, and network links, where exact text supports cross-references.",
+        "input": "name evidence and biography records",
+        "output": "a shared localized name glossary",
         "source": "gpt-5.6-terra"
       }
     },
@@ -244,11 +244,11 @@
       }
     },
     "p_img_verify": {
-      "fingerprint": "a795479abf73626d",
+      "fingerprint": "a20776b12b5b5bca",
       "summary": {
-        "description": "Checks the chosen portrait against the person in the story, catching images whose captions mention the subject but show someone else. It rejects mismatches; a failed check leaves the portrait in place so an outage cannot remove a usable image.",
+        "description": "Checks the chosen portrait against the image itself before it becomes the face of the story. A rejection removes a clear mismatch, while a failed check preserves the pick so a service failure cannot discard it.",
         "input": "the portrait pick",
-        "output": "a verified or retained portrait pick",
+        "output": "a verified portrait decision",
         "source": "gpt-5.6-terra"
       }
     },
@@ -262,29 +262,20 @@
       }
     },
     "p_network": {
-      "fingerprint": "a1b8542ad80c32ef",
+      "fingerprint": "5de0cb51bfb1b36e",
       "summary": {
-        "description": "Maps the subject’s documented relationships from the article, related material, and life events into a network that gives the later story its social setting. It limits ties to named people with direct contact so the graph shows relationships the evidence can support.",
-        "input": "the life events and Wikipedia material",
-        "output": "a documented network of personal ties",
+        "description": "Maps the subject’s documented relationships into a network that links life events to the people who shaped them. It admits only named people with direct contact, so institutions and distant influences stay as context in the relationship summaries.",
+        "input": "the finished life events and Wikipedia material",
+        "output": "a categorized network of personal relationships",
         "source": "gpt-5.6-terra"
       }
     },
     "p_portrait": {
-      "fingerprint": "2646178139c639cb",
+      "fingerprint": "3eb6a89ea347ea8a",
       "summary": {
-        "description": "Transforms each licensed reference portrait into the collection’s shared light-drawing style. It preserves the person’s likeness and period appearance while applying the story colors, then records the portrait for the person and their life events.",
-        "input": "the licensed reference portrait and interface style",
-        "output": "a styled portrait for the person and events",
-        "source": "gpt-5.6-terra"
-      }
-    },
-    "p_register": {
-      "fingerprint": "a5c2b4ec6d0434df",
-      "summary": {
-        "description": "Adds the person to the landing-page index with the dates, roles, and summary from the life events. It preserves the first appearance date while carrying the selected portrait forward for the later portrait step.",
-        "input": "the written life events",
-        "output": "the person registry",
+        "description": "Transforms each person’s licensed reference portrait into the collection’s shared light-drawing style. It keeps the person’s likeness and period dress while using the story colors and master portrait to make portraits read as one set.",
+        "input": "the reference portrait and story colors",
+        "output": "a styled portrait and updated person entry",
         "source": "gpt-5.6-terra"
       }
     },
@@ -298,11 +289,11 @@
       }
     },
     "p_style": {
-      "fingerprint": "9352ddab1738966f",
+      "fingerprint": "19951eac7f21fe4a",
       "summary": {
-        "description": "Builds a dark visual identity from the person’s summary and early events. It retries a palette that fails the contrast check, so the story’s historical cues remain readable.",
-        "input": "the person summary and early events",
-        "output": "a dark interface style",
+        "description": "Builds a dark visual identity from the person’s life, era, and field. It ties color, type, and abstract geometric motifs to the story while retrying palettes that leave text hard to read.",
+        "input": "the finished life events",
+        "output": "a personal interface style",
         "source": "gpt-5.6-terra"
       }
     },

@@ -34,22 +34,21 @@ node, which is how the meta chart shows that it consumes what the person chart
 produces. Each artifact declares the concept it carries, and the report draws
 that concept—its name and its glyph—rather than the path it is stored at.
 
-`HUBS` are the two places where a pipeline's strands become one document and
-every later step reads that document instead of the memory that produced it:
-the life events of a person, the story of a theme. Each is drawn as an artifact
-node in the flow, with the strands arriving above it and the phases that read
-it leaving below. Serializing the document is not a step—every step writes
-something—so the join is the artifact itself, and steps depend on a hub the
-way they depend on a step.
+Writing a document is not a step—every step writes something—so the point
+where a pipeline's strands become the document every later step reads is not
+drawn as a node. The steps that read the finished life events depend on the
+last call of the run that produces them, the portrait check, and the geocoder
+is a leaf: its coordinates go into the document and are read by the
+application and by the meta pipeline's map branch, never by a later step of
+this pipeline. The same holds for the meta story, whose style and translation
+depend on the composition that finishes it.
 
 `GROUPS` are the phases of each pipeline. Every step belongs to exactly one,
 and a phase names a concern that spans several layers—planning image searches,
 running them and matching the results are three layers of one job—so the chart
 aligns each phase's steps to read as one strand under a banded label. The chart
 aligns only the parts of a phase that are continuous, so a member separated
-from the rest by layers the phase has no step in is placed on its own. A hub
-may belong to a phase, so that a phase which runs through the document (the
-composition, which writes the story and then styles it) is banded across it.
+from the rest by layers the phase has no step in is placed on its own.
 Grouping is presentation only: it never changes a layer, and the layer is
 still the longest dependency path.
 
@@ -172,7 +171,6 @@ class Group:
     inside the phase. Members separated by layers the phase has no step in are
     aligned and banded separately. Every member must be drawn in the same
     pipeline column, and every step of a pipeline belongs to exactly one phase.
-    A member may be a hub as well as a step.
     """
 
     id: str
@@ -180,24 +178,6 @@ class Group:
     steps: List[str]
     note: str = ""
     """Why these steps belong together—shown as the band's tooltip."""
-
-
-@dataclass
-class Hub:
-    """The document a pipeline's strands assemble, drawn as a node in the flow.
-
-    A hub is an artifact of this pipeline that is written once, where several
-    strands meet, and read by everything after. Steps depend on it by id, as
-    they depend on a step, and it depends on the steps whose results it holds.
-    Its column comes from the id prefix, like a step's.
-    """
-
-    id: str
-    artifact: str
-    """Which entry of `ARTIFACTS` the hub is."""
-    depends_on: List[Dep] = field(default_factory=list)
-    note: str = ""
-    """What the document settles at this point—shown as the node's tooltip."""
 
 
 GROUPS: List[Group] = [
@@ -232,17 +212,10 @@ GROUPS: List[Group] = [
     Group(
         "presentation",
         "Presentation",
-        [
-            "p_register",
-            "p_style",
-            "p_chapter_concepts",
-            "p_portrait",
-            "p_chapter_art",
-        ],
+        ["p_style", "p_chapter_concepts", "p_portrait", "p_chapter_art"],
         note=(
-            "How the story is listed and how it looks: the landing-page entry, "
-            "the color and type system, and the pictures drawn in it—the "
-            "portrait and one abstract image per chapter."
+            "How the story looks: the color and type system, and the pictures "
+            "drawn in it—the portrait and one abstract image per chapter."
         ),
     ),
     Group(
@@ -313,10 +286,10 @@ GROUPS: List[Group] = [
     Group(
         "composition",
         "Composition",
-        ["m_p8", "m_meta_story", "m_style"],
+        ["m_p8", "m_style"],
         note=(
             "Where the branches become one story: rewrite every text in one "
-            "voice, write the document, and give it its visual identity."
+            "voice, then give the story its visual identity."
         ),
     ),
     Group(
@@ -326,35 +299,6 @@ GROUPS: List[Group] = [
         note=(
             "Settle how the story's recurring images read in the target "
             "language, then translate every passage against that decision."
-        ),
-    ),
-]
-
-
-HUBS: List[Hub] = [
-    Hub(
-        "p_life_events",
-        "life_events",
-        depends_on=[
-            Dep("p_img_verify", "per-event images + the verified portrait"),
-            Dep("p_geocode", "coordinates"),
-        ],
-        note=(
-            "The three strands above become one document here, with the "
-            "chapters and the conclusion the proposal wrote. This is where the "
-            "run stops being memory: every later step reads the written life "
-            "events rather than the payload that produced them, which is what "
-            "makes a run resumable and a single concern regenerable."
-        ),
-    ),
-    Hub(
-        "m_meta_story",
-        "meta_story",
-        depends_on=[Dep("m_p8", "the composed story document")],
-        note=(
-            "The composed story is written here, and the landing-page registry "
-            "is updated with it. The style and the translation read the "
-            "document, not the composition's memory."
         ),
     ),
 ]
@@ -664,11 +608,20 @@ STEPS: List[Step] = [
             "and captions alone, and a photograph of the subject's spouse "
             "carries the subject's name in its caption. A no drops the pick; "
             "a failed call keeps it, so the check can only catch a wrong "
-            "portrait, never lose a right one."
+            "portrait, never lose a right one. It is the last call of the run "
+            "that produces the life events: the document is then written, with "
+            "the chapters and the conclusion the proposal wrote, the researched "
+            "events with their images and coordinates, and the verified "
+            "portrait, and the person is folded into the landing-page index "
+            "with the portrait reference the matching picked. Every later step "
+            "reads the written document rather than the payload that produced "
+            "it, which is what makes a run resumable and a single concern "
+            "regenerable."
         ),
         depends_on=[Dep("p_img_match", "the portrait pick")],
         prompts=["verify_portrait_depicts_person"],
         calls_per_run="0-1",
+        outputs=["life_events", "persons"],
     ),
     Step(
         "p_geocode",
@@ -680,25 +633,12 @@ STEPS: List[Step] = [
         summary=(
             "Resolves each place through Nominatim, preferring the modern name "
             "the research supplied—which is why historic places with renamed "
-            "successors still land on the map."
+            "successors still land on the map. The coordinates go into the "
+            "written document; no later step of this pipeline reads them, but "
+            "the application's map and the meta pipeline's map branch do."
         ),
         depends_on=[Dep("p_events_p2", "historic and modern place names")],
-    ),
-    Step(
-        "p_register",
-        "Register person",
-        PERSON,
-        CODE,
-        "events/pipeline.py",
-        "update_register",
-        summary=(
-            "Folds the person into the landing-page index, carrying over the "
-            "portrait reference the image matching picked—which is where the "
-            "portrait step later reads it from."
-        ),
-        depends_on=[Dep("p_life_events", "the written life events")],
-        inputs=["life_events"],
-        outputs=["persons"],
+        outputs=["life_events"],
     ),
     Step(
         "p_style",
@@ -713,7 +653,7 @@ STEPS: List[Step] = [
             "a computed contrast floor, asking the model once more with the "
             "reason."
         ),
-        depends_on=[Dep("p_life_events", "person summary + first five events")],
+        depends_on=[Dep("p_img_verify", "the finished life events")],
         prompts=["build_prompt", "build_retry_prompt", "call_openai"],
         inputs=["life_events"],
         outputs=["person_styles"],
@@ -730,7 +670,7 @@ STEPS: List[Step] = [
             "Builds the person's relationship graph with typed, weighted and "
             "described ties—the input the meta story pipeline later merges."
         ),
-        depends_on=[Dep("p_life_events", "the finished life events as context")],
+        depends_on=[Dep("p_img_verify", "the finished life events")],
         prompts=["build_prompt", "call_openai"],
         inputs=["wiki_cache", "life_events"],
         outputs=["ego_network"],
@@ -745,12 +685,12 @@ STEPS: List[Step] = [
         "generate_portrait",
         summary=(
             "Style-transfers a licensed reference portrait toward a shared master "
-            "style so every person in the collection looks like one illustration set."
+            "style so every person in the collection looks like one illustration "
+            "set. The reference is the licensed image the matching picked, read "
+            "from the person's entry in the landing-page index, and the entry "
+            "is updated with the finished portrait."
         ),
-        depends_on=[
-            Dep("p_register", "the licensed reference image URL"),
-            Dep("p_style", "primary and secondary color"),
-        ],
+        depends_on=[Dep("p_style", "primary and secondary color")],
         prompts=["STYLE_TRANSFER_PROMPT", "generate_portrait"],
         inputs=["persons", "person_styles"],
         outputs=["portrait", "persons", "life_events"],
@@ -770,7 +710,7 @@ STEPS: List[Step] = [
             "chapters are read in one call so the metaphors differ from one "
             "another."
         ),
-        depends_on=[Dep("p_life_events", "chapters and the events in each")],
+        depends_on=[Dep("p_img_verify", "the finished life events")],
         prompts=["CONCEPT_SYSTEM_PROMPT", "build_concept_prompt"],
         inputs=["life_events"],
         skip_flag="--skip-chapter-art",
@@ -852,7 +792,6 @@ STEPS: List[Step] = [
         ),
         depends_on=[
             Dep("p_name_evidence", "what the target language writes for each name"),
-            Dep("p_register", "the registry summary, as context for the call"),
         ],
         prompts=[
             "build_name_glossary",
@@ -1135,7 +1074,9 @@ STEPS: List[Step] = [
             "Reads the assembled story top-down, the way a reader meets it, and "
             "rewrites every text in one voice: the prose between components, the "
             "captions on them, the circle organization and the map stops. It may "
-            "also drop people that do not earn their place."
+            "also drop people that do not earn their place. The composed story "
+            "is then written, and the landing-page registry updated with it; "
+            "the style and the translation read the written document."
         ),
         depends_on=[
             Dep("m_p6", "the circle narration to rewrite"),
@@ -1143,6 +1084,7 @@ STEPS: List[Step] = [
         ],
         prompts=["run_composition"],
         inputs=["wiki_cache", "persons"],
+        outputs=["meta_story"],
         skip_flag="--skip-compose",
         model_note="Uses OPENAI_COMPOSER_MODEL, not OPENAI_MODEL.",
     ),
@@ -1158,7 +1100,7 @@ STEPS: List[Step] = [
             "theme itself—including the separator glyph and the ornamental "
             "rule its prose is punctuated with."
         ),
-        depends_on=[Dep("m_meta_story", "the saved story's framing and opening")],
+        depends_on=[Dep("m_p8", "the composed story's framing and opening")],
         prompts=["build_prompt", "call_openai"],
         inputs=["meta_story"],
         outputs=["meta_story_styles"],
@@ -1182,9 +1124,7 @@ STEPS: List[Step] = [
             "glossary — what has to read the same in every passage is settled "
             "once rather than re-derived per field."
         ),
-        depends_on=[
-            Dep("m_meta_story", "the story's own text, as the images to judge")
-        ],
+        depends_on=[Dep("m_p8", "the composed story's text, as the images to judge")],
         prompts=["build_image_glossary", "format_image_glossary_for_prompt"],
         inputs=["meta_story"],
         skip_flag="--skip-translate",
@@ -1213,18 +1153,11 @@ STEPS: List[Step] = [
 ]
 
 
-def group_of(node_id: str) -> Optional[Group]:
-    """The phase a step or hub belongs to."""
+def group_of(step_id: str) -> Optional[Group]:
+    """The phase a step belongs to."""
     for group in GROUPS:
-        if node_id in group.steps:
+        if step_id in group.steps:
             return group
-    return None
-
-
-def hub_by_id(hub_id: str) -> Optional[Hub]:
-    for hub in HUBS:
-        if hub.id == hub_id:
-            return hub
     return None
 
 
@@ -1242,11 +1175,11 @@ def step_by_id(step_id: str) -> Optional[Step]:
     return None
 
 
-def column_of(node: "Step | Hub") -> str:
-    """Which pipeline column a step or hub is drawn in.
+def column_of(step: Step) -> str:
+    """Which pipeline column a step is drawn in.
 
     Lane records *ownership*—several shared subsystems (sourcing, review,
     translation) are their own scripts—but the reader wants to see them at the
-    point in the flow where they run, so the drawn column comes from the id.
+    point in the flow where they run, so the drawn column comes from the step id.
     """
-    return PERSON if node.id.startswith("p_") else META
+    return PERSON if step.id.startswith("p_") else META

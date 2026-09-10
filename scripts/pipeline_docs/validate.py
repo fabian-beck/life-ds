@@ -24,7 +24,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Union
+from typing import Dict, List, Optional, Set
 
 from . import bibliography, concepts, screenshots, spec, summarize, teaser
 from .facts import Fact
@@ -82,49 +82,19 @@ def _implying_path(
     return None
 
 
-def _check_hubs() -> List[Problem]:
-    """A hub names a real artifact and an id no step uses, in one column."""
-    problems: List[Problem] = []
-    steps = {step.id for step in spec.STEPS}
-    artifacts = {artifact.id for artifact in spec.ARTIFACTS}
-    seen: Set[str] = set()
-    for hub in spec.HUBS:
-        where = f"hub '{hub.id}'"
-        if hub.id in seen:
-            problems.append(Problem("error", "spec", f"duplicate hub id '{hub.id}'"))
-        seen.add(hub.id)
-        if hub.id in steps:
-            problems.append(Problem("error", where, "shares its id with a step"))
-        if hub.id[:2] not in ("p_", "m_"):
-            problems.append(Problem("error", where, "id must start with 'p_' or 'm_'"))
-        if hub.artifact not in artifacts:
-            problems.append(
-                Problem("error", where, f"unknown artifact '{hub.artifact}'")
-            )
-        if not hub.depends_on:
-            problems.append(Problem("error", where, "nothing flows into it"))
-    return problems
-
-
 def _check_graph() -> List[Problem]:
-    """Dangling edges, self-loops, cycles, redundant edges and cross-pipeline ones.
-
-    Hubs are nodes of the graph like steps: they depend on the steps whose
-    results they hold, and steps depend on them.
-    """
+    """Dangling edges, self-loops, cycles, redundant edges and cross-pipeline ones."""
     problems: List[Problem] = []
-    nodes: List[Union[spec.Step, spec.Hub]] = [*spec.STEPS, *spec.HUBS]
-    known = {node.id for node in nodes}
+    known = {step.id for step in spec.STEPS}
     edges: Dict[str, List[str]] = {}
 
-    for node in nodes:
-        noun = "hub" if isinstance(node, spec.Hub) else "step"
+    for node in spec.STEPS:
         targets: List[str] = []
         for dep in node.depends_on:
-            where = f"{noun} '{node.id}'"
+            where = f"step '{node.id}'"
             if dep.on not in known:
                 problems.append(
-                    Problem("error", where, f"depends on unknown node '{dep.on}'")
+                    Problem("error", where, f"depends on unknown step '{dep.on}'")
                 )
                 continue
             if dep.on == node.id:
@@ -183,16 +153,16 @@ def _check_graph() -> List[Problem]:
 
 
 def _check_groups() -> List[Problem]:
-    """Phases must name real nodes, claim each once, cover every step, and
+    """Phases must name real steps, claim each once, cover every step, and
     stay in one column.
 
     A group is drawn as one band across several layers, so a member from the
     other pipeline—or a step claimed twice—would have the layout reserving a
     column that cannot exist. A step in no phase would be the one node the
-    chart leaves unexplained, so every step must be claimed; a hub may be.
+    chart leaves unexplained, so every step must be claimed.
     """
     problems: List[Problem] = []
-    known = {step.id for step in spec.STEPS} | {hub.id for hub in spec.HUBS}
+    known = {step.id for step in spec.STEPS}
     owner: Dict[str, str] = {}
     seen_ids: Set[str] = set()
 
@@ -211,7 +181,7 @@ def _check_groups() -> List[Problem]:
         for step_id in group.steps:
             if step_id not in known:
                 problems.append(
-                    Problem("error", where, f"names unknown node '{step_id}'")
+                    Problem("error", where, f"names unknown step '{step_id}'")
                 )
                 continue
             if step_id in owner:
@@ -313,7 +283,6 @@ def check(codebase: Codebase) -> List[Problem]:
         if ids.count(step_id) > 1:
             problems.append(Problem("error", "spec", f"duplicate step id '{step_id}'"))
 
-    problems.extend(_check_hubs())
     problems.extend(_check_graph())
     problems.extend(_check_groups())
 
