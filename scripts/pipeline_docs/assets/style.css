@@ -2234,6 +2234,49 @@ figure.teaser > .cap {
   background: var(--rule-strong);
 }
 
+/* A reference to a pipeline step is underlined in the color of the step's
+   kind, the same hue its node is filled with in the figure, so a sentence
+   says which kind of step it names before the reader reaches the figure. The
+   line is solid rather than dotted because a dotted hairline carries too
+   little of a hue to be read as one; the marker takes the color too, so the
+   pair still reads as one control. */
+.stepref[data-kind] {
+  border-bottom: 2.5px solid var(--kind-color);
+}
+
+.stepref[data-kind] .figref-end::after {
+  border-color: var(--kind-color);
+}
+
+.stepref[data-kind]:hover,
+.stepref[data-kind]:focus-visible,
+.stepref[data-kind].is-lit {
+  border-bottom-color: var(--kind-color);
+}
+
+.stepref[data-kind]:hover .figref-end::after,
+.stepref[data-kind]:focus-visible .figref-end::after,
+.stepref[data-kind].is-lit .figref-end::after {
+  border-color: var(--kind-color);
+  background: var(--kind-color);
+}
+
+.stepref[data-kind="ai"] {
+  --kind-color: var(--kind-ai);
+}
+
+.stepref[data-kind="deterministic"] {
+  --kind-color: var(--kind-deterministic);
+}
+
+.stepref[data-kind="external"] {
+  --kind-color: var(--kind-external);
+}
+
+.stepref[data-kind="image"] {
+  --kind-color: var(--kind-image);
+}
+
 /* Flashed when the figure sends the reader to a mention of the selected part. */
 .figref.is-found {
   background: var(--surface);
@@ -2838,7 +2881,8 @@ figure.teaser > .cap {
 
   /* On paper a reference is only a phrase; the marker and the underline would
      point nowhere. */
-  .figref {
+  .figref,
+  .stepref[data-kind] {
     border-bottom: 0;
   }
 

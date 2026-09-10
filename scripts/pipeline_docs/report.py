@@ -650,7 +650,9 @@ def substitute_figrefs(
     A `step:` id points into a pipeline figure, at one step of it, resolved
     against the spec the figure is drawn from. Which figure follows from the
     step, since a step is drawn in exactly one pipeline column, so the prose
-    names the step and nothing else.
+    names the step and nothing else. The span also carries the step's kind,
+    which the stylesheet turns into an underline in the kind's color, so a
+    sentence shows which kind of step it names the way the figure's node does.
 
     A part that carries a concept contributes its glyph, drawn ahead of the
     phrase and hidden from assistive technology, since the words already say
@@ -699,6 +701,7 @@ def substitute_figrefs(
         return (
             f'<span role="button" tabindex="0" class="figref stepref" '
             f'data-step="{_escape(step_id)}" data-lane="{_escape(column)}" '
+            f'data-kind="{_escape(step.kind)}" '
             f'aria-label="{_escape(label)}—show the step '
             f"'{_escape(step.label)}' in the "
             f'{_escape(pipeline_spec.LANES[column]["label"].lower())} pipeline">'
