@@ -569,11 +569,29 @@ def substitute_citations(
             )
         return (
             f'<span class="cite" title="{_escape(fact.source)}" '
-            f'data-fact="{_escape(key)}">{_escape(fact.display)}</span>'
+            f'data-fact="{_escape(key)}">{cited_value(fact.display)}</span>'
         )
 
     substituted = _outside_fences(text, lambda line: CITATION.sub(replace, line))
     return substituted.replace("\\{{", "{{")
+
+
+def cited_value(display: str) -> str:
+    """A measurement that breaks across lines at its separators and nowhere else.
+
+    A citation is running text and wraps like the prose around it; set as one
+    unbreakable span, a list of model identifiers moved to the next line whole
+    and left a ragged gap behind it. A single value still never splits inside:
+    browsers take the hyphen in an identifier as a break opportunity, so each
+    value sits in a nowrap span together with the separator that follows it,
+    and a separator never starts a line.
+    """
+    values = _escape(display).split(", ")
+    last = len(values) - 1
+    return " ".join(
+        f'<span class="glued">{value}{"," if index < last else ""}</span>'
+        for index, value in enumerate(values)
+    )
 
 
 def concept_glyph(concept_id: str, cls: str = "glyph") -> str:
