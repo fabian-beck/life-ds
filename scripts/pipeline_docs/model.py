@@ -242,6 +242,7 @@ def build_payload(
                 "model": model_value,
                 "model_source": model_source,
                 "model_note": step.model_note,
+                "byline": step.byline,
                 "effort": efforts[0] if efforts else None,
                 "schemas": list(dict.fromkeys(names)),
                 "spec_summary": step.summary,

@@ -1237,10 +1237,15 @@
         });
 
         if (M.FACT_UP) {
-          const facts = [DATA.kinds[step.kind].label];
+          // The kind alone names nothing for a step that calls no model, so
+          // such a step prints its byline instead: the service it asks, the
+          // rule it applies. The color bar still carries the kind.
+          const facts = [step.byline || DATA.kinds[step.kind].label];
+          // The model before the per-run marker, so that a line the node has
+          // to cut loses the marker rather than the model.
+          if (step.model) facts.push(step.model.split(" (")[0]);
           if (step.calls_per_run && step.calls_per_run !== "1")
             facts.push("×N");
-          if (step.model) facts.push(step.model.split(" (")[0]);
           const factLine = svg("text", {
             class: "metric",
             x: M.LABEL_PAD,

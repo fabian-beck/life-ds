@@ -696,6 +696,26 @@ class PayloadAndRenderTests(unittest.TestCase):
                 self.assertTrue(dep["data"])
         self.assertTrue(by_id["p_translate"]["depends_on"])
 
+    def test_steps_without_a_model_carry_a_byline(self) -> None:
+        """The figure prints a byline where a kind alone would say nothing."""
+        for step in spec.STEPS:
+            if step.kind in (spec.CODE, spec.EXTERNAL):
+                self.assertTrue(step.byline, f"step '{step.id}' has no byline")
+                assert step.byline is not None
+                self.assertLessEqual(len(step.byline), validate.BYLINE_MAX)
+        by_id = {step["id"]: step for step in self.payload["steps"]}
+        self.assertEqual(by_id["p_geocode"]["byline"], "Nominatim geocoder")
+
+    def test_a_step_without_a_model_and_without_a_byline_fails(self) -> None:
+        step = next(item for item in spec.STEPS if item.id == "p_geocode")
+        original = step.byline
+        step.byline = None
+        try:
+            messages = [str(problem) for problem in validate.check(_codebase())]
+            self.assertTrue(any("has no byline" in message for message in messages))
+        finally:
+            step.byline = original
+
     def test_ai_steps_carry_a_model_and_a_schema_or_prompt(self) -> None:
         """The page prints no prompt, but a step still has to have one.
 
