@@ -2289,8 +2289,7 @@ figure.teaser > .cap {
    question on demand and in place; laying the answer out for every step at once
    would bury the report it belongs to. The print rules at the foot of this file
    are what bring it back. */
-.appendix,
-.toc-appendix {
+.appendix {
   display: none;
 }
 
@@ -2420,12 +2419,16 @@ figure.teaser > .cap {
     print-color-adjust: exact;
   }
 
-  /* Chrome that offers an interaction paper cannot take. */
+  /* Chrome that offers an interaction paper cannot take. The contents lists
+     are navigation of the same kind—the rail, the button, and the inline list
+     at narrow widths all jump to a section—and a printed document is read from
+     its numbered headings, so none of them goes on paper. */
   .skip,
   .rail,
-  .steptip,
+  .toc,
   .toc-fab,
   .toc-pop,
+  .steptip,
   .figpeek,
   .note-pop,
   .teaser-status {
@@ -2472,17 +2475,6 @@ figure.teaser > .cap {
     color: var(--muted);
     font-family: var(--sans);
     font-size: 11px;
-  }
-
-  /* Both contents lists are ordinary document content on paper: the rail is
-     gone, so this is the only one left. */
-  .toc {
-    display: block;
-    break-inside: avoid;
-  }
-
-  .toc-appendix {
-    display: list-item;
   }
 
   /* Keep a heading with what it introduces, and never leave one line of a

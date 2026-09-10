@@ -441,7 +441,7 @@ npm run report:pdf -- --out some.pdf   # somewhere else
 
 The script prints whatever `generate_report.py` last wrote, so rebuild the page first if the pipeline or the prose has changed.
 
-Both routes render the same `@media print` rules at the foot of `assets/style.css`, whose job is that nothing on paper is missing:
+Both routes render the same `@media print` rules at the foot of `assets/style.css`. They drop the page's navigation—the rail, the contents button, and the inline contents list, which on paper would only duplicate the numbered headings—and otherwise their job is that nothing on paper is missing:
 
 - **Nothing clipped.** The wide figures and tables scroll inside their own boxes on screen, which on paper is a silent truncation. Print opens every scroll container, drops the screen-only table minimum, and fits each pipeline graph to the sheet by overriding the pixel size `app.js` measured it at.
 - **Nothing behind an interaction.** Every `<details>` is opened before printing (`bindPrintDisclosure` in `app.js` for the browser, the export script itself for headless runs, since the DevTools protocol never fires `beforeprint`), and the step note's material is laid out as an appendix.
