@@ -13,7 +13,7 @@
    Both pipelines are drawn, as two subsections rather than two tabs, so the
    report reads straight through and either chart can be cited from anywhere in
    the prose. Each chart is an independent instance with its own filters, search
-   and selection; the step drawer is shared, and opening it from one chart clears
+   and selection; the step note is shared, and opening it from one chart clears
    the other's selection. Color encodes the step kind and nothing else.
 
    The chart is a layered DAG, not a sequence. A step's layer is the longest
@@ -170,7 +170,7 @@
      Set between them, so neither kind is a special case. */
   const MARGIN_FIGURE_MAX = 500;
 
-  // Live chart instances, so the shared drawer can clear the selection in the
+  // Live chart instances, so the shared step note can clear the selection in the
   // chart the reader did *not* click.
   const charts = [];
 
@@ -372,7 +372,7 @@
     return group;
   }
 
-  // The drawer builds its rows as markup, so the same mark is needed as a
+  // The step note builds its rows as markup, so the same mark is needed as a
   // string. Path data is authored in `concepts.py`, but it still goes through
   // the escape used for everything else that reaches innerHTML.
   function glyphHtml(path, cls) {
@@ -469,7 +469,7 @@
     // a drawing that scales to its column, and whether it carries only the name.
     const reduced = size !== "full";
     const compact = size === "compact";
-    // Declared up front so `select` can name the instance the drawer belongs to
+    // Declared up front so `select` can name the instance the step note belongs to
     // before the instance is finished being built.
     const instance = { lane: laneId, size: size, host: host };
     const state = {
@@ -1510,7 +1510,7 @@
          model are one line of small type each, and three of those in a
          104-unit box is a grey block rather than a label. What is
          left out of either is still on the node—in its tooltip and its
-         accessible name—and set out in full in the drawer and the modal. */
+         accessible name—and set out in full in the step note and the modal. */
       if (reduced) {
         // Measured once per step: the node's width never changes within an
         // instance, and `draw` runs again on every selection.
@@ -1583,7 +1583,7 @@
       facts.push(DATA.kinds[step.kind].label);
       if (step.lane === "shared") facts.push("shared");
       if (step.calls_per_run && step.calls_per_run !== "1") facts.push("×N");
-      // Bare model id only—where it was resolved from belongs in the drawer.
+      // Bare model id only—where it was resolved from belongs in the step note.
       if (step.model) facts.push(truncateLabel(step.model.split(" (")[0], 18));
       const factLine = svg("text", { class: "metric", x: 16, y: 55 });
       factLine.textContent = truncateLabel(facts.join(" · "), 40);
@@ -1746,6 +1746,9 @@
       // so a reader who has tabbed to the button still has it under the cursor
       // after a filter redraws the figure.
       if (expand) captionNode.appendChild(expand);
+      // A redraw replaces the node the note is anchored to, or filters it
+      // away; either way the note is placed again against what is drawn now.
+      placeStepTip();
     }
 
     /* ------------------------------------------------------------- mount */
@@ -1753,9 +1756,11 @@
     function select(stepId) {
       if (!stepById[stepId]) return;
       state.selected = stepId;
-      openDrawer(stepById[stepId], instance);
       markStepRefs(stepId);
+      // Drawn first: the note is anchored to the selected node, which exists
+      // only once the figure has been redrawn with the selection.
       draw();
+      openStepTip(stepById[stepId], instance);
     }
 
     search.addEventListener("input", () => {
@@ -1832,7 +1837,7 @@
     instance.refit = refit;
     // A chart can be replaced—the page crossing into the compact size, or the
     // modal closing—and a dead instance left in `charts` would go on drawing
-    // into a detached node every time the drawer cleared the other selection.
+    // into a detached node every time the step note cleared the other selection.
     instance.destroy = function () {
       const index = charts.indexOf(instance);
       if (index !== -1) charts.splice(index, 1);
@@ -1863,10 +1868,10 @@
 
   /* A `[[step:id]]` in the prose compiles to a `.figref` carrying the step and
      the pipeline it is drawn in, and pressing it does what pressing the node
-     does: the step is selected in the figure and the drawer opens on it. This
+     does: the step is selected in the figure and its note opens on it. This
      is what lets an account of what a pipeline does name its steps without
      restating them—the sentence says why the step is there, and the figure and
-     the drawer keep what it is, which model it calls and what it reads. */
+     the note keep what it is, which model it calls and what it reads. */
 
   function chartForLane(laneId) {
     let inline = null;
@@ -1930,7 +1935,7 @@
       if (!chart) return;
       const stepId = ref.getAttribute("data-step");
       if (chart.selected() === stepId) {
-        closeDrawer();
+        closeStepTip();
         return;
       }
       chart.select(stepId);
@@ -1938,7 +1943,7 @@
     });
   }
 
-  /* ------------------------------------------------------------- drawer */
+  /* --------------------------------------------------------- step entry */
 
   function schemaBlock(name) {
     const schema = DATA.schemas[name];
@@ -1995,7 +2000,7 @@
   }
 
   /* The record an entry prints beside its description, each value as markup.
-     Two readers use it. The drawer lays it out as a two-column table for one
+     Two readers use it. The step note lays it out as a two-column table for one
      step at a time, and the print appendix as the columns of one table with a
      row per step, so both say the same thing about a step.
 
@@ -2030,7 +2035,7 @@
     return summary.description || step.spec_summary;
   }
 
-  /* Everything the drawer holds for one step, written into `body`: the
+  /* Everything the step note holds for one step, written into `body`: the
      description, then the record. The description is written by a language
      model from the step's source; that the report's prose is AI-written is
      said once, in the statement on AI use after the references, rather than
@@ -2051,31 +2056,124 @@
     body.appendChild(table);
   }
 
-  function renderDrawer(step) {
-    const head = document.getElementById("drawer-title");
-    head.textContent = step.label;
-    const body = document.getElementById("drawer-body");
-    clear(body);
-    stepDetail(body, step);
-    body.scrollTop = 0;
+  /* ----------------------------------------------------------- step note */
+
+  /* The entry of the selected step, as a note anchored to its node. One note
+     serves both charts and the full chart in the modal, because two open at
+     once would ask the reader which figure they are looking at; `owner` is the
+     chart that raised it, and every other chart drops its selection so only
+     one node on the page is ever highlighted.
+
+     The note is placed above the node where there is room and below it
+     otherwise, kept inside the viewport, and placed again on every scroll and
+     resize while it is open, so it follows the node through the figure's own
+     scroller and the page's. It is fixed to the viewport rather than absolute
+     in the page because the full chart is a fixed layer of its own. */
+  const tipState = { owner: null };
+
+  function stepTip() {
+    return document.getElementById("steptip");
   }
 
-  /* The drawer is one panel shared by both charts, because two open at once
-     would ask the reader which half of the page they are looking at. `owner` is
-     the chart that raised it; every other chart drops its selection so only one
-     node on the page is ever highlighted. */
-  function openDrawer(step, owner) {
+  function renderStepTip(step) {
+    document.getElementById("steptip-title").textContent = step.label;
+    const body = document.getElementById("steptip-body");
+    clear(body);
+    stepDetail(body, step);
+  }
+
+  function openStepTip(step, owner) {
     charts.forEach((chart) => {
       if (chart !== owner) chart.clearSelection();
     });
-    renderDrawer(step);
-    document.getElementById("drawer").classList.add("open");
+    tipState.owner = owner;
+    renderStepTip(step);
+    stepTip().hidden = false;
+    placeStepTip();
   }
 
-  function closeDrawer() {
-    document.getElementById("drawer").classList.remove("open");
+  function closeStepTip() {
+    stepTip().hidden = true;
+    tipState.owner = null;
     charts.forEach((chart) => {
       chart.clearSelection();
+    });
+  }
+
+  function stepTipIsOpen() {
+    return !stepTip().hidden;
+  }
+
+  /* The node the note belongs to, or null once the figure no longer draws it:
+     a filter can hide the selected step, and closing the full chart destroys
+     the drawing it was pressed in. */
+  function stepTipAnchor() {
+    const host = tipState.owner && tipState.owner.host;
+    if (!host || !host.isConnected) return null;
+    return host.querySelector(".node.selected");
+  }
+
+  function placeStepTip() {
+    const tip = stepTip();
+    if (tip.hidden) return;
+    const node = stepTipAnchor();
+    if (!node) {
+      closeStepTip();
+      return;
+    }
+    const box = node.getBoundingClientRect();
+    // A node scrolled out of the figure's own scroller is not on screen even
+    // though its box has coordinates; the note waits until it comes back.
+    const scroller = node.closest ? node.closest(".chart-scroll") : null;
+    const frame = scroller
+      ? scroller.getBoundingClientRect()
+      : { left: 0, right: window.innerWidth };
+    const onScreen = box.right > frame.left && box.left < frame.right;
+    tip.style.visibility = onScreen ? "" : "hidden";
+    if (!onScreen) return;
+
+    const margin = 8;
+    const gap = 10;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const width = tip.offsetWidth;
+    const height = tip.offsetHeight;
+    let left = box.left + box.width / 2 - width / 2;
+    left = Math.max(margin, Math.min(left, viewportWidth - width - margin));
+    let top = box.top - height - gap;
+    let side = "above";
+    if (top < margin) {
+      top = box.bottom + gap;
+      side = "below";
+    }
+    // Room on neither side: keep the note in view and let it cover the node
+    // rather than run off the sheet.
+    if (top + height > viewportHeight - margin) {
+      top = Math.max(margin, viewportHeight - height - margin);
+    }
+    tip.style.left = left + "px";
+    tip.style.top = top + "px";
+    tip.setAttribute("data-side", side);
+  }
+
+  function bindStepTip() {
+    document.getElementById("steptip-close").addEventListener("click", () => {
+      closeStepTip();
+    });
+    window.addEventListener("resize", placeStepTip);
+    // Capturing, so a scroll inside the figure's scroller, which does not
+    // bubble, places the note as well as a scroll of the page.
+    document.addEventListener("scroll", placeStepTip, true);
+    // A press anywhere else closes the note. A node or a step reference is
+    // left to its own handler, which selects or toggles; the note itself is
+    // where the reader may be selecting text.
+    document.addEventListener("click", (event) => {
+      if (!stepTipIsOpen()) return;
+      const inside = event.target.closest
+        ? event.target.closest("#steptip, .node, .figref[data-step]")
+        : null;
+      if (inside) return;
+      closeStepTip();
     });
   }
 
@@ -2125,6 +2223,8 @@
 
   function closeChartModal() {
     const modal = chartModal();
+    // The note is anchored in the drawing about to be destroyed.
+    if (tipState.owner && tipState.owner === modalState.chart) closeStepTip();
     if (modalState.chart) {
       modalState.chart.destroy();
       modalState.chart = null;
@@ -4340,13 +4440,13 @@
   /* ----------------------------------------------------- print appendix */
 
   /* On screen, what a step does and the record read out of its source are one
-     click away in the drawer. Paper has no click, so a printed report that
+     click away in the step note. Paper has no click, so a printed report that
      stopped at the figures would be missing the material the figures are an
      index to. This builds that material as an appendix: every step, in the
-     order the pipelines run them, with the drawer's own content.
+     order the pipelines run them, with the step note's own content.
 
      It is print-only. On screen it would double the length of the page to say
-     what the drawer already says on demand, so the stylesheet hides it and the
+     what the step note already says on demand, so the stylesheet hides it and the
      print rules bring it back. `?appendix=0` skips building it at all, for a
      PDF that is meant to stay short. */
 
@@ -4424,7 +4524,7 @@
           "them: what the step does, what it reads and what it leaves " +
           "behind, and the model, reasoning effort, and number of calls " +
           "read out of its source. In the interactive report this is the " +
-          "panel that opens when a step in Figure 2 or Figure 3 is clicked.",
+          "note that opens when a step in Figure 2 or Figure 3 is clicked.",
       })
     );
 
@@ -4814,28 +4914,26 @@
     });
   }
 
-  document
-    .getElementById("drawer-close")
-    .addEventListener("click", closeDrawer);
+  bindStepTip();
   document
     .getElementById("chart-modal-close")
     .addEventListener("click", closeChartModal);
-  // No click-outside to bind: the panel now covers the whole viewport, so there
-  // is no outside. Escape and the close button are the ways back.
-  // One Escape, one layer: the drawer opens over the modal, so it closes first
-  // and a second press closes the chart behind it.
+  // No click-outside to bind for the modal: the panel covers the whole
+  // viewport, so there is no outside. Escape and the close button are the ways
+  // back. One Escape, one layer: the step note opens over the modal, so it
+  // closes first and a second press closes the chart behind it.
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
     clearTeaserFocus();
-    if (document.getElementById("drawer").classList.contains("open")) {
-      closeDrawer();
+    if (stepTipIsOpen()) {
+      closeStepTip();
       return;
     }
     if (chartModalIsOpen()) {
       closeChartModal();
       return;
     }
-    closeDrawer();
+    closeStepTip();
   });
 
   renderMetaRow();

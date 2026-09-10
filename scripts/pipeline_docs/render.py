@@ -92,13 +92,16 @@ __DISCLAIMER__
 </button>
 <nav class="toc-pop" id="toc-pop" aria-label="Contents" hidden></nav>
 
-<aside class="drawer" id="drawer" aria-label="Step details">
-  <div class="drawer-head">
-    <h2 id="drawer-title">Step</h2>
-    <button class="drawer-close" id="drawer-close" type="button" aria-label="Close details">&times;</button>
+<!-- The entry of the selected step, as a note anchored to its node in
+     whichever figure it is drawn in. `app.js` fills it and places it on every
+     scroll and resize while it is open. -->
+<div class="steptip" id="steptip" role="dialog" aria-label="Step details" hidden>
+  <div class="steptip-head">
+    <h2 id="steptip-title">Step</h2>
+    <button class="steptip-close" id="steptip-close" type="button" aria-label="Close details">&times;</button>
   </div>
-  <div class="drawer-body" id="drawer-body"></div>
-</aside>
+  <div class="steptip-body" id="steptip-body"></div>
+</div>
 
 <!-- Where the pipeline figures keep the detail the compact drawing gives up on
      a narrow display: the full chart, over the whole viewport, built by app.js
@@ -107,7 +110,7 @@ __DISCLAIMER__
   <div class="chart-modal-panel">
     <div class="chart-modal-head">
       <h2 id="chart-modal-title">Pipeline</h2>
-      <button class="drawer-close" id="chart-modal-close" type="button" aria-label="Close the full chart">&times;</button>
+      <button class="panel-close" id="chart-modal-close" type="button" aria-label="Close the full chart">&times;</button>
     </div>
     <div class="chart-modal-body" id="chart-modal-body"></div>
   </div>

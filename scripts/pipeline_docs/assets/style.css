@@ -39,7 +39,7 @@
          the document rather than text in it
      13  tables, captions, controls and code: the smallest size read as prose
      14  apparatus—notes, references, the printed step details
-     15  supporting prose—a callout, the drawer
+     15  supporting prose—a callout, the step note
      16  running text, the abstract and lede that open it, and `h4`, the one
          heading that takes its rank from weight and number rather than size
      18  the subtitle; 19, 25 and a clamped 30–44 for the headings above it
@@ -1121,7 +1121,7 @@ p.cap {
   color: var(--ink);
 }
 
-/* A named artifact in the step drawer: the concept's mark, then what the
+/* A named artifact in the step note: the concept's mark, then what the
    artifact is called. */
 .artifact-ref {
   display: inline-flex;
@@ -1563,44 +1563,77 @@ figure.figure > .cap {
   fill: var(--surface);
 }
 
-/* ---------------------------------------------------------------- drawer */
+/* ------------------------------------------------------------- step note */
 
-.drawer {
+/* The entry of the selected step, as a note anchored to its node: above the
+   node where there is room, below it otherwise, never wider than the
+   viewport. `app.js` places it on every scroll and resize while it is open. A
+   note rather than a side panel, because the entry is a paragraph and five
+   rows: a panel the height of the viewport was mostly empty, and it covered
+   the figure the step was pressed in. */
+.steptip {
   position: fixed;
   z-index: 60;
   top: 0;
-  right: 0;
-  display: flex;
-  overflow: hidden;
-  width: min(560px, 100%);
-  height: 100%;
-  border-left: 1px solid var(--rule-strong);
+  left: 0;
+  width: min(380px, calc(100vw - 16px));
+  padding: 10px 12px 6px;
+  border: 1px solid var(--rule-strong);
   background: var(--paper);
-  flex-direction: column;
-  transform: translateX(102%);
-  transition: transform 0.18s ease;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 14%);
+  font-size: 13px;
+  line-height: 1.45;
 }
 
-.drawer.open {
-  transform: none;
+.steptip[hidden] {
+  display: none;
 }
 
-.drawer-head {
+.steptip-head {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: flex-start;
-  padding: 16px 20px 12px;
-  border-bottom: 1px solid var(--rule-strong);
+  margin-bottom: 6px;
 }
 
-.drawer-head h2 {
+.steptip-head h2 {
   margin: 0;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
-.drawer-close {
+.steptip-close {
+  margin: -4px -6px 0 auto;
+  padding: 0 6px;
+  border: 0;
+  background: none;
+  color: var(--ink-2);
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.steptip-body p {
+  margin: 0 0 8px;
+}
+
+.steptip .facts {
+  font-size: 12px;
+}
+
+.steptip .facts th {
+  width: 34%;
+  padding: 3px 8px 3px 0;
+}
+
+.steptip .facts td {
+  padding: 3px 0;
+}
+
+.panel-close {
   margin-left: auto;
   padding: 0 8px;
   border: 1px solid var(--rule);
@@ -1610,23 +1643,6 @@ figure.figure > .cap {
   font-size: 20px;
   line-height: 1.5;
   cursor: pointer;
-}
-
-.drawer-body {
-  overflow-y: auto;
-  padding: 16px 20px 60px;
-  font-size: 15px;
-}
-
-.drawer-body p {
-  margin: 0 0 14px;
-}
-
-.drawer-body p.sub,
-.drawer-body .inner p.sub {
-  color: var(--muted);
-  font-family: var(--sans);
-  font-size: 12px;
 }
 
 .facts {
@@ -1754,9 +1770,9 @@ details.block .inner {
    had; inset in a lit backdrop it would hand back the very margin it was opened
    to reclaim, and draw a second border around a figure that already has one.
 
-   It sits below the drawer, not above it: a step opened from the modal has to
-   be readable without the modal being closed first, so the drawer slides in
-   over this. */
+   It sits below the step note, not above it: a step pressed in the modal has
+   to be readable without the modal being closed first, so the note opens over
+   this. */
 .chart-modal {
   position: fixed;
   z-index: 50;
@@ -1799,7 +1815,7 @@ body.modal-open {
   font-weight: 600;
 }
 
-.chart-modal-head .drawer-close {
+.chart-modal-head .panel-close {
   align-self: center;
 }
 
@@ -2499,8 +2515,8 @@ figure.teaser > .cap {
 
 /* -------------------------------------------------------- print appendix */
 
-/* Built by `app.js` from the same record that fills the drawer, and carried
-   on the page for the printer's sake alone. On screen the drawer answers this
+/* Built by `app.js` from the same record that fills the step note, and carried
+   on the page for the printer's sake alone. On screen the note answers this
    question on demand and in place; laying the answer out for every step at once
    would bury the report it belongs to. The print rules at the foot of this file
    are what bring it back. */
@@ -2566,10 +2582,6 @@ figure.teaser > .cap {
 }
 
 @media (width <= 720px) {
-  .drawer {
-    width: 100%;
-  }
-
   .report {
     max-width: none;
   }
@@ -2602,7 +2614,7 @@ figure.teaser > .cap {
    container is therefore opened and every figure is fitted to the page.
 
    Nothing may be behind an interaction. A `<details>` is opened before
-   printing, the drawer's material is laid out as an appendix, and the controls
+   printing, the step note's material is laid out as an appendix, and the controls
    that would ask for a click—search, filters, the contents button—are dropped,
    since they promise something paper cannot deliver.
 
@@ -2644,7 +2656,7 @@ figure.teaser > .cap {
   .rail,
   .toolbar,
   .hint,
-  .drawer,
+  .steptip,
   .chart-modal,
   .cap .expand,
   .toc-fab,
@@ -2890,7 +2902,7 @@ figure.teaser > .cap {
     content: none;
   }
 
-  /* The appendix the drawer stands in for on screen. It opens a page of its
+  /* The appendix the step note stands in for on screen. It opens a page of its
      own and is one table, a row per step, set a step smaller than the other
      tables so that eight columns fit the sheet and a row stays a few lines
      tall. The column widths are fixed, since the auto layout would give the

@@ -279,7 +279,7 @@ class WrittenExplanationTests(unittest.TestCase):
     """The generated half of the step record, held to the measured half.
 
     A summary is written from the step's source, so a stale model name in a
-    comment can reach the page as a claim—one did, and the drawer printed it
+    comment can reach the page as a claim—one did, and the step note printed it
     beside the resolved model that contradicted it.
     """
 
@@ -330,7 +330,7 @@ class WrittenExplanationTests(unittest.TestCase):
         )
         self.assertEqual([], problems)
 
-    def test_the_drawer_does_not_attribute_each_explanation(self) -> None:
+    def test_the_step_note_does_not_attribute_each_explanation(self) -> None:
         """AI use is disclosed once, after the references, not under every step."""
         script = (ASSETS / "app.js").read_text(encoding="utf-8")
         detail = script[script.index("function stepDetail") :]
@@ -748,7 +748,7 @@ class PayloadAndRenderTests(unittest.TestCase):
         self.assertEqual(len(claimed), len(payload["call_sites"]))
 
     def test_the_shell_carries_every_element_the_script_reaches_for(self) -> None:
-        """`app.js` wires the drawer and the chart modal up on load.
+        """`app.js` wires the step note and the chart modal up on load.
 
         Every one of those lookups is unconditional, so an element dropped from
         the template in `render.py` would not degrade the page—it would throw
@@ -2041,7 +2041,7 @@ class PrintTests(unittest.TestCase):
     of saying it, so a container that clips on screen and is neither reopened nor
     hidden for print silently drops whatever it was holding. The same goes for
     the step details: they reach paper only because the appendix is built from
-    the very function that fills the drawer.
+    the very function that fills the step note.
     """
 
     @classmethod
@@ -2111,10 +2111,10 @@ class PrintTests(unittest.TestCase):
         for body in floats:
             self.assertIn("float: none", body)
 
-    def test_the_appendix_is_the_drawer(self) -> None:
-        """One record, so a new fact in the drawer reaches the PDF for free.
+    def test_the_appendix_is_the_step_note(self) -> None:
+        """One record, so a new fact in the step note reaches the PDF for free.
 
-        The drawer lays the record out as a two-column table, the appendix as
+        The note lays the record out as a two-column table, the appendix as
         the columns of a table with a row per step; both read `stepRecord`.
         """
         self.assertIn("function stepRecord(", self.js)
