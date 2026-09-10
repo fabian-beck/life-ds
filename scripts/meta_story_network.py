@@ -17,10 +17,10 @@ files: node labels are person names (kept in the original language per the
 translation rules) and ``relationship_type`` is localized by the UI. Only the
 optional ``relationship_description`` falls back to English in other languages.
 
-The one exception is ``social_network.narration`` — the AI-written story texts
-for the network's clusters (see ``derive_clusters`` below and Phase 6 of
-``generate_meta_story.py``) — which is prose and part of the translation
-payload.
+The one exception is ``social_network.narration`` — the network's clusters
+("circles"), each stored with its main members and an AI-written story text
+(see ``derive_clusters`` below and Phase 6 of ``generate_meta_story.py``) —
+whose prose is part of the translation payload.
 """
 
 from __future__ import annotations
@@ -317,12 +317,14 @@ def build_social_network(
 
 
 # ---------------------------------------------------------------------------
-# Cluster ("circle") derivation — must mirror src/utils/networkClusters.js
+# Cluster ("circle") derivation
 # ---------------------------------------------------------------------------
 
-# Tie strength weights and the boost for direct main↔main links (see the JS
-# counterpart for why the boost exists: without it two main people sharing many
-# acquaintances become hubs that modularity prefers to split apart).
+# Tie strength weights and the boost for direct main↔main links. Without the
+# boost, two main people who share many acquaintances become such heavy hubs
+# that modularity prefers splitting them apart (e.g. a married couple, each
+# with their own half of a shared court), even though their direct bond is the
+# story's strongest tie.
 _STRENGTH_WEIGHT = {"strong": 3, "moderate": 2, "weak": 1}
 _MAIN_LINK_BOOST = 3
 
@@ -337,7 +339,15 @@ def _pair_key(a: str, b: str) -> str:
 
 
 def _detect_communities(links: List[Dict[str, Any]]) -> List[set]:
-    """Greedy modularity merging (CNM), deterministic. Mirrors the JS version."""
+    """Greedy modularity merging (CNM), deterministic.
+
+    Every node starts as its own community and the pair of connected
+    communities with the highest modularity gain is merged until no merge
+    improves modularity. Iterating keys in sorted order keeps the result
+    independent of input ordering. The graphs are tiny (< 25 nodes), so the
+    O(n³) greedy approach is fast enough and, unlike label propagation, fully
+    deterministic. Unconnected nodes never form a community.
+    """
     community_of: Dict[str, str] = {}
     members: Dict[str, set] = {}
     degree: Dict[str, float] = {}
@@ -393,10 +403,13 @@ def _detect_communities(links: List[Dict[str, Any]]) -> List[set]:
 def derive_clusters(network: Dict[str, Any]) -> List[Dict[str, Any]]:
     """Derive the ordered clusters ("circles") the UI narrates while scrolling.
 
-    Mirrors ``computeClusters`` in ``src/utils/networkClusters.js`` — same
-    weights, same deterministic greedy modularity, same roughly-temporal
-    ordering — so a cluster ``key`` computed here always matches the key the
-    UI computes at runtime (narration texts are matched by that key).
+    This is the only place the circles are detected. Phase 6 stores each
+    cluster's main members as ``member_ids`` in the narration, and the client
+    (``computeClusters`` in ``src/utils/networkClusters.js``) resolves those
+    stored members against the graph rather than repeating the detection. The
+    cluster ``key`` is the main ids in birth-year order joined with ``+``;
+    narration texts are matched by that key. Clusters are ordered roughly by
+    the mean birth year of their main members.
     """
     nodes = network.get("nodes") or []
     all_links = network.get("links") or []

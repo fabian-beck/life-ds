@@ -1,11 +1,11 @@
 {
   "steps": {
     "m_clusters": {
-      "fingerprint": "67f8430a8b72624b",
+      "fingerprint": "924a4d429732713c",
       "summary": {
-        "description": "Groups the reviewed graph into circles that organize the story’s scroll. It uses the same deterministic community rule as the client, so narration stays attached to the circle shown on screen. It orders circles by the main people’s birth years and retains their internal ties.",
+        "description": "Finds connected circles in the reviewed graph and keeps circles anchored by main people. It orders them by the members’ birth years, giving the narration a stable path through the story.",
         "input": "the reviewed graph",
-        "output": "ordered story circles and their internal ties",
+        "output": "ordered circles of people and links",
         "source": "gpt-5.6-terra"
       }
     },
@@ -73,11 +73,11 @@
       }
     },
     "m_p6": {
-      "fingerprint": "b7335826374ab839",
+      "fingerprint": "9a6e1359f5ae9a73",
       "summary": {
-        "description": "Turns each detected social circle into a short factual card story. It grounds the prose in recorded ties and keeps every circle in the network’s derived order. The cards preserve a readable account of the relationships when later composition is skipped.",
+        "description": "Turns each detected circle into a short factual card that explains the ties among its main people and acquaintances. It keeps the detected members with each card, so the interface can resolve the same circles without running detection again.",
         "input": "the detected circles and their ties",
-        "output": "a card story for each circle",
+        "output": "a narrated card for each circle",
         "source": "gpt-5.6-terra"
       }
     },

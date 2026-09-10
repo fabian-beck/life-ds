@@ -276,15 +276,15 @@
     network.links.length > 0;
 
   // --- Scroll narration ("circles") ----------------------------------------
-  // Clusters derived from the network, ordered roughly by time. Each gets a
-  // card that scrolls over the pinned graph and highlights its members.
+  // Clusters resolved from the circles the pipeline stored in the narration,
+  // in stored order. Each gets a card that scrolls over the pinned graph and
+  // highlights its members.
   $: clusters = hasNetwork ? computeClusters(network) : [];
   $: nodeById = new Map(hasNetwork ? network.nodes.map((n) => [n.id, n]) : []);
 
   // Story texts authored by the generation pipeline (social_network.narration),
   // matched to clusters by key. A card shows its cluster's story text; only
-  // when a text is missing (e.g. clusters changed since narration was written)
-  // does it fall back to listing the ties.
+  // when a text is missing does it fall back to listing the ties.
   $: narrationTexts = new Map(
     (network?.narration?.circles || []).map((c) => [c.key, c.text])
   );
