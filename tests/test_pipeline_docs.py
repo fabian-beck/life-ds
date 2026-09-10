@@ -290,8 +290,9 @@ class WrittenExplanationTests(unittest.TestCase):
     def _summaries(self, text: str, source: str = "gpt-5.6-terra") -> dict:
         return {
             self.step.id: {
-                "what_it_does": text,
-                "why_this_design": "",
+                "description": text,
+                "input": "",
+                "output": "",
                 "source": source,
             }
         }
@@ -314,6 +315,13 @@ class WrittenExplanationTests(unittest.TestCase):
             self.codebase, self._summaries(f"Calls {resolved} through the API.")
         )
         self.assertEqual([], problems)
+
+    def test_a_model_named_in_the_input_phrase_fails_the_build(self) -> None:
+        summaries = self._summaries("Writes a palette.")
+        summaries[self.step.id]["input"] = "the GPT-5.1 style brief"
+        problems = validate.check_summaries(self.codebase, summaries)
+        self.assertEqual(1, len(problems))
+        self.assertIn("GPT-5.1", problems[0].message)
 
     def test_hand_written_text_is_the_maintainers_own_claim(self) -> None:
         problems = validate.check_summaries(
@@ -354,8 +362,9 @@ class ExplanationFreshnessTests(unittest.TestCase):
                         self.step.id: {
                             "fingerprint": fingerprint,
                             "summary": {
-                                "what_it_does": "Writes a palette.",
-                                "why_this_design": "",
+                                "description": "Writes a palette.",
+                                "input": "the article",
+                                "output": "a palette",
                                 "source": "gpt-5.6-terra",
                             },
                         }
@@ -2103,9 +2112,14 @@ class PrintTests(unittest.TestCase):
             self.assertIn("float: none", body)
 
     def test_the_appendix_is_the_drawer(self) -> None:
-        """One builder, so a new fact in the drawer reaches the PDF for free."""
-        self.assertIn("function stepDetail(", self.js)
-        self.assertEqual(2, self.js.count("stepDetail(body, step);"))  # both
+        """One record, so a new fact in the drawer reaches the PDF for free.
+
+        The drawer lays the record out as a two-column table, the appendix as
+        the columns of a table with a row per step; both read `stepRecord`.
+        """
+        self.assertIn("function stepRecord(", self.js)
+        self.assertEqual(2, self.js.count("stepRecord(step);"))  # both
+        self.assertEqual(2, self.js.count("stepDescription(step) }"))  # both
         self.assertIn("renderStepAppendix();", self.js)
 
     def test_the_export_script_waits_for_the_page_to_finish(self) -> None:

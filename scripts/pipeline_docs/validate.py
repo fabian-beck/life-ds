@@ -352,9 +352,11 @@ def check_summaries(
             and call.script == step.script.rsplit("/", 1)[-1]
             and call.function.split(".")[-1] == step.function
         }
+        # Every written field is published text; `source` names the writer.
         parts: List[str] = [
-            str(summary.get("what_it_does") or ""),
-            str(summary.get("why_this_design") or ""),
+            str(value)
+            for key, value in summary.items()
+            if key != "source" and isinstance(value, str)
         ]
         for name in sorted(set(MODEL_NAME.findall(" ".join(parts)))):
             if name.lower().replace(" ", "-") in resolved:

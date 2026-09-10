@@ -7,10 +7,12 @@ rebuild only pays for the steps that actually changed—the same
 staleness-by-fingerprint idea the translation pipeline uses for person data.
 
 The summarizer reads the source but does not paraphrase it. What it writes is
-a report entry: what the step contributes and why it is built that way, at the
-level the surrounding prose argues at. Character budgets, field inventories,
-and the counts a prompt happens to state are below that level, and the record
-printed beside the text carries what is measurable anyway.
+a report entry: two or three plain sentences on what the step contributes and,
+where one stands out, why it is built that way, plus a phrase each for what it
+reads and what it leaves behind. Character budgets, field inventories, and the
+counts a prompt happens to state are below that level, and the record printed
+beside the text carries the model, its reasoning effort, and the number of
+calls anyway.
 
 Without an API key (or with `--skip-ai`) the build falls back to the
 hand-written one-liners in `spec.py`, so the chart always renders.
@@ -29,7 +31,7 @@ from pydantic import BaseModel, Field
 from . import spec
 from .introspect import Codebase
 
-CACHE_VERSION = 3
+CACHE_VERSION = 4
 MAX_SOURCE_CHARS = 9000
 MAX_PROMPT_CHARS = 6000
 
@@ -37,22 +39,28 @@ SYSTEM_PROMPT = (
     "You write the step entries of a technical report on a data-journalism "
     "pipeline, for the developer who wrote it and for researchers reading it "
     "later. You are given one processing step: its source, the prompt template "
-    "it sends, and the structured output it asks for. Say what the step "
-    "contributes to the story the pipeline is building and why it is built "
-    "that way. Write at the level of the report around you, which argues about "
-    "the design rather than restating it: no character budgets, no "
-    "field-by-field inventory of the output, no counts or formatting rules "
-    "quoted from the prompt. A specific constraint earns its place only where "
-    "the design turns on it. The report prints the step's source, model, "
-    "output schema, and dependencies beside your text, so leave those to it. "
-    "Its register is plain and concrete. Name the thing that acts, prefer the "
-    "active verb and the plain word over the impressive one, and call a thing "
-    "what it is: a step reads an article and returns a place name, it does not "
-    "ingest a source and emit a geographically resolvable location layer. "
-    "Never stack abstract nouns where one concrete noun would do, and cut any "
-    "adjective that only praises the design. Every clause carries part of the "
-    "claim, so a sentence that merely restates its predecessor is dropped "
-    "rather than rewritten. "
+    "it sends, the structured output it asks for, and what it reads from other "
+    "steps. Say what the step contributes to the story the pipeline is building "
+    "and, only where one stands out, why it is built that way. Write at the "
+    "level of the report around you, which argues about the design rather than "
+    "restating it: no character budgets, no field-by-field inventory of the "
+    "output, no counts or formatting rules quoted from the prompt, no file "
+    "names, function names, or type names. The report prints the step's model, "
+    "reasoning effort, and number of calls beside your text, so leave those to "
+    "it. Its register is plain and concrete. Name the thing that acts, prefer "
+    "the active verb and the plain word over the impressive one, and call a "
+    "thing what it is: a step reads an article and returns a place name, it "
+    "does not ingest a source and emit a geographically resolvable location "
+    "layer. Never stack abstract nouns where one concrete noun would do, and "
+    "cut any adjective that only praises the design. Every clause carries part "
+    "of the claim, so a sentence that merely restates its predecessor is "
+    "dropped rather than rewritten. Keep every sentence short, in "
+    "subject-verb order, and free of the habits of machine-written prose: "
+    "no 'ensures', 'leverages', 'seamlessly', 'robust', or 'comprehensive'; "
+    "no trailing participle clause that tacks a purpose onto a sentence "
+    "('..., ensuring that ...'); no 'rather than' or 'not X but Y' unless "
+    "someone would have assumed the alternative; no list of three for its "
+    "own sake; no sentence that announces what the next one says. "
     "Never name a model, an API version or a vendor product: the record "
     "printed beside your text carries the model this step resolves, measured "
     "from the code, and a name repeated from a comment is how that record goes "
@@ -69,18 +77,27 @@ SYSTEM_PROMPT = (
 class StepSummary(BaseModel):
     """AI-written documentation for a single pipeline step."""
 
-    what_it_does: str = Field(
+    description: str = Field(
         description=(
-            "At most two sentences on what this step contributes to the story "
-            "the pipeline is building: what it reads, what it decides, what it "
-            "leaves behind."
+            "Two or three short sentences, at most fifty words in all, on what "
+            "this step contributes to the story the pipeline is building: what "
+            "it decides and what it leaves behind, and only where one stands "
+            "out, the design decision it turns on."
         )
     )
-    why_this_design: str = Field(
+    input: str = Field(
         description=(
-            "One sentence on a non-obvious design decision visible in the "
-            "source or prompt: an ordering constraint, a failure mode it "
-            "guards, a budget it protects. Empty string if nothing stands out."
+            "What the step reads, as one short phrase of at most eight words "
+            "in the pipeline's own vocabulary, such as 'the event skeletons and "
+            "the article'. No file names, no type names, no sentence."
+        )
+    )
+    output: str = Field(
+        description=(
+            "What the step leaves behind, as one short phrase of at most eight "
+            "words in the pipeline's own vocabulary, such as 'a picture and "
+            "caption per matched event'. No file names, no type names, no "
+            "sentence."
         )
     )
 
@@ -149,6 +166,25 @@ def _prompt_block(codebase: Codebase, step: spec.Step) -> str:
     return "\n\n".join(chunks)[:MAX_PROMPT_CHARS]
 
 
+def _flow_block(step: spec.Step) -> str:
+    """What the spec says the step reads and writes, for the input and output.
+
+    The dependency labels and the artifact names are the pipeline's own
+    vocabulary for the data, so the phrases the summarizer writes for input
+    and output stay in the words the figures use.
+    """
+    labels = {item.id: item.label for item in spec.STEPS}
+    artifacts = {item.id: item.label for item in spec.ARTIFACTS}
+    lines: List[str] = []
+    for dep in step.depends_on:
+        lines.append(f"  - reads from '{labels.get(dep.on, dep.on)}': {dep.data}")
+    for item in step.inputs:
+        lines.append(f"  - reads the artifact: {artifacts.get(item, item)}")
+    for item in step.outputs:
+        lines.append(f"  - writes the artifact: {artifacts.get(item, item)}")
+    return "\n".join(lines)
+
+
 def build_context(codebase: Codebase, step: spec.Step) -> str:
     """Assemble everything the summarizer is allowed to see for one step."""
     parts = [
@@ -158,6 +194,9 @@ def build_context(codebase: Codebase, step: spec.Step) -> str:
         f"SOURCE: {step.script} :: {step.function}",
         f"MAINTAINER NOTE: {step.summary}",
     ]
+    flow = _flow_block(step)
+    if flow:
+        parts.append(f"\nDATA FLOW DECLARED IN THE SPEC:\n{flow}")
     schema = _schema_block(codebase, step)
     if schema:
         parts.append(f"\nSTRUCTURED OUTPUT REQUESTED:\n{schema}")
@@ -228,9 +267,15 @@ def stale_steps(codebase: Codebase, path: Path) -> List[str]:
 
 
 def _fallback(step: spec.Step) -> Dict[str, Any]:
+    """The maintainer's own text, with the input and output left to the page.
+
+    Without a written phrase for either, the page falls back to the declared
+    dependencies and artifacts, which say the same thing in more words.
+    """
     return {
-        "what_it_does": step.summary,
-        "why_this_design": "",
+        "description": step.summary,
+        "input": "",
+        "output": "",
         "source": "spec.py",
     }
 

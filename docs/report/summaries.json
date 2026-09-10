@@ -1,333 +1,374 @@
 {
   "steps": {
     "m_clusters": {
-      "fingerprint": "59ed28478f9d1eb1",
+      "fingerprint": "ea0839334fe664eb",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Derives the groups of connected people that structure the scrolling narrative, keeping only groups anchored by main subjects. It orders those circles by the main subjects’ birth years and supplies their internal relationships for the narration phase.",
-        "why_this_design": "It recomputes the circles with the same deterministic rules as the client so narration keys continue to match the groups shown in the interface without storing a second version."
+        "description": "Finds communities in the reviewed graph and turns each into a circle for the scrolling narrative. It re-derives them with the same rules as the client so narration stays matched to the circles shown on screen, then orders them by the main people’s birth years.",
+        "input": "the reviewed graph",
+        "output": "ordered story circles",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_images": {
-      "fingerprint": "9992a480450c6900",
+      "fingerprint": "a23a05a7dcb23406",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Identifies the metaphors and coined terms that carry a story’s theme, then settles how each should read in the target language before translation begins. It preserves a native target-language image when one exists and otherwise replaces the English picture with its plain meaning, giving later passages one shared rendering.",
-        "why_this_design": "Making the choice once prevents an early literal translation—especially in a title—from becoming a misleading term repeated throughout the story."
+        "description": "Identifies the metaphors and coined terms that carry the story’s theme before translation begins. It keeps only images with a real counterpart in the target language; otherwise it records their plain meaning for consistent use across the story.",
+        "input": "the story’s own text",
+        "output": "settled renderings for recurring images",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p1": {
-      "fingerprint": "3b0f7b9a9e272339",
+      "fingerprint": "552209a254ac3eb8",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Selects the people who belong in the proposed theme, then turns their contributions into a title, introduction, thematic groupings, chronological chapters, and recommendations for people the registry lacks. It draws on biographies, roles, event titles, and places so the plan gives later stages both a narrative frame and a defined cast.",
-        "why_this_design": "It uses locations and event evidence alongside short biographies, which lets place-based themes rest on recorded work and residence rather than names or occupations alone; manual selections and explicit hints can still override that judgment when an editor has a broader intended story."
+        "description": "Selects the people who belong in the theme and frames their work as a narrative with themes and eras. It uses recorded places and events alongside biographies, which lets place-based topics rest on where people worked as well as how they are described. When editors supply people, it builds the story around that set.",
+        "input": "the person registry",
+        "output": "a thematic story plan",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p2": {
-      "fingerprint": "e9d989f5a4739606",
+      "fingerprint": "2d413e44db4920d7",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Collects dated life events for every person selected in the plan, attaches each event to its person, and orders the combined list by year. It leaves later selection and chapter assignment to downstream steps while giving them a chronological record of the available evidence.",
-        "why_this_design": "It ignores the early chapter ranges because those ranges were inferred from incomplete summaries and could otherwise exclude events before they can be judged for relevance."
+        "description": "Collects every dated life event for the selected people and orders them by time. It leaves relevance and chapter placement to later steps because the initial chapter ranges are only rough guesses.",
+        "input": "the selected people and life events",
+        "output": "a chronological list of dated events",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p3": {
-      "fingerprint": "ae95e5f89f5c5804",
+      "fingerprint": "d3ea8cff07c2b978",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Judges each person’s biographical events against the meta-story’s theme and keeps only landmark contributions with a concrete, lasting result. It records a short explanation for every decision, giving later stages both a sparse set of candidate events and the rationale for excluding background and career context.",
-        "why_this_design": "It treats an unjudged batch as a failure rather than admitting its events, protecting the story from turning a filtering error into false historical significance."
+        "description": "Judges the unfiltered event pool against the story’s theme and keeps only landmark contributions. It records why each event belongs or fails, so later chapters rest on substantive claims instead of chronology or biography.",
+        "input": "the unfiltered event pool",
+        "output": "essential events with relevance reasons",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p3b": {
-      "fingerprint": "55ffbdd3d5808b3f",
+      "fingerprint": "eb384d582b744990",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Places every curated event in a planned chapter, assigning events outside the proposed ranges to the nearest chapter. It then resets each retained chapter’s dates to its events and drops chapters with no events, leaving a continuous event-backed timeline for the meta story.",
-        "why_this_design": "Treating planned ranges as guidance rather than filters prevents curation survivors from disappearing at chapter boundaries while preserving the planned chapter order."
+        "description": "Fits the proposed eras to the events that survived curation. It assigns every event to a chapter, including events outside the proposed ranges, then drops empty chapters and sets each remaining span from its events.",
+        "input": "the surviving events and chapter plan",
+        "output": "fitted chapters with their events",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p4": {
-      "fingerprint": "d300d2cb62db1859",
+      "fingerprint": "4a6758153fd65ff9",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Places each chapter against a small set of well-known events that directly changed the featured people’s lives, work, or circumstances. It adds those events to the existing chapters while leaving the biography intact if the context request fails.",
-        "why_this_design": "It favors concrete personal effects over famous contemporaneous history, excludes events already told through person-level events, and avoids overlapping context so background clarifies the narrative without competing with it."
+        "description": "Places each chapter in the public events that directly changed the subjects’ lives or work. It leaves weakly connected landmarks out, so historical context supports the biography instead of becoming a general timeline.",
+        "input": "the fitted chapters and selected people",
+        "output": "chapters with relevant historical context",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p5": {
-      "fingerprint": "f411a0d8a0df43ab",
+      "fingerprint": "e7ced229107baa42",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Combines the selected people’s ego networks into a single graph. It preserves direct ties among the main people and adds only acquaintances who connect more than one of them, leaving the story with a compact view of shared social context.",
-        "why_this_design": "It matches names before merging and retains the richest account of each tie, while keeping both directions of a direct relationship so the interface can describe it from either person’s perspective."
+        "description": "Combines the selected people’s ego networks into a shared social graph. It preserves each person’s account of ties between selected people and keeps only acquaintances who connect multiple selected people, so the graph highlights bridges across their stories.",
+        "input": "the selected people and ego networks",
+        "output": "a shared social network",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p5b": {
-      "fingerprint": "2884cd790c130c00",
+      "fingerprint": "bc602dcf20e73392",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews the derived network against the biographical evidence, adding missed direct ties, correcting supported ones, and removing links that rest on vague or indirect contact. It leaves a revised graph for clustering so the resulting circles reflect reviewed relationships rather than the separate ego networks alone.",
-        "why_this_design": "It adjusts its standard for additions and pruning to the existing density, helping a sparse graph recover documented connections without making a dense graph still more speculative."
+        "description": "Reviews the merged social graph against the article evidence, adding missed direct ties and removing weak or indirect ones. It adjusts its threshold to the graph’s existing density before clustering turns the reviewed ties into circles.",
+        "input": "the deterministically merged graph",
+        "output": "a reviewed social graph",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p6": {
-      "fingerprint": "ea701b60a014da52",
+      "fingerprint": "73e10c757be06e3d",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Turns each deterministically derived social circle into a short card narrative, using the recorded ties to explain the bond among its main people and the acquaintances who connect them. It stores the cards in network order so the social-network section remains readable even if the later composition pass does not run.",
-        "why_this_design": "It rejects a partial response rather than mixing generated cards with missing circles, and leaves the existing tie-list fallback available when narration fails."
+        "description": "Turns each detected circle’s ties into a short card story. It keeps the people and links factual while giving the network section a readable narrative; later composition can revise these cards, and the interface falls back to ties if this step fails.",
+        "input": "the detected circles and their ties",
+        "output": "a card story for each circle",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p7a": {
-      "fingerprint": "8930dcf1c3c61a73",
+      "fingerprint": "b32a7d48a2ad0371",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Groups rated events into geographically compact map stops, then carries forward the strongest clusters with their locations, time span, and ordered events. It orders the selected stops by time so the map follows the story’s chronology rather than its ranking.",
-        "why_this_design": "Complete-linkage merging prevents a chain of nearby events from turning into one geographically sprawling stop, while rating-based selection keeps the map focused on events the story has judged consequential."
+        "description": "Groups rated events into map stops when every event in a group falls within the geographic limit. It favors clusters with more story weight and landmark events, then orders the selected stops by time so the map follows the story's chronology.",
+        "input": "located events and per-event weights",
+        "output": "chronological candidate map stops",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p7b": {
-      "fingerprint": "55833b3c1618a12c",
+      "fingerprint": "9fbc20afa289f9f3",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Rates each located event by whether the event and its place together carry the story’s theme. Leaves those ratings as weights for the map’s later clustering, so places tied to defining work or gatherings can shape the route more than incidental venues.",
-        "why_this_design": "It runs before clustering because the map should group around places that advance the story, while a failed or partial batch leaves events at a neutral weight instead of removing them from the map."
+        "description": "Rates each located event by how much its place carries the story’s theme. The map branch uses these ratings as clustering weights, so places tied to the work rise above incidental settings.",
+        "input": "the historical chapters and life events",
+        "output": "geographic weights for located events",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p7c": {
-      "fingerprint": "58ece73bd132a376",
+      "fingerprint": "3793468870487f61",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Turns chronological place clusters into short, factual map-card narratives and decides which places remain in the map sequence. It keeps locations that carry the story’s turning points and marks incidental or weaker clusters for removal, allowing that decision to prune the map.",
-        "why_this_design": "It combines writing with curation so the map follows the story’s arc rather than preserving every geographic coincidence in the source events."
+        "description": "Turns the strongest geographic clusters into short factual map-stop stories. It also removes accidental or secondary groupings, so the map follows the story’s arc instead of becoming a list of locations.",
+        "input": "the qualifying geographic clusters",
+        "output": "curated map stops and narrations",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_p8": {
-      "fingerprint": "a3401089a41479f9",
+      "fingerprint": "3664d1ddaa93696c",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Composes the assembled material into a single top-to-bottom story, choosing its arc and the order of its timeline, network, and map. It rewrites the surrounding prose and component text in one voice, while deciding which map stops and people belong in the final account.",
-        "why_this_design": "It gives one call both the complete page material and background context because the earlier item-by-item drafts cannot judge which facts carry the shared story or where each fact will be most useful."
+        "description": "Composes the assembled material into one top-down story and gives each component a shared voice. It orders the sections, rewrites supporting text, and curates map stops so the page advances one argument about the connected lives.",
+        "input": "the circle narration, map stops, and research",
+        "output": "a composed story with curated map stops",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_save": {
-      "fingerprint": "b720b798c1041407",
+      "fingerprint": "3b5d5337fb2783f9",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Writes the completed story document to its stable location, creating the story directory when needed. Returns failure instead of leaving the caller to infer whether the story became available.",
-        "why_this_design": "It creates the directory before writing so a first run can publish a story without a separate setup step."
+        "description": "Writes the composed story as a durable story record. It leaves the story available for the landing-page registry and later publication steps.",
+        "input": "the composed story document",
+        "output": "the saved Meta story",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_style": {
-      "fingerprint": "3f8432d3f2e346c5",
+      "fingerprint": "e672b7eb5eac1d15",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the visual identity for the meta story, choosing its dark palette, typography, box treatment, and a theme-derived geometric pattern. It also creates matching separator and closing-rule marks so the long article, timeline, network, and map read as parts of one editorial system.",
-        "why_this_design": "It limits the background pattern to calm, seamless black-and-white geometry so the page can keep a distinctive theme without competing with long passages of text."
+        "description": "Derives a visual language for the article from its theme and opening. It sets the dark palette, typography, background pattern, and recurring marks that carry the same geometric idea from prose separators to the closing rule. The shared motif ties the timeline, network, map, and article into one editorial surface.",
+        "input": "the saved story’s framing and opening",
+        "output": "a visual identity for the meta story",
+        "source": "gpt-5.6-terra"
       }
     },
     "m_translate": {
-      "fingerprint": "57f4e4348e653157",
+      "fingerprint": "3b23fc16203a174d",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Translates a meta story’s detail file and writes the localized version, then updates the language registry that exposes it. It reuses the person-translation contract so event titles and names match the forms already established elsewhere in the story.",
-        "why_this_design": "It skips current translations unless forced, avoiding unnecessary rewrites while keeping the registry aligned with the saved detail file."
+        "description": "Translates the meta story for the target language. It reuses settled image wording and person translations so event titles and names match the chapters and story slides.",
+        "input": "the meta story and localized person data",
+        "output": "a localized meta story",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_backgrounds": {
-      "fingerprint": "7a1047b054d84003",
+      "fingerprint": "fefca6e4d99a6b04",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the optional depth passage for each event selected for expansion, using the reviewed story, the subject’s article, related articles, and the event’s surrounding slides to add context without repeating the panel. It also replaces the event’s citations with sources that document that event and passes report-specific visual subjects to the illustration step.",
-        "why_this_design": "It filters returned citations to URLs supplied in the prompt because a plausible invented or merely adjacent article becomes especially misleading when the depth layer shows an event’s provenance directly."
+        "description": "Builds a depth report for each selected event from the reviewed story, related articles, and biographical material. It also replaces pooled citations with event-specific sources, accepting only URLs supplied to the call, and leaves image searches tied to details in the report.",
+        "input": "the reviewed events, articles, and network",
+        "output": "depth reports, sources, and image searches",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_chapter_art": {
-      "fingerprint": "618c5a36649249f9",
+      "fingerprint": "c06b5de13e65d97a",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Creates an abstract illustration for each chapter concept, using the portrait style reference to carry the story’s light-drawn visual language into chapter slides. It returns image bytes when generation succeeds and lets the run continue when an individual chapter image fails.",
-        "why_this_design": "It uses the reference only for rendering style and forbids people, places, and text so the chapter image can suggest an idea without competing with the portraits or asserting facts the story has not established."
+        "description": "Turns each chapter concept into an abstract light-drawn emblem. It uses the portrait style as a rendering reference while the concept supplies the subject, which keeps chapter slides visually aligned without inventing a second factual image.",
+        "input": "chapter concepts, colors, life events, and style",
+        "output": "chapter illustrations linked to life events",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_chapter_concepts": {
-      "fingerprint": "a96e5eeca3c20728",
+      "fingerprint": "e11d728fe7db5967",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Creates an abstract opening-image concept for each chapter from the person’s biography, leaving later illustration work with a visual metaphor rather than a literal scene. It returns only concepts attached to existing chapter IDs, so unusable or mismatched results do not alter the story.",
-        "why_this_design": "It considers every chapter together so the chapter images use distinct forms and metaphors instead of repeating the same visual language."
+        "description": "Turns each chapter’s events into an abstract opening-image concept. It reads every chapter together so the concepts use distinct metaphors and avoid depicting the subject, a real place, or a historical scene.",
+        "input": "the chapters and life events",
+        "output": "an abstract art concept per chapter",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_db": {
-      "fingerprint": "681cb5ef8f6f5ef1",
+      "fingerprint": "bc3aeedd49a709e6",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Adds biographical evidence for German and European figures, including dates, places, occupations, work locations, relationships, and genealogy when available. It omits the source entirely when no matching record was found, leaving later stages with only usable evidence.",
-        "why_this_design": "Keeps article text out of prompts when its license prohibits derivatives, while retaining the separately licensed metadata that can still support identification and context."
+        "description": "Adds biographical context for German and European figures. It carries forward usable dates, places, work, and relationships while withholding article text when its license bars derivatives.",
+        "input": "the Wikipedia material",
+        "output": "Deutsche Biographie material",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_events_p1": {
-      "fingerprint": "6f8d6ed357409a2f",
+      "fingerprint": "2d8b3a02a099dec8",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Builds the narrative spine from the full article set, selecting and ordering the life events that matter most, assigning their relative weight, and grouping them into successive chapters. It leaves later steps a dated account of the subject’s life and a conclusion that connects the central work to what endures after it.",
-        "why_this_design": "It makes these choices in one pass because significance and chapter boundaries depend on comparing events across the whole life, while later steps can safely add evidence, places, and media to that settled structure."
+        "description": "Selects the events that carry a life’s story and orders them into its major phases. It compares events across the full record, so their weight and chapter boundaries reflect the life as a whole. It leaves later steps to find places, images, and sources.",
+        "input": "the articles and biographical material",
+        "output": "a life plan with chapters and events",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_events_p2": {
-      "fingerprint": "428601a1393339eb",
+      "fingerprint": "9bc431a195f2975e",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Researches each event against the subject’s article and event-specific related articles, turning a preliminary event into a grounded account with its places, participants, evidence, explanatory terms, icon, and image-search leads. It also revises thin event prose so each slide explains what happened at that moment rather than repeating adjacent slides or importing later consequences.",
-        "why_this_design": "It keeps a failed event in the story with empty research fields and a neutral icon, so one failed call does not halt the biography or erase its chronology."
+        "description": "Expands each event skeleton into a sourced account of the moment, with places, participants, explanatory terms, and image searches. It grounds the account in the subject’s article, then uses event-specific material to fill gaps. Failed research leaves the event unresolved.",
+        "input": "an event skeleton and biographical material",
+        "output": "a researched event account and image searches",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_geocode": {
-      "fingerprint": "4e922ff617a45cdf",
+      "fingerprint": "1cd85da1170a927f",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Resolves each selected place name to map coordinates, trying normalized variants when the first spelling does not match. It reuses prior results and skips unknown labels so repeated locations do not trigger another lookup.",
-        "why_this_design": "It records a miss only after every candidate has produced a definitive nonmatch, allowing later runs to retry requests disrupted by a transient lookup failure."
+        "description": "Resolves each researched place to map coordinates. It uses the modern name when available, so renamed historic places can appear on the map.",
+        "input": "historic and modern place names",
+        "output": "map coordinates for resolved places",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_glossary": {
-      "fingerprint": "c3df2aec98312a2f",
+      "fingerprint": "67a63625827471d1",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Decides which people in a biography have an established target-language form and records only the names that should change. Later translation work uses that shared glossary so the same person appears under one spelling across documents and cross-references.",
-        "why_this_design": "It favors unchanged names and treats source-language evidence as spelling evidence, while rejecting mismatched subjects, expanded titles, and altered regnal numbering; a failed lookup also leaves names unchanged rather than introducing inconsistent substitutions."
+        "description": "Decides the target-language form of every person name used in a biography. It favors names from target-language sources, preserves the identity and numbering of historical figures, and leaves modern names unchanged. The resulting glossary fixes each changed form across the biography and its cross-references.",
+        "input": "target-language names, registry, events, and network",
+        "output": "consistent localized person names",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_illustrations": {
-      "fingerprint": "a25934c77b1557a6",
+      "fingerprint": "80344d1600dcdef0",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Reads Commons search results against the background report and keeps only images that directly show a named thing or place in the account. It excludes the event’s existing image and returns a small set of distinct illustrations, or none when the search results do not fit.",
-        "why_this_design": "It treats search results as unreliable word matches, using filenames alongside captions and enforcing one image per query so related names, later views, and duplicate subjects do not become false illustrations."
+        "description": "Judges search results against each background report and keeps only pictures that plainly show a named part of it. It reads filenames with captions because captions often describe the upload. Code limits each search to one image, so repeated views do not crowd out other illustrations.",
+        "input": "the reports, searches, and life events",
+        "output": "background illustrations for life events",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_img_fetch": {
-      "fingerprint": "d40878bdfa238093",
+      "fingerprint": "1ffd00c54ae7b7d7",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Searches image sources for both life-wide and event-specific queries, returning one deduplicated pool of image candidates. It preserves the event tag on pictures found for named events so the later matcher can connect those pictures to the event that prompted the search.",
-        "why_this_design": "It runs event queries first and keeps the first copy of each URL, because a duplicate found later without the event tag would erase the link needed for event-level matching."
+        "description": "Searches Commons and Openverse for the planned searches, then leaves one pool of unique image candidates. It searches event-specific names in Commons first so a shared picture keeps its link to the event that requested it.",
+        "input": "the planned searches and event research",
+        "output": "a deduplicated pool of image candidates",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_img_filter": {
-      "fingerprint": "92d3fd21fa291fb2",
+      "fingerprint": "425e7fd8b5ac9a33",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Scores the shared image pool, removes weak candidates, and leaves the remaining images in quality order for later event matching. By ranking before matching, it gives the matcher a smaller set that favors usable period images over modern commemorative material.",
-        "why_this_design": "The callers omit event-specific signals because this pool is scored once and reused across events."
+        "description": "Scores the returned images and removes weak candidates before matching. It penalizes commemorative images so modern plaques and graves do not displace period photographs on technical quality alone.",
+        "input": "every hit the queries returned",
+        "output": "ranked image candidates",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_img_match": {
-      "fingerprint": "93ee4aff9a0d046c",
+      "fingerprint": "656435cd1a330e66",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Selects one usable reference portrait and pairs retrieved Commons images with life events only when their metadata supports a direct connection. It leaves unsupported events unillustrated and writes cautious captions for the images it keeps.",
-        "why_this_design": "It separates a candidate’s search target from evidence of a match and rejects commemorative or present-day stand-ins, preventing familiar but misleading images from substituting for the event itself."
+        "description": "Selects a reference portrait and assigns candidate images only when their metadata supports a direct link to an event. It leaves weak matches unassigned and rejects commemorative or generic stand-ins, so images add evidence instead of decoration.",
+        "input": "the ranked image candidates and event skeletons",
+        "output": "a portrait and event images with captions",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_img_search": {
-      "fingerprint": "eba18625075407c4",
+      "fingerprint": "60501296a369d4df",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a shared set of Commons searches from the person’s life events, reserving person-name searches for the portrait and directing the rest toward the works, places, and institutions that can illustrate the timeline. It leaves later image selection with candidates tied to what the person did rather than only to their public remembrance.",
-        "why_this_design": "It excludes commemorative searches because Commons keyword results otherwise favor plaques, statues, graves, and other artifacts made after the life over historically relevant images."
+        "description": "Plans Commons searches for a portrait and for the people, works, places, and objects that carry the life story. It avoids memorials and similar later tributes, which would replace the subject’s life with images of how others remembered it.",
+        "input": "the event skeletons",
+        "output": "searches for portraits and event subjects",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_img_verify": {
-      "fingerprint": "655c2e63b6442b8b",
+      "fingerprint": "51b275fffe555dc1",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Checks the selected image itself before it becomes the story’s portrait, rejecting a file when it does not visibly depict the named subject. It corrects errors from the earlier caption-and-filename match, including images that mention the subject but show a spouse, work, or memorial instead.",
-        "why_this_design": "It preserves the existing portrait when the check fails, so an unavailable review cannot discard an otherwise usable selection."
+        "description": "Checks the chosen portrait against the subject in the image. It rejects a mismatch while keeping an unverified pick when the call fails, so a timeout cannot remove the story's only portrait.",
+        "input": "the portrait pick",
+        "output": "a portrait keep-or-drop decision",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_name_evidence": {
-      "fingerprint": "549f6d11e60e6a9a",
+      "fingerprint": "d5740331def2f566",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Reads the target-language article for the person and follows language links for the person’s names and places. Leaves the later translation calls with names already used by that language, reducing guesses based on the translator’s memory.",
-        "why_this_design": "It treats the lookup as optional so missing coverage or network access does not stop translation, and tries comma-separated place names intact before looking up their leading name so a found full title wins while any regional qualifier remains available to translate."
+        "description": "Gathers the target-language article and linked names that anchor later translation. When a qualified place name has no match, it also looks up the name before the comma, while preserving the qualifier for translation.",
+        "input": "reviewed names, life events, and ego network",
+        "output": "target-language article and name references",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_network": {
-      "fingerprint": "260e348f6f021bd9",
+      "fingerprint": "1df5e52a1ebd9107",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a person-centered relationship graph from the subject’s Wikipedia article and related articles. It keeps named people with documented direct ties, describes their role and strength, and adds category narratives that explain how family, work, and conflict shaped the subject’s life.",
-        "why_this_design": "It excludes institutions, collectives, and one-sided influence from the graph so that each link represents an evidenced encounter between two people; broader context that cannot meet that test remains in the category prose."
+        "description": "Builds a relationship map around the subject from the life events and Wikipedia material. It keeps only named people with documented direct ties, while category summaries preserve broader institutions, conflicts, and indirect influence.",
+        "input": "the finished life events and Wikipedia material",
+        "output": "an ego network of documented personal ties",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_portrait": {
-      "fingerprint": "b65dad48e55e807e",
+      "fingerprint": "2afe554de50313da",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Turns a licensed reference portrait into a vertical light-drawing image for a person’s story, preserving the person’s recognizable face, pose, clothing, and expression while applying the collection’s shared visual treatment. Leaves a reusable portrait asset whose dark background and story colors connect it to the rest of the collection.",
-        "why_this_design": "Uses separate style and identity references so a common illustration language does not erase the historical source portrait or turn decorative frames and source-scene details into part of the person’s image."
+        "description": "Transforms each licensed reference portrait into the collection’s shared light-drawing style. It preserves the person’s likeness while using the story colors, so portraits read as one set.",
+        "input": "the licensed portrait and interface colors",
+        "output": "a styled portrait and updated person records",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_register": {
-      "fingerprint": "c0ca7dd52fe0f244",
+      "fingerprint": "cfa56d43aa87ec88",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Updates the landing-page record for a person with the current biographical details and the portrait selected earlier in the pipeline. It keeps the original arrival time while making the record searchable and consistently ordered by name.",
-        "why_this_design": "It treats an absent portrait as a removal rather than storing a null value, so later portrait readers can distinguish no selection from a stale reference."
+        "description": "Adds the person to the landing-page index with dates, roles, summary, and the selected portrait reference. Keeps the original creation date when an entry already exists, so later runs refresh the profile without changing when it first entered the index.",
+        "input": "the written dataset and life events",
+        "output": "an updated person registry",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_review": {
-      "fingerprint": "17932d4e3e355ae5",
+      "fingerprint": "6c7993aa5bcc1655",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Reviews the completed event sequence and ego network against the available biography sources, looking for factual errors, weak prose, missing context, and contradictions between the two views. It returns proposed edits and a shared assessment that later code can use to update both the timeline and the relationship data.",
-        "why_this_design": "It reviews the finished sequence as a whole because gaps in context and repeated facts only become visible in the order a person reads the slides, while the paired network check catches people who appear in one view but not the other."
+        "description": "Reviews the life story and social network as one reader will encounter them. It proposes corrections from the source material and flags gaps, repeated facts, and mismatched people; later logic applies only high-confidence changes automatically.",
+        "input": "the life events, network, and Wikipedia material",
+        "output": "reviewed life events and ego network",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_style": {
-      "fingerprint": "933cfc5b8d880136",
+      "fingerprint": "7a8232b5463bb222",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Builds a dark-mode visual identity for a person’s story, tying its colors, type, background pattern, and separator mark to the person’s era, field, and cultural context. It returns the design pieces that let the interface carry the same biographical framing as the story.",
-        "why_this_design": "It tests text color contrast and regenerates a failing palette so historical or cultural color cues do not make headings and labels unreadable on the dark background."
+        "description": "Derives a dark interface identity from the person’s era, field, and early life events. Tests text colors against the background and regenerates the palette once when they miss the contrast floor.",
+        "input": "the person summary and life events",
+        "output": "an accessible interface style",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_translate": {
-      "fingerprint": "c8a0440922125eaf",
+      "fingerprint": "545c13f0fc40f3d5",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Translates the person document’s prose while preserving its extracted structure for later reassembly. It carries forward the name glossary and target-language reference evidence so people, places, and institutions use forms attested in the target language.",
-        "why_this_design": "It sends only translatable fields and overlays the result on the English document, which prevents identifiers, dates, coordinates, and links from changing while translation remains free to recast prose naturally."
+        "description": "Translates the prose, headings, and captions that describe a person and their network. It applies the name glossary and source-language evidence, then leaves protected facts untouched by merging the translated fields back into the English records.",
+        "input": "person records, events, network, reports, and glossary",
+        "output": "localized person records and supporting text",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_wiki_fetch": {
-      "fingerprint": "646f2771831cb179",
+      "fingerprint": "4dc775e4dbc6caf0",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Fetches a subject’s main Wikipedia article, related articles, and Commons image metadata, then stores the material for later phases. It lets later runs reuse the cached record instead of repeating external requests.",
-        "why_this_design": "When a URL replaces the subject for retrieval, it preserves the supplied subject-derived identifier so downstream records keep a stable identity."
+        "description": "Fetches the main article, related article candidates, and Commons image metadata for a subject. Caches them under a stable subject ID so later phases and reruns reuse the same source material.",
+        "input": "a subject or article URL",
+        "output": "cached Wikipedia material",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_wiki_select": {
-      "fingerprint": "ce554d062452b952",
+      "fingerprint": "a1b0374b29ec0cd8",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Ranks links from a person’s Wikipedia article and keeps the ones most likely to add biographical evidence: people in the subject’s life, specific events, and personal works. It leaves later retrieval focused on relationships and turning points rather than broad background.",
-        "why_this_design": "It excludes places, institutions, fields, and other general context so the limited follow-up material supports a life narrative instead of crowding it with reference material."
+        "description": "Ranks linked articles by their value as biographical context. It favors people, lived events, and personal works, so later research spends its limited context on relationships and moments that can carry the life story.",
+        "input": "the article and outgoing link candidates",
+        "output": "ranked articles for biographical context",
+        "source": "gpt-5.6-terra"
       }
     },
     "p_write": {
-      "fingerprint": "1f2c15bad954d8cf",
+      "fingerprint": "97013254276ec658",
       "summary": {
-        "source": "gpt-5.6-terra",
-        "what_it_does": "Writes the assembled personal-story document to the person’s life-events file and returns its path. Later stages read that file rather than the in-memory payload, making the assembled chapters and conclusion a durable pipeline artifact.",
-        "why_this_design": "It creates the person’s directory before writing so a new record can be saved without relying on prior filesystem setup."
+        "description": "Writes the assembled life events as the pipeline’s durable record. Downstream steps read this record instead of the in-memory payload, which fixes the story at the point where its chapters, locations, and images come together.",
+        "input": "the verified portrait and coordinates",
+        "output": "the written life events",
+        "source": "gpt-5.6-terra"
       }
     }
   },
-  "version": 3
+  "version": 4
 }

@@ -143,7 +143,7 @@ async function main() {
     });
 
     const measured = await page.evaluate(() => ({
-      steps: document.querySelectorAll(".step-detail").length,
+      steps: document.querySelectorAll(".steps-table .step-row").length,
       figures: document.querySelectorAll("figure.figure").length,
       tables: document.querySelectorAll(".report table.data").length,
     }));

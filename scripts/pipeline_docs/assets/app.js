@@ -310,8 +310,9 @@
       step.function,
       step.phase || "",
       step.spec_summary || "",
-      (step.summary && step.summary.what_it_does) || "",
-      (step.summary && step.summary.why_this_design) || "",
+      (step.summary && step.summary.description) || "",
+      (step.summary && step.summary.input) || "",
+      (step.summary && step.summary.output) || "",
       (step.schemas || []).join(" "),
     ]
       .join(" ")
@@ -1985,95 +1986,66 @@
       .join("<br>");
   }
 
-  /* Everything a step's entry holds, written into `body`.
-     Two readers call this. The drawer summons it for one step at a time, and
-     the print appendix lays the same material out for every step, because paper
-     cannot be clicked.
+  /* A resolved value arrives as `gpt-5 (env OPENAI_MODEL)`: the value, then
+     where the scan found it. The record prints the value alone; where it was
+     resolved from is how the source is read, which the record leaves to the
+     source. */
+  function bare(value) {
+    return String(value).split(" (")[0].trim();
+  }
 
-     What belongs in an entry is set by the level the report argues at. The
-     written explanation and the record measured from the source belong to it;
-     the literal prompt text and the output schema expanded field by field do
-     not. Those are the source, and the record points at it by file, line and
-     type name—which is what the figures are an index to, rather than a copy
-     of. The four schemas the pipelines turn on are expanded once in the main
-     text, where the argument needs them. */
-  function stepDetail(body, step) {
+  /* The record an entry prints beside its description, each value as markup.
+     Two readers use it. The drawer lays it out as a two-column table for one
+     step at a time, and the print appendix as the columns of one table with a
+     row per step, so both say the same thing about a step.
+
+     The record is short by design. Input and output are the phrases the
+     summarizer wrote from the source, in the vocabulary of the figures; a
+     hand-written fallback entry has none, so the declared dependencies and
+     artifacts stand in. Model, reasoning effort, and calls per run are
+     measured from the code. Everything else about a step—its file and line,
+     its output schema, the flag that skips it—is source, and the figures
+     index the source rather than copying it. */
+  function stepRecord(step) {
     const summary = step.summary || {};
-    body.appendChild(
-      el("p", { text: summary.what_it_does || step.spec_summary })
-    );
-    if (summary.why_this_design) {
-      body.appendChild(el("p", { text: summary.why_this_design }));
-    }
-    /* The explanation above is written by a language model from the step's
-       source; everything under "Record from the source" is measured from the
-       code. That the report's prose is AI-written is said once, in the
-       statement on AI use after the references, rather than under every one
-       of the steps the appendix prints. */
+    return {
+      input: summary.input
+        ? escapeHtml(summary.input)
+        : dependencyList(step) || "Nothing—this step starts a branch",
+      output: summary.output
+        ? escapeHtml(summary.output)
+        : artifactList(step.outputs) || "",
+      model: step.model
+        ? "<code>" + escapeHtml(bare(step.model)) + "</code>"
+        : "",
+      effort: step.effort
+        ? "<code>" + escapeHtml(bare(step.effort)) + "</code>"
+        : "",
+      calls: escapeHtml(step.calls_per_run),
+    };
+  }
 
-    body.appendChild(el("h3", { text: "Record from the source" }));
+  function stepDescription(step) {
+    const summary = step.summary || {};
+    return summary.description || step.spec_summary;
+  }
+
+  /* Everything the drawer holds for one step, written into `body`: the
+     description, then the record. The description is written by a language
+     model from the step's source; that the report's prose is AI-written is
+     said once, in the statement on AI use after the references, rather than
+     under every step. */
+  function stepDetail(body, step) {
+    body.appendChild(el("p", { text: stepDescription(step) }));
+    const record = stepRecord(step);
     const table = el("table", { class: "facts" });
-    /* Only what the figure cannot already say. The chart carries the step's
-       kind in its color, its pipeline in the figure it is drawn in, its group
-       in the band behind it, and its phase in its own label; repeating any of
-       those here would make the entry longer without making it say more. What
-       the step needs is kept, because the chart names a flow only while the
-       step is selected and paper never selects one. What it feeds is not: that
-       is the same edge read backwards, and it is already stated on the entry
-       of the step that needs it. */
-    const rows = [
-      factRow(
-        "Source",
-        "<code>" +
-          escapeHtml(step.script) +
-          (step.line ? ":" + step.line : "") +
-          "</code> → <code>" +
-          escapeHtml(step.function) +
-          "()</code>"
-      ),
-      factRow(
-        "Model",
-        step.model
-          ? "<code>" +
-              escapeHtml(step.model) +
-              "</code>" +
-              (step.model_source && step.model_source !== "call site"
-                ? " <span class='sub'>(from " +
-                  escapeHtml(step.model_source) +
-                  ")</span>"
-                : "")
-          : null
-      ),
-      factRow(
-        "Reasoning effort",
-        step.effort ? "<code>" + escapeHtml(step.effort) + "</code>" : null
-      ),
-      factRow(
-        "Needs",
-        dependencyList(step) || "Nothing—this step starts a branch"
-      ),
-      factRow("Calls per run", escapeHtml(step.calls_per_run)),
-      factRow(
-        "Output schema",
-        (step.schemas || []).length
-          ? step.schemas
-              .map((name) => {
-                return "<code>" + escapeHtml(name) + "</code>";
-              })
-              .join(", ")
-          : null
-      ),
-      factRow(
-        "Opt out with",
-        step.skip_flag
-          ? "<code>" + escapeHtml(step.skip_flag) + "</code>"
-          : null
-      ),
-      factRow("Note", step.model_note ? escapeHtml(step.model_note) : null),
-      factRow("Reads", artifactList(step.inputs) || null),
-      factRow("Writes", artifactList(step.outputs) || null),
-    ];
-    rows.forEach((row) => {
+    [
+      factRow("Input", record.input),
+      factRow("Output", record.output),
+      factRow("Model", record.model),
+      factRow("Reasoning effort", record.effort),
+      factRow("Calls per run", record.calls),
+    ].forEach((row) => {
       if (row) table.appendChild(row);
     });
     body.appendChild(table);
@@ -4418,42 +4390,87 @@
     );
   }
 
+  const APPENDIX_COLUMNS = [
+    "No.",
+    "Step",
+    "Description",
+    "Input",
+    "Output",
+    "Model",
+    "Effort",
+    "Calls per run",
+  ];
+
   function renderStepAppendix() {
     const host = document.getElementById("report");
     if (!host || !appendixWanted()) return;
 
-    const columns = Object.keys(DATA.lanes).filter((laneId) => {
-      return stepsOf(laneId).length > 0;
+    /* Pipelines in the order the report draws them, which is the order the
+       spec lists their steps in; the lane table's own key order is not it. */
+    const columns = [];
+    DATA.steps.forEach((step) => {
+      if (!columns.includes(step.column)) columns.push(step.column);
     });
-    const ordered = columns.reduce((all, laneId) => {
-      return all.concat(stepsOf(laneId));
-    }, []);
-    if (!ordered.length) return;
+    if (!columns.length) return;
 
-    const section = el("section", { class: "appendix", id: "appendix-steps" });
+    const section = el("section", { class: "appendix" });
     section.appendChild(
       appendixHeading(1, APPENDIX_LETTER, "appendix-steps", "Step details")
     );
     section.appendChild(
       el("p", {
         text:
-          "One entry per documented step, in the order the pipelines reach " +
-          "them: what the step does, why it is built that way, and the record " +
+          "One row per documented step, in the order the pipelines reach " +
+          "them: what the step does, what it reads and what it leaves " +
+          "behind, and the model, reasoning effort, and number of calls " +
           "read out of its source. In the interactive report this is the " +
           "panel that opens when a step in Figure 2 or Figure 3 is clicked.",
       })
     );
 
-    ordered.forEach((step, index) => {
-      const number = APPENDIX_LETTER + "." + (index + 1);
-      const slug = "appendix-" + step.id;
-      const entry = el("article", { class: "step-detail" });
-      entry.appendChild(appendixHeading(2, number, slug, step.label));
-      const body = el("div", { class: "step-detail-body" });
-      stepDetail(body, step);
-      entry.appendChild(body);
-      section.appendChild(entry);
+    /* One table rather than an entry per step: a row is read across, and
+       forty steps compare down a column, which forty paragraphs never let a
+       reader do. The steps of each pipeline sit under a row naming it. */
+    const table = el("table", { class: "data steps-table" });
+    table.appendChild(
+      el("thead", {}, [
+        el(
+          "tr",
+          {},
+          APPENDIX_COLUMNS.map((title) => el("th", { text: title }))
+        ),
+      ])
+    );
+    const tbody = el("tbody");
+    let index = 0;
+    columns.forEach((laneId) => {
+      tbody.appendChild(
+        el("tr", { class: "lane-row" }, [
+          el("th", {
+            colspan: String(APPENDIX_COLUMNS.length),
+            text: DATA.lanes[laneId].label,
+          }),
+        ])
+      );
+      stepsOf(laneId).forEach((step) => {
+        index += 1;
+        const record = stepRecord(step);
+        tbody.appendChild(
+          el("tr", { class: "step-row", id: "appendix-" + step.id }, [
+            el("td", { text: APPENDIX_LETTER + "." + index }),
+            el("th", { scope: "row", text: step.label }),
+            el("td", { text: stepDescription(step) }),
+            el("td", { html: record.input }),
+            el("td", { html: record.output }),
+            el("td", { html: record.model }),
+            el("td", { html: record.effort }),
+            el("td", { html: record.calls }),
+          ])
+        );
+      });
     });
+    table.appendChild(tbody);
+    section.appendChild(el("div", { class: "table-scroll" }, [table]));
 
     host.appendChild(section);
     addAppendixToContents();
