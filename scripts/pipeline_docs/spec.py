@@ -28,11 +28,9 @@ skipped connection whenever a filter hides the steps in between, so a strand
 never breaks.
 
 `Step.inputs` and `Step.outputs` name the artifacts a step consumes and
-produces. An artifact written by a step in the same pipeline is already implied
-by an edge; one that arrives from the *other* pipeline is drawn as a source
-node, which is how the meta chart shows that it consumes what the person chart
-produces. Each artifact declares the concept it carries, and the report draws
-that concept—its name and its glyph—rather than the path it is stored at.
+produces. The chart does not draw them; the step note and the appendix list
+them. Each artifact declares the concept it carries, and the report names that
+concept—its name and its glyph—rather than the path it is stored at.
 
 Writing a document is not a step—every step writes something—so the point
 where a pipeline's strands become the document every later step reads is not

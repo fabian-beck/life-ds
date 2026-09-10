@@ -789,7 +789,7 @@ class PayloadAndRenderTests(unittest.TestCase):
         self.assertEqual(len(claimed), len(payload["call_sites"]))
 
     def test_the_shell_carries_every_element_the_script_reaches_for(self) -> None:
-        """`app.js` wires the step note and the chart modal up on load.
+        """`app.js` wires the step note up on load.
 
         Every one of those lookups is unconditional, so an element dropped from
         the template in `render.py` would not degrade the page—it would throw
@@ -798,7 +798,7 @@ class PayloadAndRenderTests(unittest.TestCase):
         """
         script = (ASSETS / "app.js").read_text(encoding="utf-8")
         wanted = set(re.findall(r'getElementById\("([a-z0-9-]+)"\)', script))
-        self.assertIn("chart-modal", wanted)
+        self.assertIn("steptip", wanted)
         html = render.render(self.payload)
         for element_id in sorted(wanted):
             self.assertIn(f'id="{element_id}"', html, f"the shell has no #{element_id}")
@@ -818,21 +818,17 @@ class PayloadAndRenderTests(unittest.TestCase):
         claimed = {
             name: int(px)
             for name, px in re.findall(
-                r"^\s{4}(full|mid|compact): \{\n\s+TITLE_PX: (\d+)",
+                r"^\s{4}(mid|compact): \{\n\s+TITLE_PX: (\d+)",
                 script,
                 flags=re.MULTILINE,
             )
         }
-        self.assertEqual(set(claimed), {"full", "mid", "compact"})
+        self.assertEqual(set(claimed), {"mid", "compact"})
 
         for size, expected in claimed.items():
-            # `full` is the plain node rule; the reduced sizes override it.
-            selector = ".node text.title" if size == "full" else f".flow-{size} &"
+            selector = f".flow-{size} .node text.title"
             pattern = (
-                r"(?<!flow-mid )(?<!flow-compact )\.node text\.title \{[^}]*?"
-                r"font-size: (\d+(?:\.\d+)?)px"
-                if size == "full"
-                else rf"\.flow-{size} \.node text\.title \{{[^}}]*?"
+                rf"\.flow-{size} \.node text\.title \{{[^}}]*?"
                 rf"font-size: (\d+(?:\.\d+)?)px"
             )
             found = re.search(pattern, css, flags=re.DOTALL)
