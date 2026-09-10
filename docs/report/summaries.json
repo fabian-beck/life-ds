@@ -217,20 +217,29 @@
       }
     },
     "p_img_fetch": {
-      "fingerprint": "93ff18a10eaffe89",
+      "fingerprint": "042f0ab093e1c578",
       "summary": {
-        "description": "Searches both image archives for the planned searches and the event-specific searches. It keeps one record per picture; event-specific Commons results run first so shared pictures retain their event link and Commons record.",
-        "input": "the planned and event-specific searches",
-        "output": "a deduplicated pool of tagged image candidates",
+        "description": "Searches image archives with the planned terms and the event-specific terms from research. It searches event terms first and keeps their event link when the same picture appears again; Commons gets priority for duplicate records.",
+        "input": "the planned and event-specific image searches",
+        "output": "deduplicated image candidates linked to events",
+        "source": "gpt-5.6-terra"
+      }
+    },
+    "p_img_filter": {
+      "fingerprint": "8a904f0840c7b219",
+      "summary": {
+        "description": "Scores the shared pool of search hits and keeps the usable candidates in rank order. It penalizes memorial images so clean modern records do not displace period photographs before event matching begins.",
+        "input": "every hit the queries returned",
+        "output": "ranked image candidates",
         "source": "gpt-5.6-terra"
       }
     },
     "p_img_match": {
-      "fingerprint": "5fe56a3b7fe8d89a",
+      "fingerprint": "5931abc42839a489",
       "summary": {
-        "description": "Selects a reference portrait and pairs candidate images with life events only when their metadata supports a direct link. It leaves weak matches unfilled and rejects stand-ins such as memorials or generic city buildings, so images carry evidence about the event itself.",
-        "input": "the ranked image candidates and life events",
-        "output": "a portrait and event images with captions",
+        "description": "Matches candidate images to events and chooses one reference portrait. It leaves weak matches unused, especially modern stand-ins for places or objects the event does not name, so images support the event instead of its general setting.",
+        "input": "the ranked image candidates",
+        "output": "event images and a reference portrait",
         "source": "gpt-5.6-terra"
       }
     },
@@ -253,11 +262,11 @@
       }
     },
     "p_name_evidence": {
-      "fingerprint": "36208569a7efc5a6",
+      "fingerprint": "4d08228f7fb5ded4",
       "summary": {
-        "description": "Collects the target-language article and linked names that give later translation calls published names to follow. For unresolved comma-qualified places, it also looks up the leading place name while keeping the qualifier available for translation; the full name takes priority when it has a page.",
+        "description": "Collects the target-language article and linked names for the person, places, and reviewed names. It retries unresolved comma-qualified places by their leading name, preserving a full place name when that article exists while still giving the translator evidence for its qualifier.",
         "input": "reviewed names, life events, and ego network",
-        "output": "target-language article evidence and name links",
+        "output": "target-language article and name links",
         "source": "gpt-5.6-terra"
       }
     },

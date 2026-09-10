@@ -500,7 +500,8 @@ class DependencyGraphTests(unittest.TestCase):
             ]
             self.assertEqual(1, len(messages))
             self.assertIn(
-                "p_events_p1 -> p_img_search -> p_img_fetch -> p_img_match",
+                "p_events_p1 -> p_img_search -> p_img_fetch -> p_img_filter "
+                "-> p_img_match",
                 messages[0],
             )
         finally:

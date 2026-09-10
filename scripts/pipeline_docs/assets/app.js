@@ -3961,23 +3961,6 @@
     });
   }
 
-  /* The compiled contents list is built in Python from the authored headings,
-     which the appendix is not one of. Adding the entry here—print-only, like
-     the section it points at—keeps the printed contents a description of the
-     printed document rather than of the Markdown. */
-  function addAppendixToContents() {
-    const list = document.querySelector(".toc > .toc-list");
-    if (!list) return;
-    list.appendChild(
-      el("li", { class: "toc-appendix" }, [
-        el("a", { href: "#appendix-steps" }, [
-          el("span", { class: "toc-no", text: APPENDIX_LETTER }),
-          el("span", { text: "Step details" }),
-        ]),
-      ])
-    );
-  }
-
   const APPENDIX_COLUMNS = [
     "No.",
     "Step",
@@ -4061,7 +4044,6 @@
     section.appendChild(el("div", { class: "table-scroll" }, [table]));
 
     host.appendChild(section);
-    addAppendixToContents();
   }
 
   /* A `<details>` is a promise that the content is one click away. Paper cannot
