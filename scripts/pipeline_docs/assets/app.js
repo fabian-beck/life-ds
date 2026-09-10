@@ -3147,7 +3147,10 @@
     const box = view.figure.getBoundingClientRect();
     const visible =
       Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0);
-    return box.height ? Math.max(0, visible) / box.height : 0;
+    const shown = box.height ? Math.max(0, visible) / box.height : 0;
+    // A margin figure the next one has slid over is on screen only by its
+    // rectangle; what the reader sees of it is what is left after the fade.
+    return shown * marginFadeOf(view.figure);
   }
 
   /* ------------------------------------------- the screenshot detail panel */
@@ -3162,7 +3165,7 @@
       text: "Show in figure",
       onclick: function () {
         const view = activeShotView();
-        if (view) {
+        if (view && !revealMarginFigure(view.figure)) {
           view.figure.scrollIntoView({
             block: "center",
             behavior: reducedMotion() ? "auto" : "smooth",
@@ -4448,6 +4451,272 @@
     );
   }
 
+  /* ------------------------------------------------- margin figures */
+
+  /* A figure standing in the margin stays in view while the text it belongs
+     to scrolls past, instead of leaving with the paragraph it was placed
+     beside. The figure is pinned a little under the viewport's edge from the
+     moment its place in the document scrolls up to that line, and it stays
+     until the next margin figure takes its place: that one rises from its own
+     place in the text, slides over the pinned one, and the pinned one fades
+     under it. A wide block or a section heading ends a figure's stretch the
+     same way, by pushing it off, and where there is no further figure the
+     stretch runs to the end of the report.
+
+     The stylesheet does the holding—`position: sticky` on a body inside the
+     float, which the float's own height bounds—and this code only measures:
+     where each figure's place is, how far its band reaches, how far under the
+     edge it pins, and, on scroll, how far the next figure has risen over it.
+
+     A figure taller than the viewport cannot be held whole, so it is held by
+     whichever edge the reader is moving toward: reading down, it scrolls with
+     the text until its bottom edge is in view and stops there; reading up, it
+     scrolls with the text until its top edge is in view and stops there. The
+     turn is made by giving the body a spacer that leaves it exactly where it
+     is, so sticky can carry it on from there in the other direction.
+
+     Nothing here applies where the figure is not in the margin: the band is
+     sized only while the float exists, and the print rules release both. */
+  const PIN_OFFSET = 20; // CSS pixels between the viewport's edge and a pinned figure
+  const FADE_OVERLAP = 200; // over this much of the next figure's rise the covered one fades
+
+  const marginState = {
+    bands: [], // one per margin figure, in document order
+    active: false, // whether the figures currently float in the margin
+    direction: 1, // the way the reader last scrolled: 1 down, -1 up
+  };
+
+  function marginBandOf(node) {
+    return (
+      marginState.bands.find((band) => {
+        return band.body.contains(node);
+      }) || null
+    );
+  }
+
+  /* How much of a figure is showing, as a factor: one where nothing covers
+     it, zero once the next figure has slid over it. */
+  function marginFadeOf(node) {
+    const band = marginBandOf(node);
+    return band && marginState.active ? band.fade : 1;
+  }
+
+  /* Scroll so that a margin figure's place in the document is at the pin
+     line, which shows the figure from its top and uncovered. For a pinned
+     figure, scrolling to where it currently is would move nothing. */
+  function revealMarginFigure(node) {
+    const band = marginBandOf(node);
+    if (!band || !marginState.active) return false;
+    window.scrollTo({
+      top: Math.max(0, band.top - PIN_OFFSET),
+      behavior: reducedMotion() ? "auto" : "smooth",
+    });
+    return true;
+  }
+
+  function bindMarginFigures() {
+    const widgets = Array.prototype.slice.call(
+      document.querySelectorAll(".report > .widget-margin")
+    );
+    if (!widgets.length) return;
+    const report = widgets[0].parentNode;
+
+    marginState.bands = widgets.map((widget) => {
+      const body = el("div", { class: "margin-body" });
+      while (widget.firstChild) body.appendChild(widget.firstChild);
+      widget.appendChild(el("div", { class: "margin-space" }));
+      widget.appendChild(body);
+      return {
+        widget: widget,
+        body: body,
+        top: 0, // the figure's place in the document, in page pixels
+        height: 0, // the figure's own height
+        band: 0, // the height of the stretch it serves
+        tall: false, // taller than the viewport, so held by one edge at a time
+        end: 0, // where its band ends, in page pixels
+        next: null, // the band that slides over this one, if any
+        fade: 1,
+      };
+    });
+    const bands = marginState.bands;
+
+    function setFade(band, value) {
+      if (band.fade === value) return;
+      band.fade = value;
+      if (value >= 1) band.body.style.removeProperty("--fade");
+      else band.body.style.setProperty("--fade", String(value));
+      band.body.classList.toggle("is-covered", value <= 0);
+    }
+
+    /* The band ends wherever something else claims the margin: a wide block
+       clears the float, and a section heading starts a stretch of text the
+       figure was not placed beside. */
+    function stopsAfter(top) {
+      const nodes = report.querySelectorAll(
+        ":scope > .widget-wide, :scope > .appendix, :scope > h2.sec"
+      );
+      const scrollY = window.scrollY;
+      const stops = [];
+      Array.prototype.forEach.call(nodes, (node) => {
+        const at = node.getBoundingClientRect().top + scrollY;
+        if (at > top) stops.push(at);
+      });
+      return stops;
+    }
+
+    /* Turn the tall figures to face the reader's direction. The spacer puts
+       each body's resting place exactly where the body is now, so nothing
+       moves at the turn; from there sticky lets it travel with the text until
+       the edge for this direction is in view. A figure that fits is held whole
+       and never turns. */
+    function retarget() {
+      const rising = marginState.direction < 0;
+      const measured = bands.map((band) => {
+        if (!band.tall) return 0;
+        return (
+          band.body.getBoundingClientRect().top -
+          band.widget.getBoundingClientRect().top
+        );
+      });
+      bands.forEach((band, index) => {
+        if (!band.tall) {
+          band.widget.style.removeProperty("--spacer");
+          band.body.classList.remove("is-rising");
+          return;
+        }
+        const spacer = Math.max(
+          0,
+          Math.min(band.band - band.height, measured[index])
+        );
+        band.widget.style.setProperty("--spacer", spacer + "px");
+        band.body.classList.toggle("is-rising", rising);
+      });
+    }
+
+    function layout() {
+      marginState.active =
+        window.getComputedStyle(bands[0].widget).float === "right";
+      if (!marginState.active) {
+        bands.forEach((band) => {
+          band.widget.style.removeProperty("--band-height");
+          band.widget.style.removeProperty("--band-overflow");
+          band.widget.style.removeProperty("--spacer");
+          band.body.style.removeProperty("--pin-top");
+          band.body.style.removeProperty("--pin-bottom");
+          band.body.classList.remove("is-rising");
+          setFade(band, 1);
+        });
+        return;
+      }
+      // Measured with every band at its figure's own height, so the places
+      // are the ones the floats take on their own: a later figure never
+      // starts above the bottom of an earlier one.
+      bands.forEach((band) => {
+        band.height = band.body.offsetHeight;
+        band.widget.style.setProperty("--band-height", band.height + "px");
+        band.widget.style.setProperty("--band-overflow", "0px");
+      });
+      const scrollY = window.scrollY;
+      const viewport = window.innerHeight;
+      bands.forEach((band) => {
+        band.top = band.widget.getBoundingClientRect().top + scrollY;
+        band.tall = band.height > viewport - 2 * PIN_OFFSET;
+      });
+      const reportEnd = report.getBoundingClientRect().bottom + scrollY;
+      bands.forEach((band, index) => {
+        const next = bands[index + 1] || null;
+        // The next figure pins when its place reaches the pin line, where
+        // this figure's top is held; this figure's band lasts until then,
+        // holding it pinned underneath while the next one rises over it.
+        let end = next ? next.top + band.height : reportEnd;
+        stopsAfter(band.top).forEach((stop) => {
+          if (stop < end) end = stop;
+        });
+        band.band = Math.max(band.height, end - band.top);
+        band.end = band.top + band.band;
+        // Whatever ends the band, a next figure that rises before it does
+        // is what covers this one.
+        band.next = next && next.top < band.end ? next : null;
+        const bottomHeld = viewport - PIN_OFFSET - band.height;
+        band.widget.style.setProperty("--band-height", band.band + "px");
+        band.widget.style.setProperty(
+          "--band-overflow",
+          band.band - band.height + "px"
+        );
+        band.body.style.setProperty(
+          "--pin-top",
+          Math.min(PIN_OFFSET, bottomHeld) + "px"
+        );
+        band.body.style.setProperty("--pin-bottom", bottomHeld + "px");
+      });
+      retarget();
+      fade();
+    }
+
+    /* The covered figure fades over the first stretch of the overlap the
+       reader can see: what the next figure covers below the viewport's edge
+       covers nothing yet. Below the pin line the two figures are at their own
+       places, always apart, so a figure that is not pinned never fades. */
+    function fade() {
+      if (!marginState.active) return;
+      const viewport = window.innerHeight;
+      bands.forEach((band) => {
+        if (!band.next) {
+          setFade(band, 1);
+          return;
+        }
+        const mine = band.body.getBoundingClientRect();
+        const theirs = band.next.body.getBoundingClientRect();
+        const covered = Math.min(mine.bottom, viewport) - theirs.top;
+        setFade(band, Math.max(0, Math.min(1, 1 - covered / FADE_OVERLAP)));
+      });
+    }
+
+    let lastY = window.scrollY;
+    let scrolling = 0;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!scrolling) {
+          scrolling = window.requestAnimationFrame(() => {
+            scrolling = 0;
+            const y = window.scrollY;
+            const direction = y > lastY ? 1 : y < lastY ? -1 : 0;
+            lastY = y;
+            if (direction && direction !== marginState.direction) {
+              marginState.direction = direction;
+              if (marginState.active) retarget();
+            }
+            fade();
+          });
+        }
+      },
+      { passive: true }
+    );
+
+    // The places move whenever the text reflows above a figure or a figure
+    // changes height—a status strip reserved, a window resized—so the bands
+    // are measured again when the report or a figure changes size.
+    let pending = 0;
+    function schedule() {
+      if (!pending) {
+        pending = window.requestAnimationFrame(() => {
+          pending = 0;
+          layout();
+        });
+      }
+    }
+    window.addEventListener("resize", schedule, { passive: true });
+    if (window.ResizeObserver) {
+      const observer = new ResizeObserver(schedule);
+      observer.observe(report);
+      bands.forEach((band) => {
+        observer.observe(band.body);
+      });
+    }
+    layout();
+  }
+
   /* --------------------------------------------------------------- init */
 
   /* Hydrate the compiled Markdown. Document order matters: the figure and table
@@ -4499,6 +4768,7 @@
   bindPrintDisclosure();
   bindRefKeys();
   bindStepRefs();
+  bindMarginFigures();
 
   // The page is fully built. `scripts/export_report_pdf.mjs` waits for this
   // before printing, so a PDF can never catch the report half-hydrated.

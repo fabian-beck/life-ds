@@ -962,11 +962,59 @@ body.has-note-pop .notes {
     );
     max-width: none;
     margin-left: var(--figure-gutter);
+
+    /* The band, explained below. */
+    height: var(--band-height, auto);
+    margin-bottom: calc(32px - var(--band-overflow, 0px));
   }
 
   .report > .widget-wide,
   .report > .appendix {
     clear: right;
+  }
+
+  /* A margin figure stays in view while the text it belongs to scrolls past.
+
+     The float is the figure's place in the document and its placeholder; the
+     figure itself is a sticky body inside it, pinned `--pin-top` under the
+     viewport's edge. Sticky moves only within its parent, so the parent is
+     given the height of the whole stretch the figure serves—measured by
+     `bindMarginFigures` in `app.js` as far as the point where the next margin
+     figure pins, or where a wide block or a section heading claims the room.
+     The float's margin box is pulled back to the figure's own height, and
+     float placement, clearance and the container's height all go by the margin
+     box, so a band that runs far past its figure moves nothing else on the
+     page. Where the sticky body reaches the band's end it scrolls away with
+     the text again, pushed by whatever ends the band.
+
+     A later figure paints over an earlier one—positioned boxes stack in
+     document order—on a ground of its own, so the covered one does not show
+     through its caption, and the earlier one fades under it, `--fade` being
+     set on scroll. At zero the covered figure is also hidden, so it takes
+     neither pointer nor focus. */
+  .report > .widget-margin > .margin-body {
+    position: sticky;
+    top: var(--pin-top, 20px);
+    background: var(--paper);
+    opacity: var(--fade, 1);
+  }
+
+  .report > .widget-margin > .margin-body.is-covered {
+    visibility: hidden;
+  }
+
+  /* A figure taller than the viewport is held by one edge at a time: its
+     bottom while the reader scrolls down, its top while the reader scrolls
+     up. `--pin-top` is then negative, so the bottom edge stops under the
+     viewport's; the rising state adds the bottom inset that stops the top
+     edge under the viewport's instead. The spacer is what lets the body turn
+     around in place—see `retarget` in `app.js`. */
+  .report > .widget-margin > .margin-body.is-rising {
+    bottom: var(--pin-bottom, 20px);
+  }
+
+  .report > .widget-margin > .margin-space {
+    height: var(--spacer, 0);
   }
 }
 
@@ -2460,6 +2508,20 @@ figure.teaser > .cap {
     float: none;
     width: auto;
     max-width: var(--measure);
+    height: auto;
+    margin-bottom: 32px;
+  }
+
+  /* Nor does a figure stay in place on paper, or fade under the next one: the
+     band that holds it on screen is released with the float. */
+  .report > .widget-margin > .margin-body {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .report > .widget-margin > .margin-space {
+    height: 0;
   }
 
   .titleblock {

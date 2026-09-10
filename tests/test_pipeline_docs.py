@@ -2148,6 +2148,38 @@ class LayoutWidthTests(unittest.TestCase):
                 f"a renderer adds .{name} and style.css has no rule for it",
             )
 
+    def test_a_margin_figure_is_held_by_the_stylesheet_from_what_the_script_measures(
+        self,
+    ) -> None:
+        """The script sets custom properties; the stylesheet has to spend each.
+
+        Sticky positioning does the holding, bounded by the float's own height,
+        and the fade under the next figure is a factor set on scroll. A property
+        the script writes and no rule reads would leave a figure scrolling away
+        with its paragraph again, silently.
+        """
+        self.assertIn("function bindMarginFigures(", self.js)
+        self.assertIn("bindMarginFigures();", self.js)
+        written = set(re.findall(r'setProperty\(\s*"(--[a-z-]+)"', self.js))
+        for name in ("--band-height", "--band-overflow", "--pin-top", "--fade"):
+            self.assertIn(name, written, f"the script no longer sets {name}")
+        for name in sorted(written):
+            self.assertIn(
+                f"var({name}", self.css, f"the script sets {name} and no rule reads it"
+            )
+        query = re.search(
+            r"@container report \(width >= \d+px\) \{(.*?)\n\}",
+            self.css,
+            flags=re.DOTALL,
+        )
+        assert query is not None
+        column = query.group(1)
+        self.assertIn(".margin-body {", column)
+        self.assertIn("position: sticky", column)
+        self.assertIn("var(--band-height", column)
+        for name in re.findall(r'classList\.toggle\(\s*"([a-z-]+)"', self.js):
+            self.assertIn(f".{name}", self.css, f"the script toggles .{name}, unstyled")
+
     def test_the_margin_column_is_whatever_the_measure_leaves(self) -> None:
         """Measured, not guessed: a literal here would drift off the text edge."""
         query = re.search(
@@ -2234,11 +2266,29 @@ class PrintTests(unittest.TestCase):
         floats = [
             body
             for selector, body in self._rules(self.print_css)
-            if "widget-margin" in selector
+            if selector.endswith(".widget-margin")
         ]
         self.assertTrue(floats, "the print rules say nothing about a margin figure")
         for body in floats:
             self.assertIn("float: none", body)
+
+    def test_a_margin_figure_is_not_held_on_paper(self) -> None:
+        """Sticky and fade are answers to scrolling, which paper does not do."""
+        bodies = [
+            body
+            for selector, body in self._rules(self.print_css)
+            if ".margin-body" in selector
+        ]
+        self.assertTrue(bodies, "the print rules say nothing about a held figure")
+        self.assertTrue(any("position: static" in body for body in bodies))
+        self.assertTrue(any("opacity: 1" in body for body in bodies))
+        self.assertTrue(any("visibility: visible" in body for body in bodies))
+        bands = [
+            body
+            for selector, body in self._rules(self.print_css)
+            if selector.endswith(".widget-margin")
+        ]
+        self.assertTrue(any("height: auto" in body for body in bands))
 
     def test_the_appendix_is_the_step_note(self) -> None:
         """One record, so a new fact in the step note reaches the PDF for free.
