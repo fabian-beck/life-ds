@@ -2641,10 +2641,11 @@ figure.teaser > .cap {
     white-space: pre-wrap;
   }
 
-  /* On paper a reference is only a phrase; the marker and the underline would
-     point nowhere. */
-  .figref,
-  .stepref[data-kind] {
+  /* On paper a figure reference is only a phrase; the marker and the underline
+     would point nowhere. A step reference keeps its underline, since the color
+     says which kind of step the phrase names, which holds on paper as it does
+     on screen. */
+  .figref:not(.stepref[data-kind]) {
     border-bottom: 0;
   }
 
