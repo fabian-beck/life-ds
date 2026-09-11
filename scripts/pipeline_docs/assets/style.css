@@ -992,7 +992,7 @@ body.has-note-pop .notes {
 
    A caption belongs to its figure rather than to the text column, so it takes
    the width of the block it names and no clamp of its own: the whole width under
-   a drawing that uses it, 390 pixels in a margin figure, the measure in a block
+   a drawing that uses it, the shown width of a phone capture in a margin figure, the measure in a block
    that was already the measure. That is also what keeps the rule between a
    caption and its drawing the drawing's own width instead of stopping short of
    it—one object, one edge. The blocks are sized above; a caption only follows. */
@@ -1223,22 +1223,6 @@ figure.figure {
   max-width: 100%;
   height: auto;
   margin: 0 auto;
-}
-
-/* The declaration the picture was taken from. Chrome, like the teaser's status
-   strip: it belongs with the drawing rather than with the caption—and set well
-   under the caption's weight, because a reader who wants to know what the
-   figure says never needs this line, and a reader checking the figure against
-   the running application needs every character of it. */
-.shot-meta,
-.report .shot-meta {
-  margin: 6px 0 0;
-  max-width: var(--measure);
-  color: var(--faint);
-  font-family: var(--sans);
-  font-size: 9px;
-  letter-spacing: 0.01em;
-  line-height: 1.5;
 }
 
 /* Placement only—the type comes from the shared caption rules. The caption sits

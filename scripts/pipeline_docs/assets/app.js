@@ -150,6 +150,11 @@
      view, declared at 1280, which is wider than the measure and needs the room.
      Set between them, so neither kind is a special case. */
   const MARGIN_FIGURE_MAX = 500;
+  /* A portrait capture is shown smaller than it was taken. At its own CSS
+     pixels a phone screen stands on the page as large as the reader's phone,
+     more room than a figure beside a paragraph needs; at four fifths it still
+     reads, and a part drawn too small to read is enlarged in place anyway. */
+  const MARGIN_FIGURE_SCALE = 0.8;
 
   // Live chart instances, so the shared step note can clear the selection in the
   // chart the reader did *not* click.
@@ -3544,14 +3549,9 @@
 
     /* A view of the running application, taken from the position the markdown
        declares. The picture arrives in the payload as a data URI, like every
-       other asset on this page, so the report stays one file.
-
-       Under the picture, in small type, is the declaration it was taken
-       from—address, viewport, capture date, each named rather than left as a
-       bare value (see `describe` in `screenshots.py`). It is there because this
-       is the one figure on the page a reader cannot re-derive by reading the
-       source: the line says which position of which build it shows, and names
-       the state a reader would have to reach to see it for themselves. */
+       other asset on this page, so the report stays one file. The position
+       it was taken from stays in the markdown declaration and in
+       `captures.json`; the page shows the picture and its caption alone. */
     screenshot: function (mount, params, numbers) {
       const shot = (DATA.screenshots || {})[params.id];
       if (!shot || !shot.src) {
@@ -3580,16 +3580,12 @@
          and takes the room a drawing takes. */
       const widget = mount.closest(".widget");
       if (widget && shot.width) {
-        widget.style.setProperty("--fig-width", shot.width + "px");
-        widget.classList.add(
-          shot.width <= MARGIN_FIGURE_MAX ? "widget-margin" : "widget-wide"
-        );
-      }
-      const provenance = [shot.declaration];
-      if (shot.captured)
-        provenance.push("captured " + shot.captured.slice(0, 10));
-      if (shot.status !== "current") {
-        provenance.push("the declaration has changed since—retake it");
+        const inMargin = shot.width <= MARGIN_FIGURE_MAX;
+        const shown = inMargin
+          ? Math.round(shot.width * MARGIN_FIGURE_SCALE)
+          : shot.width;
+        widget.style.setProperty("--fig-width", shown + "px");
+        widget.classList.add(inMargin ? "widget-margin" : "widget-wide");
       }
       const img = el("img", {
         class: "shot-img",
@@ -3628,9 +3624,6 @@
         });
         children.push(status);
       }
-      children.push(
-        el("p", { class: "shot-meta", text: provenance.join("  ·  ") })
-      );
       const figure = el("figure", { class: "figure shot" }, children);
       mount.appendChild(figure);
       if (parts.length) {

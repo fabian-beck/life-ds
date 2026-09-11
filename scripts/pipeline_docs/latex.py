@@ -61,6 +61,15 @@ DEFAULT_PAGE = REPO_ROOT / "docs" / "report" / "index.html"
 # with the page rather than copied beside the LaTeX source.
 SCREENSHOTS_RELATIVE = "../screenshots/"
 
+# A phone capture is printed no taller than this: two fifths of the sheet is
+# enough to read it, and leaves the page to the text.
+PORTRAIT_HEIGHT = "0.4\\textheight"
+
+# How many portrait screenshots one float sets side by side. Three phone
+# captures at their printed height fit the measure with room between them;
+# a fourth would not.
+SIDE_BY_SIDE_MAX = 3
+
 # A capture no wider than this prints at its own size, as the page shows it in
 # the margin; a wider one takes the room a drawing takes. The same threshold
 # `MARGIN_FIGURE_MAX` in `app.js` uses to classify a screenshot.
@@ -706,6 +715,9 @@ class Writer:
         self.notes: Dict[int, Note] = {note.number: note for note in document.notes}
         self.mounts = list(document.mounts)
         self.mounted = 0
+        # Mount nodes a row of screenshots has already written; the walk skips
+        # them when it reaches them.
+        self._grouped: set = set()
         self.steps_by_id = {step["id"]: step for step in payload.get("steps", [])}
         self.artifacts_by_id = {
             artifact["id"]: artifact for artifact in payload.get("artifacts", [])
@@ -733,14 +745,67 @@ class Writer:
                     out.append(text + "\n\n")
                 run.clear()
 
-        for node in nodes:
+        for index, node in enumerate(nodes):
             if isinstance(node, str) or node.tag not in BLOCK_TAGS:
                 run.append(node)
                 continue
             flush()
+            if id(node) in self._grouped:
+                continue
+            row = self.shot_row(nodes, index)
+            if row is not None:
+                out.append(row)
+                continue
             out.append(self.block(node))
         flush()
         return "".join(out)
+
+    def shot_row(self, nodes: Sequence[Union[Node, str]], index: int) -> Optional[str]:
+        """Portrait screenshots that follow one another with no heading and no
+        other figure between them, written as one float at the first one's
+        place. Paragraphs between two of them do not part them: the float
+        carries both, and each is cited by its own number. Returns None when
+        the node at `index` does not begin such a run of at least two."""
+        first = nodes[index]
+        if not (
+            isinstance(first, Node)
+            and first.tag == "div"
+            and first.has_class("widget")
+            and first.attrs.get("data-component") == "screenshot"
+        ):
+            return None
+        members: List[Tuple[Node, Mount]] = []
+        widgets = 0
+        for node in nodes[index:]:
+            if isinstance(node, str) or node.tag not in BLOCK_TAGS:
+                continue
+            if node.tag in HEADINGS and node.has_class("sec"):
+                break
+            if node.tag == "div" and node.has_class("widget"):
+                position = self.mounted + widgets
+                widgets += 1
+                if position >= len(self.mounts):
+                    break
+                mount = self.mounts[position]
+                if node.attrs.get(
+                    "data-component"
+                ) != "screenshot" or not portrait_shot(self, mount):
+                    break
+                members.append((node, mount))
+                if len(members) == SIDE_BY_SIDE_MAX:
+                    break
+        if len(members) < 2:
+            return None
+        notes: List[str] = []
+        for node, mount in members:
+            self._grouped.add(id(node))
+            self.mounted += 1
+            for child in node.children:
+                if isinstance(child, Node) and child.has_class("widget-note"):
+                    notes.append(self.blocks(child.children))
+        return "".join(notes) + render_screenshot_row(
+            self, [mount for _, mount in members]
+        )
 
     def block(self, node: Node) -> str:
         tag = node.tag
@@ -1116,7 +1181,7 @@ def render_teaser(writer: Writer, mount: Mount) -> str:
     figure = teaser_figure(writer.payload)
     caption = str((writer.payload.get("teaser") or {}).get("caption") or teaser.CAPTION)
     return (
-        "\\begin{figure}[tbp]\n"
+        "\\begin{figure}[tp]\n"
         "\\begin{wide}\\centering\n"
         f"\\includegraphics[width=\\widewidth]{{{figure.file}}}\n"
         "\\end{wide}\n"
@@ -1137,7 +1202,7 @@ def render_pipeline(writer: Writer, mount: Mount) -> str:
     if banded:
         caption += " A shaded band gathers the steps of one phase."
     return (
-        "\\begin{figure}[tbp]\n"
+        "\\begin{figure}[tp]\n"
         "\\centering\n"
         f"\\pipelinechart{{{figure.file}}}\n"
         f"\\caption{{{escape(caption)}}}\\label{{fig:{figure.id}}}\n"
@@ -1167,7 +1232,7 @@ def render_screenshot(writer: Writer, mount: Mount) -> str:
         # A figure environment all the same, so the numbering the prose and
         # the page share holds even while the picture is missing.
         return (
-            "\\begin{figure}[tbp]\n\\centering\n"
+            "\\begin{figure}[tp]\n\\centering\n"
             f"\\emptynote{{No capture for \\code{{::: screenshot id="
             f"{escape_code(shot_id)}}}. The position is declared in "
             "\\code{docs/report/report.md}; the picture is taken from it by "
@@ -1177,32 +1242,67 @@ def render_screenshot(writer: Writer, mount: Mount) -> str:
             "\\end{figure}\n\n"
         )
     width = int(shot.get("width") or 0)
-    provenance = [str(shot.get("declaration") or "")]
-    if shot.get("captured"):
-        provenance.append("captured " + str(shot["captured"])[:10])
-    if shot.get("status") != "current":
-        provenance.append("the declaration has changed since---retake it")
-    meta = escape("  ·  ".join(part for part in provenance if part))
     picture_file = f"{SCREENSHOTS_RELATIVE}{file}"
     if width and width <= MARGIN_FIGURE_MAX:
         # A phone held upright: two fifths of the sheet is enough to read it,
         # and leaves the page to the text the page shows it beside.
-        size = f"width={width / CSS_PX_PER_MM:.1f}mm,height=0.4\\textheight,keepaspectratio"
+        size = f"width={width / CSS_PX_PER_MM:.1f}mm,height={PORTRAIT_HEIGHT},keepaspectratio"
         picture = f"\\includegraphics[{size}]{{{picture_file}}}"
-        frame = f"\\centering\n\\shotframe{{{picture}}}{{{meta}}}\n"
+        frame = f"\\centering\n\\shotframe{{{picture}}}\n"
     else:
         size = "width=\\widewidth,height=0.55\\textheight,keepaspectratio"
         picture = f"\\includegraphics[{size}]{{{picture_file}}}"
         frame = (
-            "\\begin{wide}\\centering\n"
-            f"\\shotframe{{{picture}}}{{{meta}}}\n"
-            "\\end{wide}\n"
+            "\\begin{wide}\\centering\n" f"\\shotframe{{{picture}}}\n" "\\end{wide}\n"
         )
     return (
-        "\\begin{figure}[tbp]\n"
+        "\\begin{figure}[tp]\n"
         + frame
         + f"\\caption{{{escape(sentence(caption))}}}\\label{{fig:shot-{shot_id}}}\n"
         "\\end{figure}\n\n"
+    )
+
+
+def portrait_shot(writer: Writer, mount: Mount) -> bool:
+    """Whether the mount is a screenshot narrow enough for the margin, with a
+    picture on disk—the ones a row can hold."""
+    if mount.component != "screenshot":
+        return False
+    shot = (writer.payload.get("screenshots") or {}).get(mount.params.get("id"))
+    if not shot or not shot.get("file"):
+        return False
+    width = int(shot.get("width") or 0)
+    return 0 < width <= MARGIN_FIGURE_MAX
+
+
+def render_screenshot_row(writer: Writer, mounts: Sequence[Mount]) -> str:
+    """Portrait screenshots declared one after another, set side by side in one
+    float. Each keeps its own caption and number, so a reference to one of
+    them reads as it does when the figure stands alone; only the placement is
+    shared. A phone capture alone in the measure leaves two thirds of the width
+    empty, and two or three of them in a row cost the page one float instead of
+    a page of floats."""
+    share = {2: "0.47", 3: "0.31"}[len(mounts)]
+    cells = []
+    for mount in mounts:
+        shot_id = mount.params["id"]
+        shot = (writer.payload.get("screenshots") or {})[shot_id]
+        caption = mount.params.get("caption", "")
+        picture = (
+            f"\\includegraphics[width=\\dimexpr\\linewidth-0.8pt\\relax,"
+            f"height={PORTRAIT_HEIGHT},"
+            f"keepaspectratio]{{{SCREENSHOTS_RELATIVE}{shot['file']}}}"
+        )
+        cells.append(
+            f"\\begin{{minipage}}[t]{{{share}\\linewidth}}\\centering\n"
+            f"\\shotframe{{{picture}}}\n"
+            f"\\caption{{{escape(sentence(caption))}}}\\label{{fig:shot-{shot_id}}}\n"
+            "\\end{minipage}"
+        )
+    return (
+        "\\begin{figure}[tp]\n\\centering\n"
+        + "\\hfill\n".join(cells)
+        + "\n\\end{figure}\n\n"
     )
 
 
@@ -1353,7 +1453,10 @@ PREAMBLE = r"""\documentclass[a4paper,11pt]{article}
 \usepackage{longtable}
 \usepackage{caption}
 \usepackage{enumitem}
-\usepackage{titlesec}
+%% `nobottomtitles*` moves a heading that would fall within `\bottomtitlespace`
+%% of the page foot to the next page, so no heading is left standing alone
+%% under the last paragraph of a page, or cut from its own rule.
+\usepackage[nobottomtitles*]{titlesec}
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{tikz}
@@ -1366,8 +1469,8 @@ PREAMBLE = r"""\documentclass[a4paper,11pt]{article}
 %% ---- Colors, read from the tokens under `:root` in `style.css`.
 __COLORS__
 
-%% ---- Text and floats. A figure goes to the top or the foot of the next page
-%% with room for it, and shares that page with the text; only a figure of
+%% ---- Text and floats. A figure goes to the top of the next page with room
+%% for it, never to a page foot, and shares that page with the text; only a figure of
 %% most of a page stands alone on one. The measure does not indent a
 %% paragraph; the space between paragraphs is what separates them.
 \setcounter{topnumber}{3}
@@ -1381,6 +1484,11 @@ __COLORS__
 \setlength{\parskip}{6pt plus 1pt minus 1pt}
 \linespread{1.08}
 \raggedbottom
+%% No line of a paragraph is left alone at a page foot or a page head; with a
+%% ragged bottom the page ends a line early instead.
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
 \urlstyle{same}
 \setlist{itemsep=2pt,topsep=4pt,leftmargin=1.6em}
 
@@ -1411,7 +1519,7 @@ __COLORS__
 \captionsetup[figure]{format=ruled,position=below}
 \captionsetup[table]{position=above,skip=4pt}
 
-%% ---- Small type: the eyebrow over a block, the line under a screenshot.
+%% ---- Small type: the eyebrow over a block.
 \newcommand{\eyebrow}[1]{{\sffamily\scriptsize\bfseries\color{muted}\MakeUppercase{#1}}}
 \newcommand{\capstyle}{\sffamily\small}
 \newcommand{\code}[1]{\texttt{#1}}
@@ -1475,9 +1583,8 @@ __GLYPHS__
 %% ---- A legend: a marked term and what it means, between two hairlines.
 \newenvironment{legend}{\par\vspace{4pt}\noindent\sffamily\small\renewcommand{\arraystretch}{1.2}\begin{tabular}{@{}>{\leavevmode\raggedright\arraybackslash}p{0.28\linewidth}>{\leavevmode\raggedright\arraybackslash\color{inktwo}}p{\dimexpr 0.72\linewidth-2\tabcolsep\relax}@{}}\arrayrulecolor{rule}\specialrule{0.4pt}{0pt}{3pt}}{\arrayrulecolor{rule}\specialrule{0.4pt}{3pt}{0pt}\end{tabular}\par\vspace{4pt}}
 
-%% ---- A screenshot in its frame, with the declaration it was taken from
-%% under it in the faintest type on the page.
-\newcommand{\shotframe}[2]{\begin{minipage}{\linewidth}\centering{\setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.4pt}\color{rule}\fbox{\color{ink}#1}}\\[3pt]{\sffamily\tiny\color{faint}#2}\end{minipage}}
+%% ---- A screenshot in its frame.
+\newcommand{\shotframe}[1]{\begin{minipage}{\linewidth}\centering{\setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.4pt}\color{rule}\fbox{\color{ink}#1}}\end{minipage}}
 
 %% ---- A schema, expanded field by field.
 
