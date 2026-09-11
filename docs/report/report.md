@@ -52,7 +52,7 @@ Both pipelines follow the same pattern: material is derived bottom-up and revise
 
 ### Personal story pipeline
 
-The [[person-pipeline|personal pipeline]] derives data for one biography, from an [[sources|encyclopedia article]] to the data needed for an illustrated and individually styled story. The chart[[figure:pipeline-person]] bands its steps into seven phases: the sources are gathered; the events are proposed, researched, and geocoded; their pictures are found; the story is given a style and generated pictures; the social network is derived and both datasets are reviewed; a depth layer of background reports is written; and localization closes the run.
+The [[person-pipeline|personal story pipeline]] derives data for one biography, from an [[sources|encyclopedia article]] to the data needed for an illustrated and individually styled story. The chart[[figure:pipeline-person]] bands its steps into seven phases: the sources are gathered; the events are proposed, researched, and geocoded; their pictures are found; the story is given a style and generated pictures; the social network is derived and both datasets are reviewed; a depth layer of background reports is written; and localization closes the run.
 
 ::: pipeline lane=person
 :::
@@ -98,13 +98,13 @@ For prompt design and context engineering, we tried to anticipate which material
 
 ## Interface
 
-Life Data Stories' frontend is a mobile-first Svelte application that loads the data the generation pipelines produced and renders it. The landing page offers access to the two story types, which organize the data differently: [[slides|a person's story]] follows one life in order, and a [[sections|meta story]] follows a theme across several lives. On the landing page[[figure:landing]], the meta stories are displayed in [[landing.carousel|a carousel]] at the top. Below them, [[landing.grid|the stories of individual people]] can be reached via their generated portrait, by filtering on role, by search, or by viewing a map that plots every place mentioned across the corpus. Clicking a marker there opens directly onto the event it belongs to inside a person's story. In the following, we walk through both story types in more detail. Throughout, we use the meta story *Beyond the Box* and the personal story of *Antoni Gaudí* as running examples.
+Life Data Stories' frontend is a mobile-first Svelte application that loads the data the generation pipelines produced and renders it. The landing page offers access to the two story types, which organize the data differently: [[slides|a personal story]] follows one life in order, and a [[sections|meta story]] follows a theme across several lives. On the landing page[[figure:landing]], the meta stories are displayed in [[landing.carousel|a carousel]] at the top. Below them, [[landing.grid|the personal stories]] can be reached via their generated portrait, by filtering on role, by search, or by viewing a map that plots every place mentioned across the corpus. Clicking a marker there opens directly onto the event it belongs to inside a personal story. In the following, we walk through both story types in more detail. Throughout, we use the meta story *Beyond the Box* and the personal story of *Antoni Gaudí* as running examples.
 
-::: screenshot id=landing route="#/en" width=1280 height=1300 settle=2500 caption="The landing page: a carousel of meta stories above, the life stories of individual people in a filterable grid below."
+::: screenshot id=landing route="#/en" width=1280 height=1300 settle=2500 caption="The landing page: a carousel of meta stories above, the personal stories in a filterable grid below."
 @carousel 471,101,769,400 Meta story carousel
 Cycles through the meta stories, each with title, subtitle, and a "Story" or "Filter" shortcut.
 @grid 48,705,1169,595 Filterable story grid
-One tile per person's story, with generated portrait, lifespan, roles, and a one-line description.
+One tile per personal story, with generated portrait, lifespan, roles, and a one-line description.
 :::
 
 ### The meta story
@@ -137,16 +137,14 @@ Describes the one connection currently lit: Otto's 1950 visit to Wright, and his
 @map 0,43,390,527 The background map
 Flies to a new location as each card scrolls into view.
 @events 20,758,350,106 Linked events
-Each relevant event listed here links directly to the person's story slide where that event is introduced.
+Each relevant event listed here links directly to the personal story slide where that event is introduced.
 :::
 
-*Map.* The third section shifts the focus to the locations where the architects' work took place. [[meta-map.map|A non-interactive map]][[figure:meta-map]] fills the background behind the scrollable story cards, flying to a new location as each one scrolls into view. It zooms to a point or fits a bounding box depending on how spread out the events are. Each [[meta-map.events|event listed on a card]] links directly to the respective person's story.
+*Map.* The third section shifts the focus to the locations where the architects' work took place. [[meta-map.map|A non-interactive map]][[figure:meta-map]] fills the background behind the scrollable story cards, flying to a new location as each one scrolls into view. It zooms to a point or fits a bounding box depending on how spread out the events are. Each [[meta-map.events|event listed on a card]] links directly to the respective personal story.
 
-The meta story concludes with a brief summary that ties the nine lives together. Below that is a grid of tiles, one for each architect, that links out to the architects' individual stories.
+The meta story concludes with a brief summary that ties the nine lives together. Below that is a grid of tiles, one for each architect, that links out to the architects' personal stories.
 
-### A person's story [todo: name consistently "personal story"]
-
-Following that grid into Gaudí's story opens the personal story, initially showing the stylized portrait image and a short biographical summary. The same three encodings of time, place, and relation that a meta story spreads across sections are attached to this sequence too, just differently. The story unfolds as a horizontal sequence of slides, moved through by swiping sideways. Chapter slides, showing a headline and an illustration, structure the [[gaudi-relationship-card.whole|event slides]][[figure:gaudi-relationship-card]] that provide the main information. Aside details of the event, an image might be blended in. For events with supporting data, a vertical axis opens further. A chevron reveals a longer background passage about the context of the event. Special events such as birth, death, publication, or migration contain further structuring elements and specialized representations.
+### Personal story
 
 ::: screenshot id=gaudi-relationship-card route="#/en/story/antoni_gaud?slide=10" width=390 height=844 wait=".story-view" settle=3500 caption="The classic format of the slide includes text in the middle, a map beneath, and an outline consisting of icons at the bottom."
 @whole 0,0,390,844 The event slide
@@ -159,11 +157,35 @@ Gains a new marker each time the running text names a place, here Barcelona.
 There is one icon per event, shaped according to its type, and a plain marker for each chapter.
 :::
 
-*Timeline.* As an explicit representation of time, [[gaudi-relationship-card.icons|a row along the bottom]] serves as both a progress marker and an outline. Each event is represented by an icon that reflects its type, while each chapter is represented by a plain marker. Users may expand the entire row into a full-screen modal vertical listing of the events. [todo: screenshot and explain more]
+Following that grid into Gaudí's personal story opens it at its beginning, showing the stylized portrait image and a short biographical summary. The same three encodings of time, place, and relation that a meta story spreads across sections are attached to this sequence too, just differently. The story unfolds as a horizontal sequence of slides, moved through by swiping sideways. Chapter slides, showing a headline and an illustration, structure the [[gaudi-relationship-card.whole|event slides]][[figure:gaudi-relationship-card]] that provide the main information. Aside details of the event, an image might be blended in. For events with supporting data, a vertical axis opens further. A chevron reveals a longer background passage about the context of the event. Special events such as birth, death, publication, or migration contain further structuring elements and specialized representations.
+
+::: screenshot id=gaudi-timeline route="#/en/story/antoni_gaud?slide=10&timeline=1" width=390 height=844 wait=".expanded-timeline-container" settle=3500 caption="The expanded timeline: the life as a vertical outline of chapters and events, each entry led in by a line that grows with the subject's age."
+@whole 0,0,390,844 The expanded outline
+The row of icons unfolded into a full-screen list of chapters and events, from the overview to the conclusion.
+@chapter 54,272,300,53 A chapter heading
+Names the chapter and its main location; tapping it moves the story to the chapter slide.
+@event 70,405,240,40 The current event
+Icon, year, the subject's age, and title, lit because it is the slide the reader came from.
+@offset 20,75,120,700 The age offset
+Every entry is set in from the left in proportion to the subject's age, a faint line marking the offset.
+:::
+
+*Timeline.* As an explicit representation of time, [[gaudi-relationship-card.icons|a row along the bottom]] serves as both a progress marker and an outline. Each event is represented by an icon that reflects its type, while each chapter is represented by a plain marker. Tapping the row unfolds it into [[gaudi-timeline.whole|a full-screen outline of the life]][[figure:gaudi-timeline]], the icons traveling from their places in the row to their entries in the list. The outline runs from the overview to the conclusion, with [[gaudi-timeline.chapter|each chapter as a heading]] that names its main location and [[gaudi-timeline.event|each event]] beneath its chapter with year, the subject's age, and title. [[gaudi-timeline.offset|Each entry is set in from the left]] in proportion to the subject's age at that point, so the pace of the life stays visible where the list is dense. Tapping an entry closes the outline and moves the story to that slide.
 
 *Map.* Fixed in the same position on the screen, the map receives a marker each time an event mentions a place. Hence, by the end of the story, the map shows everywhere the subject worked and lived. In the example, the [[gaudi-relationship-card.map|event's main marker]] is on Barcelona, while a secondary marker is visible on Paris and a faded smaller one close to Barcelona.
 
-*Network.* When an event slide mentions another person, that person's name appears beside the text with their role, as here for [[gaudi-relationship-card.tag|Eusebi Güell]], tagged as patron. Tapping the tag opens a card describing the relationship on its own terms. From this card, or the button at the top of the screen, readers can access Gaudí's full network, organized by relationship type into family, professional, and social, each group introduced by a short passage. [todo: add screenshot]
+::: screenshot id=gaudi-network route="#/en/story/antoni_gaud?slide=10&network=1" width=390 height=844 wait=".network-modal" settle=3500 caption="The network view of a personal story: relationships by category, the family laid out as generations around the subject and the other categories in boxes labeled by role."
+@whole 0,0,390,844 The network view
+The subject's relationships by category, each introduced by a short passage and laid out as chips grouped by role.
+@summary 20,125,350,140 The family passage
+Introduces the group; the names and roles it mentions are highlighted.
+@generations 28,280,335,265 The family as generations
+Parents above, siblings beside the subject's portrait, the niece below, joined by lines.
+@boxes 20,735,350,109 A professional box
+The other categories are boxes labeled by role, here the collaborators.
+:::
+
+*Network.* When an event slide mentions another person, that person's name appears beside the text with their role, as here for [[gaudi-relationship-card.tag|Eusebi Güell]], tagged as patron. Tapping the tag opens a card describing the relationship on its own terms. From this card, or the button at the top of the screen, readers can access [[gaudi-network.whole|Gaudí's full network]][[figure:gaudi-network]]. It is organized by relationship category, family first and then the others in alphabetical order, professional, religious, and social in Gaudí's case. Each category has a count and [[gaudi-network.summary|a short passage]] that introduces its people, with the names and roles it mentions highlighted, and lays them out as chips grouped by role: [[gaudi-network.generations|the family as generations]] around the subject, joined by lines, and the other categories in [[gaudi-network.boxes|boxes labeled by role]], such as collaborator or patron. Tapping a chip opens the description and strength of that relationship.
 
 ## Discussion and conclusion
 

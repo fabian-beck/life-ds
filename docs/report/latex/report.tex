@@ -228,7 +228,7 @@
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/}{\textbf{Leah Mühlöder}}\\{\sffamily\scriptsize\color{muted}University of Bamberg}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0009-0000-3510-1686}{0009-0000-3510-1686}}\end{minipage}\hfill%
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://services.informatik.hs-mannheim.de/~nagel/}{\textbf{Till Nagel}}\\{\sffamily\scriptsize\color{muted}Mannheim University of Applied Sciences}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0000-0001-5400-091X}{0000-0001-5400-091X}}\end{minipage}\hfill%
 \par
-\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 11, 2026  \textperiodcentered{}  commit a1ae01e\par}
+\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 11, 2026  \textperiodcentered{}  commit 1eed6f2\par}
 \vspace{14pt}{\color{rulestrong}\hrule}\vspace{8pt}
 \eyebrow{Abstract}\par\vspace{4pt}
 Life Data Stories transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides in which a life is presented as a multi-faceted representation that combines narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous document in which similar visual encodings are read by scrolling. The system separates two concerns. First, generation is performed offline by staged pipelines that combine intelligent language-model inference with deterministic transformation. Second, the presentation is rendered deterministically by an interactive web application. This technical report documents the implemented solution and provides a basic scientific contextualization.
@@ -285,7 +285,7 @@ Both pipelines follow the same pattern: material is derived bottom-up and revise
 
 \subsection{Personal story pipeline}\label{sec:personal-story-pipeline}
 
-The personal pipeline derives data for one biography, from an \glyphof{sources}encyclopedia article to the data needed for an illustrated and individually styled story. The chart (Figure~\ref{fig:pipeline-person}) bands its steps into seven phases: the sources are gathered; the events are proposed, researched, and geocoded; their pictures are found; the story is given a style and generated pictures; the social network is derived and both datasets are reviewed; a depth layer of background reports is written; and localization closes the run.
+The personal story pipeline derives data for one biography, from an \glyphof{sources}encyclopedia article to the data needed for an illustrated and individually styled story. The chart (Figure~\ref{fig:pipeline-person}) bands its steps into seven phases: the sources are gathered; the events are proposed, researched, and geocoded; their pictures are found; the story is given a style and generated pictures; the social network is derived and both datasets are reviewed; a depth layer of background reports is written; and localization closes the run.
 
 \begin{figure}[tbp]
 \centering
@@ -337,13 +337,13 @@ For prompt design and context engineering, we tried to anticipate which material
 
 \section{Interface}\label{sec:interface}
 
-Life Data Stories' frontend is a mobile-first Svelte application that loads the data the generation pipelines produced and renders it. The landing page offers access to the two story types, which organize the data differently: a person's story follows one life in order, and a meta story follows a theme across several lives. On the landing page (Figure~\ref{fig:shot-landing}), the meta stories are displayed in a carousel at the top. Below them, the stories of individual people can be reached via their generated portrait, by filtering on role, by search, or by viewing a map that plots every place mentioned across the corpus. Clicking a marker there opens directly onto the event it belongs to inside a person's story. In the following, we walk through both story types in more detail. Throughout, we use the meta story \emph{Beyond the Box} and the personal story of \emph{Antoni Gaudí} as running examples.
+Life Data Stories' frontend is a mobile-first Svelte application that loads the data the generation pipelines produced and renders it. The landing page offers access to the two story types, which organize the data differently: a personal story follows one life in order, and a meta story follows a theme across several lives. On the landing page (Figure~\ref{fig:shot-landing}), the meta stories are displayed in a carousel at the top. Below them, the personal stories can be reached via their generated portrait, by filtering on role, by search, or by viewing a map that plots every place mentioned across the corpus. Clicking a marker there opens directly onto the event it belongs to inside a personal story. In the following, we walk through both story types in more detail. Throughout, we use the meta story \emph{Beyond the Box} and the personal story of \emph{Antoni Gaudí} as running examples.
 
 \begin{figure}[tbp]
 \begin{wide}\centering
 \shotframe{\includegraphics[width=\widewidth,height=0.55\textheight,keepaspectratio]{../screenshots/landing.jpg}}{Address \#/en  \textperiodcentered{}  viewport 1280\texttimes{}1300  \textperiodcentered{}  2\texttimes{} density  \textperiodcentered{}  captured 2026-08-25}
 \end{wide}
-\caption{The landing page: a carousel of meta stories above, the life stories of individual people in a filterable grid below.}\label{fig:shot-landing}
+\caption{The landing page: a carousel of meta stories above, the personal stories in a filterable grid below.}\label{fig:shot-landing}
 \end{figure}
 
 \subsection{The meta story}\label{sec:the-meta-story}
@@ -373,13 +373,11 @@ A meta story is structured as an opening scene, up to three sections---relating 
 \caption{A location card, with the map flown in above and its linked events listed below.}\label{fig:shot-meta-map}
 \end{figure}
 
-\emph{Map.} The third section shifts the focus to the locations where the architects' work took place. A non-interactive map (Figure~\ref{fig:shot-meta-map}) fills the background behind the scrollable story cards, flying to a new location as each one scrolls into view. It zooms to a point or fits a bounding box depending on how spread out the events are. Each event listed on a card links directly to the respective person's story.
+\emph{Map.} The third section shifts the focus to the locations where the architects' work took place. A non-interactive map (Figure~\ref{fig:shot-meta-map}) fills the background behind the scrollable story cards, flying to a new location as each one scrolls into view. It zooms to a point or fits a bounding box depending on how spread out the events are. Each event listed on a card links directly to the respective personal story.
 
-The meta story concludes with a brief summary that ties the nine lives together. Below that is a grid of tiles, one for each architect, that links out to the architects' individual stories.
+The meta story concludes with a brief summary that ties the nine lives together. Below that is a grid of tiles, one for each architect, that links out to the architects' personal stories.
 
-\subsection{A person's story [todo: name consistently \textquotedbl{}personal story\textquotedbl{}]}\label{sec:a-person-s-story-todo-name-consistently-personal-story}
-
-Following that grid into Gaudí's story opens the personal story, initially showing the stylized portrait image and a short biographical summary. The same three encodings of time, place, and relation that a meta story spreads across sections are attached to this sequence too, just differently. The story unfolds as a horizontal sequence of slides, moved through by swiping sideways. Chapter slides, showing a headline and an illustration, structure the event slides (Figure~\ref{fig:shot-gaudi-relationship-card}) that provide the main information. Aside details of the event, an image might be blended in. For events with supporting data, a vertical axis opens further. A chevron reveals a longer background passage about the context of the event. Special events such as birth, death, publication, or migration contain further structuring elements and specialized representations.
+\subsection{Personal story}\label{sec:personal-story}
 
 \begin{figure}[tbp]
 \centering
@@ -387,11 +385,25 @@ Following that grid into Gaudí's story opens the personal story, initially show
 \caption{The classic format of the slide includes text in the middle, a map beneath, and an outline consisting of icons at the bottom.}\label{fig:shot-gaudi-relationship-card}
 \end{figure}
 
-\emph{Timeline.} As an explicit representation of time, a row along the bottom serves as both a progress marker and an outline. Each event is represented by an icon that reflects its type, while each chapter is represented by a plain marker. Users may expand the entire row into a full-screen modal vertical listing of the events. [todo: screenshot and explain more]
+Following that grid into Gaudí's personal story opens it at its beginning, showing the stylized portrait image and a short biographical summary. The same three encodings of time, place, and relation that a meta story spreads across sections are attached to this sequence too, just differently. The story unfolds as a horizontal sequence of slides, moved through by swiping sideways. Chapter slides, showing a headline and an illustration, structure the event slides (Figure~\ref{fig:shot-gaudi-relationship-card}) that provide the main information. Aside details of the event, an image might be blended in. For events with supporting data, a vertical axis opens further. A chevron reveals a longer background passage about the context of the event. Special events such as birth, death, publication, or migration contain further structuring elements and specialized representations.
+
+\begin{figure}[tbp]
+\centering
+\shotframe{\includegraphics[width=103.2mm,height=0.4\textheight,keepaspectratio]{../screenshots/gaudi-timeline.jpg}}{Address \#/en/story/antoni\_gaud?slide=10\&timeline=1  \textperiodcentered{}  viewport 390\texttimes{}844  \textperiodcentered{}  2\texttimes{} density  \textperiodcentered{}  captured 2026-09-11}
+\caption{The expanded timeline: the life as a vertical outline of chapters and events, each entry led in by a line that grows with the subject's age.}\label{fig:shot-gaudi-timeline}
+\end{figure}
+
+\emph{Timeline.} As an explicit representation of time, a row along the bottom serves as both a progress marker and an outline. Each event is represented by an icon that reflects its type, while each chapter is represented by a plain marker. Tapping the row unfolds it into a full-screen outline of the life (Figure~\ref{fig:shot-gaudi-timeline}), the icons traveling from their places in the row to their entries in the list. The outline runs from the overview to the conclusion, with each chapter as a heading that names its main location and each event beneath its chapter with year, the subject's age, and title. Each entry is set in from the left in proportion to the subject's age at that point, so the pace of the life stays visible where the list is dense. Tapping an entry closes the outline and moves the story to that slide.
 
 \emph{Map.} Fixed in the same position on the screen, the map receives a marker each time an event mentions a place. Hence, by the end of the story, the map shows everywhere the subject worked and lived. In the example, the event's main marker is on Barcelona, while a secondary marker is visible on Paris and a faded smaller one close to Barcelona.
 
-\emph{Network.} When an event slide mentions another person, that person's name appears beside the text with their role, as here for Eusebi Güell, tagged as patron. Tapping the tag opens a card describing the relationship on its own terms. From this card, or the button at the top of the screen, readers can access Gaudí's full network, organized by relationship type into family, professional, and social, each group introduced by a short passage. [todo: add screenshot]
+\begin{figure}[tbp]
+\centering
+\shotframe{\includegraphics[width=103.2mm,height=0.4\textheight,keepaspectratio]{../screenshots/gaudi-network.jpg}}{Address \#/en/story/antoni\_gaud?slide=10\&network=1  \textperiodcentered{}  viewport 390\texttimes{}844  \textperiodcentered{}  2\texttimes{} density  \textperiodcentered{}  captured 2026-09-11}
+\caption{The network view of a personal story: relationships by category, the family laid out as generations around the subject and the other categories in boxes labeled by role.}\label{fig:shot-gaudi-network}
+\end{figure}
+
+\emph{Network.} When an event slide mentions another person, that person's name appears beside the text with their role, as here for Eusebi Güell, tagged as patron. Tapping the tag opens a card describing the relationship on its own terms. From this card, or the button at the top of the screen, readers can access Gaudí's full network (Figure~\ref{fig:shot-gaudi-network}). It is organized by relationship category, family first and then the others in alphabetical order, professional, religious, and social in Gaudí's case. Each category has a count and a short passage that introduces its people, with the names and roles it mentions highlighted, and lays them out as chips grouped by role: the family as generations around the subject, joined by lines, and the other categories in boxes labeled by role, such as collaborator or patron. Tapping a chip opens the description and strength of that relationship.
 
 \section{Discussion and conclusion}\label{sec:discussion-and-conclusion}
 

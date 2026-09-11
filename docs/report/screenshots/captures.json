@@ -1,6 +1,16 @@
 {
   "note": "Written by scripts/generate_report.py --shots. Each entry records the fingerprint of the '::: screenshot' declaration the picture was taken from, which is how a build knows a figure is stale.",
   "shots": {
+    "gaudi-network": {
+      "file": "gaudi-network.jpg",
+      "fingerprint": "71e96e3bb0b4",
+      "captured": "2026-09-11T08:45:58Z",
+      "bytes": 210883,
+      "css_width": 390,
+      "css_height": 844,
+      "scale": 2,
+      "route": "#/en/story/antoni_gaud?slide=10&network=1"
+    },
     "gaudi-overview": {
       "file": "gaudi-overview.jpg",
       "fingerprint": "367b56bf8f57",
@@ -20,6 +30,16 @@
       "css_height": 844,
       "scale": 2,
       "route": "#/en/story/antoni_gaud?slide=10"
+    },
+    "gaudi-timeline": {
+      "file": "gaudi-timeline.jpg",
+      "fingerprint": "126af94665bf",
+      "captured": "2026-09-11T08:49:27Z",
+      "bytes": 153265,
+      "css_width": 390,
+      "css_height": 844,
+      "scale": 2,
+      "route": "#/en/story/antoni_gaud?slide=10&timeline=1"
     },
     "landing": {
       "file": "landing.jpg",

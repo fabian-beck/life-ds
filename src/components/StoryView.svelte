@@ -87,12 +87,11 @@
     ? $_("story.close_story_to_collection")
     : $_("story.close_story");
 
-  // Timeline expanded state - check if timeline parameter is in URL
-  $: hasTimelineParam = new URLSearchParams($location.split("?")[1] || "").has(
-    "timeline"
-  );
-  // Default to collapsed unless explicitly set via URL parameter
-  $: initialTimelineExpanded = hasTimelineParam ? $queryParams.timeline : false;
+  // The timeline opens expanded only when the URL says so (`timeline=1`); the
+  // toggle writes the flag back through updateStoryUrl, so the two stay in step.
+  // `$location` is the path alone, so the flag must be read from the parsed
+  // query, not from the location string.
+  $: initialTimelineExpanded = $queryParams.timeline;
 
   const DEFAULT_COORDINATES = null;
   let lastDatasetName = null;
