@@ -1001,19 +1001,30 @@ body.has-note-pop .notes {
 
      A later figure paints over an earlier one—positioned boxes stack in
      document order—on a ground of its own, so the covered one does not show
-     through its caption, and the earlier one fades under it, `--fade` being
-     set on scroll. At zero the covered figure is also hidden, so it takes
-     neither pointer nor focus. */
+     through its caption. Which figure shows is decided on scroll, and the
+     change is carried here as a crossfade of fixed duration rather than one
+     the scroll drives, so a reader who stops is never left between two
+     figures. A hidden figure is also out of reach of pointer and focus, once
+     its fade has run; when it returns it is reachable at once. The first
+     decision, at load, is not animated: the transition is enabled only once
+     the script has settled the page. */
   .report > .widget-margin .margin-body {
     position: sticky;
     top: var(--pin, 20px);
     bottom: var(--pin, 20px);
     background: var(--paper);
-    opacity: var(--fade, 1);
+  }
+
+  .report.is-settled .margin-body {
+    transition:
+      opacity 360ms ease,
+      visibility 0s linear 0s;
   }
 
   .report > .widget-margin .margin-body.is-covered {
+    opacity: 0;
     visibility: hidden;
+    transition-delay: 0s, 360ms;
   }
 
   .report > .widget-margin .margin-space {
@@ -2247,7 +2258,8 @@ figure.teaser > .cap {
 @media (prefers-reduced-motion: reduce) {
   .shot-canvas,
   .spart-box,
-  .spart-scrim {
+  .spart-scrim,
+  .report.is-settled .margin-body {
     transition: none;
   }
 }
@@ -2447,6 +2459,7 @@ figure.teaser > .cap {
     position: static;
     opacity: 1;
     visibility: visible;
+    transition: none;
   }
 
   .report > .widget-margin .margin-space {

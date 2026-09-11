@@ -4213,8 +4213,10 @@
      Nothing here applies where the figure is not in the margin: the band is
      sized only while it is positioned there, and the print rules release it. */
   const PIN_OFFSET = 20; // CSS pixels between the viewport's edge and a pinned figure
-  const FADE_OVERLAP = 200; // of scrolling, over which one figure gives way to the next
   const READING_LINE = 0.28; // of the viewport: where the text being read is, as the rail assumes
+  const TAKEOVER_SLACK = 40; // CSS pixels a handover must be undone by before it reverses
+  const COVER_ENTER = 60; // of overlap before a figure counts as covered by the next
+  const COVER_LEAVE = 20; // of overlap left before it counts as uncovered again
   const FIGURE_GAP = 32; // kept between a figure and a wide block or heading
 
   const marginState = {
@@ -4230,8 +4232,8 @@
     );
   }
 
-  /* How much of a figure is showing, as a factor: one where nothing covers
-     it, zero once the next figure has taken its place. */
+  /* Whether a figure is showing: one where it is, zero once the next figure
+     has taken its place. The state, not the crossfade in progress. */
   function marginFadeOf(node) {
     const band = marginBandOf(node);
     return band && marginState.active ? band.fade : 1;
@@ -4276,17 +4278,18 @@
         reach: 0, // the height of the stretch it serves, from its place on
         end: 0, // where its band ends, in page pixels
         next: null, // the band that takes this one's place, if any
-        fade: 1,
+        taken: false, // whether the next figure has taken over from this one
+        covered: false, // whether the next figure's body covers this one's
+        fade: 1, // one while shown, zero while hidden: the state, not the animation
       };
     });
     const bands = marginState.bands;
 
-    function setFade(band, value) {
+    function setShown(band, shown) {
+      const value = shown ? 1 : 0;
       if (band.fade === value) return;
       band.fade = value;
-      if (value >= 1) band.body.style.removeProperty("--fade");
-      else band.body.style.setProperty("--fade", String(value));
-      band.body.classList.toggle("is-covered", value <= 0);
+      band.body.classList.toggle("is-covered", !shown);
     }
 
     /* What bounds a band, in document order: a wide block and the appendix,
@@ -4314,7 +4317,7 @@
         band.band.style.removeProperty("--band-height");
         band.band.style.removeProperty("--lead");
         band.body.style.removeProperty("--pin");
-        setFade(band, 1);
+        setShown(band, true);
       });
       stops().forEach((stop) => {
         stop.node.style.removeProperty("--clear");
@@ -4402,44 +4405,54 @@
       const last = bands[bands.length - 1];
       const tail = last.top + last.height - reportEnd;
       if (tail > 0) report.style.setProperty("--tail", tail + "px");
-      fade();
+      decide();
+      report.classList.add("is-settled");
     }
 
-    /* Each figure shows as far as its neighbors allow. The next figure takes
-       over once the reader is done with this one's paragraph—its bottom has
-       passed the reading line—and then only as far as it actually covers this
-       one on screen: a figure declared far below stands clear at first and
-       covers this one as it rises, while one declared close by stands in the
-       same place from the start and the two simply trade places. Until the
-       paragraph is done the next figure is hidden, wherever it stands. */
-    function fade() {
+    /* Which figures show. The next figure takes over once the reader is done
+       with this one's paragraph—its bottom has passed the reading line—and
+       this one is hidden once the next actually covers it on screen: a figure
+       declared far below stands clear at first and covers this one as it
+       rises, while one declared close by stands in the same place from the
+       start and the two simply trade places. Until the paragraph is done the
+       next figure is hidden, wherever it stands.
+
+       Each is a decision, not a dial: a figure is shown or hidden, and the
+       stylesheet carries the change as a crossfade of fixed duration, so a
+       reader who stops scrolling is never left between two figures. A
+       decision reverses only once the scroll has moved a little past the
+       point that made it, so a reader lingering there does not see the two
+       figures flicker. */
+    function decide() {
       if (!marginState.active) return;
       const viewport = window.innerHeight;
-      const line = Math.max(
-        PIN_OFFSET + FADE_OVERLAP / 2,
-        viewport * READING_LINE
-      );
+      const line = viewport * READING_LINE;
       const shown = bands.map(() => {
-        return 1;
+        return true;
       });
       bands.forEach((band, index) => {
-        if (!band.next) return;
+        if (!band.next) {
+          band.taken = false;
+          band.covered = false;
+          return;
+        }
         const done = band.widget.getBoundingClientRect().top + band.text;
-        const take = Math.max(
-          0,
-          Math.min(1, (line + FADE_OVERLAP / 2 - done) / FADE_OVERLAP)
-        );
+        band.taken = band.taken
+          ? done < line + TAKEOVER_SLACK
+          : done < line - TAKEOVER_SLACK;
         const bottom = Math.min(
           band.body.getBoundingClientRect().bottom,
           viewport
         );
-        const covered = bottom - band.next.body.getBoundingClientRect().top;
-        const cover = Math.max(0, Math.min(1, covered / FADE_OVERLAP));
-        shown[index] = Math.min(shown[index], 1 - Math.min(take, cover));
-        shown[index + 1] = Math.min(shown[index + 1], take);
+        const overlap = bottom - band.next.body.getBoundingClientRect().top;
+        band.covered = band.covered
+          ? overlap > COVER_LEAVE
+          : overlap > COVER_ENTER;
+        if (band.taken && band.covered) shown[index] = false;
+        if (!band.taken) shown[index + 1] = false;
       });
       bands.forEach((band, index) => {
-        setFade(band, shown[index]);
+        setShown(band, shown[index]);
       });
     }
 
@@ -4450,7 +4463,7 @@
         if (!scrolling) {
           scrolling = window.requestAnimationFrame(() => {
             scrolling = 0;
-            fade();
+            decide();
           });
         }
       },

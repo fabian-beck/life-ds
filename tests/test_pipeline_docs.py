@@ -2158,7 +2158,7 @@ class LayoutWidthTests(unittest.TestCase):
         self.assertIn("function bindMarginFigures(", self.js)
         self.assertIn("bindMarginFigures();", self.js)
         written = set(re.findall(r'setProperty\(\s*"(--[a-z-]+)"', self.js))
-        for name in ("--band-height", "--lead", "--pin", "--fade", "--clear", "--tail"):
+        for name in ("--band-height", "--lead", "--pin", "--clear", "--tail"):
             self.assertIn(name, written, f"the script no longer sets {name}")
         for name in sorted(written):
             self.assertIn(

@@ -228,7 +228,7 @@
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/}{\textbf{Leah Mühlöder}}\\{\sffamily\scriptsize\color{muted}University of Bamberg}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0009-0000-3510-1686}{0009-0000-3510-1686}}\end{minipage}\hfill%
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://services.informatik.hs-mannheim.de/~nagel/}{\textbf{Till Nagel}}\\{\sffamily\scriptsize\color{muted}Mannheim University of Applied Sciences}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0000-0001-5400-091X}{0000-0001-5400-091X}}\end{minipage}\hfill%
 \par
-\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 11, 2026  \textperiodcentered{}  commit 5096e2e\par}
+\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 11, 2026  \textperiodcentered{}  commit 728ada5\par}
 \vspace{14pt}{\color{rulestrong}\hrule}\vspace{8pt}
 \eyebrow{Abstract}\par\vspace{4pt}
 Life Data Stories transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides in which a life is presented as a multi-faceted representation that combines narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous document in which the similar visual encodings are read by scrolling. The system separates two concerns. First, generation is performed offline by staged pipelines that combine intelligent language-model inference with deterministic transformation. Second, the presentation is rendered deterministically by an interactive web application. This technical report documents the implemented solution and provides a basic scientific contextualization.
@@ -337,7 +337,7 @@ For prompt design and context engineering, we tried to anticipate which material
 
 \section{Interface}\label{sec:interface}
 
-Life Data Stories' reading side is a mobile-first Svelte and Vite application: it loads the data the generation pipelines produced and renders it directly. The landing page offers access to two story types, which organize the data differently: a person's story follows one life in order, and a meta story follows a theme across several lives. On the landing page (Figure~\ref{fig:shot-landing}), the meta stories are displayed in a carousel at the top. Below them, the stories of individual people can be reached four ways: via their generated portrait, by filtering on role, by search, or by viewing a map that plots every place mentioned across the corpus. Clicking a marker there opens directly onto the event it belongs to inside a person's story. In the following, we walk through both story types in more detail. Throughout, we use the meta story \emph{Beyond the Box} and the person's story of \emph{Antoni Gaudí} as running examples.
+Life Data Stories' frontend is a mobile-first Svelte application that loads the data the generation pipelines produced and renders it. The landing page offers access to the two story types, which organize the data differently: a person's story follows one life in order, and a meta story follows a theme across several lives. On the landing page (Figure~\ref{fig:shot-landing}), the meta stories are displayed in a carousel at the top. Below them, the stories of individual people can be reached via their generated portrait, by filtering on role, by search, or by viewing a map that plots every place mentioned across the corpus. Clicking a marker there opens directly onto the event it belongs to inside a person's story. In the following, we walk through both story types in more detail. Throughout, we use the meta story \emph{Beyond the Box} and the personal story of \emph{Antoni Gaudí} as running examples.
 
 \begin{figure}[tbp]
 \begin{wide}\centering
@@ -348,7 +348,7 @@ Life Data Stories' reading side is a mobile-first Svelte and Vite application: i
 
 \subsection{The meta story}\label{sec:the-meta-story}
 
-A meta story is structured as an opening scene, up to three component sections, and a closing conclusion, followed by a grid linking to the people it draws on; the sections are a timeline, a network, and a map. The whole is read from top to bottom by scrolling. Not every theme carries all three sections, and which ones appear is decided once when the story is composed based on the data that is available. Our exemplary meta story, \emph{Beyond the Box}, follows nine architects who lived and worked across more than a century. The meta story investigates their commonalities, what shaped their work, and how they might have influenced each other.
+A meta story is structured as an opening scene, up to three sections---relating to components such as timeline, social network, and map---, and a closing conclusion, followed by a grid linking to the people it covers. The whole is read from top to bottom by scrolling. \emph{Beyond the Box} follows nine architects who explored organic shapes in architecture and worked across more than a century.
 
 \begin{figure}[tbp]
 \begin{wide}\centering
@@ -357,9 +357,7 @@ A meta story is structured as an opening scene, up to three component sections, 
 \caption{The timeline: one lane per architect, with a guiding story card in front naming the span currently in focus.}\label{fig:shot-meta-timeline-environment}
 \end{figure}
 
-\emph{Timeline.} After the text-only introduction, the vertical scrolling turns horizontal as the reader reaches the timeline visualization (Figure~\ref{fig:shot-meta-timeline-environment}). This visualization carries the reader sideways through time instead of further down the page. In \emph{Beyond the Box}, what comes into view is a timeline of nine lanes, one per architect. Events are marked as dots along each lane. A sequence of guiding story cards is pinned near the top and leads the reader through the timeline. Each card names a span of years and describes what happened during that period. The first card, ``The Complete Environment'', remains visible as long as the reader scrolls through the years it covers.
-
-Tapping on a dot representing an event opens a brief description of it. Tapping the surrounding card instead leads into that architect's personal story. Above the lanes is a second layer of annotations that marks historical events affecting several lives at once, such as World War II. While the guiding story card offers one path through the theme, the lanes and their events are for readers who want to explore further.
+\emph{Timeline.} After a short textual introduction, the vertical scrolling turns horizontal as the reader reaches the timeline visualization (Figure~\ref{fig:shot-meta-timeline-environment}). In \emph{Beyond the Box}, a timeline of nine lanes, one per architect, shows events that are marked as dots along each lane. A sequence of guiding story cards, marking chapters in the development, is pinned near the top and leads the reader through the timeline. Tapping or clicking on a dot representing an event opens a brief description of it. The surrounding card instead leads into that architect's personal story. Above the lanes is a second layer of annotations that marks the historical events affecting several lives at once, such as World War II.
 
 \begin{figure}[tbp]
 \centering
