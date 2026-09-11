@@ -144,7 +144,9 @@ Each relevant event listed here links directly to the person's story slide where
 
 The meta story concludes with a brief summary that ties the nine lives together. Below that is a grid of tiles, one for each architect that links out to the architects' individual stories. 
 
-### A person's story
+### A person's story [todo: name consistently "personal story"]
+
+Following that grid into Gaudí's story opens the personal story, initally showing the stylized portrait image and a short biographical summary. The same three encodings of time, place, and relation that a meta story spreads across sections are attached to this sequence too, just differently. The story unfolds as a horizontal sequence of slides, moved through by swiping sideways. Chapter slides showing a headline and illustration, structure the [[gaudi-relationship-card.whole|event slides]][[figure:gaudi-relationship-card]] that provide the main information. Aside details of the event, an image might be blended in. For events with supporting data, a vertical axis opens further. A chevron reveals a longer background passage about the context of the event. Special events such as birth, death, publication or migration contain further sturcuturing elements and specialized representatiions. 
 
 ::: screenshot id=gaudi-relationship-card route="#/en/story/antoni_gaud?slide=10" width=390 height=844 wait=".story-view" settle=3500 caption="The classic format of the slide includes text in the middle, a map beneath, and an outline consisting of icons at the bottom."
 @whole 0,0,390,844 The event slide
@@ -157,15 +159,11 @@ Gains a new marker each time the running text names a place, here Barcelona.
 There is one icon per event, shaped according to its type, and a plain marker for each chapter.
 :::
 
-There are two ways to access a person's story: directly from the landing page, through search, filter, or the overview map, or by following a link out of a meta story: its closing grid, a name in its running text, a marker on its map, a point on its timeline. Following that grid into Gaudí's story, as we just did, lands at its beginning.
+*Timeline.* As a explicit representation of time, [[gaudi-relationship-card.icons|a row along the bottom]] serves as both a progress marker and an outline. Each event is represented by an icon that reflects its type, while each chapter is represented by a plain marker. Users may expands the entire row into full-screen modal vertical listing of the events. [todo: screenshot and explain more]
 
-*Timeline.* The story unfolds as a horizontal [[gaudi-relationship-card.whole|sequence of slides]][[figure:gaudi-relationship-card]], moved through by swiping sideways rather than scrolling down: an overview, a few chapters that mark the phases of life, the events themselves, and a closing slide. [[gaudi-relationship-card.icons|A row along the bottom]] serves as both a progress marker and an outline. Each event is represented by an icon that reflects its type. Each chapter is represented by a plain marker. Tapping on the event count expands the entire row into a dated outline of the life. <!--Gaudí's story contains sixteen events across four chapters. Its second chapter, "A Genius Enters Barcelona," covers the period from 1878 to 1899. During this decade, his earliest commissions evolved into the Barcelona work for which he is known.--> For events with supporting data, a vertical axis opens further. A chevron reveals a longer background passage about the context of the event.
+*Map.* Fixed in the same position on the screen, the map receives a marker each time an event mentions a place. Hence, By the end of the story, the map shows everywhere the subject worked and lived. In the example, the [[gaudi-relationship-card.map|events's main marker]] is on Barcelona, while a secondary marker is visible on Paris and a faded smaller close to Barcelona.
 
-The same three encodings of time, place, and relation that a meta story spreads across sections are attached to this sequence too, just differently: the slide-based representation of events already stands in for the timeline; a network overview exists from the start, reachable on demand from a button at the top of the screen; and a map is visible beneath the text of every slide.
-
-*Map.* Fixed in the same position on the screen, the map receives a marker each time an event mentions a place. By the end of the story, the map shows everywhere the subject worked and lived. [[gaudi-relationship-card.map|This chapter's marker is on Barcelona]], where Gaudí's projects, such as Palau Güell, took shape.
-
-*Network.* When an event slide mentions another person, that person's name appears beside the text with their role, as here for [[gaudi-relationship-card.tag|Eusebi Güell]], tagged as patron. Tapping the tag opens a card describing the relationship on its own terms. From this card, or the button at the top of the screen, readers can access Gaudí's full network, organized by relationship type into family, professional, and social, each group introduced by a short passage.
+*Network.* When an event slide mentions another person, that person's name appears beside the text with their role, as here for [[gaudi-relationship-card.tag|Eusebi Güell]], tagged as patron. Tapping the tag opens a card describing the relationship on its own terms. From this card, or the button at the top of the screen, readers can access Gaudí's full network, organized by relationship type into family, professional, and social, each group introduced by a short passage. [todo: add screenshot]
 
 ## Discussion and conclusion
 
