@@ -47,7 +47,6 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 from . import teaser
-from .render import DRAFT_LEAD, DRAFT_TEXT
 from .report import Document, Mount, Note
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -90,9 +89,6 @@ COLOR_TOKENS: Dict[str, str] = {
     "rule": "rule",
     "rule-soft": "rulesoft",
     "rule-strong": "rulestrong",
-    "draft-wash": "draftwash",
-    "draft-line": "draftline",
-    "draft-ink": "draftink",
     "kind-ai": "kindai",
     "kind-deterministic": "kinddeterministic",
     "kind-external": "kindexternal",
@@ -1515,14 +1511,6 @@ def _paragraphs(text: str) -> List[str]:
 def title_block(document: Document, payload: Dict[str, Any]) -> str:
     """The title, the byline, the build stamp, and the abstract."""
     lines = [
-        "\\begin{tcolorbox}[enhanced,sharp corners,boxrule=0pt,colback=draftwash,"
-        "colframe=draftwash,borderline south={1.5pt}{0pt}{draftline},"
-        "left=6pt,right=6pt,top=6pt,bottom=6pt,before skip=0pt,after skip=18pt,"
-        "fontupper=\\sffamily\\small\\color{draftink}]",
-        "\\eyebrow{Draft}\\quad"
-        f"\\textbf{{{escape(DRAFT_LEAD)}}} {escape(DRAFT_TEXT)}",
-        "\\end{tcolorbox}",
-        "",
         "\\eyebrow{Technical report}\\par\\vspace{6pt}",
         f"{{\\Huge\\bfseries {escape(document.title)}\\par}}\\vspace{{6pt}}",
     ]

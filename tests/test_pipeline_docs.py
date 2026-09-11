@@ -2445,12 +2445,6 @@ class LatexTests(unittest.TestCase):
         self.assertIn("\\label{fig:pipeline-person}", tex)
         self.assertIn("\\label{fig:shot-shot}", tex)
 
-    def test_the_draft_band_is_one_text(self) -> None:
-        html = render.render(self.payload, self.document)
-        self.assertIn(render.DRAFT_LEAD, html)
-        self.assertIn(latex.escape(render.DRAFT_LEAD), self.tex)
-        self.assertIn(latex.escape(render.DRAFT_TEXT), self.tex)
-
     def test_a_drawing_is_fingerprinted_by_what_it_draws(self) -> None:
         before = latex.pipeline_figure("person", self.payload).fingerprint
         moved = json.loads(json.dumps(self.payload))
