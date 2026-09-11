@@ -228,7 +228,7 @@
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/}{\textbf{Leah Mühlöder}}\\{\sffamily\scriptsize\color{muted}University of Bamberg}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0009-0000-3510-1686}{0009-0000-3510-1686}}\end{minipage}\hfill%
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://services.informatik.hs-mannheim.de/~nagel/}{\textbf{Till Nagel}}\\{\sffamily\scriptsize\color{muted}Mannheim University of Applied Sciences}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0000-0001-5400-091X}{0000-0001-5400-091X}}\end{minipage}\hfill%
 \par
-\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 11, 2026  \textperiodcentered{}  commit 4c1ceb2\par}
+\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 11, 2026  \textperiodcentered{}  commit a1ae01e\par}
 \vspace{14pt}{\color{rulestrong}\hrule}\vspace{8pt}
 \eyebrow{Abstract}\par\vspace{4pt}
 Life Data Stories transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides in which a life is presented as a multi-faceted representation that combines narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous document in which similar visual encodings are read by scrolling. The system separates two concerns. First, generation is performed offline by staged pipelines that combine intelligent language-model inference with deterministic transformation. Second, the presentation is rendered deterministically by an interactive web application. This technical report documents the implemented solution and provides a basic scientific contextualization.
@@ -365,7 +365,7 @@ A meta story is structured as an opening scene, up to three sections---relating 
 \caption{The network: architects as nodes, one card in front naming the cluster currently lit.}\label{fig:shot-meta-network}
 \end{figure}
 
-\emph{Network.} The graph (Figure~\ref{fig:shot-meta-network}) displays the architects and the documented connections between them. Its layout is calculated in the background and finalized before it is displayed. The data groups people into clusters, tying their members more closely to each other than to the rest. As the reader scrolls, cards move over the graph, one per cluster: the people involved are highlighted and the connection between them lit, while the rest of the graph darkens, as here for Frei Otto, Frank Lloyd Wright, and Antoni Gaudí. The graph itself does not move or rearrange as the reader scrolls; only the part in the foreground changes.
+\emph{Network.} The graph (Figure~\ref{fig:shot-meta-network}) displays the architects and the documented connections between them. Its force-directed layout is calculated in the background and finalized before it is displayed. As precomputed, the data groups people into clusters. As the reader scrolls, cards move over the graph, one per cluster, describing it, and the people and connections involved are highlighted, while the rest of the graph darkens.
 
 \begin{figure}[tbp]
 \centering
@@ -373,11 +373,13 @@ A meta story is structured as an opening scene, up to three sections---relating 
 \caption{A location card, with the map flown in above and its linked events listed below.}\label{fig:shot-meta-map}
 \end{figure}
 
-\emph{Map.} The third section shifts the focus from the architects themselves and their connections to the locations where their work took place. A non-interactive map (Figure~\ref{fig:shot-meta-map}) fills the background behind the scrollable story cards, flying to a new location as each one scrolls into view, as here for Barcelona. It zooms to a point or fits a bounding box depending on how spread out the events are. Each event listed on a card links directly to the person's story slide where that event is introduced. The map section is not a separate account of the theme; it shows the same events that the timeline already showed. Instead of \emph{when,} the focus is on \emph{where.}
+\emph{Map.} The third section shifts the focus to the locations where the architects' work took place. A non-interactive map (Figure~\ref{fig:shot-meta-map}) fills the background behind the scrollable story cards, flying to a new location as each one scrolls into view. It zooms to a point or fits a bounding box depending on how spread out the events are. Each event listed on a card links directly to the respective person's story.
 
-The meta story concludes with a brief summary that ties the nine lives together. Below that is a grid of tiles, one for each architect. The grid links out to the architects' individual stories. The walkthrough follows one thread further from there, into Gaudí's own story.
+The meta story concludes with a brief summary that ties the nine lives together. Below that is a grid of tiles, one for each architect, that links out to the architects' individual stories.
 
-\subsection{A person's story}\label{sec:a-person-s-story}
+\subsection{A person's story [todo: name consistently \textquotedbl{}personal story\textquotedbl{}]}\label{sec:a-person-s-story-todo-name-consistently-personal-story}
+
+Following that grid into Gaudí's story opens the personal story, initially showing the stylized portrait image and a short biographical summary. The same three encodings of time, place, and relation that a meta story spreads across sections are attached to this sequence too, just differently. The story unfolds as a horizontal sequence of slides, moved through by swiping sideways. Chapter slides, showing a headline and an illustration, structure the event slides (Figure~\ref{fig:shot-gaudi-relationship-card}) that provide the main information. Aside details of the event, an image might be blended in. For events with supporting data, a vertical axis opens further. A chevron reveals a longer background passage about the context of the event. Special events such as birth, death, publication, or migration contain further structuring elements and specialized representations.
 
 \begin{figure}[tbp]
 \centering
@@ -385,15 +387,11 @@ The meta story concludes with a brief summary that ties the nine lives together.
 \caption{The classic format of the slide includes text in the middle, a map beneath, and an outline consisting of icons at the bottom.}\label{fig:shot-gaudi-relationship-card}
 \end{figure}
 
-There are two ways to access a person's story: directly from the landing page, through search, filter, or the overview map, or by following a link out of a meta story: its closing grid, a name in its running text, a marker on its map, a point on its timeline. Following that grid into Gaudí's story, as we just did, lands at its beginning.
+\emph{Timeline.} As an explicit representation of time, a row along the bottom serves as both a progress marker and an outline. Each event is represented by an icon that reflects its type, while each chapter is represented by a plain marker. Users may expand the entire row into a full-screen modal vertical listing of the events. [todo: screenshot and explain more]
 
-\emph{Timeline.} The story unfolds as a horizontal sequence of slides (Figure~\ref{fig:shot-gaudi-relationship-card}), moved through by swiping sideways rather than scrolling down: an overview, a few chapters that mark the phases of life, the events themselves, and a closing slide. A row along the bottom serves as both a progress marker and an outline. Each event is represented by an icon that reflects its type. Each chapter is represented by a plain marker. Tapping on the event count expands the entire row into a dated outline of the life.  For events with supporting data, a vertical axis opens further. A chevron reveals a longer background passage about the context of the event.
+\emph{Map.} Fixed in the same position on the screen, the map receives a marker each time an event mentions a place. Hence, by the end of the story, the map shows everywhere the subject worked and lived. In the example, the event's main marker is on Barcelona, while a secondary marker is visible on Paris and a faded smaller one close to Barcelona.
 
-The same three encodings of time, place, and relation that a meta story spreads across sections are attached to this sequence too, just differently: the slide-based representation of events already stands in for the timeline; a network overview exists from the start, reachable on demand from a button at the top of the screen; and a map is visible beneath the text of every slide.
-
-\emph{Map.} Fixed in the same position on the screen, the map receives a marker each time an event mentions a place. By the end of the story, the map shows everywhere the subject worked and lived. This chapter's marker is on Barcelona, where Gaudí's projects, such as Palau Güell, took shape.
-
-\emph{Network.} When an event slide mentions another person, that person's name appears beside the text with their role, as here for Eusebi Güell, tagged as patron. Tapping the tag opens a card describing the relationship on its own terms. From this card, or the button at the top of the screen, readers can access Gaudí's full network, organized by relationship type into family, professional, and social, each group introduced by a short passage.
+\emph{Network.} When an event slide mentions another person, that person's name appears beside the text with their role, as here for Eusebi Güell, tagged as patron. Tapping the tag opens a card describing the relationship on its own terms. From this card, or the button at the top of the screen, readers can access Gaudí's full network, organized by relationship type into family, professional, and social, each group introduced by a short passage. [todo: add screenshot]
 
 \section{Discussion and conclusion}\label{sec:discussion-and-conclusion}
 
