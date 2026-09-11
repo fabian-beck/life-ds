@@ -2158,7 +2158,7 @@ class LayoutWidthTests(unittest.TestCase):
         self.assertIn("function bindMarginFigures(", self.js)
         self.assertIn("bindMarginFigures();", self.js)
         written = set(re.findall(r'setProperty\(\s*"(--[a-z-]+)"', self.js))
-        for name in ("--band-height", "--band-overflow", "--pin-top", "--fade"):
+        for name in ("--band-height", "--pin-top", "--fade", "--clear", "--tail"):
             self.assertIn(name, written, f"the script no longer sets {name}")
         for name in sorted(written):
             self.assertIn(
@@ -2258,16 +2258,25 @@ class PrintTests(unittest.TestCase):
                 f"nor hide it: on paper what it holds is cut off, not scrolled to",
             )
 
-    def test_a_margin_figure_does_not_float_on_paper(self) -> None:
-        """A sheet has no margin column, and nothing on paper clears a float."""
-        floats = [
+    def test_a_margin_figure_stands_in_the_text_column_on_paper(self) -> None:
+        """A sheet has no margin column, and a figure positioned beside the
+        text would land on a page break there."""
+        anchors = [
             body
             for selector, body in self._rules(self.print_css)
             if selector.endswith(".widget-margin")
         ]
-        self.assertTrue(floats, "the print rules say nothing about a margin figure")
-        for body in floats:
-            self.assertIn("float: none", body)
+        self.assertTrue(anchors, "the print rules say nothing about a margin figure")
+        self.assertTrue(any("position: static" in body for body in anchors))
+        self.assertTrue(any("height: auto" in body for body in anchors))
+        bands = [
+            body
+            for selector, body in self._rules(self.print_css)
+            if selector.endswith(".margin-band")
+        ]
+        self.assertTrue(bands, "the print rules say nothing about the band")
+        self.assertTrue(any("position: static" in body for body in bands))
+        self.assertTrue(any("height: auto" in body for body in bands))
 
     def test_a_margin_figure_is_not_held_on_paper(self) -> None:
         """Sticky and fade are answers to scrolling, which paper does not do."""
@@ -2280,12 +2289,6 @@ class PrintTests(unittest.TestCase):
         self.assertTrue(any("position: static" in body for body in bodies))
         self.assertTrue(any("opacity: 1" in body for body in bodies))
         self.assertTrue(any("visibility: visible" in body for body in bodies))
-        bands = [
-            body
-            for selector, body in self._rules(self.print_css)
-            if selector.endswith(".widget-margin")
-        ]
-        self.assertTrue(any("height: auto" in body for body in bands))
 
     def test_the_appendix_is_the_step_note(self) -> None:
         """One record, so a new fact in the step note reaches the PDF for free.

@@ -228,7 +228,7 @@
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/}{\textbf{Leah Mühlöder}}\\{\sffamily\scriptsize\color{muted}University of Bamberg}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0009-0000-3510-1686}{0009-0000-3510-1686}}\end{minipage}\hfill%
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://services.informatik.hs-mannheim.de/~nagel/}{\textbf{Till Nagel}}\\{\sffamily\scriptsize\color{muted}Mannheim University of Applied Sciences}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0000-0001-5400-091X}{0000-0001-5400-091X}}\end{minipage}\hfill%
 \par
-\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 11, 2026  \textperiodcentered{}  commit 88635f5\par}
+\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 11, 2026  \textperiodcentered{}  commit 51ef38c\par}
 \vspace{14pt}{\color{rulestrong}\hrule}\vspace{8pt}
 \eyebrow{Abstract}\par\vspace{4pt}
 Life Data Stories transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides in which a life is presented as a multi-faceted representation that combines narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous document in which the similar visual encodings are read by scrolling. The system separates two concerns. First, generation is performed offline by staged pipelines that combine intelligent language-model inference with deterministic transformation. Second, the presentation is rendered deterministically by an interactive web application. This technical report documents the implemented solution and provides a basic scientific contextualization.
@@ -359,21 +359,21 @@ A meta story is structured as an opening scene, up to three component sections, 
 
 \emph{Timeline.} After the text-only introduction, the vertical scrolling turns horizontal as the reader reaches the timeline visualization (Figure~\ref{fig:shot-meta-timeline-environment}). This visualization carries the reader sideways through time instead of further down the page. In \emph{Beyond the Box}, what comes into view is a timeline of nine lanes, one per architect. Events are marked as dots along each lane. A sequence of guiding story cards is pinned near the top and leads the reader through the timeline. Each card names a span of years and describes what happened during that period. The first card, ``The Complete Environment'', remains visible as long as the reader scrolls through the years it covers.
 
+Tapping on a dot representing an event opens a brief description of it. Tapping the surrounding card instead leads into that architect's personal story. Above the lanes is a second layer of annotations that marks historical events affecting several lives at once, such as World War II. While the guiding story card offers one path through the theme, the lanes and their events are for readers who want to explore further.
+
 \begin{figure}[tbp]
 \centering
 \shotframe{\includegraphics[width=103.2mm,height=0.4\textheight,keepaspectratio]{../screenshots/meta-network.jpg}}{Address \#/en/meta/organic\_shapes\_in\_architecture  \textperiodcentered{}  viewport 390\texttimes{}844  \textperiodcentered{}  2\texttimes{} density  \textperiodcentered{}  captured 2026-08-28}
 \caption{The network: architects as nodes, one card in front naming the cluster currently lit.}\label{fig:shot-meta-network}
 \end{figure}
 
-Tapping on a dot representing an event opens a brief description of it. Tapping the surrounding card instead leads into that architect's personal story. Above the lanes is a second layer of annotations that marks historical events affecting several lives at once, such as World War II. While the guiding story card offers one path through the theme, the lanes and their events are for readers who want to explore further.
+\emph{Network.} The graph (Figure~\ref{fig:shot-meta-network}) displays the architects and the documented connections between them. Its layout is calculated in the background and finalized before it is displayed. The data groups people into clusters, tying their members more closely to each other than to the rest. As the reader scrolls, cards move over the graph, one per cluster: the people involved are highlighted and the connection between them lit, while the rest of the graph darkens, as here for Frei Otto, Frank Lloyd Wright, and Antoni Gaudí. The graph itself does not move or rearrange as the reader scrolls, only the part in the foreground changes.
 
 \begin{figure}[tbp]
 \centering
 \shotframe{\includegraphics[width=103.2mm,height=0.4\textheight,keepaspectratio]{../screenshots/meta-map.jpg}}{Address \#/en/meta/organic\_shapes\_in\_architecture  \textperiodcentered{}  viewport 390\texttimes{}874  \textperiodcentered{}  2\texttimes{} density  \textperiodcentered{}  captured 2026-08-28}
 \caption{A location card, with the map flown in above and its linked events listed below.}\label{fig:shot-meta-map}
 \end{figure}
-
-\emph{Network.} The graph (Figure~\ref{fig:shot-meta-network}) displays the architects and the documented connections between them. Its layout is calculated in the background and finalized before it is displayed. The data groups people into clusters, tying their members more closely to each other than to the rest. As the reader scrolls, cards move over the graph, one per cluster: the people involved are highlighted and the connection between them lit, while the rest of the graph darkens, as here for Frei Otto, Frank Lloyd Wright, and Antoni Gaudí. The graph itself does not move or rearrange as the reader scrolls, only the part in the foreground changes.
 
 \emph{Map.} The third section shifts the focus from the architects themselves and their connections to the locations where their work took place. A non-interactive map (Figure~\ref{fig:shot-meta-map}) fills the background behind the scrollable story cards, flying to a new location as each one scrolls into view, as here for Barcelona. It zooms to a point or fits a bounding box depending on how spread out the events are. Each event listed on a card links directly to the person's story slide where that event is introduced. The map section is not a separate account of the theme; it is the same events that the timeline already showed. Instead of \emph{when,} the focus is on \emph{where.}
 
