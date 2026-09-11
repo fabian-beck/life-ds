@@ -100,10 +100,10 @@ For prompt design and context engineering, we tried to anticipate which material
 
 Life Data Stories' frontend is a mobile-first Svelte application that loads the data the generation pipelines produced and renders it. The landing page offers access to the two story types, which organize the data differently: a [[slides|personal story]] follows one life in order, and a [[sections|meta story]] follows a theme across several lives. On the landing page[[figure:landing]], the meta stories are displayed in a [[landing.carousel|carousel]] at the top. Below them, the [[landing.grid|personal stories]] can be reached via their generated portrait, by filtering on role, by search, or by viewing a map that plots every place mentioned across the corpus. Clicking a marker there opens directly onto the event it belongs to inside a personal story. In the following, we walk through both story types in more detail. Throughout, we use the meta story *Beyond the Box* and the personal story of *Antoni Gaudí* as running examples.
 
-::: screenshot id=landing route="#/en" width=1280 height=1300 settle=2500 caption="The landing page: a carousel of meta stories above, the personal stories in a filterable grid below."
+::: screenshot id=landing route="#/en" width=1280 height=1000 settle=2500 caption="The landing page: a carousel of meta stories above, the personal stories in a filterable grid below."
 @carousel 471,101,769,400 Meta story carousel
 Cycles through the meta stories, each with title, subtitle, and a "Story" or "Filter" shortcut.
-@grid 48,705,1169,595 Filterable story grid
+@grid 48,705,1169,275 Filterable story grid
 One tile per personal story, with generated portrait, lifespan, roles, and a one-line description.
 :::
 

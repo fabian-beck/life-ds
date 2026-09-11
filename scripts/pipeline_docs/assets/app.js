@@ -1619,14 +1619,19 @@
      measured from the code. Everything else about a step—its file and line,
      its output schema, the flag that skips it—is source, and the figures
      index the source rather than copying it. */
+  // A written input or output is a phrase; a cell opens with a capital.
+  function initialCapital(text) {
+    return text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+  }
+
   function stepRecord(step) {
     const summary = step.summary || {};
     return {
       input: summary.input
-        ? escapeHtml(summary.input)
+        ? escapeHtml(initialCapital(summary.input))
         : dependencyList(step) || "Nothing—this step starts a branch",
       output: summary.output
-        ? escapeHtml(summary.output)
+        ? escapeHtml(initialCapital(summary.output))
         : artifactList(step.outputs) || "",
       model: step.model
         ? "<code>" + escapeHtml(bare(step.model)) + "</code>"

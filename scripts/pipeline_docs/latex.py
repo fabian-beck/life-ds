@@ -699,6 +699,11 @@ BLOCK_TAGS = {
 HEADINGS = {"h2": "section", "h3": "subsection", "h4": "subsubsection"}
 
 
+def initial_capital(text: str) -> str:
+    """A written input or output is a phrase; a cell opens with a capital."""
+    return text[:1].upper() + text[1:] if text else text
+
+
 def sentence(text: str) -> str:
     """A caption as `caption()` in `app.js` prints it: closed with a full stop."""
     trimmed = text.strip()
@@ -1136,12 +1141,12 @@ class Writer:
         summary = step.get("summary") or {}
         return {
             "input": (
-                escape(summary["input"])
+                escape(initial_capital(summary["input"]))
                 if summary.get("input")
                 else self.dependency_list(step) or "Nothing---this step starts a branch"
             ),
             "output": (
-                escape(summary["output"])
+                escape(initial_capital(summary["output"]))
                 if summary.get("output")
                 else self.artifact_list(step.get("outputs") or [])
             ),
@@ -1250,7 +1255,12 @@ def render_screenshot(writer: Writer, mount: Mount) -> str:
         picture = f"\\includegraphics[{size}]{{{picture_file}}}"
         frame = f"\\centering\n\\shotframe{{{picture}}}\n"
     else:
-        size = "width=\\widewidth,height=0.55\\textheight,keepaspectratio"
+        # The frame's rule is added outside the picture, so the picture gives up
+        # that much of the width the frame is given.
+        size = (
+            "width=\\dimexpr\\widewidth-0.8pt\\relax,"
+            "height=0.55\\textheight,keepaspectratio"
+        )
         picture = f"\\includegraphics[{size}]{{{picture_file}}}"
         frame = (
             "\\begin{wide}\\centering\n" f"\\shotframe{{{picture}}}\n" "\\end{wide}\n"
@@ -1329,7 +1339,6 @@ RENDERERS: Dict[str, Callable[[Writer, Mount], str]] = {
 # ---------------------------------------------------------------------------
 
 APPENDIX_COLUMNS = (
-    "No.",
     "Step",
     "Description",
     "Input",
@@ -1341,8 +1350,10 @@ APPENDIX_COLUMNS = (
 
 # The share of the wide measure each column takes—the print stylesheet's
 # widths for the same table, with the description giving the model and the
-# effort what a name such as `gpt-image-2` needs at this size.
-APPENDIX_WIDTHS = (0.05, 0.13, 0.31, 0.13, 0.13, 0.10, 0.08, 0.07)
+# effort what a name such as `gpt-image-2` needs at this size. The step's
+# name carries the underline in its kind's color, as a reference to it in the
+# text does, so the row is read against the charts without a number.
+APPENDIX_WIDTHS = (0.14, 0.35, 0.13, 0.13, 0.10, 0.08, 0.07)
 
 
 def appendix(writer: Writer) -> str:
@@ -1353,23 +1364,18 @@ def appendix(writer: Writer) -> str:
             columns.append(step["column"])
     if not columns:
         return ""
-    figures = [f"Figure~\\ref{{fig:pipeline-{lane}}}" for lane in writer.pipeline_lanes]
     intro = (
-        "One row per documented step, in the order the pipelines reach them: "
-        "what the step does, what it reads and what it leaves behind, and the "
-        "model, reasoning effort, and number of calls read out of its source."
+        "One row per step, in pipeline order: what it does, what it reads and "
+        "writes, and the model, reasoning effort, and number of calls per run."
     )
-    if figures:
-        intro += (
-            " In the interactive report this is the note that opens when a step in "
-            + " or ".join(figures)
-            + " is clicked."
-        )
     spec = "@{}" + "".join(f"S{{{width:.2f}}}" for width in APPENDIX_WIDTHS) + "@{}"
     head = " & ".join(f"\\textbf{{{escape(title)}}}" for title in APPENDIX_COLUMNS)
     lines = [
         "\\clearpage",
         "\\appendix",
+        # The letter alone does not say what it is; the heading names it.
+        "\\titleformat{\\section}{\\Large\\bfseries}{Appendix~\\thesection}"
+        "{0.8em}{}[{\\color{rulestrong}\\titlerule}]",
         "\\section{Step details}\\label{sec:appendix-steps}",
         "",
         intro,
@@ -1380,7 +1386,6 @@ def appendix(writer: Writer) -> str:
         "\\tabheadrule",
         "\\endhead",
     ]
-    index = 0
     for lane in columns:
         lines.append(
             f"\\multicolumn{{{len(APPENDIX_COLUMNS)}}}{{@{{}}l}}"
@@ -1388,11 +1393,10 @@ def appendix(writer: Writer) -> str:
         )
         lines.append("\\tablanerule")
         for step in writer.steps_of(lane):
-            index += 1
             record = writer.step_record(step)
+            color = KIND_COLORS.get(str(step.get("kind", "")), "ink")
             cells = [
-                f"A.{index}",
-                f"\\textbf{{{escape(step['label'])}}}",
+                f"\\stepref{{{color}}}{{\\textbf{{{escape(step['label'])}}}}}",
                 escape(writer.step_description(step)),
                 record["input"],
                 record["output"],
@@ -1649,10 +1653,7 @@ def title_block(document: Document, payload: Dict[str, Any]) -> str:
         lines.append("\\par")
     stamp = [
         part
-        for part in (
-            f"Version {payload['version']}" if payload.get("version") else "",
-            f"commit {payload['commit']}" if payload.get("commit") else "",
-        )
+        for part in (f"Version {payload['version']}" if payload.get("version") else "",)
         if part
     ]
     if stamp:
