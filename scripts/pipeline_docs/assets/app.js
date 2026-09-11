@@ -185,10 +185,6 @@
     return node;
   }
 
-  function tableScroll(table) {
-    return el("div", { class: "table-scroll" }, [table]);
-  }
-
   function clear(node) {
     while (node.firstChild) node.removeChild(node.firstChild);
   }
@@ -1247,33 +1243,6 @@
           })
         );
       });
-
-      // Labels only for the selected step's edges: naming every flow at once
-      // turns the chart into a wall of 9px type.
-      edges.filter(edgeActive).forEach((edge) => {
-        if (!edge.data) return;
-        const midX =
-          edge.channel === undefined ? (edge.x1 + edge.x2) / 2 : edge.channel;
-        const midY = (edge.y1 + edge.y2) / 2;
-        const text = truncateLabel(edge.data, 44);
-        const box = svg("rect", {
-          class: "edge-label-bg",
-          x: midX - text.length * 2.5 - 5,
-          y: midY - 8,
-          width: text.length * 5 + 10,
-          height: 15,
-          rx: 4,
-        });
-        root.appendChild(box);
-        const label = svg("text", {
-          class: "edge-label",
-          x: midX,
-          y: midY + 3,
-          "text-anchor": "middle",
-        });
-        label.textContent = text;
-        root.appendChild(label);
-      });
     }
 
     function drawNode(root, node) {
@@ -1606,33 +1575,6 @@
 
   /* --------------------------------------------------------- step entry */
 
-  function schemaBlock(name) {
-    const schema = DATA.schemas[name];
-    if (!schema) return null;
-    const inner = el("div", { class: "inner" });
-    if (schema.docstring) {
-      inner.appendChild(el("p", { class: "sub", text: schema.docstring }));
-    }
-    (schema.fields || []).forEach((field) => {
-      inner.appendChild(
-        el("div", { class: "schema-field" }, [
-          el("span", { class: "fname", text: field.name }),
-          el("span", { text: "  " }),
-          el("span", { class: "ftype", text: field.annotation }),
-          field.description
-            ? el("div", { class: "fdesc", text: field.description })
-            : null,
-        ])
-      );
-    });
-    return el("details", { class: "block" }, [
-      el("summary", {
-        text: name + "—" + (schema.fields || []).length + " fields",
-      }),
-      inner,
-    ]);
-  }
-
   function factRow(label, value) {
     if (!value) return null;
     return el("tr", {}, [el("th", { text: label }), el("td", { html: value })]);
@@ -1903,18 +1845,13 @@
     });
   });
 
-  function laneLabel(laneId) {
-    const lane = DATA.lanes[laneId];
-    return lane ? lane.label : laneId;
-  }
-
   function factOf(key) {
     return (DATA.facts && DATA.facts[key]) || null;
   }
 
-  /* A numbered caption. Figures and tables are numbered in Python, in document
-     order, so the number a component prints is the one the prose cites—a
-     caption can never drift out of step with a cross-reference.
+  /* A numbered caption. Figures are numbered in Python, in document order,
+     so the number a component prints is the one the prose cites—a caption can
+     never drift out of step with a cross-reference.
 
      A caption is one plain run of text: it says what the block is, adds only
      what the block cannot show for itself, and stops. Nothing inside it is
@@ -1928,13 +1865,8 @@
      moves the figure captions back under their figures—see the caption rules
      in `style.css`—which is why the kind is on the element as a class.
 
-     Every caption on the page is built here, whichever element carries it: a
-     figure's is a `<figcaption>` inside its `<figure>` and a table's is a
-     block above the table. */
-  function caption(kind, number, text) {
-    return fillCaption(el("p", {}), kind, number, text);
-  }
-
+     Every caption on the page is built here, as a `<figcaption>` inside its
+     `<figure>`. */
   function figureCaption(kind, number, text) {
     return fillCaption(el("figcaption", {}), kind, number, text);
   }
@@ -1953,29 +1885,8 @@
     return /[.!?]$/.test(trimmed) ? trimmed : trimmed + ".";
   }
 
-  function dataTable(headers, rows) {
-    const table = el("table", { class: "data" });
-    table.appendChild(
-      el(
-        "tr",
-        {},
-        headers.map((header) => {
-          return el("th", { text: header });
-        })
-      )
-    );
-    rows.forEach((row) => {
-      table.appendChild(el("tr", {}, row));
-    });
-    return tableScroll(table);
-  }
-
   function code(text) {
     return el("code", { text: text });
-  }
-
-  function plain(text) {
-    return el("td", { text: text === null || text === undefined ? "—" : text });
   }
 
   function emptyNote(html) {
@@ -2071,14 +1982,16 @@
     labels.appendChild(sText(x, y, text, cls || "tedge-label", "middle"));
   }
 
+  /* The tip sits exactly on (x, y): the parts are painted over the wires, so
+     a head that reached past a box's edge would vanish under the box. */
   function arrowHead(host, x, y, direction) {
-    const size = 4;
-    const tip =
-      direction === "left" ? x - size : direction === "right" ? x + size : x;
+    const size = 5;
+    const base =
+      direction === "left" ? x + size : direction === "right" ? x - size : x;
     const points =
       direction === "down"
         ? [x, y + size, x - size + 1, y - 1, x + size - 1, y - 1]
-        : [tip, y, x, y - size + 1, x, y + size - 1];
+        : [x, y, base, y - size + 1.5, base, y + size - 1.5];
     host.appendChild(
       sPath(
         "M" +
@@ -3625,43 +3538,8 @@
      roster here must match COMPONENTS in `report.py`, which is what makes an
      unknown block a build error rather than a blank space on the page. */
   const COMPONENTS = {
-    buildinfo: function (mount) {
-      const rows = [
-        ["Version", DATA.version || DATA.generated_at],
-        ["Built", DATA.generated_at],
-        ["Commit", DATA.commit || "—"],
-        ["Report source", (DATA.report && DATA.report.source) || "—"],
-      ];
-      const list = el("dl", { class: "buildinfo" });
-      rows.forEach((row) => {
-        list.appendChild(el("dt", { text: row[0] }));
-        list.appendChild(el("dd", {}, [code(row[1])]));
-      });
-      mount.appendChild(list);
-    },
-
     teaser: function (mount, params, numbers) {
       createTeaser(mount, numbers.figure);
-    },
-
-    factgrid: function (mount, params) {
-      const grid = el("div", { class: "factgrid" });
-      (params.keys || "").split(",").forEach((raw) => {
-        const key = raw.trim();
-        if (!key) return;
-        const fact = factOf(key);
-        if (!fact) return;
-        grid.appendChild(
-          el("div", { class: "factcell" }, [
-            el("div", { class: "value", text: fact.display }),
-            el("div", { class: "label", text: key }),
-          ])
-        );
-      });
-      mount.appendChild(grid);
-      if (params.caption) {
-        mount.appendChild(el("p", { class: "cap", text: params.caption }));
-      }
     },
 
     /* A view of the running application, taken from the position the markdown
@@ -3838,44 +3716,6 @@
       onViewportChange(sync);
     },
 
-    steptable: function (mount, params, numbers) {
-      const steps = stepsOf(params.lane);
-      mount.appendChild(
-        caption(
-          "Table",
-          numbers.table,
-          "Every documented step of the " +
-            laneLabel(params.lane).toLowerCase() +
-            " pipeline"
-        )
-      );
-      mount.appendChild(
-        dataTable(
-          ["Step", "Kind", "Script", "Model", "Effort", "Output schema"],
-          steps.map((step) => {
-            return [
-              el("td", {}, [
-                el("span", {
-                  class: "swatch",
-                  style: "background:" + kindColor(step.kind),
-                }),
-                el("span", { text: step.label }),
-              ]),
-              plain(DATA.kinds[step.kind].label),
-              el("td", {}, [code(step.script.split("/").slice(-1)[0])]),
-              plain(step.model || "—"),
-              plain(step.effort || "—"),
-              el("td", {}, [
-                step.schemas.length
-                  ? code(step.schemas.join(", "))
-                  : el("span", { text: "—" }),
-              ]),
-            ];
-          })
-        )
-      );
-    },
-
     /* The vocabulary itself, once, where the report first uses it: the
        perspectives a biography is turned into, in the order the paragraph above
        introduces them. Each description carries the id its references point at,
@@ -3898,91 +3738,6 @@
       mount.appendChild(list);
     },
 
-    modeltable: function (mount, params, numbers) {
-      mount.appendChild(
-        caption(
-          "Table",
-          numbers.table,
-          "Every model call site in the generation scripts"
-        )
-      );
-      mount.appendChild(
-        dataTable(
-          ["Where", "Model", "Resolved from", "Effort", "Schema", "Step"],
-          (DATA.call_sites || []).map((site) => {
-            return [
-              el("td", {}, [
-                code(site.script + ":" + site.line),
-                el("div", { class: "path", text: site.function + "()" }),
-              ]),
-              plain(site.model || "—"),
-              plain(site.model_source || "—"),
-              plain(site.effort || "—"),
-              el("td", {}, [
-                site.schema ? code(site.schema) : el("span", { text: "—" }),
-              ]),
-              el("td", {}, [
-                site.step
-                  ? el("span", {
-                      text: (stepById[site.step] || {}).label || site.step,
-                    })
-                  : el("span", { class: "warn", text: "unclaimed" }),
-              ]),
-            ];
-          })
-        )
-      );
-    },
-
-    cliflags: function (mount, params, numbers) {
-      const name = params.script.split("/").slice(-1)[0];
-      const entry = (DATA.script_index || {})[name];
-      if (!entry) {
-        mount.appendChild(
-          emptyNote("No script named <code>" + escapeHtml(name) + "</code>.")
-        );
-        return;
-      }
-      mount.appendChild(
-        caption(
-          "Table",
-          numbers.table,
-          "The " +
-            entry.flags.length +
-            " command-line options of " +
-            entry.script
-        )
-      );
-      mount.appendChild(
-        dataTable(
-          ["Flag", "Default", "What it does"],
-          entry.flags.map((flag) => {
-            return [
-              el("td", {}, [code(flag.flags.join(", "))]),
-              plain(
-                flag.default && flag.default !== "None" ? flag.default : "—"
-              ),
-              plain(flag.help || ""),
-            ];
-          })
-        )
-      );
-    },
-
-    schemalist: function (mount, params) {
-      const names = (params.names || "")
-        .split(",")
-        .map((name) => {
-          return name.trim();
-        })
-        .filter(Boolean);
-      const wanted = names.length ? names : Object.keys(DATA.schemas).sort();
-      wanted.forEach((name) => {
-        const block = schemaBlock(name);
-        if (block) mount.appendChild(block);
-      });
-    },
-
     kindlegend: function (mount) {
       const list = el("dl", { class: "kindlist" });
       kindEntries().forEach((entry) => {
@@ -4000,31 +3755,6 @@
       mount.appendChild(list);
     },
 
-    coverage: function (mount) {
-      const sites = DATA.call_sites || [];
-      const unclaimed = sites.filter((site) => {
-        return !site.step;
-      });
-      mount.appendChild(
-        el("p", { class: "cap" }, [
-          el("span", {
-            text:
-              sites.length -
-              unclaimed.length +
-              " of " +
-              sites.length +
-              " model call sites are claimed by a documented step. ",
-          }),
-          el("span", {
-            text: unclaimed.length
-              ? "The build treats the rest as an error, so this page should " +
-                "never show any."
-              : "An unclaimed call site fails the build, which is why this " +
-                "number is complete rather than merely large.",
-          }),
-        ])
-      );
-    },
   };
 
   /* ----------------------------------------------------- print appendix */
@@ -4181,9 +3911,8 @@
     const host = document.getElementById("meta-row");
     if (!host) return;
     // The report is versioned by date and by nothing else. A commit and a
-    // build time answer "which build is this", which only `::: buildinfo`
-    // prints; the reader at the top of the page is asking "how current is
-    // what I am about to read".
+    // build time answer "which build is this"; the reader at the top of the
+    // page is asking "how current is what I am about to read".
     host.appendChild(
       el("span", { class: "chip" }, [
         el("span", {
@@ -4453,20 +4182,25 @@
 
   /* ------------------------------------------------- margin figures */
 
-  /* A figure standing in the margin stays in view while the text it belongs
-     to scrolls past, instead of leaving with the paragraph it was placed
-     beside. The figure is pinned a little under the viewport's edge from the
-     moment its place in the document scrolls up to that line, and it stays
-     until the next margin figure takes its place: that one rises from its own
-     place in the text, slides over the pinned one, and the pinned one fades
-     under it. A wide block or a section heading ends a figure's stretch the
-     same way, by pushing it off, and where there is no further figure the
-     stretch runs to the end of the report.
+  /* A figure standing in the margin is placed beside the text it was declared
+     in and stays in view while that text scrolls past, instead of leaving with
+     the paragraph it was placed beside. The figure is pinned a little under
+     the viewport's edge from the moment its place in the document scrolls up
+     to that line, and it stays until the next margin figure takes its place:
+     that one rises from its own place in the text, slides over the pinned one,
+     and the pinned one fades under it. A wide block or a section heading ends
+     a figure's stretch the same way, by pushing it off, and where there is no
+     further figure the stretch runs to the end of the report.
 
-     The stylesheet does the holding—`position: sticky` on a body inside the
-     float, which the float's own height bounds—and this code only measures:
-     where each figure's place is, how far its band reaches, how far under the
-     edge it pins, and, on scroll, how far the next figure has risen over it.
+     The stylesheet does the placing and the holding—the widget is an anchor
+     without height in the flow, the band is positioned from it into the
+     margin, and the body inside the band is `position: sticky`, which the
+     band's height bounds—and this code only measures: where each figure's
+     place is, how far its band reaches, how far under the edge it pins, and,
+     on scroll, how far the next figure has risen over it. Two things the
+     figure no longer reserves in the flow are made up for here: a wide block
+     that would start inside a figure's own height is moved below it, and the
+     report is padded by however far the last figure hangs past its end.
 
      A figure taller than the viewport cannot be held whole, so it is held by
      whichever edge the reader is moving toward: reading down, it scrolls with
@@ -4476,13 +4210,15 @@
      is, so sticky can carry it on from there in the other direction.
 
      Nothing here applies where the figure is not in the margin: the band is
-     sized only while the float exists, and the print rules release both. */
+     sized only while it is positioned there, and the print rules release it. */
   const PIN_OFFSET = 20; // CSS pixels between the viewport's edge and a pinned figure
   const FADE_OVERLAP = 200; // over this much of the next figure's rise the covered one fades
+  const READING_LINE = 0.28; // of the viewport: where the text being read is, as the rail assumes
+  const FIGURE_GAP = 32; // kept between a figure and a wide block moved below it
 
   const marginState = {
     bands: [], // one per margin figure, in document order
-    active: false, // whether the figures currently float in the margin
+    active: false, // whether the figures currently stand in the margin
     direction: 1, // the way the reader last scrolled: 1 down, -1 up
   };
 
@@ -4524,17 +4260,22 @@
     marginState.bands = widgets.map((widget) => {
       const body = el("div", { class: "margin-body" });
       while (widget.firstChild) body.appendChild(widget.firstChild);
-      widget.appendChild(el("div", { class: "margin-space" }));
-      widget.appendChild(body);
+      const band = el("div", { class: "margin-band" }, [
+        el("div", { class: "margin-space" }),
+        body,
+      ]);
+      widget.appendChild(band);
       return {
         widget: widget,
+        band: band,
         body: body,
         top: 0, // the figure's place in the document, in page pixels
         height: 0, // the figure's own height
-        band: 0, // the height of the stretch it serves
+        reach: 0, // the height of the stretch it serves
         tall: false, // taller than the viewport, so held by one edge at a time
         end: 0, // where its band ends, in page pixels
         next: null, // the band that slides over this one, if any
+        close: false, // whether that one overlaps this one at rest
         fade: 1,
       };
     });
@@ -4548,20 +4289,21 @@
       band.body.classList.toggle("is-covered", value <= 0);
     }
 
-    /* The band ends wherever something else claims the margin: a wide block
-       clears the float, and a section heading starts a stretch of text the
-       figure was not placed beside. */
-    function stopsAfter(top) {
+    /* What ends a band, in document order: a wide block and the appendix,
+       which claim the whole width, and a section heading, which starts a
+       stretch of text the figure was not placed beside. */
+    function stops() {
+      const scrollY = window.scrollY;
       const nodes = report.querySelectorAll(
         ":scope > .widget-wide, :scope > .appendix, :scope > h2.sec"
       );
-      const scrollY = window.scrollY;
-      const stops = [];
-      Array.prototype.forEach.call(nodes, (node) => {
-        const at = node.getBoundingClientRect().top + scrollY;
-        if (at > top) stops.push(at);
+      return Array.prototype.map.call(nodes, (node) => {
+        return {
+          node: node,
+          at: node.getBoundingClientRect().top + scrollY,
+          wide: !node.classList.contains("sec"),
+        };
       });
-      return stops;
     }
 
     /* Turn the tall figures to face the reader's direction. The spacer puts
@@ -4575,100 +4317,158 @@
         if (!band.tall) return 0;
         return (
           band.body.getBoundingClientRect().top -
-          band.widget.getBoundingClientRect().top
+          band.band.getBoundingClientRect().top
         );
       });
       bands.forEach((band, index) => {
         if (!band.tall) {
-          band.widget.style.removeProperty("--spacer");
+          band.band.style.removeProperty("--spacer");
           band.body.classList.remove("is-rising");
           return;
         }
         const spacer = Math.max(
           0,
-          Math.min(band.band - band.height, measured[index])
+          Math.min(band.reach - band.height, measured[index])
         );
-        band.widget.style.setProperty("--spacer", spacer + "px");
+        band.band.style.setProperty("--spacer", spacer + "px");
         band.body.classList.toggle("is-rising", rising);
       });
     }
 
-    function layout() {
-      marginState.active =
-        window.getComputedStyle(bands[0].widget).float === "right";
-      if (!marginState.active) {
-        bands.forEach((band) => {
-          band.widget.style.removeProperty("--band-height");
-          band.widget.style.removeProperty("--band-overflow");
-          band.widget.style.removeProperty("--spacer");
-          band.body.style.removeProperty("--pin-top");
-          band.body.style.removeProperty("--pin-bottom");
-          band.body.classList.remove("is-rising");
-          setFade(band, 1);
-        });
-        return;
-      }
-      // Measured with every band at its figure's own height, so the places
-      // are the ones the floats take on their own: a later figure never
-      // starts above the bottom of an earlier one.
+    function release() {
       bands.forEach((band) => {
-        band.height = band.body.offsetHeight;
-        band.widget.style.setProperty("--band-height", band.height + "px");
-        band.widget.style.setProperty("--band-overflow", "0px");
+        band.band.style.removeProperty("--band-height");
+        band.band.style.removeProperty("--spacer");
+        band.body.style.removeProperty("--pin-top");
+        band.body.style.removeProperty("--pin-bottom");
+        band.body.classList.remove("is-rising");
+        setFade(band, 1);
       });
+      stops().forEach((stop) => {
+        stop.node.style.removeProperty("--clear");
+      });
+      report.style.removeProperty("--tail");
+    }
+
+    /* Where the figures are and where the bands end. The wide blocks are
+       measured with nothing moved below a figure yet; one that starts inside a
+       figure's own height is then moved, and everything after it with it, so
+       the places are measured again until nothing more moves. */
+    function measure() {
       const scrollY = window.scrollY;
-      const viewport = window.innerHeight;
       bands.forEach((band) => {
         band.top = band.widget.getBoundingClientRect().top + scrollY;
-        band.tall = band.height > viewport - 2 * PIN_OFFSET;
+        band.height = band.body.offsetHeight;
       });
+      const found = stops();
+      let moved = false;
+      bands.forEach((band) => {
+        found.forEach((stop) => {
+          if (!stop.wide || stop.at <= band.top) return;
+          const clear = band.top + band.height + FIGURE_GAP - stop.at;
+          if (clear <= 0) return;
+          const already =
+            parseFloat(stop.node.style.getPropertyValue("--clear")) || 0;
+          stop.node.style.setProperty("--clear", already + clear + "px");
+          moved = true;
+        });
+      });
+      return moved ? null : found;
+    }
+
+    function layout() {
+      release();
+      marginState.active =
+        window.getComputedStyle(bands[0].band).position === "absolute";
+      if (!marginState.active) return;
+      let found = measure();
+      for (let pass = 0; !found && pass < 3; pass += 1) found = measure();
+      if (!found) found = stops();
+      const scrollY = window.scrollY;
+      const viewport = window.innerHeight;
       const reportEnd = report.getBoundingClientRect().bottom + scrollY;
       bands.forEach((band, index) => {
         const next = bands[index + 1] || null;
+        band.tall = band.height > viewport - 2 * PIN_OFFSET;
         // The next figure pins when its place reaches the pin line, where
         // this figure's top is held; this figure's band lasts until then,
         // holding it pinned underneath while the next one rises over it.
         let end = next ? next.top + band.height : reportEnd;
-        stopsAfter(band.top).forEach((stop) => {
-          if (stop < end) end = stop;
+        found.forEach((stop) => {
+          if (stop.at > band.top && stop.at < end) end = stop.at;
         });
-        band.band = Math.max(band.height, end - band.top);
-        band.end = band.top + band.band;
+        band.reach = Math.max(band.height, end - band.top);
+        band.end = band.top + band.reach;
         // Whatever ends the band, a next figure that rises before it does
-        // is what covers this one.
+        // is what covers this one. One declared closer than this figure's
+        // own height overlaps it at rest, and the two trade places instead.
         band.next = next && next.top < band.end ? next : null;
+        band.close =
+          band.next !== null && next.top < band.top + band.height + FIGURE_GAP;
         const bottomHeld = viewport - PIN_OFFSET - band.height;
-        band.widget.style.setProperty("--band-height", band.band + "px");
-        band.widget.style.setProperty(
-          "--band-overflow",
-          band.band - band.height + "px"
-        );
+        band.band.style.setProperty("--band-height", band.reach + "px");
         band.body.style.setProperty(
           "--pin-top",
           Math.min(PIN_OFFSET, bottomHeld) + "px"
         );
         band.body.style.setProperty("--pin-bottom", bottomHeld + "px");
       });
+      const last = bands[bands.length - 1];
+      const tail = last.top + last.height - reportEnd;
+      if (tail > 0) report.style.setProperty("--tail", tail + "px");
       retarget();
       fade();
     }
 
-    /* The covered figure fades over the first stretch of the overlap the
-       reader can see: what the next figure covers below the viewport's edge
-       covers nothing yet. Below the pin line the two figures are at their own
-       places, always apart, so a figure that is not pinned never fades. */
+    /* Each figure shows as far as its two neighbors allow.
+
+       A figure declared far enough below the one before it stands clear of
+       it at rest, rises over it as the reader scrolls, and is always shown;
+       the one it covers fades over the first stretch of the overlap the reader
+       can see—what is covered below the viewport's edge covers nothing yet.
+
+       A figure declared closer than that overlaps the one before it from the
+       start, and showing both would show only the later. So it stays hidden
+       while the reader is at the earlier figure's text and the two trade
+       places as its own place in the document reaches the line the reader is
+       reading at: the earlier fades out as that place approaches the line and
+       the later fades in, both by the same measure. The exchange is complete
+       at the reading line, and so before the later one pins. */
     function fade() {
       if (!marginState.active) return;
       const viewport = window.innerHeight;
-      bands.forEach((band) => {
-        if (!band.next) {
-          setFade(band, 1);
-          return;
+      const line = Math.max(
+        PIN_OFFSET + FADE_OVERLAP / 2,
+        viewport * READING_LINE
+      );
+      const shown = bands.map(() => {
+        return 1;
+      });
+      bands.forEach((band, index) => {
+        if (!band.next) return;
+        let mine;
+        let theirs;
+        if (band.close) {
+          const place = band.next.widget.getBoundingClientRect().top;
+          theirs = Math.max(
+            0,
+            Math.min(1, (line + FADE_OVERLAP / 2 - place) / FADE_OVERLAP)
+          );
+          mine = 1 - theirs;
+        } else {
+          const bottom = Math.min(
+            band.body.getBoundingClientRect().bottom,
+            viewport
+          );
+          const covered = bottom - band.next.body.getBoundingClientRect().top;
+          mine = Math.max(0, Math.min(1, 1 - covered / FADE_OVERLAP));
+          theirs = 1;
         }
-        const mine = band.body.getBoundingClientRect();
-        const theirs = band.next.body.getBoundingClientRect();
-        const covered = Math.min(mine.bottom, viewport) - theirs.top;
-        setFade(band, Math.max(0, Math.min(1, 1 - covered / FADE_OVERLAP)));
+        shown[index] = Math.min(shown[index], mine);
+        shown[index + 1] = Math.min(shown[index + 1], theirs);
+      });
+      bands.forEach((band, index) => {
+        setFade(band, shown[index]);
       });
     }
 

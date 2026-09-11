@@ -432,11 +432,13 @@ a.author-name:focus-visible {
    stand in the margin has to be decided on the room it would actually stand in,
    so the body names itself a container and the rules further down query it.
 
-   Naming a container also contains the floats, which is what keeps a margin
-   figure hanging past the last paragraph beside it out of the colophon. */
+   A margin figure hanging past the last paragraph beside it would reach into
+   the colophon, so `bindMarginFigures` in `app.js` sets `--tail` to the
+   overhang and the body is padded by it. */
 .report {
   container: report / inline-size;
   max-width: 1010px;
+  padding-bottom: var(--tail, 0);
 }
 
 .report > p,
@@ -943,63 +945,67 @@ body.has-note-pop .notes {
    text column at its own width, which is the other half of the same rule. The
    threshold is that sum and nothing else: 576 + 32 + 300.
 
-   A float rather than a grid track, because the text has to close over the
-   bottom of the figure. A grid would give the figure a row of its own and leave
-   the measure blank for the whole height of a portrait capture; a float lets the
-   paragraphs after it run on beside it and past it.
+   The figure is placed beside the text it was declared in: the widget stays in
+   the flow as an anchor without height, and the band holding the figure is
+   positioned from it into the margin. Not a float, because a right float may
+   not begin above the bottom of the one before it, which put every figure but
+   the first far below its text. And not a grid track, because a grid would give
+   the figure a row of its own and leave the measure blank for the whole height
+   of a portrait capture. Positioned, the figure takes no room in the flow at
+   all, and the paragraphs run on beside it and past it.
 
-   Nothing that respects the measure needs to be told about the float: headings,
-   paragraphs, lists and callouts all stop at 36rem, and the figure begins after
-   the gutter. Only a full-width block would collide, so only a full-width block
-   clears. */
+   Nothing that respects the measure needs to be told about the figure:
+   headings, paragraphs, lists and callouts all stop at 36rem, and the figure
+   begins after the gutter. Only a full-width block would collide, and
+   `bindMarginFigures` in `app.js` sets `--clear` on one that starts inside a
+   figure's own height, moving it below. */
 @container report (width >= 908px) {
   .report > .widget-margin {
-    float: right;
-    clear: right;
+    position: relative;
+    height: 0;
+    max-width: none;
+    margin: 0;
+  }
+
+  .report > .widget-margin > .margin-band {
+    position: absolute;
+    top: 0;
+    left: calc(var(--measure) + var(--figure-gutter));
     width: min(
       var(--fig-width, 100%),
       calc(100cqi - var(--measure) - var(--figure-gutter))
     );
-    max-width: none;
-    margin-left: var(--figure-gutter);
-
-    /* The band, explained below. */
     height: var(--band-height, auto);
-    margin-bottom: calc(32px - var(--band-overflow, 0px));
   }
 
   .report > .widget-wide,
   .report > .appendix {
-    clear: right;
+    margin-top: calc(32px + var(--clear, 0px));
   }
 
   /* A margin figure stays in view while the text it belongs to scrolls past.
 
-     The float is the figure's place in the document and its placeholder; the
-     figure itself is a sticky body inside it, pinned `--pin-top` under the
-     viewport's edge. Sticky moves only within its parent, so the parent is
-     given the height of the whole stretch the figure serves—measured by
-     `bindMarginFigures` in `app.js` as far as the point where the next margin
-     figure pins, or where a wide block or a section heading claims the room.
-     The float's margin box is pulled back to the figure's own height, and
-     float placement, clearance and the container's height all go by the margin
-     box, so a band that runs far past its figure moves nothing else on the
-     page. Where the sticky body reaches the band's end it scrolls away with
-     the text again, pushed by whatever ends the band.
+     The band is the stretch of the document the figure serves, and the figure
+     itself is a sticky body inside it, pinned `--pin-top` under the viewport's
+     edge. Sticky moves only within its parent, so the band is given the height
+     of the whole stretch—measured by `bindMarginFigures` in `app.js` as far as
+     the point where the next margin figure pins, or where a wide block or a
+     section heading claims the room. Where the sticky body reaches the band's
+     end it scrolls away with the text again, pushed by whatever ends the band.
 
      A later figure paints over an earlier one—positioned boxes stack in
      document order—on a ground of its own, so the covered one does not show
      through its caption, and the earlier one fades under it, `--fade` being
      set on scroll. At zero the covered figure is also hidden, so it takes
      neither pointer nor focus. */
-  .report > .widget-margin > .margin-body {
+  .report > .widget-margin .margin-body {
     position: sticky;
     top: var(--pin-top, 20px);
     background: var(--paper);
     opacity: var(--fade, 1);
   }
 
-  .report > .widget-margin > .margin-body.is-covered {
+  .report > .widget-margin .margin-body.is-covered {
     visibility: hidden;
   }
 
@@ -1009,11 +1015,11 @@ body.has-note-pop .notes {
      viewport's; the rising state adds the bottom inset that stops the top
      edge under the viewport's instead. The spacer is what lets the body turn
      around in place—see `retarget` in `app.js`. */
-  .report > .widget-margin > .margin-body.is-rising {
+  .report > .widget-margin .margin-body.is-rising {
     bottom: var(--pin-bottom, 20px);
   }
 
-  .report > .widget-margin > .margin-space {
+  .report > .widget-margin .margin-space {
     height: var(--spacer, 0);
   }
 }
@@ -1062,30 +1068,6 @@ p.cap {
   font-weight: 600;
 }
 
-.factgrid {
-  display: grid;
-  gap: 14px 24px;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  padding: 14px 0;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule-strong);
-}
-
-.factcell .value {
-  font-size: 22px;
-  font-variant-numeric: tabular-nums lining-nums;
-  font-weight: 500;
-  line-height: 1.15;
-}
-
-.factcell .label {
-  margin-top: 2px;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 11px;
-}
-
-.buildinfo,
 .kindlist {
   display: grid;
   gap: 4px 20px;
@@ -1098,7 +1080,6 @@ p.cap {
   font-size: 13px;
 }
 
-.buildinfo dt,
 .kindlist dt {
   display: flex;
   gap: 8px;
@@ -1108,7 +1089,6 @@ p.cap {
   font-weight: 500;
 }
 
-.buildinfo dd,
 .kindlist dd {
   margin: 0;
   color: var(--ink-2);
@@ -1222,19 +1202,6 @@ p.cap {
   color: var(--ink);
 }
 
-/* A file path or a script location under its label. Allowed to break anywhere:
-   an unbreakable path would otherwise set the column's width on its own. */
-.path {
-  color: var(--muted);
-  font-size: 11px;
-  overflow-wrap: anywhere;
-}
-
-.warn {
-  color: var(--kind-deterministic);
-  font-weight: 600;
-}
-
 /* --------------------------------------------------------------- toolbar */
 
 /* ----------------------------------------------------------------- chart */
@@ -1277,7 +1244,6 @@ p.cap {
 }
 
 .flow-mid .rail-label,
-.flow-mid .edge-label,
 .flow-mid .band-label {
   font-size: 9px;
 }
@@ -1288,10 +1254,6 @@ p.cap {
 }
 
 .flow-compact .rail-label {
-  font-size: 8px;
-}
-
-.flow-compact .edge-label {
   font-size: 8px;
 }
 
@@ -1400,17 +1362,6 @@ figure.figure > .cap {
 
 .edge-arrow.active {
   fill: var(--rule-strong);
-}
-
-.edge-label {
-  font-size: 9.5px;
-  fill: var(--ink);
-}
-
-.edge-label-bg {
-  fill: var(--paper);
-  stroke: var(--rule);
-  stroke-width: 1;
 }
 
 .node rect.body {
@@ -1611,32 +1562,6 @@ details.block .inner {
   padding: 0 12px 12px;
 }
 
-.schema-field {
-  padding: 6px 0;
-  border-top: 1px solid var(--rule-soft);
-  font-family: var(--sans);
-  font-size: 13px;
-}
-
-.schema-field:first-child {
-  border-top: 0;
-}
-
-.schema-field .fname {
-  font-family: var(--mono);
-  font-weight: 600;
-}
-
-.schema-field .ftype {
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 11px;
-}
-
-.schema-field .fdesc {
-  color: var(--ink);
-}
-
 .empty {
   padding: 16px;
   border: 1px dashed var(--rule);
@@ -1651,14 +1576,9 @@ details.block .inner {
   background: var(--surface);
 }
 
-/* Wide tables scroll inside their own box so the page body never does. */
-.table-scroll {
-  overflow-x: auto;
-}
-
-/* The min-width is what makes the wrapper scroll instead of the columns
-   collapsing: several of these tables carry comma-joined step lists, and below
-   this width they turn into towers of one word per line. */
+/* The min-width keeps the columns from collapsing: these tables carry
+   comma-joined step lists, and below this width they turn into towers of one
+   word per line. */
 table.data {
   width: 100%;
   min-width: 680px;
@@ -2502,26 +2422,42 @@ figure.teaser > .cap {
      the measure and the gutter and a figure together, so the container query
      never matches and a margin figure prints in the text column, centered in it,
      exactly as it reads on a narrow screen. Stated anyway, because the sheet is
-     a setting and a wide one would otherwise put a float on paper, where nothing
-     clears it. */
+     a setting and a wide one would otherwise position a figure beside the
+     text on paper, where it would land on a page break. */
   .report > .widget-margin {
-    float: none;
-    width: auto;
-    max-width: var(--measure);
+    position: static;
     height: auto;
-    margin-bottom: 32px;
+    max-width: var(--measure);
+    margin: 32px 0;
+  }
+
+  .report > .widget-margin > .margin-band {
+    position: static;
+    width: auto;
+    height: auto;
+  }
+
+  .report > .widget-wide,
+  .report > .appendix {
+    margin-top: 32px;
   }
 
   /* Nor does a figure stay in place on paper, or fade under the next one: the
-     band that holds it on screen is released with the float. */
-  .report > .widget-margin > .margin-body {
+     band that holds it on screen is released with its position. The covered
+     state is named too, so the rule outweighs the one that hides it. */
+  .report > .widget-margin .margin-body,
+  .report > .widget-margin .margin-body.is-covered {
     position: static;
     opacity: 1;
     visibility: visible;
   }
 
-  .report > .widget-margin > .margin-space {
+  .report > .widget-margin .margin-space {
     height: 0;
+  }
+
+  .report {
+    padding-bottom: 0;
   }
 
   .titleblock {
@@ -2609,10 +2545,8 @@ figure.teaser > .cap {
      those together would leave a page empty for no gain. */
   figure.figure,
   .callout,
-  .factgrid,
   .kindlist,
-  .empty,
-  .buildinfo {
+  .empty {
     break-inside: avoid;
   }
 
@@ -2653,13 +2587,8 @@ figure.teaser > .cap {
     border-bottom: 0;
   }
 
-  /* Wide tables print every column instead of scrolling to it. The wrapper
-     stops clipping, the screen-only minimum that forced the scroll is dropped,
-     and the type comes down a step so the columns have somewhere to go. */
-  .table-scroll {
-    overflow: visible;
-  }
-
+  /* Wide tables print every column: the screen-only minimum is dropped, and
+     the type comes down a step so the columns have somewhere to go. */
   table.data {
     min-width: 0;
     font-size: 10px;
@@ -2678,7 +2607,6 @@ figure.teaser > .cap {
      these tables are made of, and the only ones worth breaking mid-word: it is
      that or a column wide enough for `cache_wikipedia_materials.py`. */
   table.data code,
-  table.data .path,
   table.data .mono {
     overflow-wrap: anywhere;
   }
