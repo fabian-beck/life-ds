@@ -2071,14 +2071,16 @@
     labels.appendChild(sText(x, y, text, cls || "tedge-label", "middle"));
   }
 
+  /* The tip sits exactly on (x, y): the parts are painted over the wires, so
+     a head that reached past a box's edge would vanish under the box. */
   function arrowHead(host, x, y, direction) {
-    const size = 4;
-    const tip =
-      direction === "left" ? x - size : direction === "right" ? x + size : x;
+    const size = 5;
+    const base =
+      direction === "left" ? x + size : direction === "right" ? x - size : x;
     const points =
       direction === "down"
         ? [x, y + size, x - size + 1, y - 1, x + size - 1, y - 1]
-        : [tip, y, x, y - size + 1, x, y + size - 1];
+        : [x, y, base, y - size + 1.5, base, y + size - 1.5];
     host.appendChild(
       sPath(
         "M" +
