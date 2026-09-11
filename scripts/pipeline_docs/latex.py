@@ -1110,58 +1110,10 @@ class Writer:
         lines.append("\\end{legend}")
         return "\n".join(lines) + "\n\n"
 
-    def data_table(
-        self,
-        headers: Sequence[str],
-        rows: Sequence[Sequence[str]],
-        spec: str,
-        wide: bool = False,
-    ) -> str:
-        lines = [
-            "\\begin{datatable}{" + spec + "}",
-            "\\tabtoprule",
-            " & ".join(f"\\textbf{{{escape(header)}}}" for header in headers) + " \\\\",
-            "\\tabheadrule",
-        ]
-        for index, row in enumerate(rows):
-            lines.append(" & ".join(row) + " \\\\")
-            if index < len(rows) - 1:
-                lines.append("\\tabrowrule")
-        lines.append("\\tabbottomrule")
-        lines.append("\\end{datatable}")
-        table = "\n".join(lines)
-        if wide:
-            table = "\\begin{wide}\n" + table + "\n\\end{wide}"
-        return table
-
-    def numbered_table(self, caption: str, table: str, label: str) -> str:
-        return (
-            "\\begin{table}[tbp]\n"
-            f"\\caption{{{escape(sentence(caption))}}}\\label{{tab:{label}}}\n"
-            f"{table}\n"
-            "\\end{table}\n\n"
-        )
-
 
 # ---------------------------------------------------------------------------
 # Component renderers
 # ---------------------------------------------------------------------------
-
-
-def render_buildinfo(writer: Writer, mount: Mount) -> str:
-    payload = writer.payload
-    rows = [
-        ("Version", payload.get("version") or payload.get("generated_at") or ""),
-        ("Built", payload.get("generated_at") or ""),
-        ("Commit", payload.get("commit") or "---"),
-        ("Report source", ((payload.get("report") or {}).get("source")) or "---"),
-    ]
-    return writer.legend(
-        [
-            (escape(label), f"\\code{{{escape_code(str(value))}}}")
-            for label, value in rows
-        ]
-    )
 
 
 def render_teaser(writer: Writer, mount: Mount) -> str:
@@ -1175,27 +1127,6 @@ def render_teaser(writer: Writer, mount: Mount) -> str:
         f"\\caption{{{escape(sentence(caption))}}}\\label{{fig:{figure.id}}}\n"
         "\\end{figure}\n\n"
     )
-
-
-def render_factgrid(writer: Writer, mount: Mount) -> str:
-    facts = writer.payload.get("facts") or {}
-    cells = []
-    for raw in (mount.params.get("keys") or "").split(","):
-        key = raw.strip()
-        fact = facts.get(key) if key else None
-        if not fact:
-            continue
-        cells.append(
-            "\\begin{minipage}[t]{0.3\\linewidth}"
-            f"{{\\large {escape(str(fact.get('display', '')))}}}\\\\"
-            f"{{\\factlabel {escape(key)}}}"
-            "\\end{minipage}"
-        )
-    out = "\\noindent" + "\\hfill\n".join(cells) + "\n\n" if cells else ""
-    caption = mount.params.get("caption")
-    if caption:
-        out += f"{{\\capstyle {escape(caption)}}}\n\n"
-    return out
 
 
 def render_pipeline(writer: Writer, mount: Mount) -> str:
@@ -1218,40 +1149,6 @@ def render_pipeline(writer: Writer, mount: Mount) -> str:
     )
 
 
-def render_steptable(writer: Writer, mount: Mount) -> str:
-    lane = mount.params["lane"]
-    kinds = writer.payload.get("kinds") or {}
-    rows = []
-    for step in writer.steps_of(lane):
-        kind = step.get("kind", "")
-        rows.append(
-            [
-                f"\\swatch{{{KIND_COLORS.get(kind, 'ink')}}} {escape(step['label'])}",
-                escape(str((kinds.get(kind) or {}).get("label", kind))),
-                f"\\code{{{escape_code(str(step.get('script', '')).split('/')[-1])}}}",
-                escape(str(step.get("model") or "---")),
-                escape(str(step.get("effort") or "---")),
-                (
-                    f"\\code{{{escape_code(', '.join(step['schemas']))}}}"
-                    if step.get("schemas")
-                    else "---"
-                ),
-            ]
-        )
-    table = writer.data_table(
-        ["Step", "Kind", "Script", "Model", "Effort", "Output schema"],
-        rows,
-        "@{}p{0.2\\widewidth}p{0.12\\widewidth}p{0.18\\widewidth}"
-        "p{0.14\\widewidth}p{0.08\\widewidth}p{0.2\\widewidth}@{}",
-        wide=True,
-    )
-    return writer.numbered_table(
-        f"Every documented step of the {writer.lane_label(lane).lower()} pipeline",
-        table,
-        f"steps-{lane}",
-    )
-
-
 def render_conceptlegend(writer: Writer, mount: Mount) -> str:
     rows = []
     for concept in writer.payload.get("concepts", []):
@@ -1263,92 +1160,6 @@ def render_conceptlegend(writer: Writer, mount: Mount) -> str:
         term = f"{glyph} {escape(concept['label'])}\\label{{concept:{concept['id']}}}"
         rows.append((term, escape(concept.get("blurb", ""))))
     return writer.legend(rows)
-
-
-def render_modeltable(writer: Writer, mount: Mount) -> str:
-    rows = []
-    for site in writer.payload.get("call_sites") or []:
-        step = writer.steps_by_id.get(site.get("step") or "")
-        where = (
-            f"\\code{{{escape_code(str(site.get('script', '')))}:{site.get('line', '')}}}"
-            f"\\newline{{\\pathstyle {escape(str(site.get('function', '')))}()}}"
-        )
-        rows.append(
-            [
-                where,
-                escape(str(site.get("model") or "---")),
-                escape(str(site.get("model_source") or "---")),
-                escape(str(site.get("effort") or "---")),
-                (
-                    f"\\code{{{escape_code(site['schema'])}}}"
-                    if site.get("schema")
-                    else "---"
-                ),
-                escape(step["label"]) if step else "unclaimed",
-            ]
-        )
-    table = writer.data_table(
-        ["Where", "Model", "Resolved from", "Effort", "Schema", "Step"],
-        rows,
-        "@{}p{0.22\\widewidth}p{0.12\\widewidth}p{0.18\\widewidth}"
-        "p{0.08\\widewidth}p{0.18\\widewidth}p{0.14\\widewidth}@{}",
-        wide=True,
-    )
-    return writer.numbered_table(
-        "Every model call site in the generation scripts", table, "call-sites"
-    )
-
-
-def render_cliflags(writer: Writer, mount: Mount) -> str:
-    name = mount.params["script"].split("/")[-1]
-    entry = (writer.payload.get("script_index") or {}).get(name)
-    if not entry:
-        return f"\\emptynote{{No script named \\code{{{escape_code(name)}}}.}}\n\n"
-    rows = []
-    for flag in entry.get("flags", []):
-        default = flag.get("default")
-        rows.append(
-            [
-                f"\\code{{{escape_code(', '.join(flag.get('flags', [])))}}}",
-                escape(str(default)) if default and default != "None" else "---",
-                escape(str(flag.get("help") or "")),
-            ]
-        )
-    table = writer.data_table(
-        ["Flag", "Default", "What it does"],
-        rows,
-        "@{}p{0.28\\widewidth}p{0.14\\widewidth}p{0.54\\widewidth}@{}",
-        wide=True,
-    )
-    return writer.numbered_table(
-        f"The {len(rows)} command-line options of {entry.get('script', name)}",
-        table,
-        f"flags-{name.replace('.', '-')}",
-    )
-
-
-def render_schemalist(writer: Writer, mount: Mount) -> str:
-    schemas = writer.payload.get("schemas") or {}
-    names = [name.strip() for name in (mount.params.get("names") or "").split(",")]
-    wanted = [name for name in names if name] or sorted(schemas)
-    out = []
-    for name in wanted:
-        schema = schemas.get(name)
-        if not schema:
-            continue
-        fields = schema.get("fields") or []
-        lines = [f"\\schemahead{{{escape(name)}}}{{{len(fields)} fields}}"]
-        if schema.get("docstring"):
-            lines.append(f"{{\\schemadoc {escape(str(schema['docstring']))}}}\\par")
-        for field in fields:
-            line = (
-                f"\\schemafield{{{escape_code(str(field.get('name', '')))}}}"
-                f"{{{escape(str(field.get('annotation', '')))}}}"
-                f"{{{escape(str(field.get('description') or ''))}}}"
-            )
-            lines.append(line)
-        out.append("\\begin{schema}\n" + "\n".join(lines) + "\n\\end{schema}\n\n")
-    return "".join(out)
 
 
 def render_screenshot(writer: Writer, mount: Mount) -> str:
@@ -1408,37 +1219,12 @@ def render_kindlegend(writer: Writer, mount: Mount) -> str:
     return writer.legend(rows)
 
 
-def render_coverage(writer: Writer, mount: Mount) -> str:
-    sites = writer.payload.get("call_sites") or []
-    unclaimed = [site for site in sites if not site.get("step")]
-    text = (
-        f"{len(sites) - len(unclaimed)} of {len(sites)} model call sites are "
-        "claimed by a documented step. "
-    )
-    text += (
-        "The build treats the rest as an error, so this page should never show any."
-        if unclaimed
-        else (
-            "An unclaimed call site fails the build, which is why this number is "
-            "complete rather than merely large."
-        )
-    )
-    return f"{{\\capstyle {escape(text)}}}\n\n"
-
-
 RENDERERS: Dict[str, Callable[[Writer, Mount], str]] = {
-    "buildinfo": render_buildinfo,
     "teaser": render_teaser,
-    "factgrid": render_factgrid,
     "pipeline": render_pipeline,
-    "steptable": render_steptable,
     "conceptlegend": render_conceptlegend,
-    "modeltable": render_modeltable,
-    "cliflags": render_cliflags,
-    "schemalist": render_schemalist,
     "screenshot": render_screenshot,
     "kindlegend": render_kindlegend,
-    "coverage": render_coverage,
 }
 
 
@@ -1632,8 +1418,6 @@ __COLORS__
 %% ---- Small type: the eyebrow over a block, the line under a screenshot.
 \newcommand{\eyebrow}[1]{{\sffamily\scriptsize\bfseries\color{muted}\MakeUppercase{#1}}}
 \newcommand{\capstyle}{\sffamily\small}
-\newcommand{\factlabel}{\sffamily\scriptsize\color{muted}}
-\newcommand{\pathstyle}{\sffamily\scriptsize\color{muted}}
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\refdoi}[1]{\textcolor{muted}{#1}}
 \newcommand{\refdetail}[1]{\textcolor{inktwo}{#1}}
@@ -1700,10 +1484,6 @@ __GLYPHS__
 \newcommand{\shotframe}[2]{\begin{minipage}{\linewidth}\centering{\setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.4pt}\color{rule}\fbox{\color{ink}#1}}\\[3pt]{\sffamily\tiny\color{faint}#2}\end{minipage}}
 
 %% ---- A schema, expanded field by field.
-\newenvironment{schema}{\par\sffamily\small\begin{list}{}{\setlength{\leftmargin}{0pt}\setlength{\itemsep}{0pt}}\item}{\end{list}\par}
-\newcommand{\schemahead}[2]{{\bfseries #1}\quad{\color{muted}#2}\par\vspace{2pt}}
-\newcommand{\schemadoc}{\color{inktwo}}
-\newcommand{\schemafield}[3]{\hangindent=1.5em \code{#1}\quad{\color{muted}#2}\ifx\relax#3\relax\else{} --- #3\fi\par}
 
 %% ---- An authored callout: a labeled block with a rule down its left edge,
 %% dashed for a limitation and faint for an aside, as the page draws them.

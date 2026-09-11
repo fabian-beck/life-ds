@@ -1062,30 +1062,6 @@ p.cap {
   font-weight: 600;
 }
 
-.factgrid {
-  display: grid;
-  gap: 14px 24px;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  padding: 14px 0;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule-strong);
-}
-
-.factcell .value {
-  font-size: 22px;
-  font-variant-numeric: tabular-nums lining-nums;
-  font-weight: 500;
-  line-height: 1.15;
-}
-
-.factcell .label {
-  margin-top: 2px;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 11px;
-}
-
-.buildinfo,
 .kindlist {
   display: grid;
   gap: 4px 20px;
@@ -1098,7 +1074,6 @@ p.cap {
   font-size: 13px;
 }
 
-.buildinfo dt,
 .kindlist dt {
   display: flex;
   gap: 8px;
@@ -1108,7 +1083,6 @@ p.cap {
   font-weight: 500;
 }
 
-.buildinfo dd,
 .kindlist dd {
   margin: 0;
   color: var(--ink-2);
@@ -1220,19 +1194,6 @@ p.cap {
 .report .cref:focus-visible .glyph,
 .report .cref.open .glyph {
   color: var(--ink);
-}
-
-/* A file path or a script location under its label. Allowed to break anywhere:
-   an unbreakable path would otherwise set the column's width on its own. */
-.path {
-  color: var(--muted);
-  font-size: 11px;
-  overflow-wrap: anywhere;
-}
-
-.warn {
-  color: var(--kind-deterministic);
-  font-weight: 600;
 }
 
 /* --------------------------------------------------------------- toolbar */
@@ -1611,32 +1572,6 @@ details.block .inner {
   padding: 0 12px 12px;
 }
 
-.schema-field {
-  padding: 6px 0;
-  border-top: 1px solid var(--rule-soft);
-  font-family: var(--sans);
-  font-size: 13px;
-}
-
-.schema-field:first-child {
-  border-top: 0;
-}
-
-.schema-field .fname {
-  font-family: var(--mono);
-  font-weight: 600;
-}
-
-.schema-field .ftype {
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 11px;
-}
-
-.schema-field .fdesc {
-  color: var(--ink);
-}
-
 .empty {
   padding: 16px;
   border: 1px dashed var(--rule);
@@ -1651,14 +1586,9 @@ details.block .inner {
   background: var(--surface);
 }
 
-/* Wide tables scroll inside their own box so the page body never does. */
-.table-scroll {
-  overflow-x: auto;
-}
-
-/* The min-width is what makes the wrapper scroll instead of the columns
-   collapsing: several of these tables carry comma-joined step lists, and below
-   this width they turn into towers of one word per line. */
+/* The min-width keeps the columns from collapsing: these tables carry
+   comma-joined step lists, and below this width they turn into towers of one
+   word per line. */
 table.data {
   width: 100%;
   min-width: 680px;
@@ -2609,10 +2539,8 @@ figure.teaser > .cap {
      those together would leave a page empty for no gain. */
   figure.figure,
   .callout,
-  .factgrid,
   .kindlist,
-  .empty,
-  .buildinfo {
+  .empty {
     break-inside: avoid;
   }
 
@@ -2653,13 +2581,8 @@ figure.teaser > .cap {
     border-bottom: 0;
   }
 
-  /* Wide tables print every column instead of scrolling to it. The wrapper
-     stops clipping, the screen-only minimum that forced the scroll is dropped,
-     and the type comes down a step so the columns have somewhere to go. */
-  .table-scroll {
-    overflow: visible;
-  }
-
+  /* Wide tables print every column: the screen-only minimum is dropped, and
+     the type comes down a step so the columns have somewhere to go. */
   table.data {
     min-width: 0;
     font-size: 10px;
@@ -2678,7 +2601,6 @@ figure.teaser > .cap {
      these tables are made of, and the only ones worth breaking mid-word: it is
      that or a column wide enough for `cache_wikipedia_materials.py`. */
   table.data code,
-  table.data .path,
   table.data .mono {
     overflow-wrap: anywhere;
   }

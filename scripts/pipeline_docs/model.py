@@ -108,89 +108,6 @@ def _step_line(codebase: Codebase, step: spec.Step) -> Optional[int]:
     return None
 
 
-def _collect_schemas(codebase: Codebase, names: List[str]) -> Dict[str, Any]:
-    out: Dict[str, Any] = {}
-    queue = list(dict.fromkeys(names))
-    while queue:
-        name = queue.pop()
-        if name in out:
-            continue
-        schema = codebase.schema(name)
-        if schema is None:
-            continue
-        out[name] = schema.to_json()
-        # Nested models: pull any referenced type that is itself a schema.
-        for item in schema.fields:
-            for candidate in _type_names(item.annotation):
-                if candidate not in out and codebase.schema(candidate) is not None:
-                    queue.append(candidate)
-    return out
-
-
-def _type_names(annotation: str) -> List[str]:
-    tokens: List[str] = []
-    current = ""
-    for char in annotation:
-        if char.isalnum() or char == "_":
-            current += char
-        else:
-            if current:
-                tokens.append(current)
-            current = ""
-    if current:
-        tokens.append(current)
-    return [token for token in tokens if token[:1].isupper()]
-
-
-def _script_index(codebase: Codebase) -> Dict[str, Dict[str, Any]]:
-    """Docstring, size and CLI surface of every scanned script.
-
-    The report cites a script's options by name (`::: cliflags script=...`), so
-    the whole surface travels in the payload rather than only the two entry
-    points—a section about the maintenance tools can then show theirs too.
-    """
-    return {
-        name: {
-            "script": f"scripts/{name}",
-            "docstring": facts.docstring,
-            "line_count": facts.line_count,
-            "flags": [flag.to_json() for flag in facts.cli_flags],
-        }
-        for name, facts in sorted(codebase.scripts.items())
-    }
-
-
-def _call_sites(codebase: Codebase) -> List[Dict[str, Any]]:
-    """Every model call in the repo, and the step that claims it.
-
-    The report uses this to show coverage: a call site with no owning step is a
-    part of the system the document does not describe, which is exactly the thing
-    a generated report should be able to admit about itself.
-    """
-    owner: Dict[str, str] = {}
-    for step in spec.STEPS:
-        owner[f"{step.script.rsplit('/', 1)[-1]}:{step.function}"] = step.id
-
-    rows: List[Dict[str, Any]] = []
-    for call in codebase.all_ai_calls():
-        function = call.function.split(".")[-1]
-        rows.append(
-            {
-                "script": call.script,
-                "function": function,
-                "line": call.lineno,
-                "method": call.method,
-                "model": call.model_value,
-                "model_source": call.model_source,
-                "effort": call.reasoning_value,
-                "schema": call.schema,
-                "step": owner.get(f"{call.script}:{function}"),
-            }
-        )
-    rows.sort(key=lambda row: (row["script"], row["line"]))
-    return rows
-
-
 def build_payload(
     codebase: Codebase,
     summaries: Dict[str, Dict[str, Any]],
@@ -199,21 +116,10 @@ def build_payload(
     shots: Optional[Dict[str, Dict[str, Any]]] = None,
 ) -> Dict[str, Any]:
     steps: List[Dict[str, Any]] = []
-    # Schemas the steps use, plus any the report asks to expand by name.
-    schema_names: List[str] = []
-    for mount in (document.mounts if document else []):
-        if mount.component == "schemalist":
-            schema_names.extend(
-                name.strip()
-                for name in (mount.params.get("names") or "").split(",")
-                if name.strip()
-            )
-
     for step in spec.STEPS:
         group = spec.group_of(step.id)
         ai_calls = _step_ai_calls(codebase, step)
         names = [call["schema"] for call in ai_calls if call.get("schema")]
-        schema_names.extend(names)
         models = [call["model_value"] for call in ai_calls if call.get("model_value")]
         efforts = [
             call["reasoning_value"] for call in ai_calls if call.get("reasoning_value")
@@ -257,8 +163,8 @@ def build_payload(
     return {
         # The report is versioned by the day it was built, because that is what
         # a reader needs to know: which one of these they are holding. The
-        # timestamp and the commit stay in the payload for `::: buildinfo`,
-        # where provenance belongs.
+        # timestamp and the commit stay in the payload, where provenance
+        # belongs.
         "version": f"{time.strftime('%B', built)} {built.tm_mday}, {built.tm_year}",
         "generated_at": time.strftime("%Y-%m-%d %H:%M UTC", built),
         # The commit is the state the page was built from and identifies it for
@@ -268,8 +174,6 @@ def build_payload(
         "commit": _git("rev-parse", "--short", "HEAD"),
         "report": document.to_json() if document else None,
         "facts": facts_module.to_json(facts or {}),
-        "call_sites": _call_sites(codebase),
-        "script_index": _script_index(codebase),
         "lanes": spec.LANES,
         "kinds": KIND_META,
         "teaser": teaser.scene(),
@@ -289,10 +193,4 @@ def build_payload(
             }
             for artifact in spec.ARTIFACTS
         ],
-        "schemas": _collect_schemas(codebase, schema_names),
-        "totals": {
-            "steps": len(spec.STEPS),
-            "ai_steps": sum(1 for step in spec.STEPS if step.kind == spec.AI),
-            "call_sites": len(codebase.all_ai_calls()),
-        },
     }

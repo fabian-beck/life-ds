@@ -150,20 +150,10 @@ COMPONENTS: Dict[str, ComponentSpec] = {
     spec.name: spec
     for spec in [
         ComponentSpec(
-            "buildinfo",
-            "Commit and build time of this rendering.",
-        ),
-        ComponentSpec(
             "teaser",
             "The whole system on one canvas, in parts the prose can point at.",
             figures=1,
             width="wide",
-        ),
-        ComponentSpec(
-            "factgrid",
-            "A labeled grid of measurements, each with its source.",
-            required=("keys",),
-            optional=("caption",),
         ),
         ComponentSpec(
             "pipeline",
@@ -173,33 +163,8 @@ COMPONENTS: Dict[str, ComponentSpec] = {
             width="wide",
         ),
         ComponentSpec(
-            "steptable",
-            "Every documented step of one pipeline, with model and schema.",
-            required=("lane",),
-            tables=1,
-            width="wide",
-        ),
-        ComponentSpec(
             "conceptlegend",
             "What the system reads and what it derives, with the glyph for each.",
-        ),
-        ComponentSpec(
-            "modeltable",
-            "Each model call site, its model and its reasoning effort.",
-            tables=1,
-            width="wide",
-        ),
-        ComponentSpec(
-            "cliflags",
-            "The command-line options of one script, from its argument parser.",
-            required=("script",),
-            tables=1,
-            width="wide",
-        ),
-        ComponentSpec(
-            "schemalist",
-            "Structured-output schemas, expanded field by field.",
-            optional=("names",),
         ),
         ComponentSpec(
             "screenshot",
@@ -224,10 +189,6 @@ COMPONENTS: Dict[str, ComponentSpec] = {
         ComponentSpec(
             "kindlegend",
             "What the four step-kind colors mean.",
-        ),
-        ComponentSpec(
-            "coverage",
-            "Which model call sites the spec claims, and any it does not.",
         ),
     ]
 }

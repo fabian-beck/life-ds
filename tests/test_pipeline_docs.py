@@ -805,9 +805,6 @@ class PayloadAndRenderTests(unittest.TestCase):
         self.assertTrue(payload["report"]["sections"])
         self.assertEqual(payload["report"]["title"], document.title)
         self.assertEqual(len(payload["facts"]), len(facts))
-        self.assertTrue(payload["script_index"]["generate_person.py"]["flags"])
-        claimed = [site for site in payload["call_sites"] if site["step"]]
-        self.assertEqual(len(claimed), len(payload["call_sites"]))
 
     def test_the_shell_carries_every_element_the_script_reaches_for(self) -> None:
         """`app.js` wires the step note up on load.
@@ -1059,15 +1056,15 @@ class MarkdownCompilerTests(unittest.TestCase):
 
     def test_captions_are_numbered_in_document_order(self) -> None:
         document = _compile(
-            self.HEAD + "\n## S\n\n::: steptable lane=person\n:::\n\n"
-            "::: pipeline lane=meta\n:::\n\n::: steptable lane=meta\n:::\n"
+            self.HEAD + "\n## S\n\n::: pipeline lane=person\n:::\n\n"
+            "::: teaser\n:::\n\n::: pipeline lane=meta\n:::\n"
         )
         self.assertEqual(
             [
                 (mount.component, mount.figure_start, mount.table_start)
                 for mount in document.mounts
             ],
-            [("steptable", 1, 1), ("pipeline", 1, 2), ("steptable", 2, 2)],
+            [("pipeline", 1, 1), ("teaser", 2, 1), ("pipeline", 3, 1)],
         )
 
     def test_a_note_leaves_a_marker_and_prints_under_its_section(self) -> None:

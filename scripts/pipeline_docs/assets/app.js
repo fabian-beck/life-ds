@@ -185,10 +185,6 @@
     return node;
   }
 
-  function tableScroll(table) {
-    return el("div", { class: "table-scroll" }, [table]);
-  }
-
   function clear(node) {
     while (node.firstChild) node.removeChild(node.firstChild);
   }
@@ -1606,33 +1602,6 @@
 
   /* --------------------------------------------------------- step entry */
 
-  function schemaBlock(name) {
-    const schema = DATA.schemas[name];
-    if (!schema) return null;
-    const inner = el("div", { class: "inner" });
-    if (schema.docstring) {
-      inner.appendChild(el("p", { class: "sub", text: schema.docstring }));
-    }
-    (schema.fields || []).forEach((field) => {
-      inner.appendChild(
-        el("div", { class: "schema-field" }, [
-          el("span", { class: "fname", text: field.name }),
-          el("span", { text: "  " }),
-          el("span", { class: "ftype", text: field.annotation }),
-          field.description
-            ? el("div", { class: "fdesc", text: field.description })
-            : null,
-        ])
-      );
-    });
-    return el("details", { class: "block" }, [
-      el("summary", {
-        text: name + "—" + (schema.fields || []).length + " fields",
-      }),
-      inner,
-    ]);
-  }
-
   function factRow(label, value) {
     if (!value) return null;
     return el("tr", {}, [el("th", { text: label }), el("td", { html: value })]);
@@ -1903,18 +1872,13 @@
     });
   });
 
-  function laneLabel(laneId) {
-    const lane = DATA.lanes[laneId];
-    return lane ? lane.label : laneId;
-  }
-
   function factOf(key) {
     return (DATA.facts && DATA.facts[key]) || null;
   }
 
-  /* A numbered caption. Figures and tables are numbered in Python, in document
-     order, so the number a component prints is the one the prose cites—a
-     caption can never drift out of step with a cross-reference.
+  /* A numbered caption. Figures are numbered in Python, in document order,
+     so the number a component prints is the one the prose cites—a caption can
+     never drift out of step with a cross-reference.
 
      A caption is one plain run of text: it says what the block is, adds only
      what the block cannot show for itself, and stops. Nothing inside it is
@@ -1928,13 +1892,8 @@
      moves the figure captions back under their figures—see the caption rules
      in `style.css`—which is why the kind is on the element as a class.
 
-     Every caption on the page is built here, whichever element carries it: a
-     figure's is a `<figcaption>` inside its `<figure>` and a table's is a
-     block above the table. */
-  function caption(kind, number, text) {
-    return fillCaption(el("p", {}), kind, number, text);
-  }
-
+     Every caption on the page is built here, as a `<figcaption>` inside its
+     `<figure>`. */
   function figureCaption(kind, number, text) {
     return fillCaption(el("figcaption", {}), kind, number, text);
   }
@@ -1953,29 +1912,8 @@
     return /[.!?]$/.test(trimmed) ? trimmed : trimmed + ".";
   }
 
-  function dataTable(headers, rows) {
-    const table = el("table", { class: "data" });
-    table.appendChild(
-      el(
-        "tr",
-        {},
-        headers.map((header) => {
-          return el("th", { text: header });
-        })
-      )
-    );
-    rows.forEach((row) => {
-      table.appendChild(el("tr", {}, row));
-    });
-    return tableScroll(table);
-  }
-
   function code(text) {
     return el("code", { text: text });
-  }
-
-  function plain(text) {
-    return el("td", { text: text === null || text === undefined ? "—" : text });
   }
 
   function emptyNote(html) {
@@ -3627,43 +3565,8 @@
      roster here must match COMPONENTS in `report.py`, which is what makes an
      unknown block a build error rather than a blank space on the page. */
   const COMPONENTS = {
-    buildinfo: function (mount) {
-      const rows = [
-        ["Version", DATA.version || DATA.generated_at],
-        ["Built", DATA.generated_at],
-        ["Commit", DATA.commit || "—"],
-        ["Report source", (DATA.report && DATA.report.source) || "—"],
-      ];
-      const list = el("dl", { class: "buildinfo" });
-      rows.forEach((row) => {
-        list.appendChild(el("dt", { text: row[0] }));
-        list.appendChild(el("dd", {}, [code(row[1])]));
-      });
-      mount.appendChild(list);
-    },
-
     teaser: function (mount, params, numbers) {
       createTeaser(mount, numbers.figure);
-    },
-
-    factgrid: function (mount, params) {
-      const grid = el("div", { class: "factgrid" });
-      (params.keys || "").split(",").forEach((raw) => {
-        const key = raw.trim();
-        if (!key) return;
-        const fact = factOf(key);
-        if (!fact) return;
-        grid.appendChild(
-          el("div", { class: "factcell" }, [
-            el("div", { class: "value", text: fact.display }),
-            el("div", { class: "label", text: key }),
-          ])
-        );
-      });
-      mount.appendChild(grid);
-      if (params.caption) {
-        mount.appendChild(el("p", { class: "cap", text: params.caption }));
-      }
     },
 
     /* A view of the running application, taken from the position the markdown
@@ -3840,44 +3743,6 @@
       onViewportChange(sync);
     },
 
-    steptable: function (mount, params, numbers) {
-      const steps = stepsOf(params.lane);
-      mount.appendChild(
-        caption(
-          "Table",
-          numbers.table,
-          "Every documented step of the " +
-            laneLabel(params.lane).toLowerCase() +
-            " pipeline"
-        )
-      );
-      mount.appendChild(
-        dataTable(
-          ["Step", "Kind", "Script", "Model", "Effort", "Output schema"],
-          steps.map((step) => {
-            return [
-              el("td", {}, [
-                el("span", {
-                  class: "swatch",
-                  style: "background:" + kindColor(step.kind),
-                }),
-                el("span", { text: step.label }),
-              ]),
-              plain(DATA.kinds[step.kind].label),
-              el("td", {}, [code(step.script.split("/").slice(-1)[0])]),
-              plain(step.model || "—"),
-              plain(step.effort || "—"),
-              el("td", {}, [
-                step.schemas.length
-                  ? code(step.schemas.join(", "))
-                  : el("span", { text: "—" }),
-              ]),
-            ];
-          })
-        )
-      );
-    },
-
     /* The vocabulary itself, once, where the report first uses it: the
        perspectives a biography is turned into, in the order the paragraph above
        introduces them. Each description carries the id its references point at,
@@ -3900,91 +3765,6 @@
       mount.appendChild(list);
     },
 
-    modeltable: function (mount, params, numbers) {
-      mount.appendChild(
-        caption(
-          "Table",
-          numbers.table,
-          "Every model call site in the generation scripts"
-        )
-      );
-      mount.appendChild(
-        dataTable(
-          ["Where", "Model", "Resolved from", "Effort", "Schema", "Step"],
-          (DATA.call_sites || []).map((site) => {
-            return [
-              el("td", {}, [
-                code(site.script + ":" + site.line),
-                el("div", { class: "path", text: site.function + "()" }),
-              ]),
-              plain(site.model || "—"),
-              plain(site.model_source || "—"),
-              plain(site.effort || "—"),
-              el("td", {}, [
-                site.schema ? code(site.schema) : el("span", { text: "—" }),
-              ]),
-              el("td", {}, [
-                site.step
-                  ? el("span", {
-                      text: (stepById[site.step] || {}).label || site.step,
-                    })
-                  : el("span", { class: "warn", text: "unclaimed" }),
-              ]),
-            ];
-          })
-        )
-      );
-    },
-
-    cliflags: function (mount, params, numbers) {
-      const name = params.script.split("/").slice(-1)[0];
-      const entry = (DATA.script_index || {})[name];
-      if (!entry) {
-        mount.appendChild(
-          emptyNote("No script named <code>" + escapeHtml(name) + "</code>.")
-        );
-        return;
-      }
-      mount.appendChild(
-        caption(
-          "Table",
-          numbers.table,
-          "The " +
-            entry.flags.length +
-            " command-line options of " +
-            entry.script
-        )
-      );
-      mount.appendChild(
-        dataTable(
-          ["Flag", "Default", "What it does"],
-          entry.flags.map((flag) => {
-            return [
-              el("td", {}, [code(flag.flags.join(", "))]),
-              plain(
-                flag.default && flag.default !== "None" ? flag.default : "—"
-              ),
-              plain(flag.help || ""),
-            ];
-          })
-        )
-      );
-    },
-
-    schemalist: function (mount, params) {
-      const names = (params.names || "")
-        .split(",")
-        .map((name) => {
-          return name.trim();
-        })
-        .filter(Boolean);
-      const wanted = names.length ? names : Object.keys(DATA.schemas).sort();
-      wanted.forEach((name) => {
-        const block = schemaBlock(name);
-        if (block) mount.appendChild(block);
-      });
-    },
-
     kindlegend: function (mount) {
       const list = el("dl", { class: "kindlist" });
       kindEntries().forEach((entry) => {
@@ -4002,31 +3782,6 @@
       mount.appendChild(list);
     },
 
-    coverage: function (mount) {
-      const sites = DATA.call_sites || [];
-      const unclaimed = sites.filter((site) => {
-        return !site.step;
-      });
-      mount.appendChild(
-        el("p", { class: "cap" }, [
-          el("span", {
-            text:
-              sites.length -
-              unclaimed.length +
-              " of " +
-              sites.length +
-              " model call sites are claimed by a documented step. ",
-          }),
-          el("span", {
-            text: unclaimed.length
-              ? "The build treats the rest as an error, so this page should " +
-                "never show any."
-              : "An unclaimed call site fails the build, which is why this " +
-                "number is complete rather than merely large.",
-          }),
-        ])
-      );
-    },
   };
 
   /* ----------------------------------------------------- print appendix */
@@ -4183,9 +3938,8 @@
     const host = document.getElementById("meta-row");
     if (!host) return;
     // The report is versioned by date and by nothing else. A commit and a
-    // build time answer "which build is this", which only `::: buildinfo`
-    // prints; the reader at the top of the page is asking "how current is
-    // what I am about to read".
+    // build time answer "which build is this"; the reader at the top of the
+    // page is asking "how current is what I am about to read".
     host.appendChild(
       el("span", { class: "chip" }, [
         el("span", {
