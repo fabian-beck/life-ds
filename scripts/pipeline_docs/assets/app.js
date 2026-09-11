@@ -3801,7 +3801,7 @@
     "Input",
     "Output",
     "Model (effort)",
-    "Calls per run",
+    "#Calls",
   ];
 
   /* The model a step calls and, in parentheses, the reasoning effort it asks

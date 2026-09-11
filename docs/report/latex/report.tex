@@ -179,11 +179,10 @@
 \newcommand{\tabbottomrule}{\arrayrulecolor{rulestrong}\specialrule{0.8pt}{2pt}{0pt}}
 \newcommand{\tabheadrule}{\arrayrulecolor{rulestrong}\specialrule{0.4pt}{1pt}{2pt}}
 \newcommand{\tabrowrule}{\arrayrulecolor{rulesoft}\specialrule{0.4pt}{1pt}{1pt}}
-\newcommand{\tablanerule}{\noalign{\vskip1pt{\color{rulestrong}\hrule height 0.4pt}\penalty10000\vskip2pt}}
 \newenvironment{datatable}[1]{\sffamily\small\renewcommand{\arraystretch}{1.25}\setlength{\tabcolsep}{5pt}\begin{tabular}{#1}}{\end{tabular}}
 \newcolumntype{S}[1]{>{\raggedright\arraybackslash}p{\dimexpr #1\widewidth-2\tabcolsep\relax}}
 \newenvironment{steptable}[1]{\sffamily\scriptsize\renewcommand{\arraystretch}{1.2}\setlength{\tabcolsep}{4pt}\setlength{\LTleft}{-\wideoverhang}\setlength{\LTright}{-\wideoverhang}\begin{longtable}{#1}}{\end{longtable}}
-\newcommand{\lanerow}[1]{\eyebrow{#1}}
+\newcommand{\lanerow}[1]{\eyebrow{#1}\par\nobreak\vspace{1pt}{\color{rulestrong}\hrule height 0.4pt}\vspace{2pt}}
 
 %% ---- A legend: a marked term and what it means, between two hairlines.
 \newenvironment{legend}{\par\vspace{4pt}\noindent\sffamily\small\renewcommand{\arraystretch}{1.2}\begin{tabular}{@{}>{\leavevmode\raggedright\arraybackslash}p{0.28\linewidth}>{\leavevmode\raggedright\arraybackslash\color{inktwo}}p{\dimexpr 0.72\linewidth-2\tabcolsep\relax}@{}}\arrayrulecolor{rule}\specialrule{0.4pt}{0pt}{3pt}}{\arrayrulecolor{rule}\specialrule{0.4pt}{3pt}{0pt}\end{tabular}\par\vspace{4pt}}
@@ -427,11 +426,10 @@ The steps of the personal story pipeline (Figure~\ref{fig:pipeline-person}) and 
 
 \begin{steptable}{@{}S{0.14}S{0.36}S{0.13}S{0.13}S{0.16}S{0.08}@{}}
 \tabtoprule
-\textbf{Step} & \textbf{Description} & \textbf{Input} & \textbf{Output} & \textbf{Model (effort)} & \textbf{Calls per run} \\
+\textbf{Step} & \textbf{Description} & \textbf{Input} & \textbf{Output} & \textbf{Model (effort)} & \textbf{\#Calls} \\
 \tabheadrule
 \endhead
-\multicolumn{6}{@{}l}{\lanerow{Personal story}} \\*
-\tablanerule
+\multicolumn{6}{@{}p{\dimexpr\widewidth-2\tabcolsep\relax}@{}}{\lanerow{Personal story}} \\*
 \stepref{kindexternal}{\textbf{Fetch Wikipedia}} & Collects the subject article, related candidates, and Commons image metadata as shared reporting material. Caches the material under a stable subject identity so later steps and reruns reuse the same source set. & A subject or article URL & Cached Wikipedia material &  & 1 \\
 \tabrowrule
 \stepref{kindai}{\textbf{Select articles}} & Ranks linked articles by their value for a life story. It keeps people, personal events, and individual works, so later research spends its context on relationships and moments that shape the subject's biography. & The article and outgoing link candidates & Ranked articles for biographical context & \code{gpt{-}\allowbreak{}5.6{-}\allowbreak{}luna (none)} & 1 \\
@@ -476,8 +474,7 @@ The steps of the personal story pipeline (Figure~\ref{fig:pipeline-person}) and 
 \tabrowrule
 \stepref{kindai}{\textbf{Illustrate reports}} & Reviews Commons results against each report and keeps only pictures that directly depict named things. It reads filenames with captions because captions often describe the upload, and code admits only one result from each search. & The report, its searches, and life events & Report illustrations for each event & \code{gpt{-}\allowbreak{}5.6{-}\allowbreak{}terra (medium)} & 1 per report illustrated \\
 \tabrowrule
-\multicolumn{6}{@{}l}{\lanerow{Meta story}} \\*
-\tablanerule
+\multicolumn{6}{@{}p{\dimexpr\widewidth-2\tabcolsep\relax}@{}}{\lanerow{Meta story}} \\*
 \stepref{kindai}{\textbf{Plan story}} & Selects the people who belong in the theme and writes the story's title, introduction, subtopics, chapters, conclusion, and gaps in the registry. It draws on each person's roles, summary, places, and event history so place-based themes rest on recorded activity as well as biography. & The person registry and life events & A themed story plan and selected people & \code{gpt{-}\allowbreak{}5.6{-}\allowbreak{}terra (medium)} & 1 \\
 \tabrowrule
 \stepref{kinddeterministic}{\textbf{Collect events}} & Collects every dated life event for the selected people and orders them by year. It leaves relevance and chapter placement to later steps because early chapter ranges can miss events outside their guessed bounds. & The selected people and life events & Dated events in chronological order &  & 1 \\

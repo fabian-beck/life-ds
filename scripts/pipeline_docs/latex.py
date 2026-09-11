@@ -1344,7 +1344,7 @@ APPENDIX_COLUMNS = (
     "Input",
     "Output",
     "Model (effort)",
-    "Calls per run",
+    "#Calls",
 )
 
 # The share of the wide measure each column takes—the print stylesheet's
@@ -1404,12 +1404,16 @@ def appendix(writer: Writer) -> str:
     ]
     for lane in columns:
         lines.append(
-            f"\\multicolumn{{{len(APPENDIX_COLUMNS)}}}{{@{{}}l}}"
+            # One cell across the table, as wide as the table: the S columns
+            # add up to \\widewidth, less the two gutters the @{} ends take
+            # away. The rule under the name is part of the cell, so nothing
+            # can come between them.
+            f"\\multicolumn{{{len(APPENDIX_COLUMNS)}}}"
+            "{@{}p{\\dimexpr\\widewidth-2\\tabcolsep\\relax}@{}}"
             # `\\*` forbids the page break after the row, so a pipeline's
             # name is never left at a page foot with its steps overleaf.
             f"{{\\lanerow{{{escape(writer.lane_label(lane))}}}}} \\\\*"
         )
-        lines.append("\\tablanerule")
         for step in writer.steps_of(lane):
             record = writer.step_record(step)
             color = KIND_COLORS.get(str(step.get("kind", "")), "ink")
@@ -1594,11 +1598,10 @@ __GLYPHS__
 \newcommand{\tabbottomrule}{\arrayrulecolor{rulestrong}\specialrule{0.8pt}{2pt}{0pt}}
 \newcommand{\tabheadrule}{\arrayrulecolor{rulestrong}\specialrule{0.4pt}{1pt}{2pt}}
 \newcommand{\tabrowrule}{\arrayrulecolor{rulesoft}\specialrule{0.4pt}{1pt}{1pt}}
-\newcommand{\tablanerule}{\noalign{\vskip1pt{\color{rulestrong}\hrule height 0.4pt}\penalty10000\vskip2pt}}
 \newenvironment{datatable}[1]{\sffamily\small\renewcommand{\arraystretch}{1.25}\setlength{\tabcolsep}{5pt}\begin{tabular}{#1}}{\end{tabular}}
 \newcolumntype{S}[1]{>{\raggedright\arraybackslash}p{\dimexpr #1\widewidth-2\tabcolsep\relax}}
 \newenvironment{steptable}[1]{\sffamily\scriptsize\renewcommand{\arraystretch}{1.2}\setlength{\tabcolsep}{4pt}\setlength{\LTleft}{-\wideoverhang}\setlength{\LTright}{-\wideoverhang}\begin{longtable}{#1}}{\end{longtable}}
-\newcommand{\lanerow}[1]{\eyebrow{#1}}
+\newcommand{\lanerow}[1]{\eyebrow{#1}\par\nobreak\vspace{1pt}{\color{rulestrong}\hrule height 0.4pt}\vspace{2pt}}
 
 %% ---- A legend: a marked term and what it means, between two hairlines.
 \newenvironment{legend}{\par\vspace{4pt}\noindent\sffamily\small\renewcommand{\arraystretch}{1.2}\begin{tabular}{@{}>{\leavevmode\raggedright\arraybackslash}p{0.28\linewidth}>{\leavevmode\raggedright\arraybackslash\color{inktwo}}p{\dimexpr 0.72\linewidth-2\tabcolsep\relax}@{}}\arrayrulecolor{rule}\specialrule{0.4pt}{0pt}{3pt}}{\arrayrulecolor{rule}\specialrule{0.4pt}{3pt}{0pt}\end{tabular}\par\vspace{4pt}}
