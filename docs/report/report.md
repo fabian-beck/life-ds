@@ -131,7 +131,7 @@ Ringed and connected while the rest of the graph darkens into the background.
 Describes the one connection currently lit: Otto's 1950 visit to Wright, and his later use of Gaudí's forms.
 :::
 
-*Network.* [[meta-network.whole|The graph]][[figure:meta-network]] displays the architects and the documented connections between them. Its layout is calculated in the background and finalized before it is displayed. The data groups people into clusters, tying their members more closely to each other than to the rest. As the reader scrolls, [[meta-network.card|cards move over the graph]], one per cluster: the people involved are highlighted and the connection between them lit, while the rest of the graph darkens, [[meta-network.cluster|as here for Frei Otto, Frank Lloyd Wright, and Antoni Gaudí]]. The graph itself does not move or rearrange as the reader scrolls; only the part in the foreground changes.
+*Network.* [[meta-network.whole|The graph]][[figure:meta-network]] displays the architects and the documented connections between them. Its force-directed layout is calculated in the background and finalized before it is displayed. As precomputed, the data groups people into clusters. As the reader scrolls, [[meta-network.card|cards move over the graph]], one per cluster, describing it, and the people and connections involved are [[meta-network.cluster|highlighted]], while the rest of the graph darkens.
 
 ::: screenshot id=meta-map route="#/en/meta/organic_shapes_in_architecture" width=390 height=874 wait=".map-section" anchor=".map-section" scroll=800 settle=3000 caption="A location card, with the map flown in above and its linked events listed below."
 @map 0,43,390,527 The background map
@@ -140,9 +140,9 @@ Flies to a new location as each card scrolls into view.
 Each relevant event listed here links directly to the person's story slide where that event is introduced.
 :::
 
-*Map.* The third section shifts the focus from the architects themselves and their connections to the locations where their work took place. [[meta-map.map|A non-interactive map]][[figure:meta-map]] fills the background behind the scrollable story cards, flying to a new location as each one scrolls into view, as here for Barcelona. It zooms to a point or fits a bounding box depending on how spread out the events are. Each [[meta-map.events|event listed on a card]] links directly to the person's story slide where that event is introduced. The map section is not a separate account of the theme; it shows the same events that the timeline already showed. Instead of *when,* the focus is on *where.*
+*Map.* The third section shifts the focus to the locations where the architects' work took place. [[meta-map.map|A non-interactive map]][[figure:meta-map]] fills the background behind the scrollable story cards, flying to a new location as each one scrolls into view. It zooms to a point or fits a bounding box depending on how spread out the events are. Each [[meta-map.events|event listed on a card]] links directly to the respective person's story.
 
-The meta story concludes with a brief summary that ties the nine lives together. Below that is a grid of tiles, one for each architect. The grid links out to the architects' individual stories. The walkthrough follows one thread further from there, into Gaudí's own story.
+The meta story concludes with a brief summary that ties the nine lives together. Below that is a grid of tiles, one for each architect that links out to the architects' individual stories. 
 
 ### A person's story
 
