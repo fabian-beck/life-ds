@@ -1244,7 +1244,6 @@ p.cap {
 }
 
 .flow-mid .rail-label,
-.flow-mid .edge-label,
 .flow-mid .band-label {
   font-size: 9px;
 }
@@ -1255,10 +1254,6 @@ p.cap {
 }
 
 .flow-compact .rail-label {
-  font-size: 8px;
-}
-
-.flow-compact .edge-label {
   font-size: 8px;
 }
 
@@ -1367,17 +1362,6 @@ figure.figure > .cap {
 
 .edge-arrow.active {
   fill: var(--rule-strong);
-}
-
-.edge-label {
-  font-size: 9.5px;
-  fill: var(--ink);
-}
-
-.edge-label-bg {
-  fill: var(--paper);
-  stroke: var(--rule);
-  stroke-width: 1;
 }
 
 .node rect.body {

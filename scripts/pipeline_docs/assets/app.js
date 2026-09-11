@@ -1243,33 +1243,6 @@
           })
         );
       });
-
-      // Labels only for the selected step's edges: naming every flow at once
-      // turns the chart into a wall of 9px type.
-      edges.filter(edgeActive).forEach((edge) => {
-        if (!edge.data) return;
-        const midX =
-          edge.channel === undefined ? (edge.x1 + edge.x2) / 2 : edge.channel;
-        const midY = (edge.y1 + edge.y2) / 2;
-        const text = truncateLabel(edge.data, 44);
-        const box = svg("rect", {
-          class: "edge-label-bg",
-          x: midX - text.length * 2.5 - 5,
-          y: midY - 8,
-          width: text.length * 5 + 10,
-          height: 15,
-          rx: 4,
-        });
-        root.appendChild(box);
-        const label = svg("text", {
-          class: "edge-label",
-          x: midX,
-          y: midY + 3,
-          "text-anchor": "middle",
-        });
-        label.textContent = text;
-        root.appendChild(label);
-      });
     }
 
     function drawNode(root, node) {
