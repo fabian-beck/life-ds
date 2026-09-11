@@ -98,8 +98,7 @@ For prompt design and context engineering, we tried to anticipate which material
 
 ## Interface
 
-Life Data Stories' reading side is a mobile-first Svelte and Vite application: it loads the data the generation pipelines produced and renders it directly. The landing page offers access to two story types, which organize the data differently: [[slides|a person's story]] follows one life in order, and a [[sections|meta story]] follows a theme across several lives. On the landing page[[figure:landing]], the meta stories are displayed in [[landing.carousel|a carousel]] at the top. Below them, [[landing.grid|the stories of individual people]] can be reached four ways: via their generated portrait, by filtering on role, by search, or by viewing a map that plots every place mentioned across the corpus. Clicking a marker there opens directly onto the event it belongs to inside a person's story. In the following, we walk through both story types in more detail. Throughout, we use the meta story *Beyond the Box* and the person's story of *Antoni Gaudí* as running examples.
-
+Life Data Stories' frontend is a mobile-first Svelte application that loads the data the generation pipelines produced and renders it. The landing page offers access to the two story types, which organize the data differently: [[slides|a person's story]] follows one life in order, and a [[sections|meta story]] follows a theme across several lives. On the landing page[[figure:landing]], the meta stories are displayed in [[landing.carousel|a carousel]] at the top. Below them, [[landing.grid|the stories of individual people]] can be reached via their generated portrait, by filtering on role, by search, or by viewing a map that plots every place mentioned across the corpus. Clicking a marker there opens directly onto the event it belongs to inside a person's story. In the following, we walk through both story types in more detail. Throughout, we use the meta story *Beyond the Box* and the personal story of *Antoni Gaudí* as running examples.
 
 ::: screenshot id=landing route="#/en" width=1280 height=1300 settle=2500 caption="The landing page: a carousel of meta stories above, the life stories of individual people in a filterable grid below."
 @carousel 471,101,769,400 Meta story carousel
@@ -108,10 +107,9 @@ Cycles through the meta stories, each with title, subtitle, and a "Story" or "Fi
 One tile per person's story, with generated portrait, lifespan, roles, and a one-line description.
 :::
 
-
 ### The meta story
-A meta story is structured as an opening scene, up to three component sections, and a closing conclusion, followed by a grid linking to the people it draws on; the sections are a timeline, a network, and a map. The whole is read from top to bottom by scrolling. Not every theme carries all three sections, and which ones appear is decided once when the story is composed based on the data that is available. Our exemplary meta story, *Beyond the Box*, follows nine architects who lived and worked across more than a century. <!--Each of these architects pushed past what their time considered to be the limits of architecture. -->The meta story investigates their commonalities, what shaped their work, and how they might have influenced each other.
 
+A meta story is structured as an opening scene, up to three sections---relating to components such as timeline, social network, and map---, and a closing conclusion, followed by a grid linking to the people it covers. The whole is read from top to bottom by scrolling.  *Beyond the Box* follows nine architects who explored organic shapes in architecture and worked across more than a century.
 
 ::: screenshot id=meta-timeline-environment route="#/en/meta/organic_shapes_in_architecture" width=1280 height=820 wait=".timeline-horizontal-container" anchor=".timeline-horizontal-container" scroll=500 settle=3000 caption="The timeline: one lane per architect, with a guiding story card in front naming the span currently in focus."
 @whole 0,0,1280,820 Timeline visualization
@@ -122,9 +120,7 @@ Names the span of years currently in focus and describes what happened across th
 One lane per architect, grouped into thematic clusters, with events marked as dots along each line.
 :::
 
-*Timeline.* After the text-only introduction, the vertical scrolling turns horizontal as the reader reaches the [[meta-timeline-environment.whole|timeline visualization]][[figure:meta-timeline-environment]]. This visualization carries the reader sideways through time instead of further down the page. In *Beyond the Box*, what comes into view is [[meta-timeline-environment.lanes|a timeline of nine lanes]], one per architect. Events are marked as dots along each lane. [[meta-timeline-environment.card|A sequence of guiding story cards]] is pinned near the top and leads the reader through the timeline. Each card names a span of years and describes what happened during that period. The first card, "The Complete Environment", remains visible as long as the reader scrolls through the years it covers.
-
-Tapping on a dot representing an event opens a brief description of it. Tapping the surrounding card instead leads into that architect's personal story. Above the lanes is a second layer of annotations that marks historical events affecting several lives at once, such as World War II. While the guiding story card offers one path through the theme, the lanes and their events are for readers who want to explore further.
+*Timeline.* After a short textual introduction, the vertical scrolling turns horizontal as the reader reaches the [[meta-timeline-environment.whole|timeline visualization]][[figure:meta-timeline-environment]]. In *Beyond the Box*, [[meta-timeline-environment.lanes|a timeline of nine lanes]], one per architect, shows events that are marked as dots along each lane. [[meta-timeline-environment.card|A sequence of guiding story cards]], marking chapters in the development, is pinned near the top and leads the reader through the timeline. Tapping or clicking on a dot representing an event opens a brief description of it. The surrounding card instead leads into that architect's personal story. Above the lanes is a second layer of annotations that marks the historical events affecting several lives at once, such as World War II. 
 
 ::: screenshot id=meta-network route="#/en/meta/organic_shapes_in_architecture" width=390 height=844 wait=".network-section" anchor=".network-section" scroll=800 settle=3000 caption="The network: architects as nodes, one card in front naming the cluster currently lit."
 @whole 0,0,390,844 The network view
@@ -145,8 +141,6 @@ Each relevant event listed here links directly to the person's story slide where
 :::
 
 *Map.* The third section shifts the focus from the architects themselves and their connections to the locations where their work took place. [[meta-map.map|A non-interactive map]][[figure:meta-map]] fills the background behind the scrollable story cards, flying to a new location as each one scrolls into view, as here for Barcelona. It zooms to a point or fits a bounding box depending on how spread out the events are. Each [[meta-map.events|event listed on a card]] links directly to the person's story slide where that event is introduced. The map section is not a separate account of the theme; it is the same events that the timeline already showed. Instead of *when,* the focus is on *where.*
-
-
 
 The meta story concludes with a brief summary that ties the nine lives together. Below that is a grid of tiles, one for each architect. The grid links out to the architects' individual stories. The walkthrough follows one thread further from there, into Gaudí's own story.
 
