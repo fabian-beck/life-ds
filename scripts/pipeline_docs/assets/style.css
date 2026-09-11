@@ -2574,7 +2574,7 @@ figure.teaser > .cap {
 
   /* The appendix the step note stands in for on screen. It opens a page of its
      own and is one table, a row per step, set a step smaller than the other
-     tables so that eight columns fit the sheet and a row stays a few lines
+     tables so that six columns fit the sheet and a row stays a few lines
      tall. The column widths are fixed, since the auto layout would give the
      description whatever the phrases left over, and a row is never split
      across sheets. */
@@ -2597,32 +2597,46 @@ figure.teaser > .cap {
   }
 
   .steps-table th:nth-child(1) {
-    width: 5%;
+    width: 14%;
   }
 
   .steps-table th:nth-child(2) {
+    width: 36%;
+  }
+
+  .steps-table th:nth-child(3),
+  .steps-table th:nth-child(4) {
     width: 13%;
   }
 
-  .steps-table th:nth-child(3) {
-    width: 34%;
-  }
-
-  .steps-table th:nth-child(4),
   .steps-table th:nth-child(5) {
-    width: 13%;
+    width: 16%;
   }
 
   .steps-table th:nth-child(6) {
-    width: 9%;
+    width: 8%;
   }
 
-  .steps-table th:nth-child(7) {
-    width: 6%;
+  /* The step's name is underlined in its kind's color, as a reference to
+     the step in the running text is. */
+  .steps-table .step-name {
+    border-bottom: 2px solid var(--kind-color, var(--rule-strong));
   }
 
-  .steps-table th:nth-child(8) {
-    width: 7%;
+  .steps-table .step-name[data-kind="ai"] {
+    --kind-color: var(--kind-ai);
+  }
+
+  .steps-table .step-name[data-kind="deterministic"] {
+    --kind-color: var(--kind-deterministic);
+  }
+
+  .steps-table .step-name[data-kind="external"] {
+    --kind-color: var(--kind-external);
+  }
+
+  .steps-table .step-name[data-kind="image"] {
+    --kind-color: var(--kind-image);
   }
 
   /* A row heading is the step's name, in the weight of a heading, and the

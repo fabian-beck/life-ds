@@ -428,7 +428,12 @@
     const compact = size === "compact";
     // Declared up front so `select` can name the instance the step note belongs to
     // before the instance is finished being built.
-    const instance = { lane: laneId, size: size, host: host };
+    const instance = {
+      lane: laneId,
+      figure: figureNumber,
+      size: size,
+      host: host,
+    };
     const state = {
       tab: laneId,
       selected: null,
@@ -3791,15 +3796,21 @@
   }
 
   const APPENDIX_COLUMNS = [
-    "No.",
     "Step",
     "Description",
     "Input",
     "Output",
-    "Model",
-    "Effort",
+    "Model (effort)",
     "Calls per run",
   ];
+
+  /* The model a step calls and, in parentheses, the reasoning effort it asks
+     of it: one cell, since the effort means nothing without the model. */
+  function modelEffort(step) {
+    if (!step.model) return "";
+    const effort = step.effort ? " (" + bare(step.effort) + ")" : "";
+    return "<code>" + escapeHtml(bare(step.model) + effort) + "</code>";
+  }
 
   function renderStepAppendix() {
     const host = document.getElementById("report");
@@ -3817,14 +3828,21 @@
     section.appendChild(
       appendixHeading(1, APPENDIX_LETTER, "appendix-steps", "Step details")
     );
+    /* The table is read against the pipeline charts, so the intro names
+       them by number, as the LaTeX rendering does. */
+    const cited = columns.map((laneId) => {
+      const chart = charts.find((entry) => entry.lane === laneId);
+      const label =
+        "the " + DATA.lanes[laneId].label.toLowerCase() + " pipeline";
+      return chart ? label + " (Figure " + chart.figure + ")" : label;
+    });
     section.appendChild(
       el("p", {
         text:
-          "One row per documented step, in the order the pipelines reach " +
-          "them: what the step does, what it reads and what it leaves " +
-          "behind, and the model, reasoning effort, and number of calls " +
-          "read out of its source. In the interactive report this is the " +
-          "note that opens when a step in Figure 2 or Figure 3 is clicked.",
+          "The steps of " +
+          cited.join(" and ") +
+          ", one per row: description, input, output, model with " +
+          "reasoning effort, and calls per run.",
       })
     );
 
@@ -3842,7 +3860,6 @@
       ])
     );
     const tbody = el("tbody");
-    let index = 0;
     columns.forEach((laneId) => {
       tbody.appendChild(
         el("tr", { class: "lane-row" }, [
@@ -3853,17 +3870,22 @@
         ])
       );
       stepsOf(laneId).forEach((step) => {
-        index += 1;
         const record = stepRecord(step);
+        /* The step's name carries the underline in its kind's color, as a
+           reference to it in the text does, so the row is read against the
+           charts without a number. */
+        const name = el("span", {
+          class: "step-name",
+          "data-kind": step.kind || "",
+          text: step.label,
+        });
         tbody.appendChild(
           el("tr", { class: "step-row", id: "appendix-" + step.id }, [
-            el("td", { text: APPENDIX_LETTER + "." + index }),
-            el("th", { scope: "row", text: step.label }),
+            el("th", { scope: "row" }, [name]),
             el("td", { text: stepDescription(step) }),
             el("td", { html: record.input }),
             el("td", { html: record.output }),
-            el("td", { html: record.model }),
-            el("td", { html: record.effort }),
+            el("td", { html: modelEffort(step) }),
             el("td", { html: record.calls }),
           ])
         );

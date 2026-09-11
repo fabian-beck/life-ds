@@ -1343,8 +1343,7 @@ APPENDIX_COLUMNS = (
     "Description",
     "Input",
     "Output",
-    "Model",
-    "Effort",
+    "Model (effort)",
     "Calls per run",
 )
 
@@ -1353,7 +1352,18 @@ APPENDIX_COLUMNS = (
 # effort what a name such as `gpt-image-2` needs at this size. The step's
 # name carries the underline in its kind's color, as a reference to it in the
 # text does, so the row is read against the charts without a number.
-APPENDIX_WIDTHS = (0.14, 0.35, 0.13, 0.13, 0.10, 0.08, 0.07)
+APPENDIX_WIDTHS = (0.14, 0.36, 0.13, 0.13, 0.16, 0.08)
+
+
+def model_effort(step: Dict[str, Any]) -> str:
+    """The model a step calls and, in parentheses, the reasoning effort it
+    asks of it: one cell, since the effort means nothing without the model."""
+    if not step.get("model"):
+        return ""
+    text = escape_code(Writer.bare(step["model"]))
+    if step.get("effort"):
+        text += f" ({escape_code(Writer.bare(step['effort']))})"
+    return f"\\code{{{text}}}"
 
 
 def appendix(writer: Writer) -> str:
@@ -1364,9 +1374,15 @@ def appendix(writer: Writer) -> str:
             columns.append(step["column"])
     if not columns:
         return ""
+    charts = [
+        f"the {escape(writer.lane_label(lane).lower())} pipeline "
+        f"(Figure~\\ref{{fig:pipeline-{lane}}})"
+        for lane in writer.pipeline_lanes
+    ]
+    subject = " and ".join(charts) if charts else "each pipeline"
     intro = (
-        "One row per step, in pipeline order: what it does, what it reads and "
-        "writes, and the model, reasoning effort, and number of calls per run."
+        f"The steps of {subject}, one per row: description, input, output, "
+        "model with reasoning effort, and calls per run."
     )
     spec = "@{}" + "".join(f"S{{{width:.2f}}}" for width in APPENDIX_WIDTHS) + "@{}"
     head = " & ".join(f"\\textbf{{{escape(title)}}}" for title in APPENDIX_COLUMNS)
@@ -1389,7 +1405,9 @@ def appendix(writer: Writer) -> str:
     for lane in columns:
         lines.append(
             f"\\multicolumn{{{len(APPENDIX_COLUMNS)}}}{{@{{}}l}}"
-            f"{{\\lanerow{{{escape(writer.lane_label(lane))}}}}} \\\\"
+            # `\\*` forbids the page break after the row, so a pipeline's
+            # name is never left at a page foot with its steps overleaf.
+            f"{{\\lanerow{{{escape(writer.lane_label(lane))}}}}} \\\\*"
         )
         lines.append("\\tablanerule")
         for step in writer.steps_of(lane):
@@ -1400,8 +1418,7 @@ def appendix(writer: Writer) -> str:
                 escape(writer.step_description(step)),
                 record["input"],
                 record["output"],
-                record["model"],
-                record["effort"],
+                model_effort(step),
                 record["calls"],
             ]
             lines.append(" & ".join(cells) + " \\\\")
@@ -1577,7 +1594,7 @@ __GLYPHS__
 \newcommand{\tabbottomrule}{\arrayrulecolor{rulestrong}\specialrule{0.8pt}{2pt}{0pt}}
 \newcommand{\tabheadrule}{\arrayrulecolor{rulestrong}\specialrule{0.4pt}{1pt}{2pt}}
 \newcommand{\tabrowrule}{\arrayrulecolor{rulesoft}\specialrule{0.4pt}{1pt}{1pt}}
-\newcommand{\tablanerule}{\arrayrulecolor{rulestrong}\specialrule{0.4pt}{1pt}{2pt}}
+\newcommand{\tablanerule}{\noalign{\vskip1pt{\color{rulestrong}\hrule height 0.4pt}\penalty10000\vskip2pt}}
 \newenvironment{datatable}[1]{\sffamily\small\renewcommand{\arraystretch}{1.25}\setlength{\tabcolsep}{5pt}\begin{tabular}{#1}}{\end{tabular}}
 \newcolumntype{S}[1]{>{\raggedright\arraybackslash}p{\dimexpr #1\widewidth-2\tabcolsep\relax}}
 \newenvironment{steptable}[1]{\sffamily\scriptsize\renewcommand{\arraystretch}{1.2}\setlength{\tabcolsep}{4pt}\setlength{\LTleft}{-\wideoverhang}\setlength{\LTright}{-\wideoverhang}\begin{longtable}{#1}}{\end{longtable}}
