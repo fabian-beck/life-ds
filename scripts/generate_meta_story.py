@@ -12,7 +12,7 @@ Generate meta-story datasets using a multi-phase approach:
 4. Phase 4: Historical context landmarks (1 AI call)
 5. Phase 5: Social network derived from ego networks (programmatic, no AI)
    Phase 5b: AI review/enrichment of the derived network (1 AI call)
-6. Phase 6: Network narration for the scroll-over cards (1 AI call)
+6. Phase 6: Network narration, a title and a text per circle (1 AI call)
 7. Phase 7: Geographic map section — event rating, geographic clustering,
    and stop narration with a discard option (see meta_story_map.py and
    meta_story_map_narration.py)
@@ -332,7 +332,7 @@ class NetworkCircleNarration(BaseModel):
 
 
 class NetworkNarrationResult(BaseModel):
-    """AI-written narration for the social network scroll-over cards."""
+    """AI-written narration for the social network, one entry per circle."""
 
     circles: List[NetworkCircleNarration]
 
@@ -1575,13 +1575,11 @@ def phase6_network_narration(
 ) -> None:
     """Phase 6: Write short story texts for the network's clusters ("circles").
 
-    The UI narrates the social network with scroll-over cards, one per cluster.
     The clusters are detected here by ``derive_clusters`` and stored with the
-    narration as ``member_ids`` per circle, so the client only resolves the
-    stored members against the graph and never repeats the detection. This
-    phase asks the model for a short narrative per circle, stored as
-    ``social_network.narration``. Failures are non-fatal — without narration
-    the section shows no circle cards.
+    narration as ``member_ids`` per circle, so the story carries its circles as
+    data and the detection runs once. This phase asks the model for a title
+    and a short narrative per circle, stored as ``social_network.narration``.
+    Failures are non-fatal — without narration the network has no circle texts.
     """
     network = dataset.get("social_network") or {}
     clusters = derive_clusters(network)

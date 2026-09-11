@@ -401,12 +401,13 @@ def _detect_communities(links: List[Dict[str, Any]]) -> List[set]:
 
 
 def derive_clusters(network: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Derive the ordered clusters ("circles") the UI narrates while scrolling.
+    """Derive the ordered clusters ("circles") of the network.
 
     This is the only place the circles are detected. Phase 6 stores each
-    cluster's main members as ``member_ids`` in the narration, and the client
-    (``computeClusters`` in ``src/utils/networkClusters.js``) resolves those
-    stored members against the graph rather than repeating the detection. The
+    cluster's main members as ``member_ids`` in the narration, so the story
+    carries its circles as data; ``computeClusters`` in
+    ``src/utils/networkClusters.js`` resolves the stored members against the
+    graph rather than repeating the detection. The
     cluster ``key`` is the main ids in birth-year order joined with ``+``;
     narration texts are matched by that key. Clusters are ordered roughly by
     the mean birth year of their main members.

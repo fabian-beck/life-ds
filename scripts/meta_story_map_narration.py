@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """AI agents for the meta-story map section, plus the pipeline orchestrator.
 
-The map section shows the story's key places on an auto-zooming map while
-narration cards scroll over it (mirroring the social-network scrollytelling).
+The map section holds the story's key places as stops, each with a title
+and a short text (mirroring the circles of the social network).
 Building it is a small multi-agent pipeline around the deterministic
 clustering in ``meta_story_map.py``:
 
@@ -17,7 +17,7 @@ clustering in ``meta_story_map.py``:
    — complete-linkage geographic clustering with the rated weights; top
    clusters are selected and ordered chronologically.
 3. **Narration agent** (:func:`narrate_map_clusters`, one AI call) — writes
-   one card (headline + short story text) per cluster,
+   one stop (title + short story text) per cluster,
    and **curates how many stops the map has**: it keeps only the places that
    genuinely matter to the story (usually no more than ~5), discarding both
    accidental groupings (events merely sharing a city) and real-but-secondary
@@ -118,7 +118,7 @@ class MapStopNarration(BaseModel):
 
 
 class MapNarrationResult(BaseModel):
-    """AI-written narration for the map scroll-over cards."""
+    """AI-written narration for the map, one entry per stop."""
 
     stops: List[MapStopNarration]
 
@@ -344,7 +344,7 @@ def apply_map_narration(
     """Apply the narration agent's decisions defensively.
 
     Unknown keys are ignored; clusters without a decision are kept without a
-    text (the UI falls back to listing the events). Discards are honored only
+    text (a stop without a text carries only its events). Discards are honored only
     while at least ``MIN_MAP_CLUSTERS`` (or all, if fewer) clusters survive —
     re-kept clusters are chosen by score.
 
