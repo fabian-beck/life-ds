@@ -14,16 +14,13 @@ knows nothing about meta stories; it now lives here, next to the CLI in
 from __future__ import annotations
 
 import copy
-import json
 from typing import Any, Dict, List, Optional
 
 from openai import OpenAI
 from pydantic import BaseModel
 
-from config import GLOSSARY_MODEL, GLOSSARY_REASONING_EFFORT
 from translate_person import (
     DATA_DIR,
-    LANGUAGE_NAMES,
     PEOPLE_DIR,
     REGISTER_PATH,
     TRANSLATION_MODEL,
@@ -36,7 +33,6 @@ from translate_person import (
     load_json_file,
     make_translation_block,
 )
-from utils.model_calls import parse_structured
 from utils.wikipedia_cache import fetch_language_links
 
 
@@ -105,31 +101,6 @@ class TrSectionBodies(BaseModel):
     timeline: Optional[List[TrBodyBlock]] = None
     network: Optional[List[TrBodyBlock]] = None
     map: Optional[List[TrBodyBlock]] = None
-
-
-class RecurringImage(BaseModel):
-    """One image the story's theme rides on, and what it becomes.
-
-    The fields are ordered the way the decision has to be made — the image,
-    then whether the target language has it at all, then the wording — and a
-    structured response is generated in field order, so the check is written
-    before the wording it decides.
-    """
-
-    english: str
-    """The recurring English metaphor or coined term, as the source words it."""
-
-    target_language_usage: str
-    """Whether someone writing about this field in the target language would use
-    that image on their own, and the word they would use if so."""
-
-    rendering: str
-    """The wording the translation uses wherever the image appears — the target
-    language's own image, or what the image means where it has none."""
-
-
-class ImageGlossary(BaseModel):
-    images: List[RecurringImage]
 
 
 class MetaStoryTranslation(BaseModel):
@@ -489,108 +460,6 @@ def build_meta_story_reference(
     return reference
 
 
-def build_image_glossary(
-    payload: Dict[str, Any],
-    target_lang: str,
-    client: OpenAI,
-    model: str = GLOSSARY_MODEL,
-    verbose: bool = False,
-) -> List[RecurringImage]:
-    """Settle how the story's recurring images read in the target language.
-
-    A meta story is built on a handful of images — a metaphor or coined term
-    announced in the title and picked up in the opening, the section bodies and
-    the event connections. Asking the translation call to settle them as it
-    goes does not work: it meets the image first in the title, renders it word
-    for word, and then keeps that rendering faithfully everywhere, so the whole
-    story arrives in a word the target language does not use. An architecture
-    story about "the box" came back in German as "Kasten", a crate.
-
-    So the images are decided before any prose is written, in their own small
-    call, the way person names are. Both calls exist for the same reason: a
-    choice that has to be the same in every passage is made once, deliberately,
-    rather than re-derived per field.
-
-    Returns an empty list when the call fails — the translation then runs as it
-    did before, with the general idiom rules and nothing more.
-    """
-    lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
-    prompt = f"""A thematic story collection is being translated to {lang_name}.
-Before it is translated, name the images its theme rides on.
-
-WHAT COUNTS AS ONE:
-A picture the story argues in — a metaphor or a coined term it keeps coming
-back to, usually announced in the title and picked up in the opening, the
-section bodies, the chapter lead-ins and the lines connecting events to the
-theme. The story's subject is not one, and neither is a claim it makes: only
-name something whose force comes from the picture rather than from the words'
-plain sense. One or two per story is the normal count, none is common, and a
-long list means the test above was not applied.
-
-FOR EACH ONE:
-- english: the image as the source words it.
-- target_language_usage: whether people writing about this subject in
-  {lang_name} use that picture themselves, and the word they use if so. Answer
-  it before you decide the wording, and answer it about the {lang_name} that
-  is actually written: the word has to be one specialists reach for, not one
-  that merely translates the English. A word you would have to explain before
-  the picture arrives is not one {lang_name} has, and neither is a compound
-  built out of the English image for the occasion.
-- rendering: the wording the translation will use wherever the image appears.
-  Use the {lang_name} picture only where the field above found a real one.
-  Otherwise drop the picture and say what it meant — plainly, in the terms the
-  subject is discussed in. That is the usual answer for an image that works
-  only in English, and it is the safe one: naming the meaning always reads,
-  while an imported picture repeated in every passage leaves the whole story
-  meaningless. When the two options look close, take the meaning.
-
-STORY:
-{json.dumps(payload, ensure_ascii=False, indent=2)}
-"""
-
-    if verbose:
-        print(f"  Settling the story's recurring images in {lang_name}...")
-
-    try:
-        parsed = parse_structured(
-            client,
-            model=model,
-            reasoning_effort=GLOSSARY_REASONING_EFFORT,
-            input=[
-                {
-                    "role": "system",
-                    "content": (
-                        f"You are a native {lang_name} writer who knows how this "
-                        f"subject is written about in {lang_name}, and which "
-                        f"English images have no counterpart there."
-                    ),
-                },
-                {"role": "user", "content": prompt},
-            ],
-            text_format=ImageGlossary,
-            label="meta story image glossary",
-        )
-        images = list(parsed.images) if parsed else []
-        if verbose:
-            for image in images:
-                print(f"    {image.english} -> {image.rendering}")
-        return images
-    except Exception as e:
-        print(f"  Warning: image glossary failed ({e}); translating without it")
-        return []
-
-
-def format_image_glossary_for_prompt(images: List[RecurringImage]) -> str:
-    """The settled images as the translation call is shown them."""
-    if not images:
-        return "(none — no recurring image needed a decision of its own)"
-    return "\n".join(
-        f'- the story\'s "{image.english}" is rendered "{image.rendering}" '
-        f"({image.target_language_usage})"
-        for image in images
-    )
-
-
 def translate_meta_story(
     source_data: Dict[str, Any],
     target_lang: str,
@@ -601,7 +470,6 @@ def translate_meta_story(
     """Translate a meta story dataset; returns the full derived document."""
     payload = extract_meta_story_translatables(source_data)
     reference = build_meta_story_reference(source_data, target_lang, verbose)
-    images = build_image_glossary(payload, target_lang, client, verbose=verbose)
     parsed = _call_translation_model(
         payload=payload,
         response_format=MetaStoryTranslation,
@@ -637,16 +505,21 @@ def translate_meta_story(
             "13. The story's theme rides on a few recurring images — a "
             "metaphor or coined term announced in the title and picked up in "
             "the opening, the section bodies, the chapter lead-ins, the event "
-            "titles and the theme_connection lines. How each one reads in the "
-            "target language has already been settled, deliberately and for "
-            "the whole story:\n"
-            f"{format_image_glossary_for_prompt(images)}\n"
-            "Use the settled wording wherever the English image appears, the "
-            "title and the shortest headline included, and use no other "
-            "wording for it. Where the settled wording drops the image and "
-            "names what it meant, follow it there too rather than reaching "
-            "back for the English picture: an image the language does not use "
-            "stays meaningless however consistently it is repeated.\n"
+            "titles and the theme_connection lines. Before translating any "
+            "of them, read the whole story and decide for each image whether "
+            "someone writing about this subject in the target language would "
+            "use that picture themselves. Where they would, use the word "
+            "they reach for. Where they would not, drop the picture and say "
+            "what it meant, in the terms the subject is discussed in. That is "
+            "the usual answer for an image that works only in English, and "
+            "the safe one: naming the meaning always reads, while an English "
+            "picture rendered word for word and repeated in every passage "
+            "leaves the whole story meaningless. The image is not settled by "
+            "the passage it first appears in; the title has the same claim on "
+            "the decision as the shortest headline, and both follow it. "
+            "Whatever you decide, hold to it everywhere the image appears, so "
+            "that the reader meets one story and not several renderings of "
+            "the same picture.\n"
             "13b. The title is part of the same decision — translate what it "
             "claims about the story, never the wordplay that makes the claim "
             "in English."

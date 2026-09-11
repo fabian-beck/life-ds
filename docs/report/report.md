@@ -88,7 +88,7 @@ The [[meta-pipeline|meta story generation]][[figure:pipeline-meta]] concerns a t
 
 *Composition*. [[step:m_p8|The composition call]] assembles the story based on the previously generated materials. In one call it revises and connects the descriptions into a coherent and consistent story and decides the order of the sections and the final grouping of the circles. [[step:m_style|A style call]] derives from its framing a color palette, background pattern,  fonts, and ornamental elements.
 
-*Localization*. Each subject's name is taken from their own translated registry entry, so that a meta story calls a person what their own story calls them. [[step:m_images|A glossary call]] settles once how the images the story argues in read in the target language, and says plainly what an image meant where the language does not use the picture. [[step:m_translate|The translation]] follows the same contract as a person's data and copies event titles verbatim from the translated person data, so that chapter and slide never disagree.
+*Localization*. Each subject's name is taken from their own translated registry entry, so that a meta story calls a person what their own story calls them. [[step:m_translate|The translation]] follows the same contract as a person's data and copies event titles verbatim from the translated person data, so that chapter and slide never disagree. Its prompt asks the translator to read the whole story before rendering the images its theme rides on, to keep a picture only where the target language uses it and otherwise to say plainly what it meant, and to hold to that decision in every passage, the title included.
 
 ### AI models and prompting
 

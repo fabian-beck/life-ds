@@ -305,10 +305,11 @@ GROUPS: List[Group] = [
     Group(
         "meta_localization",
         "Localization",
-        ["m_images", "m_translate"],
+        ["m_name_evidence", "m_translate"],
         note=(
-            "Settle how the story's recurring images read in the target "
-            "language, then translate every passage against that decision."
+            "Read what each person's own translation calls them, then translate "
+            "every passage in one call that decides, for the whole story, how "
+            "the images its theme rides on read in the target language."
         ),
     ),
 ]
@@ -1137,27 +1138,23 @@ STEPS: List[Step] = [
         skip_flag="--skip-style",
     ),
     Step(
-        "m_images",
-        "Settle recurring images",
+        "m_name_evidence",
+        "Collect name evidence",
         SHARED,
-        AI,
+        EXTERNAL,
         "meta_story_translation.py",
-        "build_image_glossary",
+        "build_meta_story_reference",
+        byline="Registries and Wikipedia links",
         summary=(
-            "Decides once, before any prose is written, how the metaphors the "
-            "story argues in read in the target language — and whether the "
-            "language has them at all. Left to the translation call the "
-            "decision is never made: it meets the image in the title, renders "
-            "it word for word, and then carries that rendering faithfully "
-            "through every passage, so an architecture story about 'the box' "
-            "arrived in German as 'Kasten', a crate. Same reason as the name "
-            "glossary — what has to read the same in every passage is settled "
-            "once rather than re-derived per field."
+            "A meta story has no single subject, and its people already have "
+            "translations of their own: the interface matches a name in this "
+            "prose against the name each person's story shows, so the "
+            "strongest evidence is the corpus's own, whatever each person's "
+            "translated registry entry settled on. Only the map's place labels "
+            "have no such record and are asked of Wikipedia's language links."
         ),
-        depends_on=[Dep("m_p8", "the composed story's text, as the images to judge")],
-        prompts=["build_image_glossary", "format_image_glossary_for_prompt"],
-        inputs=["meta_story"],
-        skip_flag="--skip-translate",
+        depends_on=[Dep("m_p8", "every name the composed story carries")],
+        inputs=["meta_story", "person_de"],
     ),
     Step(
         "m_translate",
@@ -1170,9 +1167,16 @@ STEPS: List[Step] = [
             "Same extract–translate–merge contract as person data. Event titles "
             "are copied verbatim from the translated person data so chapters and "
             "story slides never disagree, and the names in its prose are taken "
-            "from the same place: what each person's own translation settled on."
+            "from the same place: what each person's own translation settled on. "
+            "The metaphors the story argues in are decided inside the same call: "
+            "the prompt asks the translator to read the whole story first, judge "
+            "for each image whether the target language uses the picture, and "
+            "otherwise say what it meant — the title included — and to hold to "
+            "that one decision everywhere the image appears."
         ),
-        depends_on=[Dep("m_images", "the settled wording for each recurring image")],
+        depends_on=[
+            Dep("m_name_evidence", "what the target language writes for each name"),
+        ],
         inputs=["meta_story", "person_de"],
         outputs=["meta_de"],
         skip_flag="--skip-translate",

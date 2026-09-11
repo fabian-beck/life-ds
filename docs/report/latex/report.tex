@@ -228,7 +228,7 @@
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/}{\textbf{Leah Mühlöder}}\\{\sffamily\scriptsize\color{muted}University of Bamberg}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0009-0000-3510-1686}{0009-0000-3510-1686}}\end{minipage}\hfill%
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://services.informatik.hs-mannheim.de/~nagel/}{\textbf{Till Nagel}}\\{\sffamily\scriptsize\color{muted}Mannheim University of Applied Sciences}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0000-0001-5400-091X}{0000-0001-5400-091X}}\end{minipage}\hfill%
 \par
-\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 11, 2026  \textperiodcentered{}  commit 85220f4\par}
+\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 11, 2026  \textperiodcentered{}  commit ddd742b\par}
 \vspace{14pt}{\color{rulestrong}\hrule}\vspace{8pt}
 \eyebrow{Abstract}\par\vspace{4pt}
 Life Data Stories transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides in which a life is presented as a multi-faceted representation that combines narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous document in which the similar visual encodings are read by scrolling. The system separates two concerns. First, generation is performed offline by staged pipelines that combine intelligent language-model inference with deterministic transformation. Second, the presentation is rendered deterministically by an interactive web application. This technical report documents the implemented solution and provides a basic scientific contextualization.
@@ -327,7 +327,7 @@ The meta story generation (Figure~\ref{fig:pipeline-meta}) concerns a theme that
 
 \emph{Composition}. \stepref{kindai}{The composition call} assembles the story based on the previously generated materials. In one call it revises and connects the descriptions into a coherent and consistent story and decides the order of the sections and the final grouping of the circles. \stepref{kindai}{A style call} derives from its framing a color palette, background pattern, fonts, and ornamental elements.
 
-\emph{Localization}. Each subject's name is taken from their own translated registry entry, so that a meta story calls a person what their own story calls them. \stepref{kindai}{A glossary call} settles once how the images the story argues in read in the target language, and says plainly what an image meant where the language does not use the picture. \stepref{kindai}{The translation} follows the same contract as a person's data and copies event titles verbatim from the translated person data, so that chapter and slide never disagree.
+\emph{Localization}. Each subject's name is taken from their own translated registry entry, so that a meta story calls a person what their own story calls them. \stepref{kindai}{The translation} follows the same contract as a person's data and copies event titles verbatim from the translated person data, so that chapter and slide never disagree. Its prompt asks the translator to read the whole story before rendering the images its theme rides on, to keep a picture only where the target language uses it and otherwise to say plainly what it meant, and to hold to that decision in every passage, the title included.
 
 \subsection{AI models and prompting}\label{sec:ai-models-and-prompting}
 
@@ -497,9 +497,9 @@ A.34 & \textbf{Compose story} & Rewrites the assembled material as one story, fr
 \tabrowrule
 A.35 & \textbf{Design story style} & Derives the article's dark visual identity from its theme and opening. It carries the theme into the page pattern, typography, box geometry, and repeated marks so the interface frames the biographies as one story. & the story's framing and opening & the story's visual identity & \code{gpt{-}\allowbreak{}5.6{-}\allowbreak{}luna} & \code{low} & 1 \\
 \tabrowrule
-A.36 & \textbf{Settle recurring images} & Identifies recurring metaphors in the composed story and settles their target-language wording before translation begins. It keeps a metaphor only when the target language uses it; otherwise it replaces the image with its plain meaning so the same choice can guide every passage. & the composed story and meta story & settled renderings for recurring images & \code{gpt{-}\allowbreak{}5.6{-}\allowbreak{}terra} & \code{low} & 1 \\
+A.36 & \textbf{Collect name evidence} & Matches each person named in the meta story to the name used in that person's localized story. Looks up map labels in language links only when the corpus has no matching name, preserving the names already established across the collection. & the meta story and localized person data & name evidence for people and places &  &  & 1 \\
 \tabrowrule
-A.37 & \textbf{Translate meta story} & Translates the meta story for the target language and preserves its structure for the interface. It reuses settled image wording and localized person names, so event titles and prose match the people stories. Local language evidence guides names for people, places, and institutions. & the meta story and localized person data & a localized meta story & \code{gpt{-}\allowbreak{}5.6{-}\allowbreak{}terra} &  & 1 \\
+A.37 & \textbf{Translate meta story} & Translates the story's framing text while preserving the names and event titles already settled in localized person data. It judges each recurring image across the whole story, replacing a metaphor when the target language does not use it and keeping that choice consistent. & the meta story and localized person data & a localized meta story & \code{gpt{-}\allowbreak{}5.6{-}\allowbreak{}terra} &  & 1 \\
 \tabbottomrule
 \end{steptable}
 

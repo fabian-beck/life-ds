@@ -9,12 +9,12 @@
         "source": "gpt-5.6-terra"
       }
     },
-    "m_images": {
-      "fingerprint": "66b253490d2e3540",
+    "m_name_evidence": {
+      "fingerprint": "6b9d72900374ab38",
       "summary": {
-        "description": "Identifies recurring metaphors in the composed story and settles their target-language wording before translation begins. It keeps a metaphor only when the target language uses it; otherwise it replaces the image with its plain meaning so the same choice can guide every passage.",
-        "input": "the composed story and meta story",
-        "output": "settled renderings for recurring images",
+        "description": "Matches each person named in the meta story to the name used in that person’s localized story. Looks up map labels in language links only when the corpus has no matching name, preserving the names already established across the collection.",
+        "input": "the meta story and localized person data",
+        "output": "name evidence for people and places",
         "source": "gpt-5.6-terra"
       }
     },
@@ -127,9 +127,9 @@
       }
     },
     "m_translate": {
-      "fingerprint": "a3284d1063a3720a",
+      "fingerprint": "7a31d93a9841df30",
       "summary": {
-        "description": "Translates the meta story for the target language and preserves its structure for the interface. It reuses settled image wording and localized person names, so event titles and prose match the people stories. Local language evidence guides names for people, places, and institutions.",
+        "description": "Translates the story’s framing text while preserving the names and event titles already settled in localized person data. It judges each recurring image across the whole story, replacing a metaphor when the target language does not use it and keeping that choice consistent.",
         "input": "the meta story and localized person data",
         "output": "a localized meta story",
         "source": "gpt-5.6-terra"
