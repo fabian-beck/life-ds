@@ -31,7 +31,7 @@ from pydantic import BaseModel, Field
 from . import spec
 from .introspect import Codebase
 
-CACHE_VERSION = 4
+CACHE_VERSION = 5
 MAX_SOURCE_CHARS = 9000
 MAX_PROMPT_CHARS = 6000
 
@@ -64,7 +64,12 @@ SYSTEM_PROMPT = (
     "Never name a model, an API version or a vendor product: the record "
     "printed beside your text carries the model this step resolves, measured "
     "from the code, and a name repeated from a comment is how that record goes "
-    "stale. Never address the reader, never use second person, and do not "
+    "stale. The pipeline writes data; the application that shows it is "
+    "described elsewhere in the report. Say what a step writes into the "
+    "story, a title and a text per circle or a stop the map keeps, never how "
+    "that is shown: no cards, screens, scrolling, tapping, clients, or 'the "
+    "interface', except in a name the step carries, such as the interface "
+    "style. Never address the reader, never use second person, and do not "
     "restate the step's name as a sentence. Open with the verb: the entry is "
     "printed under the step's name, so 'This step gathers the article' spends "
     "the opening on a subject the heading already gave, where 'Gathers the "

@@ -197,8 +197,9 @@ BODY_SECTIONS = ("timeline", "network", "map")
 # then graph, then map — which is one story shape imposed on every story; a
 # cast whose lives are held together by a place or by a circle is introduced
 # by whichever component carries that, and the sequence is the composer's to
-# set. The conditions below mirror the UI's render conditions exactly, so a
-# section the reader never sees is never named in the order.
+# set. The conditions below name a section only when the story carries it,
+# the same test the reading side applies, so a section the reader never
+# meets is never named in the order.
 # ============================================================================
 
 

@@ -189,6 +189,7 @@ An exploratory user test is the exception. Its report is its deliverable, and it
 - Do not edit generated output when the source data or generator is the proper place for a change.
 - Do not write legacy-data repair code. Generated data is never edited by hand, so any dataset can be regenerated from scratch by the current pipeline. When a schema or generator changes, fix the generator, flag the datasets it leaves behind in `data/outdated.md` with the reason, and regenerate them — never write a backfill, migration, or fix-up script; deterministic validators that only report are fine.
 - Preserve source attribution for biographical data and images.
+- Describe a generation step by the data it writes, never by the interface that shows it: a narration is a title and a text per circle or stop, not a card, and the report, the pipeline spec, and docstrings name interface elements only when describing the interface itself.
 
 Consult the relevant reference document before changing schemas, translation generation, maps, networks, timelines, or meta-story composition.
 

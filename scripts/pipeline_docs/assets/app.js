@@ -3754,7 +3754,6 @@
       });
       mount.appendChild(list);
     },
-
   };
 
   /* ----------------------------------------------------- print appendix */
@@ -4182,44 +4181,45 @@
 
   /* ------------------------------------------------- margin figures */
 
-  /* A figure standing in the margin is placed beside the text it was declared
-     in and stays in view while that text scrolls past, instead of leaving with
-     the paragraph it was placed beside. The figure is pinned a little under
-     the viewport's edge from the moment its place in the document scrolls up
-     to that line, and it stays until the next margin figure takes its place:
-     that one rises from its own place in the text, slides over the pinned one,
-     and the pinned one fades under it. A wide block or a section heading ends
-     a figure's stretch the same way, by pushing it off, and where there is no
-     further figure the stretch runs to the end of the report.
+  /* A figure standing in the margin keeps beside the text it was declared in
+     and stays in view while that text is read, instead of arriving with the
+     paragraph and leaving with it.
+
+     The figure runs a little ahead of its paragraph: it may stand as much as
+     its own height above its place in the document, so that it is in view,
+     as completely as the viewport allows, from the moment the paragraph is.
+     A figure that fits the viewport is held whole: by its bottom edge while
+     its place is still low in the viewport, beside its place as that rises,
+     and by its top edge once its place has passed the pin line. A figure
+     taller than the viewport cannot be held whole, so it is held by its top
+     edge while its place is below the pin line, scrolls with the text as its
+     place passes through, which brings its bottom into view, and is held by
+     its bottom edge from there on. It stays until the next margin figure takes
+     its place, until a wide block or a section heading pushes it off, or,
+     where there is nothing further, to the end of the report.
 
      The stylesheet does the placing and the holding—the widget is an anchor
      without height in the flow, the band is positioned from it into the
-     margin, and the body inside the band is `position: sticky`, which the
-     band's height bounds—and this code only measures: where each figure's
-     place is, how far its band reaches, how far under the edge it pins, and,
-     on scroll, how far the next figure has risen over it. Two things the
-     figure no longer reserves in the flow are made up for here: a wide block
-     that would start inside a figure's own height is moved below it, and the
-     report is padded by however far the last figure hangs past its end.
-
-     A figure taller than the viewport cannot be held whole, so it is held by
-     whichever edge the reader is moving toward: reading down, it scrolls with
-     the text until its bottom edge is in view and stops there; reading up, it
-     scrolls with the text until its top edge is in view and stops there. The
-     turn is made by giving the body a spacer that leaves it exactly where it
-     is, so sticky can carry it on from there in the other direction.
+     margin, starting as far above the anchor as the figure may run ahead, and
+     the body inside the band is `position: sticky` with the same inset at top
+     and bottom, which the band's height bounds—and this code only measures:
+     where each figure's place is, how far it may run ahead, how far its band
+     reaches, how far under the edge it pins, and, on scroll, how far the next
+     figure has taken over. Two things the figure no longer reserves in the
+     flow are made up for here: a wide block that would start inside a
+     figure's own height is moved below it, and the report is padded by
+     however far the last figure hangs past its end.
 
      Nothing here applies where the figure is not in the margin: the band is
      sized only while it is positioned there, and the print rules release it. */
   const PIN_OFFSET = 20; // CSS pixels between the viewport's edge and a pinned figure
-  const FADE_OVERLAP = 200; // over this much of the next figure's rise the covered one fades
+  const FADE_OVERLAP = 200; // of scrolling, over which one figure gives way to the next
   const READING_LINE = 0.28; // of the viewport: where the text being read is, as the rail assumes
-  const FIGURE_GAP = 32; // kept between a figure and a wide block moved below it
+  const FIGURE_GAP = 32; // kept between a figure and a wide block or heading
 
   const marginState = {
     bands: [], // one per margin figure, in document order
     active: false, // whether the figures currently stand in the margin
-    direction: 1, // the way the reader last scrolled: 1 down, -1 up
   };
 
   function marginBandOf(node) {
@@ -4231,7 +4231,7 @@
   }
 
   /* How much of a figure is showing, as a factor: one where nothing covers
-     it, zero once the next figure has slid over it. */
+     it, zero once the next figure has taken its place. */
   function marginFadeOf(node) {
     const band = marginBandOf(node);
     return band && marginState.active ? band.fade : 1;
@@ -4271,11 +4271,11 @@
         body: body,
         top: 0, // the figure's place in the document, in page pixels
         height: 0, // the figure's own height
-        reach: 0, // the height of the stretch it serves
-        tall: false, // taller than the viewport, so held by one edge at a time
+        text: 0, // the height of the block declared under it: its paragraph
+        lead: 0, // how far above its place the figure may stand
+        reach: 0, // the height of the stretch it serves, from its place on
         end: 0, // where its band ends, in page pixels
-        next: null, // the band that slides over this one, if any
-        close: false, // whether that one overlaps this one at rest
+        next: null, // the band that takes this one's place, if any
         fade: 1,
       };
     });
@@ -4289,59 +4289,31 @@
       band.body.classList.toggle("is-covered", value <= 0);
     }
 
-    /* What ends a band, in document order: a wide block and the appendix,
+    /* What bounds a band, in document order: a wide block and the appendix,
        which claim the whole width, and a section heading, which starts a
-       stretch of text the figure was not placed beside. */
+       stretch of text the figure was not placed beside. A band ends at the
+       next of these, and starts no higher than the previous one's bottom. */
     function stops() {
       const scrollY = window.scrollY;
       const nodes = report.querySelectorAll(
         ":scope > .widget-wide, :scope > .appendix, :scope > h2.sec"
       );
       return Array.prototype.map.call(nodes, (node) => {
+        const box = node.getBoundingClientRect();
         return {
           node: node,
-          at: node.getBoundingClientRect().top + scrollY,
+          at: box.top + scrollY,
+          bottom: box.bottom + scrollY,
           wide: !node.classList.contains("sec"),
         };
-      });
-    }
-
-    /* Turn the tall figures to face the reader's direction. The spacer puts
-       each body's resting place exactly where the body is now, so nothing
-       moves at the turn; from there sticky lets it travel with the text until
-       the edge for this direction is in view. A figure that fits is held whole
-       and never turns. */
-    function retarget() {
-      const rising = marginState.direction < 0;
-      const measured = bands.map((band) => {
-        if (!band.tall) return 0;
-        return (
-          band.body.getBoundingClientRect().top -
-          band.band.getBoundingClientRect().top
-        );
-      });
-      bands.forEach((band, index) => {
-        if (!band.tall) {
-          band.band.style.removeProperty("--spacer");
-          band.body.classList.remove("is-rising");
-          return;
-        }
-        const spacer = Math.max(
-          0,
-          Math.min(band.reach - band.height, measured[index])
-        );
-        band.band.style.setProperty("--spacer", spacer + "px");
-        band.body.classList.toggle("is-rising", rising);
       });
     }
 
     function release() {
       bands.forEach((band) => {
         band.band.style.removeProperty("--band-height");
-        band.band.style.removeProperty("--spacer");
-        band.body.style.removeProperty("--pin-top");
-        band.body.style.removeProperty("--pin-bottom");
-        band.body.classList.remove("is-rising");
+        band.band.style.removeProperty("--lead");
+        band.body.style.removeProperty("--pin");
         setFade(band, 1);
       });
       stops().forEach((stop) => {
@@ -4359,6 +4331,8 @@
       bands.forEach((band) => {
         band.top = band.widget.getBoundingClientRect().top + scrollY;
         band.height = band.body.offsetHeight;
+        const under = band.widget.nextElementSibling;
+        band.text = under ? under.offsetHeight : 0;
       });
       const found = stops();
       let moved = false;
@@ -4386,54 +4360,58 @@
       if (!found) found = stops();
       const scrollY = window.scrollY;
       const viewport = window.innerHeight;
-      const reportEnd = report.getBoundingClientRect().bottom + scrollY;
+      const reportBox = report.getBoundingClientRect();
+      const reportStart = reportBox.top + scrollY;
+      const reportEnd = reportBox.bottom + scrollY;
       bands.forEach((band, index) => {
         const next = bands[index + 1] || null;
-        band.tall = band.height > viewport - 2 * PIN_OFFSET;
-        // The next figure pins when its place reaches the pin line, where
-        // this figure's top is held; this figure's band lasts until then,
-        // holding it pinned underneath while the next one rises over it.
+        // The figure may run ahead of its place by its own height, but not
+        // over whatever stands above it in the margin.
+        let above = reportStart;
+        found.forEach((stop) => {
+          if (stop.at < band.top && stop.bottom > above) above = stop.bottom;
+        });
+        band.lead = Math.max(
+          0,
+          Math.min(band.height, band.top - above - FIGURE_GAP)
+        );
+        // The band lasts until the next figure has taken this one's place,
+        // which is complete by the time that one's own place has passed the
+        // pin line, or until something else claims the margin.
         let end = next ? next.top + band.height : reportEnd;
         found.forEach((stop) => {
           if (stop.at > band.top && stop.at < end) end = stop.at;
         });
         band.reach = Math.max(band.height, end - band.top);
         band.end = band.top + band.reach;
-        // Whatever ends the band, a next figure that rises before it does
-        // is what covers this one. One declared closer than this figure's
-        // own height overlaps it at rest, and the two trade places instead.
+        // Whatever ends the band, a next figure that arrives before it does
+        // is what takes this one's place.
         band.next = next && next.top < band.end ? next : null;
-        band.close =
-          band.next !== null && next.top < band.top + band.height + FIGURE_GAP;
-        const bottomHeld = viewport - PIN_OFFSET - band.height;
-        band.band.style.setProperty("--band-height", band.reach + "px");
-        band.body.style.setProperty(
-          "--pin-top",
-          Math.min(PIN_OFFSET, bottomHeld) + "px"
+        // One inset for both edges: with a figure that fits, it keeps the
+        // whole figure inside the viewport; with one that does not, it is
+        // negative by the excess, so the top edge is held under the
+        // viewport's top and the bottom edge under its bottom.
+        const pin = Math.min(PIN_OFFSET, viewport - PIN_OFFSET - band.height);
+        band.band.style.setProperty("--lead", band.lead + "px");
+        band.band.style.setProperty(
+          "--band-height",
+          band.lead + band.reach + "px"
         );
-        band.body.style.setProperty("--pin-bottom", bottomHeld + "px");
+        band.body.style.setProperty("--pin", pin + "px");
       });
       const last = bands[bands.length - 1];
       const tail = last.top + last.height - reportEnd;
       if (tail > 0) report.style.setProperty("--tail", tail + "px");
-      retarget();
       fade();
     }
 
-    /* Each figure shows as far as its two neighbors allow.
-
-       A figure declared far enough below the one before it stands clear of
-       it at rest, rises over it as the reader scrolls, and is always shown;
-       the one it covers fades over the first stretch of the overlap the reader
-       can see—what is covered below the viewport's edge covers nothing yet.
-
-       A figure declared closer than that overlaps the one before it from the
-       start, and showing both would show only the later. So it stays hidden
-       while the reader is at the earlier figure's text and the two trade
-       places as its own place in the document reaches the line the reader is
-       reading at: the earlier fades out as that place approaches the line and
-       the later fades in, both by the same measure. The exchange is complete
-       at the reading line, and so before the later one pins. */
+    /* Each figure shows as far as its neighbors allow. The next figure takes
+       over once the reader is done with this one's paragraph—its bottom has
+       passed the reading line—and then only as far as it actually covers this
+       one on screen: a figure declared far below stands clear at first and
+       covers this one as it rises, while one declared close by stands in the
+       same place from the start and the two simply trade places. Until the
+       paragraph is done the next figure is hidden, wherever it stands. */
     function fade() {
       if (!marginState.active) return;
       const viewport = window.innerHeight;
@@ -4446,33 +4424,25 @@
       });
       bands.forEach((band, index) => {
         if (!band.next) return;
-        let mine;
-        let theirs;
-        if (band.close) {
-          const place = band.next.widget.getBoundingClientRect().top;
-          theirs = Math.max(
-            0,
-            Math.min(1, (line + FADE_OVERLAP / 2 - place) / FADE_OVERLAP)
-          );
-          mine = 1 - theirs;
-        } else {
-          const bottom = Math.min(
-            band.body.getBoundingClientRect().bottom,
-            viewport
-          );
-          const covered = bottom - band.next.body.getBoundingClientRect().top;
-          mine = Math.max(0, Math.min(1, 1 - covered / FADE_OVERLAP));
-          theirs = 1;
-        }
-        shown[index] = Math.min(shown[index], mine);
-        shown[index + 1] = Math.min(shown[index + 1], theirs);
+        const done = band.widget.getBoundingClientRect().top + band.text;
+        const take = Math.max(
+          0,
+          Math.min(1, (line + FADE_OVERLAP / 2 - done) / FADE_OVERLAP)
+        );
+        const bottom = Math.min(
+          band.body.getBoundingClientRect().bottom,
+          viewport
+        );
+        const covered = bottom - band.next.body.getBoundingClientRect().top;
+        const cover = Math.max(0, Math.min(1, covered / FADE_OVERLAP));
+        shown[index] = Math.min(shown[index], 1 - Math.min(take, cover));
+        shown[index + 1] = Math.min(shown[index + 1], take);
       });
       bands.forEach((band, index) => {
         setFade(band, shown[index]);
       });
     }
 
-    let lastY = window.scrollY;
     let scrolling = 0;
     window.addEventListener(
       "scroll",
@@ -4480,13 +4450,6 @@
         if (!scrolling) {
           scrolling = window.requestAnimationFrame(() => {
             scrolling = 0;
-            const y = window.scrollY;
-            const direction = y > lastY ? 1 : y < lastY ? -1 : 0;
-            lastY = y;
-            if (direction && direction !== marginState.direction) {
-              marginState.direction = direction;
-              if (marginState.active) retarget();
-            }
             fade();
           });
         }

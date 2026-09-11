@@ -71,7 +71,7 @@ LANES: Dict[str, Dict[str, str]] = {
         "label": "Personal story",
         "entry": "scripts/generate_person.py",
         "blurb": (
-            "One biography, from a Wikipedia article to a scroll-snapped story: "
+            "One biography, from a Wikipedia article to a complete story dataset: "
             "life events, ego network, interface style, portrait, chapter art, "
             "review, translation."
         ),
@@ -281,7 +281,7 @@ GROUPS: List[Group] = [
         ["m_p5", "m_p5b", "m_clusters", "m_p6"],
         note=(
             "The network branch end to end: merge the ego networks, review the "
-            "graph, detect the circles, write their cards."
+            "graph, detect the circles, narrate them."
         ),
     ),
     Group(
@@ -305,10 +305,11 @@ GROUPS: List[Group] = [
     Group(
         "meta_localization",
         "Localization",
-        ["m_images", "m_translate"],
+        ["m_name_evidence", "m_translate"],
         note=(
-            "Settle how the story's recurring images read in the target "
-            "language, then translate every passage against that decision."
+            "Read what each person's own translation calls them, then translate "
+            "every passage in one call that decides, for the whole story, how "
+            "the images its theme rides on read in the target language."
         ),
     ),
 ]
@@ -352,7 +353,7 @@ ARTIFACTS: List[Artifact] = [
         "Interface style",
         "data/person_styles.json",
         "registry",
-        "Per-person colors and fonts for the story UI.",
+        "Per-person colors and fonts for the story.",
         concept="identity",
     ),
     Artifact(
@@ -360,7 +361,7 @@ ARTIFACTS: List[Artifact] = [
         "Person registry",
         "data/persons.json",
         "registry",
-        "Landing-page index of every person.",
+        "Registry of every person.",
         concept="profile",
     ),
     Artifact(
@@ -393,7 +394,7 @@ ARTIFACTS: List[Artifact] = [
         "data/meta_stories/{id}.json, data/meta_stories.json",
         "dataset",
         "Chapters, social network, geo map and composed prose for one theme, "
-        "and the landing-page index entry written with it.",
+        "and the registry entry written with it.",
         concept="theme",
     ),
     Artifact(
@@ -636,7 +637,7 @@ STEPS: List[Step] = [
             "that produces the life events: the document is then written, with "
             "the chapters and the conclusion the proposal wrote, the researched "
             "events with their images and coordinates, and the verified "
-            "portrait, and the person is folded into the landing-page index "
+            "portrait, and the person is folded into the person registry "
             "with the portrait reference the matching picked. Every later step "
             "reads the written document rather than the payload that produced "
             "it, which is what makes a run resumable and a single concern "
@@ -712,7 +713,7 @@ STEPS: List[Step] = [
             "Style-transfers a licensed reference portrait toward a shared master "
             "style so every person in the collection looks like one illustration "
             "set. The reference is the licensed image the matching picked, read "
-            "from the person's entry in the landing-page index, and the entry "
+            "from the person's entry in the person registry, and the entry "
             "is updated with the finished portrait."
         ),
         depends_on=[Dep("p_style", "primary and secondary color")],
@@ -813,8 +814,9 @@ STEPS: List[Step] = [
         "build_name_glossary",
         summary=(
             "Decides once per person how every name is rendered in the target "
-            "language, then applies it everywhere—the UI cross-references match "
-            "on exact names, so drift between documents would break them."
+            "language, then applies it everywhere—cross-references between documents "
+            "are matched on exact names, so drift between them would break the "
+            "references."
         ),
         depends_on=[
             Dep("p_name_evidence", "what the target language writes for each name"),
@@ -858,7 +860,8 @@ STEPS: List[Step] = [
         "write_report",
         summary=(
             "Computes the story's own deep-event selection — roughly one event "
-            "per chapter, ported from the interface and kept in sync with it — "
+            "per chapter, by a ranking ported from the reading application and kept "
+            "in sync with it — "
             "and writes a 350-550 word background report exactly for the "
             "events the story will offer one on; a report for any other event "
             "could never be reached. It runs after review, so the report is "
@@ -909,8 +912,8 @@ STEPS: List[Step] = [
             "one illustration printed twice. Three is a ceiling, not a target, "
             "and keeping none is a normal outcome. It runs in the same pass as "
             "the report, once the event's own picture is already in the "
-            "dataset and can be excluded: an illustration the reader scrolled "
-            "past a screen ago illustrates nothing."
+            "dataset and can be excluded: the report opens beside that picture, and "
+            "repeating it would illustrate nothing."
         ),
         depends_on=[
             Dep("p_backgrounds", "the report and the searches it asked for"),
@@ -1027,8 +1030,8 @@ STEPS: List[Step] = [
         summary=(
             "Community detection over the reviewed graph produces the story's "
             "circles. Called from the narration step, which stores each "
-            "circle's members with its text; the client reads the stored "
-            "circles and never repeats the detection."
+            "circle's members with its text, so the story carries its circles as "
+            "data and the detection runs once."
         ),
         depends_on=[Dep("m_p5b", "the reviewed graph")],
     ),
@@ -1040,11 +1043,11 @@ STEPS: List[Step] = [
         "generate_meta_story.py",
         "phase6_network_narration",
         summary=(
-            "Writes the card text for each circle. The composition rewrites "
+            "Writes a title and a short text for each circle. The composition rewrites "
             "these later; keeping this step means the story still reads when "
             "composition is skipped."
         ),
-        depends_on=[Dep("m_clusters", "one circle per card")],
+        depends_on=[Dep("m_clusters", "the circles to narrate")],
         prompts=["phase6_network_narration"],
     ),
     Step(
@@ -1105,7 +1108,7 @@ STEPS: List[Step] = [
             "rewrites every text in one voice: the prose between components, the "
             "captions on them, the circle organization and the map stops. It may "
             "also drop people that do not earn their place. The composed story "
-            "is then written, and the landing-page registry updated with it; "
+            "is then written, and the meta story registry updated with it; "
             "the style and the translation read the written document."
         ),
         depends_on=[
@@ -1137,27 +1140,23 @@ STEPS: List[Step] = [
         skip_flag="--skip-style",
     ),
     Step(
-        "m_images",
-        "Settle recurring images",
+        "m_name_evidence",
+        "Collect name evidence",
         SHARED,
-        AI,
+        EXTERNAL,
         "meta_story_translation.py",
-        "build_image_glossary",
+        "build_meta_story_reference",
+        byline="Registries and Wikipedia links",
         summary=(
-            "Decides once, before any prose is written, how the metaphors the "
-            "story argues in read in the target language — and whether the "
-            "language has them at all. Left to the translation call the "
-            "decision is never made: it meets the image in the title, renders "
-            "it word for word, and then carries that rendering faithfully "
-            "through every passage, so an architecture story about 'the box' "
-            "arrived in German as 'Kasten', a crate. Same reason as the name "
-            "glossary — what has to read the same in every passage is settled "
-            "once rather than re-derived per field."
+            "A meta story has no single subject, and its people already have "
+            "translations of their own: the interface matches a name in this "
+            "prose against the name each person's story shows, so the "
+            "strongest evidence is the corpus's own, whatever each person's "
+            "translated registry entry settled on. Only the map's place labels "
+            "have no such record and are asked of Wikipedia's language links."
         ),
-        depends_on=[Dep("m_p8", "the composed story's text, as the images to judge")],
-        prompts=["build_image_glossary", "format_image_glossary_for_prompt"],
-        inputs=["meta_story"],
-        skip_flag="--skip-translate",
+        depends_on=[Dep("m_p8", "every name the composed story carries")],
+        inputs=["meta_story", "person_de"],
     ),
     Step(
         "m_translate",
@@ -1170,9 +1169,16 @@ STEPS: List[Step] = [
             "Same extract–translate–merge contract as person data. Event titles "
             "are copied verbatim from the translated person data so chapters and "
             "story slides never disagree, and the names in its prose are taken "
-            "from the same place: what each person's own translation settled on."
+            "from the same place: what each person's own translation settled on. "
+            "The metaphors the story argues in are decided inside the same call: "
+            "the prompt asks the translator to read the whole story first, judge "
+            "for each image whether the target language uses the picture, and "
+            "otherwise say what it meant — the title included — and to hold to "
+            "that one decision everywhere the image appears."
         ),
-        depends_on=[Dep("m_images", "the settled wording for each recurring image")],
+        depends_on=[
+            Dep("m_name_evidence", "what the target language writes for each name"),
+        ],
         inputs=["meta_story", "person_de"],
         outputs=["meta_de"],
         skip_flag="--skip-translate",
