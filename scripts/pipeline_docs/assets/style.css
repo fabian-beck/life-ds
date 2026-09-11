@@ -969,7 +969,7 @@ body.has-note-pop .notes {
 
   .report > .widget-margin > .margin-band {
     position: absolute;
-    top: 0;
+    top: calc(0px - var(--lead, 0px));
     left: calc(var(--measure) + var(--figure-gutter));
     width: min(
       var(--fig-width, 100%),
@@ -983,15 +983,21 @@ body.has-note-pop .notes {
     margin-top: calc(32px + var(--clear, 0px));
   }
 
-  /* A margin figure stays in view while the text it belongs to scrolls past.
+  /* A margin figure stays in view while the text it belongs to is read.
 
      The band is the stretch of the document the figure serves, and the figure
-     itself is a sticky body inside it, pinned `--pin-top` under the viewport's
-     edge. Sticky moves only within its parent, so the band is given the height
-     of the whole stretch—measured by `bindMarginFigures` in `app.js` as far as
-     the point where the next margin figure pins, or where a wide block or a
-     section heading claims the room. Where the sticky body reaches the band's
-     end it scrolls away with the text again, pushed by whatever ends the band.
+     itself is a sticky body inside it with one inset, `--pin`, for both
+     edges: a figure that fits is held whole inside the viewport, and one that
+     does not gets a negative inset by the excess, so its top is held under
+     the viewport's top and its bottom under the viewport's bottom, and its
+     place in the text decides which. Sticky moves only within its parent, so
+     the band is given the height of the whole stretch—measured by
+     `bindMarginFigures` in `app.js`—and starts `--lead` above the figure's
+     place, with a spacer of the same height keeping the figure's resting
+     position at its place: that is how far the figure may run ahead of its
+     paragraph, so that it is in view from the moment the paragraph is. Where
+     the sticky body reaches the band's end it scrolls away with the text
+     again, pushed by whatever ends the band.
 
      A later figure paints over an earlier one—positioned boxes stack in
      document order—on a ground of its own, so the covered one does not show
@@ -1000,7 +1006,8 @@ body.has-note-pop .notes {
      neither pointer nor focus. */
   .report > .widget-margin .margin-body {
     position: sticky;
-    top: var(--pin-top, 20px);
+    top: var(--pin, 20px);
+    bottom: var(--pin, 20px);
     background: var(--paper);
     opacity: var(--fade, 1);
   }
@@ -1009,18 +1016,8 @@ body.has-note-pop .notes {
     visibility: hidden;
   }
 
-  /* A figure taller than the viewport is held by one edge at a time: its
-     bottom while the reader scrolls down, its top while the reader scrolls
-     up. `--pin-top` is then negative, so the bottom edge stops under the
-     viewport's; the rising state adds the bottom inset that stops the top
-     edge under the viewport's instead. The spacer is what lets the body turn
-     around in place—see `retarget` in `app.js`. */
-  .report > .widget-margin .margin-body.is-rising {
-    bottom: var(--pin-bottom, 20px);
-  }
-
   .report > .widget-margin .margin-space {
-    height: var(--spacer, 0);
+    height: var(--lead, 0);
   }
 }
 
