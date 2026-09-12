@@ -280,11 +280,11 @@
       }
     },
     "p_portrait": {
-      "fingerprint": "d04d284a9c2040de",
+      "fingerprint": "dbccdcc926318f64",
       "summary": {
-        "description": "Transforms each person’s licensed reference portrait into a shared light-drawing style. It keeps the person’s likeness and period dress while using the story colors and master portrait to make the collection read as one illustration set.",
+        "description": "Transforms each licensed reference portrait into the story’s light-drawing style. It keeps the person’s likeness and period dress while carrying the shared colors into every portrait.",
         "input": "the person registry and interface style",
-        "output": "a portrait linked to the person and events",
+        "output": "a portrait and updated person registry",
         "source": "gpt-5.6-terra"
       }
     },

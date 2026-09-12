@@ -24,7 +24,7 @@ Run scripts with the venv interpreter, e.g. `.venv/Scripts/python.exe scripts/ge
 - `OPENAI_COMPOSER_MODEL` — Phase 8 meta-story composer model (default: `gpt-5.6-sol`)
 - `OPENAI_BULK_MODEL` — small model for the steps whose output is checkable or replaceable (default: `gpt-5.6-luna`)
 - `OPENAI_REASONING_EFFORT` / `OPENAI_BULK_REASONING_EFFORT` / `OPENAI_LOW_REASONING_EFFORT` — reasoning effort levels (`medium` / `low` / `none`)
-- Portrait scripts take `--model` separately (default: `gpt-image-2`)
+- Portrait scripts take `--model` separately (default: `gpt-image-2.5-sunburst`); the chapter illustrations default to `gpt-image-2.5-flare`, since they edit no content reference and the two variants bill at the same token rates
 
 A step runs on `OPENAI_BULK_MODEL` when a wrong answer cannot quietly become part of the corpus — its output is validated against existing entities afterwards, rewritten by a later step, or backed by a deterministic fallback. That covers related-article selection, the research event research, image search and matching, both style generators, meta-story event curation, circle narration, the map branch, and translation. Everything else keeps `OPENAI_MODEL`: the proposal, the ego network, story planning, historical context, the depth-layer background reports and their illustration critic, both review passes, and the name glossary, whose decisions every other document then matches on by exact name. The report's step note shows the model and effort each call site actually resolves to; it is generated from the source, so consult it rather than this list when they disagree.
 
@@ -265,7 +265,7 @@ This uses OpenAI image generation to transform the existing Wikimedia Commons po
 - `--force`: Regenerate even if portrait already exists
 - `--dry-run`: Test without API calls or file writes
 - `--master-style PATH`: Use custom master style image
-- `--model MODEL`: Specify OpenAI model (default: gpt-image-2)
+- `--model MODEL`: Specify OpenAI model (default: gpt-image-2.5-sunburst)
 
 **Master Style Portrait**: The master style portrait defines the artistic style applied to all generated portraits. Create it once (manually or using AI tools), then all generated portraits will match its style through AI-powered style transfer.
 

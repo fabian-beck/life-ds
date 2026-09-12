@@ -70,7 +70,10 @@ enable_utf8_console()
 CHAPTER_ART_DIR = PUBLIC_DIR / "chapter_art"
 DEFAULT_MASTER_STYLE_PATH = PUBLIC_DIR / "master_style_portrait.png"
 
-DEFAULT_IMAGE_MODEL = "gpt-image-2"
+DEFAULT_IMAGE_MODEL = "gpt-image-2.5-flare"
+"""The faster Images 2.5 variant: the illustration is drawn from a prompt and
+a style reference alone, with no content to stay faithful to, so the editing
+precision the portrait step pays Sunburst's latency for buys nothing here."""
 IMAGE_SIZE = "1024x1024"
 """Square, because the illustration is an emblem above a headline rather than a
 scene: a square crops equally badly nowhere, and the slide is read on a phone."""

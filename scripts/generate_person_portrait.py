@@ -45,6 +45,21 @@ PORTRAITS_DIR = PUBLIC_DIR / "portraits"
 DEFAULT_MASTER_STYLE_PATH = PUBLIC_DIR / "master_style_portrait.png"
 REFERENCE_IMAGE_MAX_DIMENSIONS = (1024, 1536)
 
+DEFAULT_PORTRAIT_MODEL = "gpt-image-2.5-sunburst"
+"""The Images 2.5 variant OpenAI positions for edits that must keep the
+people in a reference image: the step transforms a licensed portrait and
+is judged on whether the person stays recognizable, so the faster Flare
+variant, billed at the same token rates, is the wrong trade here."""
+EDIT_MODELS = (
+    "gpt-image-2.5-sunburst",
+    "gpt-image-2.5-flare",
+    "gpt-image-2",
+    "gpt-image-1.5",
+    "gpt-image-1",
+)
+"""Models that edit from several input images at once. A model outside
+this list falls back to text-only generation and loses the likeness."""
+
 # Style transfer prompt for consistent artistic treatment
 STYLE_TRANSFER_PROMPT = """Apply the artistic style, color treatment, lighting technique, and rendering approach of the first reference image to the second reference image.
 
@@ -697,7 +712,7 @@ def generate_portrait(
     source_license: Optional[str] = None,
     source_creator: Optional[str] = None,
     master_style_path: Path = DEFAULT_MASTER_STYLE_PATH,
-    model: str = "gpt-image-2",
+    model: str = DEFAULT_PORTRAIT_MODEL,
     dry_run: bool = False,
     force: bool = False,
 ) -> Dict[str, Any]:
@@ -710,7 +725,7 @@ def generate_portrait(
                            If None, will load from person's registry entry.
         source_page_url: Optional URL to source page for attribution (e.g., Openverse, Flickr page)
         master_style_path: Path to master style reference image
-        model: OpenAI model to use (default: gpt-image-2)
+        model: OpenAI model to use (default: gpt-image-2.5-sunburst)
         dry_run: If True, skip API calls and file writes
         force: If True, regenerate even if portrait exists
 
@@ -888,7 +903,7 @@ def generate_portrait(
                 print(f"  Reference path: {temp_ref_path}")
 
                 # Models that support image editing with multiple images
-                if model in ["gpt-image-2", "gpt-image-1.5", "gpt-image-1"]:
+                if model in EDIT_MODELS:
                     print(
                         "  Model supports multiple images - using dual-image approach"
                     )
@@ -1221,8 +1236,11 @@ def parse_args(argv: Any) -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        default="gpt-image-2",
-        help="OpenAI model to use (default: gpt-image-2). Models with image editing support: dall-e-2, gpt-image-1, gpt-image-1.5, gpt-image-2",
+        default=DEFAULT_PORTRAIT_MODEL,
+        help=(
+            f"OpenAI model to use (default: {DEFAULT_PORTRAIT_MODEL}). Models with "
+            f"image editing support: dall-e-2, {', '.join(reversed(EDIT_MODELS))}"
+        ),
     )
 
     parser.add_argument(

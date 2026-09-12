@@ -10,6 +10,8 @@ from typing import Any, Dict, List
 
 from generate_person_portrait import (
     DEFAULT_MASTER_STYLE_PATH,
+    DEFAULT_PORTRAIT_MODEL,
+    EDIT_MODELS,
     PORTRAITS_DIR,
     generate_portrait,
     person_registry,
@@ -100,8 +102,11 @@ def main(argv: Any = None) -> int:
     )
     parser.add_argument(
         "--model",
-        default="gpt-image-2",
-        help="OpenAI model to use (default: gpt-image-2). Models with image editing support: dall-e-2, gpt-image-1, gpt-image-1.5, gpt-image-2",
+        default=DEFAULT_PORTRAIT_MODEL,
+        help=(
+            f"OpenAI model to use (default: {DEFAULT_PORTRAIT_MODEL}). Models with "
+            f"image editing support: dall-e-2, {', '.join(reversed(EDIT_MODELS))}"
+        ),
     )
     parser.add_argument(
         "--persons",

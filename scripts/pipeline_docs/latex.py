@@ -1349,7 +1349,7 @@ APPENDIX_COLUMNS = (
 
 # The share of the wide measure each column takes—the print stylesheet's
 # widths for the same table, with the description giving the model and the
-# effort what a name such as `gpt-image-2` needs at this size. The step's
+# effort what a name such as `gpt-image-2.5-sunburst` needs at this size. The step's
 # name carries the underline in its kind's color, as a reference to it in the
 # text does, so the row is read against the charts without a number.
 APPENDIX_WIDTHS = (0.14, 0.36, 0.13, 0.13, 0.16, 0.08)

@@ -15,11 +15,15 @@ from generate_person_network import (
     DEFAULT_MODEL as NETWORK_MODEL,
 )
 from generate_person_portrait import (
+    DEFAULT_PORTRAIT_MODEL,
     extract_image_from_page,
     generate_portrait,
     is_direct_image_url,
 )
-from generate_chapter_illustrations import generate_chapter_illustrations
+from generate_chapter_illustrations import (
+    DEFAULT_IMAGE_MODEL as CHAPTER_ART_MODEL,
+    generate_chapter_illustrations,
+)
 from generate_event_backgrounds import generate_event_backgrounds
 from review_person import review_person_data
 from utils import usage
@@ -120,8 +124,8 @@ def parse_args(argv: Any) -> argparse.Namespace:
     )
     parser.add_argument(
         "--portrait-model",
-        default="gpt-image-2",
-        help="OpenAI model for portrait generation (default: gpt-image-2).",
+        default=DEFAULT_PORTRAIT_MODEL,
+        help=f"OpenAI model for portrait generation (default: {DEFAULT_PORTRAIT_MODEL}).",
     )
     parser.add_argument(
         "--portrait-url",
@@ -149,8 +153,8 @@ def parse_args(argv: Any) -> argparse.Namespace:
     )
     parser.add_argument(
         "--chapter-art-model",
-        default="gpt-image-2",
-        help="OpenAI model for the chapter illustrations (default: gpt-image-2).",
+        default=CHAPTER_ART_MODEL,
+        help=f"OpenAI model for the chapter illustrations (default: {CHAPTER_ART_MODEL}).",
     )
     parser.add_argument(
         "--skip-db",
