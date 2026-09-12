@@ -8,7 +8,7 @@ import re
 import sys
 from datetime import date
 from pathlib import Path
-from typing import Any, Dict, List, Optional, cast
+from typing import Any, Dict, List, Optional, Tuple, cast
 
 import requests
 from openai import OpenAI
@@ -29,6 +29,7 @@ from utils.relationship_vocabulary import (
 from utils.text import fix_control_characters, slugify
 from utils.wikipedia_cache import (
     ensure_cache,
+    extract_wikipedia_title,
     fetch_wikipedia_extract,
     get_cache_dir,
     get_cached_wikipedia_page,
@@ -531,10 +532,75 @@ def _normalize_relationship_types(connections: List[Dict[str, Any]]) -> None:
             )
 
 
+def _article_key(title: str) -> str:
+    """An article title as it compares: underscores spaced out, case folded."""
+    return re.sub(r"\s+", " ", str(title or "").replace("_", " ")).strip().casefold()
+
+
+def cached_article_urls(
+    related_articles: Optional[List[Dict[str, Any]]],
+) -> Dict[str, str]:
+    """The URL the cache holds for each related article, by title."""
+    urls: Dict[str, str] = {}
+    for article in related_articles or []:
+        if not isinstance(article, dict):
+            continue
+        key = _article_key(article.get("title", ""))
+        url = str(article.get("url") or "").strip()
+        if key and url:
+            urls.setdefault(key, url)
+    return urls
+
+
+def repair_source_urls(
+    connections: List[Dict[str, Any]],
+    related_articles: Optional[List[Dict[str, Any]]],
+) -> List[Tuple[str, str]]:
+    """Cite a related article at the URL the cache actually holds for it.
+
+    The cached related articles are not all English: the search falls back to
+    the German Wikipedia for a person English Wikipedia does not carry, and
+    each cached entry records the URL it came from. The model is shown that
+    URL and writes an English one anyway, composing
+    ``en.wikipedia.org/wiki/<cached title>`` — and a German title is rarely
+    the English one. Babbage's network cited
+    ``en.wikipedia.org/wiki/Georg_Scheutz``, which is no article at all:
+    English Wikipedia calls him Per Georg Scheutz, so the chip's source link
+    led the reader to a "no article" page.
+
+    A cited title the cache holds is therefore pointed back at the cache's own
+    URL. A title the cache does not hold is left alone — guessing which
+    article was meant is what produced the dead link.  Returns the
+    ``(before, after)`` pairs it rewrote.
+    """
+    urls = cached_article_urls(related_articles)
+    if not urls:
+        return []
+    repaired: List[Tuple[str, str]] = []
+    for connection in connections:
+        sources = connection.get("sources")
+        if not isinstance(sources, list):
+            continue
+        rewritten: List[str] = []
+        for source in sources:
+            url = str(source or "").strip()
+            parsed = extract_wikipedia_title(url) if url else None
+            if parsed:
+                cached = urls.get(_article_key(parsed[0]))
+                if cached and cached != url:
+                    repaired.append((url, cached))
+                    url = cached
+            if url and url not in rewritten:
+                rewritten.append(url)
+        connection["sources"] = rewritten
+    return repaired
+
+
 def enforce_metadata(
     payload: Dict[str, Any],
     page_data: Dict[str, Any],
     person_id: str,
+    related_articles: Optional[List[Dict[str, Any]]] = None,
 ) -> Dict[str, Any]:
     """Ensure consistent metadata in the payload."""
     payload.setdefault("dataset", DATASET_NAME)
@@ -559,6 +625,10 @@ def enforce_metadata(
         return strength_order.get(conn.get("strength", "").lower(), 3)
 
     connections.sort(key=connection_sort_key)
+
+    for before, after in repair_source_urls(connections, related_articles):
+        print(f"    Source cited as {before} -> {after}")
+
     payload["connections"] = connections
 
     return payload
@@ -689,7 +759,7 @@ def generate_person_network(
     print("[4/6] Response received from OpenAI.")
 
     print("[5/6] Normalizing ego network metadata...")
-    payload = enforce_metadata(payload, page_data, person_id)
+    payload = enforce_metadata(payload, page_data, person_id, related_articles)
     connection_count = len(payload.get("connections", []))
     print(f"[5/6] Ego network includes {connection_count} connections.")
 
