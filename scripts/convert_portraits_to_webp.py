@@ -11,18 +11,10 @@ from typing import Any, Dict
 
 from PIL import Image
 
+from config import enable_utf8_console
 from utils.registry import Registry
 
-# Set UTF-8 encoding for Windows console with unbuffered output
-if sys.platform == "win32":
-    import io
-
-    sys.stdout = io.TextIOWrapper(
-        sys.stdout.buffer, encoding="utf-8", line_buffering=True
-    )
-    sys.stderr = io.TextIOWrapper(
-        sys.stderr.buffer, encoding="utf-8", line_buffering=True
-    )
+enable_utf8_console()
 
 
 # Constants

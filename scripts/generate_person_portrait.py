@@ -19,22 +19,14 @@ from bs4 import BeautifulSoup
 from openai import APIStatusError, OpenAI
 from PIL import Image, ImageOps
 
+from config import enable_utf8_console
 from utils import usage
 from utils.http import COMMONS_FILE_HOST, QueryParams, canonical_commons_url
 from utils.person_style import MissingStyleError, story_colors
 from utils.registry import Registry
 from utils.text import slugify
 
-# Set UTF-8 encoding for Windows console with unbuffered output
-if sys.platform == "win32":
-    import io
-
-    sys.stdout = io.TextIOWrapper(
-        sys.stdout.buffer, encoding="utf-8", line_buffering=True
-    )
-    sys.stderr = io.TextIOWrapper(
-        sys.stderr.buffer, encoding="utf-8", line_buffering=True
-    )
+enable_utf8_console()
 
 
 # Constants
