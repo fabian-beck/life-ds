@@ -25,7 +25,7 @@ from generate_chapter_illustrations import (
     generate_chapter_illustrations,
 )
 from generate_event_backgrounds import generate_event_backgrounds
-from review_person import review_person_data
+from review_person import resolve_person_id, review_person_data
 from utils import usage
 from utils.text import slugify
 from utils.person_style import MissingStyleError, has_style, story_colors
@@ -240,6 +240,18 @@ def main(argv: Any = None) -> int:
         print("\n⊘ Skipping life events dataset generation")
         run_log.record("Life events", STEP_SKIPPED, "not requested")
 
+    # Every step after the dataset one is filed under a person id, and step 1
+    # is where a run normally learns it. Under --style-only and --network-only
+    # that step does not run at all, and a run whose dataset step failed has no
+    # id either, so the id is resolved from the data already on disk: the
+    # registry and data/people/ both answer to a name or an id. A person
+    # neither knows is genuinely new, and the steps below skip themselves as
+    # they already do.
+    if person_id is None:
+        person_id = resolve_person_id(args.subject)
+        if person_id:
+            print(f"\n→ Resolved existing person '{person_id}' from {args.subject!r}")
+
     # The colors the shipped images were drawn in, read before the style step
     # may rewrite them.
     def current_colors() -> Optional[Dict[str, str]]:
@@ -280,6 +292,14 @@ def main(argv: Any = None) -> int:
     style_missing = person_id is not None and not has_style(person_id)
     no_style_reason = (
         "no interface style — run scripts/generate_person_style.py, then rerun"
+    )
+
+    # Both images are filed under a person id. Without one there is no dataset
+    # to draw from either, so this is a step that cannot run rather than one
+    # that failed, and it is reported the way the missing style is.
+    no_id_reason = (
+        f"no person ID — the dataset step did not run and no existing person "
+        f"matches {args.subject!r}; pass --url to file the run under an ID"
     )
 
     # A portrait and a chapter illustration are kept when they already exist,
@@ -331,6 +351,9 @@ def main(argv: Any = None) -> int:
     elif style_missing:
         print(f"\n⊘ Skipping portrait generation ({no_style_reason})")
         run_log.record("Portrait", STEP_SKIPPED, no_style_reason)
+    elif not person_id:
+        print(f"\n⊘ Skipping portrait generation ({no_id_reason})")
+        run_log.record("Portrait", STEP_SKIPPED, no_id_reason)
     else:
         banner("STEP 4/8: Generating stylized portrait")
         try:
@@ -350,12 +373,6 @@ def main(argv: Any = None) -> int:
                         f"Could not resolve a portrait image from {page_url}"
                     )
                 portrait_source_page = portrait_source_page or extracted_page
-
-            if not person_id:
-                raise ValueError(
-                    "No person ID resolved — run the dataset step or pass "
-                    "--url so the portrait can be filed under a person ID"
-                )
 
             portrait_result = generate_portrait(
                 person_id=person_id,
@@ -395,14 +412,12 @@ def main(argv: Any = None) -> int:
     elif style_missing:
         print(f"\n⊘ Skipping chapter illustrations ({no_style_reason})")
         run_log.record("Chapter illustrations", STEP_SKIPPED, no_style_reason)
+    elif not person_id:
+        print(f"\n⊘ Skipping chapter illustrations ({no_id_reason})")
+        run_log.record("Chapter illustrations", STEP_SKIPPED, no_id_reason)
     else:
         banner("STEP 5/8: Generating chapter illustrations")
         try:
-            if not person_id:
-                raise ValueError(
-                    "No person ID resolved — run the dataset step or pass "
-                    "--url so the illustrations can be filed under a person ID"
-                )
             art_result = generate_chapter_illustrations(
                 person_id,
                 model=args.chapter_art_model,

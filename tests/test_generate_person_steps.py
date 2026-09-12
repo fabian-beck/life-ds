@@ -228,6 +228,61 @@ class PaletteChangeRedrawsTheImagesTests(unittest.TestCase):
         self.assertEqual(forced, {"portrait": False, "chapter art": False})
 
 
+class PersonIdWithoutTheDatasetStepTests(unittest.TestCase):
+    """A run that skips the dataset step still knows whose story it is.
+
+    `--style-only` and `--network-only` skip step 1, which was the only place
+    a run learned the person id, so every later step lost it: the portrait and
+    the chapter art raised "No person ID resolved", and the background reports
+    and the translation skipped themselves. The id is resolved from the
+    existing data instead, which is what a run over an existing person has.
+    """
+
+    ARGV = [
+        "Ada Lovelace",
+        "--no-register",
+        "--network-only",
+        "--skip-review",
+        "--skip-backgrounds",
+        "--skip-translate",
+    ]
+
+    def _run_without_the_dataset_step(self, resolved):
+        seen = {}
+
+        def portrait(*args, **kwargs):
+            seen["portrait"] = kwargs.get("person_id")
+            return {"success": True, "local_path": "portrait.png"}
+
+        def chapter_art(person_id=None, *args, **kwargs):
+            seen["chapter art"] = person_id
+            return {
+                "id": person_id,
+                "success": True,
+                "generated": [],
+                "message": "stubbed",
+            }
+
+        with _styles(ada_lovelace={"primary": "#FF8800", "secondary": "#1155AA"}):
+            code = _run(
+                self.ARGV,
+                generate_portrait=portrait,
+                generate_chapter_illustrations=chapter_art,
+                resolve_person_id=lambda subject: resolved,
+            )
+        return code, seen
+
+    def test_the_id_is_resolved_from_the_existing_data(self) -> None:
+        code, seen = self._run_without_the_dataset_step("ada_lovelace")
+        self.assertEqual(seen, {"portrait": "ada_lovelace", "chapter art": "ada_lovelace"})
+        self.assertEqual(code, 0)
+
+    def test_a_person_the_data_does_not_know_still_skips_cleanly(self) -> None:
+        code, seen = self._run_without_the_dataset_step(None)
+        self.assertEqual(seen, {}, "an image was drawn for nobody")
+        self.assertEqual(code, 0, "skipping for an unknown person is not a failure")
+
+
 class RunLogTests(unittest.TestCase):
     def test_the_summary_names_what_failed_and_why(self) -> None:
         log = pipeline.RunLog()
