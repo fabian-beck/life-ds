@@ -38,6 +38,15 @@ What the prompt still carries is what the model cannot infer:
   fact worth keeping moves into the story element nearest to where the reader
   will use it. Readers reported reading the event, circle, and stop cards and
   skimming the prose around them, so the information belongs on the cards.
+- **The header rule** — the opening is one documented moment told as a
+  scene, and the description is brief background on the subject the title
+  names: what the field, movement, place, or period is and where it stands
+  in history. Left to the budget alone, the description summarized the data
+  below it — a roll call of who did what, or a sentence on what the lives
+  have in common — so a reader who did not know what quantum physics or the
+  American Revolution was met the cast before the subject. The subject is the
+  one thing the components cannot introduce, and general knowledge of it is
+  the one place the composer may reach beyond the material.
 - **The section introductions** — each section body is one full paragraph
   that opens its section on the question the component answers, hints at
   the shape of the answer without giving it, and adds background only where
@@ -352,12 +361,16 @@ class CompositionResult(BaseModel):
     title: str = Field(description="2-5 words")
     tagline: str = Field(description="3-10 words")
     opening: List[StoryBlock] = Field(
-        description="The story's opening prose; opening and description "
-        "together stay within roughly 100-150 words of paragraph text"
+        description="The story's opening prose: one documented moment told "
+        "as a scene; opening and description together stay within roughly "
+        "150-200 words of paragraph text"
     )
     description: List[StoryBlock] = Field(
         description="The prose following the opening, still in the page "
-        "header; shares the opening's 100-150 word budget"
+        "header: brief background on the subject the title names, what it "
+        "is and where it stands in history, never a summary of the people "
+        "or the components; the larger part of the shared 150-200 word "
+        "budget"
     )
     section_headings: ComposedSectionHeadings = Field(
         description="Headings for the four sections"
@@ -934,10 +947,30 @@ this story is about and how it is best told.
 WHERE THE WEIGHT GOES. Readers read the texts on the components — the event
 texts, the circle cards, the stop cards — and tire in the article prose
 around them, so the information lives on the components and the prose stays
-short. Opening and description together: roughly 100-150 words. The
-conclusion: one short paragraph. A fact worth keeping belongs in the story
-element nearest to where the reader will use it — the event text, the circle
-card, the stop card — never in the paragraph above the component.
+short. Opening and description together: roughly 150-200 words, the
+description the larger part. The conclusion: one short paragraph. A fact
+worth keeping belongs in the story element nearest to where the reader will
+use it — the event text, the circle card, the stop card — never in the
+paragraph above the component.
+
+THE HEADER. The opening and the description are the page's introduction, and
+the reader arrives knowing nothing of the subject. The opening is one
+documented moment from the material told as a scene, with its date, its
+place, and its person named. The description then gives the background of the
+subject the title names, before the page turns to the people: what the field,
+the movement, the place, or the period is, in plain words; where and when it
+stands in history; how things stood when the first of these lives entered it;
+and what had changed by the end of the story's span. Write it as the brief
+background a good teacher gives before the first name, from general knowledge
+of the subject and from the historical context in the material. It does not
+summarize the cast, the components, or the data: no sentence listing who did
+what, no roll call of professions ("mathematicians defined it, engineers built
+it, programmers made it usable"), no sentence on what the lives have in
+common or how they connect. The timeline, the cards, and the conclusion carry
+all of that. A person is named in the description only where the background
+needs the name. The background of the subject as a whole belongs here and
+nowhere else on the page; the section introductions below carry only what is
+specific to their own question.
 
 SECTION INTRODUCTIONS. Each section body is one full paragraph of roughly
 80-130 words between the section's heading and its component. It is the
@@ -995,8 +1028,10 @@ would lose nothing — the budgets are ceilings, not targets.
 
 {PROSE_STYLE_INSTRUCTIONS}
 
-Ground everything in the material above: no invented events, dates,
-relationships or quotations. Quotes verbatim, with attribution. Copy every id
+Ground everything about the people in the material above: no invented events,
+dates, relationships or quotations. The description's background on the
+subject may draw on general knowledge of it, held to what is settled and
+well known. Quotes verbatim, with attribution. Copy every id
 and key exactly, never construct one. At most {MAX_IMAGES_PER_STORY} images in
 the whole story, never reused. Third person, about the people and their era —
 never address the reader, and never make the page or one of its parts the
