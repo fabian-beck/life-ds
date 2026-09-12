@@ -30,22 +30,34 @@
     {
       "id": "imperial_founders_and_sacred_patronage",
       "title": "Imperial Founders, Sacred City",
-      "person_ids": ["henry_ii", "cunigunde_of_luxembourg"]
+      "person_ids": [
+        "henry_ii",
+        "cunigunde_of_luxembourg"
+      ]
     },
     {
       "id": "napoleonic_aftershocks_and_romantic_bamberg",
       "title": "Romantic Bamberg, Modern Pressures",
-      "person_ids": ["e_t_a_hoffmann", "georg_wilhelm_friedrich_hegel"]
+      "person_ids": [
+        "e_t_a_hoffmann",
+        "georg_wilhelm_friedrich_hegel"
+      ]
     },
     {
       "id": "civic_professionals_and_urban_making",
       "title": "Civic Experts, Built City",
-      "person_ids": ["hans_erlwein", "johann_lukas_sch_nlein"]
+      "person_ids": [
+        "hans_erlwein",
+        "johann_lukas_sch_nlein"
+      ]
     },
     {
       "id": "national_science_and_conscience",
       "title": "Science and Conscience in Germany",
-      "person_ids": ["ida_noddack", "claus_schenk_graf_von_stauffenberg"]
+      "person_ids": [
+        "ida_noddack",
+        "claus_schenk_graf_von_stauffenberg"
+      ]
     }
   ],
   "description": [
@@ -282,7 +294,10 @@
         "name": "Henry II",
         "type": "main",
         "portrait": "/portraits/henry_ii_thumbnail.webp",
-        "roles": ["monarch", "emperor"],
+        "roles": [
+          "monarch",
+          "emperor"
+        ],
         "birth_year": 973
       },
       {
@@ -290,7 +305,10 @@
         "name": "Cunigunde of Luxembourg",
         "type": "main",
         "portrait": "/portraits/cunigunde_of_luxembourg_thumbnail.webp",
-        "roles": ["empress", "regent"],
+        "roles": [
+          "empress",
+          "regent"
+        ],
         "birth_year": 975
       },
       {
@@ -298,7 +316,10 @@
         "name": "E. T. A. Hoffmann",
         "type": "main",
         "portrait": "/portraits/e_t_a_hoffmann_thumbnail.webp",
-        "roles": ["writer", "jurist"],
+        "roles": [
+          "writer",
+          "jurist"
+        ],
         "birth_year": 1776
       },
       {
@@ -306,7 +327,10 @@
         "name": "Georg Wilhelm Friedrich Hegel",
         "type": "main",
         "portrait": "/portraits/georg_wilhelm_friedrich_hegel_thumbnail.webp",
-        "roles": ["philosopher", "writer"],
+        "roles": [
+          "philosopher",
+          "writer"
+        ],
         "birth_year": 1770
       },
       {
@@ -314,7 +338,10 @@
         "name": "Hans Erlwein",
         "type": "main",
         "portrait": "/portraits/hans_erlwein_thumbnail.webp",
-        "roles": ["architect", "civil servant"],
+        "roles": [
+          "architect",
+          "civil servant"
+        ],
         "birth_year": 1872
       },
       {
@@ -322,7 +349,10 @@
         "name": "Johann Lukas Schönlein",
         "type": "main",
         "portrait": "/portraits/johann_lukas_sch_nlein_thumbnail.webp",
-        "roles": ["physician", "pathologist"],
+        "roles": [
+          "physician",
+          "pathologist"
+        ],
         "birth_year": 1793
       },
       {
@@ -330,7 +360,10 @@
         "name": "Ida Noddack",
         "type": "main",
         "portrait": "/portraits/ida_noddack_thumbnail.webp",
-        "roles": ["chemist", "physicist"],
+        "roles": [
+          "chemist",
+          "physicist"
+        ],
         "birth_year": 1896
       },
       {
@@ -338,7 +371,10 @@
         "name": "Claus von Stauffenberg",
         "type": "main",
         "portrait": "/portraits/claus_schenk_graf_von_stauffenberg_thumbnail.webp",
-        "roles": ["army officer", "resistance fighter"],
+        "roles": [
+          "army officer",
+          "resistance fighter"
+        ],
         "birth_year": 1907
       },
       {
@@ -596,25 +632,37 @@
       "circles": [
         {
           "key": "henry_ii+cunigunde_of_luxembourg",
-          "member_ids": ["henry_ii", "cunigunde_of_luxembourg"],
+          "member_ids": [
+            "henry_ii",
+            "cunigunde_of_luxembourg"
+          ],
           "title": "The Founding Partners",
           "text": "Henry II and Cunigunde were spouses and partners in imperial representation, church patronage and Bamberg’s endowment. Their separate royal coronations in 1002 and joint imperial coronation in 1014 affirmed Cunigunde’s public position. After Henry died without an heir, she served as interim regent and helped secure the succession of Conrad II."
         },
         {
           "key": "georg_wilhelm_friedrich_hegel+e_t_a_hoffmann",
-          "member_ids": ["georg_wilhelm_friedrich_hegel", "e_t_a_hoffmann"],
+          "member_ids": [
+            "georg_wilhelm_friedrich_hegel",
+            "e_t_a_hoffmann"
+          ],
           "title": "After the Old Order",
           "text": "Hegel and Hoffmann both worked in Bamberg after war and secularization had overturned its former political and ecclesiastical order. Hegel’s work there passed through journalism and editing; Hoffmann’s combined theater, composition, fiction and law. No personal relationship between them is documented here."
         },
         {
           "key": "johann_lukas_sch_nlein+hans_erlwein",
-          "member_ids": ["johann_lukas_sch_nlein", "hans_erlwein"],
+          "member_ids": [
+            "johann_lukas_sch_nlein",
+            "hans_erlwein"
+          ],
           "title": "Civic Expertise",
           "text": "Schönlein and Erlwein represent different professions directed toward public institutions. Schönlein advanced natural-scientific medicine and gave part of his historical collection to Bamberg’s royal library; Erlwein turned municipal administration into schools, utilities and service buildings. Their connection is thematic rather than personal."
         },
         {
           "key": "ida_noddack+claus_schenk_graf_von_stauffenberg",
-          "member_ids": ["ida_noddack", "claus_schenk_graf_von_stauffenberg"],
+          "member_ids": [
+            "ida_noddack",
+            "claus_schenk_graf_von_stauffenberg"
+          ],
           "title": "Modern Tests",
           "text": "Noddack and Stauffenberg faced different demands in 20th-century Germany, with no documented relationship between them. Her work subjected scientific claims to difficult isolation and measurement. His opposition to National Socialism culminated in the July 20 attempt on Hitler."
         }
@@ -643,7 +691,10 @@
       "text": "Stauffenberg’s path exposes the limits of any story that equates institutions with the public good. After joining the military resistance, he carried a bomb into Hitler’s headquarters on July 20, 1944, making opposition to the regime a matter of decisive personal action. From an imperial foundation to resistance against dictatorship, these lives trace not a simple march of progress but a continuing struggle over how power, knowledge and responsibility should meet."
     }
   ],
-  "section_order": ["timeline", "network"],
+  "section_order": [
+    "timeline",
+    "network"
+  ],
   "opening": [
     {
       "type": "image",

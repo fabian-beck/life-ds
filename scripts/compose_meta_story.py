@@ -2086,8 +2086,6 @@ def main() -> int:
         print(f"\n{failures} meta story composition(s) failed")
         return 1
     print("\nComposition complete")
-    if not args.dry_run:
-        print('Remember: npx prettier --write "data/meta_stories/**/*.json"')
     return 0
 
 

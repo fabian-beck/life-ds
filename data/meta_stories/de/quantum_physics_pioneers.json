@@ -26,12 +26,19 @@
     {
       "id": "quanta_and_radioactivity",
       "title": "Quanten und Radioaktivität",
-      "person_ids": ["marie_curie", "albert_einstein", "satyendra_nath_bose"]
+      "person_ids": [
+        "marie_curie",
+        "albert_einstein",
+        "satyendra_nath_bose"
+      ]
     },
     {
       "id": "atoms_and_formalism",
       "title": "Atome und Formalismus",
-      "person_ids": ["niels_bohr", "john_von_neumann"]
+      "person_ids": [
+        "niels_bohr",
+        "john_von_neumann"
+      ]
     }
   ],
   "chapters": [
@@ -161,7 +168,10 @@
         "name": "Albert Einstein",
         "type": "main",
         "portrait": "/portraits/albert_einstein_thumbnail.webp",
-        "roles": ["physicist", "writer"],
+        "roles": [
+          "physicist",
+          "writer"
+        ],
         "birth_year": 1879
       },
       {
@@ -169,7 +179,10 @@
         "name": "Marie Curie",
         "type": "main",
         "portrait": "/portraits/marie_curie_thumbnail.webp",
-        "roles": ["physicist", "chemist"],
+        "roles": [
+          "physicist",
+          "chemist"
+        ],
         "birth_year": 1867
       },
       {
@@ -177,7 +190,10 @@
         "name": "John von Neumann",
         "type": "main",
         "portrait": "/portraits/john_von_neumann_thumbnail.webp",
-        "roles": ["mathematician", "physicist"],
+        "roles": [
+          "mathematician",
+          "physicist"
+        ],
         "birth_year": 1903
       },
       {
@@ -185,7 +201,10 @@
         "name": "Niels Bohr",
         "type": "main",
         "portrait": "/portraits/niels_bohr_thumbnail.webp",
-        "roles": ["physicist", "philosopher"],
+        "roles": [
+          "physicist",
+          "philosopher"
+        ],
         "birth_year": 1885
       },
       {
@@ -193,7 +212,10 @@
         "name": "Satyendra Nath Bose",
         "type": "main",
         "portrait": "/portraits/satyendra_nath_bose_thumbnail.webp",
-        "roles": ["physicist", "mathematician"],
+        "roles": [
+          "physicist",
+          "mathematician"
+        ],
         "birth_year": 1894
       },
       {
@@ -358,8 +380,16 @@
       {
         "label": "Paris",
         "score": 4.0,
-        "centroid": [2.32004, 48.85889],
-        "bbox": [2.32004, 48.85889, 2.32004, 48.85889],
+        "centroid": [
+          2.32004,
+          48.85889
+        ],
+        "bbox": [
+          2.32004,
+          48.85889,
+          2.32004,
+          48.85889
+        ],
         "year_start": 1898,
         "year_end": 1903,
         "events": [
@@ -370,7 +400,10 @@
             "event_title": "Discovered polonium and radium",
             "event_date": "1898-07",
             "place": "Paris",
-            "coordinates": [2.320041, 48.8588897],
+            "coordinates": [
+              2.320041,
+              48.8588897
+            ],
             "weight": 3.0
           },
           {
@@ -380,7 +413,10 @@
             "event_title": "Doctorate and Nobel Prize in Physics",
             "event_date": "1903",
             "place": "Paris",
-            "coordinates": [2.320041, 48.8588897],
+            "coordinates": [
+              2.320041,
+              48.8588897
+            ],
             "weight": 1.0
           }
         ],
@@ -389,8 +425,16 @@
       {
         "label": "Dacca",
         "score": 3.0,
-        "centroid": [90.4125, 23.8103],
-        "bbox": [90.4125, 23.8103, 90.4125, 23.8103],
+        "centroid": [
+          90.4125,
+          23.8103
+        ],
+        "bbox": [
+          90.4125,
+          23.8103,
+          90.4125,
+          23.8103
+        ],
         "year_start": 1924,
         "year_end": 1924,
         "events": [
@@ -401,7 +445,10 @@
             "event_title": "Sends Quantum Paper to Einstein",
             "event_date": "1924",
             "place": "Dacca",
-            "coordinates": [90.4125, 23.8103],
+            "coordinates": [
+              90.4125,
+              23.8103
+            ],
             "weight": 3.0
           }
         ],
@@ -410,8 +457,16 @@
       {
         "label": "Copenhagen",
         "score": 5.0,
-        "centroid": [12.5683, 55.6761],
-        "bbox": [12.5683, 55.6761, 12.5683, 55.6761],
+        "centroid": [
+          12.5683,
+          55.6761
+        ],
+        "bbox": [
+          12.5683,
+          55.6761,
+          12.5683,
+          55.6761
+        ],
         "year_start": 1913,
         "year_end": 1936,
         "events": [
@@ -422,7 +477,10 @@
             "event_title": "Publishes Papers on Atomic Structure",
             "event_date": "1913",
             "place": "Copenhagen",
-            "coordinates": [12.5683, 55.6761],
+            "coordinates": [
+              12.5683,
+              55.6761
+            ],
             "weight": 3.0
           },
           {
@@ -432,7 +490,10 @@
             "event_title": "Develops the Nuclear Drop Model",
             "event_date": "1936",
             "place": "Copenhagen",
-            "coordinates": [12.5683, 55.6761],
+            "coordinates": [
+              12.5683,
+              55.6761
+            ],
             "weight": 2.0
           }
         ],
@@ -465,7 +526,11 @@
       "rated_events": 8
     }
   },
-  "section_order": ["timeline", "network", "map"],
+  "section_order": [
+    "timeline",
+    "network",
+    "map"
+  ],
   "opening": [
     {
       "type": "image",

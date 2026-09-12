@@ -29,17 +29,26 @@
     {
       "id": "military_paths_to_independence",
       "title": "Military Paths to Independence",
-      "person_ids": ["george_washington", "alexander_hamilton"]
+      "person_ids": [
+        "george_washington",
+        "alexander_hamilton"
+      ]
     },
     {
       "id": "negotiating_nations_and_constitutions",
       "title": "Negotiating Nations and Constitutions",
-      "person_ids": ["benjamin_franklin", "joseph_brant"]
+      "person_ids": [
+        "benjamin_franklin",
+        "joseph_brant"
+      ]
     },
     {
       "id": "revolutionary_voices_and_claims",
       "title": "Revolutionary Voices and Claims",
-      "person_ids": ["abigail_adams", "phillis_wheatley"]
+      "person_ids": [
+        "abigail_adams",
+        "phillis_wheatley"
+      ]
     }
   ],
   "chapters": [
@@ -293,7 +302,10 @@
         "name": "Abigail Adams",
         "type": "main",
         "portrait": "/portraits/abigail_adams_thumbnail.webp",
-        "roles": ["writer", "political advisor"],
+        "roles": [
+          "writer",
+          "political advisor"
+        ],
         "birth_year": 1744
       },
       {
@@ -301,7 +313,10 @@
         "name": "Alexander Hamilton",
         "type": "main",
         "portrait": "/portraits/alexander_hamilton_thumbnail.webp",
-        "roles": ["statesman", "soldier"],
+        "roles": [
+          "statesman",
+          "soldier"
+        ],
         "birth_year": 1755
       },
       {
@@ -309,7 +324,10 @@
         "name": "Benjamin Franklin",
         "type": "main",
         "portrait": "/portraits/benjamin_franklin_thumbnail.webp",
-        "roles": ["statesman", "inventor"],
+        "roles": [
+          "statesman",
+          "inventor"
+        ],
         "birth_year": 1706
       },
       {
@@ -317,7 +335,10 @@
         "name": "George Washington",
         "type": "main",
         "portrait": "/portraits/george_washington_thumbnail.webp",
-        "roles": ["soldier", "politician"],
+        "roles": [
+          "soldier",
+          "politician"
+        ],
         "birth_year": 1732
       },
       {
@@ -325,7 +346,10 @@
         "name": "Joseph Brant",
         "type": "main",
         "portrait": "/portraits/joseph_brant_thumbnail.webp",
-        "roles": ["military leader", "politician"],
+        "roles": [
+          "military leader",
+          "politician"
+        ],
         "birth_year": 1743
       },
       {
@@ -333,7 +357,10 @@
         "name": "Phillis Wheatley",
         "type": "main",
         "portrait": "/portraits/phillis_wheatley_thumbnail.webp",
-        "roles": ["poet", "writer"],
+        "roles": [
+          "poet",
+          "writer"
+        ],
         "birth_year": 1753
       },
       {
@@ -748,7 +775,10 @@
       "circles": [
         {
           "key": "benjamin_franklin+abigail_adams",
-          "member_ids": ["benjamin_franklin", "abigail_adams"],
+          "member_ids": [
+            "benjamin_franklin",
+            "abigail_adams"
+          ],
           "title": "A Republic in Letters",
           "text": "Franklin and Abigail Adams occupied overlapping worlds of founding politics, diplomacy, education, and correspondence. Franklin worked with John Adams and Thomas Jefferson on independence and with Adams and John Jay in Europe; Abigail made John Adams’s household a place of sustained political argument. Her father William Smith also connected her intellectual formation to the educational institutions Franklin helped establish in Philadelphia."
         },
@@ -771,8 +801,16 @@
       {
         "label": "Paris",
         "score": 3.0,
-        "centroid": [2.3522, 48.8566],
-        "bbox": [2.3522, 48.8566, 2.3522, 48.8566],
+        "centroid": [
+          2.3522,
+          48.8566
+        ],
+        "bbox": [
+          2.3522,
+          48.8566,
+          2.3522,
+          48.8566
+        ],
         "year_start": 1776,
         "year_end": 1776,
         "events": [
@@ -783,7 +821,10 @@
             "event_title": "Wins French Aid for Independence",
             "event_date": "1776-10",
             "place": "Paris",
-            "coordinates": [2.3522, 48.8566],
+            "coordinates": [
+              2.3522,
+              48.8566
+            ],
             "weight": 3.0
           }
         ],
@@ -792,8 +833,16 @@
       {
         "label": "Yorktown",
         "score": 6.0,
-        "centroid": [-76.5097, 37.2388],
-        "bbox": [-76.5097, 37.2388, -76.5097, 37.2388],
+        "centroid": [
+          -76.5097,
+          37.2388
+        ],
+        "bbox": [
+          -76.5097,
+          37.2388,
+          -76.5097,
+          37.2388
+        ],
         "year_start": 1781,
         "year_end": 1781,
         "events": [
@@ -804,7 +853,10 @@
             "event_title": "Wins Yorktown, Resigns Command",
             "event_date": "1781-09-28",
             "place": "Yorktown",
-            "coordinates": [-76.5097, 37.2388],
+            "coordinates": [
+              -76.5097,
+              37.2388
+            ],
             "weight": 3.0
           },
           {
@@ -814,7 +866,10 @@
             "event_title": "Storms Yorktown Redoubt",
             "event_date": "1781-10-14",
             "place": "Yorktown",
-            "coordinates": [-76.5097, 37.2388],
+            "coordinates": [
+              -76.5097,
+              37.2388
+            ],
             "weight": 3.0
           }
         ],
@@ -823,8 +878,16 @@
       {
         "label": "Philadelphia",
         "score": 17.0,
-        "centroid": [-75.09068, 39.99928],
-        "bbox": [-75.1652, 39.9526, -74.7429, 40.2171],
+        "centroid": [
+          -75.09068,
+          39.99928
+        ],
+        "bbox": [
+          -75.1652,
+          39.9526,
+          -74.7429,
+          40.2171
+        ],
         "year_start": 1775,
         "year_end": 1796,
         "events": [
@@ -835,7 +898,10 @@
             "event_title": "Commands Continental Army",
             "event_date": "1775-06-15",
             "place": "Philadelphia",
-            "coordinates": [-75.1652, 39.9526],
+            "coordinates": [
+              -75.1652,
+              39.9526
+            ],
             "weight": 3.0
           },
           {
@@ -845,7 +911,10 @@
             "event_title": "Wins Trenton and Princeton",
             "event_date": "1776-12-26",
             "place": "Trenton",
-            "coordinates": [-74.7429, 40.2171],
+            "coordinates": [
+              -74.7429,
+              40.2171
+            ],
             "weight": 3.0
           },
           {
@@ -855,7 +924,10 @@
             "event_title": "Makes the Case for Constitution",
             "event_date": "1787-05",
             "place": "Philadelphia",
-            "coordinates": [-75.1652, 39.9526],
+            "coordinates": [
+              -75.1652,
+              39.9526
+            ],
             "weight": 3.0
           },
           {
@@ -865,7 +937,10 @@
             "event_title": "Presides Over Constitutional Convention",
             "event_date": "1787-05-25",
             "place": "Philadelphia",
-            "coordinates": [-75.1652, 39.9526],
+            "coordinates": [
+              -75.1652,
+              39.9526
+            ],
             "weight": 3.0
           },
           {
@@ -875,7 +950,10 @@
             "event_title": "Signs the New United States Constitution",
             "event_date": "1787-09-17",
             "place": "Philadelphia",
-            "coordinates": [-75.1652, 39.9526],
+            "coordinates": [
+              -75.1652,
+              39.9526
+            ],
             "weight": 3.0
           },
           {
@@ -885,7 +963,10 @@
             "event_title": "Issues Farewell Address",
             "event_date": "1796-09-19",
             "place": "Philadelphia",
-            "coordinates": [-75.1652, 39.9526],
+            "coordinates": [
+              -75.1652,
+              39.9526
+            ],
             "weight": 2.0
           }
         ],
@@ -894,8 +975,16 @@
       {
         "label": "New York City",
         "score": 5.0,
-        "centroid": [-74.006, 40.7128],
-        "bbox": [-74.006, 40.7128, -74.006, 40.7128],
+        "centroid": [
+          -74.006,
+          40.7128
+        ],
+        "bbox": [
+          -74.006,
+          40.7128,
+          -74.006,
+          40.7128
+        ],
         "year_start": 1789,
         "year_end": 1789,
         "events": [
@@ -906,7 +995,10 @@
             "event_title": "Becomes First President",
             "event_date": "1789-04-30",
             "place": "New York City",
-            "coordinates": [-74.006, 40.7128],
+            "coordinates": [
+              -74.006,
+              40.7128
+            ],
             "weight": 3.0
           },
           {
@@ -916,7 +1008,10 @@
             "event_title": "Leads the Treasury Department",
             "event_date": "1789-09-11",
             "place": "New York City",
-            "coordinates": [-74.006, 40.7128],
+            "coordinates": [
+              -74.006,
+              40.7128
+            ],
             "weight": 2.0
           }
         ],
@@ -925,8 +1020,16 @@
       {
         "label": "Western Pennsylvania",
         "score": 3.0,
-        "centroid": [-80.0, 40.4],
-        "bbox": [-80.0, 40.4, -80.0, 40.4],
+        "centroid": [
+          -80.0,
+          40.4
+        ],
+        "bbox": [
+          -80.0,
+          40.4,
+          -80.0,
+          40.4
+        ],
         "year_start": 1794,
         "year_end": 1794,
         "events": [
@@ -937,7 +1040,10 @@
             "event_title": "Suppresses Whiskey Rebellion",
             "event_date": "1794-08",
             "place": "Western Pennsylvania",
-            "coordinates": [-80.0, 40.4],
+            "coordinates": [
+              -80.0,
+              40.4
+            ],
             "weight": 3.0
           }
         ],

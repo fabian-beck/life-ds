@@ -55,12 +55,20 @@
     {
       "id": "languages_and_algorithms",
       "title": "Sprachen und Algorithmen",
-      "person_ids": ["grace_hopper", "edsger_w_dijkstra", "frances_allen"]
+      "person_ids": [
+        "grace_hopper",
+        "edsger_w_dijkstra",
+        "frances_allen"
+      ]
     },
     {
       "id": "computing_for_people",
       "title": "Computer für Menschen",
-      "person_ids": ["douglas_engelbart", "joseph_weizenbaum", "steve_jobs"]
+      "person_ids": [
+        "douglas_engelbart",
+        "joseph_weizenbaum",
+        "steve_jobs"
+      ]
     }
   ],
   "chapters": [
@@ -418,7 +426,10 @@
         "name": "Ada Lovelace",
         "type": "main",
         "portrait": "/portraits/ada_lovelace_thumbnail.webp",
-        "roles": ["mathematician", "writer"],
+        "roles": [
+          "mathematician",
+          "writer"
+        ],
         "birth_year": 1815
       },
       {
@@ -426,7 +437,10 @@
         "name": "Alan Turing",
         "type": "main",
         "portrait": "/portraits/alan_turing_thumbnail.webp",
-        "roles": ["mathematician", "computer scientist"],
+        "roles": [
+          "mathematician",
+          "computer scientist"
+        ],
         "birth_year": 1912
       },
       {
@@ -434,7 +448,10 @@
         "name": "Charles Babbage",
         "type": "main",
         "portrait": "/portraits/charles_babbage_thumbnail.webp",
-        "roles": ["mathematician", "inventor"],
+        "roles": [
+          "mathematician",
+          "inventor"
+        ],
         "birth_year": 1791
       },
       {
@@ -442,7 +459,10 @@
         "name": "Douglas Engelbart",
         "type": "main",
         "portrait": "/portraits/douglas_engelbart_thumbnail.webp",
-        "roles": ["inventor", "engineer"],
+        "roles": [
+          "inventor",
+          "engineer"
+        ],
         "birth_year": 1925
       },
       {
@@ -450,7 +470,10 @@
         "name": "Edsger W. Dijkstra",
         "type": "main",
         "portrait": "/portraits/edsger_w_dijkstra_thumbnail.webp",
-        "roles": ["computer scientist", "mathematician"],
+        "roles": [
+          "computer scientist",
+          "mathematician"
+        ],
         "birth_year": 1930
       },
       {
@@ -458,7 +481,10 @@
         "name": "Frances Allen",
         "type": "main",
         "portrait": "/portraits/frances_allen_thumbnail.webp",
-        "roles": ["computer scientist", "mathematician"],
+        "roles": [
+          "computer scientist",
+          "mathematician"
+        ],
         "birth_year": 1932
       },
       {
@@ -466,7 +492,10 @@
         "name": "Grace Hopper",
         "type": "main",
         "portrait": "/portraits/grace_hopper_thumbnail.webp",
-        "roles": ["computer scientist", "mathematician"],
+        "roles": [
+          "computer scientist",
+          "mathematician"
+        ],
         "birth_year": 1906
       },
       {
@@ -474,7 +503,10 @@
         "name": "Heinz Nixdorf",
         "type": "main",
         "portrait": "/portraits/heinz_nixdorf_thumbnail.webp",
-        "roles": ["entrepreneur", "computer scientist"],
+        "roles": [
+          "entrepreneur",
+          "computer scientist"
+        ],
         "birth_year": 1925
       },
       {
@@ -482,7 +514,10 @@
         "name": "Herman Hollerith",
         "type": "main",
         "portrait": "/portraits/herman_hollerith_thumbnail.webp",
-        "roles": ["inventor", "statistician"],
+        "roles": [
+          "inventor",
+          "statistician"
+        ],
         "birth_year": 1860
       },
       {
@@ -490,7 +525,10 @@
         "name": "John von Neumann",
         "type": "main",
         "portrait": "/portraits/john_von_neumann_thumbnail.webp",
-        "roles": ["mathematician", "physicist"],
+        "roles": [
+          "mathematician",
+          "physicist"
+        ],
         "birth_year": 1903
       },
       {
@@ -498,7 +536,10 @@
         "name": "Joseph Weizenbaum",
         "type": "main",
         "portrait": "/portraits/joseph_weizenbaum_thumbnail.webp",
-        "roles": ["computer scientist", "professor"],
+        "roles": [
+          "computer scientist",
+          "professor"
+        ],
         "birth_year": 1923
       },
       {
@@ -506,7 +547,10 @@
         "name": "Konrad Zuse",
         "type": "main",
         "portrait": "/portraits/konrad_zuse_thumbnail.webp",
-        "roles": ["inventor", "computer scientist"],
+        "roles": [
+          "inventor",
+          "computer scientist"
+        ],
         "birth_year": 1910
       },
       {
@@ -514,7 +558,10 @@
         "name": "Steve Jobs",
         "type": "main",
         "portrait": "/portraits/steve_jobs_thumbnail.webp",
-        "roles": ["entrepreneur", "inventor"],
+        "roles": [
+          "entrepreneur",
+          "inventor"
+        ],
         "birth_year": 1955
       },
       {
@@ -522,7 +569,10 @@
         "name": "Vannevar Bush",
         "type": "main",
         "portrait": "/portraits/vannevar_bush_thumbnail.webp",
-        "roles": ["engineer", "inventor"],
+        "roles": [
+          "engineer",
+          "inventor"
+        ],
         "birth_year": 1890
       },
       {
@@ -765,25 +815,37 @@
       "circles": [
         {
           "key": "charles_babbage+ada_lovelace",
-          "member_ids": ["charles_babbage", "ada_lovelace"],
+          "member_ids": [
+            "charles_babbage",
+            "ada_lovelace"
+          ],
           "title": "Die Maschine erklären",
           "text": "Ada Lovelace begegnete Charles Babbage auf dessen Soiree von 1833 und wurde seine Freundin und Mitarbeiterin. Ihre Übersetzung von Menabreas Artikel und ihre umfangreichen Anmerkungen lieferten die einflussreichste veröffentlichte Erklärung von Babbages Analytical Engine – einschließlich eines Verfahrens, dem die Maschine folgen konnte."
         },
         {
           "key": "john_von_neumann+alan_turing",
-          "member_ids": ["john_von_neumann", "alan_turing"],
+          "member_ids": [
+            "john_von_neumann",
+            "alan_turing"
+          ],
           "title": "Vom Modell zur Architektur",
           "text": "John von Neumann schrieb Alan Turings Aufsatz von 1936 das Grundkonzept des modernen Computers zu. Er versuchte, Turing als Postdoktoranden nach Princeton zu holen, doch Turing kehrte nach Großbritannien zurück. Ihre Verbindung führte ein formales Modell des Rechnens mit den Forschungsnetzwerken zusammen, die Maschinen mit gespeicherten Programmen entwickelten."
         },
         {
           "key": "vannevar_bush+douglas_engelbart",
-          "member_ids": ["vannevar_bush", "douglas_engelbart"],
+          "member_ids": [
+            "vannevar_bush",
+            "douglas_engelbart"
+          ],
           "title": "Menschliches Wissen erweitern",
           "text": "Douglas Engelbart las Vannevar Bushs „As We May Think“, als er in der US Navy diente. Bushs vorgeschlagenes System assoziativer Wissenspfade wies Engelbart den Weg zu interaktiven Werkzeugen, die gemeinsame geistige Arbeit erweitern konnten."
         },
         {
           "key": "konrad_zuse+heinz_nixdorf",
-          "member_ids": ["konrad_zuse", "heinz_nixdorf"],
+          "member_ids": [
+            "konrad_zuse",
+            "heinz_nixdorf"
+          ],
           "title": "Maschinen treffen Geschäft",
           "text": "Konrad Zuse besuchte Heinz Nixdorf wiederholt in Paderborn und verband damit einen frühen Computererfinder mit einem wachsenden deutschen Computerunternehmen. Ihre Firmen versuchten, Zuse-Software auf Nixdorf-Maschinen zu übertragen, doch die Geschäftsbedingungen verhinderten, dass sich das Vorhaben durchsetzte."
         }
@@ -795,8 +857,16 @@
       {
         "label": "London",
         "score": 7.0,
-        "centroid": [-0.12772, 51.50738],
-        "bbox": [-0.12777, 51.5072, -0.1276, 51.50745],
+        "centroid": [
+          -0.12772,
+          51.50738
+        ],
+        "bbox": [
+          -0.12777,
+          51.5072,
+          -0.1276,
+          51.50745
+        ],
         "year_start": 1837,
         "year_end": 1945,
         "events": [
@@ -807,7 +877,10 @@
             "event_title": "Designed Analytical Engine",
             "event_date": "1837",
             "place": "London",
-            "coordinates": [-0.1277653, 51.5074456],
+            "coordinates": [
+              -0.1277653,
+              51.5074456
+            ],
             "weight": 3.0
           },
           {
@@ -817,7 +890,10 @@
             "event_title": "Publishes Notes on the Analytical Engine",
             "event_date": "1843-08",
             "place": "London",
-            "coordinates": [-0.1276, 51.5072],
+            "coordinates": [
+              -0.1276,
+              51.5072
+            ],
             "weight": 2.0
           },
           {
@@ -827,7 +903,10 @@
             "event_title": "Designed the ACE computer",
             "event_date": "1945",
             "place": "London",
-            "coordinates": [-0.1277653, 51.5074456],
+            "coordinates": [
+              -0.1277653,
+              51.5074456
+            ],
             "weight": 2.0
           }
         ],
@@ -836,8 +915,16 @@
       {
         "label": "Berlin",
         "score": 6.0,
-        "centroid": [13.39513, 52.51739],
-        "bbox": [13.39513, 52.51739, 13.39513, 52.51739],
+        "centroid": [
+          13.39513,
+          52.51739
+        ],
+        "bbox": [
+          13.39513,
+          52.51739,
+          13.39513,
+          52.51739
+        ],
         "year_start": 1936,
         "year_end": 1941,
         "events": [
@@ -848,7 +935,10 @@
             "event_title": "Builds the Z1 in his parents’ apartment",
             "event_date": "1936",
             "place": "Berlin",
-            "coordinates": [13.3951309, 52.5173885],
+            "coordinates": [
+              13.3951309,
+              52.5173885
+            ],
             "weight": 3.0
           },
           {
@@ -858,7 +948,10 @@
             "event_title": "Unveils the Z3",
             "event_date": "1941-05-12",
             "place": "Berlin",
-            "coordinates": [13.3951309, 52.5173885],
+            "coordinates": [
+              13.3951309,
+              52.5173885
+            ],
             "weight": 3.0
           }
         ],
@@ -867,8 +960,16 @@
       {
         "label": "Cambridge",
         "score": 11.0,
-        "centroid": [-71.10875, 42.37361],
-        "bbox": [-71.11056, 42.3736, -71.1056, 42.37362],
+        "centroid": [
+          -71.10875,
+          42.37361
+        ],
+        "bbox": [
+          -71.11056,
+          42.3736,
+          -71.1056,
+          42.37362
+        ],
         "year_start": 1944,
         "year_end": 1976,
         "events": [
@@ -879,7 +980,10 @@
             "event_title": "Programs the Harvard Mark I",
             "event_date": "1944",
             "place": "Cambridge",
-            "coordinates": [-71.1097, 42.3736],
+            "coordinates": [
+              -71.1097,
+              42.3736
+            ],
             "weight": 2.0
           },
           {
@@ -889,7 +993,10 @@
             "event_title": "Develops list‑processing language SLIP",
             "event_date": "1964",
             "place": "Cambridge",
-            "coordinates": [-71.110556, 42.373611],
+            "coordinates": [
+              -71.110556,
+              42.373611
+            ],
             "weight": 2.0
           },
           {
@@ -899,7 +1006,10 @@
             "event_title": "Creates ELIZA, pioneering chatbot",
             "event_date": "1964",
             "place": "Cambridge",
-            "coordinates": [-71.1056, 42.3736],
+            "coordinates": [
+              -71.1056,
+              42.3736
+            ],
             "weight": 3.0
           },
           {
@@ -909,7 +1019,10 @@
             "event_title": "Questions the computer's place in society",
             "event_date": "1972",
             "place": "Cambridge",
-            "coordinates": [-71.109733, 42.3736158],
+            "coordinates": [
+              -71.109733,
+              42.3736158
+            ],
             "weight": 2.0
           },
           {
@@ -919,7 +1032,10 @@
             "event_title": "Publishes \"Computer Power and Human Reason\"",
             "event_date": "1976",
             "place": "Cambridge",
-            "coordinates": [-71.109733, 42.3736158],
+            "coordinates": [
+              -71.109733,
+              42.3736158
+            ],
             "weight": 2.0
           }
         ],
@@ -928,8 +1044,16 @@
       {
         "label": "Cupertino",
         "score": 15.0,
-        "centroid": [-122.09057, 37.37452],
-        "bbox": [-122.17799, 37.32289, -122.03229, 37.45197],
+        "centroid": [
+          -122.09057,
+          37.37452
+        ],
+        "bbox": [
+          -122.17799,
+          37.32289,
+          -122.03229,
+          37.45197
+        ],
         "year_start": 1962,
         "year_end": 2001,
         "events": [
@@ -940,7 +1064,10 @@
             "event_title": "Published augmentation framework",
             "event_date": "1962-10",
             "place": "Menlo Park",
-            "coordinates": [-122.177992, 37.4519671],
+            "coordinates": [
+              -122.177992,
+              37.4519671
+            ],
             "weight": 3.0
           },
           {
@@ -950,7 +1077,10 @@
             "event_title": "Builds the first mouse prototype",
             "event_date": "1964",
             "place": "Menlo Park",
-            "coordinates": [-122.177992, 37.4519671],
+            "coordinates": [
+              -122.177992,
+              37.4519671
+            ],
             "weight": 3.0
           },
           {
@@ -960,7 +1090,10 @@
             "event_title": "Apple II and IPO boom",
             "event_date": "1977-04",
             "place": "Cupertino",
-            "coordinates": [-122.0322895, 37.3228934],
+            "coordinates": [
+              -122.0322895,
+              37.3228934
+            ],
             "weight": 3.0
           },
           {
@@ -970,7 +1103,10 @@
             "event_title": "Launched Macintosh platform",
             "event_date": "1984-01",
             "place": "Cupertino",
-            "coordinates": [-122.0322895, 37.3228934],
+            "coordinates": [
+              -122.0322895,
+              37.3228934
+            ],
             "weight": 3.0
           },
           {
@@ -980,7 +1116,10 @@
             "event_title": "Created Apple’s digital ecosystem",
             "event_date": "2001-05",
             "place": "Cupertino",
-            "coordinates": [-122.0322895, 37.3228934],
+            "coordinates": [
+              -122.0322895,
+              37.3228934
+            ],
             "weight": 3.0
           }
         ],
@@ -989,8 +1128,16 @@
       {
         "label": "San Francisco",
         "score": 8.0,
-        "centroid": [-122.45408, 37.858],
-        "bbox": [-122.53167, 37.78794, -122.40752, 37.97478],
+        "centroid": [
+          -122.45408,
+          37.858
+        ],
+        "bbox": [
+          -122.53167,
+          37.78794,
+          -122.40752,
+          37.97478
+        ],
         "year_start": 1968,
         "year_end": 2007,
         "events": [
@@ -1001,7 +1148,10 @@
             "event_title": "Presented Mother of All Demos",
             "event_date": "1968-12-09",
             "place": "San Francisco",
-            "coordinates": [-122.4075201, 37.7879363],
+            "coordinates": [
+              -122.4075201,
+              37.7879363
+            ],
             "weight": 3.0
           },
           {
@@ -1011,7 +1161,10 @@
             "event_title": "Built Pixar into studio",
             "event_date": "1986",
             "place": "San Rafael",
-            "coordinates": [-122.5316686, 37.9747795],
+            "coordinates": [
+              -122.5316686,
+              37.9747795
+            ],
             "weight": 3.0
           },
           {
@@ -1021,7 +1174,10 @@
             "event_title": "Unveiled the iPhone",
             "event_date": "2007-01-09",
             "place": "San Francisco",
-            "coordinates": [-122.4075201, 37.7879363],
+            "coordinates": [
+              -122.4075201,
+              37.7879363
+            ],
             "weight": 2.0
           }
         ],
@@ -1064,7 +1220,11 @@
       "rated_events": 33
     }
   },
-  "section_order": ["timeline", "network", "map"],
+  "section_order": [
+    "timeline",
+    "network",
+    "map"
+  ],
   "opening": [
     {
       "type": "paragraph",

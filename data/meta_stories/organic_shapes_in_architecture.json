@@ -40,12 +40,20 @@
     {
       "id": "buildings_belonging_to_place",
       "title": "Place Shapes Buildings",
-      "person_ids": ["frank_lloyd_wright", "alvar_aalto", "geoffrey_bawa"]
+      "person_ids": [
+        "frank_lloyd_wright",
+        "alvar_aalto",
+        "geoffrey_bawa"
+      ]
     },
     {
       "id": "forces_fields_and_flow",
       "title": "Form Under Pressure",
-      "person_ids": ["frei_otto", "lina_bo_bardi", "zaha_hadid"]
+      "person_ids": [
+        "frei_otto",
+        "lina_bo_bardi",
+        "zaha_hadid"
+      ]
     }
   ],
   "opening": [
@@ -407,7 +415,10 @@
         "name": "Antoni Gaudí",
         "type": "main",
         "portrait": "/portraits/antoni_gaud_thumbnail.webp",
-        "roles": ["architect", "designer"],
+        "roles": [
+          "architect",
+          "designer"
+        ],
         "birth_year": 1852
       },
       {
@@ -415,7 +426,10 @@
         "name": "Charles Rennie Mackintosh",
         "type": "main",
         "portrait": "/portraits/charles_rennie_mackintosh_thumbnail.webp",
-        "roles": ["architect", "designer"],
+        "roles": [
+          "architect",
+          "designer"
+        ],
         "birth_year": 1868
       },
       {
@@ -423,7 +437,10 @@
         "name": "Frank Lloyd Wright",
         "type": "main",
         "portrait": "/portraits/frank_lloyd_wright_thumbnail.webp",
-        "roles": ["architect", "designer"],
+        "roles": [
+          "architect",
+          "designer"
+        ],
         "birth_year": 1867
       },
       {
@@ -431,7 +448,10 @@
         "name": "Alvar Aalto",
         "type": "main",
         "portrait": "/portraits/alvar_aalto_thumbnail.webp",
-        "roles": ["architect", "designer"],
+        "roles": [
+          "architect",
+          "designer"
+        ],
         "birth_year": 1898
       },
       {
@@ -439,7 +459,10 @@
         "name": "Geoffrey Bawa",
         "type": "main",
         "portrait": "/portraits/geoffrey_bawa_thumbnail.webp",
-        "roles": ["architect", "designer"],
+        "roles": [
+          "architect",
+          "designer"
+        ],
         "birth_year": 1919
       },
       {
@@ -447,7 +470,10 @@
         "name": "Frei Otto",
         "type": "main",
         "portrait": "/portraits/frei_otto_thumbnail.webp",
-        "roles": ["architect", "engineer"],
+        "roles": [
+          "architect",
+          "engineer"
+        ],
         "birth_year": 1925
       },
       {
@@ -455,7 +481,10 @@
         "name": "Lina Bo Bardi",
         "type": "main",
         "portrait": "/portraits/lina_bo_bardi_thumbnail.webp",
-        "roles": ["architect", "designer"],
+        "roles": [
+          "architect",
+          "designer"
+        ],
         "birth_year": 1914
       },
       {
@@ -463,7 +492,10 @@
         "name": "Friedensreich Hundertwasser",
         "type": "main",
         "portrait": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
-        "roles": ["artist", "architect"],
+        "roles": [
+          "artist",
+          "architect"
+        ],
         "birth_year": 1928
       },
       {
@@ -471,7 +503,10 @@
         "name": "Zaha Hadid",
         "type": "main",
         "portrait": "/portraits/zaha_hadid_thumbnail.webp",
-        "roles": ["architect", "designer"],
+        "roles": [
+          "architect",
+          "designer"
+        ],
         "birth_year": 1950
       },
       {
@@ -561,7 +596,11 @@
       "circles": [
         {
           "key": "antoni_gaud+frank_lloyd_wright+frei_otto",
-          "member_ids": ["antoni_gaud", "frank_lloyd_wright", "frei_otto"],
+          "member_ids": [
+            "antoni_gaud",
+            "frank_lloyd_wright",
+            "frei_otto"
+          ],
           "title": "Lines of Transmission",
           "text": "Otto visited Wright at Taliesin during his 1950 trip to the United States, encountering Wright’s work and ideas firsthand. He later used Gaudí’s forms while developing the Munich Olympic Stadium, where hanging-net and soap-film experiments informed sweeping cable-net roofs."
         },
@@ -576,13 +615,19 @@
         },
         {
           "key": "alvar_aalto+geoffrey_bawa",
-          "member_ids": ["alvar_aalto", "geoffrey_bawa"],
+          "member_ids": [
+            "alvar_aalto",
+            "geoffrey_bawa"
+          ],
           "title": "Modernism Belongs Somewhere",
           "text": "Aalto tempered modern construction with wood, brick, natural textures, and interiors calibrated to human experience. In Sri Lanka, Bawa joined modern design to tropical climate, water, planting, local materials, and vernacular roof forms."
         },
         {
           "key": "lina_bo_bardi+zaha_hadid",
-          "member_ids": ["lina_bo_bardi", "zaha_hadid"],
+          "member_ids": [
+            "lina_bo_bardi",
+            "zaha_hadid"
+          ],
           "title": "Public Space Recast",
           "text": "Bo Bardi directed architecture toward everyday social and cultural life, most visibly in the SESC Pompéia factory conversion. Hadid reorganized public institutions through angled planes, continuous routes, and flowing galleries, carrying radical geometry from drawings into built space."
         }
@@ -594,8 +639,16 @@
       {
         "label": "Barcelona",
         "score": 12.0,
-        "centroid": [2.17615, 41.38321],
-        "bbox": [2.1734, 41.38258, 2.17707, 41.3851],
+        "centroid": [
+          2.17615,
+          41.38321
+        ],
+        "bbox": [
+          2.1734,
+          41.38258,
+          2.17707,
+          41.3851
+        ],
         "year_start": 1883,
         "year_end": 1915,
         "events": [
@@ -606,7 +659,10 @@
             "event_title": "Built Casa Vicens",
             "event_date": "1883",
             "place": "Barcelona",
-            "coordinates": [2.177073, 41.3825802],
+            "coordinates": [
+              2.177073,
+              41.3825802
+            ],
             "weight": 3.0
           },
           {
@@ -616,7 +672,10 @@
             "event_title": "Developed Park Güell project",
             "event_date": "1900",
             "place": "Barcelona",
-            "coordinates": [2.1734, 41.3851],
+            "coordinates": [
+              2.1734,
+              41.3851
+            ],
             "weight": 3.0
           },
           {
@@ -626,7 +685,10 @@
             "event_title": "Created landmark urban houses",
             "event_date": "1904",
             "place": "Barcelona",
-            "coordinates": [2.177073, 41.3825802],
+            "coordinates": [
+              2.177073,
+              41.3825802
+            ],
             "weight": 3.0
           },
           {
@@ -636,7 +698,10 @@
             "event_title": "Focused entirely on Sagrada Família",
             "event_date": "1915",
             "place": "Barcelona",
-            "coordinates": [2.177073, 41.3825802],
+            "coordinates": [
+              2.177073,
+              41.3825802
+            ],
             "weight": 3.0
           }
         ],
@@ -645,8 +710,16 @@
       {
         "label": "Glasgow",
         "score": 5.0,
-        "centroid": [-4.25017, 55.86115],
-        "bbox": [-4.25017, 55.86115, -4.25017, 55.86115],
+        "centroid": [
+          -4.25017,
+          55.86115
+        ],
+        "bbox": [
+          -4.25017,
+          55.86115,
+          -4.25017,
+          55.86115
+        ],
         "year_start": 1897,
         "year_end": 1902,
         "events": [
@@ -657,7 +730,10 @@
             "event_title": "Glasgow School of Art rises on Renfrew Street",
             "event_date": "1897",
             "place": "Glasgow",
-            "coordinates": [-4.2501687, 55.861155],
+            "coordinates": [
+              -4.2501687,
+              55.861155
+            ],
             "weight": 3.0
           },
           {
@@ -667,7 +743,10 @@
             "event_title": "Hill House and Willow Tearooms peak",
             "event_date": "1902",
             "place": "Glasgow",
-            "coordinates": [-4.2501687, 55.861155],
+            "coordinates": [
+              -4.2501687,
+              55.861155
+            ],
             "weight": 2.0
           }
         ],
@@ -676,8 +755,16 @@
       {
         "label": "São Paulo",
         "score": 6.0,
-        "centroid": [-46.63338, -23.55065],
-        "bbox": [-46.63338, -23.55065, -46.63338, -23.55065],
+        "centroid": [
+          -46.63338,
+          -23.55065
+        ],
+        "bbox": [
+          -46.63338,
+          -23.55065,
+          -46.63338,
+          -23.55065
+        ],
         "year_start": 1951,
         "year_end": 1977,
         "events": [
@@ -688,7 +775,10 @@
             "event_title": "Naturalized and built Glass House",
             "event_date": "1951",
             "place": "São Paulo",
-            "coordinates": [-46.6333824, -23.5506507],
+            "coordinates": [
+              -46.6333824,
+              -23.5506507
+            ],
             "weight": 3.0
           },
           {
@@ -698,7 +788,10 @@
             "event_title": "Designed SESC Pompéia",
             "event_date": "1977",
             "place": "São Paulo",
-            "coordinates": [-46.6333824, -23.5506507],
+            "coordinates": [
+              -46.6333824,
+              -23.5506507
+            ],
             "weight": 3.0
           }
         ],
@@ -707,8 +800,16 @@
       {
         "label": "Cologne",
         "score": 3.0,
-        "centroid": [6.9568, 50.9383],
-        "bbox": [6.9568, 50.9383, 6.9568, 50.9383],
+        "centroid": [
+          6.9568,
+          50.9383
+        ],
+        "bbox": [
+          6.9568,
+          50.9383,
+          6.9568,
+          50.9383
+        ],
         "year_start": 1957,
         "year_end": 1957,
         "events": [
@@ -719,7 +820,10 @@
             "event_title": "Founds lightweight lab and builds Sternwellenzelt",
             "event_date": "1957",
             "place": "Cologne",
-            "coordinates": [6.9568, 50.9383],
+            "coordinates": [
+              6.9568,
+              50.9383
+            ],
             "weight": 3.0
           }
         ],
@@ -728,8 +832,16 @@
       {
         "label": "Dambulla",
         "score": 3.0,
-        "centroid": [80.6517, 7.8742],
-        "bbox": [80.6517, 7.8742, 80.6517, 7.8742],
+        "centroid": [
+          80.6517,
+          7.8742
+        ],
+        "bbox": [
+          80.6517,
+          7.8742,
+          80.6517,
+          7.8742
+        ],
         "year_start": 1994,
         "year_end": 1994,
         "events": [
@@ -740,7 +852,10 @@
             "event_title": "Completes Kandalama Hotel",
             "event_date": "1994",
             "place": "Dambulla",
-            "coordinates": [80.6517, 7.8742],
+            "coordinates": [
+              80.6517,
+              7.8742
+            ],
             "weight": 3.0
           }
         ],
@@ -810,5 +925,9 @@
     "composed_at": "2026-08-09T20:43:10.011140+00:00",
     "throughline": "Across more than a century, nine designers challenged architecture conceived as a sealed, standardized object. Their work progressively widened the forces allowed to shape buildings—from craft and natural form to bodily comfort, landscape, social use, structural tension, and movement. A few direct encounters linked these lives, while parallel experiments in distinct places reveal a broader reworking of modern architecture."
   },
-  "section_order": ["timeline", "network", "map"]
+  "section_order": [
+    "timeline",
+    "network",
+    "map"
+  ]
 }

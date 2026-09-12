@@ -12,6 +12,15 @@ data/persons_*.json
 data/person_styles.json
 data/people/**/*.json
 data/people/**/_cache/
+# Written by the meta-story scripts through utils/json_io.py, in the same
+# canonical format as the person data above. Prettier collapses a short array
+# onto one line and the writer does not, so every composition, translation,
+# and event sync left the tree failing format:check until someone ran Prettier
+# by hand.
+data/meta_stories.json
+data/meta_stories_*.json
+data/meta_story_styles.json
+data/meta_stories/**/*.json
 # Geocoder answers, written by the generation scripts and not committed.
 data/_cache/
 # Written by the fact-checking evaluation stages.
