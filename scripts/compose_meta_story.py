@@ -38,6 +38,15 @@ What the prompt still carries is what the model cannot infer:
   fact worth keeping moves into the story element nearest to where the reader
   will use it. Readers reported reading the event, circle, and stop cards and
   skimming the prose around them, so the information belongs on the cards.
+- **The section introductions** — each section body is one full paragraph
+  that opens its section on the question the component answers, hints at
+  the shape of the answer without giving it, and adds background only where
+  it is specific to that question; it names no cast member, event, tie, or
+  stop. A weight rule that asked for "one short paragraph that only frames
+  the question" got exactly that, one sentence restating the heading ("the
+  dates trace how each result opened the next stage"), which introduced
+  nothing. The rules before it had produced the opposite failure, a body
+  that toured the stops in one clause each.
 - **The craft rules** — name every place, identify a first-mentioned event
   before building on it, no rhetorical questions, no sentences enumerating
   abstract categories, and a title delivered by the text beneath it. Each
@@ -354,20 +363,28 @@ class CompositionResult(BaseModel):
         description="Headings for the four sections"
     )
     timeline_body: List[StoryBlock] = Field(
-        description="Prose between the chronology heading and the timeline: "
-        "one short paragraph that only frames the question the timeline "
-        "answers — the information itself goes on the event texts"
+        description="The section introduction between the chronology heading "
+        "and the timeline: one full paragraph (see SECTION INTRODUCTIONS) "
+        "that opens the section on the question the sequence answers for "
+        "these lives, hints at the shape of the answer without giving it, "
+        "and adds the conditions of the era that set the sequence's pace; "
+        "names no cast member, event, or date — those are the event texts'"
     )
     network_body: List[StoryBlock] = Field(
-        description="Prose between the network heading and the graph: one "
-        "short paragraph that only frames the question the graph answers — "
-        "the information itself goes on the circle cards"
+        description="The section introduction between the network heading "
+        "and the graph: one full paragraph (see SECTION INTRODUCTIONS) that "
+        "opens the section on the question the graph answers for these "
+        "lives, hints at the shape of the answer without giving it, and "
+        "adds how people of this field and time came to know one another; "
+        "names no cast member or tie — those are the circle cards'"
     )
     map_body: List[StoryBlock] = Field(
-        description="Prose between the places heading and the map: one short "
-        "paragraph that only frames the question the map answers — the "
-        "information itself goes on the stop cards; empty when the story "
-        "has no map"
+        description="The section introduction between the places heading "
+        "and the map: one full paragraph (see SECTION INTRODUCTIONS) that "
+        "opens the section on the question the map answers for these "
+        "lives, hints at the shape of the answer without giving it, and "
+        "adds what drew the work to a few places; names no cast member or "
+        "stop — those are the stop cards'; empty when the story has no map"
     )
     conclusion: List[StoryBlock] = Field(
         description="The closing section's prose — the last prose on the "
@@ -652,7 +669,7 @@ def build_page(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
     def timeline_lines() -> List[str]:
         lines = [
             "  heading          >>> YOURS  (section_headings.timeline)",
-            "  timeline_body    >>> YOURS",
+            "  timeline_body    >>> YOURS  (the section introduction, one full paragraph)",
             "",
             "  then THE TIMELINE, which gives the reader the sequence itself: what",
             "  happened, dated, era by era. It scrolls sideways and the reader meets",
@@ -699,7 +716,7 @@ def build_page(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
         }
         lines = [
             "  heading          >>> YOURS  (section_headings.network)",
-            "  network_body     >>> YOURS",
+            "  network_body     >>> YOURS  (the section introduction, one full paragraph)",
             "",
             "  then THE GRAPH, which gives the reader who was connected to whom.",
             "  The cast appears as a graph and the circles arrive one card at a",
@@ -746,7 +763,7 @@ def build_page(dataset: Dict[str, Any], registry: Dict[str, Any]) -> str:
         }
         lines = [
             "  heading          >>> YOURS  (section_headings.map)",
-            "  map_body         >>> YOURS",
+            "  map_body         >>> YOURS  (the section introduction, one full paragraph)",
             "",
             "  then THE MAP, which gives the reader where it happened. The map",
             "  pins full screen while the stop cards arrive in the order you set.",
@@ -917,12 +934,46 @@ this story is about and how it is best told.
 WHERE THE WEIGHT GOES. Readers read the texts on the components — the event
 texts, the circle cards, the stop cards — and tire in the article prose
 around them, so the information lives on the components and the prose stays
-short. Opening and description together: roughly 100-150 words. Each section
-body: one short paragraph that only frames the question its component
-answers. The conclusion: just as short. A fact worth keeping belongs in the
-story element nearest to where the reader will use it — the event text, the
-circle card, the stop card — never in the introductory paragraph above the
-component.
+short. Opening and description together: roughly 100-150 words. The
+conclusion: one short paragraph. A fact worth keeping belongs in the story
+element nearest to where the reader will use it — the event text, the circle
+card, the stop card — never in the paragraph above the component.
+
+SECTION INTRODUCTIONS. Each section body is one full paragraph of roughly
+80-130 words between the section's heading and its component. It is the
+threshold the reader crosses into the component, and it does three things,
+in this order of importance:
+
+1. It opens the section on the question this component answers for these
+   lives — how the work advanced over the years, who dealt with whom, where
+   it gathered — and on why that question is worth asking of this cast. It
+   does so without naming a cast member, an event, a date, a tie, or a stop:
+   the reader meets every one of those on the component a moment later, and
+   a name given here is one the card can no longer introduce.
+2. It hints at what the component will show, in the abstract: the shape of
+   the answer, never the answer. "One laboratory drew every strand of this
+   work toward itself" hints; "Paris supplied the decisive evidence" is the
+   stop card's sentence. Say what kind of pattern the reader is about to see
+   and let the component prove it. Abstract by leaving the finding out, never
+   by paraphrasing it away: a place goes by its name or stays off the page,
+   so an introduction that needs "an Atlantic diplomatic capital" has begun
+   to tell the stop.
+3. It carries background the reader needs in order to read the component
+   and finds nowhere else on the page — and only background specific to this
+   section's question. For the chronology, the conditions of the era that
+   set its pace: a war, a law, a market, an institution. For the graph, how
+   people of this field and time came to know one another: the journals,
+   the academies, the courts, the letters. For the map, what drew the work
+   to a few places: a patron, a university, a trade, a border. This
+   background is concrete, and it names the law or the institution, which
+   are not the cast. Background that would fit every section, or every
+   story, is filler; leave it out.
+
+The three components answer different questions, so their introductions must
+not be interchangeable: a reader who covered the headings should still know
+which component each paragraph opens. The one-sentence framing — "the dates
+trace how each result opened the next stage" — is too little; it tells the
+reader nothing they could not infer from the heading.
 
 CRAFT. Assume a reader with no prior knowledge: what a sentence does not
 explain, they do not know. Name every place instead of paraphrasing it
