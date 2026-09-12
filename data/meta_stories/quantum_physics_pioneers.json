@@ -1,11 +1,11 @@
 {
   "dataset": "meta_story",
-  "created_on": "2026-08-02T14:12:30.489676+02:00",
+  "created_on": "2026-09-12T06:35:35.492374+02:00",
   "meta_story": {
     "id": "quantum_physics_pioneers",
     "title": "Making the Quantum World",
-    "tagline": "How matter escaped classical certainty",
-    "description": "At the turn of the twentieth century, the atom ceased to be a tidy, indivisible unit and became a source of unsettling evidence. Marie Curie’s investigations of radioactivity revealed transformations within matter, while Albert Einstein’s work on light quanta helped establish that energy itself could arrive in discrete packets. Their breakthroughs made plain that nature at its smallest scales demanded a new language.\n\nThat language emerged through arguments, equations, and international exchanges. Niels Bohr gave the quantum atom a bold early picture and later articulated complementarity; Satyendra Nath Bose supplied a new statistical treatment of particles that Einstein recognized and extended; John von Neumann gave quantum mechanics a rigorous mathematical framework. Together, their work turned a scientific crisis into a durable—if still counterintuitive—account of the physical world.",
+    "tagline": "Five lives behind a new physics",
+    "description": "At the turn of the twentieth century, experiments with radiation, light, and atoms exposed cracks in the orderly clockwork universe of classical physics. Marie Curie made radioactivity an object of rigorous investigation; Albert Einstein argued that light came in quanta; Niels Bohr gave the atom a startling structure of discrete states. Their results forced scientists to confront a world governed by probabilities, jumps, and limits on what can be known at once.\n\nQuantum physics emerged through an international exchange of papers, institutions, and arguments stretching from Paris and Copenhagen to Calcutta, Berlin, and Princeton. Satyendra Nath Bose supplied a new way to count light particles, opening the path to Bose-Einstein statistics, while John von Neumann gave the young theory its powerful mathematical framework. Together, these advances remade both the language of physics and the technologies built from it.",
     "person_ids": [
       "albert_einstein",
       "marie_curie",
@@ -14,33 +14,33 @@
       "satyendra_nath_bose"
     ],
     "date_range_start": "1898",
-    "date_range_end": "1932",
-    "lastUpdated": "2026-09-05T07:13:07.263915+02:00"
+    "date_range_end": "1936",
+    "lastUpdated": "2026-09-12T06:37:06.061863+02:00"
   },
   "generation_metadata": {
     "hints": null,
     "model": "gpt-5.6-terra",
-    "generated_at": "2026-08-02T14:12:30.489676+02:00"
+    "generated_at": "2026-09-12T06:35:35.492374+02:00"
   },
   "subtopics": [
     {
-      "id": "matter_energy_and_quanta",
-      "title": "Matter, Energy, Quanta",
-      "person_ids": ["marie_curie", "albert_einstein"]
+      "id": "quanta_and_radioactivity",
+      "title": "Quanta and Radioactivity",
+      "person_ids": ["marie_curie", "albert_einstein", "satyendra_nath_bose"]
     },
     {
-      "id": "rules_of_quantum_worlds",
-      "title": "Rules of Quantum Worlds",
-      "person_ids": ["niels_bohr", "satyendra_nath_bose", "john_von_neumann"]
+      "id": "atoms_and_formalism",
+      "title": "Atoms and Formalism",
+      "person_ids": ["niels_bohr", "john_von_neumann"]
     }
   ],
   "chapters": [
     {
-      "id": "radioactivity_reveals_the_atom",
-      "title": "The Atom Opens (1898-1903)",
+      "id": "experimental_cracks",
+      "title": "Matter Breaks Open (1898-1913)",
       "date_start": "1898",
       "date_start_precision": "year",
-      "date_end": "1903",
+      "date_end": "1913",
       "date_end_precision": "year",
       "person_events": [
         {
@@ -49,7 +49,7 @@
           "event_date_precision": "month",
           "event_title": "Discovered polonium and radium",
           "event_index": 8,
-          "theme_connection": "Curie’s identification of polonium and radium and her establishment of radioactivity as a property requiring explanation directly revealed that atoms could transform and emit energy. This landmark discovery is indispensable to the collection’s story of matter ceasing to be an indivisible, stable unit."
+          "theme_connection": "In Paris, Curie studied pitchblende and concluded that uranium alone could not explain its activity. She identified the elements polonium and radium and established radioactivity as a property of matter."
         },
         {
           "person_id": "marie_curie",
@@ -57,29 +57,34 @@
           "event_date_precision": "year",
           "event_title": "Doctorate and Nobel Prize in Physics",
           "event_index": 9,
-          "theme_connection": "Curie’s doctoral synthesis of research on radioactive substances gave the emerging phenomenon a durable scientific account, while the 1903 Nobel recognized its landmark significance. It concretely consolidated radioactivity as evidence of transformations within matter."
+          "theme_connection": "Curie completed her doctorate on radioactive substances in Paris. She shared the 1903 Nobel Prize in Physics with Pierre Curie and Henri Becquerel for research that established radioactivity as a field of study."
+        },
+        {
+          "person_id": "marie_curie",
+          "event_date": "1911-12-10",
+          "event_date_precision": "day",
+          "event_title": "Won Nobel Prize in Chemistry",
+          "event_index": 11,
+          "theme_connection": "Curie received the 1911 Nobel Prize in Chemistry for her work on radioactivity and radiochemical research. She now held Nobel Prizes in both physics and chemistry."
+        },
+        {
+          "person_id": "niels_bohr",
+          "event_date": "1913",
+          "event_date_precision": "year",
+          "event_title": "Publishes Papers on Atomic Structure",
+          "event_index": 5,
+          "theme_connection": "Bohr published three papers that joined Rutherford’s nuclear atom to Planck’s idea of fixed energy packets. The model explained the specific lines in hydrogen’s light spectrum."
         }
       ],
       "historical_context": [],
-      "lead_in": "Curie’s discoveries made atomic stability impossible to take for granted. Radioactivity revealed matter as capable of transformation and internal energy release."
+      "lead_in": "Curie’s work on radioactive minerals made the atom an experimental problem. Bohr then used fixed packets of energy to explain the light emitted by hydrogen."
     },
     {
-      "id": "the_first_quantum_break",
-      "title": "Quanta Enter the Atom (1905-1913)",
-      "date_start": "1905",
-      "date_start_precision": "year",
-      "date_end": "1913",
-      "date_end_precision": "year",
-      "person_events": [],
-      "historical_context": [],
-      "lead_in": "Einstein treated light as discrete quanta, breaking with classical continuity. Bohr then placed quantum restrictions at the center of a working atomic model."
-    },
-    {
-      "id": "atoms_and_new_statistics",
-      "title": "Rules for Quantum Reality (1924-1932)",
+      "id": "quantum_language_emerges",
+      "title": "A Shared Quantum Language (1924-1927)",
       "date_start": "1924",
       "date_start_precision": "year",
-      "date_end": "1932",
+      "date_end": "1927",
       "date_end_precision": "year",
       "person_events": [
         {
@@ -88,7 +93,7 @@
           "event_date_precision": "year",
           "event_title": "Sends Quantum Paper to Einstein",
           "event_index": 6,
-          "theme_connection": "Bose’s 1924 paper introduced a new counting method for identical particles and derived Planck’s radiation law, founding Bose statistics; Einstein’s recognition and extension of the work made it central to the rules of quantum worlds."
+          "theme_connection": "While teaching in Dacca, Bose derived Planck’s radiation law by counting identical particles of light in a new way. After a journal rejected the paper, he sent it to Einstein. Einstein translated it into German and secured its publication."
         },
         {
           "person_id": "niels_bohr",
@@ -96,29 +101,57 @@
           "event_date_precision": "year",
           "event_title": "Formulates Complementarity",
           "event_index": 9,
-          "theme_connection": "Bohr’s 1927 principle of complementarity gave quantum mechanics a foundational interpretive language, explaining why wave and particle descriptions are mutually exclusive yet jointly necessary."
-        },
+          "theme_connection": "At the Volta Conference in Como, Bohr presented complementarity. The principle held that quantum objects require wave or particle descriptions according to the experiment being performed."
+        }
+      ],
+      "historical_context": [],
+      "lead_in": "Bose found a new way to count identical particles of light. Bohr supplied a rule for using wave and particle descriptions in different experiments."
+    },
+    {
+      "id": "theory_in_an_atomic_age",
+      "title": "Theory Gains Structure (1932-1936)",
+      "date_start": "1932",
+      "date_start_precision": "year",
+      "date_end": "1936",
+      "date_end_precision": "year",
+      "person_events": [
         {
           "person_id": "john_von_neumann",
           "event_date": "1932",
           "event_date_precision": "year",
           "event_title": "Published quantum mechanics classic",
           "event_index": 7,
-          "theme_connection": "Von Neumann’s 1932 quantum mechanics classic, *Mathematical Foundations of Quantum Mechanics*, supplied the rigorous Hilbert-space and operator framework that formalized the theory and remains a foundational artifact."
+          "theme_connection": "While based in Berlin, von Neumann published Mathematical Foundations of Quantum Mechanics with Springer. The book expressed quantum mechanics through Hilbert spaces and operators, giving the theory a rigorous mathematical framework."
+        },
+        {
+          "person_id": "niels_bohr",
+          "event_date": "1936",
+          "event_date_precision": "year",
+          "event_title": "Develops the Nuclear Drop Model",
+          "event_index": 10,
+          "theme_connection": "Bohr developed a theory of the compound nucleus with Fritz Kalckar. Their model treated the atomic nucleus as a deformable liquid drop."
         }
       ],
-      "historical_context": [],
-      "lead_in": "Bose, Bohr, and von Neumann pushed quantum theory beyond early atomic models. New statistics, an interpretive principle, and a rigorous mathematical framework defined how the theory worked and what it meant."
+      "historical_context": [
+        {
+          "id": "nazi_seizure",
+          "title": "Nazi Seizure",
+          "description": "Adolf Hitler became German chancellor on 30 January 1933, and the Nazi government quickly destroyed democratic institutions and persecuted Jewish citizens. Einstein, who was abroad when Hitler took power, refused to return to Germany, resigned from the Prussian Academy, and settled permanently in the United States.",
+          "date_start": "1933-01-30",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Nazi_seizure_of_power",
+          "priority": 3
+        }
+      ],
+      "lead_in": "Quantum mechanics acquired a rigorous mathematical form and reached into the atomic nucleus. After Hitler took power in 1933, Einstein refused to return to Germany and settled permanently in the United States."
     }
   ],
   "conclusion": [
     {
       "type": "paragraph",
-      "text": "By 1932, the atom was no longer an indivisible piece of predictable matter. It had become a quantum system described through discrete states, probabilistic behavior, complementary observations, unfamiliar particle statistics, and abstract mathematical operators."
-    },
-    {
-      "type": "paragraph",
-      "text": "No one scientist made that world alone. Curie’s experiments, Einstein’s quantum insight and advocacy, Bohr’s atomic model and interpretive arguments, Bose’s statistical breakthrough, and von Neumann’s formalism became parts of a shared transformation—carried across borders and sharpened through both friendship and dispute."
+      "text": "By 1936, the study of radioactive matter had grown into a theory for atoms, light, and nuclei. The ties among these five people let a result from one city become working material in another."
     }
   ],
   "social_network": {
@@ -128,7 +161,7 @@
         "name": "Albert Einstein",
         "type": "main",
         "portrait": "/portraits/albert_einstein_thumbnail.webp",
-        "roles": ["physicist", "scientist"],
+        "roles": ["physicist", "writer"],
         "birth_year": 1879
       },
       {
@@ -164,8 +197,8 @@
         "birth_year": 1894
       },
       {
-        "id": "sec:david_hilbert",
-        "name": "David Hilbert",
+        "id": "sec:j_robert_oppenheimer",
+        "name": "J. Robert Oppenheimer",
         "type": "secondary",
         "portrait": null,
         "roles": [],
@@ -178,17 +211,17 @@
         "target": "john_von_neumann",
         "kind": "main",
         "relationship_type": "social/friend",
-        "relationship_description": "Einstein and von Neumann were colleagues at the Institute for Advanced Study in Princeton and were described as good friends.",
+        "relationship_description": "Einstein and von Neumann were colleagues at the Institute for Advanced Study in Princeton, and von Neumann described Einstein as a good friend.",
         "strength": "strong",
         "endpoints": {
           "albert_einstein": {
             "relationship_type": "social/friend",
-            "relationship_description": "Einstein and von Neumann were colleagues at the Institute for Advanced Study in Princeton and were described as good friends.",
+            "relationship_description": "Einstein and von Neumann were colleagues at the Institute for Advanced Study in Princeton, and von Neumann described Einstein as a good friend.",
             "strength": "strong"
           },
           "john_von_neumann": {
             "relationship_type": "social/friend",
-            "relationship_description": "Einstein and von Neumann were colleagues at the Institute for Advanced Study in Princeton and were described as good friends.",
+            "relationship_description": "Einstein and von Neumann were colleagues at the Institute for Advanced Study in Princeton, and von Neumann described Einstein as a good friend.",
             "strength": "strong"
           }
         },
@@ -198,18 +231,18 @@
         "source": "albert_einstein",
         "target": "niels_bohr",
         "kind": "main",
-        "relationship_type": "professional/rival",
-        "relationship_description": "Einstein and Bohr conducted famous, good-natured lifelong debates over the interpretation and completeness of quantum theory, including Einstein's challenge at the 1930 Solvay Conference.",
+        "relationship_type": "academic/opponent",
+        "relationship_description": "Einstein and Bohr were fellow physicists and friends whose long-running, good-natured debates over quantum mechanics made them prominent intellectual opponents.",
         "strength": "strong",
         "endpoints": {
           "albert_einstein": {
-            "relationship_type": "professional/rival",
-            "relationship_description": "Einstein and Bohr conducted famous, good-natured lifelong debates over the interpretation and completeness of quantum theory, including Einstein's challenge at the 1930 Solvay Conference.",
+            "relationship_type": "academic/opponent",
+            "relationship_description": "Einstein and Bohr were fellow physicists and friends whose long-running, good-natured debates over quantum mechanics made them prominent intellectual opponents.",
             "strength": "strong"
           },
           "niels_bohr": {
-            "relationship_type": "professional/rival",
-            "relationship_description": "Einstein and Bohr conducted famous, good-natured lifelong debates over the interpretation and completeness of quantum theory, including Einstein's challenge at the 1930 Solvay Conference.",
+            "relationship_type": "academic/opponent",
+            "relationship_description": "Einstein and Bohr were fellow physicists and friends whose long-running, good-natured debates over quantum mechanics made them prominent intellectual opponents.",
             "strength": "strong"
           }
         },
@@ -234,44 +267,50 @@
         "source": "marie_curie",
         "target": "satyendra_nath_bose",
         "kind": "main",
-        "relationship_type": "professional/colleague",
-        "relationship_description": "During Bose's 1924–1926 European research stay, he worked in Curie's laboratory environment and gained experience in X-ray and crystallography research.",
+        "relationship_type": "professional/collaborator",
+        "relationship_description": "During his 1924–1926 European research stay, Bose worked with Marie Curie in X-ray and crystallography research.",
         "strength": "moderate",
         "endpoints": {
+          "marie_curie": {
+            "relationship_type": "professional/collaborator",
+            "relationship_description": "During his 1924–1926 European research stay, Bose worked with Marie Curie in X-ray and crystallography research.",
+            "strength": "moderate"
+          },
           "satyendra_nath_bose": {
-            "relationship_type": "professional/colleague",
-            "relationship_description": "During Bose's 1924–1926 European research stay, he worked in Curie's laboratory environment and gained experience in X-ray and crystallography research.",
+            "relationship_type": "professional/collaborator",
+            "relationship_description": "During his 1924–1926 European research stay, Bose worked with Marie Curie in X-ray and crystallography research.",
             "strength": "moderate"
           }
-        }
+        },
+        "origin": "reviewed"
       },
       {
         "source": "albert_einstein",
-        "target": "sec:david_hilbert",
+        "target": "sec:j_robert_oppenheimer",
         "kind": "secondary",
-        "relationship_type": "professional/rival",
-        "relationship_description": "Influential German mathematician who worked in parallel with Einstein on the gravitational field equations and contributed to the mathematical setting of general relativity.",
+        "relationship_type": "academic/colleague",
+        "relationship_description": "A fellow theoretical physicist and later director of the Institute for Advanced Study, where he and Einstein were colleagues in Princeton from 1947 until Einstein's death.",
         "strength": "moderate",
         "endpoints": {
           "albert_einstein": {
-            "relationship_type": "professional/rival",
-            "relationship_description": "Influential German mathematician who worked in parallel with Einstein on the gravitational field equations and contributed to the mathematical setting of general relativity.",
+            "relationship_type": "academic/colleague",
+            "relationship_description": "A fellow theoretical physicist and later director of the Institute for Advanced Study, where he and Einstein were colleagues in Princeton from 1947 until Einstein's death.",
             "strength": "moderate"
           }
         }
       },
       {
-        "source": "john_von_neumann",
-        "target": "sec:david_hilbert",
+        "source": "niels_bohr",
+        "target": "sec:j_robert_oppenheimer",
         "kind": "secondary",
-        "relationship_type": "academic/mentor",
-        "relationship_description": "Leading German mathematician under whom von Neumann studied in Göttingen on a Rockefeller grant, shaping his work in functional analysis and foundations.",
-        "strength": "strong",
+        "relationship_type": "professional/colleague",
+        "relationship_description": "Bohr joined the British mission to the Manhattan Project, whose Los Alamos Laboratory was directed by Oppenheimer, and contributed to Allied discussions of atomic weapons and postwar international control.",
+        "strength": "moderate",
         "endpoints": {
-          "john_von_neumann": {
-            "relationship_type": "academic/mentor",
-            "relationship_description": "Leading German mathematician under whom von Neumann studied in Göttingen on a Rockefeller grant, shaping his work in functional analysis and foundations.",
-            "strength": "strong"
+          "niels_bohr": {
+            "relationship_type": "professional/colleague",
+            "relationship_description": "Bohr joined the British mission to the Manhattan Project, whose Los Alamos Laboratory was directed by Oppenheimer, and contributed to Allied discussions of atomic weapons and postwar international control.",
+            "strength": "moderate"
           }
         }
       },
@@ -279,18 +318,18 @@
         "source": "albert_einstein",
         "target": "marie_curie",
         "kind": "main",
-        "relationship_type": "professional/colleague",
-        "relationship_description": "Einstein supported Curie, visited her in March 1913, and joined her on a summer excursion in the Swiss Engadin.",
+        "relationship_type": "social/friend",
+        "relationship_description": "Marie Curie visited Einstein in March 1913, and they took a summer excursion together in the Swiss Engadin.",
         "strength": "moderate",
         "endpoints": {
           "albert_einstein": {
-            "relationship_type": "professional/colleague",
-            "relationship_description": "Einstein supported Curie, visited her in March 1913, and joined her on a summer excursion in the Swiss Engadin.",
+            "relationship_type": "social/friend",
+            "relationship_description": "Marie Curie visited Einstein in March 1913, and they took a summer excursion together in the Swiss Engadin.",
             "strength": "moderate"
           },
           "marie_curie": {
-            "relationship_type": "professional/colleague",
-            "relationship_description": "Einstein supported Curie, visited her in March 1913, and joined her on a summer excursion in the Swiss Engadin.",
+            "relationship_type": "social/friend",
+            "relationship_description": "Marie Curie visited Einstein in March 1913, and they took a summer excursion together in the Swiss Engadin.",
             "strength": "moderate"
           }
         },
@@ -300,16 +339,16 @@
     "narration": {
       "circles": [
         {
-          "key": "marie_curie+satyendra_nath_bose",
-          "member_ids": ["marie_curie", "satyendra_nath_bose"],
-          "title": "From Paper to Laboratory",
-          "text": "Bose’s European research stay brought him into Curie’s laboratory environment from 1924 to 1926. His work there in X-ray and crystallography linked the experimental tradition of radioactivity research with a career newly recognized for its contribution to quantum statistics."
-        },
-        {
-          "key": "albert_einstein+niels_bohr+john_von_neumann",
-          "member_ids": ["albert_einstein", "niels_bohr", "john_von_neumann"],
-          "title": "Debate and Formalism",
-          "text": "Einstein and Bohr’s good-natured rivalry turned the interpretation and completeness of quantum theory into a lifelong argument. Einstein later became a close friend and colleague of von Neumann in Princeton. Together, these connections place Einstein between Bohr’s philosophical interpretation and von Neumann’s mathematical formalization, even as Einstein remained skeptical of the theory’s completeness."
+          "key": "marie_curie+albert_einstein+niels_bohr+satyendra_nath_bose+john_von_neumann",
+          "member_ids": [
+            "marie_curie",
+            "albert_einstein",
+            "niels_bohr",
+            "satyendra_nath_bose",
+            "john_von_neumann"
+          ],
+          "title": "The Connected Quantum Circle",
+          "text": "Bose mailed his 1924 paper to Einstein after a journal rejected it. Einstein translated the paper, arranged its publication, and later recommended Bose for a professorship in Dacca. Bose worked with Curie on X-ray and crystallography research during his European stay. Curie and Einstein were friends who traveled together in the Swiss Engadin. Einstein debated quantum mechanics with Bohr and called von Neumann a good friend from Princeton."
         }
       ]
     }
@@ -318,7 +357,7 @@
     "clusters": [
       {
         "label": "Paris",
-        "score": 5.0,
+        "score": 4.0,
         "centroid": [2.32004, 48.85889],
         "bbox": [2.32004, 48.85889, 2.32004, 48.85889],
         "year_start": 1898,
@@ -342,52 +381,10 @@
             "event_date": "1903",
             "place": "Paris",
             "coordinates": [2.320041, 48.8588897],
-            "weight": 2.0
+            "weight": 1.0
           }
         ],
         "key": "paris"
-      },
-      {
-        "label": "Bern",
-        "score": 3.0,
-        "centroid": [7.4474, 46.9481],
-        "bbox": [7.4474, 46.9481, 7.4474, 46.9481],
-        "year_start": 1905,
-        "year_end": 1905,
-        "events": [
-          {
-            "person_id": "albert_einstein",
-            "person_name": "Albert Einstein",
-            "event_index": 6,
-            "event_title": "Publishes Annus Mirabilis papers",
-            "event_date": "1905-06-30",
-            "place": "Bern",
-            "coordinates": [7.4474, 46.9481],
-            "weight": 3.0
-          }
-        ],
-        "key": "bern"
-      },
-      {
-        "label": "Manchester",
-        "score": 3.0,
-        "centroid": [-2.2426, 53.4808],
-        "bbox": [-2.2426, 53.4808, -2.2426, 53.4808],
-        "year_start": 1913,
-        "year_end": 1913,
-        "events": [
-          {
-            "person_id": "niels_bohr",
-            "person_name": "Niels Bohr",
-            "event_index": 5,
-            "event_title": "Publishes Three Atomic Model Papers",
-            "event_date": "1913-07",
-            "place": "Manchester",
-            "coordinates": [-2.2426, 53.4808],
-            "weight": 3.0
-          }
-        ],
-        "key": "manchester"
       },
       {
         "label": "Dacca",
@@ -409,44 +406,67 @@
           }
         ],
         "key": "dacca"
+      },
+      {
+        "label": "Copenhagen",
+        "score": 5.0,
+        "centroid": [12.5683, 55.6761],
+        "bbox": [12.5683, 55.6761, 12.5683, 55.6761],
+        "year_start": 1913,
+        "year_end": 1936,
+        "events": [
+          {
+            "person_id": "niels_bohr",
+            "person_name": "Niels Bohr",
+            "event_index": 5,
+            "event_title": "Publishes Papers on Atomic Structure",
+            "event_date": "1913",
+            "place": "Copenhagen",
+            "coordinates": [12.5683, 55.6761],
+            "weight": 3.0
+          },
+          {
+            "person_id": "niels_bohr",
+            "person_name": "Niels Bohr",
+            "event_index": 10,
+            "event_title": "Develops the Nuclear Drop Model",
+            "event_date": "1936",
+            "place": "Copenhagen",
+            "coordinates": [12.5683, 55.6761],
+            "weight": 2.0
+          }
+        ],
+        "key": "copenhagen"
       }
     ],
     "narration": {
       "stops": [
         {
           "key": "paris",
-          "title": "Matter Becomes Unstable",
-          "text": "In Paris, Curie’s 1898 identification of polonium and radium showed that uranium-bearing minerals concealed previously unknown sources of radioactivity. Her doctorate and shared 1903 Nobel Prize in Physics consolidated radioactivity as a fundamental problem in the understanding of matter."
-        },
-        {
-          "key": "bern",
-          "title": "Light Comes in Quanta",
-          "text": "Working in Bern, Einstein published his Annus Mirabilis papers in 1905. Among their breakthroughs was a light-quantum explanation of the photoelectric effect, giving discrete energy packets a concrete role in physical theory."
-        },
-        {
-          "key": "manchester",
-          "title": "Quantum Rules for Atoms",
-          "text": "In Manchester, Bohr’s three 1913 papers joined a nuclear atom to quantized stationary states. Electrons could remain in permitted states and emit radiation when making transitions, bringing quantum rules into the structure of matter."
+          "title": "Radioactivity in Paris",
+          "text": "Curie studied uranium-bearing minerals in Paris and identified polonium and radium in 1898. She completed her doctorate there before sharing the 1903 Nobel Prize in Physics."
         },
         {
           "key": "dacca",
-          "title": "A Paper Crosses Continents",
-          "text": "In Dacca in 1924, Bose derived Planck’s radiation law by counting identical particles in a new way. He sent the paper directly to Einstein, who recognized its importance, translated it into German, and secured its publication."
+          "title": "A Paper From Dacca",
+          "text": "At the University of Dhaka, Bose turned a lecture about problems in radiation theory into a paper on light particles. He mailed it from Dacca to Einstein in 1924 after its first rejection."
+        },
+        {
+          "key": "copenhagen",
+          "title": "From Atom to Nucleus",
+          "text": "In Copenhagen, Bohr published his quantized model of the atom in 1913. He later developed the liquid-drop model there in 1936, extending his work from electron behavior to the atomic nucleus."
         }
       ]
     },
     "generation": {
       "model": "gpt-5.6-luna",
-      "generated_at": "2026-08-02T14:12:51.947505+02:00",
-      "located_events": 7,
-      "rated_events": 7
+      "generated_at": "2026-09-12T06:35:58.313303+02:00",
+      "located_events": 8,
+      "rated_events": 8
     }
   },
+  "section_order": ["timeline", "network", "map"],
   "opening": [
-    {
-      "type": "paragraph",
-      "text": "At the end of the nineteenth century, the atom was still imagined as a stable unit of matter. Marie Curie’s work on radioactivity exposed something far less settled: atoms could transform and release energy from within."
-    },
     {
       "type": "image",
       "image": {
@@ -461,68 +481,44 @@
     },
     {
       "type": "paragraph",
-      "text": "That rupture was only the beginning. Over the next three decades, Albert Einstein, Niels Bohr, Satyendra Nath Bose, and John von Neumann helped build a physics in which energy came in packets, atoms occupied discrete states, identical particles obeyed unfamiliar statistics, and physical reality demanded a new mathematical language."
+      "text": "At the turn of the twentieth century, physicists struggled to describe matter and light with inherited rules. Marie Curie found unexplained activity inside minerals. Niels Bohr, Satyendra Nath Bose, John von Neumann, and Albert Einstein helped build a theory based on fixed packets of energy, identical particles, experimental limits, and a new mathematical form."
     }
   ],
   "description": [
     {
       "type": "paragraph",
-      "text": "Their contributions formed a chain rather than a single breakthrough. Curie made instability within matter impossible to ignore; Einstein applied the quantum idea to light; Bohr brought quantum rules into the atom; Bose changed how particles were counted; and von Neumann gave the emerging theory a rigorous formal structure."
-    },
-    {
-      "type": "paragraph",
-      "text": "The chain was also personal and international. Papers traveled by post, scientists crossed laboratories and institutions, and disagreement became productive: Einstein promoted Bose’s work even as he challenged Bohr’s interpretation of the quantum theory he had helped create."
+      "text": "The work passed between laboratories, letters, conferences, and friendships. A paper mailed from Dacca reached Einstein and a physics journal in Germany. Bose later worked with Curie in Europe. Einstein’s exchanges with Bohr and von Neumann connected new calculations to disputes over what quantum mechanics meant. By 1936, quantum ideas reached from light and atoms into the nucleus."
     }
   ],
   "section_bodies": {
     "timeline": [
       {
         "type": "paragraph",
-        "text": "The classical picture did not collapse all at once. Experimental evidence first unsettled the atom; quantum rules then entered explanations of light and atomic structure; finally, new statistics, interpretations, and mathematics turned a collection of puzzles into a more complete theory."
+        "text": "The dates trace how each experimental or theoretical result opened the next stage of quantum physics."
       }
     ],
     "network": [
       {
         "type": "paragraph",
-        "text": "Quantum physics grew through relationships as well as results. Einstein became a crucial hub: he supported Curie, carried Bose’s paper into German publication, debated Bohr for decades, and later worked alongside von Neumann at the Institute for Advanced Study."
-      },
-      {
-        "type": "image",
-        "image": {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Solvay_conference_1927.jpg/960px-Solvay_conference_1927.jpg",
-          "caption": "1927 Solvay Conference on Quantum Mechanics",
-          "source": "https://commons.wikimedia.org/wiki/File:Solvay_conference_1927.jpg",
-          "person_id": "niels_bohr",
-          "event_index": 9,
-          "image_index": 0
-        },
-        "layout": "full"
-      },
-      {
-        "type": "paragraph",
-        "text": "These ties joined experimental work, theoretical invention, interpretation, and mathematics. Collaboration accelerated ideas, while rivalry—especially between Einstein and Bohr—forced the theory’s advocates to state more clearly what quantum mechanics could and could not claim about reality."
+        "text": "Direct relationships carried the new physics between laboratories, universities, publications, and debates."
       }
     ],
     "map": [
       {
         "type": "paragraph",
-        "text": "The new physics developed across a wide intellectual geography. Paris supplied decisive experimental evidence, Bern a quantum account of light, Manchester a quantized model of the atom, and Dacca a new way to count indistinguishable particles."
-      },
-      {
-        "type": "paragraph",
-        "text": "Movement connected those centers. Bose’s letter to Einstein carried an idea from South Asia into European publication, and his subsequent work in Curie’s laboratory environment brought him directly into the scientific world his paper had reached."
+        "text": "The geography spans Europe and South Asia. Each city provided a different setting for the changing account of matter and light."
       }
     ]
   },
   "section_headings": {
-    "timeline": "From Instability to Structure",
-    "network": "Ideas in Company",
-    "map": "A Theory in Motion",
-    "conclusion": "What They Changed"
+    "timeline": "How Quantum Theory Formed",
+    "network": "Ideas Between People",
+    "map": "Three Centers of Change",
+    "conclusion": "A Physics Made Together"
   },
   "composition": {
     "model": "gpt-5.6-sol",
-    "composed_at": "2026-08-02T14:13:40.455107+02:00",
-    "throughline": "Between 1898 and 1932, discoveries about radioactivity, light, atoms, and particle statistics dismantled the classical picture of matter and replaced it with a quantum framework. The transformation emerged through experiments, papers, debates, correspondence, and mathematical formalization connecting five scientists across Europe and South Asia."
+    "composed_at": "2026-09-12T06:37:06.061863+02:00",
+    "throughline": "Experimental evidence that atoms could change became a quantum theory of light, matter, and the nucleus. The work advanced through a connected group whose letters, collaborations, friendships, and debates carried ideas between Paris, Dacca, Copenhagen, Berlin, and Princeton."
   }
 }
