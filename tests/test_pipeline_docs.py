@@ -2392,11 +2392,18 @@ class LatexTests(unittest.TestCase):
         self.assertIn("\\section{Step details}", tex)
 
     def test_every_block_of_the_real_report_is_written(self) -> None:
-        """One figure environment per figure the page numbers, in order."""
+        """One numbered caption per figure the page numbers, in order. Phone
+        captures declared one after another share a float, so there are no
+        more figure environments than captions, and possibly fewer."""
         figures = sum(
             report.COMPONENTS[mount.component].figures for mount in self.document.mounts
         )
-        self.assertEqual(figures, self.tex.count("\\begin{figure}"))
+        floats = re.findall(
+            r"\\begin\{figure\}.*?\\end\{figure\}", self.tex, flags=re.DOTALL
+        )
+        captions = sum(body.count("\\caption{") for body in floats)
+        self.assertEqual(figures, captions)
+        self.assertLessEqual(len(floats), figures)
         for mount in self.document.mounts:
             if mount.component == "screenshot":
                 self.assertIn(f"\\label{{fig:shot-{mount.params['id']}}}", self.tex)
