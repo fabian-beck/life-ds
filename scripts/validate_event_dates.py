@@ -49,6 +49,14 @@ ACCEPTED: Dict[Tuple[str, str], str] = {
     ("alvar_aalto", "1935"): "The 1927 competition the completed library came out of.",
     ("antoni_gaud", "1886"): "The 1878 exhibition where Gaudí and Güell met.",
     ("max_planck", "1919"): "The reserved 1918 prize, awarded to Planck in 1919.",
+    ("steve_jobs", "1991-03-18"): (
+        "The October 1989 lecture where Jobs met Powell, whom the marriage "
+        "description reaches back to."
+    ),
+    ("steve_jobs", "1997-07"): (
+        "The December 1996 NeXT acquisition that brought Jobs back, before "
+        "the July 1997 appointment the event dates."
+    ),
     ("zaha_hadid", "2011"): "The 2012 Olympic Games the centre was completed for.",
 }
 

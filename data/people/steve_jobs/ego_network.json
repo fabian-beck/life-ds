@@ -1,538 +1,251 @@
 {
-  "dataset": "wikipedia-egonetwork",
-  "created_on": "2025-12-05",
+  "dataset": "Wikipedia ego network: Steve Jobs",
+  "created_on": "2026-09-12",
   "ego": {
     "name": "Steve Jobs",
     "birth_year": 1955,
     "death_year": 2011,
     "primary_roles": [
-      "entrepreneur",
-      "inventor"
+      "businessman",
+      "inventor",
+      "investor",
+      "technology entrepreneur"
     ],
-    "summary": "Steve Jobs (1955–2011) was an American technology entrepreneur and inventor, best known as the co‑founder and longtime CEO of Apple Inc., founder of NeXT, and chairman and majority shareholder of Pixar. A central figure in the personal computer revolution and later in consumer electronics and digital media, he played key roles in products such as the Apple II, Macintosh, iMac, iPod, iPhone, and iPad. His life was shaped by a complex family history, intense professional partnerships and rivalries, and a highly influential design‑driven leadership style.",
+    "summary": "Steve Jobs was an American businessman, inventor, and investor who co-founded Apple, founded NeXT, and served as chairman and majority shareholder of Pixar. He helped shape the personal-computer revolution and, after returning to Apple in 1997, led the development and marketing of products including the iMac, iPod, iPhone, and iPad.",
     "wikipedia": "https://en.wikipedia.org/wiki/Steve_Jobs"
   },
   "connections": [
     {
       "person_name": "Paul Jobs",
-      "relationship_type": "family/father",
-      "relationship_description": "Adoptive father who raised Steve Jobs in California, encouraged his interest in mechanics, and set up a workbench for him in the family garage.",
-      "start_year": 1955,
-      "end_year": 1993,
+      "relationship_description": "Paul Jobs adopted Jobs as an infant and raised him in California. A machinist, he encouraged Jobs’s interest in mechanical craftsmanship through work in the family garage.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life",
-        "building and repairing household items",
-        "working together at the garage workbench",
-        "supporting Steve’s early electronics projects"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "Jobs credited Paul’s craftsmanship and willingness to build anything as formative for his own design sensibility and love of hardware."
+      "notes": "Jobs regarded Paul as his father and rejected language that diminished their relationship.",
+      "relationship_type": "family/adoptive_father"
     },
     {
       "person_name": "Clara Jobs",
-      "relationship_type": "family/mother",
-      "relationship_description": "Adoptive mother who raised Steve Jobs and strongly supported his education, promising his birth mother that they would fund his college tuition.",
-      "start_year": 1955,
-      "end_year": 1986,
+      "relationship_description": "Clara Jobs and Paul Jobs adopted Steve Jobs shortly after his birth. She helped raise him in California and supported his education.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life",
-        "school support",
-        "religious upbringing at Lutheran church"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "Clara initially feared losing Steve in a custody dispute and later admitted to finding him a difficult child, but Jobs said he felt deeply loved and indulged by his parents."
+      "notes": "Jobs regarded Clara and Paul as his parents.",
+      "relationship_type": "family/adoptive_mother"
     },
     {
-      "person_name": "Joanne Carole Schieble",
-      "relationship_type": "family/biological_mother",
-      "relationship_description": "Biological mother who, facing family opposition to her relationship with Abdulfattah Jandali, arranged for Steve’s closed adoption shortly after his birth.",
-      "start_year": 1955,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "post‑adoption contact as adults (via connection through Mona Simpson)"
-      ],
+      "person_name": "Patricia Jobs",
+      "relationship_description": "Patricia Jobs was adopted by Paul and Clara Jobs in 1957 and grew up with Steve Jobs in the Jobs family household.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/Mona_Simpson"
-      ],
-      "notes": "Jobs insisted on calling Joanne and Abdulfattah his ‘sperm and egg bank’ in public, but later in life he re‑established contact through his sister Mona Simpson."
-    },
-    {
-      "person_name": "Abdulfattah Jandali",
-      "relationship_type": "family/biological_father",
-      "relationship_description": "Biological father, a Syrian-born political science student who fathered Steve Jobs with Joanne Schieble before Steve’s adoption.",
-      "start_year": 1955,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "limited contact later in life via family reconnection"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/Mona_Simpson"
-      ],
-      "notes": "They did not have a relationship during Jobs’s childhood. Jandali and Schieble later married and had Mona Simpson, whom Jobs met as an adult."
-    },
-    {
-      "person_name": "Bill Hewlett",
-      "relationship_type": "professional/mentor",
-      "relationship_description": "Co‑founder of Hewlett‑Packard who gave Jobs an early summer job and parts for electronics projects after Jobs cold‑called him as a teenager.",
-      "start_year": 1968,
-      "end_year": 1970,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "telephone conversation about spare parts",
-        "summer job at HP during Jobs’s teens"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/Steve_Wozniak"
-      ],
-      "notes": "Jobs’s story of simply calling Hewlett out of the phone book and being given both parts and a job became part of Silicon Valley lore about openness and mentorship."
-    },
-    {
-      "person_name": "Kōbun Chino Otogawa",
-      "relationship_type": "religious/teacher",
-      "relationship_description": "Zen Buddhist monk who became Jobs’s spiritual teacher, guiding his meditation practice and officiating his wedding to Laurene Powell.",
-      "start_year": 1970,
-      "end_year": 2002,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Zen meditation retreats at Tassajara Zen Mountain Center",
-        "conversations about Zen, discipline, and simplicity",
-        "Buddhist wedding ceremony for Steve and Laurene in 1991"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/K%C5%8Dbun_Chino_Otogawa",
         "https://en.wikipedia.org/wiki/Daniel_Kottke"
       ],
-      "notes": "Jobs explored the idea of monastic life and credited Zen with shaping his minimalist aesthetics and intense focus; Kōbun remained an important but low‑profile influence."
-    },
-    {
-      "person_name": "Steve Wozniak",
-      "relationship_type": "professional/co_founder",
-      "relationship_description": "Close early friend and engineering partner; co‑founded Apple with Jobs and designed the Apple I and Apple II while Jobs drove product vision and business.",
-      "start_year": 1971,
-      "end_year": 2011,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "high school friendship",
-        "phone phreaking and blue box venture",
-        "work at Hewlett‑Packard and Atari collaboration",
-        "co-founding Apple",
-        "development and launch of Apple I and Apple II",
-        "early Macintosh era",
-        "public events and interviews"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/Steve_Wozniak"
-      ],
-      "notes": "Their clandestine ‘blue box’ business convinced both that small entrepreneurs could challenge big corporations; Wozniak later said Apple would not have happened without that project and credited Markkula and Jobs for Apple’s business success."
-    },
-    {
-      "person_name": "Daniel Kottke",
-      "relationship_type": "social/friend",
-      "relationship_description": "College friend from Reed and one of Apple’s earliest employees; travelled with Jobs to India and worked on early Apple hardware.",
-      "start_year": 1972,
-      "end_year": 1985,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "student life at Reed College",
-        "spiritual journey through India in 1974",
-        "living together in an early Apple share house near Cupertino",
-        "debugging Apple II boards and prototyping Apple III and Macintosh"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Daniel_Kottke",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "notes": "Despite their friendship and Kottke’s low employee number, Jobs refused to grant him stock options during Apple’s IPO; co‑founder Steve Wozniak later gave Kottke some of his own shares."
-    },
-    {
-      "person_name": "Chrisann Brennan",
-      "relationship_type": "social/partner",
-      "relationship_description": "High‑school girlfriend and later partner of Jobs; mother of Lisa Brennan‑Jobs and part of Jobs’s early countercultural life.",
-      "start_year": 1972,
-      "end_year": 1980,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "relationship during Homestead High years",
-        "shared house near Apple’s early offices",
-        "participation in counterculture and Zen Buddhism",
-        "co‑parenting of Lisa, including legal disputes over paternity and support"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Chrisann_Brennan",
-        "https://en.wikipedia.org/wiki/Lisa_Brennan-Jobs",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "notes": "Brennan described both the inspiring and difficult aspects of Jobs’s personality in her memoir; she recounted that Clara Jobs once confided her early fears about adopting Steve."
-    },
-    {
-      "person_name": "Robert Friedland",
-      "relationship_type": "social/friend",
-      "relationship_description": "Charismatic Reed College acquaintance and commune owner whose spiritual and entrepreneurial style influenced Jobs’s early worldview.",
-      "start_year": 1972,
-      "end_year": 1978,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "student life at Reed College",
-        "time at the All One Farm commune in Oregon",
-        "introduction to Eastern spirituality and charismatic leadership models"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/Robert_Friedland",
-        "https://en.wikipedia.org/wiki/Lisa_Brennan-Jobs"
-      ],
-      "notes": "Lisa Brennan‑Jobs was born at Friedland’s All One Farm. Jobs later acknowledged Friedland’s influence on his mix of spirituality and showmanship, though they drifted apart."
-    },
-    {
-      "person_name": "Mike Markkula",
-      "relationship_type": "professional/funder",
-      "relationship_description": "Early angel investor and executive who provided crucial funding, business structure, and ‘adult supervision’ to Apple, later serving as CEO and long‑time chairman.",
-      "start_year": 1976,
-      "end_year": 1997,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "incorporating Apple",
-        "securing bank credit and capital",
-        "recruiting early management",
-        "strategic decisions on products like Lisa and Macintosh",
-        "boardroom governance incl. Jobs’s 1985 ouster and 1997 return"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Mike_Markkula",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "notes": "Markkula was instrumental in securing early financing and professionalizing Apple. He sided with John Sculley during the 1985 power struggle but later supported Jobs’s 1997 return and stepped off the board."
-    },
-    {
-      "person_name": "Ronald Wayne",
-      "relationship_type": "professional/co_founder",
-      "relationship_description": "Older engineer who briefly partnered with Steve Jobs and Steve Wozniak as the third co‑founder of Apple, providing administrative expertise and early documentation.",
-      "start_year": 1976,
-      "end_year": 1976,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "drafting the original Apple partnership agreement",
-        "designing Apple’s first logo",
-        "writing the Apple I operations manual"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Ronald_Wayne",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "notes": "Wayne sold his 10% stake in Apple for a small sum less than two weeks after founding due to risk concerns, later often described as the ‘forgotten founder’."
-    },
-    {
-      "person_name": "Bill Gates",
-      "relationship_type": "professional/rival",
-      "relationship_description": "Co‑founder of Microsoft; both competitor and software partner to Apple, with a relationship that evolved from rivalry and legal conflict to mutual public reflection.",
-      "start_year": 1977,
-      "end_year": 2011,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Microsoft software for Apple II and Macintosh",
-        "competition in the personal computer market",
-        "Apple v. Microsoft GUI disputes",
-        "joint public interviews such as the 2007 D5 conference"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/Bill_Gates"
-      ],
-      "notes": "Jobs accused Microsoft of lacking taste, while Gates criticized Apple’s closed approach; later in life they appeared together and spoke with nuance about each other’s contributions."
-    },
-    {
-      "person_name": "Lisa Brennan-Jobs",
-      "relationship_type": "family/child",
-      "relationship_description": "Eldest daughter of Steve Jobs from his relationship with Chrisann Brennan; their relationship moved from denial and legal conflict to later reconciliation.",
-      "start_year": 1978,
-      "end_year": 2011,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family visits",
-        "financial and educational support",
-        "inspiration for the Apple Lisa computer’s name"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lisa_Brennan-Jobs",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "notes": "Jobs initially denied paternity despite a DNA test, but later acknowledged Lisa, altered her birth certificate, and left her a multimillion‑dollar inheritance. Their relationship remained emotionally complex."
-    },
-    {
-      "person_name": "Joan Baez",
-      "relationship_type": "social/friend",
-      "relationship_description": "Folk singer and activist whom Jobs dated in the early 1980s; their relationship reflected his admiration for 1960s counterculture figures.",
-      "start_year": 1982,
-      "end_year": 1984,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "romantic relationship",
-        "shared interest in music and the 1960s counterculture",
-        "social events in the Bay Area"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Joan_Baez",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "notes": "Baez later recalled that Jobs remained a friend and visited her months before his death. The relationship highlighted Jobs’s personal connection to the generation that had inspired him."
-    },
-    {
-      "person_name": "John Sculley",
-      "relationship_type": "professional/rival",
-      "relationship_description": "Former Pepsi executive recruited by Jobs to be Apple’s CEO, later his main internal rival; their conflict led to Jobs losing power and leaving Apple in 1985.",
-      "start_year": 1983,
-      "end_year": 1993,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "joint leadership of Apple",
-        "launch and marketing of the Macintosh",
-        "boardroom strategy debates",
-        "power struggle culminating in Jobs’s removal from operational roles"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_Sculley",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "notes": "Jobs persuaded Sculley with the famous line, ‘Do you want to sell sugared water for the rest of your life or come with me and change the world?’ Their relationship deteriorated over strategy and management style, ending with Jobs’s departure."
+      "notes": "She was known as Patty and also helped assemble early Apple circuit boards.",
+      "relationship_type": "family/sister"
     },
     {
       "person_name": "Mona Simpson",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Biological younger sister, a novelist whom Jobs met as an adult and with whom he developed a close relationship.",
-      "start_year": 1986,
-      "end_year": 2011,
+      "relationship_description": "Mona Simpson was Jobs’s biological younger sister. They first met in 1986 after their biological mother arranged a meeting. They became friends and searched for their father together.",
       "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family visits",
-        "personal conversations",
-        "mutual support during illness",
-        "literary portrayals of Jobs and their father"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Mona_Simpson",
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "They worked together to locate their biological father. Simpson fictionalized Jobs in her novel ‘A Regular Guy’ and wrote a widely read eulogy for him in 2011."
+      "notes": "Simpson later helped Jobs repair his relationship with his daughter Lisa.",
+      "relationship_type": "family/sister"
+    },
+    {
+      "person_name": "Laurene Powell Jobs",
+      "relationship_description": "Jobs met Laurene Powell after his 1989 Stanford Business School lecture. They married in 1991 and raised three children together.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs"
+      ],
+      "notes": "Their marriage lasted until Jobs's death in 2011.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Chrisann Brennan",
+      "relationship_description": "Chrisann Brennan was Jobs’s first girlfriend at Homestead High School and an on-and-off partner for about five years. They were the parents of Lisa Brennan-Jobs.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Lisa_Brennan-Jobs"
+      ],
+      "notes": "Their relationship became strained after Jobs initially denied paternity of their daughter.",
+      "relationship_type": "family/romantic_partner"
+    },
+    {
+      "person_name": "Reed Jobs",
+      "relationship_description": "Reed Jobs was the son of Steve Jobs and Laurene Powell Jobs, born in 1991.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": null,
+      "relationship_type": "family/son"
+    },
+    {
+      "person_name": "Erin Jobs",
+      "relationship_description": "Erin Jobs was the daughter of Steve Jobs and Laurene Powell Jobs, born in 1995.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": null,
+      "relationship_type": "family/daughter"
+    },
+    {
+      "person_name": "Eve Jobs",
+      "relationship_description": "Eve Jobs was the daughter of Steve Jobs and Laurene Powell Jobs, born in 1998.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": null,
+      "relationship_type": "family/daughter"
+    },
+    {
+      "person_name": "Steve Wozniak",
+      "relationship_description": "Steve Wozniak and Jobs became friends through Bill Fernandez in 1971 and sold blue boxes together. They co-founded Apple in 1976 to develop and market Wozniak’s early computers.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Steve_Wozniak"
+      ],
+      "notes": "Wozniak designed the early computers while Jobs drove their commercialization and marketing.",
+      "relationship_type": "innovation/co_founder"
+    },
+    {
+      "person_name": "Daniel Kottke",
+      "relationship_description": "Kottke met Jobs at Reed College in 1972, traveled with him through India in 1974, and became an early Apple employee who helped build and test computer hardware.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Daniel_Kottke",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": "Kottke lived with Jobs and Chrisann Brennan near Apple's Cupertino office and worked on Apple II, Apple III, and Macintosh prototypes.",
+      "relationship_type": "innovation/friend"
+    },
+    {
+      "person_name": "Jony Ive",
+      "relationship_description": "After Jobs returned to Apple, he worked closely with Ive on the company's industrial design direction and on products including the iMac, iPod, iPhone, and iPad.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Jony_Ive"
+      ],
+      "notes": "Jobs described Ive as his spiritual partner at Apple; Ive delivered eulogies at Jobs's employee and family memorial services.",
+      "relationship_type": "innovation/close_colleague"
     },
     {
       "person_name": "John Lasseter",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Animator and director who led Pixar’s creative output; worked closely with Jobs as Jobs served as Pixar’s chairman and majority shareholder and supported its growth.",
-      "start_year": 1986,
-      "end_year": 2006,
+      "relationship_description": "As Pixar's chairman and majority shareholder, Jobs worked with Lasseter, Pixar's leading creative figure, during the studio's emergence as a major animation company and the production of Toy Story.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "spin‑off of Pixar from Lucasfilm",
-        "production of Toy Story and subsequent Pixar films",
-        "negotiations and relationship with Disney",
-        "eventual sale of Pixar to Disney in 2006"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs",
         "https://en.wikipedia.org/wiki/John_Lasseter"
       ],
-      "notes": "Jobs initially saw Pixar as a hardware company but came to trust Lasseter’s creative leadership. Pixar’s success transformed Jobs into a Hollywood figure and major Disney shareholder after the acquisition."
+      "notes": "Lasseter led Pixar's creative work while Jobs provided corporate leadership and long-term financial backing.",
+      "relationship_type": "innovation/close_colleague"
     },
     {
-      "person_name": "Laurene Powell Jobs",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Wife of Steve Jobs from 1991 until his death; a business executive and philanthropist who shared his later life and inherited his estate.",
-      "start_year": 1989,
-      "end_year": 2011,
+      "person_name": "Mike Markkula",
+      "relationship_description": "Markkula met Jobs and Wozniak while they sought financing for Apple II production, invested critical early capital, helped incorporate Apple in 1977, and supplied managerial guidance.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life",
-        "raising three children",
-        "Apple and Pixar social circles",
-        "philanthropic and educational initiatives"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs",
+        "https://en.wikipedia.org/wiki/Mike_Markkula",
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "They met at Stanford Business School in 1989 and married in a Buddhist ceremony in Yosemite in 1991, presided over by Zen monk Kōbun Chino Otogawa."
+      "notes": "Markkula later backed John Sculley during the 1985 dispute that led Jobs to leave Apple, but supported Jobs's return in 1997.",
+      "relationship_type": "business/funder"
     },
     {
-      "person_name": "Reed Jobs",
-      "relationship_type": "family/child",
-      "relationship_description": "Son of Steve Jobs and Laurene Powell Jobs, born in 1991; part of Jobs’s later family life.",
-      "start_year": 1991,
-      "end_year": 2011,
+      "person_name": "John Sculley",
+      "relationship_description": "Jobs recruited John Sculley from Pepsi to lead Apple in 1983. They later clashed over management and product strategy, and Apple’s board supported Sculley in 1985.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life",
-        "time during Jobs’s illness"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/John_Sculley"
       ],
-      "notes": "Reed’s birth shortly after Steve and Laurene’s marriage marked Jobs’s transition into a more settled family life; he was often mentioned as a motivation during Jobs’s illness."
-    },
-    {
-      "person_name": "Erin Jobs",
-      "relationship_type": "family/child",
-      "relationship_description": "Daughter of Steve Jobs and Laurene Powell Jobs, born in 1995.",
-      "start_year": 1995,
-      "end_year": 2011,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "notes": null
-    },
-    {
-      "person_name": "Jony Ive",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "British industrial designer who became Jobs’s closest design collaborator after Jobs’s 1997 return to Apple, co‑creating iconic products and Apple’s design language.",
-      "start_year": 1997,
-      "end_year": 2011,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "design of iMac, iPod, iPhone, iPad and many Macs",
-        "development of iOS and OS X design language",
-        "work on Apple Stores and Apple Park",
-        "tight iterative design process in Apple’s design studio"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Jony_Ive",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "notes": "Jobs called Ive his ‘spiritual partner’ at Apple; Ive said they shared the same perceptions when looking at objects. Jobs gave Ive unusual autonomy and direct reporting to the CEO."
-    },
-    {
-      "person_name": "Eve Jobs",
-      "relationship_type": "family/child",
-      "relationship_description": "Youngest daughter of Steve Jobs and Laurene Powell Jobs, born in 1998.",
-      "start_year": 1998,
-      "end_year": 2011,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "notes": null
+      "notes": "Their early partnership helped launch the Macintosh, but their conflict resulted in Jobs's resignation and creation of NeXT.",
+      "relationship_type": "business/political_rival"
     },
     {
       "person_name": "Tim Cook",
-      "relationship_type": "professional/successor",
-      "relationship_description": "Operations executive whom Jobs hired in 1998 to overhaul Apple’s supply chain; later became COO and succeeded Jobs as CEO in 2011.",
-      "start_year": 1998,
-      "end_year": 2011,
+      "relationship_description": "Jobs recruited Tim Cook to Apple in 1998, and they built a close executive partnership during Apple’s revival. Cook managed operations and succeeded Jobs as Apple CEO.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Apple’s operational turnaround and inventory reduction",
-        "long‑term component supply deals",
-        "strategic planning as part of Apple’s executive team",
-        "leadership transition as Jobs’s health declined"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Tim_Cook",
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "Cook’s operational discipline was central to Apple’s profitability. Jobs trusted him enough to recommend him as CEO; Cook once offered to donate part of his liver to Jobs, which Jobs refused."
+      "notes": "Cook led much of Apple's day-to-day business during Jobs's medical leaves while Jobs continued making major strategic decisions.",
+      "relationship_type": "business/successor"
     },
     {
-      "person_name": "Al Gore",
-      "relationship_type": "social/friend",
-      "relationship_description": "Former U.S. Vice President who served on Apple’s board of directors and shared environmental interests with Jobs.",
-      "start_year": 2003,
-      "end_year": 2011,
+      "person_name": "Joanne Schieble",
+      "relationship_description": "Schieble arranged Jobs's closed adoption in 1955 and later helped arrange his introduction to his biological sister Mona Simpson in 1986.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Apple board meetings",
-        "public advocacy around environmental and educational issues",
-        "social interactions within Apple’s director circle"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Al_Gore",
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Mona_Simpson"
+      ],
+      "notes": "Their relationship was separated by the circumstances of Jobs's adoption.",
+      "relationship_type": "family/biological_mother"
+    },
+    {
+      "person_name": "Lisa Brennan-Jobs",
+      "relationship_description": "Lisa Brennan-Jobs was Jobs's daughter with Chrisann Brennan. After initially denying paternity, Jobs later accepted it, reconciled with Lisa, and legally added his surname to hers.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lisa_Brennan-Jobs",
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "Gore joined Apple’s board in 2003 during Jobs’s second tenure. Their association reinforced Apple’s image as a progressive, environmentally conscious company."
+      "notes": "Their later relationship remained complex and is central to Lisa Brennan-Jobs's memoir Small Fry.",
+      "relationship_type": "family/daughter"
+    },
+    {
+      "person_name": "Ronald Wayne",
+      "relationship_description": "Ronald Wayne worked with Jobs and Steve Wozniak at Atari and helped mediate an early discussion about their venture. He drafted Apple’s original partnership agreement and became a co-founder in April 1976.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ronald_Wayne",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": "Wayne withdrew from Apple less than two weeks after its formation because of his financial exposure.",
+      "relationship_type": "innovation/co_founder"
+    },
+    {
+      "person_name": "Nolan Bushnell",
+      "relationship_description": "Bushnell, Atari's co-founder, hired Jobs as a computer technician and assigned him the Breakout circuit-board project, for which Jobs enlisted Steve Wozniak's engineering help.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Steve_Wozniak"
+      ],
+      "notes": "Bushnell characterized Jobs as difficult but valuable.",
+      "relationship_type": "business/employer"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Steve Jobs’s family relationships were complex, spanning deeply loved adoptive parents, a later‑in‑life reconnection with his biological sister and parents, a long marriage to Laurene Powell Jobs, and four children including Lisa Brennan‑Jobs, with whom he had a difficult but ultimately reconciled bond. His adoptive father’s craftsmanship and his parents’ promise to fund college were central to his identity and values."
+      "summary": "Adoption shaped Jobs’s early family life in the Santa Clara Valley, where Paul and Clara Jobs raised him. His later connection with his biological mother and sister opened another branch of the family. He built a household with Laurene Powell Jobs and their children. His relationship with Chrisann Brennan and Lisa Brennan-Jobs remained difficult after his initial denial of Lisa’s paternity."
     },
     {
-      "relationship_type": "professional",
-      "summary": "Jobs’s professional world revolved around intense partnerships and rivalries—with Steve Wozniak and Mike Markkula in Apple’s founding, John Sculley in the power struggle that led to his ouster, and later Jony Ive, Tim Cook, John Lasseter, and board members like Al Gore as he reshaped Apple and Pixar. These relationships shaped some of the most influential products and companies in computing and animation, often marked by both admiration and conflict."
+      "relationship_type": "innovation",
+      "summary": "Jobs’s innovation circle joined engineering, industrial design, and animation. Steve Wozniak supplied the early computer designs that Jobs brought to market through Apple. After Jobs returned to Apple, Jony Ive made industrial design central to products such as the iMac, iPod, and iPhone. At Pixar, John Lasseter led the studio’s creative work while Jobs provided corporate leadership and long-term financial backing."
     },
     {
-      "relationship_type": "social",
-      "summary": "Jobs’s social network blended countercultural, spiritual, and artistic influences: friends like Daniel Kottke and Robert Friedland, spiritual teacher Kōbun Chino Otogawa, early partner Chrisann Brennan, and later relationships and friendships with figures such as Joan Baez. These connections fed into his fascination with Eastern spirituality, the 1960s counterculture, and music, which in turn influenced his personal style and approach to design and leadership."
+      "relationship_type": "business",
+      "summary": "Business partners and executives shaped Jobs’s ability to build companies. Mike Markkula provided early Apple capital and management guidance. Conflict with John Sculley and Apple’s board forced Jobs out in 1985. After Jobs returned, Tim Cook became Apple’s operations leader and later succeeded him as chief executive."
     }
   ]
 }
