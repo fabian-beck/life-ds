@@ -118,8 +118,18 @@
   /* The indicator stands in the slide's flow under the skeleton and takes the
      free space down to the reserve, centering the spinner in it. It does not
      shrink: on a viewport too short for the skeleton it follows the skeleton
-     down into the slide's own scroll rather than collapsing onto it. */
+     down into the slide's own scroll rather than collapsing onto it.
+
+     It also lifts itself over the slide's pattern, which `StoryView` paints in
+     two coats around its children—the upper one at `z-index: 2`. The rule that
+     raises those children cannot reach here, because Svelte scopes its `*` to
+     the component that declares it, so every block a slide component draws
+     carries the lift itself: this one at the same `z-index: 4` as the skeleton
+     column above it in `.overview-content`. Without it the spinner turns under
+     the coat's `overlay` blend. */
   .loading-indicator {
+    position: relative;
+    z-index: 4;
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
