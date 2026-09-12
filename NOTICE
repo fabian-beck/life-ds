@@ -1,0 +1,33 @@
+Life Data Stories — third-party material and its terms
+
+The MIT license in LICENSE covers what this repository authors: the application under src/, the generation and evaluation code under scripts/ and evaluation/, the build configuration, the tests, and the documentation under docs/.
+
+It does not cover everything the repository carries. The material below comes from third parties or is derived from their work, and it keeps their terms rather than taking on the MIT license. Anyone reusing this repository is bound by the terms of each source named here, not only by LICENSE.
+
+Basemap tiles — public/basemap.pmtiles
+
+A zoom 0–5 world extract of the Protomaps Basemap (version 4.13.0), whose layers are derived from OpenStreetMap and Natural Earth. OpenStreetMap data is published under the Open Database License (ODbL) 1.0, which governs redistribution of the file and of anything derived from it; Natural Earth is in the public domain. The archive carries the required OpenStreetMap attribution in its metadata, and the map displays it.
+
+Basemap glyphs and sprites — public/basemap-assets/
+
+Glyph ranges for Noto Sans Regular, Medium, and Italic, and the sprite sheet of the dark flavor, vendored from https://protomaps.github.io/basemaps-assets by scripts/vendor_basemap_assets.mjs. Noto Sans is licensed under the SIL Open Font License 1.1.
+
+Web fonts
+
+src/fonts.css self-hosts the families the stories set text in, from the @fontsource packages. Those are npm dependencies rather than files in this repository, and each family keeps its own license — for most of them the SIL Open Font License 1.1, recorded in the package.
+
+Story text and metadata — data/
+
+Generated from Wikipedia articles, published under CC BY-SA 4.0, and from Deutsche Biographie records. Of the latter, the metadata fields are CC0 and only the ADB article text (CC BY-NC-SA) is read; the NDB article text (CC BY-NC-ND) is never used, which scripts/utils/deutsche_biographie.py enforces per record. The generated stories are derived from those sources rather than written from nothing, so reuse should follow the sources' terms.
+
+Event images — referenced, not stored
+
+Events link images on Wikimedia Commons and Flickr by URL; no image file of theirs is stored here. Each record carries the creator, license, and license URL its source states, and the interface shows them with the image.
+
+Portraits and chapter art — public/portraits/, public/chapter_art/
+
+Generated with the OpenAI image API. Each portrait is a stylized rendering made from a source image on Wikimedia Commons, which the person's registry entry names in `originalImage`; the chapter illustrations are generated from prompts in the person's dataset and depict no source image.
+
+Node and Python dependencies
+
+Not vendored here. package-lock.json, requirements.txt, and requirements-dev.txt record them, and each carries its own license.

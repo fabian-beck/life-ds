@@ -179,4 +179,10 @@ Daily builds live at `https://build.protomaps.com/<YYYYMMDD>.pmtiles?download=1`
 
 ### Attribution
 
-Attribution for Protomaps and OpenStreetMap is included in the vector source definition and displayed according to the license terms.
+Attribution for Protomaps and OpenStreetMap is included in the vector source definition and displayed according to the license terms. The basemap archive and its vendored glyphs are third-party material; see [License](#license).
+
+## License
+
+The code is MIT-licensed (see `LICENSE`): the application, the generation and evaluation scripts, the build configuration, the tests, and the documentation.
+
+The repository also carries material it did not author, and that material keeps the terms of its source rather than taking on the MIT license — the basemap extract is derived from OpenStreetMap under ODbL, the vendored glyphs are Noto Sans under the SIL Open Font License, and the generated stories under `data/` are derived from Wikipedia under CC BY-SA and from Deutsche Biographie. `NOTICE` names each one, where it sits, and which terms apply, and is the file to read before reusing anything from here beyond the code.

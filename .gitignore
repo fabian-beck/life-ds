@@ -35,3 +35,10 @@ docs/report/latex/*.toc
 docs/report/latex/*.synctex.gz
 # Interaction logs the dev server's emulation of the evaluation API writes.
 .evaluation-logs/
+# Local environment files. README "Generating Data Assets" asks for the OpenAI
+# key in `.env`, so an untracked `.env` is the one place in this checkout a
+# credential is expected to sit. `.env.evaluation` matches none of these and
+# stays tracked: it holds one build switch and no secret.
+.env
+.env.local
+.env.*.local
