@@ -39,6 +39,7 @@ from utils.review_helpers import (  # noqa: E402
     continuity_notes,
 )
 from utils.wikipedia_cache import (  # noqa: E402
+    MissingCacheError,
     get_cached_wikipedia_page,
     get_cache_dir,
 )
@@ -111,6 +112,7 @@ def load_person_data(person_id: str) -> Dict[str, Any]:
 
     Raises:
         FileNotFoundError: If required files don't exist
+        MissingCacheError: If the person has no Wikipedia cache to review against
     """
     person_dir = PEOPLE_DIR / person_id
 
@@ -129,8 +131,11 @@ def load_person_data(person_id: str) -> Dict[str, Any]:
         with open(network_path, "r", encoding="utf-8") as f:
             network_data = json.load(f)
 
-    # Load cached Wikipedia content
-    # Note: We pass empty title since we're always using cache (use_cache=True by default)
+    # Load cached Wikipedia content. Every aspect of the review reads the
+    # article, and the cache is the only place it comes from here — the title
+    # that would be needed to fetch one is not known at this point. A person
+    # without a cache therefore raises MissingCacheError naming the step that
+    # writes it, rather than asking Wikipedia for a page named "".
     wikipedia_page = get_cached_wikipedia_page(person_id, title="", use_cache=True)
     related_articles = get_cached_related_articles(person_id)
 
@@ -254,7 +259,7 @@ def review_person_data(
     print("[Step 2/5] Loading person data...")
     try:
         person_data = load_person_data(person_id)
-    except FileNotFoundError as e:
+    except (FileNotFoundError, MissingCacheError) as e:
         print(f"X {e}")
         return False
 

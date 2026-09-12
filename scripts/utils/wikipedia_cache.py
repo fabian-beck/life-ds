@@ -722,6 +722,28 @@ def load_from_cache(
     return page_data, summary_data, commons_images
 
 
+class MissingCacheError(RuntimeError):
+    """A person's Wikipedia cache is absent where a step needs the article."""
+
+
+def _require_title(person_id: str, title: str) -> None:
+    """Refuse to fetch on behalf of a caller that has no title to fetch.
+
+    A caller that reads the cache and nothing else passes no title, because it
+    expects the cache to answer. When the cache is missing the fetch below
+    would ask Wikipedia for the article named "", which can never succeed; the
+    caller is really missing its cache, and that is what it is told.
+    """
+    if str(title or "").strip():
+        return
+    raise MissingCacheError(
+        f"No Wikipedia cache for '{person_id}' in {get_cache_dir(person_id)}. "
+        f"Run 'python scripts/generate_person.py {person_id}' or "
+        f"'python scripts/cache_wikipedia_materials.py {person_id}' from the "
+        "primary worktree to write it."
+    )
+
+
 def get_cached_wikipedia_page(
     person_id: str, title: str, use_cache: bool = True
 ) -> Dict[str, Any]:
@@ -731,6 +753,7 @@ def get_cached_wikipedia_page(
         if page_data is not None:
             return page_data
 
+    _require_title(person_id, title)
     # Fetch from API
     page_data = _fetch_wikipedia_page_direct(title)
     return page_data
@@ -745,6 +768,7 @@ def get_cached_wikipedia_summary(
         if summary_data is not None:
             return summary_data
 
+    _require_title(person_id, title)
     # Fetch from API
     summary_data = _fetch_wikipedia_summary_direct(title)
     return summary_data

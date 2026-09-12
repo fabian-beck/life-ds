@@ -132,5 +132,32 @@ class CasingTests(unittest.TestCase):
         self.assertEqual(fetched, ["Nobody At All"])
 
 
+class MissingCacheTests(unittest.TestCase):
+    """A cache-only reader is told its cache is missing, not sent fetching.
+
+    ``review_person.py`` reads the article from the cache and passes no title,
+    because it has none to pass. With no cache the accessor fell through to a
+    live fetch of the article named "", which can never succeed, and the
+    review died in the fetcher instead of naming its unmet dependency.
+    """
+
+    def test_an_empty_title_names_the_missing_cache(self):
+        def fail(title):  # pragma: no cover - must never run
+            raise AssertionError(f"fetched {title!r} instead of reporting")
+
+        original = wikipedia_cache._fetch_wikipedia_page_direct
+        wikipedia_cache._fetch_wikipedia_page_direct = fail
+        try:
+            with self.assertRaises(wikipedia_cache.MissingCacheError) as context:
+                wikipedia_cache.get_cached_wikipedia_page(
+                    "nobody_at_all", title="", use_cache=True
+                )
+        finally:
+            wikipedia_cache._fetch_wikipedia_page_direct = original
+        message = str(context.exception)
+        self.assertIn("nobody_at_all", message)
+        self.assertIn("cache_wikipedia_materials.py", message)
+
+
 if __name__ == "__main__":
     unittest.main()
