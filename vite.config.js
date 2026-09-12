@@ -15,14 +15,14 @@ import { createEvaluationApi } from "./netlify/lib/evaluationApi.mjs";
 /**
  * Deployment base path.
  *
- * The dev server and the interface tests serve the application from
- * /life-ds/, so every asset URL has to carry that prefix, and the code that
- * builds those URLs is exercised by every local run rather than only by a
- * production build.
+ * `/life-ds/` is the path GitHub Pages serves this repository from, and it is
+ * the default everywhere: the dev server and the interface tests run under it
+ * too, so the code that builds asset URLs is exercised by every local run
+ * rather than only by a production build.
  *
- * The published site is served from the domain root instead, so the Netlify
- * build sets `VITE_BASE_PATH=/` (see netlify.toml). Any other host that serves
- * from a root or from a subdirectory is the same one variable.
+ * A host that serves the site from a domain root sets `VITE_BASE_PATH=/`
+ * instead; the Netlify build in netlify.toml does, and is why the variable
+ * exists.
  *
  * Code that turns a site-absolute path into a URL must go through
  * `src/utils/assetUrl.js`, which reads this value back as
@@ -34,10 +34,13 @@ const basePath = process.env.VITE_BASE_PATH ?? "/life-ds/";
  * Absolute address of the deployed site.
  *
  * The link-preview tags in index.html need it: an unfurler resolves `og:image`
- * against nothing, so a site-absolute path there is a broken picture. The
- * public address belongs to the deployment rather than to this repository, so
- * the published build reads it from `VITE_SITE_URL` in the Netlify site's
- * environment variables; the fallback below is only a placeholder.
+ * against nothing, so a site-absolute path there is a broken picture.
+ *
+ * The default is the Pages address of this repository, derived from the base
+ * path above, so the deployment that publishes from `deploy` needs nothing
+ * set. A deployment at another address — a custom domain, or the Netlify site
+ * that carries the user evaluation — sets `VITE_SITE_URL` in its own
+ * environment.
  */
 const siteUrl = (
   process.env.VITE_SITE_URL ?? `https://fabian-beck.github.io${basePath}`

@@ -28,9 +28,9 @@ The HTML report includes screenshots and viewport audits. Generated reports and 
 
 ## Deployment
 
-The site is published by **Netlify**, and the `deploy` branch is the deployment. Netlify watches that branch, builds every update it receives, and serves the result; nothing else publishes. `main` is integrated continuously and stays unpublished until someone advances `deploy`, which is what keeps releasing a deliberate act.
+The site is published by **GitHub Pages** at https://fabian-beck.github.io/life-ds/, and the `deploy` branch is the deployment. A push onto that branch runs `.github/workflows/deploy-pages.yml`, which builds the tree it carries and publishes it; nothing else publishes. `main` is integrated continuously and stays unpublished until someone advances `deploy`, which is what keeps releasing a deliberate act.
 
-There is no deployment through GitHub Actions. `.github/workflows/checks.yml` lints, builds, and tests every push except the one onto `deploy`, whose tree `main` has already been checked, and a green run of it releases nothing.
+`.github/workflows/checks.yml` lints, builds, and tests every push except the one onto `deploy`, whose tree `main` has already been checked, so the deployment workflow publishes without repeating them.
 
 ### Publishing a new version
 
@@ -39,27 +39,27 @@ git fetch origin
 git push origin origin/main:deploy
 ```
 
-That push is the entire release: Netlify notices the new commit on `deploy` and builds it on its own, with nothing to trigger by hand. Follow the build under **Deploys** in the Netlify dashboard. Publishing an earlier or a partial state is the same command with a different source — `git push origin <commit>:deploy`.
+That push is the entire release: the workflow starts on its own, and its run under **Actions → Deploy to GitHub Pages** is where it is followed. Publishing an earlier or a partial state is the same command with a different source — `git push origin <commit>:deploy`.
 
 Check what `deploy` currently points at before pushing (`git log origin/deploy --oneline -1`). The branch is a pointer at whatever was published last rather than a line of development, so a push that is not a fast-forward is normal and needs `--force`; nothing is lost, because every commit it ever pointed at is on `main`.
 
 ### The build
 
-`netlify.toml` holds it, and Netlify reads that file from the branch it is building — a change to it publishes only once it reaches `deploy`. The one thing that is not obvious: Netlify serves the site from the domain root rather than from a subdirectory, so the build command sets `VITE_BASE_PATH=/`. A default `npm run build` writes every asset URL into `/life-ds/`, the path the dev server and the interface tests use, which answers 404 at the root.
-
-`VITE_SITE_URL` is not set in `netlify.toml`, because the address a link preview should name is a deployment decision rather than a repository one. Set it in **Site configuration → Environment variables** to the site's public address; left unset, the preview tags fall back to the placeholder in `vite.config.js`, which is not where the site lives.
+A plain `npm run build`, and the workflow reads it from the branch it is building — a change to the workflow publishes only once it reaches `deploy`. Nothing has to be configured for the address: `vite.config.js` defaults `base` to `/life-ds/`, which is the path Pages serves a repository of this name from, and derives the link-preview address from it. `VITE_BASE_PATH` and `VITE_SITE_URL` are for a deployment that lives somewhere else — a custom domain, or a host that serves from a domain root.
 
 Notes:
 
 - The build produces a `404.html` copy of `index.html` (see `notFoundFallbackPlugin` in `vite.config.js`). Shared deep links are hash-based and never reach the server, but a static host has no rewrite rules, and serving the application as the 404 document keeps path-style entry URLs such as `/en` working.
 - The technical report is published with the site: the build copies `docs/report/index.html` to `dist/report/index.html`, served at `/report/` and linked from the landing page and the "AI-generated" modal. The report is committed, so a deployment publishes whatever `docs/report/index.html` holds on the published commit — regenerate it (`python scripts/generate_report.py`) before publishing if a generation script changed.
-- Locally the site is served from a subdirectory (`base: "/life-ds/"`), so anything that turns a site-absolute path — a portrait path from the generated data, an asset in `public/` — into a URL must go through `assetUrl()` in `src/utils/assetUrl.js`. A raw `"/portraits/…"` string in markup works on the published site and 404s in `npm run dev` and in the interface tests.
-- `public/` is currently ~141 MB, most of it generated portraits, and all of it is published. It is worth watching against whatever storage and bandwidth the hosting plan allows.
-- The basemap is served from the site's own origin and relies on HTTP range requests. If the map fails to load with a byte-serving error, point `VITE_PROTOMAPS_PM_TILES_URL` at an external host (see "Basemap" below); the map degrades to a message rather than breaking the page.
+- The site is served from a subdirectory (`base: "/life-ds/"`), on Pages and locally alike, so anything that turns a site-absolute path — a portrait path from the generated data, an asset in `public/` — into a URL must go through `assetUrl()` in `src/utils/assetUrl.js`. A raw `"/portraits/…"` string in markup 404s everywhere except on a deployment that serves from a domain root.
+- The published site is currently ~177 MB in ~1,170 files, most of it generated portraits, and all of it is served. Pages caps a site at 1 GB and a single file at 100 MB — the basemap, at 15 MB, is the largest — and applies a soft bandwidth limit of 100 GB per month.
+- The basemap is served from the site's own origin and relies on HTTP range requests, which Pages has been reported to answer inconsistently for `.pmtiles` archives. If the map fails to load with a byte-serving error, point `VITE_PROTOMAPS_PM_TILES_URL` at an external host (see "Basemap" below); the map degrades to a message rather than breaking the page.
 
 ### The user-evaluation deployment
 
 A second deployment of the same site, built from the `deploy-evaluation` branch in Vite's `evaluation` mode, asks each reader for a participant ID, logs their interactions to Netlify Blobs through a Netlify Function, and serves an analysis page at `/analysis/` with a report per participant and one across all of them. Publishing it is `git push origin origin/main:deploy-evaluation`, once the branch is enabled under the site's branch deploys; nothing of it is in the ordinary `deploy` build. See [User evaluation](docs/agent/user-evaluation.md).
+
+This deployment stays on **Netlify** and cannot move to Pages: its log endpoint is a function and its store is a Netlify service, neither of which a static host provides. `netlify.toml` is therefore still part of the repository, and the Netlify site still exists — for the evaluation branch alone. Its production branch is what needs to be disconnected, under **Site configuration → Build & deploy → Continuous deployment**: while it still watches `deploy`, one push publishes the site twice, to Pages at `/life-ds/` and to Netlify at its own root.
 
 ## Routing
 

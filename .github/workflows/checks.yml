@@ -22,11 +22,11 @@ name: Checks
 # trigger is left the one thing a push here cannot reach: a branch in a fork.
 # The `if` on each job below is what draws that line; the trigger itself cannot.
 #
-# Deployment is deliberately not here, and there is no deployment workflow
-# beside it: the site is published by Netlify from the `deploy` branch, so a
-# green run of this workflow releases nothing. See README "Deployment". Pushing
-# `main` onto `deploy` therefore re-checked a tree that had just been checked,
-# which is why `deploy` is the one branch this workflow ignores.
+# Deployment is deliberately not here: it is `deploy-pages.yml`, which runs on
+# a push onto the `deploy` branch, so a green run of this workflow releases
+# nothing. See README "Deployment". Pushing `main` onto `deploy` would re-check
+# a tree that had just been checked, which is why `deploy` is the one branch
+# this workflow ignores.
 on:
   push:
     branches-ignore:

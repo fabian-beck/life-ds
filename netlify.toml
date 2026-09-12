@@ -1,16 +1,20 @@
-# Netlify watches the `deploy` branch and builds every update to it. Advancing
-# that branch is the whole deployment: `main` is integrated continuously and
-# never published on its own, so releasing stays a deliberate act. Nothing else
-# publishes the site — there is no deployment workflow in .github/workflows.
+# Netlify carries the user-evaluation deployment, which GitHub Pages cannot:
+# its log endpoint is a function and its store is a Netlify service. The
+# ordinary site is published by Pages from the `deploy` branch — see
+# .github/workflows/deploy-pages.yml and README "Deployment".
+#
+# The `[build]` section below is what a Netlify deploy of the ordinary site
+# runs. It stays because the evaluation context inherits from it, and because
+# the site's production branch still watches `deploy` until that is
+# disconnected in the dashboard.
 #
 # Netlify reads this file from the branch it is building, so a change here
-# takes effect only once it reaches `deploy`.
+# takes effect only once it reaches the branch being deployed.
 #
-# Netlify serves the site from the domain root, not from the `/life-ds/`
-# subdirectory the dev server and the interface tests use, so the build has to
-# be told: without `VITE_BASE_PATH=/` every asset URL in `index.html` points
-# into `/life-ds/` and answers 404 here. See README "Deployment" for the rest
-# of the story.
+# Netlify serves a site from the domain root, not from the `/life-ds/`
+# subdirectory that is this repository's default, so the build has to be told:
+# without `VITE_BASE_PATH=/` every asset URL in `index.html` points into
+# `/life-ds/` and answers 404 here.
 [build]
   command = "VITE_BASE_PATH=/ npm run build"
   publish = "dist"

@@ -1,0 +1,67 @@
+name: Deploy to GitHub Pages
+
+# The `deploy` branch is the deployment: a push onto it publishes the tree it
+# carries, and nothing else does. `main` is integrated continuously and stays
+# unpublished until someone advances `deploy`, which is what keeps releasing a
+# deliberate act — so this workflow has no trigger on `main` and no
+# `workflow_dispatch` that would open a second way to publish.
+#
+# `checks.yml` ignores pushes onto `deploy`, whose tree was already checked on
+# `main`. This workflow therefore builds and publishes without repeating them.
+on:
+  push:
+    branches:
+      - deploy
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One publish at a time, and a running one is never cancelled: the site would
+# be left on whichever half of a superseded deployment arrived last.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the branch being published
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      # A plain build, deliberately: `vite.config.js` defaults `base` to
+      # `/life-ds/`, which is the path Pages serves this repository from, and
+      # derives the link-preview address from it. A host that serves from a
+      # domain root is the one that has to set `VITE_BASE_PATH=/`.
+      #
+      # No Python step: the build reads scripts/icon_categories.py and the
+      # generated life_events.json files as text, it does not run them.
+      - name: Build
+        run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload the built site
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5
