@@ -6,6 +6,7 @@ SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 import cache_wikipedia_materials as cache_script  # noqa: E402
+from utils import wikipedia_cache  # noqa: E402
 from utils.wikipedia_cache import extract_wikipedia_title  # noqa: E402
 
 
@@ -86,6 +87,49 @@ class FindWikipediaPageTests(unittest.TestCase):
             cache_script.find_wikipedia_page("https://example.com/Zaha_Hadid")
         self.assertIn("not a Wikipedia article URL", str(context.exception))
         self.assertEqual(self.searched, [])
+
+
+class CasingTests(unittest.TestCase):
+    """A search hit that differs only in case is a different article.
+
+    A person id is passed as the subject whenever an existing person is
+    regenerated, and the lowercase variants built from it miss: a Wikipedia
+    title is case-sensitive after its first letter. The search then returns
+    the correctly cased title, and folding candidates together dropped it as
+    a duplicate of the lowercase miss — so 'niels_bohr' resolved to the next
+    hit, 'Niels Bohr Institute', and generated a person from that article.
+    """
+
+    def test_the_correctly_cased_search_hit_is_tried(self):
+        fetched = []
+
+        def fetch(title):
+            fetched.append(title)
+            if title == "Niels Bohr":
+                return {"title": "Niels Bohr"}
+            raise ValueError(f"No Wikipedia page found for '{title}'.")
+
+        def search(query):
+            return ["Niels Bohr", "Niels Bohr Institute", "Bohr model"]
+
+        page = wikipedia_cache.resolve_wikipedia_page(
+            "niels_bohr", fetch, search=search
+        )
+        self.assertEqual(page, {"title": "Niels Bohr"})
+        self.assertEqual(fetched, ["niels_bohr", "niels bohr", "Niels Bohr"])
+
+    def test_a_suggestion_repeated_verbatim_is_not_fetched_twice(self):
+        fetched = []
+
+        def fetch(title):
+            fetched.append(title)
+            raise ValueError(f"No Wikipedia page found for '{title}'.")
+
+        with self.assertRaises(ValueError):
+            wikipedia_cache.resolve_wikipedia_page(
+                "Nobody At All", fetch, search=lambda query: ["Nobody At All"]
+            )
+        self.assertEqual(fetched, ["Nobody At All"])
 
 
 if __name__ == "__main__":

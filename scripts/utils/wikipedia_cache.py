@@ -95,13 +95,20 @@ def resolve_wikipedia_page(
     attempted: List[str] = []
 
     def add_candidate(value: str) -> None:
+        """Enqueue a title, skipping one already queued.
+
+        Candidates are compared exactly, not case-folded: a Wikipedia title is
+        case-sensitive after its first letter, so 'niels bohr' and 'Niels Bohr'
+        are two different titles and only the second one exists. Folding them
+        together dropped the search's correctly cased hit for the very id that
+        had just been tried in lowercase, and the next hit — 'Niels Bohr
+        Institute' — won instead. The variants below guard themselves against
+        case-only duplicates where that is what they mean.
+        """
         candidate = (value or "").strip()
-        if not candidate:
+        if not candidate or candidate in seen:
             return
-        key = candidate.casefold()
-        if key in seen:
-            return
-        seen.add(key)
+        seen.add(candidate)
         candidates.append(candidate)
 
     add_candidate(title)
