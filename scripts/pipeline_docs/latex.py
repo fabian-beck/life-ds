@@ -47,7 +47,7 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 from . import teaser
-from .report import Document, Mount, Note
+from .report import Document, Mount, Note, split_front_links
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 ASSETS = Path(__file__).resolve().parent / "assets"
@@ -1638,6 +1638,14 @@ def _paragraphs(text: str) -> List[str]:
     return [part.strip() for part in text.split("\n\n") if part.strip()]
 
 
+def _front_prose(text: str) -> str:
+    """Front-matter prose, with the links its Markdown writes made into `\\href`."""
+    return "".join(
+        f"\\href{{{escape_url(href)}}}{{{escape(run)}}}" if href else escape(run)
+        for run, href in split_front_links(text)
+    )
+
+
 def title_block(document: Document, payload: Dict[str, Any]) -> str:
     """The title, the byline, the build stamp, and the abstract."""
     lines = [
@@ -1685,7 +1693,7 @@ def title_block(document: Document, payload: Dict[str, Any]) -> str:
     lines.append("\\vspace{14pt}{\\color{rulestrong}\\hrule}\\vspace{8pt}")
     lines.append("\\eyebrow{Abstract}\\par\\vspace{4pt}")
     if abstract:
-        lines.extend(escape(part) + "\n" for part in abstract)
+        lines.extend(_front_prose(part) + "\n" for part in abstract)
     else:
         lines.append("No abstract was written in the report's front matter.\n")
     lines.append("\\vspace{4pt}{\\color{rulestrong}\\hrule}\\vspace{12pt}")

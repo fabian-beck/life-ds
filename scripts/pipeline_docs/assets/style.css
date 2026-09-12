@@ -320,6 +320,12 @@ a.author-name:focus-visible {
   margin-bottom: 0;
 }
 
+.abstract a {
+  color: var(--ink);
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
+}
+
 .lede {
   margin: 0;
   max-width: 66ch;

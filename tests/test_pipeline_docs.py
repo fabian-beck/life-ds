@@ -879,6 +879,18 @@ class PayloadAndRenderTests(unittest.TestCase):
         ):
             self.assertNotIn(marker, html)
 
+    def test_the_abstract_links_the_repository_and_the_deployment(self) -> None:
+        """The front matter writes Markdown links; the title block serves them."""
+        document = _compile(
+            "---\ntitle: T\nabstract: Read it at [the page](https://example.org/a).\n"
+            "---\n\n## S\n\nBody.\n"
+        )
+        head = render.render(
+            build_payload(_codebase(), {}, document, _facts()), document
+        ).split('<div class="report"')[0]
+        self.assertIn('<a href="https://example.org/a">the page</a>', head)
+        self.assertNotIn("[the page](", head)
+
     def test_the_statement_on_ai_use_follows_the_references(self) -> None:
         """The disclaimer is authored in the front matter and served as HTML."""
         codebase = _codebase()
@@ -944,6 +956,20 @@ class MarkdownCompilerTests(unittest.TestCase):
         self.assertEqual(front["abstract"], "first line\nsecond line")
         self.assertIn("body", body)
         self.assertGreater(offset, 0)
+
+    def test_front_matter_prose_splits_into_plain_and_linked_runs(self) -> None:
+        self.assertEqual(
+            report.split_front_links("see [a](https://x.test/a) and [b](https://y.test)."),
+            [
+                ("see ", ""),
+                ("a", "https://x.test/a"),
+                (" and ", ""),
+                ("b", "https://y.test"),
+                (".", ""),
+            ],
+        )
+        self.assertEqual(report.split_front_links("plain"), [("plain", "")])
+        self.assertEqual(report.split_front_links(""), [])
 
     def test_authors_are_read_from_the_front_matter(self) -> None:
         document = _compile(
@@ -2390,6 +2416,15 @@ class LatexTests(unittest.TestCase):
         self.assertIn("\\swatch{kindai}", tex)
         self.assertIn("\\begin{callout}{note}{Note}", tex)
         self.assertIn("\\section{Step details}", tex)
+
+    def test_the_abstract_carries_its_links_onto_paper(self) -> None:
+        document = report.compile_report(
+            "---\ntitle: T\nabstract: Read it at [the page](https://example.org/a).\n"
+            "---\n\n## One\n\nBody.\n",
+            self.facts,
+        )
+        tex = latex.render(self.payload, document)
+        self.assertIn("\\href{https://example.org/a}{the page}", tex)
 
     def test_every_block_of_the_real_report_is_written(self) -> None:
         """One numbered caption per figure the page numbers, in order. Phone

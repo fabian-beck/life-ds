@@ -19,7 +19,7 @@ import re
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from .report import Document
+from .report import Document, split_front_links
 
 ASSETS = Path(__file__).resolve().parent / "assets"
 
@@ -127,12 +127,20 @@ def _escape(value: str) -> str:
     )
 
 
+def _front_prose_html(text: str) -> str:
+    """Front-matter prose, with the links its Markdown writes made into anchors."""
+    return "".join(
+        f'<a href="{_escape(href)}">{_escape(run)}</a>' if href else _escape(run)
+        for run, href in split_front_links(text)
+    )
+
+
 def _abstract_html(document: Document) -> str:
     text = document.front.get("abstract", "").strip()
     if not text:
         return FALLBACK_ABSTRACT
     paragraphs = [part.strip() for part in text.split("\n\n") if part.strip()]
-    return "\n".join(f"<p>{_escape(part)}</p>" for part in paragraphs)
+    return "\n".join(f"<p>{_front_prose_html(part)}</p>" for part in paragraphs)
 
 
 def _disclaimer_html(document: Optional[Document]) -> str:

@@ -349,6 +349,30 @@ class ReportError(ValueError):
     """A fault in the authored source, reported with its line number."""
 
 
+FRONT_LINK = re.compile(r"\[([^\]]+)\]\(([^)\s]+)\)")
+
+
+def split_front_links(text: str) -> List[Tuple[str, str]]:
+    """Front-matter prose as `(text, href)` runs, the href empty where plain.
+
+    The front matter reaches both outputs as plain text rather than through the
+    Markdown compiler, because a byline and an abstract have to be in the page
+    before any script runs. A link is the one inline construct the abstract
+    needs, so it is recognized here and each renderer spells it in its own
+    markup.
+    """
+    runs: List[Tuple[str, str]] = []
+    position = 0
+    for match in FRONT_LINK.finditer(text):
+        if match.start() > position:
+            runs.append((text[position : match.start()], ""))
+        runs.append((match.group(1), match.group(2)))
+        position = match.end()
+    if position < len(text):
+        runs.append((text[position:], ""))
+    return runs
+
+
 def split_front_matter(text: str) -> Tuple[Dict[str, str], str, int]:
     """`---` fenced `key: value` header. A blank value opens an indented block."""
     lines = text.splitlines()
