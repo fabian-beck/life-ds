@@ -59,7 +59,7 @@ def _styles(**styles):
         path = Path(directory) / "person_styles.json"
         path.write_text(json.dumps({"styles": styles}), encoding="utf-8")
         with patch.object(person_style, "STYLES_PATH", path):
-            yield
+            yield path
 
 
 def _boom(message):
@@ -167,6 +167,65 @@ class StyleGatesTheImagesTests(unittest.TestCase):
 
         self.assertEqual(drawn, ["portrait", "chapter art"])
         self.assertEqual(code, 0)
+
+
+class PaletteChangeRedrawsTheImagesTests(unittest.TestCase):
+    """An image is kept across a re-run, but never across a new palette.
+
+    Both image steps keep what is already on disk, which is what makes a
+    re-run cheap. The style step runs before them and may rewrite the two
+    colors they are drawn in, and an image kept across that change is drawn in
+    a palette no story uses — the state `utils/person_style.py` refuses to
+    create from the other direction. The images are therefore redrawn exactly
+    when the style step moved the palette under them.
+    """
+
+    def _drawing_run(self, new_colors, old_colors):
+        forced = {}
+
+        def portrait(*args, **kwargs):
+            forced["portrait"] = kwargs.get("force")
+            return {"success": True, "local_path": "portrait.png"}
+
+        def chapter_art(*args, **kwargs):
+            forced["chapter art"] = kwargs.get("force")
+            return {
+                "id": "ada_lovelace",
+                "success": True,
+                "generated": [],
+                "message": "stubbed",
+            }
+
+        argv = ["Ada Lovelace", "--no-register", "--skip-review", "--skip-translate"]
+        with _styles(ada_lovelace=old_colors) as styles_path:
+
+            def restyle(*args, **kwargs):
+                styles_path.write_text(
+                    json.dumps({"styles": {"ada_lovelace": new_colors}}),
+                    encoding="utf-8",
+                )
+                return {"id": "ada_lovelace", **new_colors}
+
+            code = _run(
+                argv,
+                generate_style=restyle,
+                generate_portrait=portrait,
+                generate_chapter_illustrations=chapter_art,
+            )
+        self.assertEqual(code, 0)
+        return forced
+
+    def test_a_rewritten_palette_redraws_both_images(self) -> None:
+        forced = self._drawing_run(
+            new_colors={"primary": "#F2B84B", "secondary": "#63D6D1"},
+            old_colors={"primary": "#00E5FF", "secondary": "#FFB000"},
+        )
+        self.assertEqual(forced, {"portrait": True, "chapter art": True})
+
+    def test_an_unchanged_palette_keeps_the_images(self) -> None:
+        colors = {"primary": "#00E5FF", "secondary": "#FFB000"}
+        forced = self._drawing_run(new_colors=colors, old_colors=dict(colors))
+        self.assertEqual(forced, {"portrait": False, "chapter art": False})
 
 
 class RunLogTests(unittest.TestCase):

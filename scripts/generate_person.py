@@ -4,7 +4,7 @@
 import argparse
 import json
 import sys
-from typing import Any, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 # Import the individual generation functions
 from config import DEFAULT_MODEL as DATASET_MODEL
@@ -28,7 +28,7 @@ from generate_event_backgrounds import generate_event_backgrounds
 from review_person import review_person_data
 from utils import usage
 from utils.text import slugify
-from utils.person_style import has_style
+from utils.person_style import MissingStyleError, has_style, story_colors
 
 STEP_OK = "ok"
 STEP_FAILED = "failed"
@@ -240,6 +240,18 @@ def main(argv: Any = None) -> int:
         print("\n⊘ Skipping life events dataset generation")
         run_log.record("Life events", STEP_SKIPPED, "not requested")
 
+    # The colors the shipped images were drawn in, read before the style step
+    # may rewrite them.
+    def current_colors() -> Optional[Dict[str, str]]:
+        if not person_id:
+            return None
+        try:
+            return story_colors(person_id)
+        except MissingStyleError:
+            return None
+
+    colors_before_style = current_colors()
+
     # Step 2: Generate interface style
     usage.begin_step("Interface style")
     if run_style:
@@ -269,6 +281,27 @@ def main(argv: Any = None) -> int:
     no_style_reason = (
         "no interface style — run scripts/generate_person_style.py, then rerun"
     )
+
+    # A portrait and a chapter illustration are kept when they already exist,
+    # which is what makes a re-run cheap. The style step runs before them and
+    # may have just rewritten the two colors they are drawn in, and an image
+    # kept across that change is drawn in a palette no story uses — the state
+    # utils/person_style.py refuses to create from the other direction. So the
+    # images are redrawn exactly when the palette moved under them.
+    colors_after_style = current_colors()
+    palette_changed = False
+    if (
+        colors_before_style is not None
+        and colors_after_style is not None
+        and colors_after_style != colors_before_style
+    ):
+        palette_changed = True
+        print(
+            f"\n↻ Palette changed ({colors_before_style['primary']}/"
+            f"{colors_before_style['secondary']} → {colors_after_style['primary']}/"
+            f"{colors_after_style['secondary']}); redrawing the portrait and the "
+            "chapter illustrations in the new colors"
+        )
 
     # Step 3: Generate ego network
     usage.begin_step("Ego network")
@@ -335,7 +368,7 @@ def main(argv: Any = None) -> int:
                 / "master_style_portrait.png",
                 model=args.portrait_model,
                 dry_run=False,
-                force=False,
+                force=palette_changed,
             )
             if portrait_result["success"]:
                 if portrait_result.get("cached"):
@@ -374,6 +407,7 @@ def main(argv: Any = None) -> int:
                 person_id,
                 model=args.chapter_art_model,
                 concept_model=args.model or DATASET_MODEL,
+                force=palette_changed,
             )
             if art_result["success"]:
                 print(f"\n✓ {art_result['message']}")
