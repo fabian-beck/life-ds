@@ -544,7 +544,7 @@ def substitute_citations(
             )
         return (
             f'<span class="cite" data-fact="{_escape(key)}">'
-            f'{cited_value(fact.display)}</span>'
+            f"{cited_value(fact.display)}</span>"
         )
 
     substituted = _outside_fences(text, lambda line: CITATION.sub(replace, line))
