@@ -26,6 +26,7 @@ from config import (  # noqa: E402
     DEFAULT_REASONING_EFFORT,
 )
 from events.pipeline import enrich_event_coordinates_v2  # noqa: E402
+from utils.json_io import write_json  # noqa: E402
 from utils.model_calls import parse_structured_or_raise  # noqa: E402
 from utils.review_models import (  # noqa: E402
     CombinedReviewOutput,
@@ -410,8 +411,7 @@ def review_person_data(
 
     if aspect in ["all", "events"]:
         events_path = person_dir / "life_events.json"
-        with open(events_path, "w", encoding="utf-8") as f:
-            json.dump(updated_events, f, indent=2, ensure_ascii=False)
+        write_json(events_path, updated_events)
         print(f"  * Updated {events_path.name}")
         try:
             from sync_meta_story_events import (
@@ -431,8 +431,7 @@ def review_person_data(
 
     if aspect in ["all", "network"] and updated_network:
         network_path = person_dir / "ego_network.json"
-        with open(network_path, "w", encoding="utf-8") as f:
-            json.dump(updated_network, f, indent=2, ensure_ascii=False)
+        write_json(network_path, updated_network)
         print(f"  * Updated {network_path.name}")
 
     total_applied = events_applied + network_applied

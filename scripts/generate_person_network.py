@@ -16,6 +16,7 @@ from pydantic import BaseModel, Field
 
 from config import DEFAULT_MODEL, DEFAULT_REASONING_EFFORT
 from utils.http import QueryParams
+from utils.json_io import write_json
 from utils.model_calls import parse_structured_or_raise
 from utils.registry import Registry
 from utils.relationship_vocabulary import (
@@ -642,9 +643,7 @@ def write_ego_network(payload: Dict[str, Any], person_id: str) -> Path:
     person_dir = PEOPLE_DIR / person_id
     person_dir.mkdir(parents=True, exist_ok=True)
     output_path = person_dir / "ego_network.json"
-    output_path.write_text(
-        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
+    write_json(output_path, payload)
     return output_path
 
 

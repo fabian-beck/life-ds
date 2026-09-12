@@ -22,6 +22,7 @@ from openai import APIStatusError, OpenAI
 
 from config import BULK_MODEL, BULK_REASONING_EFFORT, enable_utf8_console
 from utils import usage
+from utils.json_io import write_json
 from utils.person_style import is_hex_color
 from generate_person_style import (
     BODY_FONT_CHOICES,
@@ -318,9 +319,7 @@ def load_styles() -> Dict[str, Any]:
 
 def write_styles(data: Dict[str, Any]) -> None:
     STYLES_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STYLES_PATH.write_text(
-        json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
+    write_json(STYLES_PATH, data)
 
 
 def generate_style(

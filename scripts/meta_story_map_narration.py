@@ -53,6 +53,7 @@ from meta_story_map import (
     cluster_located_events,
     collect_located_events,
 )
+from utils.json_io import write_json
 from utils.model_calls import parse_structured
 from utils.prose_style import PROSE_STYLE_INSTRUCTIONS
 
@@ -580,8 +581,7 @@ def main() -> int:
             continue
 
         dataset["geo_map"] = geo_map
-        with open(story_path, "w", encoding="utf-8") as f:
-            json.dump(dataset, f, indent=2, ensure_ascii=False)
+        write_json(story_path, dataset)
         print(f"  Saved {story_path.name} with {len(geo_map['clusters'])} map stop(s)")
 
         # The map narration changes the story's translatable English text, so
