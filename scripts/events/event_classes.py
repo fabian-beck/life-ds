@@ -7,8 +7,8 @@ builds the research focus that tells a call not to repeat what the
 classification already holds, and the run log formats what was found. Keeping
 the three in one table is what stops a kind from being detected under one
 description and researched under another. The birth and the death carry a
-fourth reader: their `description_guidance` defines what the prose of the two
-boundary events tells, and the review holds the shipped description to it.
+fourth reader: their `description_guidance` states the goal the prose of the two
+boundary events serves, and the review holds the shipped description to it.
 
 The models these entries describe live in `events/schemas.py`; nothing here
 imports them, because the table is read as data.
@@ -37,61 +37,79 @@ from typing import Any, Dict
 # - research_focus: List of research focus areas (emphasize what NOT to repeat)
 # - log_format: lambda cls: str for formatting log output
 
-# What the prose of the two boundary events tells. Both slides already show
-# the fact itself, the date and the city on every slide, the parents on the
-# birth card and the cause on the death card, so a description that narrates
-# the birth or the death repeats the slide: the Turing story opened on "Alan
-# Turing is born in Maida Vale, London" under a card naming both parents, and
-# closed on "Turing dies from cyanide poisoning. An inquest rules his death a
-# suicide." under a card holding both facts. The proposal writes the skeleton from
-# this definition, the research rewrites a skeleton that fell short of it, and the
-# review holds the shipped description to it, so it is stated once here and
-# read from the table like everything else about the kind.
+# What the prose of the two boundary events is for. A birth and a death are the
+# only events whose own fact the slide states without help from the prose: the
+# card names the parents and the household on the one, the cause and the
+# resting place on the other. Their guidance was therefore written as an
+# inventory of what such a description may contain and what it may not, and the
+# inventory is what failed. Steve Jobs's birth card named Jandali and Schieble
+# as the parents while the chips beside it named Paul and Clara Jobs as the
+# adoptive ones, and the description, forbidden to carry a parent at all and
+# asked for the standing conditions of the early home, spent its three
+# sentences on Jandali's doctorate and on the Schieble family's objection to
+# him without once saying that the child was given up. Every rule had been
+# followed and the slide could not be read.
+#
+# What stands here now is a goal: what the reader is to come away with. Which
+# fact a birth or a death turns on differs in every life, and no list written in
+# advance names it, so the shape of the telling is left to the call that has the
+# article in front of it. The proposal writes the skeleton toward the goal, the
+# research rewrites a skeleton that missed it, and the review reads the shipped
+# description against it, so the goal is stated once here and read from the
+# table like everything else about the kind.
 BIRTH_DESCRIPTION_GUIDANCE = (
-    "DESCRIPTION: The slide already says that the subject was born, when, where, and "
-    "to whom. The prose tells the world the child enters and grows up in: what the "
-    "parents did and where the family stood, its means, faith, and language, the "
-    "siblings already in the house, and the circumstances of the moment, such as a "
-    "father posted abroad, a war, or a business in debt. The standing conditions of "
-    "the early home hold in the present of a birth. An event dated to a later year, "
-    "such as a move, a school, or a parent's death, does not\n"
+    "DESCRIPTION GOAL: the reader comes away knowing what this life began "
+    "from. Tell the beginning this life actually had, in whatever shape the case "
+    "needs, within 2-4 sentences: the household and what it lived on, the parents "
+    "and whoever actually raised the child, the siblings already there, the faith, "
+    "the language, the money, and whatever about this birth decided what came "
+    "after, such as an adoption arranged around it, a father already dead, a war, "
+    "or a flight\n"
+    "  * The card beside the prose holds names and labels and nothing else. It "
+    "cannot say how two facts stand to each other, so where the relation is the "
+    "point, the prose says it and names whoever it must name to say it: that the "
+    "couple who raised the child adopted him days after the birth, that the mother "
+    "died in it, that the man the card names never saw the child\n"
+    "  * The shape to avoid is the sentence that says the card again and stops: "
+    "'Alan Turing is born in Maida Vale, London' under a card naming both parents "
+    "leaves the reader with what they can already see\n"
+    "  * Stay in the opening of the life: what was already true of the household, "
+    "what happened around the birth, and what the birth set in motion. A move, a "
+    "school, or a parent's death years later belongs to the event that carries it\n"
     "  * GOOD: 'The father served as a magistrate in the Indian Civil Service and was "
     "home on leave. The parents spent most of each year in India and left both sons "
-    "in England in the care of a retired army couple.'\n"
-    "  * GOOD: 'The household was an intellectually active one, with regular gatherings "
-    "of university colleagues.'\n"
-    "  * BAD (restates the slide): 'Alan Turing is born in Maida Vale, London, while his "
-    "father is on leave from the Indian Civil Service.'\n"
-    "  * BAD (a later year): 'His father was a banking partner, and the family later "
-    "moved to East Teignmouth in 1808.'"
+    "in England in the care of a retired army couple.'"
 )
 
 DEATH_DESCRIPTION_GUIDANCE = (
-    "DESCRIPTION: The slide already says that the subject died, when, where, of what, "
-    "and where they rest. The prose tells what led to the death and the conditions of "
-    "the end: the illness and its course, the years of decline, a prosecution, a duel, "
-    "an accident, how the person lived in the last period, and who was there. The "
-    "present of a death reaches back over what brought it about. Nothing after it "
-    "belongs in it, neither the funeral, nor the reaction, nor a retrospect of the "
-    "career, which the conclusion carries\n"
+    "DESCRIPTION GOAL: the reader comes away knowing how this life ended. "
+    "Tell the road to the death and the conditions of the end, in whatever shape "
+    "the case needs, within 2-4 sentences: the illness and its course, the years of "
+    "decline, a prosecution, a duel, an accident, how the person was living by then, "
+    "and who was there\n"
+    "  * The card holds the cause in a few words and the resting place as a name. "
+    "Where either needs a sentence to be understood, the prose carries it: what the "
+    "conviction had cost him, who found him, why an inquest ruled as it did\n"
+    "  * The shape to avoid is the sentence that says the card again and stops: "
+    "'Turing dies from cyanide poisoning. An inquest rules his death a suicide.' "
+    "under a card holding both facts leaves the reader with what they can already "
+    "see\n"
+    "  * The death is the last moment of the story. The funeral, the reaction, and "
+    "the retrospect of the career belong to the conclusion\n"
     "  * GOOD: 'A 1952 conviction for gross indecency had cost him his security "
     "clearance, and the court had ordered a year of hormone treatment. He lived alone "
-    "in Wilmslow. His housekeeper found him dead in bed.'\n"
-    "  * GOOD: 'He spent his last afternoon at home in Carlsberg, resting after lunch.'\n"
-    "  * BAD (restates the slide): 'Turing dies from cyanide poisoning. An inquest rules "
-    "his death a suicide.'\n"
-    "  * BAD (a retrospect): 'Bohr died of heart failure in Copenhagen, closing a career "
-    "that had reshaped physics.'"
+    "in Wilmslow. His housekeeper found him dead in bed.'"
 )
 
 # The research is told in its base prompt to rewrite a description that falls short
-# of the contract. A boundary skeleton that narrates the fact the slide already
-# shows has nothing worth keeping, so its class block says the rewrite starts
-# from the definition, not from the skeleton.
+# of the contract. A boundary skeleton is written before the article is in front
+# of the call, so its class block says how far the rewrite reaches: as far as the
+# goal needs, and no further where the skeleton already gets there.
 BOUNDARY_REWRITE_NOTE = (
-    "  * A proposed description that narrates the fact the slide already shows is "
-    "replaced, not trimmed: write the definition above from the article in front "
-    "of you, within 2-4 sentences"
+    "  * The skeleton was proposed before this article was in front of you. Where it "
+    "reaches the goal above, keep its facts and fill in what it left out; where it "
+    "only says what the slide already shows, replace it and write the goal from the "
+    "article, within 2-4 sentences"
 )
 
 
@@ -121,6 +139,10 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
             "  * Exactly one event per life story carries this classification\n"
             "  * father: Full name of the father, omit when undocumented\n"
             "  * mother: Full name of the mother, with maiden name when documented, omit when undocumented\n"
+            "  * The two fields name the parents the sources give for the birth itself. Where "
+            "others raised the child (adopted, fostered, given to relatives, orphaned), those "
+            "people belong in the description and among the event's involved people, and the "
+            "description says how the two stand to each other\n"
             "  * Optional: birth_name (only when it differs from the name the person is known by), "
             "characterization (the household born into, 1-4 words)\n"
             + _as_bullet(BIRTH_DESCRIPTION_GUIDANCE)
@@ -129,13 +151,15 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
         "description_guidance": BIRTH_DESCRIPTION_GUIDANCE,
         "research_focus": [
             BIRTH_DESCRIPTION_GUIDANCE,
-            "  * The classification names the parents and the birth name, and the slide shows "
-            "the city, so the prose carries none of them",
-            "  * BAD: 'He was born to Christian Bohr, a physiologist, and Ellen Adler Bohr...'",
+            "  * The card carries the parents' names and the slide the city, so a sentence whose "
+            "whole content is those names adds nothing: 'He was born to Christian Bohr, a "
+            "physiologist, and Ellen Adler Bohr' tells the reader what the card tells them. Name a "
+            "parent wherever the sentence needs the name to say what the card cannot say: what they "
+            "did, that they gave the child up, that they took him in, that one of them was already dead",
             BOUNDARY_REWRITE_NOTE,
             "LOCATIONS: Place of birth (city level)",
-            "INVOLVED_PEOPLE: Siblings or others present, if any; the parents are already in the "
-            "classification and are not listed again",
+            "INVOLVED_PEOPLE: Whoever the beginning of this life turns on: siblings, the couple "
+            "who raised the child, a guardian. The parents in the classification are not listed again",
         ],
         "log_format": lambda cls: (
             "BIRTH ("
@@ -176,7 +200,8 @@ EVENT_CLASS_CONFIG: Dict[str, Dict[str, Any]] = {
         "description_guidance": DEATH_DESCRIPTION_GUIDANCE,
         "research_focus": [
             DEATH_DESCRIPTION_GUIDANCE,
-            "  * DO NOT repeat the cause of death or the resting place (classification has these)",
+            "  * The card states the cause in a few words and names the resting place, so the prose "
+            "says what those few words leave out rather than spelling them again",
             BOUNDARY_REWRITE_NOTE,
             "LOCATIONS: Where the person died (city level)",
             "INVOLVED_PEOPLE: People present or closely involved at the end",

@@ -289,10 +289,10 @@
       }
     },
     "p_review": {
-      "fingerprint": "650fb7470f173143",
+      "fingerprint": "7d9ca8e218490d11",
       "summary": {
-        "description": "Reviews the life story and ego network as one record against the available biographical sources. It proposes corrections, prose revisions, and links between events and people; later processing applies only changes with strong support.",
-        "input": "the life events, network, and sources",
+        "description": "Reviews the life events and ego network as one biography, checking facts against the supplied source material and tracing continuity across the event sequence. Leaves proposed corrections for both artifacts; the pipeline applies only changes the critic rates with high confidence.",
+        "input": "the life events, network, and Wikipedia material",
         "output": "reviewed life events and ego network",
         "source": "gpt-5.6-terra"
       }
