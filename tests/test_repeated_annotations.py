@@ -1,9 +1,11 @@
-"""A term is explained once, where the story first makes it a subject.
+"""A term is explained once, where the story first makes it a subject, and
+only where the explanation has something the slide does not.
 
 The research takes every event in isolation, so an event three slides after
-the one titled for the Analytical Engine annotated the engine again. The
-normalize step drops such repeats deterministically; the review save path
-applies the same rule.
+the one titled for the Analytical Engine annotated the engine again, and a
+sentence that introduced a term in an appositive glossed it with the appositive
+again. The normalize step drops both deterministically; the review save path
+applies the same rules.
 """
 
 from __future__ import annotations
@@ -17,6 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from events.normalize import (  # noqa: E402
     drop_classified_annotations,
     drop_repeated_annotations,
+    drop_restating_annotations,
 )
 from utils.review_helpers import apply_event_changes  # noqa: E402
 from utils.review_models import EventsChanges  # noqa: E402
@@ -185,3 +188,85 @@ class ClassifiedAnnotationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RestatingAnnotationTests(unittest.TestCase):
+    """A sentence that defines its term has left the popup nothing to say."""
+
+    def test_a_gloss_of_the_sentence_s_own_appositive_is_dropped(self) -> None:
+        events = [
+            {
+                "title": "Joins Bletchley Park",
+                "description": (
+                    "Turing reported to [[Bletchley Park|Bletchley Park]], the "
+                    "wartime center of the British codebreaking organization."
+                ),
+                "annotations": {
+                    "Bletchley Park": _gloss(
+                        "Bletchley Park was the British wartime codebreaking "
+                        "center where codebreakers analyzed enemy communications."
+                    )
+                },
+            }
+        ]
+        self.assertEqual(drop_restating_annotations(events), ["Bletchley Park"])
+        self.assertNotIn("annotations", events[0])
+        self.assertEqual(
+            events[0]["description"],
+            "Turing reported to Bletchley Park, the wartime center of the "
+            "British codebreaking organization.",
+        )
+
+    def test_an_explanation_that_reaches_past_the_sentence_stays(self) -> None:
+        events = [
+            {
+                "title": "Joins Bletchley Park",
+                "description": "Turing reported to [[Bletchley Park]] in Buckinghamshire.",
+                "annotations": {
+                    "Bletchley Park": _gloss(
+                        "A Victorian mansion requisitioned in 1938, where some "
+                        "nine thousand staff read German naval signals and cut "
+                        "years from the war in the Atlantic."
+                    )
+                },
+            }
+        ]
+        self.assertEqual(drop_restating_annotations(events), [])
+        self.assertIn("annotations", events[0])
+
+    def test_naming_the_term_it_explains_is_not_charged_against_it(self) -> None:
+        """Otherwise a short gloss would fail on the term's own words."""
+        events = [
+            {
+                "title": "Writes on Banburismus",
+                "description": "Turing devised [[Banburismus]] at Hut 8.",
+                "annotations": {
+                    "Banburismus": _gloss(
+                        "Banburismus ranked Enigma rotor orders by sequential "
+                        "Bayesian evidence, sparing scarce bombe runs."
+                    )
+                },
+            }
+        ]
+        self.assertEqual(drop_restating_annotations(events), [])
+
+    def test_review_save_path_applies_the_rule(self) -> None:
+        data = {
+            "events": [
+                {
+                    "title": "Joins Bletchley Park",
+                    "description": (
+                        "Turing reported to [[Bletchley Park]], the wartime "
+                        "center of the British codebreaking organization."
+                    ),
+                    "annotations": {
+                        "Bletchley Park": _gloss(
+                            "Bletchley Park was the British wartime codebreaking "
+                            "center of the organization."
+                        )
+                    },
+                }
+            ]
+        }
+        updated, _applied, _skipped = apply_event_changes(data, EventsChanges())
+        self.assertNotIn("annotations", updated["events"][0])

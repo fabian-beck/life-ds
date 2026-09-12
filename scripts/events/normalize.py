@@ -18,6 +18,7 @@ from datetime import date, datetime
 from typing import Any, Dict, List, Optional, Set, Tuple
 
 from utils.text import fix_control_characters
+from utils.word_overlap import restates
 from utils.wikipedia_cache import _strip_html_tags
 
 DATASET_NAME = "Life Data Stories"
@@ -324,6 +325,38 @@ def drop_repeated_annotations(events: List[Dict[str, Any]]) -> List[str]:
         ):
             if isinstance(text, str) and text.strip():
                 introduced.append(text)
+    return dropped
+
+
+def drop_restating_annotations(events: List[Dict[str, Any]]) -> List[str]:
+    """Drop a gloss that says again what its own sentence already said.
+
+    A description that introduces a term in an appositive has defined it:
+    "reported to Bletchley Park, the wartime center of the British codebreaking
+    organization" leaves a popup reading "Bletchley Park was the British
+    wartime codebreaking center" with nothing to tell. The research is told
+    that such a sentence defines its term, and the review is told to drop the
+    gloss, and both still write them — a Turing dataset generated from scratch
+    under those prompts shipped five.
+
+    The rule is lexical, so it holds without a model: an explanation whose
+    content words mostly already stand in the title, the description, or the
+    term itself is dropped and its markup unwrapped. A paraphrase that reaches
+    past the sentence keeps its words and stays. `validate_event_prose.py`
+    reports what shipped before this ran, under the same rule. Returns the
+    dropped terms.
+    """
+    dropped: List[str] = []
+    for event in events:
+        annotations = event.get("annotations")
+        if not isinstance(annotations, dict):
+            continue
+        context = f"{event.get('title') or ''} {event.get('description') or ''}"
+        for term in list(annotations):
+            explanation = str((annotations.get(term) or {}).get("explanation") or "")
+            if restates(explanation, context, term):
+                drop_annotation(event, term)
+                dropped.append(term)
     return dropped
 
 
@@ -635,6 +668,7 @@ def enforce_metadata(
     events.sort(key=event_sort_key)
     drop_classified_annotations(events)
     drop_repeated_annotations(events)
+    drop_restating_annotations(events)
     payload["events"] = events
 
     # Process chapters if present

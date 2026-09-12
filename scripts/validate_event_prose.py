@@ -59,6 +59,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from utils.json_io import read_json
 from utils.validation import dataset_paths
+from utils.word_overlap import content_words, restates
 
 # (person id, event date, rule) -> why the sentence is right as written.
 ACCEPTED: Dict[Tuple[str, str, str], str] = {}
@@ -205,47 +206,6 @@ def thin_conclusion(data: Dict[str, Any]) -> List[str]:
     return [text]
 
 
-STOPWORDS = frozenset(
-    """a an the of to in on at for and or by with from as is was were be been
-    being it its this that these those his her their he she they them into over
-    under than then there here which who whom whose what when where while not
-    no nor so such but if also very more most much many some any each both all
-    one first later early after before during between within without through
-    about against among across per via up out off""".split()
-)
-RESTATED_SHARE = 0.6
-_SUFFIXES = (
-    "ically",
-    "ical",
-    "ing",
-    "ions",
-    "ion",
-    "ies",
-    "ers",
-    "er",
-    "ed",
-    "es",
-    "s",
-    "al",
-    "ly",
-)
-
-
-def _stem(word: str) -> str:
-    for suffix in _SUFFIXES:
-        if word.endswith(suffix) and len(word) - len(suffix) >= 4:
-            return word[: -len(suffix)]
-    return word
-
-
-def _content_words(text: str) -> set:
-    return {
-        _stem(word)
-        for word in re.findall(r"[a-z0-9]+", text.lower())
-        if word not in STOPWORDS and len(word) > 1
-    }
-
-
 def restated_annotations(event: Dict[str, Any]) -> List[str]:
     """Explanations whose content words mostly already stand in the slide.
 
@@ -257,17 +217,11 @@ def restated_annotations(event: Dict[str, Any]) -> List[str]:
     annotations = event.get("annotations")
     if not isinstance(annotations, dict):
         return []
-    context = _content_words(
-        f"{event.get('title') or ''} {event.get('description') or ''}"
-    )
+    context = f"{event.get('title') or ''} {event.get('description') or ''}"
     found = []
     for term, annotation in annotations.items():
         explanation = str((annotation or {}).get("explanation") or "")
-        words = _content_words(explanation)
-        if not words:
-            continue
-        known = words & (context | _content_words(term))
-        if len(known) / len(words) >= RESTATED_SHARE:
+        if restates(explanation, context, term):
             found.append(f"{term}: {explanation}".replace("\n", " "))
     return found
 
@@ -306,7 +260,7 @@ def _own_words(event: Dict[str, Any], subject_name: str) -> set:
             names.append(str(location.get("name_historic") or ""))
             names.append(str(location.get("name_modern") or ""))
     names.extend(str(name) for name in event.get("involved_people") or [])
-    return _content_words(" ".join(names))
+    return content_words(" ".join(names))
 
 
 def restated_sentences(
@@ -333,14 +287,14 @@ def restated_sentences(
         (
             str(other.get("title") or ""),
             sentence,
-            _content_words(sentence) - own,
+            content_words(sentence) - own,
         )
         for other in recent
         for sentence in split_sentences(str(other.get("description") or ""))
     ]
     found: List[str] = []
     for sentence in split_sentences(str(event.get("description") or "")):
-        words = _content_words(sentence) - own
+        words = content_words(sentence) - own
         if len(words) < RESTATED_SENTENCE_WORDS:
             continue
         for title, other_sentence, other_words in earlier:

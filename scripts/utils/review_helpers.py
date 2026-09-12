@@ -13,6 +13,7 @@ from events.normalize import (
     drop_annotation,
     drop_classified_annotations,
     drop_repeated_annotations,
+    drop_restating_annotations,
 )
 
 from .relationship_vocabulary import normalize_relationship_type
@@ -210,6 +211,7 @@ def apply_event_changes(
     # meets it, and this holds it to that the way generation does.
     drop_classified_annotations(updated_data.get("events", []))
     drop_repeated_annotations(updated_data.get("events", []))
+    drop_restating_annotations(updated_data.get("events", []))
 
     return updated_data, applied, skipped
 
