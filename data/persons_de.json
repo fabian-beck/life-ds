@@ -1243,31 +1243,33 @@
     {
       "id": "joseph_weizenbaum",
       "name": "Joseph_Weizenbaum",
-      "tagline": "Schöpfer von ELIZA, Kritiker der KI",
-      "summary": "Joseph Weizenbaum war ein deutsch-US-amerikanischer Informatiker und ein prägender Kritiker des unreflektierten Vertrauens in Computer und künstliche Intelligenz. Nachdem er 1936 aus dem nationalsozialistischen Deutschland in die Vereinigten Staaten emigriert war, studierte er Mathematik, arbeitete als Systemingenieur bei General Electric und kam 1963 ans MIT. Dort wirkte er an der Entwicklung früher Programmiersprachen für die Listenverarbeitung mit und leistete Beiträge zum ARPANET. Sein in den 1960er-Jahren entwickeltes Programm ELIZA wurde zu einem Meilenstein der Verarbeitung natürlicher Sprache und veranlasste ihn, die gesellschaftlichen und ethischen Folgen künstlicher Intelligenz zu hinterfragen – Themen, mit denen er sich in seinem einflussreichen Buch „Computer Power and Human Reason“ von 1976 auseinandersetzte. In seinen späteren Lebensjahren wurde er zu einem maßgeblichen öffentlichen Intellektuellen, der sich mit Technologie und Verantwortung befasste. 1996 kehrte er schließlich nach Berlin zurück, wo er bis zu seinem Tod 2008 aktiv blieb.",
+      "tagline": "ELIZA stellt das maschinelle Verstehen infrage",
+      "summary": "Joseph Weizenbaum war ein deutsch-amerikanischer Informatiker und entwickelte ELIZA, ein frühes Programm für Textgespräche zwischen Menschen und Computern. Die Reaktionen der Nutzer auf ELIZA beunruhigten ihn und führten dazu, dass er forderte, die moralische Verantwortung für folgenschwere Entscheidungen müsse beim Menschen bleiben.",
       "portrait": {
         "image": "/portraits/joseph_weizenbaum_thumbnail.webp",
-        "source": "https://de.wikipedia.org/wiki/Joseph_Weizenbaum",
-        "caption": "Stylized portrait based on historical photograph",
-        "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/1/17/Joseph_Weizenbaum.jpg",
         "thumbnail": "/portraits/joseph_weizenbaum_thumbnail.webp",
         "medium": "/portraits/joseph_weizenbaum_medium.webp",
-        "full": "/portraits/joseph_weizenbaum_full.webp"
+        "full": "/portraits/joseph_weizenbaum_full.webp",
+        "source": "https://de.wikipedia.org/wiki/Joseph_Weizenbaum",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/1/17/Joseph_Weizenbaum.jpg",
+        "referenceUsed": true
       },
       "birthDate": "1923-01-08",
       "deathDate": "2008-03-05",
       "primaryRoles": [
         "Informatiker",
-        "Professor"
+        "Schriftsteller",
+        "Technologiekritiker"
       ],
       "created": "2025-12-05T23:33:58.229576+01:00",
-      "lastUpdated": "2026-08-02T12:52:21.444210+00:00",
+      "lastUpdated": "2026-09-13T14:49:43.926724+02:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "c4b0e108b1e63b32",
-        "translated_on": "2026-08-02T12:52:21.444309+00:00",
+        "source_fingerprint": "e277ec0ea94ca85e",
+        "translated_on": "2026-09-13T14:49:43.926724+02:00",
         "translator": "openai:gpt-5.6-luna"
       }
     },
