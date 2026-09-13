@@ -426,33 +426,34 @@
     {
       "id": "douglas_engelbart",
       "name": "Douglas_Engelbart",
-      "summary": "Douglas Engelbart war ein amerikanischer Ingenieur und Erfinder, der interaktives Computing als Weg zur Erweiterung des menschlichen Intellekts verfolgte, vor allem im Augmentation Research Center des SRI und mit dessen oN-Line System (NLS). Seine Arbeit führte Ideen wie Maus, Hypertext und gemeinsames Bearbeiten am Bildschirm ein und vereinte sie zu Grundlagen der Mensch-Computer-Interaktion.",
-      "tagline": "Erfinder der Computermaus",
+      "summary": "Douglas Engelbart entwickelte interaktive Computerwerkzeuge, die Menschen bei der gemeinsamen Arbeit an komplexen Problemen unterstützen sollten. Am SRI International leitete er das Team hinter NLS, der Computermaus und Hypertext-Werkzeugen. 1968 präsentierte er in einer berühmten Demonstration vernetztes Arbeiten am Computer.",
+      "tagline": "Die Maus und vernetztes Arbeiten",
       "portrait": {
         "image": "/portraits/douglas_engelbart_thumbnail.webp",
         "thumbnail": "/portraits/douglas_engelbart_thumbnail.webp",
         "medium": "/portraits/douglas_engelbart_medium.webp",
         "full": "/portraits/douglas_engelbart_full.webp",
         "source": "https://en.wikipedia.org/wiki/Douglas_Engelbart",
-        "caption": "Stylized portrait based on historical photograph",
+        "caption": "Stylized portrait based on a historical source image",
         "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/0/00/SRI_Douglas_Engelbart_1968_%28cropped%29.jpg"
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/0/00/SRI_Douglas_Engelbart_1968_%28cropped%29.jpg",
+        "referenceUsed": true
       },
       "birthDate": "1925-01-30",
       "deathDate": "2013-07-02",
       "primaryRoles": [
-        "Erfinder",
         "Ingenieur",
+        "Erfinder",
         "Informatiker"
       ],
       "created": "2026-01-14T15:24:14.762904+01:00",
-      "lastUpdated": "2026-07-18T14:37:51.190390+00:00",
+      "lastUpdated": "2026-09-13T16:17:59.872270+02:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "6bf40cf78caecd62",
-        "translated_on": "2026-07-18T14:37:51.190414+00:00",
-        "translator": "manual"
+        "source_fingerprint": "feac6224068aa7b0",
+        "translated_on": "2026-09-13T16:17:59.872270+02:00",
+        "translator": "openai:gpt-5.6-luna"
       }
     },
     {
@@ -491,33 +492,34 @@
     {
       "id": "edsger_w_dijkstra",
       "name": "Edsger_W._Dijkstra",
-      "tagline": "Pionier der strukturierten Programmierung",
-      "summary": "Edsger W. Dijkstra war ein niederländischer Informatiker, dessen Ideen Programmiermethodik, Algorithmen und Betriebssysteme neu prägten. Er trug wesentlich dazu bei, disziplinierte Ansätze für Programmentwurf und Korrektheit zu etablieren, und seine Forschung beeinflusste sowohl die akademische Informatik als auch den praktischen Systembau. 1972 erhielt er den ACM Turing Award für grundlegende Beiträge zur strukturierten Programmierung und zu Programmiersprachen.",
+      "tagline": "Kürzeste Wege und strukturierte Programme",
+      "summary": "Edsger W. Dijkstra war ein niederländischer Informatiker, der grundlegende Algorithmen und Methoden der Programmierung entwickelte. Er führte den Dijkstra-Algorithmus und Semaphore ein und prägte zentrale Ideen der strukturierten Programmierung. Er lehrte und forschte in den Niederlanden und den Vereinigten Staaten.",
       "portrait": {
         "image": "/portraits/edsger_w_dijkstra_thumbnail.webp",
-        "source": "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "caption": "Stylized portrait based on historical photograph",
-        "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Edsger_Wybe_Dijkstra.jpg",
         "thumbnail": "/portraits/edsger_w_dijkstra_thumbnail.webp",
         "medium": "/portraits/edsger_w_dijkstra_medium.webp",
-        "full": "/portraits/edsger_w_dijkstra_full.webp"
+        "full": "/portraits/edsger_w_dijkstra_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Edsger_Wybe_Dijkstra.jpg",
+        "referenceUsed": true
       },
       "birthDate": "1930-05-11",
       "deathDate": "2002-08-06",
       "primaryRoles": [
         "Informatiker",
-        "Mathematiker",
-        "Schriftsteller"
+        "Programmierer",
+        "Mathematiker"
       ],
       "created": "2025-11-29T23:57:01.566778+01:00",
-      "lastUpdated": "2026-07-18T14:37:51.190465+00:00",
+      "lastUpdated": "2026-09-13T15:49:51.910588+02:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "1757c5c3878df611",
-        "translated_on": "2026-07-18T14:37:51.190487+00:00",
-        "translator": "manual"
+        "source_fingerprint": "aae0b07ca87b2798",
+        "translated_on": "2026-09-13T15:49:51.910588+02:00",
+        "translator": "openai:gpt-5.6-luna"
       }
     },
     {
@@ -1181,17 +1183,18 @@
     {
       "id": "john_von_neumann",
       "name": "John_von_Neumann",
-      "tagline": "Architekt des modernen Computers",
-      "summary": "John von Neumann war ein in Ungarn geborener amerikanischer Universalgelehrter, dessen Werk die moderne Mathematik, die Quantenphysik, die Spieltheorie und die Architektur digitaler Computer umformte. Er spielte bedeutende Rollen in der Waffenforschung des Zweiten Weltkriegs und später in der US-Verteidigungsplanung des Kalten Krieges.",
+      "tagline": "Regeln für Spiele und Computer",
+      "summary": "John von Neumann war ein in Ungarn geborener amerikanischer Mathematiker. Seine Arbeit prägte die Quantenmechanik, die Spieltheorie, die Forschung an Kernwaffen und die elektronische Datenverarbeitung. Er lehrte am Institute for Advanced Study und trug dazu bei, das heute in modernen Computern verwendete Konzept des gespeicherten Programms zu etablieren.",
       "portrait": {
         "image": "/portraits/john_von_neumann_thumbnail.webp",
         "thumbnail": "/portraits/john_von_neumann_thumbnail.webp",
         "medium": "/portraits/john_von_neumann_medium.webp",
         "full": "/portraits/john_von_neumann_full.webp",
         "source": "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "caption": "Stylized portrait based on historical photograph",
+        "caption": "Stylized portrait based on a historical source image",
         "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/5/5e/JohnvonNeumann-LosAlamos.gif"
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/5/5e/JohnvonNeumann-LosAlamos.gif",
+        "referenceUsed": true
       },
       "birthDate": "1903-12-28",
       "deathDate": "1957-02-08",
@@ -1201,13 +1204,13 @@
         "Informatiker"
       ],
       "created": "2025-12-02T12:28:28.013204+01:00",
-      "lastUpdated": "2026-07-18T14:37:51.191216+00:00",
+      "lastUpdated": "2026-09-13T16:07:04.615385+02:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "21de11c8ecf83f37",
-        "translated_on": "2026-07-18T14:37:51.191237+00:00",
-        "translator": "manual"
+        "source_fingerprint": "acabaf4045a872cf",
+        "translated_on": "2026-09-13T16:07:04.615385+02:00",
+        "translator": "openai:gpt-5.6-luna"
       }
     },
     {

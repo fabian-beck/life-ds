@@ -1,123 +1,137 @@
 {
-  "dataset": "wikipedia: Edsger W. Dijkstra",
-  "created_on": "2025-12-17",
+  "dataset": "biographical_timeline",
+  "created_on": "2026-09-13",
   "person": {
     "name": "Edsger_W._Dijkstra",
     "birth_date": "1930-05-11",
     "death_date": "2002-08-06",
     "primary_roles": [
       "Informatiker",
-      "Mathematiker",
-      "Schriftsteller"
+      "Programmierer",
+      "Mathematiker"
     ],
-    "tagline": "Wegbereiter der strukturierten Programmierung",
-    "summary": "Edsger W. Dijkstra war ein niederländischer Informatiker, dessen Ideen die Programmiermethodik, Algorithmen und Betriebssysteme neu prägten. Er trug dazu bei, disziplinierte Verfahren für Programmentwurf und Korrektheit zu etablieren; seine Forschung beeinflusste sowohl die akademische Informatik als auch die praktische Entwicklung von Systemen. 1972 erhielt er den ACM Turing Award für grundlegende Beiträge zur strukturierten Programmierung und zu Programmiersprachen.",
+    "tagline": "Kürzeste Wege und strukturierte Programme",
+    "summary": "Edsger W. Dijkstra war ein niederländischer Informatiker, der grundlegende Algorithmen und Methoden des Programmierens entwickelte. Er führte Dijkstras Algorithmus, Semaphore und wesentliche Konzepte der strukturierten Programmierung ein. Er lehrte und forschte in den Niederlanden und den Vereinigten Staaten.",
     "wikipedia": "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
     "portrait": {
       "image": "/portraits/edsger_w_dijkstra_thumbnail.webp",
-      "source": "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-      "caption": "Stylized portrait based on historical photograph",
-      "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Edsger_Wybe_Dijkstra.jpg",
       "thumbnail": "/portraits/edsger_w_dijkstra_thumbnail.webp",
       "medium": "/portraits/edsger_w_dijkstra_medium.webp",
-      "full": "/portraits/edsger_w_dijkstra_full.webp"
+      "full": "/portraits/edsger_w_dijkstra_full.webp",
+      "source": "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Edsger_Wybe_Dijkstra.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "rotterdam_foundations",
-      "headline": "Rotterdamer Aufbruch",
+      "id": "early_computing",
+      "headline": "Ein Programmierer entsteht",
       "date_start": "1930-05-11",
       "date_start_precision": "day",
-      "date_end": "1952",
-      "date_end_precision": "year",
-      "age_start": 0,
-      "age_end": 21,
-      "involved_people": null,
-      "location": "Niederlande"
-    },
-    {
-      "id": "amsterdam_first_programmer",
-      "headline": "Der erste Programmierer",
-      "date_start": "1952-03",
-      "date_start_precision": "month",
       "date_end": "1960-08-24",
       "date_end_precision": "day",
-      "age_start": 21,
+      "age_start": 0,
       "age_end": 30,
       "involved_people": [
         "Johannes Haantjes",
         "Adriaan van Wijngaarden",
-        "Maria \"Ria\" C. Debets",
+        "Carel Scholten",
+        "Bram Jan Loopstra",
+        "Maria C. Debets",
         "Jaap A. Zonneveld"
       ],
-      "location": "Niederlande"
+      "location": "Niederlande",
+      "illustration": {
+        "image": "/chapter_art/edsger_w_dijkstra/early_computing_medium.webp",
+        "medium": "/chapter_art/edsger_w_dijkstra/early_computing_medium.webp",
+        "full": "/chapter_art/edsger_w_dijkstra/early_computing_full.webp",
+        "concept": "A dark field holds a radiant network of fine copper paths, converging cleanly toward one small luminous point. Around it, faint branching routes recede and dissolve, suggesting an elegant choice discovered amid complexity.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "eindhoven_structured_revolt",
-      "headline": "Strukturierter Aufbruch",
+      "id": "programming_methods",
+      "headline": "Die Disziplin des Codes",
       "date_start": "1962",
       "date_start_precision": "year",
       "date_end": "1972",
       "date_end_precision": "year",
-      "age_start": 32,
-      "age_end": 42,
+      "age_start": null,
+      "age_end": null,
       "involved_people": null,
-      "location": "Niederlande"
+      "location": "Niederlande",
+      "illustration": {
+        "image": "/chapter_art/edsger_w_dijkstra/programming_methods_medium.webp",
+        "medium": "/chapter_art/edsger_w_dijkstra/programming_methods_medium.webp",
+        "full": "/chapter_art/edsger_w_dijkstra/programming_methods_full.webp",
+        "concept": "Centered in darkness, a suspended stack of translucent geometric planes aligns into a precise vertical order. Each layer casts a narrow halo onto the next, while a single loose ribbon at the edge is neatly drawn inward.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "ewd_years",
-      "headline": "Die EWD-Werkstatt",
+      "id": "independent_research",
+      "headline": "Forschung über Kontinente hinweg",
       "date_start": "1973-08",
       "date_start_precision": "month",
       "date_end": "1984",
       "date_end_precision": "year",
       "age_start": 43,
-      "age_end": 54,
+      "age_end": null,
       "involved_people": null,
-      "location": "Niederlande"
+      "location": "Niederlande und Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/edsger_w_dijkstra/independent_research_medium.webp",
+        "medium": "/chapter_art/edsger_w_dijkstra/independent_research_medium.webp",
+        "full": "/chapter_art/edsger_w_dijkstra/independent_research_full.webp",
+        "concept": "A solitary sheet of deep blue light floats over blackness, folded into a calm, intricate origami-like spiral. Its sharp creases glow softly, as though a private train of thought has been shaped into enduring form.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "austin_last_institution",
-      "headline": "Austiner Beweiskultur",
-      "date_start": "1984",
-      "date_start_precision": "year",
-      "date_end": "1999-11",
-      "date_end_precision": "month",
-      "age_start": 54,
-      "age_end": 69,
-      "involved_people": null,
-      "location": "Vereinigte Staaten"
-    },
-    {
-      "id": "return_final_silence",
-      "headline": "Heimkehr und letzte Stille",
+      "id": "final_return",
+      "headline": "Rückkehr nach Nuenen",
       "date_start": "1999-11",
       "date_start_precision": "month",
       "date_end": "2002-08-06",
       "date_end_precision": "day",
       "age_start": 69,
       "age_end": 72,
-      "involved_people": null,
-      "location": "Niederlande"
+      "involved_people": [
+        "Maria “Ria” C. Debets",
+        "Maria \"Ria\" C. Debets"
+      ],
+      "location": "Niederlande",
+      "illustration": {
+        "image": "/chapter_art/edsger_w_dijkstra/final_return_medium.webp",
+        "medium": "/chapter_art/edsger_w_dijkstra/final_return_medium.webp",
+        "full": "/chapter_art/edsger_w_dijkstra/final_return_full.webp",
+        "concept": "A pale circular current of mist slowly closes around a small warm amber glow at its center. The outer vapor thins into darkness, while the inner light remains still, sheltered and complete.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     }
   ],
-  "conclusion": "Dijkstra machte aus dem Programmieren eine Disziplin: nicht länger eine Sache des geistreichen Improvisierens, sondern ein Handwerk, das auf Klarheit, Struktur und Beweisen beruht. Seine Algorithmen, Systeme und sein unerbittlicher Anspruch prägen bis heute, wie die Informatik denkt – und wie sehr sie darauf besteht, dass ihre Gedanken zu Ende geführt werden.",
+  "conclusion": "Dijkstras Algorithmus für kürzeste Wege, seine Arbeit an Semaphoren und seine Ideen zur strukturierten Programmierung gehören weiterhin zu den zentralen Bezugspunkten der Informatik. Nach seinem Tod benannte die ACM ihren jährlichen Preis für ein einflussreiches Paper über verteilte Rechnersysteme in Dijkstra-Preis um.",
   "events": [
     {
       "date": "1930-05-11",
       "date_precision": "day",
       "age": 0,
       "title": "Geburt in Rotterdam",
-      "description": "Edsger Wybe Dijkstra wurde in Rotterdam in den Niederlanden geboren. Er wuchs in einer Familie auf, in der Wissenschaft und Mathematik hohes Ansehen genossen; sein Vater unterrichtete Chemie, seine Mutter hatte Mathematik studiert. Dieses Umfeld weckte früh sein Interesse am analytischen Denken.",
+      "description": "Edsger Wybe Dijkstra wurde in Rotterdam in den Niederlanden als Sohn von Douwe Wybe Dijkstra und Brechtje Cornelia Kluijver geboren. Sein Vater unterrichtete Chemie an einer weiterführenden Schule und wurde später deren Direktor. Seine Mutter war Mathematikerin und hatte nie eine formelle Anstellung.",
       "locations": [
         {
           "name_historic": "Rotterdam",
           "name_modern": "Rotterdam, Niederlande",
           "centroid": [
-            4.47775,
-            51.9244424
+            4.4777,
+            51.9244
           ],
           "primary": true
         }
@@ -126,99 +140,28 @@
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "rotterdam_foundations",
+      "chapter": "early_computing",
+      "weight": 0.2,
       "event_class": {
         "type": "birth",
         "father": "Douwe Wybe Dijkstra",
-        "mother": "Brechtje Cornelia Kluijver"
-      }
-    },
-    {
-      "date": "1948",
-      "date_precision": "year",
-      "age": 17,
-      "title": "Abschluss am Gymnasium Erasmianum",
-      "description": "Dijkstra schloss seine Schulbildung am Gymnasium Erasmianum ab. Damals erwog er, Jura zu studieren und in den internationalen Dienst zu gehen, statt sich der Wissenschaft zu widmen. Nach dem Schulabschluss entschied er sich für ein Universitätsstudium der Mathematik und Physik.",
-      "locations": [
-        {
-          "name_historic": "Rotterdam",
-          "name_modern": "Rotterdam, Niederlande",
-          "centroid": [
-            4.47775,
-            51.9244424
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/Gymnasium_Erasmianum"
-      ],
-      "images": [
-        {
-          "url": "https://images.memorix.nl/rce/thumb/fullsize/42595656-d941-d712-50d7-e41902e52f67.jpg",
-          "caption": "Coolsingel und Coolvest mit dem Gymnasium Erasmianum (Rotterdam)",
-          "source": "https://beeldbank.cultureelerfgoed.nl/alle-afbeeldingen/detail/619b21b7-d57a-ce10-1cb9-670c8bffa90c/media/42595656-d941-d712-50d7-e41902e52f67"
-        }
-      ],
-      "event_type_icon": "mdi-school",
-      "chapter": "rotterdam_foundations"
-    },
-    {
-      "date": "1948",
-      "date_precision": "year",
-      "date_end": "1952",
-      "date_end_precision": "year",
-      "date_note": "Der Artikel nennt ein Studium der Mathematik, Physik und theoretischen Physik an der Universität Leiden; ein genaues Abschlussdatum ist nicht angegeben",
-      "age": 17,
-      "title": "Physikstudium in Leiden",
-      "description": "Er studierte Mathematik und Physik und anschließend theoretische Physik an der [[Leiden University|Universität Leiden]]. In diesen Jahren entwickelte sich das elektronische Rechnen zu einem neuen Fachgebiet, das noch als Kuriosität galt. Seine wissenschaftliche Ausbildung vermittelte ihm jene Strenge, die später seinen Umgang mit dem Programmieren und mit Beweisen kennzeichnen sollte.",
-      "locations": [
-        {
-          "name_historic": "Leiden",
-          "name_modern": "Leiden, Niederlande",
-          "centroid": [
-            4.4908843,
-            52.1594747
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Entrance_of_the_Herta_Mohr_Building%2C_Leiden_University%2C_Witte_Singel%2C_Leiden%2C_2024_-_1.jpg",
-          "caption": "Eingang des Herta-Mohr-Gebäudes der Universität Leiden (2024)",
-          "source": "https://commons.wikimedia.org/wiki/File:Entrance_of_the_Herta_Mohr_Building,_Leiden_University,_Witte_Singel,_Leiden,_2024_-_1.jpg",
-          "creator": "Hansmuller",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-school",
-      "chapter": "rotterdam_foundations",
-      "annotations": {
-        "Leiden University": {
-          "explanation": "Eine bedeutende niederländische Forschungsuniversität in Leiden, gegründet 1575 und bekannt für ihre starken Studiengänge in Mathematik und Naturwissenschaften.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Leiden_University"
-        }
+        "mother": "Brechtje Cornelia Kluijver",
+        "characterization": "akademischer Haushalt"
       }
     },
     {
       "date": "1952-03",
       "date_precision": "month",
       "age": 21,
-      "title": "Niederländischer erster Programmierer",
-      "description": "Über seinen Betreuer Johannes Haantjes lernte Dijkstra Adriaan van Wijngaarden am [[Mathematical Centre|Mathematisch Centrum in Amsterdam]] kennen. Im März 1952 trat er dort offiziell eine Stelle als erster „Programmierer“ der Niederlande an. Die Arbeit brachte ihn ins Zentrum der frühen niederländischen Computerentwicklung und verband Softwarearbeit mit der Entwicklung neuer Maschinen.",
+      "title": "Beginn am Mathematischen Zentrum",
+      "description": "Im März 1952 begann Edsger W. Dijkstra am Mathematisch Centrum zu arbeiten, einem Amsterdamer Forschungsinstitut für Mathematik und Informatik. Professor Johannes Haantjes stellte ihn Adriaan van Wijngaarden vor, der ihm die Stelle anbot. Dijkstra schloss damals noch sein Studium der theoretischen Physik in Leiden ab.",
       "locations": [
         {
           "name_historic": "Amsterdam",
           "name_modern": "Amsterdam, Niederlande",
           "centroid": [
-            4.8924534,
-            52.3730796
+            4.9041,
+            52.3676
           ],
           "primary": true
         }
@@ -228,132 +171,106 @@
         "Adriaan van Wijngaarden"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
         "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden"
-      ],
-      "images": [
-        {
-          "url": "https://live.staticflickr.com/6116/6343680225_4e15f6375c_b.jpg",
-          "caption": "Fotografie der Automatischen Relais-Rechenmaschine Amsterdam, 1952",
-          "source": "https://www.flickr.com/photos/29780762@N07/6343680225"
-        }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "amsterdam_first_programmer",
-      "annotations": {
-        "Mathematical Centre": {
-          "explanation": "Niederländisches Forschungsinstitut für Mathematik und frühe Computertechnik, später in Centrum Wiskunde & Informatica (CWI) umbenannt.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Centrum_Wiskunde_%26_Informatica"
-        }
-      }
-    },
-    {
-      "date": "1955",
-      "date_precision": "year",
-      "date_note": "Dijkstra erinnerte sich später, diese Entscheidung nach etwa drei Jahren Programmiertätigkeit am Mathematisch Centrum getroffen zu haben",
-      "age": 24,
-      "title": "Programmieren statt Physik",
-      "description": "Nachdem er versucht hatte, seine Arbeit als Programmierer mit dem Studium der theoretischen Physik zu verbinden, geriet Dijkstra zwischen die beiden Wege. Ein langes Gespräch mit Adriaan van Wijngaarden überzeugte ihn davon, dass Computer „gekommen waren, um zu bleiben“, und dass das Programmieren zu einer ernst zu nehmenden Disziplin werden konnte. Er beschloss, seine Laufbahn darauf auszurichten, dem Programmieren intellektuelle Strenge zu verleihen.",
-      "locations": [],
-      "involved_people": [
-        "Adriaan van Wijngaarden"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Centrum-wiskunde-informatica-logo.png",
-          "caption": "Offizielles Logo des Centrum Wiskunde & Informatica (CWI)",
-          "source": "https://commons.wikimedia.org/wiki/File:Centrum-wiskunde-informatica-logo.png",
-          "creator": "The original uploader was Rcblanke at English Wikipedia .",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "amsterdam_first_programmer"
+      "chapter": "early_computing",
+      "weight": 0.7
     },
     {
       "date": "1956",
       "date_precision": "year",
-      "age": 25,
-      "title": "Kürzeste Wege berechnet",
-      "description": "1956 formulierte und löste Dijkstra bei der Vorbereitung einer Vorführung zur Einweihung des [[ARMAC|ARMAC-Computers]] das, was später als Kürzeste-Wege-Problem bekannt wurde; veröffentlicht wurde es anschließend als [[Dijkstra's algorithm|Dijkstra-Algorithmus]].",
+      "title": "Löst das Kürzeste-Wege-Problem",
+      "description": "1956 formulierte und löste Edsger W. Dijkstra das [[shortest-path problem|Kürzeste-Wege-Problem]], als er eine Vorführung für [[ARMAC]] vorbereitete, einen frühen Computer am Amsterdamer Mathematisch Centrum. Carel Scholten und Bram Jan Loopstra bauten ARMAC. Gemeinsam mit Dijkstra arbeiteten sie an dessen Software.",
       "locations": [
         {
           "name_historic": "Amsterdam",
           "name_modern": "Amsterdam, Niederlande",
           "centroid": [
-            4.8924534,
-            52.3730796
+            4.9041,
+            52.3676
           ],
           "primary": true
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Carel_S._Scholten"
+      "involved_people": [
+        "Carel Scholten",
+        "Bram Jan Loopstra"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/DijkstraNegativeWeightCounterExample.png",
-          "caption": "Gegenbeispiel mit negativen Gewichten zum Dijkstra-Algorithmus",
-          "source": "https://commons.wikimedia.org/wiki/File:DijkstraNegativeWeightCounterExample.png",
-          "creator": "Galaranty",
-          "license": "CC0",
-          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
-        }
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+        "https://en.wikipedia.org/wiki/Carel_S._Scholten",
+        "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden"
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "amsterdam_first_programmer",
-      "annotations": {
-        "ARMAC": {
-          "explanation": "Ein früher niederländischer Transistorcomputer, der am Mathematisch Centrum entwickelt wurde und für den Dijkstra Software entwickelte."
-        },
-        "Dijkstra's algorithm": {
-          "explanation": "Ein 1956 entwickelter Algorithmus zur Graphensuche, der in einem gewichteten Graphen die kürzesten Wege von einem Startknoten zu allen anderen Knoten berechnet.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm"
-        }
-      },
+      "chapter": "early_computing",
+      "weight": 1.0,
       "event_class": {
         "type": "invention",
-        "title": "Dijkstra-Algorithmus",
-        "description": "Algorithmus für kürzeste Wege von einer Quelle, der wiederholt den nächsten noch nicht besuchten Knoten auswählt und die angrenzenden gewichteten Kanten relaxiert.",
-        "impact": "Wurde zu einem grundlegenden Verfahren für Routing und Graphenoptimierung in Informatik und Ingenieurwesen."
-      }
+        "title": "Dijkstras Algorithmus",
+        "description": "Er wählt wiederholt den noch nicht besuchten Knoten mit der geringsten vorläufigen Entfernung aus und lockert dessen ausgehende Kanten.",
+        "impact": "Der Algorithmus wurde zu einem Standardverfahren, um kürzeste Wege in gewichteten Netzwerken zu finden."
+      },
+      "annotations": {
+        "shortest-path problem": {
+          "explanation": "Bei einem Kürzeste-Wege-Problem wird nach der kostengünstigsten Verbindung zwischen Punkten in einem Netzwerk gefragt. Dijkstra entwickelte ein Verfahren, das solche Wege effizient findet, wenn die Kosten der Verbindungen nichtnegativ sind.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm"
+        },
+        "ARMAC": {
+          "explanation": "ARMAC was an early Dutch electronic computer built at Amsterdam’s Mathematical Centre. Its development brought hardware designers and programmers together on one of the Netherlands’ first computer projects.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/ARMAC"
+        }
+      },
+      "background": "Das Amsterdamer Mathematisch Centrum hatte 1947 unter Adriaan van Wijngaarden eine Abteilung für elektronische Rechenmaschinen eingerichtet. Van Wijngaarden reiste nach England und in die Vereinigten Staaten, um Anregungen für den ersten niederländischen Computer zu sammeln. Die erste Maschine des Zentrums, der elektromechanische Rechner ARRA, wurde 1952 vorgeführt. Scholten und Loopstra hatten 1947 als Physikstudenten mit dieser Arbeit begonnen. Ihre ARRA I war kein Erfolg. Auch Gerrit Blaauw arbeitete an ihrem Nachfolger ARRA II. 1954 begann die Arbeit am transistorbasierten ARMAC. Der Einsatz von Transistoren war damals bemerkenswert, da elektronische Computer noch neu waren. Mathematik, Physik, Maschinenbau und Programmierung kamen in dem Projekt zusammen.\n\nBeim Bau der Maschine arbeitete die Gruppe mit einer klaren Aufgabenteilung. Zuerst verfasste sie ein Programmierhandbuch, das die Schnittstelle zwischen Hardware und Software festlegte. Scholten und Loopstra mussten die Maschine anschließend nach dieser Vereinbarung bauen. Die Software konnte auf Grundlage des Handbuchs geschrieben werden, bevor die Hardware existierte. Dijkstra schrieb später, diese Arbeitsweise habe ihm den Wert einer klaren Dokumentation vermittelt. Er kam außerdem zu dem Schluss, dass sorgfältiger Entwurf einen großen Teil der später nötigen Fehlersuche vermeiden konnte.\n\nFür die automatische Datenverarbeitung gab es keine spezialisierten Zeitschriften, die Ergebnisse dieser Arbeit hätten veröffentlichen können. Das mit der ARMAC-Vorführung verbundene Ergebnis blieb daher bis 1959 unveröffentlicht. Inzwischen wandte sich das Mathematisch Centrum auch den Programmiersprachen zu. Dijkstra und Jaap Zonneveld stellten im August 1960 einen Compiler für ALGOL 60 fertig. Dieser Compiler entstand mehr als ein Jahr vor dem eines anderen Teams. Scholten verließ das Zentrum 1958 und wechselte zu Electrologica. Dort entwickelten er und Loopstra den Electrologica X1. Bis 1964 waren vierzig X1-Maschinen installiert, vor allem an Universitäten.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Automatische_Relais_Rekenmachine_Amsterdam_06-18-1952_10675.jpg/960px-Automatische_Relais_Rekenmachine_Amsterdam_06-18-1952_10675.jpg",
+          "caption": "Der erste niederländische programmierbare Computer: die „ARRA“, Automatische Relais-Rechenmaschine Amsterdam im Mathematisch Centrum, Tweede Boerhaavestraat 49, A.",
+          "source": "https://commons.wikimedia.org/wiki/File:Automatische_Relais_Rekenmachine_Amsterdam_06-18-1952_10675.jpg",
+          "creator": "Ben van Meerendonk",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+          "query": "Mathematisch Centrum Amsterdam"
+        }
+      ]
     },
     {
       "date": "1957",
       "date_precision": "year",
-      "age": 27,
-      "title": "Heirat mit Maria „Ria“ Debets",
-      "description": "Dijkstra heiratete 1957 Maria „Ria“ C. Debets. Während der Trauung musste er seinen Beruf angeben und erklärte, er sei Programmierer; Berichten zufolge stieß diese Angabe bei den niederländischen Behörden auf Schwierigkeiten, weil „Programmierer“ damals noch nicht als offizieller Beruf anerkannt war.",
+      "title": "Heirat mit Maria Debets",
+      "description": "1957 heiratete Edsger W. Dijkstra Maria C. Debets in den Niederlanden. Bei der Trauung gab er als Beruf Programmierer an. Die niederländischen Behörden erkannten diese Berufsbezeichnung damals noch nicht an.",
       "locations": [],
       "involved_people": [
-        "Maria \"Ria\" C. Debets"
+        "Maria C. Debets"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "amsterdam_first_programmer",
+      "chapter": "early_computing",
+      "weight": 0.3,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
-        "partner": "Maria “Ria” C. Debets"
+        "partner": "Maria C. Debets",
+        "duration": "bis zu seinem Tod",
+        "children": 3,
+        "characterization": "dauerhafte Ehe"
       }
     },
     {
       "date": "1959",
       "date_precision": "year",
-      "age": 29,
       "title": "Promotion in Amsterdam",
-      "description": "1959 promovierte Dijkstra an der Universität Amsterdam mit der Dissertation „Communication with an Automatic Computer“. Unter der Betreuung von Adriaan van Wijngaarden behandelte die Arbeit eine Assemblersprache für den [[Electrologica X1|Electrologica X1]] und spiegelte die enge berufliche Zusammenarbeit der beiden wider.",
+      "description": "1959 promovierte Edsger W. Dijkstra an der Universität Amsterdam bei Adriaan van Wijngaarden. Seine Dissertation Communication with an Automatic Computer beschrieb [[assembly language|Assemblersprache]] für den [[Electrologica X1]], einen frühen niederländischen Computer.",
       "locations": [
         {
           "name_historic": "Amsterdam",
           "name_modern": "Amsterdam, Niederlande",
           "centroid": [
-            4.8924534,
-            52.3730796
+            4.9041,
+            52.3676
           ],
           "primary": true
         }
@@ -362,39 +279,42 @@
         "Adriaan van Wijngaarden"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/8/89/University_of_Amsterdam_235_2094.jpg",
-          "caption": "Gebäude der Universität Amsterdam, Oudezijds Achterburgwal 235",
-          "source": "https://commons.wikimedia.org/wiki/File:University_of_Amsterdam_235_2094.jpg",
-          "creator": "C messier",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
       "event_type_icon": "mdi-book-open-variant",
-      "chapter": "amsterdam_first_programmer",
+      "chapter": "early_computing",
       "annotations": {
+        "assembly language": {
+          "explanation": "Assemblersprache verwendet kurze symbolische Befehle, die eng den Maschinenbefehlen eines Computers entsprechen. Sie gab Programmierern eine lesbare Möglichkeit, eine bestimmte Maschine anzusteuern.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Assembly_language"
+        },
         "Electrologica X1": {
-          "explanation": "Ein früher niederländischer kommerzieller Computer, gebaut von Electrologica und Ende der 1950er- sowie Anfang der 1960er-Jahre an Universitäten und Forschungseinrichtungen installiert."
+          "explanation": "The Electrologica X1 was an early computer designed and built in the Netherlands. It was used at the Mathematical Centre for programming research and early compiler work.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Electrologica_X1"
         }
+      },
+      "weight": 0.5,
+      "event_class": {
+        "type": "publication",
+        "title": "Communication with an Automatic Computer",
+        "publication_type": "thesis",
+        "publisher": "University of Amsterdam",
+        "significance": "Doktorarbeit"
       }
     },
     {
       "date": "1960-08-24",
       "date_precision": "day",
       "age": 30,
-      "title": "Erster ALGOL-60-Compiler fertig",
-      "description": "Gemeinsam mit Jaap A. Zonneveld entwickelte Dijkstra den ersten Compiler für die Programmiersprache [[ALGOL 60|ALGOL 60]]. Der Compiler war am 24. August 1960 fertiggestellt und zeigte, dass sich eine höhere Programmiersprache auf zeitgenössischen Maschinen praktisch implementieren ließ. Damit bereitete er den späteren Ideen der strukturierten Programmierung den Weg.",
+      "title": "ALGOL-60-Compiler fertiggestellt",
+      "description": "Am 24. August 1960 stellten Edsger W. Dijkstra und Jaap A. Zonneveld am Amsterdamer Mathematisch Centrum einen ALGOL-60-Compiler fertig. ALGOL 60 war eine neue Programmiersprache. Sie arbeiteten Tag und Nacht und bewahrten doppelte Aufzeichnungen an getrennten Orten auf, falls ihre Unterlagen verloren gingen.",
       "locations": [
         {
           "name_historic": "Amsterdam",
           "name_modern": "Amsterdam, Niederlande",
           "centroid": [
-            4.8924534,
-            52.3730796
+            4.9041,
+            52.3676
           ],
           "primary": true
         }
@@ -403,207 +323,300 @@
         "Jaap A. Zonneveld"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Jaap_A._Zonneveld",
-        "https://en.wikipedia.org/wiki/IFIP_Working_Group_2.1"
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
+        "https://en.wikipedia.org/wiki/Jaap_A._Zonneveld"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Algol%26Fortran_Family_By_Skippppp.svg/800px-Algol%26Fortran_Family_By_Skippppp.svg.png",
-          "caption": "Stammbaumdiagramm der Algol- und Fortran-Familie",
-          "source": "https://commons.wikimedia.org/wiki/File:Algol&Fortran_Family_By_Skippppp.svg",
-          "creator": "Skippppp , Shazz , Borkowsk , Qwertyus , MáneyMánadóttir",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/X1_250675.jpg/960px-X1_250675.jpg",
+          "caption": "Konsole des Electrologica X1 mit Bändern des ALGOL-60-Compilers",
+          "source": "https://commons.wikimedia.org/wiki/File:X1_250675.jpg",
+          "creator": "PeterFrankfurt at German Wikipedia (Original text: de:Benutzer:PeterFrankfurt)",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "amsterdam_first_programmer",
-      "annotations": {
-        "ALGOL 60": {
-          "explanation": "Eine internationale algorithmische Programmiersprachennorm von 1960, die spätere Sprachen und den Compilerbau stark beeinflusste.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/ALGOL_60"
-        }
-      },
+      "chapter": "early_computing",
+      "weight": 0.8,
       "event_class": {
         "type": "invention",
-        "title": "Erster ALGOL-60-Compiler (Dijkstra–Zonneveld)",
-        "description": "Ein Übersetzungsprogramm, das ALGOL-60-Quellcode in ausführbare Maschinenbefehle für zeitgenössische Computer umwandelte.",
-        "impact": "Demonstrierte die praktische Übersetzung höherer Programmiersprachen und beeinflusste den späteren Compilerbau sowie die strukturierte Programmierung."
+        "title": "ALGOL-60-Compiler",
+        "description": "Der Compiler übersetzt ALGOL-60-Programme in Befehle für den Computer Electrologica X1.",
+        "impact": "Er war der erste fertiggestellte Compiler für die neue Programmiersprache ALGOL 60."
       }
     },
     {
       "date": "1962",
       "date_precision": "year",
-      "age": 32,
-      "title": "Professur in Eindhoven",
-      "description": "1962 zog Dijkstra nach Eindhoven und später nach Nuenen. Dort trat er in den mathematischen Fachbereich der [[Eindhoven University of Technology|Technischen Universität Eindhoven]] ein, die damals Technische Hogeschool Eindhoven hieß. Da es noch keinen eigenen Informatikfachbereich gab, versuchte er, innerhalb der bestehenden mathematischen Kultur eine Gruppe von Informatikern aufzubauen. So wurde er zu einer maßgeblichen akademischen Stimme in der Frage, wie man programmieren und wie man es lehren sollte.",
+      "title": "Umzug nach Eindhoven",
+      "description": "1962 zog Dijkstra von Amsterdam nach Eindhoven. Er wurde Professor im Fachbereich Mathematik an der Technische Hogeschool Eindhoven, der technischen Universität der Stadt. Er versuchte, innerhalb des Fachbereichs eine Gruppe von Informatikern aufzubauen.",
+      "locations": [
+        {
+          "name_historic": "Amsterdam",
+          "name_modern": "Amsterdam, Niederlande",
+          "centroid": [
+            4.9041,
+            52.3676
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Eindhoven",
+          "name_modern": "Eindhoven, Niederlande",
+          "centroid": [
+            5.4697,
+            51.4416
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/48/Technische_Universiteit_Eindhoven_-_TU_e.jpg",
+          "caption": "Campus der Technischen Universität Eindhoven",
+          "source": "https://commons.wikimedia.org/wiki/File:Technische_Universiteit_Eindhoven_-_TU_e.jpg",
+          "creator": "A van den Tillaart",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "programming_methods",
+      "weight": 0.6,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Amsterdam, Niederlande",
+        "to_location": "Eindhoven, Niederlande",
+        "characterization": "Universitätsberufung"
+      }
+    },
+    {
+      "date": "1965",
+      "date_precision": "year",
+      "title": "Einführung der Semaphore",
+      "description": "1965 entwickelte Dijkstra in Eindhoven das Konstrukt [[semaphore|Semaphor]]. Ein Semaphor ist ein Programmierwerkzeug, das den Zugriff auf eine gemeinsam genutzte Ressource koordiniert. Dijkstra arbeitete an Möglichkeiten, mehrere Computerprozesse ohne gegenseitige Störungen auszuführen.",
       "locations": [
         {
           "name_historic": "Eindhoven",
           "name_modern": "Eindhoven, Niederlande",
           "centroid": [
-            5.4501225,
-            51.4485569
+            5.4697,
+            51.4416
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Nuenen",
-          "name_modern": "Nuenen, Niederlande",
-          "centroid": [
-            5.544007,
-            51.48603
-          ],
-          "primary": false
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/Eindhoven_University_of_Technology"
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Hoofdgeboeuw_Technische_Universiteit_Eindhoven.jpg",
-          "caption": "Hauptgebäude der Technischen Universität Eindhoven",
-          "source": "https://commons.wikimedia.org/wiki/File:Hoofdgeboeuw_Technische_Universiteit_Eindhoven.jpg",
-          "creator": "daveboy",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
-        }
-      ],
-      "event_type_icon": "mdi-school-outline",
-      "chapter": "eindhoven_structured_revolt",
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "programming_methods",
+      "weight": 1.0,
+      "event_class": {
+        "type": "invention",
+        "title": "Semaphore",
+        "description": "Semaphoroperationen steuern den Zugriff auf gemeinsam genutzte Ressourcen, indem sie Prozessen ermöglichen, aufeinander zu warten und einander Signale zu geben.",
+        "impact": "Semaphore wurden zu einem grundlegenden Werkzeug für die Synchronisierung in Betriebssystemen und nebenläufigen Programmen."
+      },
       "annotations": {
-        "Eindhoven University of Technology": {
-          "explanation": "Eine 1956 gegründete niederländische technische Universität; bis 1986 trug sie den Namen Technische Hogeschool Eindhoven.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Eindhoven_University_of_Technology"
+        "semaphore": {
+          "explanation": "Dijkstra führte Semaphore als Operationen ein, mit denen ein Prozess auf einen anderen warten oder die Verfügbarkeit einer gemeinsam genutzten Ressource signalisieren kann. Sie wurden zu einem grundlegenden Mechanismus für die Koordination nebenläufiger Aufgaben.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Semaphore_(programming)"
         }
-      }
+      },
+      "background": "Mitte der 1960er-Jahre war die Informatik an der Technische Hogeschool Eindhoven im Fachbereich Mathematik angesiedelt. Einen eigenen Informatikfachbereich gab es nicht. Die Kultur des Fachbereichs passte nur bedingt zu Dijkstra. Er versuchte, Informatiker zusammenzubringen, die gemeinsam an Problemen arbeiten konnten. Eine solche Arbeitsweise war innerhalb des Fachbereichs ungewöhnlich. Die praktische Frage, wie sich Abläufe innerhalb einer Maschine koordinieren ließen, fiel in eine Zeit, in der die akademische Identität der Informatik selbst noch nicht feststand.\n\nSeine frühere Arbeit am Amsterdamer Mathematisch Centrum hatte ihm ein anspruchsvolles Vorbild für eine solche Arbeitsweise gegeben. Dijkstra hatte mit Bram Jan Loopstra und Carel Scholten zusammengearbeitet, während diese einen Computer bauten. Die drei verfassten zunächst ein Programmierhandbuch, das die Grenze zwischen Hardware und Software festlegte. Die Hardwareentwickler mussten sich anschließend an ihren Teil dieser Vereinbarung halten. Dijkstra schrieb die Software, bevor die Maschine existierte. Später sagte er, diese Erfahrung habe ihm den Wert einer klaren Dokumentation vermittelt. Er kam außerdem zu dem Schluss, dass sorgfältiger Entwurf einen großen Teil der später üblichen Fehlersuche vermeiden konnte.\n\nNach seinem Umzug nach Eindhoven begann Dijkstra, unter Kollegen eigene nummerierte Manuskripte zu verbreiten. Diese Schriften wurden nach seinen Initialen EWDs genannt. Auf den Umzug folgte eine lange Schreibblockade. Danach wurde ein neues EWD vervielfältigt und von Empfänger zu Empfänger weitergegeben. Die Berichte behandelten Informatik und Mathematik. Sie enthielten auch Briefe, Reden und Reiseberichte. Die Reihe wuchs schließlich auf mehr als 1.300 Dokumente an. Ende der 1960er-Jahre entstand in derselben Eindhovener Umgebung das geschichtete Betriebssystem THE. Sein Entwurf nutzte softwarebasierten virtuellen Speicher mit Seitenverwaltung. Spätere Betriebssystementwürfe griffen darauf zurück."
     },
     {
       "date": "1968",
       "date_precision": "year",
-      "date_end": "1969",
-      "date_end_precision": "year",
-      "date_note": "Der Artikel datiert das Mehrprogrammsystem THE auf das Ende der 1960er-Jahre",
-      "age": 37,
-      "title": "Mehrprogrammsystem THE entwickelt",
-      "description": "Ende der 1960er-Jahre leitete er an der [[Technische Hogeschool Eindhoven|Technischen Universität Eindhoven]] ein Team, das das nach der Universität benannte [[THE operating system|Betriebssystem THE]] entwickelte – als Teil seiner Arbeit zur Strukturierung von Betriebssystemen und zur Lehre.",
+      "title": "Entwicklung des THE-Systems",
+      "description": "Ende der 1960er-Jahre entwickelte Edsger W. Dijkstra in Eindhoven das Mehrprogrammsystem THE. THE war ein geschichtetes Betriebssystem, das Funktionen auf verschiedene Ebenen verteilte. Sein Entwurf nutzte softwarebasierten virtuellen Speicher mit Seitenverwaltung, um den Arbeitsspeicher des Computers zu verwalten.",
       "locations": [
         {
           "name_historic": "Eindhoven",
           "name_modern": "Eindhoven, Niederlande",
           "centroid": [
-            5.4501225,
-            51.4485569
+            5.4697,
+            51.4416
           ],
           "primary": true
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/THE_multiprogramming_system",
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "images": [],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "eindhoven_structured_revolt",
-      "annotations": {
-        "Technische Hogeschool Eindhoven": {
-          "explanation": "Die frühere niederländische Bezeichnung (bis 1986) der heutigen Technischen Universität Eindhoven, an der Dijkstra Ende der 1960er-Jahre arbeitete.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Eindhoven_University_of_Technology"
-        },
-        "THE operating system": {
-          "explanation": "Ein frühes experimentelles Betriebssystem, das unter Dijkstras Leitung in Eindhoven entwickelt wurde und vor allem für seinen Schichtenaufbau sowie seine Bedeutung für Forschung und Lehre zu Betriebssystemen bekannt ist.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/THE_multiprogramming_system"
-        }
-      },
+      "chapter": "programming_methods",
+      "weight": 0.8,
       "event_class": {
         "type": "invention",
-        "title": "Mehrprogrammsystem THE",
-        "description": "Ein geschichtetes Betriebssystem für den Electrologica X8, das Mehrprogrammbetrieb unterstützte und eine softwarebasierte virtuelle Speicherverwaltung mit Paging einführte.",
-        "impact": "Wurde zu einem klassischen Fallbeispiel für den strukturierten Entwurf von Betriebssystemen und beeinflusste deren spätere Architektur."
+        "title": "THE-Mehrprogrammsystem",
+        "description": "Das geschichtete Betriebssystem trennt Systemfunktionen und verwaltet den Speicher mit softwarebasiertem virtuellem Speicher mit Seitenverwaltung.",
+        "impact": "Sein geschichteter Aufbau und seine Speichertechniken beeinflussten spätere Betriebssystementwürfe."
+      }
+    },
+    {
+      "date": "1968-03",
+      "date_precision": "month",
+      "age": 37,
+      "title": "Kritik an der Goto-Anweisung",
+      "description": "Im März 1968 schrieb Edsger W. Dijkstra Go To Statement Considered Harmful, einen Leserbrief über [[goto statement|Goto-Anweisungen]] in Computerprogrammen. Communications of the ACM veröffentlichte den Brief. Dijkstra argumentierte, uneingeschränkte Sprünge machten Programme schwerer verständlich und überprüfbar.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "programming_methods",
+      "annotations": {
+        "goto statement": {
+          "explanation": "Eine Goto-Anweisung überträgt die Programmkontrolle an eine an anderer Stelle im Code markierte Anweisung. Solche Sprünge waren in frühen Programmiersprachen üblich.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Goto"
+        }
+      },
+      "weight": 1.0,
+      "event_class": {
+        "type": "publication",
+        "title": "Go To Statement Considered Harmful",
+        "publication_type": "article",
+        "publisher": "Communications of the ACM",
+        "significance": "strukturierte Programmierung",
+        "impact": "Der Artikel wurde zu einer zentralen Stellungnahme in den Debatten über strukturierte Programmierung und die Korrektheit von Programmen."
       }
     },
     {
       "date": "1972",
       "date_precision": "year",
-      "age": 42,
-      "title": "ACM Turing Award erhalten",
-      "description": "Dijkstra erhielt 1972 den [[ACM Turing Award|ACM Turing Award]] für grundlegende Beiträge zu Programmiersprachen und zur Entwicklung der [[structured programming|strukturierten Programmierung]]. Die Auszeichnung würdigte sowohl seine technischen Ergebnisse als auch seine weiter reichenden methodischen Überlegungen zum disziplinierten Aufbau von Programmen. Zu diesem Zeitpunkt galt er weithin als eine Schlüsselfigur bei der Herausbildung der Informatik als akademischem Fach.",
+      "title": "Erhält den Turing Award",
+      "description": "1972 verlieh die [[Association for Computing Machinery|Association for Computing Machinery]] Edsger W. Dijkstra den [[Turing Award]]. Der Preis würdigte seine grundlegenden Beiträge zu Programmiersprachen und zur [[structured programming|strukturierten Programmierung]].",
       "locations": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/Turing_Award"
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "event_type_icon": "mdi-medal",
-      "chapter": "eindhoven_structured_revolt",
+      "event_type_icon": "mdi-trophy",
+      "chapter": "programming_methods",
       "annotations": {
-        "ACM Turing Award": {
-          "explanation": "Die höchste Auszeichnung der Association for Computing Machinery, die jährlich für bedeutende und nachhaltig wirksame Beiträge zur Informatik verliehen wird.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Turing_Award"
-        },
         "structured programming": {
-          "explanation": "Ein Programmieransatz, der klare Kontrollstrukturen und den Verzicht auf uneingeschränkte Sprünge (etwa „goto“) betont, um Korrektheit und Lesbarkeit zu verbessern.",
+          "explanation": "Strukturierte Programmierung bevorzugt klare Steuerungsmuster, die den Ablauf eines Programms leichter nachvollziehbar und begründbar machen. Dijkstras Arbeit rückte sie in den Mittelpunkt der Debatten über zuverlässige Software.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Structured_programming"
+        },
+        "Association for Computing Machinery": {
+          "explanation": "Die Association for Computing Machinery, meist ACM genannt, ist eine bedeutende internationale Berufsorganisation für Informatik.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Association_for_Computing_Machinery"
+        },
+        "Turing Award": {
+          "explanation": "The Turing Award is ACM’s leading annual award in computer science. It honors contributions of lasting importance to the field.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Turing_Award"
         }
-      }
+      },
+      "weight": 0.9
     },
     {
       "date": "1973-08",
       "date_precision": "month",
       "age": 43,
-      "title": "Forschungsstipendiat bei Burroughs",
-      "description": "Im August 1973 trat Dijkstra der [[Burroughs Corporation|Burroughs Corporation]] als deren einziger Forschungsstipendiat bei, während er zugleich eine reduzierte Universitätsstelle behielt. Er arbeitete größtenteils von zu Hause in Nuenen aus, reiste gelegentlich zu den Burroughs-Forschungszentren und begründete die Seminarkultur, die als „Tuesday Afternoon Club“ bekannt wurde. In diese Zeit fiel auch seine produktivste Schaffensphase, darunter zahlreiche Beiträge in seinen privat verbreiteten „EWD“-Berichten.",
+      "title": "Forschung bei Burroughs",
+      "description": "Im August 1973 trat Edsger W. Dijkstra als einziger Forschungsmitarbeiter der Burroughs Corporation bei, einem Computerhersteller. Er arbeitete hauptsächlich in seinem Arbeitszimmer in Nuenen. Mehrmals im Jahr besuchte er die Forschungszentren des Unternehmens in den Vereinigten Staaten.",
       "locations": [
         {
           "name_historic": "Nuenen",
           "name_modern": "Nuenen, Niederlande",
           "centroid": [
-            5.544007,
-            51.48603
+            5.55,
+            51.47
           ],
           "primary": true
+        },
+        {
+          "name_historic": "United States",
+          "name_modern": "Vereinigte Staaten",
+          "centroid": [
+            -100.445882,
+            39.7837304
+          ],
+          "primary": false
         }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Burroughs_building_1905.jpg",
+          "caption": "Gebäude der Burroughs Adding Machine Company",
+          "source": "https://commons.wikimedia.org/wiki/File:Burroughs_building_1905.jpg",
+          "creator": "Detroit Publishing Co.",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "ewd_years",
+      "chapter": "independent_research",
       "annotations": {
         "Burroughs Corporation": {
-          "explanation": "Ein US-amerikanisches Technologieunternehmen, bekannt für die Herstellung von Geschäftscomputern und zugehörigen Systemen; 1986 ging es durch eine Fusion in Unisys auf.",
+          "explanation": "Burroughs Corporation was an American company that made business machines and computers. Its research-fellow arrangement allowed Dijkstra to continue working from the Netherlands.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Burroughs_Corporation"
         }
-      }
+      },
+      "weight": 0.6,
+      "background": "Im Fachbereich Mathematik der Technische Hogeschool Eindhoven gab es keinen eigenen Informatikfachbereich. Seine Kultur passte nur bedingt zu Dijkstra. Er hatte dort versucht, eine Gruppe von Informatikern für gemeinsame Probleme zu bilden. Seine neue Vereinbarung reduzierte sein Lehrdeputat an der Universität auf einen Tag pro Woche. Der Dienstag wurde zum Tag des Tuesday Afternoon Club, eines Seminars, zu dem Kollegen wissenschaftliche Artikel besprachen.\n\nDer Club behandelte einen Artikel als Gegenstand, der Zeile für Zeile untersucht werden konnte. Die Teilnehmer diskutierten seine Notation, Gliederung, Darstellung, Sprache und seinen Inhalt. Diese Arbeitsweise entsprach Dijkstras Beharren auf sorgfältiger Gestaltung technischer Texte. Er verfasste die meisten Arbeiten allein. Auch seine Korrespondenz erledigte er selbst. Zum Schreiben benutzte er keine Computer. Zunächst arbeitete er mit einer Schreibmaschine, später mit einem Füllfederhalter von Montblanc Meisterstück.\n\nSeine Forschungsarbeit aus diesen Jahren füllte die EWD-Reihe. Jedes Manuskript trug seine Initialen und eine fortlaufende Nummer. Die meisten waren technische Berichte, die privat unter einer ausgewählten Gruppe von Kollegen verbreitet wurden. Die Empfänger vervielfältigten ihre Exemplare und gaben sie an andere Wissenschaftler weiter. So entstand ein informelles internationales Verteilungsnetz. Die Themen reichten von Mathematik bis Informatik. Einige Arbeiten hielten auch Reisen, Briefe und Reden fest. Fast alle EWDs nach 1972 waren handschriftlich verfasst. Meist waren sie höchstens 15 Seiten lang.\n\nDie Reihe erreichte schließlich 1.318 Dokumente. Das letzte trug das Datum 14. April 2002. Die University of Texas unterhält ein Archiv, in dem die EWDs eingescannt wurden. Zunehmend viele werden für die Suche transkribiert. Nachdem Dijkstra 1984 eine Stelle an der University of Texas angenommen hatte, erhielt der Tuesday Afternoon Club später eine Filiale in Austin."
     },
     {
       "date": "1976",
       "date_precision": "year",
-      "age": 46,
-      "title": "A Discipline of Programming veröffentlicht",
-      "description": "Dijkstra veröffentlichte das Buch A Discipline of Programming, eine Darstellung seines Ansatzes, Programme mit mathematischer Präzision zu konstruieren. Das Werk betonte die Begründung der Korrektheit von Programmen und den sorgfältigen Entwurf von Kontrollstrukturen. Damit verlieh es seinem Anliegen Nachdruck, das Programmieren als strenge Disziplin und nicht als improvisiertes Handwerk zu behandeln.",
-      "locations": [],
+      "title": "Veröffentlicht A Discipline of Programming",
+      "description": "1976 veröffentlichte Dijkstra A Discipline of Programming. Das Buch behandelte die Konstruktion von Programmen als einen Prozess mathematischer Schlussfolgerungen. Es legte Methoden vor, mit denen sich beweisen lässt, dass ein Programm seine vorgesehenen Anforderungen erfüllt.",
+      "locations": [
+        {
+          "name_historic": "Nuenen",
+          "name_modern": "Nuenen, Niederlande",
+          "centroid": [
+            5.55,
+            51.47
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/Tony_Hoare",
-        "https://en.wikipedia.org/wiki/Robert_W._Floyd"
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "ewd_years"
+      "chapter": "independent_research",
+      "weight": 0.9,
+      "event_class": {
+        "type": "publication",
+        "title": "A Discipline of Programming",
+        "publication_type": "book",
+        "publisher": "Prentice-Hall",
+        "significance": "Programmiermethodik",
+        "impact": "Das Buch wurde zu einem bedeutenden Werk über formale Begründungen der Programmkorrektheit."
+      }
     },
     {
       "date": "1984",
       "date_precision": "year",
-      "age": 54,
-      "title": "Lehrstuhl in Austin übernommen",
-      "description": "Dijkstra nahm den Schlumberger Centennial Chair im Fachbereich Informatik der University of Texas at Austin an. In Austin setzte er seine Forschung und Lehrtätigkeit fort und verbreitete seinen seminarartigen Stil sowie seinen auf Beweise ausgerichteten Ansatz zur Begründung von Programmen. Seine Präsenz prägte eine Generation von Studierenden und Kollegen im formal-logischen Denken über Programme.",
+      "title": "Übernimmt den Austin-Lehrstuhl",
+      "description": "1984 zog Edsger W. Dijkstra von Nuenen nach Austin, Texas. Er übernahm den Schlumberger Centennial Chair im Fachbereich Informatik der University of Texas at Austin. Dort lehrte und forschte er bis zu seiner Emeritierung.",
       "locations": [
         {
-          "name_historic": "Austin",
+          "name_historic": "Nuenen, Niederlande",
+          "name_modern": "Nuenen, Niederlande",
+          "centroid": [
+            5.55,
+            51.47
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Austin, Vereinigte Staaten",
           "name_modern": "Austin, Texas, Vereinigte Staaten",
           "centroid": [
-            -97.7436995,
-            30.2711286
+            -97.7431,
+            30.2672
           ],
           "primary": true
         }
@@ -613,92 +626,105 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Aerial_view_of_University_of_Texas_at_Austin_Main_Campus.jpg",
-          "caption": "Luftaufnahme des Hauptcampus der University of Texas at Austin",
-          "source": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_University_of_Texas_at_Austin_Main_Campus.jpg",
-          "creator": "Insightwm",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Main_Building_%28University_of_Texas_at_Austin%29_-_DSC08585.jpg/960px-Main_Building_%28University_of_Texas_at_Austin%29_-_DSC08585.jpg",
+          "caption": "Hauptgebäude der University of Texas at Austin",
+          "source": "https://commons.wikimedia.org/wiki/File:Main_Building_(University_of_Texas_at_Austin)_-_DSC08585.jpg",
+          "creator": "Daderot",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
         }
       ],
-      "event_type_icon": "mdi-school-outline",
-      "chapter": "ewd_years"
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "independent_research",
+      "weight": 0.6,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Niederlande",
+        "to_location": "Texas, Vereinigte Staaten",
+        "characterization": "akademische Berufung"
+      }
     },
     {
       "date": "1999-11",
       "date_precision": "month",
       "age": 69,
-      "title": "Ruhestand in Austin",
-      "description": "Dijkstra trat im November 1999 nach fünfzehn Jahren an der University of Texas at Austin von seiner dortigen Position zurück. Kurz darauf kehrten er und seine Frau in ihr Haus im niederländischen Nuenen zurück. Damit endete seine formale akademische Laufbahn nach Jahrzehnten einflussreicher Veröffentlichungen, Vorträge und Systemarbeit.",
+      "title": "Rückkehr nach Nuenen",
+      "description": "Im November 1999 ging Edsger W. Dijkstra an der University of Texas at Austin in den Ruhestand. Gemeinsam mit seiner Frau Maria C. Debets kehrte er in ihr Zuhause in Nuenen in den Niederlanden zurück.",
       "locations": [
         {
-          "name_historic": "Austin",
+          "name_historic": "Austin, Vereinigte Staaten",
           "name_modern": "Austin, Texas, Vereinigte Staaten",
           "centroid": [
-            -97.7436995,
-            30.2711286
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Nuenen",
-          "name_modern": "Nuenen, Niederlande",
-          "centroid": [
-            5.544007,
-            51.48603
+            -97.7431,
+            30.2672
           ],
           "primary": false
+        },
+        {
+          "name_historic": "Nuenen, Niederlande",
+          "name_modern": "Nuenen, Niederlande",
+          "centroid": [
+            5.55,
+            51.47
+          ],
+          "primary": true
         }
+      ],
+      "involved_people": [
+        "Maria C. Debets"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "event_type_icon": "mdi-account-clock",
-      "chapter": "austin_last_institution"
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "final_return",
+      "weight": 0.4,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Texas, Vereinigte Staaten",
+        "to_location": "Nuenen, Niederlande",
+        "characterization": "Rückkehr im Ruhestand"
+      }
     },
     {
       "date": "2002-08-06",
       "date_precision": "day",
       "age": 72,
-      "title": "Nach Krebserkrankung gestorben",
-      "description": "Dijkstra starb am 6. August 2002 nach einem langen Kampf gegen den Krebs. Seine letzte Lebensphase verbrachte er in den Niederlanden, nachdem er aus den Vereinigten Staaten zurückgekehrt war. Er hinterließ seine Frau und ihre drei Kinder.",
+      "title": "Tod in Nuenen",
+      "description": "In Nuenen erfuhr Dijkstra, dass ihm wegen seiner Krebserkrankung nur noch wenige Monate zu leben blieben. Er starb dort am 6. August 2002 nach einem langen Ringen mit der Krankheit.",
       "locations": [
         {
           "name_historic": "Nuenen",
           "name_modern": "Nuenen, Niederlande",
           "centroid": [
-            5.544007,
-            51.48603
+            5.55,
+            51.47
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Niederlande",
-          "name_modern": "Niederlande",
-          "centroid": [
-            5.6343227,
-            52.2434979
-          ],
-          "primary": false
         }
+      ],
+      "involved_people": [
+        "Maria C. Debets"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "return_final_silence",
+      "chapter": "final_return",
+      "weight": 0.5,
       "event_class": {
         "type": "death",
         "cause": "Krebs",
-        "characterization": "nach langem Leiden"
-      }
+        "characterization": "nach langer Krankheit"
+      },
+      "background": "An der University of Texas at Austin hatte der Fachbereich Informatik 1984 für ihn den Schlumberger Centennial Chair eingerichtet. Für seine Lehre galten eigene Regeln. Zu Beginn jedes Semesters fotografierte er alle Studierenden, damit er ihre Namen lernen konnte. Seine Lehrveranstaltungen konzentrierten sich auf die Darstellung mathematischer Beweise. Er schrieb Beweise mit Kreide und prüfte die Studierenden jeweils mehrere Stunden mündlich. Im Mai 2000 veranstaltete der Fachbereich zu seinem siebzigsten Geburtstag ein Symposium, das mehr als vier Jahrzehnte Arbeit in der Informatik würdigte.\n\nSein Haushalt in Nuenen blieb bewusst schlicht. Das kleine Haus hatte weder Fernseher noch Videogerät oder Mobiltelefon. Dijkstra spielte Klavier und hörte aufmerksam klassische Musik. Mozart war sein Lieblingskomponist. Für seine Arbeit benutzte er einen Füllfederhalter von Montblanc Meisterstück. Gedanken entwickelte er zunächst im Kopf, bevor er sie zu Papier brachte. Diese Gewohnheit hatte er als Physikstudent beim Spaziergang durch die Straßen von Leiden entwickelt.\n\nSeine handschriftlichen Manuskripte, die nach seinen Initialen EWD genannt und nummeriert waren, setzten diese Arbeitsweise fort. Jedes wurde kopiert und privat unter Kollegen verbreitet, die es ihrerseits kopierten und weitergaben. Die Reihe behandelte Informatik, Mathematik, Briefe, Reden und Reiseberichte. Sie erreichte schließlich 1.318 Dokumente. Das letzte EWD trägt das Datum 14. April 2002.\n\nKurz vor seinem Lebensende verlieh ihm die Association for Computing Machinery ihren PODC Influential-Paper Award für Arbeiten zur Selbststabilisierung, einer Möglichkeit, wie sich ein verteiltes Computersystem von Fehlern erholen kann. Seine Familie nahm nach seinem Tod einen Preis der C&C Foundation of Japan aus dem Jahr 2002 entgegen. 2003 wurde der jährliche Preis für ein Paper über verteilte Rechnersysteme in Edsger W. Dijkstra Prize umbenannt. Die University of Texas begann 2010 ihre Dijkstra Memorial Lecture. Tony Hoare war der erste Redner."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "02408220611cf1b7",
-    "translated_on": "2026-08-02T11:58:19.776843+00:00",
+    "source_fingerprint": "05eb80e9e50a8933",
+    "translated_on": "2026-09-13T15:49:38.957856+02:00",
     "translator": "openai:gpt-5.6-luna"
   }
 }

@@ -1,466 +1,254 @@
 {
-  "dataset": "ego_network_en",
-  "created_on": "2025-12-02",
+  "dataset": "John von Neumann ego network",
+  "created_on": "2026-09-13",
   "ego": {
     "name": "John von Neumann",
     "birth_year": 1903,
     "death_year": 1957,
     "primary_roles": [
-      "mathematician",
-      "physicist",
-      "computer scientist"
+      "Mathematician",
+      "Physicist",
+      "Computer scientist",
+      "Engineer"
     ],
-    "summary": "John von Neumann (1903–1957) was a Hungarian-American mathematician, physicist, computer scientist, and engineer whose work reshaped pure mathematics, quantum mechanics, game theory, economics, and the architecture of modern digital computers. Trained in Budapest, Zurich, and Göttingen, he became one of the youngest Privatdozenten in Germany, then a founding professor at the Institute for Advanced Study in Princeton. During World War II and the early Cold War he was central to the Manhattan Project, the development of high-speed computing, and U.S. nuclear and missile strategy.",
+    "summary": "Hungarian-born American mathematician, physicist, computer scientist, and engineer whose work reshaped set theory, quantum mechanics, game theory, nuclear-weapons research, and stored-program computing. A professor at the Institute for Advanced Study, he connected abstract mathematics with major wartime and postwar technical programs.",
     "wikipedia": "https://en.wikipedia.org/wiki/John_von_Neumann"
   },
   "connections": [
     {
-      "person_name": "Max (Miksa) von Neumann",
-      "relationship_type": "family/father",
-      "relationship_description": "Father; a wealthy Budapest banker who was ennobled in 1913, providing the aristocratic ‘von Neumann’ name and a comfortable, intellectually rich upbringing.",
-      "start_year": 1903,
-      "end_year": 1929,
+      "person_name": "Max von Neumann",
+      "relationship_description": "Von Neumann’s father was a Budapest banker who encouraged his broad education. Max urged him to gain practical training, and von Neumann studied chemical engineering alongside mathematics.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life in Budapest",
-        "supporting sons' education",
-        "creation of large home library"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
-      "notes": "His elevation to the Hungarian nobility (appellation 'Margittai') shaped the family’s social status and John's later surname."
+      "notes": "Max later joined the family migration to the United States in 1939.",
+      "relationship_type": "family/father"
     },
     {
-      "person_name": "Margit (Margaret) Kann von Neumann",
-      "relationship_type": "family/mother",
-      "relationship_description": "Mother; came from the prosperous Kann family and presided over the large, multilingual household in which von Neumann grew up.",
-      "start_year": 1903,
-      "end_year": 1957,
+      "person_name": "Margaret Kann",
+      "relationship_description": "Von Neumann's mother raised him in the affluent Kann-Neumann household in Budapest and later followed him to the United States in 1939.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life in Budapest",
-        "encouraging reading and languages"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
-      "notes": "Three generations of the Kann family lived in the same building in Budapest; her family’s wealth underpinned the 18-room apartment and large library."
+      "notes": "He confided religious reflections to her near the end of his life.",
+      "relationship_type": "family/mother"
     },
     {
-      "person_name": "Mihály (Michael) von Neumann",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Younger brother; part of the close-knit Budapest family who later followed John to the United States in 1939.",
-      "start_year": 1905,
-      "end_year": 1957,
-      "strength": "moderate",
-      "interaction_frequency": "yearly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life in Budapest",
-        "emigration to the US"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "notes": "Although less is recorded about his career, the brothers’ families reassembled in America before World War II."
-    },
-    {
-      "person_name": "Miklós (Nicholas) von Neumann",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Youngest brother; grew up with John in Budapest and emigrated with their mother and in-laws to the United States in 1939.",
-      "start_year": 1907,
-      "end_year": 1957,
-      "strength": "moderate",
-      "interaction_frequency": "yearly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life",
-        "emigration and resettlement in the US"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "notes": "Part of the extended von Neumann family cluster that relocated to Princeton on the eve of the war."
-    },
-    {
-      "person_name": "Eugene Wigner",
-      "relationship_type": "social/friend",
-      "relationship_description": "Hungarian schoolmate at Fasori Gymnasium who became a lifelong friend and later a leading theoretical physicist and Nobel laureate. Beyond being a colleague, Wigner served as one of von Neumann's most perceptive assessors, comparing his originality even to Einstein's.",
-      "start_year": 1914,
-      "end_year": 1957,
+      "person_name": "Marina von Neumann Whitman",
+      "relationship_description": "Marina was von Neumann’s only child with his first wife, Marietta Kövesi. She later became an economist, writer, business executive, and professor.",
       "strength": "strong",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "secondary school in Budapest",
-        "lifelong friendship",
-        "collaboration and mutual consultation on quantum and nuclear problems",
-        "social contact in Princeton",
-        "mutual support as Hungarian émigrés",
-        "public reflections on each other's work"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/Eugene_Wigner"
-      ],
-      "notes": "Wigner wrote that von Neumann perhaps 'supervised more work (in a casual sense) than any other modern mathematician' and judged his mind 'more penetrating and more original' than his own."
-    },
-    {
-      "person_name": "Gábor Szegő",
-      "relationship_type": "academic/mentor",
-      "relationship_description": "Hungarian analyst who gave von Neumann private advanced-calculus tutorials around age 15 and was stunned by his talent.",
-      "start_year": 1918,
-      "end_year": 1920,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "private mathematics tutorials in Budapest",
-        "discussion of advanced analysis and set theory"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "notes": "Szegő reportedly came home from his first meeting with the teenager in tears, recognizing his extraordinary ability."
-    },
-    {
-      "person_name": "David Hilbert",
-      "relationship_type": "academic/mentor",
-      "relationship_description": "Leading German mathematician under whom von Neumann studied in Göttingen on a Rockefeller grant, shaping his work in functional analysis and foundations.",
-      "start_year": 1926,
-      "end_year": 1927,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "seminars and research in Göttingen",
-        "development of axiomatic set theory and operator theory"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/David_Hilbert"
-      ],
-      "notes": "The Göttingen period cemented von Neumann’s transition from engineering to foundational mathematics."
-    },
-    {
-      "person_name": "Hermann Weyl",
-      "relationship_type": "academic/colleague",
-      "relationship_description": "Prominent mathematician and theoretical physicist who walked and discussed hypercomplex systems with von Neumann and Noether in Göttingen, and later was a colleague at the Institute for Advanced Study.",
-      "start_year": 1926,
-      "end_year": 1955,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Göttingen walks discussing hypercomplex numbers",
-        "overlapping membership at the Institute for Advanced Study"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/Hermann_Weyl"
-      ],
-      "notes": "Their interactions linked von Neumann’s operator-algebra work with Weyl’s interests in symmetry and representation theory."
-    },
-    {
-      "person_name": "Emmy Noether",
-      "relationship_type": "academic/colleague",
-      "relationship_description": "Revolutionary algebraist who joined von Neumann and Weyl in Göttingen discussions on hypercomplex number systems during the winter of 1926–1927.",
-      "start_year": 1926,
-      "end_year": 1928,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Göttingen seminars",
-        "informal walks debating algebra and representations"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/Emmy_Noether"
-      ],
-      "notes": "Their interactions occurred at a formative time when von Neumann was developing his operator and set-theoretic ideas."
-    },
-    {
-      "person_name": "Marietta Kövesi",
-      "relationship_type": "family/spouse",
-      "relationship_description": "First wife; Hungarian economics student whom von Neumann married in 1930. They had one daughter, Marina, and divorced in 1937.",
-      "start_year": 1930,
-      "end_year": 1937,
-      "strength": "moderate",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "marriage",
-        "family life in Berlin and later the US",
-        "raising their daughter Marina"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann",
         "https://en.wikipedia.org/wiki/Marina_von_Neumann_Whitman"
       ],
-      "notes": "Von Neumann converted to Roman Catholicism shortly before marrying her."
-    },
-    {
-      "person_name": "Kurt Gödel",
-      "relationship_type": "academic/colleague",
-      "relationship_description": "Logician and fellow founding professor at the Institute for Advanced Study; engaged in deep discussions with von Neumann on logic, set theory, and the foundations of mathematics.",
-      "start_year": 1933,
-      "end_year": 1957,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Institute for Advanced Study seminars",
-        "walks and conversations on incompleteness, set theory, and computability"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Kurt_G%C3%B6del",
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "notes": "Gödel’s incompleteness theorems profoundly influenced von Neumann’s views; both are often cited together as central figures in 20th‑century logic and computation."
-    },
-    {
-      "person_name": "Albert Einstein",
-      "relationship_type": "academic/colleague",
-      "relationship_description": "Senior theoretical physicist and colleague at the Institute for Advanced Study; their offices and circles overlapped in Princeton academic life.",
-      "start_year": 1933,
-      "end_year": 1955,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "membership at the Institute for Advanced Study",
-        "informal discussions on physics and mathematics",
-        "shared presence in Princeton intellectual community"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/Albert_Einstein"
-      ],
-      "notes": "While not close personally, they symbolized complementary strands of 20th‑century theoretical physics at the IAS."
-    },
-    {
-      "person_name": "Marina von Neumann Whitman",
-      "relationship_type": "family/child",
-      "relationship_description": "Daughter; became a prominent economist and business executive, later writing memoirs about life with her father.",
-      "start_year": 1935,
-      "end_year": 1957,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life",
-        "childhood in Princeton",
-        "intellectual conversations noted in her later memoir"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Marina_von_Neumann_Whitman",
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "notes": "Born 1935; her recollections highlight von Neumann’s concern with his intellectual legacy and his accessibility to people of all abilities."
+      "notes": "She became an economist, business executive, and professor.",
+      "relationship_type": "family/daughter"
     },
     {
       "person_name": "Klára Dán von Neumann",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Second wife; Hungarian mathematician and pioneering computer programmer who married von Neumann in 1938 and shared his social and professional life in Princeton and Los Alamos.",
-      "start_year": 1938,
-      "end_year": 1957,
+      "relationship_description": "Von Neumann married Dán in Princeton in 1938. She later became one of the first computer programmers and worked on ENIAC and MANIAC I.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "marriage",
-        "social life in Princeton academic community",
-        "immigration to the US",
-        "collaboration on early computing projects (ENIAC, MANIAC I, Monte Carlo method)"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Kl%C3%A1ra_D%C3%A1n_von_Neumann",
+        "https://en.wikipedia.org/wiki/John_von_Neumann",
+        "https://en.wikipedia.org/wiki/Kl%C3%A1ra_D%C3%A1n_von_Neumann"
+      ],
+      "notes": "Dán worked on ENIAC and MANIAC I and wrote the preface to his posthumously published Silliman Lectures.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Gábor Szegő",
+      "relationship_description": "Szegő gave von Neumann advanced calculus instruction beginning when von Neumann was 15 and recognized his exceptional mathematical ability immediately.",
+      "strength": "strong",
+      "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
-      "notes": "She programmed MANIAC I, worked on ENIAC meteorological forecasts and the first Monte Carlo simulations; after his death she edited his Silliman Lectures ('The Computer and the Brain')."
+      "notes": null,
+      "relationship_type": "academic/teacher"
+    },
+    {
+      "person_name": "David Hilbert",
+      "relationship_description": "Von Neumann studied mathematics under Hilbert at the University of Göttingen in 1926-1927 on a Rockefeller Foundation grant.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "notes": "Hilbert's foundational program formed an important context for von Neumann's early work in logic and set theory.",
+      "relationship_type": "academic/teacher"
+    },
+    {
+      "person_name": "Eugene Wigner",
+      "relationship_description": "Wigner was von Neumann’s fellow student at the Fasori Lutheran Gymnasium and became a lifelong friend. They later collaborated in mathematical physics and both built careers in Princeton.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann",
+        "https://en.wikipedia.org/wiki/Eugene_Wigner"
+      ],
+      "notes": "Their friendship linked their early Hungarian education, work in mathematical physics, Princeton careers, and wartime nuclear work.",
+      "relationship_type": "academic/friend"
     },
     {
       "person_name": "Oskar Morgenstern",
-      "relationship_type": "artistic/collaborator",
-      "relationship_description": "Economist who co-founded game theory with von Neumann; co-authored 'Theory of Games and Economic Behavior', transforming economics and strategic analysis.",
-      "start_year": 1938,
-      "end_year": 1957,
+      "relationship_description": "Morgenstern joined von Neumann in writing Theory of Games and Economic Behavior. Their partnership connected mathematical analysis with economics and strategic decision-making.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "collaboration on game theory",
-        "co-authoring 'Theory of Games and Economic Behavior'",
-        "joint seminars at Princeton and IAS"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
         "https://en.wikipedia.org/wiki/Oskar_Morgenstern"
       ],
-      "notes": "Their partnership bridged mathematics and economics, creating the von Neumann–Morgenstern utility framework and foundational texts in game theory."
+      "notes": "Their work joined von Neumann's mathematics to Morgenstern's economics and strategic decision-making.",
+      "relationship_type": "academic/collaborator"
     },
     {
-      "person_name": "Norbert Wiener",
-      "relationship_type": "academic/colleague",
-      "relationship_description": "MIT mathematician and originator of cybernetics whose work on communication and control intersected conceptually with von Neumann’s ideas on computation and automata.",
-      "start_year": 1940,
-      "end_year": 1957,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "overlapping participation in early computing and control-theory discussions",
-        "parallel development of mathematical models of information and feedback"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Norbert_Wiener",
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "notes": "Although they worked largely in separate institutions, Wiener’s cybernetics and von Neumann’s automata theory jointly framed postwar thinking about machines and brains."
-    },
-    {
-      "person_name": "Stanislaw Ulam",
-      "relationship_type": "academic/friend",
-      "relationship_description": "Closest friend in the United States; Polish-American mathematician and collaborator on nuclear weapons design, computing, and stochastic ideas.",
-      "start_year": 1943,
-      "end_year": 1957,
+      "person_name": "Stanisław Ulam",
+      "relationship_description": "Von Neumann invited Ulam to the Institute for Advanced Study in 1935; they became close friends and later worked together at Los Alamos on numerical methods, the Monte Carlo method, and nuclear-weapons problems.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "work at Los Alamos on thermonuclear weapon design",
-        "mathematical discussions on intuition and problem solving",
-        "socializing and humor"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann",
         "https://en.wikipedia.org/wiki/Stanis%C5%82aw_Ulam"
       ],
-      "notes": "Ulam suspected von Neumann’s thought was more aural than visual and highlighted his mix of abstract wit with earthy humor."
-    },
-    {
-      "person_name": "Edward Teller",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Hungarian-American theoretical physicist and collaborator in the US nuclear program, particularly on thermonuclear weapons and strategic issues.",
-      "start_year": 1943,
-      "end_year": 1957,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "work within the Manhattan Project and subsequent nuclear-weapons advisory committees",
-        "discussions on thermonuclear design and strategic defense"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edward_Teller",
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "notes": "Both were part of the group of Hungarian émigré scientists dubbed 'the Martians'; they shaped early US nuclear and missile policy."
-    },
-    {
-      "person_name": "Enrico Fermi",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Italian-American physicist and Nobel laureate who worked with von Neumann on aspects of nuclear chain reactions and consulted with him on computing and numerical methods.",
-      "start_year": 1943,
-      "end_year": 1954,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Manhattan Project consultations on neutron diffusion and chain reactions",
-        "early discussions of electronic computing for physics"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Enrico_Fermi",
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "notes": "Their overlap at Los Alamos and later scientific committees combined Fermi’s experimental sense with von Neumann’s mathematical formalism."
+      "notes": "Ulam later described a discussion with von Neumann concerning accelerating technological change and a possible historical singularity.",
+      "relationship_type": "academic/friend"
     },
     {
       "person_name": "Herman Goldstine",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Army liaison and mathematician who brought von Neumann into the ENIAC project, later collaborating on foundational work in stored-program computer architecture.",
-      "start_year": 1944,
-      "end_year": 1957,
+      "relationship_description": "Goldstine met von Neumann at Aberdeen in 1944 and brought him into the EDVAC study group. They subsequently worked together on the Institute for Advanced Study computer project.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "logical design of stored-program computers",
-        "work on the IAS machine",
-        "co-authored classic reports on computer architecture"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Herman_Goldstine",
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
+        "https://en.wikipedia.org/wiki/Herman_Goldstine"
       ],
-      "notes": "Goldstine’s 'First Draft of a Report on the EDVAC', based on von Neumann’s ideas, popularized the stored-program concept associated with the 'von Neumann architecture'."
+      "notes": "Goldstine circulated von Neumann's First Draft of a Report on the EDVAC, which helped make stored-program computer design widely influential.",
+      "relationship_type": "innovation/collaborator"
     },
     {
-      "person_name": "J. Presper Eckert",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Electrical engineer and co-inventor of ENIAC; interacted with von Neumann when the latter advised on its logical redesign and the shift toward stored-program concepts.",
-      "start_year": 1944,
-      "end_year": 1947,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "discussion of ENIAC redesign for stored programs",
-        "exchange on practical engineering vs. logical structuring of computers"
-      ],
+      "person_name": "Julian Bigelow",
+      "relationship_description": "Bigelow worked with von Neumann on the design of the IAS machine, the stored-program computer project at the Institute for Advanced Study that influenced later computer construction.",
+      "strength": "strong",
       "sources": [
-        "https://en.wikipedia.org/wiki/J._Presper_Eckert",
+        "https://en.wikipedia.org/wiki/Kl%C3%A1ra_D%C3%A1n_von_Neumann",
+        "https://en.wikipedia.org/wiki/Herman_Goldstine"
+      ],
+      "notes": "Klára Dán von Neumann later programmed the related MANIAC I machine at Los Alamos.",
+      "relationship_type": "innovation/engineer_collaborator"
+    },
+    {
+      "person_name": "Michael von Neumann",
+      "relationship_description": "Michael was one of von Neumann's two younger brothers and grew up with him in the Budapest family household.",
+      "strength": "moderate",
+      "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
-      "notes": "Von Neumann’s logical insights influenced Eckert’s later commercial machines (UNIVAC), even as debates over credit and architecture naming persisted."
+      "notes": null,
+      "relationship_type": "family/brother"
+    },
+    {
+      "person_name": "Nicholas von Neumann",
+      "relationship_description": "Nicholas was von Neumann's younger brother and, with other family members, followed him to the United States in 1939.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "notes": null,
+      "relationship_type": "family/brother"
+    },
+    {
+      "person_name": "Marietta Kövesi",
+      "relationship_description": "Von Neumann married Kövesi shortly after his 1930 Catholic baptism; they had one daughter before divorcing in 1937.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "notes": "Kövesi had studied economics at Budapest University.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Hermann Weyl",
+      "relationship_description": "Weyl and von Neumann discussed mathematics with Emmy Noether in Göttingen during 1926 and 1927. Weyl later recalled those exchanges.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "notes": "Weyl's unsuccessful prospective appointment preceded von Neumann's 1933 appointment to the Institute for Advanced Study.",
+      "relationship_type": "academic/colleague"
+    },
+    {
+      "person_name": "Kurt Gödel",
+      "relationship_description": "Gödel and von Neumann worked together on foundational questions in set theory, including the continuum hypothesis, and Gödel wrote von Neumann in 1956 about the problem now called P versus NP.",
+      "strength": "moderate",
+      "sources": [
+        "https://de.wikipedia.org/wiki/Kurt_G%C3%B6del"
+      ],
+      "notes": "They were also early members of the Institute for Advanced Study faculty.",
+      "relationship_type": "academic/colleague"
     },
     {
       "person_name": "John Mauchly",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Co-designer of ENIAC who interacted with von Neumann during the transition from hard-wired to stored-program computing.",
-      "start_year": 1944,
-      "end_year": 1947,
+      "relationship_description": "Mauchly and von Neumann took part in engineering discussions for EDVAC after von Neumann learned of the project in 1944; Mauchly's work on ENIAC and EDVAC informed the computing design debates.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "ENIAC consultation",
-        "early discussions on programming and instruction codes"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_Mauchly",
+        "https://en.wikipedia.org/wiki/Herman_Goldstine"
+      ],
+      "notes": "Their connection was consequential but was complicated by disputes over credit for the stored-program concept.",
+      "relationship_type": "innovation/collaborator"
+    },
+    {
+      "person_name": "J. Presper Eckert",
+      "relationship_description": "Eckert discussed the planned EDVAC with von Neumann after von Neumann joined the project in 1944-1945, while Eckert was developing its engineering and memory concepts.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/J._Presper_Eckert",
+        "https://en.wikipedia.org/wiki/John_Mauchly"
+      ],
+      "notes": "Eckert later objected to the attribution implied by the term von Neumann architecture.",
+      "relationship_type": "innovation/collaborator"
+    },
+    {
+      "person_name": "J. Robert Oppenheimer",
+      "relationship_description": "Oppenheimer directed the Los Alamos Laboratory during the Manhattan Project, where von Neumann contributed hydrodynamic and shock-wave calculations for implosion weapons from 1943 to 1945.",
+      "strength": "moderate",
+      "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
-      "notes": "Mauchly’s engineering and von Neumann’s theoretical perspectives together shaped early electronic computing, though questions of priority remained controversial."
+      "notes": "Their relationship placed von Neumann's applied mathematics within the wartime atomic-bomb program.",
+      "relationship_type": "professional/supervisor"
+    },
+    {
+      "person_name": "Bernard Schriever",
+      "relationship_description": "Von Neumann worked alongside Schriever and Trevor Gardner on the design and development of the first United States intercontinental ballistic missile programs in the 1950s.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "notes": null,
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Trevor Gardner",
+      "relationship_description": "Von Neumann worked alongside Gardner and Bernard Schriever on early United States intercontinental ballistic missile programs during the 1950s.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "notes": null,
+      "relationship_type": "professional/collaborator"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Family relationships anchored von Neumann’s life, from his highly educated banking parents in Budapest to his brothers who emigrated with him, his first wife Marietta and their daughter Marina, and his second wife Klára, who became a key collaborator in early computer programming. His extended family reconstituted itself in Princeton on the eve of World War II, and his daughter’s later memoir provides insight into his personal as well as intellectual legacy."
+      "summary": "Von Neumann’s family gave him an affluent Budapest upbringing and expected practical achievement as well as intellectual distinction. Max von Neumann directed him toward chemical engineering alongside mathematics. His parents and brothers joined the family migration to the United States in 1939. His first marriage produced his only child, Marina, and his marriage to Klára Dán later connected his Princeton household to early electronic computing."
     },
     {
       "relationship_type": "academic",
-      "summary": "Von Neumann’s academic network stretched from formative mentors like Gábor Szegő and David Hilbert to towering contemporaries such as Hermann Weyl, Emmy Noether, Kurt Gödel, and Albert Einstein. These relationships shaped his work in set theory, functional analysis, quantum mechanics, and the foundations of mathematics, and were deepened through intense seminar culture in Göttingen and at the Institute for Advanced Study."
+      "summary": "Mathematical teachers, classmates, and collaborators carried von Neumann from Budapest and Göttingen to Princeton. Gábor Szegő and David Hilbert trained him in advanced mathematics. Wigner, Weyl, Gödel, and Morgenstern linked his work to physics, logic, and economics. The partnership with Morgenstern produced Theory of Games and Economic Behavior in 1944."
+    },
+    {
+      "relationship_type": "innovation",
+      "summary": "The computing circle around von Neumann began with the EDVAC discussions in Philadelphia. Herman Goldstine connected him with the engineers building EDVAC, and John Mauchly and J. Presper Eckert contributed to the design debates. At the Institute for Advanced Study, Julian Bigelow and Goldstine worked with him on the IAS machine. The EDVAC report helped spread stored-program computer design and also led to disputes over credit."
     },
     {
       "relationship_type": "professional",
-      "summary": "Professionally, von Neumann was embedded in dense networks of collaboration around nuclear physics, computing, and defense policy, working with figures like Enrico Fermi, Edward Teller, Herman Goldstine, J. Presper Eckert, John Mauchly, and Oskar Morgenstern. These ties underpinned key developments from nuclear-reactor theory and thermonuclear design to the 'von Neumann architecture' and the creation of game theory."
-    },
-    {
-      "relationship_type": "social",
-      "summary": "His social world overlapped with his professional and academic circles, especially among the émigré Hungarian 'Martians' such as Eugene Wigner and Stanislaw Ulam, who were both close friends and scientific interlocutors. In Princeton, he and Klára hosted an active social life that blended parties, loud music, and late-night conversations with some of the century’s leading scientific minds."
-    },
-    {
-      "relationship_type": "artistic",
-      "summary": "Von Neumann’s most significant 'artistic' collaborations were interdisciplinary, most notably with economist Oskar Morgenstern on game theory and with his programmer-wife Klára on the practical realization of digital computers. These partnerships bridged mathematics with economics and with the nascent art of coding, influencing both the social sciences and the culture of computing."
+      "summary": "Defense work put von Neumann’s mathematics into United States weapons and missile programs. At Los Alamos he calculated explosive effects for implosion weapons. In the 1950s, Bernard Schriever and Trevor Gardner worked with him on early intercontinental-ballistic-missile programs. He also served on the Atomic Energy Commission and Defense Department committees."
     }
   ]
 }

@@ -1,402 +1,181 @@
 {
-  "dataset": "wikipedia_ego_network",
-  "created_on": "2026-01-14",
+  "dataset": "Douglas Engelbart ego network",
+  "created_on": "2026-09-13",
   "ego": {
     "name": "Douglas Engelbart",
     "birth_year": 1925,
     "death_year": 2013,
     "primary_roles": [
-      "inventor",
       "engineer",
+      "inventor",
       "computer scientist"
     ],
-    "summary": "Douglas Engelbart was an American engineer and inventor who pioneered interactive computing and human–computer interaction. At SRI International he founded the Augmentation Research Center and led development of the oN-Line System (NLS), showcased in the 1968 “Mother of All Demos,” introducing and integrating concepts such as the computer mouse, hypertext, and collaborative on-screen editing.",
+    "summary": "Douglas Engelbart was an American engineer and computer scientist who developed tools for interactive, collaborative computing. At SRI International, he led the Augmentation Research Center, where his team developed NLS, the computer mouse, hypertext tools, and networked collaboration.",
     "wikipedia": "https://en.wikipedia.org/wiki/Douglas_Engelbart"
   },
   "connections": [
     {
-      "person_name": "Carl Louis Engelbart",
-      "relationship_type": "family/father",
-      "relationship_description": "Engelbart's father; his death during Engelbart's childhood was a major early life event for the family.",
-      "start_year": 1925,
-      "end_year": 1935,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life in Portland, Oregon and later rural eastern Multnomah County"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
-      ],
-      "notes": "Wikipedia notes the family moved to the countryside when Engelbart was about 8 and his father died about a year later."
-    },
-    {
       "person_name": "Gladys Charlotte Amelia Munson Engelbart",
-      "relationship_type": "family/mother",
-      "relationship_description": "Engelbart's mother, who raised Engelbart and his siblings after his father's death during the Great Depression.",
-      "start_year": 1925,
-      "end_year": null,
+      "relationship_description": "Gladys Charlotte Amelia Munson Engelbart was Douglas Engelbart's mother. She and Carl Louis Engelbart raised their three children in Portland and later near Johnson Creek.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family life and upbringing through the Great Depression"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Douglas_Engelbart"
       ],
-      "notes": "End year not specified in the provided Wikipedia text."
-    },
-    {
-      "person_name": "Dorianne Engelbart",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Engelbart's older sister (about three years older).",
-      "start_year": 1925,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "shared childhood household"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
-      ],
-      "notes": "The article names her as Dorianne."
-    },
-    {
-      "person_name": "David Engelbart",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Engelbart's younger brother (about 14 months younger).",
-      "start_year": 1925,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "shared childhood household"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
-      ],
-      "notes": "The Wikipedia article lists him as Engelbart's brother David."
-    },
-    {
-      "person_name": "Vannevar Bush",
-      "relationship_type": "academic/inspiration",
-      "relationship_description": "Bush's essay “As We May Think” strongly influenced Engelbart's vision of interactive, knowledge-augmenting computing while Engelbart was in the U.S. Navy.",
-      "start_year": 1946,
-      "end_year": null,
-      "strength": "strong",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "intellectual influence via 'As We May Think'"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart",
-        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos",
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": "This is influence rather than a direct personal collaboration."
+      "notes": null,
+      "relationship_type": "family/mother"
     },
     {
       "person_name": "Ballard Fish",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Engelbart's wife; they met while Engelbart worked at NACA Ames Research Center and married in 1951.",
-      "start_year": 1951,
-      "end_year": 1997,
+      "relationship_description": "Ballard Fish met Engelbart at Ames Research Center while completing occupational-therapy training. They married on May 5, 1951, and remained married until her death in 1997.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "marriage and family life",
-        "shared time around Ames Research Center and later career moves"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Douglas_Engelbart"
       ],
-      "notes": "The article gives her lifespan (1928–1997) and states they were married until her death."
-    },
-    {
-      "person_name": "Hewitt Crane",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Early SRI colleague; Engelbart worked with Crane on magnetic devices and miniaturization, and they became close friends.",
-      "start_year": 1957,
-      "end_year": null,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "research at SRI International on magnetic devices",
-        "electronics miniaturization work"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
-      ],
-      "notes": "The Wikipedia text explicitly states Engelbart and Crane became close friends."
-    },
-    {
-      "person_name": "Rowena Swanson",
-      "relationship_type": "professional/funder",
-      "relationship_description": "Air Force Office of Scientific Research staff member who took active interest in Engelbart's work, supporting the early research agenda around 1962.",
-      "start_year": 1962,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "early research support and attention through Air Force Office of Scientific Research"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
-      ],
-      "notes": "Represents institutional support that helped Engelbart's research program develop."
-    },
-    {
-      "person_name": "J. C. R. Licklider",
-      "relationship_type": "professional/funder",
-      "relationship_description": "ARPA/IPTO leader associated with funding and legitimizing interactive computing; Wikipedia notes he funded early efforts including Engelbart's Augmentation Research Center and NLS work.",
-      "start_year": 1962,
-      "end_year": 1964,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "ARPA-related support for interactive computing and Engelbart's program"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/J._C._R._Licklider",
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
-      ],
-      "notes": "Interaction is inferred through ARPA programmatic support described in related articles."
-    },
-    {
-      "person_name": "Robert Taylor",
-      "relationship_type": "professional/funder",
-      "relationship_description": "ARPA program leader who funded and advocated for Engelbart’s NLS work leading up to the 1968 demo.",
-      "start_year": 1962,
-      "end_year": 1969,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "supporting/funding SRI work on display technology and the mouse",
-        "urging the NLS public demonstration at the 1968 Fall Joint Computer Conference"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Robert_Taylor_(computer_scientist)",
-        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos",
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
-      ],
-      "notes": "Taylor is described as a key funder/advocate rather than a lab collaborator."
-    },
-    {
-      "person_name": "Bill English",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "ARC lead engineer who helped build the first mouse prototype and supported key technical elements of the 1968 demo.",
-      "start_year": 1964,
-      "end_year": 1971,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "building and improving the first mouse prototype",
-        "ARC engineering work on NLS",
-        "technical production and networking/video links for the 1968 demo"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Bill_English_(computer_engineer)",
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart",
-        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
-      ],
-      "notes": "English built the initial prototype based on Engelbart's notes and later enhanced demo infrastructure."
-    },
-    {
-      "person_name": "Jeff Rulifson",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "ARC software leader who led NLS implementation and contributed to the 1968 demo software and materials.",
-      "start_year": 1966,
-      "end_year": 1973,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "leading NLS software team and implementation",
-        "developing NLS command language and hypertext-related work",
-        "preparing programs and demonstration files for 1968 demo",
-        "ARPANET-era networking working group involvement tied to NLS"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Jeff_Rulifson",
-        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos",
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
-      ],
-      "notes": "Rulifson is described as essential to realizing Engelbart's vision in software."
-    },
-    {
-      "person_name": "Stewart Brand",
-      "relationship_type": "professional/advisor",
-      "relationship_description": "Advised Engelbart and the team on how to present the 1968 demo.",
-      "start_year": 1968,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "advising on presentation of 'The Mother of All Demos'",
-        "presence at Menlo Park lab during demo preparations (including camera operation context)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
-      ],
-      "notes": "Brand is described as advising the demo presentation and being present in the lab context."
-    },
-    {
-      "person_name": "Bertram Raphael",
-      "relationship_type": "professional/manager",
-      "relationship_description": "SRI AI researcher who took control of the remains of ARC under SRI management and negotiated the lab's transfer to Tymshare in 1976.",
-      "start_year": 1976,
-      "end_year": 1976,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "organizational transition of ARC from SRI to Tymshare"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
-      ],
-      "notes": "Represents managerial control affecting Engelbart's work environment."
+      "notes": "They had four children.",
+      "relationship_type": "family/spouse"
     },
     {
       "person_name": "Christina Engelbart",
-      "relationship_type": "family/child",
-      "relationship_description": "Engelbart’s daughter; co-founded the Bootstrap Institute with him in 1988 and helped carry the mission forward.",
-      "start_year": 1988,
-      "end_year": null,
+      "relationship_description": "Christina Engelbart was Engelbart's daughter and co-founded the Bootstrap Institute with him in 1988. The institute later became the Doug Engelbart Institute.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "co-founding and operating the Bootstrap Institute / Doug Engelbart Institute",
-        "organizing seminars at Stanford University",
-        "advocacy for Engelbart's 'Collective IQ' and bootstrapping strategy"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Douglas_Engelbart"
       ],
-      "notes": "The article explicitly states they founded the institute together in 1988."
+      "notes": "Co-founded the Bootstrap Institute with Engelbart in 1988.",
+      "relationship_type": "family/daughter"
     },
     {
-      "person_name": "Yuri Rubinsky",
-      "relationship_type": "professional/editor",
-      "relationship_description": "Editor and advocate who helped present Engelbart’s work to the early web community, including co-editing “Boosting Our Collective IQ.”",
-      "start_year": 1995,
-      "end_year": 1996,
+      "person_name": "Hewitt Crane",
+      "relationship_description": "Engelbart worked with Hewitt Crane at SRI from 1957 on magnetic devices and electronics miniaturization. They became close friends.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "notes": "Their work began before Engelbart established the Augmentation Research Center.",
+      "relationship_type": "professional/close_colleague"
+    },
+    {
+      "person_name": "Bill English",
+      "relationship_description": "Bill English built the first mouse prototype from Engelbart's notes. He also directed key technical elements of the 1968 NLS demonstration.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart",
+        "https://en.wikipedia.org/wiki/Bill_English_(computer_engineer)",
+        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+      ],
+      "notes": "English was the first person to join Engelbart's Augmentation Research Center in 1964.",
+      "relationship_type": "innovation/engineer_collaborator"
+    },
+    {
+      "person_name": "Jeff Rulifson",
+      "relationship_description": "Jeff Rulifson led ARC's software team working on NLS. He developed its command language and online editing features and joined the 1968 demonstration.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jeff_Rulifson",
+        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+      ],
+      "notes": "Joined ARC in 1966.",
+      "relationship_type": "innovation/collaborator"
+    },
+    {
+      "person_name": "Carl Louis Engelbart",
+      "relationship_description": "Carl Louis Engelbart was Engelbart's father. The family moved from Portland to the Johnson Creek countryside when Douglas was eight, and Carl died the following year.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "editing and producing 'Boosting Our Collective IQ' compilation",
-        "recognition activities around the World Wide Web conference and awards"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart",
-        "https://en.wikipedia.org/wiki/Yuri_Rubinsky"
-      ],
-      "notes": "Rubinsky's role is documented as editor and award sponsor context via SoftQuad."
-    },
-    {
-      "person_name": "Tim Berners-Lee",
-      "relationship_type": "professional/peer",
-      "relationship_description": "Web pioneer associated with honoring Engelbart; co-signed (with Engelbart) limited hardcover copies of 'Boosting Our Collective IQ' tied to the 1995 web conference recognition.",
-      "start_year": 1995,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "joint signing associated with 'Boosting Our Collective IQ' publication and recognition at a WWW conference"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart",
-        "https://en.wikipedia.org/wiki/Tim_Berners-Lee"
-      ],
-      "notes": "The Engelbart page notes a limited edition signed by Engelbart and Tim Berners-Lee."
-    },
-    {
-      "person_name": "Bill Clinton",
-      "relationship_type": "professional/patron",
-      "relationship_description": "As U.S. President, awarded Engelbart the National Medal of Technology (December 2000).",
-      "start_year": 2000,
-      "end_year": 2000,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "National Medal of Technology award ceremony"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Douglas_Engelbart",
-        "https://en.wikipedia.org/wiki/Bill_Clinton"
-      ],
-      "notes": "This is a recognition relationship rather than collaboration."
-    },
-    {
-      "person_name": "Eileen Clegg",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Visual journalist who cites sustained work inspired by Engelbart (from 2002) and co-authored a book involving Engelbart-related dialogues (as described in her biography).",
-      "start_year": 2002,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "work and projects inspired by Engelbart's ideas (e.g., co-evolution of tools and technology)",
-        "Engelbart-related publication work"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Eileen_Clegg",
         "https://en.wikipedia.org/wiki/Douglas_Engelbart"
       ],
-      "notes": "Clegg's article frames Engelbart primarily as an inspiration and subject for her work."
+      "notes": "Carl died when Douglas was nine.",
+      "relationship_type": "family/father"
     },
     {
-      "person_name": "Valerie Landau",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Co-authored “The Engelbart Hypothesis: Dialogs with Douglas Engelbart” based on interviews and conversations with him.",
-      "start_year": 2008,
-      "end_year": null,
+      "person_name": "Dorianne Engelbart",
+      "relationship_description": "Engelbart's older sister; Douglas was the middle child between Dorianne and their younger brother David.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "interviews and dialog-based book production about Engelbart's ideas"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Douglas_Engelbart"
       ],
-      "notes": "The Engelbart page cites the book as one of the interview-based works about him and his lab."
+      "notes": null,
+      "relationship_type": "family/sister"
+    },
+    {
+      "person_name": "David Engelbart",
+      "relationship_description": "Engelbart's younger brother, born about 14 months after Douglas.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "notes": null,
+      "relationship_type": "family/brother"
+    },
+    {
+      "person_name": "Rowena Swanson",
+      "relationship_description": "Rowena Swanson supported Engelbart's early SRI research from the Air Force Office of Scientific Research.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "notes": "Her support helped sustain Engelbart's early SRI research.",
+      "relationship_type": "professional/funder"
+    },
+    {
+      "person_name": "Robert Taylor",
+      "relationship_description": "Robert Taylor directed NASA funding to Engelbart's computer-display research at SRI. That support contributed to work leading to the mouse.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Robert_Taylor_(computer_scientist)",
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "notes": "Taylor also attended the 1968 NLS demonstration.",
+      "relationship_type": "professional/funder"
+    },
+    {
+      "person_name": "Bertram Raphael",
+      "relationship_description": "SRI management placed the remaining ARC staff under Bertram Raphael in 1976. He negotiated ARC's transfer to Tymshare.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "notes": "The transfer moved ARC and its NLS software to Tymshare.",
+      "relationship_type": "professional/supervisor"
+    },
+    {
+      "person_name": "Bill Paxton",
+      "relationship_description": "Bill Paxton was an ARC associate who joined the 1968 demonstration remotely from Menlo Park. He collaborated with Engelbart and Rulifson during the live presentation.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos",
+        "https://en.wikipedia.org/wiki/Douglas_Engelbart"
+      ],
+      "notes": "Participated remotely from Menlo Park.",
+      "relationship_type": "innovation/collaborator"
+    },
+    {
+      "person_name": "Stewart Brand",
+      "relationship_description": "Stewart Brand advised Engelbart and the ARC team on presenting the 1968 demonstration. He also operated a camera from Menlo Park during the event.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos"
+      ],
+      "notes": "Supported the production of the 1968 demonstration.",
+      "relationship_type": "social/friend"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Engelbart’s family circle includes his parents Carl and Gladys, siblings Dorianne and David, his wife Ballard Fish, and his daughter Christina—who became a key late-life partner in advancing his mission."
+      "summary": "Engelbart's family connected the private commitments of his early life with the institutions of his later work. He married Ballard Fish while defining his career purpose, and their daughter Christina joined him in founding the Bootstrap Institute in 1988."
     },
     {
       "relationship_type": "professional",
-      "summary": "Centered on SRI’s Augmentation Research Center: close builders like Bill English and Jeff Rulifson, early colleague Hewitt Crane, and funders/decision-makers (Rowena Swanson, J. C. R. Licklider, Robert Taylor, Bertram Raphael) who shaped what the lab could do."
+      "summary": "Engelbart's professional circle gave him research support and organizational settings for his work. At SRI, collaborators and funders helped develop his augmentation program. SRI management later transferred ARC to Tymshare, where limited funding and interest constrained further development."
     },
     {
-      "relationship_type": "academic",
-      "summary": "Engelbart’s direction was catalyzed by earlier thinkers—especially Vannevar Bush—while later web-era recognition connected him to figures such as Tim Berners-Lee."
+      "relationship_type": "innovation",
+      "summary": "ARC turned Engelbart's ideas about collective work into NLS. Its engineers and programmers developed the mouse, display interaction, hypertext, shared editing, and remote communication. The team presented the system in San Francisco in 1968."
     },
     {
       "relationship_type": "social",
-      "summary": "A small social/presentation layer surrounds the 1968 demo, including Stewart Brand’s advice on how to communicate the team’s work to a broad audience."
+      "summary": "Stewart Brand helped the ARC team prepare the 1968 demonstration for a conference audience. His presentation advice and camera work supported the live connection between San Francisco and Menlo Park."
     }
   ]
 }

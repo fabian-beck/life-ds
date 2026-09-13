@@ -24,7 +24,7 @@
     ],
     "date_range_start": "1837",
     "date_range_end": "2007",
-    "lastUpdated": "2026-09-13T15:36:36.369729+02:00"
+    "lastUpdated": "2026-09-13T16:17:59.898366+02:00"
   },
   "generation_metadata": {
     "hints": null,
@@ -156,8 +156,8 @@
           "person_id": "john_von_neumann",
           "event_date": "1945-06-30",
           "event_date_precision": "day",
-          "event_title": "Rechner mit gespeichertem Programm",
-          "event_index": 13,
+          "event_title": "Verbreitet den EDVAC-Bericht",
+          "event_index": 11,
           "theme_connection": "Von Neumann verbreitete den „First Draft of a Report on the EDVAC“, der eine Architektur beschrieb, in der Anweisungen und Daten im Speicher lagen. Die rasche Zirkulation des Berichts machte das Stored-Program-Modell Computerprojekten in den Vereinigten Staaten und im Ausland zugänglich."
         },
         {
@@ -220,8 +220,8 @@
           "person_id": "edsger_w_dijkstra",
           "event_date": "1956",
           "event_date_precision": "year",
-          "event_title": "Kürzeste Wege berechnet",
-          "event_index": 5,
+          "event_title": "Löst das Kürzeste-Wege-Problem",
+          "event_index": 2,
           "theme_connection": "Zur Vorbereitung einer Vorführung für den ARMAC-Computer entwickelte Dijkstra ein Verfahren, um die kürzeste Route durch einen gewichteten Graphen zu finden. Der Algorithmus wurde zum Standardwerkzeug für Probleme wie das Routing in Netzwerken."
         },
         {
@@ -236,16 +236,16 @@
           "person_id": "edsger_w_dijkstra",
           "event_date": "1960-08-24",
           "event_date_precision": "day",
-          "event_title": "Erster ALGOL-60-Compiler fertig",
-          "event_index": 8,
+          "event_title": "ALGOL-60-Compiler fertiggestellt",
+          "event_index": 5,
           "theme_connection": "Dijkstra und Jaap Zonneveld vollendeten den ersten Compiler für ALGOL 60, eine höhere Programmiersprache. Ihre Implementierung zeigte, dass sich deren abstrakte Struktur wirkungsvoll für einen zeitgenössischen Computer übersetzen ließ."
         },
         {
           "person_id": "douglas_engelbart",
           "event_date": "1962-10",
           "event_date_precision": "month",
-          "event_title": "Rahmenwerk zur Erweiterung veröffentlicht",
-          "event_index": 9,
+          "event_title": "Rahmen für Erweiterung veröffentlicht",
+          "event_index": 7,
           "theme_connection": "Am SRI in Menlo Park schlug Engelbart vor, Computer zur Erweiterung des menschlichen Intellekts zu nutzen, statt bloß Berechnungen zu automatisieren. Sein Konzept forderte interaktive Systeme zur Unterstützung gemeinsamer, organisierter geistiger Arbeit."
         },
         {
@@ -255,14 +255,6 @@
           "event_title": "Wechsel zum Watson Center",
           "event_index": 5,
           "theme_connection": "Allen wechselte zu IBMs Thomas J. Watson Research Center und arbeitete an Projekten wie der ACS-1-Architektur und PL/I-Compilern. Sie entwickelte Algorithmen, die Optimierung als zentrale Funktion des Compilerentwurfs etablierten."
-        },
-        {
-          "person_id": "douglas_engelbart",
-          "event_date": "1964",
-          "event_date_precision": "year",
-          "event_title": "Baut den ersten Maus-Prototyp",
-          "event_index": 11,
-          "theme_connection": "Auf der Suche nach einer schnelleren Methode, Objekte auf dem Bildschirm auszuwählen, entwickelte Engelbart gemeinsam mit dem Ingenieur Bill English ein hölzernes Zeigegerät, das Handbewegungen in X-Y-Koordinaten übersetzte. Aus dem Prototyp entstand die Computermaus."
         },
         {
           "person_id": "joseph_weizenbaum",
@@ -292,16 +284,16 @@
           "person_id": "douglas_engelbart",
           "event_date": "1968-12-09",
           "event_date_precision": "day",
-          "event_title": "Die Mutter aller Demos",
-          "event_index": 12,
+          "event_title": "NLS in San Francisco vorgeführt",
+          "event_index": 9,
           "theme_connection": "In einer 90-minütigen Livepräsentation in San Francisco demonstrierte Engelbart NLS mit Maus, Hypertext, Fenstern, gemeinsamer Bearbeitung und einer entfernten Netzwerkverbindung. Die gebündelte Vorführung machte interaktives Rechnen als funktionierendes System sichtbar."
         },
         {
           "person_id": "edsger_w_dijkstra",
           "event_date": "1968",
           "event_date_precision": "year",
-          "event_title": "Mehrprogrammsystem THE entwickelt",
-          "event_index": 10,
+          "event_title": "Entwicklung des THE-Systems",
+          "event_index": 8,
           "theme_connection": "Dijkstras Team an der Technischen Universität Eindhoven entwickelte das Betriebssystem THE als Hierarchie klar getrennter Schichten. Es zeigte, wie eine strenge Struktur Multiprogrammiersysteme leichter nachvollziehbar machen konnte."
         },
         {
@@ -340,8 +332,8 @@
           "person_id": "edsger_w_dijkstra",
           "event_date": "1976",
           "event_date_precision": "year",
-          "event_title": "A Discipline of Programming veröffentlicht",
-          "event_index": 13,
+          "event_title": "Veröffentlicht A Discipline of Programming",
+          "event_index": 12,
           "theme_connection": "In A Discipline of Programming entwickelte Dijkstra einen mathematischen Ansatz, Programme zu konstruieren und über ihre Korrektheit nachzudenken. Programmierung verlangte seiner Darstellung zufolge Beweise und sorgfältige Struktur statt Versuch und Irrtum."
         },
         {
@@ -1251,7 +1243,7 @@
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "65588175a95014c4",
+    "source_fingerprint": "bd9df60059b742a0",
     "translated_on": "2026-08-28T06:21:29.920058+02:00",
     "translator": "openai:gpt-5.6-terra"
   }

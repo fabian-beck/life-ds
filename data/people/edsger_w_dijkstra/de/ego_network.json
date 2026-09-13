@@ -1,484 +1,186 @@
 {
-  "dataset": "wikipedia-ego-network",
-  "created_on": "2025-11-29",
+  "dataset": "Edsger W. Dijkstra ego network",
+  "created_on": "2026-09-13",
   "ego": {
     "name": "Edsger W. Dijkstra",
     "birth_year": 1930,
     "death_year": 2002,
     "primary_roles": [
       "Informatiker",
-      "Mathematiker"
+      "Programmierer",
+      "Mathematiker",
+      "Wissenschaftsautor"
     ],
-    "summary": "Edsger W. Dijkstra (1930–2002) war ein niederländischer Informatiker und eine prägende Gestalt der strukturierten Programmierung, der Algorithmen, der Betriebssysteme und der Methodik des Programmierens. Er arbeitete am Mathematisch Centrum in Amsterdam, war Professor an der Technischen Universität Eindhoven und hatte später den Schlumberger Centennial Chair in Computer Science an der University of Texas at Austin inne. Zu seinen einflussreichen Arbeiten zählen Dijkstras Algorithmus zur Berechnung kürzester Wege, das Betriebssystem THE und Hunderte weit verbreitete „EWD“-Manuskripte.",
+    "summary": "Edsger W. Dijkstra war ein niederländischer Informatiker, Programmierer, Mathematiker und Wissenschaftsautor. Er arbeitete am Mathematischen Zentrum, bei der Burroughs Corporation und an der University of Texas at Austin zu Algorithmen, strukturierter Programmierung, Betriebssystemen, Nebenläufigkeit und formaler Beweisführung.",
     "wikipedia": "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
   },
   "connections": [
     {
       "person_name": "Douwe Wybe Dijkstra",
-      "relationship_type": "family/father",
-      "relationship_description": "Vater; Chemiker und Schulinspektor in Rotterdam, der großen Wert auf rigoroses wissenschaftliches Denken legte und damit Dijkstras geistige Entwicklung prägte.",
-      "start_year": 1930,
-      "end_year": 1970,
+      "relationship_description": "Dijkstras Vater war Chemiker, Chemielehrer an einer weiterführenden Schule und später Schulinspektor. Gemeinsam mit Brechtje Cornelia Kluijver förderte er Edsgers Universitätsstudium der Mathematik und Physik.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben",
-        "Bildungsberatung",
-        "Gespräche über Wissenschaft und Gelehrsamkeit"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "notes": "Wird als Präsident des Rotterdamsche Chemische Kring und als einflussreiche Gestalt in Dijkstras frühen Lebensjahren beschrieben."
+      "notes": "Er gehörte zu dem bildungsorientierten Elternhaus, in dem Dijkstra aufwuchs.",
+      "relationship_type": "family/father"
     },
     {
       "person_name": "Brechtje Cornelia Kluijver",
-      "relationship_type": "family/mother",
-      "relationship_description": "Mutter; mathematisch ausgebildete Frau, die Dijkstra gemeinsam mit ihrem Mann dazu ermutigte, Mathematik und Physik statt Jura zu studieren.",
-      "start_year": 1930,
-      "end_year": 1994,
+      "relationship_description": "Dijkstras Mutter war Mathematikerin, übte jedoch nie einen formalen Beruf aus. Ihre mathematische Ausbildung gehörte zum akademisch geprägten Elternhaus, in dem er aufwuchs.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben",
-        "Bildungsentscheidungen"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "notes": "Obwohl sie nie eine formelle berufliche Tätigkeit ausübte, prägte ihr mathematischer Hintergrund Dijkstras Wertschätzung für mathematische Strenge."
+      "notes": "Ihr mathematischer Hintergrund prägte Dijkstras frühes geistiges Umfeld.",
+      "relationship_type": "family/mother"
     },
     {
-      "person_name": "Johannes Haantjes",
-      "relationship_type": "academic/advisor",
-      "relationship_description": "Physikbetreuer in Leiden, der Dijkstra mit Adriaan van Wijngaarden bekannt machte und ihm dadurch seine erste berufliche Stelle als Programmierer vermittelte.",
-      "start_year": 1948,
-      "end_year": 1952,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Universitätsstudium der Mathematik und Physik",
-        "Betreuung der Forschungsarbeit",
-        "Einführung in die Informatikgemeinschaft"
-      ],
+      "person_name": "Maria C. Debets",
+      "relationship_description": "Dijkstra heiratete 1957 Maria, die Ria genannt wurde. Sie lebten gemeinsam in Nuenen und Austin und kehrten nach seinem Ruhestand 1999 nach Nuenen zurück.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "notes": "Über Haantjes lernte Dijkstra van Wijngaarden und das Mathematical Centre kennen – ein entscheidender Wendepunkt in seiner Laufbahn."
+      "notes": "Sie hatten drei Kinder.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Marcus Dijkstra",
+      "relationship_description": "Marcus war eines der drei Kinder von Dijkstra und Maria Debets und überlebte seinen Vater, der 2002 starb.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": null,
+      "relationship_type": "family/son"
+    },
+    {
+      "person_name": "Femke Dijkstra",
+      "relationship_description": "Femke war eines der drei Kinder von Dijkstra und Maria Debets und überlebte ihren Vater, der 2002 starb.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": null,
+      "relationship_type": "family/daughter"
+    },
+    {
+      "person_name": "Rutger M. Dijkstra",
+      "relationship_description": "Rutger war der Sohn von Dijkstra und Maria Debets und wurde Informatiker. Er überlebte seinen Vater, der 2002 starb.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+      ],
+      "notes": "Damit setzte er die Verbindung der Familie zur Informatik fort.",
+      "relationship_type": "family/son"
     },
     {
       "person_name": "Adriaan van Wijngaarden",
-      "relationship_type": "academic/mentor",
-      "relationship_description": "Doktorvater, Vorgesetzter und Mentor am Mathematisch Centrum; er ermutigte Dijkstra, das Programmieren zu seiner geistigen Berufung zu machen, und betreute seine Promotion.",
-      "start_year": 1952,
-      "end_year": 1962,
+      "relationship_description": "Van Wijngaarden verschaffte Dijkstra 1952 seine erste Stelle als Programmierer am Mathematischen Zentrum in Amsterdam. Später betreute er Dijkstras 1959 eingereichte Doktorarbeit.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Arbeit am Mathematisch Centrum",
-        "Software für frühe niederländische Computer",
-        "Arbeit an der ALGOL-Sprache und an Compilern",
-        "Betreuung der Promotion",
-        "Gespräche über die berufliche Laufbahn"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
         "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden"
       ],
-      "notes": "Dijkstra bezeichnete ein langes Gespräch mit van Wijngaarden als „Wendepunkt“ seines Lebens; van Wijngaarden betreute auch seine Dissertation von 1959."
+      "notes": "Van Wijngaarden bestärkte Dijkstra darin, das Programmieren als intellektuell anspruchsvollen Beruf zu verstehen.",
+      "relationship_type": "academic/mentor"
     },
     {
-      "person_name": "Bram Jan Loopstra",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Kollege für Hardware am Mathematisch Centrum; entwarf gemeinsam mit Dijkstra frühe niederländische Computer und stimmte sich mit ihm eng über die Schnittstellen zwischen Hardware und Software ab.",
-      "start_year": 1952,
-      "end_year": 1962,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Entwurf früher niederländischer Computer (etwa im Zusammenhang mit ARMAC)",
-        "Festlegung von Hardware-Software-Schnittstellen durch Programmi unterlagen",
-        "Gemeinsamer Entwicklungsprozess am Mathematisch Centrum"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
-      ],
-      "notes": "Ihre disziplinierte Zusammenarbeit mit klar festgelegten Schnittstellen prägte Dijkstras Vorstellungen von Dokumentation und vom Entwerfen vor dem Debuggen."
-    },
-    {
-      "person_name": "Carel Scholten",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Hardwareentwickler am Mathematisch Centrum; arbeitete mit Dijkstra und Loopstra am Bau früher Computer.",
-      "start_year": 1952,
-      "end_year": 1962,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Entwurf und Bau früher niederländischer Computer",
-        "Spezifikation von Hardware-Software-Schnittstellen",
-        "Arbeit am Mathematisch Centrum"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
-      ],
-      "notes": "Er gehörte zum kleinen Kernteam, dessen Zusammenarbeit Dijkstras Vorstellungen von klaren Schnittstellen und von Korrektheit durch gutes Design beeinflusste."
-    },
-    {
-      "person_name": "Maria \"Ria\" C. Debets",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Ehefrau; Dijkstra heiratete Ria Debets 1957. Sie lebten zunächst gemeinsam in den Niederlanden und später in Austin, bevor sie in seinen letzten Lebensjahren nach Nuenen zurückkehrten.",
-      "start_year": 1957,
-      "end_year": 2002,
+      "person_name": "Tony Hoare",
+      "relationship_description": "Dijkstra und Hoare formulierten gemeinsam das Philosophenproblem und verfassten 1972 zusammen mit Ole-Johan Dahl Structured Programming.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familienleben",
-        "Umzüge zwischen den Niederlanden und den USA",
-        "Prüfungen von Studierenden zu Hause abhalten"
-      ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Tony_Hoare",
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "notes": "Bei der Eheschließung bestand Dijkstra darauf, als Beruf „Programmierer“ anzugeben, und stellte damit die damalige Auffassung infrage, dass Informatik kein eigentlicher Beruf sei."
-    },
-    {
-      "person_name": "International Federation for Information Processing Working Group 2.1 members",
-      "entity_kind": "group",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Internationale Kollegen in der IFIP-Arbeitsgruppe WG 2.1 für algorithmische Sprachen und Kalküle; sie arbeiteten an ALGOL-Standards und am Sprachentwurf im Umfeld von Dijkstras frühen Arbeiten.",
-      "start_year": 1958,
-      "end_year": 1970,
-      "strength": "moderate",
-      "interaction_frequency": "yearly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Entwurf und Pflege von ALGOL 60 und ALGOL 68",
-        "Internationale Normungstreffen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Adriaan_van_Wijngaarden",
-        "https://en.wikipedia.org/wiki/Tony_Hoare",
-        "https://en.wikipedia.org/wiki/Lambert_Meertens"
-      ],
-      "notes": "Van Wijngaarden, Hoare, Meertens und andere Mitglieder der WG 2.1 gehörten derselben Gemeinschaft des Sprachentwurfs an, in der Dijkstras ALGOL- und Compilerarbeiten eine wichtige Rolle spielten."
+      "notes": "Ihre Arbeit verband strukturierte Programmierung mit strengen Ansätzen zur Nebenläufigkeit und zur Korrektheit von Programmen.",
+      "relationship_type": "academic/collaborator"
     },
     {
       "person_name": "Jaap A. Zonneveld",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Kollege am Mathematisch Centrum; entwickelte gemeinsam mit Dijkstra den weltweit ersten funktionsfähigen ALGOL-60-Compiler.",
-      "start_year": 1960,
-      "end_year": 1962,
+      "relationship_description": "Zonneveld arbeitete mit Dijkstra am Mathematischen Zentrum in Amsterdam am ersten vollständig fertiggestellten ALGOL-60-Compiler. Ihre Zusammenarbeit endete 1960 mit der Fertigstellung des Compilers.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Entwicklung des ersten ALGOL-60-Compilers für die Electrologica X1",
-        "Intensive gemeinsame Programmier- und Entwurfsarbeit",
-        "Arbeit am Mathematisch Centrum"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
         "https://en.wikipedia.org/wiki/Jaap_A._Zonneveld"
       ],
-      "notes": "Sie arbeiteten „Tag und Nacht“ an dem Compiler, führten sogar an getrennten Orten doppelte Notizen und ließen sich bis zur Fertigstellung Bärte wachsen – eine beispielhafte Zusammenarbeit aus der Frühzeit der Sprachimplementierung."
+      "notes": "Während der intensiven Arbeit am Compiler bewahrten sie doppelte Projektnotizen an voneinander getrennten Orten auf.",
+      "relationship_type": "professional/collaborator"
     },
     {
-      "person_name": "Marcus Dijkstra",
-      "relationship_type": "family/child",
-      "relationship_description": "Sohn; eines von Dijkstras drei Kindern.",
-      "start_year": 1960,
-      "end_year": 2002,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Familienleben"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
-      ],
-      "notes": "Bei Dijkstras Tod als eines der überlebenden Kinder erwähnt; eine ausführlichere biografische Beziehung ist im Artikel nicht dokumentiert."
-    },
-    {
-      "person_name": "Femke Dijkstra",
-      "relationship_type": "family/child",
-      "relationship_description": "Tochter; eines von Dijkstras drei Kindern.",
-      "start_year": 1960,
-      "end_year": 2002,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Familienleben"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
-      ],
-      "notes": "Unter seinen überlebenden Kindern aufgeführt; weitere Einzelheiten werden nicht genannt."
-    },
-    {
-      "person_name": "Rutger M. Dijkstra",
-      "relationship_type": "family/child",
-      "relationship_description": "Sohn und Informatiker; eines von Dijkstras Kindern, die ihm in die Informatik folgten.",
-      "start_year": 1960,
-      "end_year": 2002,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familienleben",
-        "Gemeinsame berufliche Interessen an der Informatik"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
-      ],
-      "notes": "Im Artikel ausdrücklich als Informatiker bezeichnet, was auf eine berufliche ebenso wie familiäre Verbindung hindeutet."
-    },
-    {
-      "person_name": "Technische Hogeschool Eindhoven (Eindhoven University of Technology) colleagues",
-      "entity_kind": "group",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Kollegen aus dem Fachbereich Mathematik, mit denen Dijkstra während seiner Professur in Eindhoven eine Gruppe zusammenarbeitender Informatiker aufzubauen versuchte.",
-      "start_year": 1962,
-      "end_year": 1973,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Lehre in Mathematik und Informatik",
-        "Aufbau einer kleinen Informatikergruppe",
-        "Entwicklung des Betriebssystems THE"
-      ],
+      "person_name": "Carel Scholten",
+      "relationship_description": "Scholten arbeitete mit Dijkstra am Rechner ARMAC des Mathematischen Zentrums in Amsterdam. Ihre Zusammenarbeit verband den frühen niederländischen Rechnerbau mit späteren Arbeiten zur Semantik von Programmen.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/Eindhoven_University_of_Technology"
+        "https://en.wikipedia.org/wiki/Carel_S._Scholten"
       ],
-      "notes": "Der Artikel nennt keine Einzelpersonen, betont jedoch seinen Versuch, in einer von der Mathematik geprägten Umgebung eine kooperative Informatikgruppe zu schaffen."
+      "notes": "Ihre langjährige Zusammenarbeit verknüpfte den frühen niederländischen Rechnerbau mit der späteren formalen Semantik von Programmen.",
+      "relationship_type": "professional/collaborator"
     },
     {
-      "person_name": "Nico Habermann",
-      "relationship_type": "academic/student",
-      "relationship_description": "Doktorand Dijkstras in Eindhoven, der später ein bedeutender Systemforscher und Leiter eines Fachbereichs an der Carnegie Mellon University wurde.",
-      "start_year": 1967,
-      "end_year": 1973,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Promotionsbetreuung an der Technischen Universität Eindhoven",
-        "Forschung zu Betriebssystemen und Synchronisation (einschließlich des Multiprogrammiersystems THE)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Nico_Habermann",
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
-      ],
-      "notes": "Habermanns Promotion in Eindhoven unter Dijkstra und seine spätere Arbeit am THE-System werden ausdrücklich erwähnt; er wurde ein einflussreicher Wissenschaftler auf dem Gebiet des Software Engineering."
-    },
-    {
-      "person_name": "Donald E. Knuth",
-      "relationship_type": "professional/peer",
-      "relationship_description": "Zeitgenosse und Pionier der Algorithmusanalyse und der Methodik des Programmierens; beide erhielten den Turing Award und prägten die Vorstellungen von Strenge beim Programmieren.",
-      "start_year": 1968,
-      "end_year": 2002,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Teilnahme an der internationalen Informatikgemeinschaft",
-        "Indirekter Austausch durch Veröffentlichungen zur Methodik des Programmierens und zu Algorithmen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Donald_Knuth",
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
-      ],
-      "notes": "Sie teilten das Interesse an strukturierter Programmierung und der Korrektheit von Programmen; ihre Arbeiten werden in Darstellungen der Informatikgeschichte häufig gemeinsam behandelt, auch wenn der Artikel keine enge persönliche Zusammenarbeit dokumentiert."
-    },
-    {
-      "person_name": "Tony Hoare",
-      "relationship_type": "professional/peer",
-      "relationship_description": "Ebenfalls mit dem Turing Award ausgezeichneter Theoretiker der Programmiersprachen und Mitbegründer der strukturierten Programmierung, bekannt für verwandte Arbeiten zur Programmkorrigiertheit und Nebenläufigkeit.",
-      "start_year": 1968,
-      "end_year": 2002,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Internationale Konferenzen und IFIP-Arbeitsgruppen zu Programmiersprachen und Kalkülen",
-        "Gemeinsames Eintreten für die formale Begründung von Programmen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Tony_Hoare",
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
-      ],
-      "notes": "Hoare war Mitautor des klassischen Buches „Structured Programming“ und formulierte gemeinsam mit Dijkstra das Philosophenproblem; ihre Ideen beeinflussten einander und das gesamte Fach nachhaltig."
-    },
-    {
-      "person_name": "K. Mani Chandy",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Kollege auf den Gebieten der nebenläufigen Programmierung und des verteilten Rechnens; seine Arbeiten, etwa mit Misra, berührten zentrale Themen von Dijkstras Forschung zu Nebenläufigkeit und Selbststabilisierung.",
-      "start_year": 1970,
-      "end_year": 2002,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Übergreifende Forschungsgemeinschaft zu Nebenläufigkeit und verteilten Algorithmen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Jayadev_Misra"
-      ],
-      "notes": "Auf Dijkstras Seite nicht direkt erwähnt, aber über die Gemeinschaft der Nebenläufigkeitsforscher und verwandte Auszeichnungen wie den Dijkstra-Preis eng verbunden."
-    },
-    {
-      "person_name": "Tuesday Afternoon Club colleagues",
-      "entity_kind": "group",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Ausgewählte Gruppe von Kollegen, die sich wöchentlich mit Dijkstra traf, um wissenschaftliche Artikel zu analysieren und über Notation, Aufbau und Inhalt zu diskutieren.",
-      "start_year": 1973,
-      "end_year": 1999,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Seminare des Tuesday Afternoon Club in Nuenen und Austin",
-        "Kritische Diskussion von Forschungsarbeiten",
-        "Entwicklung von Dijkstras Essaystil (EWD-Reihe)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
-      ],
-      "notes": "Zunächst in Nuenen ansässig und später in Austin neu formiert; die Mitglieder bildeten Dijkstras engsten dauerhaften Kreis für wissenschaftliche Gespräche."
-    },
-    {
-      "person_name": "Burroughs Corporation research staff",
-      "entity_kind": "group",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Kollegen aus den Forschungszentren von Burroughs, die während Dijkstras Zeit als einziger Forschungsstipendiat des Unternehmens mit ihm in Kontakt standen.",
-      "start_year": 1973,
-      "end_year": 1984,
+      "person_name": "Johannes Haantjes",
+      "relationship_description": "Haantjes betreute Dijkstra während dessen Studium der theoretischen Physik in Leiden und stellte ihn Anfang der 1950er-Jahre Adriaan van Wijngaarden vor.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Forschungsbesuche in Burroughs-Zentren",
-        "Gespräche über Systementwurf und Programmiermethodik",
-        "Verbreitung und Diskussion der EWD-Berichte"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/Burroughs_Corporation"
+        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "notes": "Obwohl er hauptsächlich von seinem Haus in Nuenen aus arbeitete, reiste er zu Burroughs-Niederlassungen in den USA und beeinflusste dort die Vorstellungen zur Softwaregestaltung."
+      "notes": "Diese Bekanntschaft führte unmittelbar zu Dijkstras erster Stelle als Programmierer.",
+      "relationship_type": "academic/teacher"
     },
     {
       "person_name": "Jan L. A. van de Snepscheut",
-      "relationship_type": "academic/student",
-      "relationship_description": "Ehemaliger Student von Dijkstra und Martin Rem aus der niederländischen Schule der formalen Methoden; später Professor am Caltech und Autor von „What Computing Is All About“.",
-      "start_year": 1977,
-      "end_year": 1988,
+      "relationship_description": "Van de Snepscheut studierte bei Dijkstra und Martin Rem und wurde später Professor für Informatik und Hochschullehrer.",
       "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Ausbildung auf Promotionsniveau in der formalen Herleitung von Programmen",
-        "Teilnahme an der Eindhovener Schule der Informatik"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Jan_L._A._van_de_Snepscheut",
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
+        "https://en.wikipedia.org/wiki/Jan_L._A._van_de_Snepscheut"
       ],
-      "notes": "Der zugehörige Artikel erwähnt, dass er bei Dijkstra studierte; durch seine Forschung und Lehre führte er Dijkstras Schwerpunkt auf der Programmkorrigiertheit weiter."
+      "notes": "Dijkstra lobte van de Snepscheuts Buch What Computing Is All About für seine wissenschaftliche Begeisterung und sein pädagogisches Engagement.",
+      "relationship_type": "academic/student"
     },
     {
-      "person_name": "Students at the University of Texas at Austin",
-      "entity_kind": "group",
-      "relationship_type": "academic/student",
-      "relationship_description": "Studierende im Grund- und Hauptstudium, die Dijkstra unterrichtete, häufig in beweisorientierten Lehrveranstaltungen mit mündlichen Prüfungen und intensivem Feedback.",
-      "start_year": 1984,
-      "end_year": 1999,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Lehrveranstaltungen zu mathematischen Beweisen und schlüssigem Denken",
-        "Mündliche Prüfungen in seinem Büro oder zu Hause",
-        "Interaktive Tafelvorlesungen und anspruchsvolle Hausaufgaben"
-      ],
+      "person_name": "Per Brinch Hansen",
+      "relationship_description": "Brinch Hansen und Dijkstra erörterten bei Treffen 1971 und 1972 gemeinsam mit Tony Hoare Ideen zur Nebenläufigkeit und zu Betriebssystemen. Diese Gespräche trugen zur Entwicklung des Monitor-Konzepts bei.",
+      "strength": "moderate",
       "sources": [
+        "https://en.wikipedia.org/wiki/Per_Brinch_Hansen",
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
       ],
-      "notes": "Zu Beginn jedes Semesters fotografierte er die Studierenden, um sich ihre Namen einzuprägen, verzichtete auf Lehrbücher und verstand die Lehre als ernsthafte Forschungsaufgabe."
+      "notes": "Brinch Hansen hatte sich außerdem mit Dijkstras Darstellung der Semaphoren befasst, als er Mehrprogrammiersysteme entwickelte.",
+      "relationship_type": "academic/field_peer"
     },
     {
-      "person_name": "University of Texas at Austin Computer Science faculty",
-      "entity_kind": "group",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Kollegen im Fachbereich Informatik der UT Austin während Dijkstras Zeit als Schlumberger Centennial Chair; sie wirkten an Lehre und Fachbereichsaktivitäten mit.",
-      "start_year": 1984,
-      "end_year": 1999,
+      "person_name": "Bram Jan Loopstra",
+      "relationship_description": "Loopstra arbeitete mit Dijkstra am Mathematischen Zentrum in Amsterdam am Rechner ARMAC. Loopstra leistete die Hardwarearbeit, während Dijkstra für die Software zuständig war.",
       "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Lehre fortgeschrittener Veranstaltungen zu Beweisen und schlüssigem Denken",
-        "Arbeit in der Fachbereichsleitung",
-        "Organisation des Dijkstra zu Ehren veranstalteten Symposiums im Jahr 2000"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra",
-        "https://en.wikipedia.org/wiki/University_of_Texas_at_Austin"
+        "https://en.wikipedia.org/wiki/Carel_S._Scholten"
       ],
-      "notes": "Der Artikel hebt seinen besonderen Lehrstil und das vom Fachbereich zu seinem 70. Geburtstag veranstaltete Symposium hervor; einzelne Kollegen werden im Haupttext nicht genannt."
-    },
-    {
-      "person_name": "Vladimir Lifschitz",
-      "relationship_type": "academic/colleague",
-      "relationship_description": "Logiker, der sich an der UT Austin vorstellte; Dijkstra prüfte ihn mit einem Rätsel, das Lifschitz löste, woraufhin er eine langfristige Stelle in Austin erhielt.",
-      "start_year": 1990,
-      "end_year": 2002,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Kontakt im Rahmen der Berufung eines Hochschullehrers",
-        "Spätere kollegiale Zusammenarbeit an der UT Austin"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edsger_W._Dijkstra"
-      ],
-      "notes": "Der Artikel führt dies als Beispiel für Dijkstras unkonventionelle Methoden an, die Problemlösungsfähigkeit von Menschen zu beurteilen."
+      "notes": "",
+      "relationship_type": "professional/collaborator"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Dijkstras Familiennetzwerk kreist um seine wissenschaftlich geprägten Eltern, die ihn zur Mathematik und Physik hinführten, um seine Frau Ria Debets, die seine Umzüge zwischen den Niederlanden und den USA teilte, und um ihre drei Kinder, darunter der Informatiker Rutger M. Dijkstra. Diese Beziehungen gaben ihm persönlichen Halt und bestärkten zugleich seine geistige Ausrichtung auf rigoroses Denken."
+      "summary": "Dijkstra wuchs in einem bildungsorientierten Elternhaus in Rotterdam auf. Nach dem Gymnasium förderten seine Eltern sein Studium der Mathematik und Physik. Seine Ehe mit Maria Debets bestand während der Umzüge zwischen Nuenen und Austin fort. Nach seinem Ruhestand 1999 kehrte das Paar nach Nuenen zurück."
     },
     {
       "relationship_type": "academic",
-      "summary": "Seine akademischen Beziehungen waren entscheidend: Der Physikbetreuer Johannes Haantjes stellte den Kontakt zur Informatik her, während Adriaan van Wijngaarden zu Dijkstras wichtigstem Mentor und Doktorvater wurde und ihn darin bestärkte, das Programmieren als eigenständige Disziplin zu begründen. Dijkstra wiederum betreute Studierende wie Nico Habermann und Jan van de Snepscheut und prägte durch seinen intensiven, beweisorientierten Unterricht Generationen von Studierenden an der UT Austin."
+      "summary": "Akademische Mentoren führten Dijkstra von der theoretischen Physik zur Informatik am Mathematischen Zentrum in Amsterdam. Johannes Haantjes stellte ihn Adriaan van Wijngaarden vor, der ihm seine erste Stelle als Programmierer anbot und später seine Promotion betreute. Dijkstras spätere Studierende und Kollegen trugen seine Anliegen der Beweisführung von Programmen, der Nebenläufigkeit und der Ausbildung in Informatik in eine größere Forschungsgemeinschaft weiter."
     },
     {
       "relationship_type": "professional",
-      "summary": "Zu Dijkstras beruflichem Kernnetzwerk gehörten Kollegen am Mathematisch Centrum (Loopstra, Carel Scholten, Zonneveld), Mitarbeiter und Gesprächspartner in Eindhoven und bei Burroughs sowie die Mitglieder seines Tuesday Afternoon Club und des Fachbereichs der UT Austin. Diese Verbindungen prägten seine Arbeiten an ALGOL, Compilern und dem Betriebssystem THE ebenso wie die einflussreiche Reihe der EWD-Berichte."
-    },
-    {
-      "relationship_type": "social",
-      "summary": "Auch Dijkstras markantester gesellschaftlicher Kreis überschnitt sich mit seinem Berufsleben, insbesondere der Tuesday Afternoon Club, eine kleine Seminargruppe, die sich wöchentlich traf, um Aufsätze zu analysieren und Ideen weiterzuentwickeln. Darüber hinaus verwischten seine sozialen Kontakte – häufig geprägt von Musik, Rätseln und intensiven Gesprächen – in der Informatikgemeinschaft die Grenze zwischen persönlicher und geistiger Verbundenheit."
+      "summary": "Dijkstras berufliche Mitarbeiter am Mathematischen Zentrum in Amsterdam verbanden Hardware- und Softwarearbeit an einigen der frühesten Rechner der Niederlande. Die Arbeit mit Carel Scholten und Bram Jan Loopstra am ARMAC vermittelte Dijkstra praktische Erfahrung im Rechnerbau. Seine Zusammenarbeit mit Jaap A. Zonneveld führte 1960 zum ersten vollständig fertiggestellten ALGOL-60-Compiler."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "bb5afe8545f98cb4",
-    "translated_on": "2026-08-02T11:58:37.610839+00:00",
+    "source_fingerprint": "911bc0b6dd148ddc",
+    "translated_on": "2026-09-13T15:49:49.881600+02:00",
     "translator": "openai:gpt-5.6-luna"
   }
 }

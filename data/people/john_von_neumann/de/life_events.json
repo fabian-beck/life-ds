@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia-biographical-timelines",
-  "created_on": "2025-12-25",
+  "dataset": "John von Neumann biographical timeline",
+  "created_on": "2026-09-13",
   "person": {
     "name": "John_von_Neumann",
     "birth_date": "1903-12-28",
@@ -10,8 +10,8 @@
       "Physiker",
       "Informatiker"
     ],
-    "tagline": "Architekt des modernen Rechnens",
-    "summary": "John von Neumann war ein in Ungarn geborener amerikanischer Universalgelehrter, dessen Arbeit die moderne Mathematik, Quantenphysik, Spieltheorie und die Architektur digitaler Computer grundlegend veränderte. Im Zweiten Weltkrieg spielte er eine wichtige Rolle in der Waffenforschung und später in der amerikanischen Verteidigungsplanung des Kalten Krieges.",
+    "tagline": "Regeln für Spiele und Computer",
+    "summary": "John von Neumann war ein in Ungarn geborener amerikanischer Mathematiker. Seine Arbeiten prägten die Quantenmechanik, die Spieltheorie, die Forschung an Kernwaffen und die elektronische Datenverarbeitung. Er lehrte am Institute for Advanced Study und half dabei, das Von-Neumann-Konzept zu etablieren, das moderne Computer mit gespeicherten Programmen nutzen.",
     "wikipedia": "https://en.wikipedia.org/wiki/John_von_Neumann",
     "portrait": {
       "image": "/portraits/john_von_neumann_thumbnail.webp",
@@ -19,93 +19,107 @@
       "medium": "/portraits/john_von_neumann_medium.webp",
       "full": "/portraits/john_von_neumann_full.webp",
       "source": "https://en.wikipedia.org/wiki/John_von_Neumann",
-      "caption": "Stylized portrait based on historical photograph",
+      "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/5/5e/JohnvonNeumann-LosAlamos.gif"
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/5/5e/JohnvonNeumann-LosAlamos.gif",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
       "id": "budapest_prodigy",
-      "headline": "Wunderkind aus Budapest",
+      "headline": "Ein Budapester Wunderkind",
       "date_start": "1903-12-28",
       "date_start_precision": "day",
-      "date_end": "1922",
+      "date_end": "1923",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 18,
+      "age_end": 19,
       "involved_people": [
-        "Max von Neumann",
-        "Margit Kann",
         "Eugene Wigner"
       ],
-      "location": "Ungarn"
+      "location": "Ungarn",
+      "illustration": {
+        "image": "/chapter_art/john_von_neumann/budapest_prodigy_medium.webp",
+        "medium": "/chapter_art/john_von_neumann/budapest_prodigy_medium.webp",
+        "full": "/chapter_art/john_von_neumann/budapest_prodigy_full.webp",
+        "concept": "A radiant crystalline polyhedron floats in blackness, its facets opening into ever-smaller nested chambers. Fine gold filaments branch outward from one bright core, suggesting an intellect discovering order faster than the surrounding dark can contain it.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "central_european_crucible",
-      "headline": "Mitteleuropäischer Schmelztiegel",
-      "date_start": "1923-09",
-      "date_start_precision": "month",
-      "date_end": "1927-12-13",
-      "date_end_precision": "day",
-      "age_start": 19,
-      "age_end": 23,
-      "involved_people": [
-        "Gábor Szegő"
-      ],
-      "location": "Mitteleuropa"
+      "id": "european_training",
+      "headline": "Beweise in Europa",
+      "date_start": "1926",
+      "date_start_precision": "year",
+      "date_end": "1928",
+      "date_end_precision": "year",
+      "age_start": 22,
+      "age_end": 24,
+      "involved_people": null,
+      "location": "Mitteleuropa",
+      "illustration": {
+        "image": "/chapter_art/john_von_neumann/european_training_medium.webp",
+        "medium": "/chapter_art/john_von_neumann/european_training_medium.webp",
+        "full": "/chapter_art/john_von_neumann/european_training_full.webp",
+        "concept": "Several translucent planes glide through one another at different angles, leaving precise luminous intersections suspended in deep blue darkness. A single silver arc threads across them, binding disparate layers into one rigorous, balanced structure.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "princeton_as_gravitational_center",
-      "headline": "Princeton wird zum Zentrum",
-      "date_start": "1929-10",
-      "date_start_precision": "month",
+      "id": "princeton_mathematics",
+      "headline": "Princeton ruft",
+      "date_start": "1929",
+      "date_start_precision": "year",
       "date_end": "1938-11-17",
       "date_end_precision": "day",
       "age_start": 25,
       "age_end": 34,
       "involved_people": [
-        "Oswald Veblen",
-        "Marietta Kövesi",
-        "Klára Dán von Neumann"
+        "Hermann Weyl",
+        "Klára Dán"
       ],
-      "location": "Vereinigte Staaten"
+      "location": "Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/john_von_neumann/princeton_mathematics_medium.webp",
+        "medium": "/chapter_art/john_von_neumann/princeton_mathematics_medium.webp",
+        "full": "/chapter_art/john_von_neumann/princeton_mathematics_full.webp",
+        "concept": "A vast, weightless field of pale spheres hangs within a velvet-black void, subtly drawn toward a central transparent ring. Soft pulses travel between them in ordered waves, evoking invisible laws gathering scattered possibilities into a coherent whole.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "war_calculus",
-      "headline": "Kriegsberechnungen",
+      "id": "war_and_computation",
+      "headline": "Maschinen für den Krieg",
       "date_start": "1943",
       "date_start_precision": "year",
-      "date_end": "1945",
+      "date_end": "1952",
       "date_end_precision": "year",
       "age_start": 39,
-      "age_end": 41,
+      "age_end": 42,
       "involved_people": [
-        "J. Robert Oppenheimer",
-        "Edward Teller",
-        "Stanislaw Ulam",
-        "Oskar Morgenstern"
-      ],
-      "location": "Vereinigte Staaten"
-    },
-    {
-      "id": "the_stored_program_revolution",
-      "headline": "Die Revolution des gespeicherten Programms",
-      "date_start": "1945-06-30",
-      "date_start_precision": "day",
-      "date_end": "1951",
-      "date_end_precision": "year",
-      "age_start": 41,
-      "age_end": 47,
-      "involved_people": [
+        "Oskar Morgenstern",
         "John Mauchly",
-        "J. Presper Eckert"
+        "J. Presper Eckert",
+        "Julian Bigelow",
+        "Herman Goldstine"
       ],
-      "location": "Vereinigte Staaten"
+      "location": "Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/john_von_neumann/war_and_computation_medium.webp",
+        "medium": "/chapter_art/john_von_neumann/war_and_computation_medium.webp",
+        "full": "/chapter_art/john_von_neumann/war_and_computation_full.webp",
+        "concept": "At the center of darkness, a dense amber grid compresses toward a small white-hot square, while concentric pressure ripples expand outward. Along the grid, cool blue sparks leap in measured sequences, joining force, strategy, and calculation.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "cold_war_final_reckoning",
-      "headline": "Abrechnung im Kalten Krieg",
+      "id": "public_service_final_years",
+      "headline": "Macht und Krankheit",
       "date_start": "1955",
       "date_start_precision": "year",
       "date_end": "1957-02-08",
@@ -113,73 +127,75 @@
       "age_start": 51,
       "age_end": 53,
       "involved_people": null,
-      "location": "Vereinigte Staaten"
+      "location": "Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/john_von_neumann/public_service_final_years_medium.webp",
+        "medium": "/chapter_art/john_von_neumann/public_service_final_years_medium.webp",
+        "full": "/chapter_art/john_von_neumann/public_service_final_years_full.webp",
+        "concept": "A thin luminous orb, fissured by dark branching cracks, hovers above a reflective pool of black glass. Its remaining light casts a quiet halo into the surrounding void, while the reflection below slowly dissolves into ripples.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     }
   ],
-  "conclusion": "John von Neumann machte aus schierer geistiger Kraft eine funktionierende Maschine der modernen Welt – und veränderte damit Mathematik, Quantentheorie, Strategie und die Architektur des Rechnens. Sein Vermächtnis wirkt überall dort fort, wo Entscheidungen modelliert, Kriege verhindert und Ideen von Maschinen mit hoher Geschwindigkeit umgesetzt werden.",
+  "conclusion": "John von Neumanns mathematische Formulierung der Quantenmechanik gehört weiterhin zum Kern der Ausbildung und Forschung in der modernen Physik. Ökonomen, Politikwissenschaftler, Biologen und Militäranalytiker verwenden Formen der Spieltheorie, die aus Theory of Games and Economic Behavior hervorgegangen sind. Der EDVAC-Bericht und das IAS-Maschinenprojekt trugen dazu bei, den Entwurf von Computern mit gespeicherten Programmen zu verbreiten. Er wurde zum Vorbild für viele spätere elektronische Computer.",
   "events": [
     {
       "date": "1903-12-28",
       "date_precision": "day",
       "age": 0,
       "title": "Geburt in Budapest",
-      "description": "John von Neumann wurde in Budapest, damals im Königreich Ungarn innerhalb von [[Austria-Hungary|Österreich-Ungarn]], in eine wohlhabende, kulturell assimilierte jüdische Familie hineingeboren. Seine frühe Erziehung umfasste intensiven Privatunterricht und den Umgang mit mehreren Sprachen – Erfahrungen, die sein späteres kosmopolitisches Gelehrtenleben prägten.",
+      "description": "John von Neumann wurde in Budapest im Königreich Ungarn als Sohn einer wohlhabenden, nicht religiösen jüdischen Familie geboren. Sein Vater Max von Neumann war Bankier und promovierter Jurist. Seine Mutter Margaret Kann erzog John und seine jüngeren Brüder Michael und Nicholas in der Familienwohnung über den Geschäftsräumen von Kann-Heller.",
       "locations": [
         {
           "name_historic": "Budapest",
           "name_modern": "Budapest, Ungarn",
           "centroid": [
-            19.0402383,
-            47.4978789
+            19.0402,
+            47.4979
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "Max von Neumann",
-        "Margit Kann"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/Austria-Hungary"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Neumann_J%C3%A1nos_eml%C3%A9kt%C3%A1bl%C3%A1ja_a_sz%C3%BCl%C5%91h%C3%A1za_fal%C3%A1n_%28Budapest%2C_B%C3%A1thory_utca%29.jpg/960px-Neumann_J%C3%A1nos_eml%C3%A9kt%C3%A1bl%C3%A1ja_a_sz%C3%BCl%C5%91h%C3%A1za_fal%C3%A1n_%28Budapest%2C_B%C3%A1thory_utca%29.jpg",
-          "caption": "Gedenktafel am Geburtshaus von Neumann in Budapest",
-          "source": "https://commons.wikimedia.org/wiki/File:Neumann_János_emléktáblája_a_szülőháza_falán_(Budapest,_Báthory_utca).jpg",
-          "creator": "Misibacsi at Hungarian Wikipedia",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
-        }
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
       "event_type_icon": "mdi-candle",
       "chapter": "budapest_prodigy",
       "annotations": {
-        "Austria-Hungary": {
-          "explanation": "Eine multiethnische Doppelmonarchie (1867–1918), die aus dem Kaiserreich Österreich und dem Königreich Ungarn bestand und in der Budapest eine bedeutende ungarische Hauptstadt war.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Austria-Hungary"
+        "non-observant Jewish": {
+          "explanation": "The family was Jewish by background but did not actively practice the religion. Von Neumann was later baptized a Catholic in 1930.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/John_von_Neumann"
         }
       },
+      "weight": 0.25,
       "event_class": {
         "type": "birth",
-        "father": "Max (Miksa) von Neumann",
-        "mother": "Margit (Margaret) Kann von Neumann"
-      }
+        "father": "Max von Neumann",
+        "mother": "Margaret Kann",
+        "birth_name": "Neumann János Lajos",
+        "characterization": "wohlhabende jüdische Familie"
+      },
+      "involved_people": [
+        "Max von Neumann",
+        "Margaret Kann",
+        "Michael von Neumann",
+        "Nicholas von Neumann"
+      ]
     },
     {
       "date": "1914",
       "date_precision": "year",
       "age": 10,
-      "title": "Besuch des Fasori-Gymnasiums",
-      "description": "1914 trat er in das lutherische [[Fasori Evangélikus Gimnázium|Fasori-Gymnasium]] ein, eine der führenden Budapester weiterführenden Schulen. Dort schloss er früh Freundschaft mit Eugene Wigner und erwies sich rasch als mathematisches Wunderkind; zusätzlich zum regulären Lehrplan erhielt er Unterricht auf fortgeschrittenem Niveau.",
+      "title": "Studium am Fasori",
+      "description": "1914 trat John von Neumann in das lutherische Fasori Evangélikus Gimnázium ein, eine weiterführende Schule in Budapest. Eugene Paul Wigner war ihm an der Schule ein Jahr voraus. Die beiden freundeten sich an. Von Neumann profitierte von dem anspruchsvollen Mathematikunterricht.",
       "locations": [
         {
           "name_historic": "Budapest",
           "name_modern": "Budapest, Ungarn",
           "centroid": [
-            19.040235,
-            47.497913
+            19.0402,
+            47.4979
           ],
           "primary": true
         }
@@ -193,9 +209,9 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Fasori_Evang%C3%A9likus_Gimn%C3%A1zium1.jpg/960px-Fasori_Evang%C3%A9likus_Gimn%C3%A1zium1.jpg",
-          "caption": "Gebäude des Fasori Evangélikus Gimnázium in Budapest",
-          "source": "https://commons.wikimedia.org/wiki/File:Fasori_Evangélikus_Gimnázium1.jpg",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Fasori_Evang%C3%A9likus_Gimn%C3%A1zium10.jpg/960px-Fasori_Evang%C3%A9likus_Gimn%C3%A1zium10.jpg",
+          "caption": "Fasori Evangélikus Gimnázium in Budapest",
+          "source": "https://commons.wikimedia.org/wiki/File:Fasori_Evangélikus_Gimnázium10.jpg",
           "creator": "12akd",
           "license": "CC BY-SA 4.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
@@ -203,72 +219,42 @@
       ],
       "event_type_icon": "mdi-school",
       "chapter": "budapest_prodigy",
-      "annotations": {
-        "Fasori Evangélikus Gimnázium": {
-          "explanation": "Ein angesehenes lutherisches Gymnasium in Budapest, häufig Fasori-Gymnasium genannt, das im frühen 20. Jahrhundert für seine außergewöhnlich gute Ausbildung in Mathematik und Naturwissenschaften bekannt war.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Fasori_Gimn%C3%A1zium"
-        }
-      }
+      "weight": 0.25
     },
     {
-      "date": "1922",
+      "date": "1923",
       "date_precision": "year",
-      "date_note": "Die zeitliche Einordnung bezieht sich auf seine Durchbruchsjahre im späten Teenageralter; nach üblicher Quellenlage entstanden seine frühen bedeutenden Arbeiten und der Preis etwa im Alter von 18 bis 19 Jahren",
-      "age": 18,
-      "title": "Frühe Arbeiten und ein Preis",
-      "description": "Als Jugendlicher und junger Erwachsener veröffentlichte von Neumann in Budapest bedeutende Arbeiten zur mathematischen Grundlagenforschung, darunter eine moderne Definition der [[ordinal number|Ordinalzahlen]], die frühere Formulierungen ablöste. Ungefähr in dieser Zeit gewann er außerdem den [[Eötvös Prize|Eötvös-Preis]], eine renommierte ungarische Mathematikauszeichnung – ein Zeichen dafür, dass er zu den herausragenden jungen Mathematikern seiner Generation aufstieg.",
-      "locations": [
-        {
-          "name_historic": "Budapest",
-          "name_modern": "Budapest, Ungarn",
-          "centroid": [
-            19.040235,
-            47.497913
-          ],
-          "primary": true
-        }
-      ],
+      "age": 19,
+      "title": "Veröffentlicht Arbeiten zur Mengenlehre",
+      "description": "John von Neumann veröffentlichte im Alter von 19 Jahren zwei bedeutende mathematische Arbeiten. Seine zweite Arbeit gab eine moderne Definition der Ordinalzahlen. Sie erweiterte die Untersuchung geordneter Mengen auf unendliche Folgen.",
+      "locations": [],
+      "involved_people": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/L%C3%B3r%C3%A1nd_E%C3%B6tv%C3%B6s#E%C3%B6tv%C3%B6s_Prize"
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
-      "event_type_icon": "mdi-trophy",
+      "event_type_icon": "mdi-file-document",
       "chapter": "budapest_prodigy",
-      "annotations": {
-        "ordinal number": {
-          "explanation": "Ein Begriff der Mengenlehre zur Beschreibung des Ordnungstyps einer wohlgeordneten Menge; von Neumanns Ansatz stellt jede Ordinalzahl als die Menge aller kleineren Ordinalzahlen dar.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Ordinal_number"
-        },
-        "Eötvös Prize": {
-          "explanation": "Ein ungarischer Mathematikpreis, benannt nach Loránd Eötvös, der an herausragende Schüler weiterführender Schulen verliehen wurde und frühe außergewöhnliche Begabung würdigte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/L%C3%B3r%C3%A1nd_E%C3%B6tv%C3%B6s#E%C3%B6tv%C3%B6s_Prize"
-        }
+      "weight": 0.6,
+      "event_class": {
+        "type": "publication",
+        "title": "Zur Einführung der transfiniten Zahlen",
+        "publication_type": "paper",
+        "significance": "Definition der Ordinalzahlen"
       }
     },
     {
-      "date": "1923-09",
-      "date_precision": "month",
-      "date_end": "1926",
-      "date_end_precision": "year",
-      "age": 19,
-      "title": "Doppeltes Universitätsstudium",
-      "description": "Um die Erwartungen seiner Familie mit seinen mathematischen Ambitionen zu vereinbaren, studierte er Chemieingenieurwesen und entwickelte sich zugleich als Doktorand in der Mathematik weiter. In dieser Zeit hielt er sich in Berlin auf, studierte Ingenieurwissenschaften an der [[ETH Zurich|ETH Zürich]] und arbeitete an seiner Dissertation an der Universität Budapest, die sich mit der Axiomatisierung der [[set theory|Mengenlehre]] befasste.",
+      "date": "1926",
+      "date_precision": "year",
+      "age": 22,
+      "title": "Erwirbt zwei Abschlüsse",
+      "description": "John von Neumann erwarb 1926 an der ETH Zürich einen Abschluss in Chemieingenieurwesen. Außerdem promovierte er an der Universität Budapest in Mathematik mit summa cum laude. Seine Dissertation formulierte ein formales System grundlegender Regeln für [[Cantor's set theory|die Mengenlehre]].",
       "locations": [
-        {
-          "name_historic": "Berlin",
-          "name_modern": "Berlin, Deutschland",
-          "centroid": [
-            13.3951309,
-            52.5173885
-          ],
-          "primary": false
-        },
         {
           "name_historic": "Zürich",
           "name_modern": "Zürich, Schweiz",
           "centroid": [
-            8.5410422,
-            47.3744489
+            8.5417,
+            47.3769
           ],
           "primary": true
         },
@@ -276,37 +262,43 @@
           "name_historic": "Budapest",
           "name_modern": "Budapest, Ungarn",
           "centroid": [
-            19.0402383,
-            47.4978789
+            19.0402,
+            47.4979
           ],
           "primary": false
         }
       ],
-      "involved_people": [
-        "Gábor Szegő"
-      ],
+      "involved_people": [],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
-      "event_type_icon": "mdi-school",
-      "chapter": "central_european_crucible",
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/ETH_zurich_%28Ank_Kumar_Infosys_Limited%29_01.jpg/960px-ETH_zurich_%28Ank_Kumar_Infosys_Limited%29_01.jpg",
+          "caption": "Gebäude auf dem Campus der ETH Zürich",
+          "source": "https://commons.wikimedia.org/wiki/File:ETH_zurich_(Ank_Kumar_Infosys_Limited)_01.jpg",
+          "creator": "Ank kumar",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "european_training",
       "annotations": {
-        "ETH Zurich": {
-          "explanation": "Eine bedeutende öffentliche Schweizer Forschungsuniversität (deutsch: Eidgenössische Technische Hochschule Zürich), an der von Neumann in den 1920er-Jahren Chemieingenieurwesen studierte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/ETH_Zurich"
-        },
-        "set theory": {
-          "explanation": "Ein grundlegender Zweig der mathematischen Logik, der Mengen untersucht; von Neumanns frühe Doktorarbeit befasste sich mit ihrer Axiomatisierung, um Paradoxien der naiven Mengenlehre zu vermeiden.",
+        "Cantor's set theory": {
+          "explanation": "Die Mengenlehre untersucht Zusammenfassungen von Objekten und die Regeln, nach denen man über sie schließt. Sie wurde zu einer zentralen Grundlage der modernen Mathematik.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Set_theory"
         }
-      }
+      },
+      "weight": 0.55,
+      "background": "Sein Vater wollte, dass er in die Industrie ging, und bat den Ingenieur Theodore von Kármán, ihn von der Mathematik abzubringen. Sie einigten sich auf Chemieingenieurwesen als praktischen Berufsweg. Zunächst belegte er an der Universität Berlin einen zweijährigen Chemiekurs ohne Abschluss. Im September 1923 bestand er dann die Aufnahmeprüfung der ETH Zürich. Gleichzeitig setzte er seine mathematischen Arbeiten in Budapest fort. Sein Promotionsstudium absolvierte er an der Pázmány-Péter-Universität, der heutigen Universität Budapest.\n\nDie Dissertation ging auf ein Problem zurück, das die Versuche erschüttert hatte, die Mengenlehre zu einer sicheren Grundlage der Mathematik zu machen. Bertrand Russells Paradoxon betraf die Gesamtheit aller Mengen, die sich nicht selbst enthalten. Von Neumanns Dissertation von 1925 entwickelte zwei Wege, solche sich selbst enthaltenden Mengen auszuschließen. Einer davon war das Fundierungsaxiom. Es verlangte, dass Mengen in einer geordneten Folge aufgebaut wurden. Eine Menge, die Element einer anderen Menge war, musste in dieser Folge früher auftreten. Dadurch konnte eine Menge nicht Element ihrer selbst sein.\n\nSein zweites Verfahren unterschied Mengen von Klassen. Eine Menge war eine Klasse, die Element anderer Klassen war. Eine echte Klasse war kein Element anderer Klassen. So konnte man über die Klasse aller Mengen sprechen, die sich nicht selbst enthalten, ohne sie als Menge zu behandeln. Außerdem führte er innere Modelle ein, um zu zeigen, dass das Hinzufügen des Fundierungsaxioms keine Widersprüche erzeugte. Diese Werkzeuge wurden später zu einem Kernbestandteil der mathematischen Mengenlehre.\n\nEin Stipendium der Rockefeller Foundation führte ihn anschließend an die Universität Göttingen, wo er bei David Hilbert studierte. Hermann Weyl erinnerte sich an Spaziergänge nach den Vorlesungen im Winter 1926/27 durch die kalten, regennassen Straßen Göttingens, gemeinsam mit von Neumann und Emmy Noether. Sie diskutierten hyperkomplexe Zahlensysteme und deren Darstellungen."
     },
     {
-      "date": "1927-12-13",
-      "date_precision": "day",
-      "age": 23,
-      "title": "Habilitation in Berlin",
-      "description": "Von Neumann schloss seine Habilitation ab und wurde an der Berliner Universität [[Privatdozent|Privatdozent]] – ein ungewöhnlich früher Erfolg, der ihn zum jüngsten Privatdozenten dieser Universität machte. Er begann eine außerordentlich produktive Phase der Forschung und Lehrtätigkeit und gewann rasch Einfluss in den europäischen Mathematikerkreisen.",
+      "date": "1928",
+      "date_precision": "year",
+      "age": 24,
+      "title": "Beginnt seine Lehrtätigkeit in Berlin",
+      "description": "John von Neumann begann 1928 an der Universität Berlin Vorlesungen zu halten. Er wurde zum Privatdozenten und damit nach abgeschlossener Habilitation zur selbstständigen Lehre berechtigt. Er war der jüngste Mensch, der in der Geschichte der Universität diesen Rang erhielt.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -318,115 +310,75 @@
           "primary": true
         }
       ],
+      "involved_people": [],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Frontansicht_des_Hauptgeb%C3%A4udes_der_Humboldt-Universit%C3%A4t_in_Berlin.jpg/960px-Frontansicht_des_Hauptgeb%C3%A4udes_der_Humboldt-Universit%C3%A4t_in_Berlin.jpg",
-          "caption": "Hauptgebäude der Humboldt-Universität zu Berlin",
-          "source": "https://commons.wikimedia.org/wiki/File:Frontansicht_des_Hauptgebäudes_der_Humboldt-Universität_in_Berlin.jpg",
-          "creator": "Christian Wolf ( www.c-w-design.de )",
-          "license": "CC BY-SA 3.0 de",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Humboldt-Universit%C3%A4t_Berlin_01.jpg/960px-Humboldt-Universit%C3%A4t_Berlin_01.jpg",
+          "caption": "Humboldt-Universität zu Berlin",
+          "source": "https://commons.wikimedia.org/wiki/File:Humboldt-Universität_Berlin_01.jpg",
+          "creator": "H.Helmlechner",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
-      "event_type_icon": "mdi-school",
-      "chapter": "central_european_crucible",
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "european_training",
       "annotations": {
         "Privatdozent": {
-          "explanation": "Eine deutsche akademische Bezeichnung für jemanden, der die Habilitation abgeschlossen hat und berechtigt ist, selbstständig an einer Universität zu lehren, gewöhnlich ohne eine besoldete Professur.",
+          "explanation": "In the German university system, a Privatdozent could teach independently after completing a habilitation. The rank did not necessarily carry a salaried professorship.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Privatdozent"
         }
-      }
+      },
+      "weight": 0.45
     },
     {
-      "date": "1929-10",
-      "date_precision": "month",
+      "date": "1929",
+      "date_precision": "year",
       "age": 25,
-      "title": "Übersiedlung nach Princeton",
-      "description": "Nach Lehrtätigkeiten in Deutschland nahm er die Einladung an, als Gastdozent für mathematische Physik an das [[Institute for Advanced Study|Institute for Advanced Study]] in Princeton zu kommen. Damit wurde er Teil eines wachsenden transatlantischen Netzwerks führender Mathematiker und Physiker – und legte den Grundstein für eine dauerhafte akademische Heimat in den Vereinigten Staaten.",
+      "title": "Lehrtätigkeit in Princeton",
+      "description": "John von Neumann verließ 1929 die Universität Hamburg und ging nach Princeton. Die Princeton University ernannte ihn zum Gastdozenten für mathematische Physik, also für die Anwendung der Mathematik auf physikalische Probleme.",
       "locations": [
         {
-          "name_historic": "Berlin",
-          "name_modern": "Berlin, Deutschland",
+          "name_historic": "Hamburg",
+          "name_modern": "Hamburg, Deutschland",
           "centroid": [
-            13.3951309,
-            52.5173885
+            9.9937,
+            53.5511
           ],
           "primary": false
         },
         {
           "name_historic": "Princeton",
-          "name_modern": "Princeton, New Jersey, USA",
+          "name_modern": "Princeton, New Jersey, Vereinigte Staaten",
           "centroid": [
-            -74.6597376,
-            40.3496953
+            -74.6591,
+            40.3573
           ],
           "primary": true
         }
-      ],
-      "involved_people": [
-        "Oswald Veblen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study"
-      ],
-      "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "princeton_as_gravitational_center",
-      "annotations": {
-        "Institute for Advanced Study": {
-          "explanation": "Ein 1930 gegründetes, 1933 eröffnetes Forschungsinstitut, das zu einem bedeutenden amerikanischen Zentrum theoretischer Forschung wurde, insbesondere in Mathematik und Physik.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study"
-        }
-      },
-      "event_class": {
-        "type": "migration",
-        "from_location": "Deutschland",
-        "to_location": "Vereinigte Staaten",
-        "characterization": "Karrierechance"
-      }
-    },
-    {
-      "date": "1930",
-      "date_precision": "year",
-      "age": 26,
-      "title": "Konversion und Ehe mit Marietta",
-      "description": "1930 wurde er in der katholischen Kirche getauft und heiratete kurz darauf Marietta Kövesi, deren Ausbildung in Budapest die mitteleuropäischen Geisteskreise widerspiegelte, in denen er sich damals bewegte.",
-      "locations": [
-        {
-          "name_historic": "Budapest",
-          "name_modern": "Budapest, Ungarn",
-          "centroid": [
-            19.0402383,
-            47.4978789
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Marietta Kövesi"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
-      "event_type_icon": "mdi-ring",
-      "chapter": "princeton_as_gravitational_center",
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "princeton_mathematics",
+      "weight": 0.7,
       "event_class": {
-        "type": "marriage_partnership",
-        "subtype": "marriage",
-        "partner": "Marietta Kövesi",
-        "duration": "bis zur Scheidung",
-        "children": 1
+        "type": "migration",
+        "from_location": "Deutschland",
+        "to_location": "Vereinigte Staaten",
+        "characterization": "akademische Berufung"
       }
     },
     {
       "date": "1932",
       "date_precision": "year",
       "age": 28,
-      "title": "Klassiker der Quantenmechanik",
-      "description": "1932 veröffentlichte er, während er in [[Berlin|Berlin]] lebte, das Werk im akademischen Verlag [[Springer|Springer]] und trug damit dazu bei, die entstehende europäische Forschungsgemeinschaft der Nachkriegszeit um ein gemeinsames formales Gerüst der Quantentheorie zu sammeln.",
+      "title": "Formuliert die Quantenmechanik",
+      "description": "John von Neumann veröffentlichte 1932 in Berlin Mathematische Grundlagen der Quantenmechanik. Das Buch ging aus seinen Arbeiten zur Spektraltheorie hervor und gab der Quantenmechanik einen mathematischen Rahmen auf der Grundlage von [[Hilbert space|Hilberträumen]] und [[operator|Operatoren]].",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -439,118 +391,110 @@
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/Mathematical_Foundations_of_Quantum_Mechanics"
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/John_Von_Neumann.jpg/960px-John_Von_Neumann.jpg",
+          "caption": "Mathematical Foundations of Quantum Mechanics",
+          "source": "https://commons.wikimedia.org/wiki/File:John_Von_Neumann.jpg",
+          "creator": "Carpeemptor",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "princeton_as_gravitational_center",
+      "chapter": "princeton_mathematics",
       "annotations": {
-        "Springer": {
-          "explanation": "Springer, damals Julius Springer Verlag, war ein bedeutender deutscher Wissenschaftsverlag, der im frühen 20. Jahrhundert insbesondere in Mathematik und Physik hohes Ansehen genoss.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Springer_Science%2BBusiness_Media"
+        "Hilbert space": {
+          "explanation": "Ein Hilbertraum ist ein vollständiger mathematischer Raum, der den gewöhnlichen geometrischen Raum verallgemeinert und die Darstellung von Quantenzuständen als Vektoren ermöglicht.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hilbert_space"
+        },
+        "operator": {
+          "explanation": "Ein Operator ist eine mathematische Vorschrift, die auf einen Zustand oder eine Funktion wirkt. In der Quantenmechanik stellen Operatoren messbare physikalische Größen wie Ort und Energie dar.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Operator_(mathematics)"
         }
       },
+      "weight": 0.95,
       "event_class": {
         "type": "publication",
         "title": "Mathematische Grundlagen der Quantenmechanik",
         "publication_type": "book",
-        "significance": "grundlegend",
-        "impact": "Das Werk systematisierte das mathematische Gerüst der Quantentheorie und beeinflusste die spätere Forschung in Physik und Funktionalanalysis nachhaltig.",
-        "source_link": {
-          "url": "https://en.wikipedia.org/wiki/Mathematical_Foundations_of_Quantum_Mechanics",
-          "kind": "wikipedia",
-          "site": "Wikipedia",
-          "entity": "Q19902709",
-          "resolved_by": "wikipedia",
-          "resolved_on": "2026-08-02"
-        }
-      }
+        "publisher": "Springer",
+        "significance": "Axiome der Quantenmechanik"
+      },
+      "background": "Die Quantenmechanik hatte den Physikern bereits erfolgreiche Regeln zur Berechnung atomarer Vorgänge geliefert, während die Mathematik unendlichdimensionaler Räume noch im Aufbau war. In Arbeiten von 1929 bis 1932 entwickelte von Neumann eine Spektraltheorie für Operatoren in Hilberträumen. Er gab die allgemeine Form der Cauchy-Schwarz-Ungleichung an. Außerdem unterschied er hermitesche von selbstadjungierten Operatoren. Dadurch konnte er jeden hermiteschen Operator beschreiben, der einen gegebenen Operator erweiterte. Das betraf unbeschränkte Operatoren, wie sie in der Quantenmechanik vorkamen und über frühere spektraltheoretische Ergebnisse hinausgingen.\n\nEin technisches Hindernis waren schwache Topologien, die eine schwächere Form der Konvergenz als die gewöhnliche Abstandskonvergenz beschreiben. Mathematiker hatten festgestellt, dass Folgen allein keine befriedigende Theorie dieser Topologien ermöglichten. Von Neumann skizzierte einen Ausweg aus dem Problem. Er führte lokal-konvexe Räume und topologische Vektorräume ein. Außerdem übertrug er Hausdorffs neuere topologische Ideen auf Hilberträume. Beschränktheit und totale Beschränktheit, Begriffe, die er in diesem Rahmen formulierte, blieben in Gebrauch.\n\nDer Band fasste diese Arbeiten über Operatoren zu einer einheitlichen mathematischen Darstellung der Quantentheorie zusammen. Seine Darstellung der Spektraltheorie stand neben Monografien von Marshall Stone und Stefan Banach unter den ersten Büchern zur Theorie der Hilberträume. Dasselbe Forschungsprogramm führte von Neumann zur Untersuchung von Operatorringen, die später von-Neumann-Algebren genannt wurden. Erste Ideen zu diesen Algebren hatte er bereits 1930. Einige Jahre später begann er nach seiner Begegnung mit F. J. Murray, sie systematisch zu untersuchen.\n\nDer mathematische Rahmen des Buches wurde zu einem Standardbezugspunkt der mathematischen Physik. Er verband frühere Ergebnisse über abstrakte Hilberträume mit einer systematischen Darstellung der in der Quantentheorie verwendeten Operatoren. Von Neumann erweiterte die Spektraltheorie durch direkte Integrale von Hilberträumen und durch Arbeiten über Operatoralgebren."
     },
     {
       "date": "1933",
       "date_precision": "year",
       "age": 29,
       "title": "Am Institute for Advanced Study",
-      "description": "1933 nahm von Neumann eine unbefristete Stelle am [[Institute for Advanced Study|Institute for Advanced Study]] in New Jersey an. Das IAS wurde zu seinem wichtigsten geistigen Zentrum und ermöglichte ihm weitgespannte Arbeiten in reiner Mathematik, Physik, Ökonomie und dem neu entstehenden Gebiet des elektronischen Rechnens.",
+      "description": "John von Neumann nahm 1933 eine mit einer festen Professur verbundene Stelle am Institute for Advanced Study in Princeton an. Die neue Einrichtung brachte Wissenschaftler zur Forschung zusammen, ohne regelmäßige Lehrverpflichtungen.",
       "locations": [
         {
-          "name_historic": "Princeton",
+          "name_historic": "Princeton, New Jersey",
           "name_modern": "Princeton, New Jersey, Vereinigte Staaten",
           "centroid": [
-            -74.6597376,
-            40.3496953
+            -74.659,
+            40.357
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Hermann Weyl"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study"
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Fuld_Hall%2C_Institute_for_Advanced_Study%2C_Princeton%2C_NJ.jpg/960px-Fuld_Hall%2C_Institute_for_Advanced_Study%2C_Princeton%2C_NJ.jpg",
-          "caption": "Fuld Hall, Institute for Advanced Study, Princeton",
+          "caption": "Fuld Hall, Institute for Advanced Study",
           "source": "https://commons.wikimedia.org/wiki/File:Fuld_Hall,_Institute_for_Advanced_Study,_Princeton,_NJ.jpg",
           "creator": "Zeete",
           "license": "CC BY-SA 4.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "princeton_as_gravitational_center",
-      "annotations": {
-        "Institute for Advanced Study": {
-          "explanation": "Ein privates Forschungsinstitut in Princeton, gegründet 1930 und organisiert um eine Fakultät aus ständigen Mitgliedern und Gastwissenschaftlern; es war eines der frühen Zentren für Spitzenforschung in Mathematik und Physik.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study"
-        }
-      }
-    },
-    {
-      "date": "1937",
-      "date_precision": "year",
-      "age": 33,
-      "title": "Amerikanischer Staatsbürger",
-      "description": "1937 wurde er amerikanischer Staatsbürger und besiegelte damit sein langfristiges Engagement für akademische und staatliche Institutionen der Vereinigten Staaten. In den folgenden Jahren war er zunehmend an der wissenschaftlich-militärischen Arbeit der USA beteiligt, während er seine Professur am Institute for Advanced Study in Princeton beibehielt.",
-      "locations": [
-        {
-          "name_historic": "Princeton",
-          "name_modern": "Princeton, New Jersey, Vereinigte Staaten",
-          "centroid": [
-            -74.6597376,
-            40.3496953
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
-      ],
-      "event_type_icon": "mdi-file-document",
-      "chapter": "princeton_as_gravitational_center"
+      "event_type_icon": "mdi-school-outline",
+      "chapter": "princeton_mathematics",
+      "weight": 0.85
     },
     {
       "date": "1938-11-17",
       "date_precision": "day",
       "age": 34,
-      "title": "Ehe mit Klára Dán",
-      "description": "Am 17. November 1938 heiratete von Neumann, nachdem seine Ehe mit Marietta Kövesi 1937 geschieden worden war, Klára Dán. Das Paar lebte später gemeinsam in den Vereinigten Staaten, wo sie eng mit seinem Forschungskreis während des Krieges verbunden war.",
-      "locations": [],
+      "title": "Heirat mit Klara Dan",
+      "description": "John von Neumann heiratete Klara Dan am 17. November 1938 in Princeton. Dan war eine Ungarin, die er in einem Kasino in Monte Carlo kennengelernt hatte.",
+      "locations": [
+        {
+          "name_historic": "Princeton",
+          "name_modern": "Princeton, New Jersey, Vereinigte Staaten",
+          "centroid": [
+            -74.659,
+            40.357
+          ],
+          "primary": true
+        }
+      ],
       "involved_people": [
-        "Klára Dán von Neumann",
-        "Marietta Kövesi"
+        "Klára Dán"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Kl%C3%A1ra_D%C3%A1n_von_Neumann",
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
+        "https://en.wikipedia.org/wiki/John_von_Neumann",
+        "https://en.wikipedia.org/wiki/Kl%C3%A1ra_D%C3%A1n_von_Neumann"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "princeton_as_gravitational_center",
+      "chapter": "princeton_mathematics",
+      "weight": 0.35,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
         "partner": "Klára Dán",
-        "duration": "bis zu seinem Tod"
+        "duration": "bis zu seinem Tod",
+        "characterization": "gesellschaftlich aktives Eheleben"
       }
     },
     {
@@ -559,69 +503,62 @@
       "date_end": "1945",
       "date_end_precision": "year",
       "age": 39,
-      "title": "Mitarbeit am Manhattan-Projekt",
-      "description": "Während des Zweiten Weltkriegs arbeitete von Neumann am [[Manhattan Project|Manhattan-Projekt]] und an verwandten amerikanischen Waffenforschungsprogrammen. Als mathematischer Berater reiste er von seinem Stützpunkt in Princeton zu verschiedenen Projektstandorten; seine Arbeit half leitenden Wissenschaftlern, zentrale Fragen der Implosionskonstruktion für das Atombombenprogramm zu formulieren und zu bewerten.",
+      "title": "Arbeitet in Los Alamos",
+      "description": "John von Neumann trat 1943 dem [[Manhattan Project|Manhattan-Projekt]] in Robert Oppenheimers Labor in Los Alamos bei. Er nutzte hydrodynamische Berechnungen und Berechnungen zu Stoßwellen, um Sprengstofflinsen zu modellieren, also geformte Ladungen, die Plutonium für eine Implosionsbombe verdichteten.",
       "locations": [
-        {
-          "name_historic": "Princeton",
-          "name_modern": "Princeton, New Jersey, Vereinigte Staaten",
-          "centroid": [
-            -74.6597376,
-            40.3496953
-          ],
-          "primary": true
-        },
         {
           "name_historic": "Los Alamos",
           "name_modern": "Los Alamos, New Mexico, Vereinigte Staaten",
           "centroid": [
-            -106.298959,
-            35.88137
+            -106.3031,
+            35.8897
           ],
-          "primary": false
+          "primary": true
         }
       ],
-      "involved_people": [
-        "J. Robert Oppenheimer",
-        "Edward Teller",
-        "Stanislaw Ulam"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/Manhattan_Project",
-        "https://en.wikipedia.org/wiki/Stanis%C5%82aw_Ulam"
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/John_von_Neumann_Los_Alamos_identity_badge_photo.jpg/960px-John_von_Neumann_Los_Alamos_identity_badge_photo.jpg",
-          "caption": "John von Neumanns Ausweisfoto aus Los Alamos",
-          "source": "https://commons.wikimedia.org/wiki/File:John_von_Neumann_Los_Alamos_identity_badge_photo.jpg",
-          "creator": "Los Alamos Laboratory",
-          "license": "Attribution"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Los_Alamos_Project_Main_Gate%2C_1943.jpg/960px-Los_Alamos_Project_Main_Gate%2C_1943.jpg",
+          "caption": "Haupttor des Los-Alamos-Projekts, 1943",
+          "source": "https://commons.wikimedia.org/wiki/File:Los_Alamos_Project_Main_Gate,_1943.jpg",
+          "creator": "Los Alamos National Laboratory",
+          "license": "Attribution",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-shield",
-      "chapter": "war_calculus",
+      "event_type_icon": "mdi-atom",
+      "chapter": "war_and_computation",
       "annotations": {
         "Manhattan Project": {
-          "explanation": "Das von den USA geleitete Forschungsprogramm des Zweiten Weltkriegs, in dessen Rahmen die ersten Kernwaffen entwickelt wurden; im Mittelpunkt standen Labors wie Los Alamos, koordiniert wurde es mit der US-Armee.",
+          "explanation": "Das Manhattan-Projekt war ein geheimes, von den Vereinigten Staaten geleitetes Programm des Zweiten Weltkriegs zur Entwicklung der ersten Atombomben.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Manhattan_Project"
+        },
+        "explosive lenses": {
+          "explanation": "Explosive lenses use carefully shaped charges to focus an explosive wave inward. They were essential to the implosion design used with plutonium.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Nuclear_weapon_design#Implosion-type_weapon"
         }
-      }
+      },
+      "weight": 0.9,
+      "involved_people": [
+        "J. Robert Oppenheimer"
+      ]
     },
     {
       "date": "1944",
       "date_precision": "year",
       "age": 40,
-      "title": "Buch zur Spieltheorie",
-      "description": "1944 überführte John von Neumann gemeinsam mit dem Ökonomen Oskar Morgenstern am Institute for Advanced Study in [[Princeton|Princeton, New Jersey]] seine früheren mathematischen Arbeiten zur strategischen Wechselwirkung in ein gemeinsames Buch, das rasch großen Einfluss auf die Sozialwissenschaften und die Kreise der strategischen Kriegsplanung gewann.",
+      "title": "Veröffentlicht die Spieltheorie",
+      "description": "John von Neumann und der Ökonom Oskar Morgenstern veröffentlichten 1944 in Princeton Theory of Games and Economic Behavior. Das Buch nutzte Mathematik, um strategische Entscheidungen zu untersuchen, bei denen das Ergebnis für jeden Beteiligten von den Entscheidungen der anderen abhängt.",
       "locations": [
         {
           "name_historic": "Princeton",
           "name_modern": "Princeton, New Jersey, Vereinigte Staaten",
           "centroid": [
-            -74.6597376,
-            40.3496953
+            -74.659,
+            40.357
           ],
           "primary": true
         }
@@ -630,199 +567,231 @@
         "Oskar Morgenstern"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Oskar_Morgenstern",
-        "https://en.wikipedia.org/wiki/Theory_of_Games_and_Economic_Behavior"
+        "https://en.wikipedia.org/wiki/John_von_Neumann",
+        "https://en.wikipedia.org/wiki/Oskar_Morgenstern"
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "war_calculus",
-      "annotations": {
-        "Princeton": {
-          "explanation": "Princeton in New Jersey war der Sitz des Institute for Advanced Study, an dem von Neumann und Morgenstern arbeiteten und Anfang der 1940er-Jahre ihre Zusammenarbeit entwickelten.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Princeton,_New_Jersey"
-        }
-      },
+      "chapter": "war_and_computation",
+      "weight": 0.98,
       "event_class": {
         "type": "publication",
         "title": "Theory of Games and Economic Behavior",
         "publication_type": "book",
-        "significance": "Begründung eines Fachgebiets",
-        "impact": "Das Werk begründete die moderne Spieltheorie und beeinflusste sowohl die akademische Ökonomie als auch die praktische strategische Planung während des Kalten Krieges.",
-        "source_link": {
-          "url": "https://en.wikipedia.org/wiki/Theory_of_Games_and_Economic_Behavior",
-          "kind": "wikipedia",
-          "site": "Wikipedia",
-          "entity": "Q5226156",
-          "resolved_by": "wikipedia",
-          "resolved_on": "2026-08-02"
+        "publisher": "Princeton University Press",
+        "significance": "Spieltheorie",
+        "impact": "Dem Buch wird die Begründung der Spieltheorie zugeschrieben. Es brachte die mathematische Analyse in die Wirtschaftswissenschaften und die strategische Forschung."
+      },
+      "background": "Die Wirtschaftstheorie in Wien hatte Morgenstern bereits zu einem Problem der Vorhersage geführt. Sein Aufsatz Perfect Foresight and Economic Equilibrium von 1935 veranlasste den Mathematiker Eduard Čech zu einer Antwort. Čech verwies ihn auf von Neumanns Arbeit Zur Theorie der Gesellschaftsspiele von 1928. Diese frühere Arbeit lieferte eine mathematische Behandlung von Spielen zwischen Spielern mit entgegengesetzten Interessen. Morgenstern kam 1938 als Gast nach Princeton. Während seines Aufenthalts erfolgte Adolf Hitlers Annexion Österreichs. Morgenstern blieb in den Vereinigten Staaten und trat der Wirtschaftsfakultät von Princeton bei. Er verbrachte Zeit am Institute for Advanced Study, wo die beiden ihre Zusammenarbeit begannen.\n\nDie frühere Arbeit befasste sich mit Zwei-Personen-Nullsummenspielen. In einem solchen Spiel entspricht der Gewinn des einen Spielers dem Verlust des anderen. Der Minimaxsatz gab jedem Spieler eine Möglichkeit, eine Strategie zu wählen, die ihn gegen die bestmögliche Antwort des Gegners absicherte. Das Ergebnis erlaubte den Spielern gemischte Strategien, also berechnete Wahrscheinlichkeiten, die mehreren verfügbaren Zügen zugeordnet wurden. Die Zusammenarbeit übertrug diese Behandlung auf wirtschaftliche Fragen und fasste auch politische und militärische Entscheidungen als strategische Probleme auf.\n\nDie Arbeit eröffnete neue Forschungsrichtungen in Mathematik und Wirtschaftswissenschaften. Sie stieß auf akademisches und praktisches Interesse an strategischer Entscheidungsfindung. Morgenstern blieb bis 1970 in Princeton und veröffentlichte später im Journal of Economic Literature einen Bericht über die Zusammenarbeit. Die Universität Wien benannte 2012 den Oskar-Morgenstern-Platz nach ihm. Dort befinden sich ihre Fakultät für Wirtschaftswissenschaften und Statistik sowie ihre Fakultät für Mathematik.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/31/Adolf_Hitler_arriving_at_Heldenplatz%2C_Vienna%2C_to_announce_the_Anschluss%3B_in_the_background%2C_SS-Oberscharf%C3%BChrer_of_the_Leibstandarte_SS_Adolf_Hitler%2C_Gerhard_Werner_Rosenberg%2C_standing_guard%2C_1938.jpg",
+          "caption": "Unser Führer! (Englisch: „Unser Führer“); Adolf Hitler trifft auf dem Heldenplatz in Wien ein, um den Anschluss zu verkünden; im Hintergrund ein SS-Oberscharführer der Le.",
+          "source": "https://commons.wikimedia.org/wiki/File:Adolf_Hitler_arriving_at_Heldenplatz,_Vienna,_to_announce_the_Anschluss;_in_the_background,_SS-Oberscharführer_of_the_Leibstandarte_SS_Adolf_Hitler,_Gerhard_Werner_Rosenberg,_standing_guard,_1938.jpg",
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Anschluss Vienna 1938"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Oskar-Morgenstern-Platz_1_Univ_Wien_Eingang_DSC_9864w.jpg/960px-Oskar-Morgenstern-Platz_1_Univ_Wien_Eingang_DSC_9864w.jpg",
+          "caption": "Fakultät für Mathematik der Universität Wien, Eingang von der Türkenstraße, Oskar-Morgenstern-Platz 1, 9. Wiener Gemeindebezirk",
+          "source": "https://commons.wikimedia.org/wiki/File:Oskar-Morgenstern-Platz_1_Univ_Wien_Eingang_DSC_9864w.jpg",
+          "creator": "P e z i",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Oskar-Morgenstern-Platz Vienna"
         }
-      }
+      ]
     },
     {
       "date": "1945-06-30",
       "date_precision": "day",
-      "date_end": "1951",
-      "date_end_precision": "year",
       "age": 41,
-      "title": "Rechner mit gespeichertem Programm",
-      "description": "Ende Juni 1945 verfasste und verbreitete von Neumann, während er in den kriegsbedingten Rechenforschungskreisen in [[Philadelphia|Philadelphia]] arbeitete, seinen „First Draft“-Bericht über EDVAC, der sich rasch in amerikanischen und internationalen Forschungsnetzwerken verbreitete. In den folgenden Jahren förderte er, vor allem in [[Princeton|Princeton]], diese Ideen im Computerprojekt des Institute for Advanced Study – als Teil einer umfassenderen wissenschaftlichen und verteidigungspolitischen Planung der Nachkriegszeit.",
+      "title": "Verbreitet den EDVAC-Bericht",
+      "description": "John von Neumann verbreitete am 30. Juni 1945 First Draft of a Report on the EDVAC. Er verfasste ihn nach Gesprächen mit Herman H. Goldstine, John William Mauchly und John Presper Eckert an der University of Pennsylvania in Philadelphia. Der Bericht schlug einen elektronischen Computer vor, der Befehle und numerische Daten im selben Speicher aufbewahrte.",
       "locations": [
         {
           "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "name_modern": "Philadelphia, Pennsylvania, USA",
           "centroid": [
-            -75.1635262,
-            39.9527237
+            -75.1652,
+            39.9526
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Princeton",
-          "name_modern": "Princeton, New Jersey, Vereinigte Staaten",
-          "centroid": [
-            -74.6597376,
-            40.3496953
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
+        "Herman Goldstine",
         "John Mauchly",
         "J. Presper Eckert"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann",
         "https://en.wikipedia.org/wiki/John_Mauchly",
-        "https://en.wikipedia.org/wiki/John_von_Neumann"
+        "https://en.wikipedia.org/wiki/J._Presper_Eckert"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Oppenheimer_%26_Neumann.jpg/960px-Oppenheimer_%26_Neumann.jpg",
-          "caption": "Oppenheimer und John von Neumann bei der Einweihung des IAS-Computers, 1952",
-          "source": "https://commons.wikimedia.org/wiki/File:Oppenheimer_&_Neumann.jpg",
-          "creator": "Unknown author Unknown author",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/First_Draft_%2823640792120%29.jpg/960px-First_Draft_%2823640792120%29.jpg",
+          "caption": "Erster Entwurf des EDVAC-Berichts",
+          "source": "https://commons.wikimedia.org/wiki/File:First_Draft_(23640792120).jpg",
+          "creator": "Paul Sableman",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
-      "event_type_icon": "mdi-book",
-      "chapter": "the_stored_program_revolution",
-      "annotations": {
-        "Philadelphia": {
-          "explanation": "Philadelphia war der Standort der Moore School der University of Pennsylvania, eines bedeutenden amerikanischen Zentrums für die EDVAC- und ENIAC-Arbeiten während des Zweiten Weltkriegs, wo von Neumann mit dieser Rechengruppe in Kontakt stand.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Pennsylvania"
-        },
-        "Princeton": {
-          "explanation": "Princeton ist Sitz des Institute for Advanced Study, wo von Neumann das nach dem Krieg entstandene IAS-Computerprojekt leitete und die Prioritäten der amerikanischen wissenschaftlichen Datenverarbeitung mitprägte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Institute_for_Advanced_Study"
-        }
-      },
+      "event_type_icon": "mdi-file-document",
+      "chapter": "war_and_computation",
+      "weight": 0.98,
       "event_class": {
         "type": "publication",
-        "title": "Erster Entwurf eines Berichts über EDVAC",
+        "title": "First Draft of a Report on the EDVAC",
         "publication_type": "manuscript",
-        "significance": "Konstruktionsplan",
-        "impact": "Der Bericht wurde zu einer weithin gelesenen Konstruktionsvorlage für frühe Computer und trug dazu bei, das später mit seinem Namen verbundene Konzept des gespeicherten Programms zu standardisieren.",
-        "source_link": {
-          "url": "https://en.wikipedia.org/wiki/First_Draft_of_a_Report_on_the_EDVAC",
-          "kind": "wikipedia",
-          "site": "Wikipedia",
-          "entity": "Q5452926",
-          "resolved_by": "wikipedia",
-          "resolved_on": "2026-08-02"
+        "significance": "Entwurf mit gespeicherten Programmen",
+        "impact": "Der Bericht trug dazu bei, den Entwurf mit gespeicherten Programmen zu verbreiten, der den Bau früher elektronischer Digitalcomputer beeinflusste."
+      }
+    },
+    {
+      "date": "1946",
+      "date_precision": "year",
+      "date_end": "1952",
+      "date_end_precision": "year",
+      "age": 42,
+      "title": "Baut die IAS-Maschine",
+      "description": "John von Neumann leitete ab 1946 am Institute for Advanced Study in Princeton ein Projekt für einen elektronischen Computer. Gemeinsam mit Julian Bigelow und Herman H. Goldstine entwarf er die IAS-Maschine als Computer mit gespeichertem Programm für wissenschaftliche Berechnungen. Das Projekt brachte bis 1952 eine betriebsfähige Maschine hervor.",
+      "locations": [
+        {
+          "name_historic": "Princeton",
+          "name_modern": "Princeton, New Jersey, Vereinigte Staaten",
+          "centroid": [
+            -74.659,
+            40.357
+          ],
+          "primary": true
         }
+      ],
+      "involved_people": [
+        "Julian Bigelow",
+        "Herman Goldstine"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann",
+        "https://en.wikipedia.org/wiki/Herman_Goldstine"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/IAS_machine_at_Smithsonian.jpg",
+          "caption": "IAS-Maschine im Smithsonian",
+          "source": "https://commons.wikimedia.org/wiki/File:IAS_machine_at_Smithsonian.jpg",
+          "creator": "Smithsonian Institution",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "war_and_computation",
+      "weight": 0.92,
+      "event_class": {
+        "type": "invention",
+        "title": "IAS machine",
+        "description": "Ein elektronischer Computer mit gespeichertem Programm, Binärarithmetik und Direktzugriffsspeicher, der in Princeton für wissenschaftliche Berechnungen gebaut wurde.",
+        "impact": "Ihr Entwurf leitete den Bau früher wissenschaftlicher Computer in den Vereinigten Staaten und Europa."
       }
     },
     {
       "date": "1955",
       "date_precision": "year",
       "age": 51,
-      "title": "Verteidigungswissenschaft trotz Krankheit",
-      "description": "1955, nachdem er einflussreiche amerikanische Verteidigungsbeiräte geleitet oder ihnen angehört hatte und als Kommissar der [[Atomic Energy Commission|Atomic Energy Commission]] beigetreten war, wurde bei John von Neumann metastasierender Krebs diagnostiziert. Trotz seines sich verschlechternden Zustands arbeitete er weiter an hochrangiger Beratung in Fragen der nationalen Sicherheit, vor allem in Washington, D.C. und Umgebung.",
+      "title": "In der Atomic Energy Commission",
+      "description": "1955 trat John von Neumann der Atomic Energy Commission der Vereinigten Staaten bei, der für die Entwicklung der Atomenergie zuständigen Bundesbehörde. Er war an staatlichen Entscheidungen über Atomenergie, Kernwaffen und die Forschung zur Landesverteidigung beteiligt.",
       "locations": [
         {
           "name_historic": "Washington, D.C.",
           "name_modern": "Washington, D.C., Vereinigte Staaten",
+          "primary": true,
           "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "primary": true
+            -77.0363849,
+            38.8950982
+          ]
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/United_States_Atomic_Energy_Commission"
+        "https://en.wikipedia.org/wiki/John_von_Neumann"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Schriever_address_a_session_of_the_von_Neumann_Committee.jpg/960px-Schriever_address_a_session_of_the_von_Neumann_Committee.jpg",
-          "caption": "Bernard Schriever spricht vor einer Sitzung des von-Neumann-Komitees",
-          "source": "https://commons.wikimedia.org/wiki/File:Schriever_address_a_session_of_the_von_Neumann_Committee.jpg",
-          "creator": "US Air Force",
-          "license": "Public domain"
-        }
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "public_service_final_years",
+      "weight": 0.65
+    },
+    {
+      "date": "1955",
+      "date_precision": "year",
+      "age": 51,
+      "title": "Krebsdiagnose",
+      "description": "Ärzte entdeckten 1955 Krebs in der Nähe von John von Neumanns Schlüsselbein. Der Ausgangspunkt des Tumors ließ sich nicht sicher bestimmen.",
+      "locations": [],
+      "involved_people": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_von_Neumann",
+        "https://en.wikipedia.org/wiki/Kl%C3%A1ra_D%C3%A1n_von_Neumann"
       ],
       "event_type_icon": "mdi-hospital",
-      "chapter": "cold_war_final_reckoning",
-      "annotations": {
-        "Atomic Energy Commission": {
-          "explanation": "Eine amerikanische Bundesbehörde (1946–1974), die die Entwicklung der Kernenergie einschließlich Waffenforschung und -produktion kontrollierte, bevor sie durch Nachfolgebehörden ersetzt wurde.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Atomic_Energy_Commission"
-        }
-      }
+      "chapter": "public_service_final_years",
+      "weight": 0.3
     },
     {
       "date": "1957-02-08",
       "date_precision": "day",
       "age": 53,
-      "title": "Tod in Washington, D.C.",
-      "description": "Von Neumann starb im [[Walter Reed Army Medical Center|Walter Reed Army Medical Hospital]] in [[Washington, D.C.|Washington, D.C.]], nachdem sich seine Krebserkrankung rapide verschlechtert hatte. In seinen letzten Monaten suchte er als Katholik religiösen Beistand und begegnete dem Tod mit ausgeprägter Angst – ein persönlicher Konflikt neben dem Ende einer außergewöhnlich vielseitigen wissenschaftlichen Laufbahn.",
+      "title": "Tod im Walter Reed Hospital",
+      "description": "John von Neumanns Krebs hatte sich ausgebreitet, als seine Krankheit fortschritt. Er bat einen Priester um die [[last rites|letzte katholische Ölung]] und blieb von der Angst vor dem Tod erfüllt. Er starb am 8. Februar 1957 im Walter Reed Army Medical Hospital in Washington, D.C.",
       "locations": [
         {
           "name_historic": "Washington, D.C.",
           "name_modern": "Washington, D.C., Vereinigte Staaten",
           "centroid": [
-            -77.0365427,
-            38.8950368
+            -77.0369,
+            38.9072
           ],
           "primary": true
         }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/John_von_Neumann",
-        "https://en.wikipedia.org/wiki/Walter_Reed_National_Military_Medical_Center"
+        "https://en.wikipedia.org/wiki/Kl%C3%A1ra_D%C3%A1n_von_Neumann"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Walter_Reed_Hospital-Harris-Ewing.tif/lossy-page1-800px-Walter_Reed_Hospital-Harris-Ewing.tif.jpg",
-          "caption": "Walter-Reed-Krankenhaus, Washington, D.C.",
-          "source": "https://commons.wikimedia.org/wiki/File:Walter_Reed_Hospital-Harris-Ewing.tif",
-          "creator": "Harris & Ewing, photographer",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Walter_Reed_Army_Hospital%2C_Washington%2C_D.C.%2C_prior_to_its_closing_in_2011.jpg/960px-Walter_Reed_Army_Hospital%2C_Washington%2C_D.C.%2C_prior_to_its_closing_in_2011.jpg",
+          "caption": "Walter Reed Army Hospital, Washington, D.C.",
+          "source": "https://commons.wikimedia.org/wiki/File:Walter_Reed_Army_Hospital,_Washington,_D.C.,_prior_to_its_closing_in_2011.jpg",
+          "creator": "Highsmith, Carol M., 1946-, photographer",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "cold_war_final_reckoning",
+      "chapter": "public_service_final_years",
       "annotations": {
-        "Walter Reed Army Medical Center": {
-          "explanation": "Die zentrale medizinische Einrichtung der US-Armee in Washington, D.C., damals Walter Reed Army Medical Center genannt. Sie behandelte zahlreiche hochrangige Regierungs- und Militärvertreter und ging später im heutigen Walter Reed National Military Medical Center auf.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Walter_Reed_National_Military_Medical_Center"
-        },
-        "Washington, D.C.": {
-          "explanation": "Der amerikanische Bundesdistrikt und Regierungssitz; von Neumann lebte während seiner letzten Krankheit im Raum Washington, was seine Beratungstätigkeit für die Regierung im Kalten Krieg widerspiegelt.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Washington,_D.C."
+        "last rites": {
+          "explanation": "Die letzte Ölung umfasst katholische Gebete und Sakramente für einen Menschen, der schwer erkrankt ist oder im Sterben liegt. Dazu können Beichte, Krankensalbung und Kommunion gehören.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Last_rites"
         }
       },
+      "weight": 0.55,
       "event_class": {
         "type": "death",
-        "cause": "Krebs",
-        "characterization": "rapider Verfall"
-      }
+        "cause": "metastasierter Krebs",
+        "characterization": "nach längerer Krankheit",
+        "place_of_rest": "Princeton Cemetery, Princeton"
+      },
+      "background": "Mitte der 1950er-Jahre nahm die Arbeit für die nationale Sicherheit einen großen Teil seiner Zeit ein. Er leitete Ausschüsse des Verteidigungsministeriums, darunter das Strategic Missile Evaluation Committee und das ICBM Scientific Advisory Committee. Er gehörte der Atomic Energy Commission an, die die Entwicklung der Atomenergie des Landes lenkte. Bernard Schriever und Trevor Gardner arbeiteten mit ihm an den ersten amerikanischen Programmen für interkontinentale ballistische Raketen. Kollegen hielten ihn für die führende Autorität des Landes auf dem Gebiet der Kernwaffen. Sein Haus an der Westcott Road in Princeton war seit Langem ein Treffpunkt der örtlichen akademischen Gemeinschaft. Stanisław Marcin Ulam, sein engster amerikanischer Freund, erinnerte sich an einen Geist, der häufig nach einer Nacht Schlaf eine Antwort fand.\n\nSein letztes öffentliches intellektuelles Projekt ging aus den Silliman Lectures an der Yale University hervor. Die Vorlesungen befassten sich mit dem Verhältnis zwischen Rechenmaschinen und dem menschlichen Nervensystem. Klara Dan von Neumann verfasste nach seinem Tod ein Vorwort. Yale University Press veröffentlichte die Vorlesungen 1958 unter dem Titel The Computer and the Brain. Das Buch zog die Grenzen des Vergleichs sorgfältig. Das Gehirn nutzte ein gewaltiges Netz von Nervenzellen. Die damals verfügbaren elektronischen Maschinen arbeiteten mit einer weit geringeren Zahl von Elementen und mit grundlegend anderen Geschwindigkeiten.\n\nKlara hatte unmittelbar mit den neuen Maschinen gearbeitet, die Teil dieses Vergleichs waren. Sie programmierte MANIAC I in Los Alamos und half bei der Programmierung des ENIAC für eine bahnbrechende computergestützte Wettervorhersage. Sie schulte eine Gruppe aus dem Manhattan-Projekt darin, Programme als Binärcode zu speichern. Für die Wettervorhersage mussten 100.000 Lochkarten über 32 Tage hinweg verarbeitet werden. Danach bewahrte sie die Vorlesungen für die Veröffentlichung auf und setzte zugleich eine Laufbahn fort, die in den frühesten Jahren der elektronischen Programmierung begonnen hatte."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "94a056ad6f20f07c",
-    "translated_on": "2026-08-02T10:51:12.485708+00:00",
+    "source_fingerprint": "8a3d583bfd21bb9b",
+    "translated_on": "2026-09-13T16:06:43.020293+02:00",
     "translator": "openai:gpt-5.6-luna"
   }
 }
