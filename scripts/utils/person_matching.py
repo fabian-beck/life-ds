@@ -4,8 +4,7 @@
 network connections an event's ``involved_people`` resolve to, and that
 decision feeds both the person chips and the deep-event selection. This module
 is a faithful port of its name normalization and scoring; keep the two in sync
-when the matcher changes. ``scripts/validate_involved_names.py`` holds the
-port to the corpus, and ``scripts/utils/event_depth.py`` selects deep events
+when the matcher changes. ``scripts/utils/event_depth.py`` selects deep events
 with it.
 """
 

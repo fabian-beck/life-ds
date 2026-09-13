@@ -39,7 +39,13 @@ from config import (
 )
 from events.event_classes import EVENT_CLASS_CONFIG
 from events.images import assign
-from events.normalize import enforce_metadata, normalize_date_for_comparison
+from events.normalize import (
+    death_cutoff_date,
+    dropped_date_reason,
+    enforce_metadata,
+    normalize_date_for_comparison,
+    timeline_key,
+)
 from events.prompts.propose import build_proposal_prompt
 from events.prompts.research import (
     RELATED_ARTICLE_COUNT,
@@ -59,6 +65,7 @@ from events.schemas import (
 )
 from events.images.scoring import filter_images_by_quality
 from icon_categories import normalize_icon
+from utils.citations import citable_urls, keep_citable
 from utils.concurrency import map_concurrently, worker_count
 from utils.geocode import geocode_location
 from utils.registry import Registry
@@ -309,11 +316,13 @@ def _validate_chronological_order(event_skeletons: List[EventSkeleton]) -> None:
         current_event = event_skeletons[i]
         next_event = event_skeletons[i + 1]
 
-        # Compare dates
+        # Compare dates on the timeline the story is read along
         current_date = current_event.date
         next_date = next_event.date
 
-        if current_date > next_date:
+        if timeline_key(current_date, current_event.date_precision) > timeline_key(
+            next_date, next_event.date_precision
+        ):
             raise RuntimeError(
                 f"Events are not in chronological order: "
                 f"'{current_event.title}' ({current_date}) comes after "
@@ -532,8 +541,19 @@ def accept_life_plan(parsed: LifePlan) -> LifePlan:
     Raises RuntimeError when the events are out of order or the chapters do
     not partition them into contiguous runs of at least MIN_CHAPTER_EVENTS.
     """
-    # Ensure events are sorted chronologically (defensive programming)
-    parsed.event_skeletons.sort(key=lambda e: e.date)
+    # An event `enforce_metadata` would drop is refused while the model can still
+    # replace it: dropped after the partition is accepted, it leaves its chapter
+    # short or empty
+    cutoff = death_cutoff_date(parsed.person.death_date)
+    for skeleton in parsed.event_skeletons:
+        reason = dropped_date_reason(skeleton.model_dump(), cutoff)
+        if reason:
+            raise RuntimeError(
+                f"Event '{skeleton.title}' would be dropped from the dataset: {reason}"
+            )
+
+    # The order the story is read in, which is the order the file is written in
+    parsed.event_skeletons.sort(key=lambda e: timeline_key(e.date, e.date_precision))
 
     # The birth opens a story and the death closes it, so both are detected
     # rather than hoped for
@@ -645,6 +665,12 @@ def research_event_details(
         attempts=retry_count + 1,
     )
     if details is not None:
+        # Only the articles the call was shown are citable; any other source
+        # is a URL the model composed.
+        allowed = citable_urls(
+            (subject_article or {}).get("fullurl"), filtered_articles
+        )
+        details.sources = keep_citable(details.sources, allowed)
         return details
 
     # The event keeps its place in the story with nothing researched about it:

@@ -27,7 +27,8 @@ from utils.relationship_vocabulary import (
     normalize_relationship_type,
     plain_parent_roles,
 )
-from utils.text import fix_control_characters, slugify
+from utils.citations import citable_urls, keep_citable
+from utils.text import slugify
 from utils.wikipedia_cache import (
     ensure_cache,
     extract_wikipedia_title,
@@ -56,23 +57,6 @@ DEFAULT_USER_AGENT = (
 # ============================================================================
 # UTILITY FUNCTIONS
 # ============================================================================
-
-
-def _clean_all_strings(data: Any) -> Any:
-    """
-    Recursively fix control characters in all strings within a data structure.
-
-    This ensures AI-generated text doesn't contain incorrect Unicode control
-    characters that should be typographic punctuation.
-    """
-    if isinstance(data, dict):
-        return {key: _clean_all_strings(value) for key, value in data.items()}
-    elif isinstance(data, list):
-        return [_clean_all_strings(item) for item in data]
-    elif isinstance(data, str):
-        return fix_control_characters(data)
-    else:
-        return data
 
 
 # Pydantic models for structured outputs
@@ -630,6 +614,14 @@ def enforce_metadata(
     for before, after in repair_source_urls(connections, related_articles):
         print(f"    Source cited as {before} -> {after}")
 
+    # A source is kept only when the call was shown its article; any other is a
+    # URL the model composed. Without cached articles there is nothing to
+    # compare against, and the sources stand as written.
+    if related_articles:
+        allowed = citable_urls(page_data.get("fullurl"), related_articles)
+        for connection in connections:
+            connection["sources"] = keep_citable(connection.get("sources"), allowed)
+
     payload["connections"] = connections
 
     return payload
@@ -637,9 +629,6 @@ def enforce_metadata(
 
 def write_ego_network(payload: Dict[str, Any], person_id: str) -> Path:
     """Write ego network to a JSON file."""
-    # Clean any control characters in all strings
-    payload = _clean_all_strings(payload)
-
     person_dir = PEOPLE_DIR / person_id
     person_dir.mkdir(parents=True, exist_ok=True)
     output_path = person_dir / "ego_network.json"

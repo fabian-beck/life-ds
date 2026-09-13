@@ -59,6 +59,8 @@ python scripts/generate_person.py steve_jobs --skip-style --skip-portrait
 
 **The images wait for the style**: both image steps draw in the story's own primary and secondary color, which `generate_person_style.py` writes to `data/person_styles.json`, so they run after it and only for a person who has an entry there. `scripts/utils/person_style.py` is the one reader of those colors, and it raises rather than substituting a default palette: a portrait or a chapter illustration in colors no story uses would be cached under the person's name, and every later run would find it and leave it alone. A run whose style step failed reports the portrait and the chapter art as skipped for the missing style; a person whose style an earlier run wrote is drawn in that one.
 
+**What the writing steps enforce**: a rule a dataset must satisfy lives in the step that writes the field, and no script checks the corpus afterwards (see `AGENTS.md`). Phase 1 refuses, with the reason and one more call, an event whose date cannot be read or whose period reaches past the death, since `enforce_metadata` would drop it after the chapters were accepted and leave a chapter short or empty; it orders the events by `timeline_key` in `events/normalize.py`, the order the file is written in and the story reads, so the chapter check and the story cannot disagree about which chapter comes first. The research step and the network step keep a source only when the call was shown its article (`utils/citations.py`), as the background reports already did. Every data file is written through `utils/json_io.write_json`, which repairs control characters and unwraps Markdown emphasis, code spans, and links in every string, keeps `## ` headings only inside a `background`, and leaves files under `_cache` as they came. A failed translation makes `generate_person.py` and `generate_meta_story.py` exit 1.
+
 **What the run consumed**:
 
 Every model call the pipeline makes is recorded by `scripts/utils/usage.py` and attributed to the step that was open when it was made, and a run ends by printing one row per step: calls, input tokens, input tokens served from the provider's prefix cache, input tokens written to it, output tokens, reasoning tokens, and images. `--usage-json PATH` writes the same ledger, plus one entry per individual call, as JSON. The ledger counts tokens and images only. Rates for the configured models are not part of this repository, so a run states what it consumed and not what it cost.
@@ -145,97 +147,6 @@ The story offers a depth layer on roughly one event per chapter, and the layer i
 ```bash
 python scripts/remove_person.py "Ada Lovelace"
 ```
-
-**Check the source links** (no API key, no model):
-
-```bash
-python scripts/validate_source_links.py            # report
-python scripts/validate_source_links.py --check    # exit 1 on any dead link
-python scripts/validate_source_links.py --fix      # repair what search resolves
-```
-
-The research asks a model for the sources behind each event, and the annotations it writes carry article links of their own; both are rendered as links the reader can follow. This asks the MediaWiki API — 50 titles per request, redirects followed — whether each one is a real article. `--fix` rewrites a link only when search returns the same title respelled ("Kunst Haus Wien" → "KunstHausWien", "Austrian Postal Savings Bank Building" → "Austrian Postal Savings Bank"); a result that names a different subject is reported for a human, because search answers every query with something.
-
-**Check the people who lived the same events** (no API key, no model):
-
-```bash
-python scripts/validate_cross_person_events.py            # scan list
-python scripts/validate_cross_person_events.py --check    # exit 1 on a contradiction
-```
-
-Person generation is per-person by construction: the generator reads one subject's cached articles and never looks at the datasets already in `data/people/`, so two records of one wedding, battle, or coronation are written independently and never compared. Two events become candidates for the same occasion when they name a participant in common — or name each other's subject — and fall within a year. The default output lists those candidates for a human to scan, because nothing deterministic can tell whether "Makes the Case for Constitution" and "Presides Over Constitutional Convention" are one occasion or two. `--check` reports only the shape that is a contradiction rather than a judgment: same primary place, and dates that cannot both be true once each is read at its own precision. That is what a coronation recorded on two different days looks like.
-
-**Check the event dates against their own descriptions** (no API key, no model):
-
-```bash
-python scripts/validate_event_dates.py            # exit 1 on any finding
-python scripts/validate_event_dates.py alvar_aalto
-```
-
-The proposal decides the date, the precision, and the description in one call, and the research schema carries no date field — so when the research disagrees, the disagreement lands in the prose and the reader sees the date on the slide contradicted by the sentence beneath it. The generator's chronological check only compares an event to its neighbors, so a wrong year that preserves the ordering passes. This reads the description's *first* sentence, the one that states the event, and reports a year there that falls outside the event's own span. Decades ("the 1950s"), life spans in parentheses, and ranges ("the winter of 1779–1780", which covers both years) are read the way a reader reads them. A context year in an opening sentence that is nonetheless right belongs in the script's `ACCEPTED` list with the reason. The owner decides that: a session that meets a finding in data it just generated reports it and adds no entry, as `AGENTS.md` sets out for generated output.
-
-**Check the years given to other people against their sources** (no API key, no model):
-
-```bash
-python scripts/validate_life_spans.py            # exit 1 on any finding
-python scripts/validate_life_spans.py max_planck
-```
-
-The cached articles write life spans in parentheses ("Karl (1888–1916)"), and the generator read them yet still shipped "killed at Verdun in 1917" — a wrong year attached to a *different* person, which neither the chronological check nor `validate_event_dates.py` can see. This collects every such span from the person's `_cache` and holds two things to them: a network connection must not end after that person's death or start before their birth, and a prose sentence that says a named person died must name a year the sources give as that person's death year. Family names resolve through bare first names the way the articles write relatives; everyone else matches on the full name only. A person without a cache produces no findings, so run it right after generating, while the cache that fed the prompts is still on disk; a finding that is right despite the sources belongs in the script's `ACCEPTED` list with the reason.
-
-**Check that events spell people the way the network spells them** (no API key, no model):
-
-```bash
-python scripts/validate_involved_names.py            # exit 1 on any finding
-python scripts/validate_involved_names.py max_planck
-```
-
-The story matches `involved_people` against `ego_network.json` by name to draw the person chips, without folding diacritics or ß/ss — so "Marga von Hößlin Planck" against "Marga von Hösslin" silently lost its chip, and nothing reported it because a failed match is also the correct outcome for people who are not in the network. This flags the near miss: a pair that folds to one person (diacritics collapsed, particles dropped, token subsets allowed) and that the interface's scoring — ported from `src/utils/story/personMatching.js`, keep the two in sync — nonetheless rejects. Its first corpus run surfaced seven shipped misses, from "Leó Szilárd"/"Leo Szilard" to a control-character corruption of "Lazović". The fix is to spell both sides identically; a pair that is genuinely two people belongs in the script's `ACCEPTED` list with the reason.
-
-**Check the words for mixed writing systems** (no API key, no model):
-
-```bash
-python scripts/validate_scripts.py            # exit 1 on any finding
-```
-
-The translator has twice spliced another alphabet into a German word — "Zwillინგstöchter" with three Georgian letters, "лекtionierte" opening in Cyrillic — and the defect is invisible in a diff of correct-looking JSON. This scans every data file for a word mixing Latin letters with another script's. A pure Cyrillic name in an image credit passes, one Greek letter beside Latin passes (that is how physics writes "hν"), and sub-/superscript digits are not letters; there is no `ACCEPTED` list because no legitimate word has this shape. `translate_person.py` runs the same scan on every document it saves and prints the corrupt words while the run is still on screen.
-
-**Check the prose for stray Markdown** (no API key, no model):
-
-```bash
-python scripts/validate_markdown.py            # exit 1 on any finding
-```
-
-The interface renders every text field verbatim; its only markup is the `[[term|display]]` annotation marker and the `## ` heading line inside a `background` report. A model that writes Markdown anyway — the generator setting a work's title as `*Childe Harold's Pilgrimage*`, the translator adding `*Philosophical Magazine*` where the English was plain — ships literal asterisks onto the slide. This flags asterisks, backticks, `__bold__` pairs, `[text](url)` links, and a heading line outside a `background` field; single-underscore emphasis is not checked, because Commons file names are full of underscores and models write emphasis with asterisks. There is no `ACCEPTED` list because no field legitimately carries these characters. `translate_person.py` runs the same scan on every document it saves.
-
-**Check the English event titles** (no API key, no model):
-
-```bash
-python scripts/validate_event_titles.py            # exit 1 on any finding
-python scripts/validate_event_titles.py emmy_noether
-```
-
-A title is written once, in the proposal, and nothing downstream revisits it — the research schema carries no title field. A title that came back half in German therefore stays that way in the English data, while the translation step renders it into idiomatic German, so the defect survives only in the language nobody re-reads. This flags a German function word left standing in an English title and a city written the German way where English has its own name (Warschau, Zürich). Quoted work titles and name particles ("Nina von Lerchenfeld") are exempt; a title that trips a rule and is still right belongs in the script's `ACCEPTED` list with the reason. It is a lexical check and claims nothing beyond that: a German noun that looks like a place name ("Wölfen" against "Göttingen") is indistinguishable to it.
-
-**Check the event prose against the description contract** (no API key, no model):
-
-```bash
-python scripts/validate_event_prose.py            # report
-python scripts/validate_event_prose.py --check    # exit 1 on any finding
-python scripts/validate_event_prose.py charles_babbage
-```
-
-Every step that writes a description — the proposal, the research's refinement, the review — reads one definition of what a description is, `description_contract_prompt()` in `scripts/utils/prose_style.py`: one moment of a life, narrated in its own present, asserted rather than weighed against sources, at the slide's granularity. Before the contract each step carried its own partial copy of the rules and the copies disagreed, and a description that was accurate, sourced, and written in an encyclopedia's source-critical register passed every validator (issue #141). This reads for the shapes that shipped: a year later than the event's own span anywhere in the prose, the language of weighing sources ("most likely", "is disputed", "according to"), a street address or house number where the slide is at city level, a description under twenty words, a conclusion of one sentence, and a sentence that restates a sentence of one of the three slides before it in its content words ("He prepares plans for the Automatic Computing Engine, a stored-program electronic computer" followed by "The design sets out a stored-program electronic computer"), the event's own place and people not counting as shared words. The last is the shape a per-event rewrite produces, since the research sees one event at a time; the contract says a description is read in sequence, and the review is asked to read it that way. The two length floors came from the datasets generated on 2026-09-05, whose median description had fallen to 23 words from the 60 of the first datasets: the prose block said its range was "not a length target", the research was told to refine a skeleton "shorter, never longer" although it holds more of the article than the proposal, the class guidance forbade the partner's name in the prose because the card carries it, and a marriage came out as "In 1930, she married a New York University professor." The prompts now state the floor, let the research extend a thin skeleton, and keep the people and the place in the sentence; the card holds only the structured detail. It reports by default, because the corpus still carries prose written before the contract, and its count is how a prompt change is judged; `--check` makes it a gate. A sentence that trips a rule and is right belongs in the script's `ACCEPTED` list with the reason.
-
-**Check the chapter sizes** (no API key, no model):
-
-```bash
-python scripts/validate_chapter_sizes.py            # report
-python scripts/validate_chapter_sizes.py --check    # exit 1 on any finding
-python scripts/validate_chapter_sizes.py alan_turing
-```
-
-A chapter slide announces a phase of the life and the event slides after it tell that phase, so a chapter with one event announces the event and then tells it once more, with the same year and place on both slides; a chapter with no event never renders, because the interface inserts a chapter slide only where an event names it. Phase 1 now refuses such a plan (`MIN_CHAPTER_EVENTS` in `scripts/events/pipeline.py`), and this reads the corpus for the datasets written before the floor. It reports by default and gates under `--check` once the count reads zero.
 
 **Restyle a meta story** (Phase 9 of `generate_meta_story.py`, standalone):
 
@@ -324,7 +235,7 @@ The life events generation uses **a proposal call and a research call per event*
   - People directly involved in this event (excludes main subject)
   - Event-specific images and sources
   - Semantic icon from 100+ MDI categories (e.g., "mdi-crown", "mdi-book")
-  - Annotations for the terms an educated general reader would not know from the sentence. Section 5 of the prompt tests reader benefit, not obscurity: the standard terms of a field (`central limit theorem`, `general relativity`) get a gloss, while person names, the classified subject, well-known places and periods, and terms the sentence itself explains do not. An earlier prompt annotated "only truly obscure terms" and defaulted to none, and the persons generated under it (July to September 2026) carry a third of the annotations older ones do; `data/outdated.md` lists them. The review pass (`scripts/utils/review_prompts.py`) applies the same test and adds what the research missed, merging into the event's existing annotations, and removes via `dropped_annotations` a gloss that only restates the description, the way Turing's Banburismus slide defined the method in the sentence and again in the popup. `validate_event_prose.py` reports the restatements written in the slide's own words; a paraphrase escapes it, which is why the reviewer reads the rest.
+  - Annotations for the terms an educated general reader would not know from the sentence. Section 5 of the prompt tests reader benefit, not obscurity: the standard terms of a field (`central limit theorem`, `general relativity`) get a gloss, while person names, the classified subject, well-known places and periods, and terms the sentence itself explains do not. An earlier prompt annotated "only truly obscure terms" and defaulted to none, and the persons generated under it (July to September 2026) carry a third of the annotations older ones do; `data/outdated.md` lists them. The review pass (`scripts/utils/review_prompts.py`) applies the same test and adds what the research missed, merging into the event's existing annotations, and removes via `dropped_annotations` a gloss that only restates the description, the way Turing's Banburismus slide defined the method in the sentence and again in the popup.
 - Each call sees only its own event, so it cannot know that a term was the subject of an earlier slide. `drop_repeated_annotations` in `scripts/events/normalize.py` therefore keeps an annotation only where the story first meets its term: once an earlier event annotated a term or named it in its title or classification title, a later annotation of it is removed and its `[[term|display]]` markup unwrapped. The review save path applies the same rule to what the reviewer adds.
 
 **Benefits**:

@@ -4,16 +4,11 @@ name: Checks
 # remembered to run it, and the drift that produced was already visible in the
 # tree. These run on every push instead.
 #
-# Three jobs, because they answer different questions and one must not silence
-# another. `checks` and `interface` ask whether the commit is sound — its
-# formatting, types, build, unit tests, and the one browser journey. `data`
-# asks whether the corpus is current, which is a property of generated data
-# rather than of the commit that happens to be pushed: a story renders, it just
-# renders something outdated. Corpus conditions are recorded in
-# `data/outdated.md` and cleared by regenerating with the pipeline, so they can
-# stand for weeks, and while they did they used to fail the one job that also
-# carried lint, build, and the tests — the whole workflow was red for a reason
-# no commit could fix, and every check behind the failing one was skipped.
+# Two jobs, and both ask whether the implementation is sound: `checks` runs
+# the formatting, lint, types, the build, the unit tests, and the report's
+# agreement with its source; `interface` runs the one browser journey. No job
+# reads the generated corpus. The quality of the data is ensured by the
+# generation pipeline that writes it (see AGENTS.md).
 #
 # A branch pushed here fires `push`, and opening a pull request from it fires
 # `pull_request` as well, so the jobs used to run twice over the same commit.
@@ -114,78 +109,10 @@ jobs:
       - name: Python tests
         run: python -m pytest
 
-  data:
-    name: Data integrity
-    runs-on: ubuntu-latest
-    if: >-
-      github.event_name != 'pull_request'
-      || github.event.pull_request.head.repo.full_name != github.repository
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v5
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.11"
-          cache: pip
-
-      # Only the runtime dependencies: these checks read the corpus and none of
-      # them shells out to the black-and-flake8 tooling `checks` installs.
-      - name: Install Python dependencies
-        id: deps
-        run: pip install -r requirements.txt
-
-      # Deterministic checks. None needs an API key, a model, or the network;
-      # each guards a failure that is otherwise silent in the data.
-      #
-      # Every one carries the same condition, so a failing check reports
-      # alongside the others rather than hiding them: steps stop at the first
-      # failure by default, and these are independent questions about the same
-      # corpus. One run should answer all of them. The condition still stands
-      # them down when the dependencies they need never arrived.
-      - name: Event-to-chapter assignments
-        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
-        run: python scripts/validate_event_chapters.py
-
-      - name: English event titles are English
-        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
-        run: python scripts/validate_event_titles.py
-
-      # Report only: the corpus still carries prose written before the
-      # description contract, and the count here is what says whether a
-      # prompt change worked. --check turns it into a gate once it reads zero.
-      - name: Event prose keeps to the description contract
-        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
-        run: python scripts/validate_event_prose.py
-
-      # Report only for the same reason: the corpus still carries chapters
-      # written before Phase 1 refused a chapter of fewer than two events.
-      - name: Every chapter holds at least two events
-        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
-        run: python scripts/validate_chapter_sizes.py
-
-      - name: Event dates agree with their descriptions
-        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
-        run: python scripts/validate_event_dates.py
-
-      - name: People who lived the same events agree about them
-        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
-        run: python scripts/validate_cross_person_events.py --check
-
-      - name: Every German translation exists
-        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
-        run: python scripts/translate_all_persons.py --target-lang de --check
-
+      # The report is computed from the generation scripts, so a script change
+      # not rebuilt into it leaves the report describing old code.
       - name: The technical report matches its source
-        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: python scripts/generate_report.py --check
-
-      # Deliberately not in this list: scripts/validate_source_links.py --check.
-      # It asks the MediaWiki API whether each cited article exists, so unlike
-      # everything above it depends on an external service being reachable, and
-      # it is red today — 28 dead links, enumerated on #73. It belongs here once
-      # that data is repaired.
 
   interface:
     name: Interface tests

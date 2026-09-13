@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import re
+from typing import Any
 
 
 def slugify(
@@ -58,4 +59,62 @@ def fix_control_characters(text: str) -> str:
         if bad_char in text:
             text = text.replace(bad_char, good_char)
 
+    # A character past Latin-1 can also come back as its high byte, a control
+    # character, followed by its low byte spelled as two hex digits: "\x01"
+    # and "07" where "ć" (U+0107) belongs.
+    text = _CONTROL_HIGH_BYTE.sub(
+        lambda match: chr(ord(match.group(1)) * 256 + int(match.group(2), 16)), text
+    )
+    # Any control character still left shows the reader nothing.
+    return _CONTROL.sub("", text)
+
+
+_CONTROL_HIGH_BYTE = re.compile(r"([\x01-\x08\x0b\x0c\x0e-\x1f])([0-9a-fA-F]{2})")
+_CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+
+# Emphasis opens on a star that follows no word character and closes on one
+# that precedes none, so a star inside a Commons file name ("Mk1*") or before a
+# space ("* EM3880") is text, not Markdown.
+_BOLD = re.compile(r"(?<![\w*])\*\*([^\s*](?:[^*\n]*[^\s*])?)\*\*(?![\w*])")
+_EMPHASIS = re.compile(r"(?<![\w*])\*([^\s*](?:[^*\n]*[^\s*])?)\*(?![\w*])")
+_CODE = re.compile(r"`([^`\n]+)`")
+_LINK = re.compile(r"\[([^\[\]\n]+)\]\((?:https?://|/)[^)\s]*\)")
+_HEADING = re.compile(r"^#{1,6}[ \t]+", re.MULTILINE)
+
+
+def strip_markdown(text: str, key: str = "") -> str:
+    """Unwrap the Markdown a model writes into text the interface shows verbatim.
+
+    The interface reads two pieces of markup: ``[[term|display]]`` annotation
+    markers and ``## `` headings inside a ``background`` report. Emphasis,
+    bold, code spans, and links arrive anyway — the generator around a work's
+    title, the translator adding emphasis the English never had — and would
+    reach the slide as literal asterisks. Each keeps its text and loses its
+    markup; a heading line outside a background keeps its words. A URL is left
+    as it is.
+    """
+    if not isinstance(text, str) or text.startswith(("http://", "https://")):
+        return text
+    for pattern in (_BOLD, _EMPHASIS, _CODE, _LINK):
+        text = pattern.sub(r"\1", text)
+    if key != "background":
+        text = _HEADING.sub("", text)
     return text
+
+
+def clean_strings(value: Any, key: str = "") -> Any:
+    """Repair control characters and unwrap Markdown in every string of a document.
+
+    ``key`` is the field a string sits in, which is what decides whether a
+    heading line is markup the interface reads.
+    """
+    if isinstance(value, str):
+        return strip_markdown(fix_control_characters(value), key)
+    if isinstance(value, dict):
+        return {
+            child_key: clean_strings(child, child_key)
+            for child_key, child in value.items()
+        }
+    if isinstance(value, list):
+        return [clean_strings(item, key) for item in value]
+    return value

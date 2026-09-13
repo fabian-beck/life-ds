@@ -1,6 +1,6 @@
 """A missing translation fails the parity check; a stale one only warns.
 
-`--check` runs in CI over every person and meta story. Gating it on staleness
+`--check` reports over every person and meta story. Gating it on staleness
 made an unrelated change wait for a re-translation: regenerating one person
 leaves that person's German copy describing English text that has moved, which
 is readable prose and the expected state until `translate_person.py` catches

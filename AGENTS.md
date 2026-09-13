@@ -51,6 +51,8 @@ npm run type-check:py
 
 The automated suite is a smoke test plus pure-function and Python checks, and it runs in seconds; interface work is reviewed by the Codex/Claude exploratory user testing skill rather than by new browser tests. Both are documented in [Testing strategy](docs/testing-strategy.md).
 
+The generation pipeline is the only place that ensures the quality of the data. A rule a dataset must satisfy is enforced inside the step that writes the field — through its prompt or schema, a deterministic normalization, or a rejection that asks the model again with the reason — and nowhere else: no standalone validator script, no allowlist of accepted exceptions, no test that reads the generated corpus, and no data check in CI. CI checks the implementation only: formatting, lint, types, the build, the unit tests, the report's agreement with its source, and the interface smoke test. A rule the writing step cannot enforce without growing more complex stays a prompt instruction.
+
 The development server is normally already running in this environment.
 
 ## Git Workflow
@@ -98,7 +100,7 @@ Before starting any generation script, `generate_person.py` and its parts, `gene
 
 A run that was started and whose log shows `Failed to fetch`, `429`, or `Cache read failed` is stopped, and nothing it wrote is committed. Never commit the output of such a run and never repair it by hand.
 
-A clean run's output is committed exactly as the run wrote it. A session that finds a defect in that output — a validator finding, a file the run left behind, a sentence that contradicts its source — does not correct it by hand: it edits no generated file, deletes no file the generator should have removed, and adds no allowlist entry, threshold, or exception that lets a finding pass. It reports the finding to the owner with the file and the reason, and when the finding would fail a check, it commits nothing until the owner has decided. The fix belongs in the generator, and the dataset is regenerated with it. A validator's allowlist, such as `ACCEPTED` in `validate_event_dates.py`, is extended only at the owner's explicit request.
+A clean run's output is committed exactly as the run wrote it. A session that finds a defect in that output — a file the run left behind, a sentence that contradicts its source — does not correct it by hand: it edits no generated file and deletes no file the generator should have removed. It reports the defect to the owner with the file and the reason. The fix belongs in the generator, and the dataset is regenerated with it.
 
 A regeneration session therefore works in the primary repository throughout and commits and pushes from there, rather than creating an `agent/<session>` worktree it would only have to copy caches into. Stage only the files the run touched so unrelated working-tree changes survive, and rebase onto `origin/main` before pushing — a run takes on the order of fifteen minutes, and `main` can advance meanwhile.
 
@@ -189,7 +191,7 @@ An exploratory user test is the exception. Its report is its deliverable, and it
 - Reuse the shared stores rather than deriving their state again inside a component.
 - Keep person data synchronized across its registries and localized files.
 - Do not edit generated output when the source data or generator is the proper place for a change.
-- Do not write legacy-data repair code. Generated data is never edited by hand, so any dataset can be regenerated from scratch by the current pipeline. When a schema or generator changes, fix the generator, flag the datasets it leaves behind in `data/outdated.md` with the reason, and regenerate them — never write a backfill, migration, or fix-up script; deterministic validators that only report are fine.
+- Do not write legacy-data repair code. Generated data is never edited by hand, so any dataset can be regenerated from scratch by the current pipeline. When a schema or generator changes, fix the generator, flag the datasets it leaves behind in `data/outdated.md` with the reason, and regenerate them — never write a backfill, migration, or fix-up script.
 - Preserve source attribution for biographical data and images.
 - Describe a generation step by the data it writes, never by the interface that shows it: a narration is a title and a text per circle or stop, not a card, and the report, the pipeline spec, and docstrings name interface elements only when describing the interface itself.
 

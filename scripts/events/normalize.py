@@ -5,8 +5,9 @@ value at a time: a date to ISO-8601 at the precision it was given, a name to
 the one form the registries and the localized files must agree on, a quoted
 string to its content. `enforce_metadata` then walks a finished payload and
 applies them in order—the person's name, the dates, the portrait, the
-locations, the images, the annotations and chapters—and ends by replacing the
-control characters a model writes where typographic punctuation belongs.
+locations, the images, the annotations and chapters. The control characters
+and the Markdown a model writes are cleared by the canonical writer,
+`utils.json_io.write_json`, on the way to disk.
 
 Nothing here calls a model or reads the network. That is what lets the whole
 of it be exercised without either.
@@ -17,7 +18,6 @@ from calendar import monthrange
 from datetime import date, datetime
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-from utils.text import fix_control_characters
 from utils.word_overlap import restates
 from utils.wikipedia_cache import _strip_html_tags
 
@@ -208,16 +208,33 @@ def normalize_date_for_comparison(date_str: str, to_end: bool = False) -> str:
     return date_str  # Already full date
 
 
-def event_sort_key(event: Dict[str, Any]) -> str:
-    date_value = event.get("date")
-    precision = (event.get("date_precision") or "day").lower()
-    if not date_value:
-        return "9999-12-31"
-    if precision == "year":
-        return f"{date_value}-12-31"
-    if precision == "month":
-        return f"{date_value}-28"
-    return str(date_value)
+def timeline_key(date_value: Any, precision: Optional[str]) -> Tuple[str, str]:
+    """Where a date stands on the story's timeline: its period's start, then end.
+
+    The interface orders events by the start of their period and keeps the
+    file's order on a tie. The proposal checks its chapters against an order,
+    and this module writes the file in one; both read this key. They used to
+    sort differently — the proposal on the raw string, the file with a year
+    placed at its last day — so a chapter ending on "1945" and the next opening
+    on "1945-01-01" passed the check and reached the story in reverse, showing
+    the first chapter twice.
+    """
+    raw = (
+        _split_date_annotation(date_value)[0]
+        if isinstance(date_value, str)
+        else date_value
+    )
+    normalized, _ = normalize_date_value(raw, precision or "day")
+    if not normalized:
+        return ("9999-12-31", "9999-12-31")
+    return (
+        normalize_date_for_comparison(normalized),
+        normalize_date_for_comparison(normalized, to_end=True),
+    )
+
+
+def event_sort_key(event: Dict[str, Any]) -> Tuple[str, str]:
+    return timeline_key(event.get("date"), event.get("date_precision"))
 
 
 _ANNOTATION_MARKER = re.compile(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]")
@@ -342,9 +359,7 @@ def drop_restating_annotations(events: List[Dict[str, Any]]) -> List[str]:
     The rule is lexical, so it holds without a model: an explanation whose
     content words mostly already stand in the title, the description, or the
     term itself is dropped and its markup unwrapped. A paraphrase that reaches
-    past the sentence keeps its words and stays. `validate_event_prose.py`
-    reports what shipped before this ran, under the same rule. Returns the
-    dropped terms.
+    past the sentence keeps its words and stays. Returns the dropped terms.
     """
     dropped: List[str] = []
     for event in events:
@@ -380,21 +395,46 @@ def _upper_bound_date(value: Optional[str], precision: str) -> Optional[date]:
     return None
 
 
-def _clean_all_strings(data: Any) -> Any:
-    """
-    Recursively fix control characters in all strings within a data structure.
+def death_cutoff_date(death_value: Any) -> Optional[date]:
+    """The last day an event of the life may reach: the end of the death date."""
+    normalized, precision = normalize_date_value(death_value, "day")
+    return _upper_bound_date(normalized, precision) if normalized else None
 
-    This ensures AI-generated text doesn't contain incorrect Unicode control
-    characters that should be typographic punctuation.
+
+def dropped_date_reason(event: Dict[str, Any], cutoff: Optional[date]) -> Optional[str]:
+    """Why `enforce_metadata` leaves an event out of the dataset, or None.
+
+    An event whose date cannot be read is dropped, and so is one whose period
+    reaches past the subject's death. The proposal refuses both before it
+    checks its chapters, so no chapter loses a member after its partition was
+    accepted: dropped later, such an event left its chapter with one event or
+    none, and the chapter still dated from it.
     """
-    if isinstance(data, dict):
-        return {key: _clean_all_strings(value) for key, value in data.items()}
-    elif isinstance(data, list):
-        return [_clean_all_strings(item) for item in data]
-    elif isinstance(data, str):
-        return fix_control_characters(data)
-    else:
-        return data
+    raw = event.get("date")
+    start = _split_date_annotation(raw)[0] if isinstance(raw, str) else raw
+    precision = event.get("date_precision") or "day"
+    normalized, normalized_precision = normalize_date_value(start, precision)
+    if not normalized:
+        return f"its date {raw!r} cannot be read as a date"
+    if cutoff is None:
+        return None
+    raw_end = event.get("date_end") or event.get("end_date")
+    end = _split_date_annotation(raw_end)[0] if isinstance(raw_end, str) else raw_end
+    end_precision = (
+        event.get("date_end_precision") or event.get("end_date_precision") or precision
+    )
+    normalized_end, normalized_end_precision = normalize_date_value(end, end_precision)
+    upper = (
+        _upper_bound_date(normalized_end, normalized_end_precision)
+        if normalized_end
+        else _upper_bound_date(normalized, normalized_precision)
+    )
+    if upper and upper > cutoff:
+        return (
+            f"its period runs to {upper.isoformat()}, past the death on "
+            f"{cutoff.isoformat()}"
+        )
+    return None
 
 
 def enforce_metadata(
@@ -413,6 +453,10 @@ def enforce_metadata(
         person["name"] = preferred_name
     else:
         person.setdefault("name", page_data.get("title"))
+
+    # Read before the dates below are padded to days: "1954" pads to its first
+    # day, while the cutoff is the last day the death date allows.
+    death_cutoff = death_cutoff_date(person.get("death_date"))
 
     for key in ("birth_date", "death_date"):
         value = person.get(key)
@@ -456,17 +500,9 @@ def enforce_metadata(
         ):
             person["portrait"] = None
 
-    death_cutoff: Optional[date] = None
-    death_value = person.get("death_date")
-    if isinstance(death_value, str):
-        try:
-            death_cutoff = datetime.strptime(death_value, "%Y-%m-%d").date()
-        except ValueError:
-            death_cutoff = None
-
     events = []
     for event in payload.get("events", []) or []:
-        if not isinstance(event, dict):
+        if not isinstance(event, dict) or dropped_date_reason(event, death_cutoff):
             continue
         event = {**event}
 
@@ -522,13 +558,6 @@ def enforce_metadata(
             event.pop("date_end_precision", None)
         event.pop("end_date", None)
         event.pop("end_date_precision", None)
-
-        if death_cutoff is not None:
-            comparison_date = normalized_end_date or normalized_date
-            comparison_precision = normalized_end_precision or normalized_precision
-            upper_bound = _upper_bound_date(comparison_date, comparison_precision)
-            if upper_bound and upper_bound > death_cutoff:
-                continue
 
         existing_note_raw = event.get("date_note")
         cleaned_existing_note = None
@@ -713,8 +742,5 @@ def enforce_metadata(
             payload.pop("chapters", None)
     else:
         payload.pop("chapters", None)
-
-    # Fix any control characters in all strings throughout the payload
-    payload = _clean_all_strings(payload)
 
     return payload

@@ -2090,8 +2090,9 @@ def main():
             print(f"Warning: style generation failed: {e}")
 
     # Translate the meta story so language versions stay in sync with English.
-    # Translation failures are non-fatal: the English reference is complete and
-    # `translate_all_persons.py --check` will report the gap.
+    # A failed translation leaves the English story complete, so the run goes on
+    # to its summary, and it exits 1 so the gap is not taken for a clean run.
+    translation_failed = False
     if not args.skip_translate:
         from translate_meta_story import translate_meta_story_data
 
@@ -2111,8 +2112,10 @@ def main():
                     print(f"  Translation to '{lang}' complete")
                 else:
                     print(f"  WARNING: translation to '{lang}' failed")
+                    translation_failed = True
             except Exception as e:
                 print(f"  WARNING: translation to '{lang}' failed: {e}")
+                translation_failed = True
 
     print("\nSUCCESS: Meta-story created!")
     print(f"  ID: {story_id}")
@@ -2141,7 +2144,7 @@ def main():
             print(f"     {suggestion.reason}")
         print("\n  Consider adding these people to expand the dataset.")
 
-    sys.exit(0)
+    sys.exit(1 if translation_failed else 0)
 
 
 if __name__ == "__main__":

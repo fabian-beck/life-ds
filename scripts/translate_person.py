@@ -1249,30 +1249,17 @@ def load_json_file(file_path: Path) -> Optional[Dict[str, Any]]:
 
 
 def save_json_file(data: Dict[str, Any], file_path: Path, indent: int = 2) -> bool:
-    """Save data to a JSON file (LF newlines, UTF-8, same style as generation).
+    """Save a translated document through the canonical writer.
 
-    Every document is scanned on the way out for words that mix writing
-    systems — the translator has returned "Zwillინგstöchter" and
-    "лекtionierte" before — and for stray Markdown, which the translator has
-    added where the English was plain ("*Philosophical Magazine*") and the
-    interface renders verbatim. Both defects are invisible in a diff of
-    correct-looking JSON. The save still succeeds; the warnings name the
-    findings so the operator can fix or re-translate them while the run is
-    still on screen.
+    The writer also unwraps the Markdown the translator adds where the English
+    was plain ("*Philosophical Magazine*") and repairs control characters, as
+    it does for every generated document.
     """
-    from validate_markdown import markdown_findings, strings_in
-    from validate_scripts import mixed_script_words
+    from utils.json_io import write_json
 
-    for field, key, text in strings_in(data):
-        for word in mixed_script_words(text):
-            print(f'  ⚠ mixed-script word in {file_path.name}{field}: "{word}"')
-        for finding in markdown_findings(text, key):
-            print(f"  ⚠ Markdown in {file_path.name}{field}: {finding}")
     try:
         file_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(file_path, "w", encoding="utf-8", newline="") as f:
-            json.dump(data, f, indent=indent, ensure_ascii=False)
-            f.write("\n")
+        write_json(file_path, data)
         return True
     except Exception as e:
         print(f"Error: Failed to save {file_path}: {e}")

@@ -8,10 +8,8 @@ longer one already holds. It catches the restatement written in the same
 words and lets a paraphrase through, which is the trade a generator can make
 without a model in the loop.
 
-The same rule has to hold on both sides of the pipeline. `events/normalize.py`
-drops a gloss that restates its own slide, and `validate_event_prose.py`
-reports the ones that shipped before it did; were the two to drift, the
-generator would write exactly what the validator counts.
+`events/normalize.py` drops a gloss that restates its own slide under this
+rule.
 """
 
 from __future__ import annotations

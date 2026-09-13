@@ -238,9 +238,8 @@ def _event_payload(event: Dict[str, Any]) -> Dict[str, Any]:
     ``sources`` list, an annotation's ``wikipedia_url``, and an image's
     ``creator``. Each yields a claim about a link or a credit — "this URL is
     listed as a source" — that the biographical materials cannot settle either
-    way, and whether a listed source resolves is already checked by
-    ``scripts/validate_source_links.py``. The sources still travel in the
-    unit's context, so an evaluator sees what the event cites.
+    way. The sources still travel in the unit's context, so an evaluator sees
+    what the event cites.
     """
     payload: Dict[str, Any] = {}
     for key in (

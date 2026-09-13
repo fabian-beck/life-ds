@@ -56,6 +56,7 @@ from events.prompts.research import (
     filter_related_articles_for_event,
 )
 from events.schemas import CLASSIFICATION_MODELS, EventSkeleton
+from utils.citations import citable_urls, keep_citable
 from utils.concurrency import map_concurrently, worker_count
 from utils.datasets import person_ids
 from utils.event_depth import get_event_weight, select_deep_event_indexes
@@ -759,37 +760,6 @@ def build_report_prompt(
 # ============================================================================
 
 
-def _normalize(url: str) -> str:
-    """Compare URLs the way Wikipedia treats them: percent-encoding and
-    underscores are spelling, not identity."""
-    return unquote(str(url or "")).replace("_", " ").rstrip("/").lower()
-
-
-def _citable(
-    person_wikipedia: Optional[str],
-    related: List[Dict[str, Any]],
-    existing: Optional[List[str]] = None,
-) -> set:
-    """Every URL this call is allowed to cite.
-
-    The subject's article, the related articles it was shown, and whatever the
-    event already cites — the last because a citation already in the corpus is a
-    real article whether or not this event's article filter happened to surface
-    it, and dropping a good one for being absent from a five-item shortlist is
-    how "Published the Turing test paper" lost its citation of the paper.
-    """
-    urls = {_normalize(person_wikipedia)} if person_wikipedia else set()
-    for article in related:
-        url = article.get("url")
-        if url:
-            urls.add(_normalize(url))
-    for url in existing or []:
-        if url:
-            urls.add(_normalize(url))
-    urls.discard("")
-    return urls
-
-
 def _ego_network(person_id: str) -> Dict[str, Any]:
     """The network the chips are drawn from, or nothing."""
     path = PEOPLE_DIR / person_id / "ego_network.json"
@@ -930,8 +900,8 @@ def generate_event_backgrounds(
         # Only URLs the call was actually shown. A model asked for a citation
         # will write a plausible one, and a plausible Wikipedia URL that 404s is
         # worse than the wrong-but-real article it replaces.
-        allowed = _citable(person_wikipedia, related, event.get("sources"))
-        chosen = [url for url in (parsed.sources or []) if _normalize(url) in allowed]
+        allowed = citable_urls(person_wikipedia, related, event.get("sources"))
+        chosen = keep_citable(parsed.sources, allowed)
         if chosen and chosen != event.get("sources"):
             print(f"    sources of [{index}]: {event.get('sources')} -> {chosen}")
             event["sources"] = chosen

@@ -136,11 +136,11 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "5bfcccf4cef400d9",
+      "fingerprint": "255fdcf117bc54e3",
       "summary": {
-        "description": "Writes detailed background reports only for the story's selected deep events, using reviewed event material and related articles. It renews each event's citations from URLs it was shown, so the provenance attached to the report documents that event.",
-        "input": "the reviewed events and Wikipedia material",
-        "output": "background reports, citations, and image queries",
+        "description": "Writes a background report for each event the story can open in depth, using the reviewed event, the subject’s article, related articles, and the surrounding story. It replaces event citations only with URLs it was shown, so the sources beneath the report document that event. It also leaves searches for images of the report’s concrete subjects.",
+        "input": "reviewed events, articles, and story outline",
+        "output": "background reports, sources, and image searches",
         "source": "gpt-5.6-terra"
       }
     },
@@ -172,11 +172,11 @@
       }
     },
     "p_events_p2": {
-      "fingerprint": "f24b14eda788ec7b",
+      "fingerprint": "720561b17d9a2d6d",
       "summary": {
-        "description": "Expands each proposed event into a sourced account of what happened, where, and who took part. It keeps the subject’s article as the authority and confines the prose to the event’s moment; a failed call leaves the event unresolved without stopping the story.",
-        "input": "the event skeleton and Wikipedia material",
-        "output": "a researched account for each event",
+        "description": "Researches each proposed event against the subject’s article and event-specific related material. It expands the event into grounded prose, places, people, sources, annotations, an icon, and picture-search terms; failed calls leave the event unresolved so the story continues.",
+        "input": "an event skeleton and Wikipedia material",
+        "output": "researched details for each event",
         "source": "gpt-5.6-terra"
       }
     },
