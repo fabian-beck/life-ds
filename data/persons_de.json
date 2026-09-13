@@ -1018,32 +1018,34 @@
     {
       "id": "heinz_nixdorf",
       "name": "Heinz_Nixdorf",
-      "tagline": "Deutschlands Computerunternehmer",
-      "summary": "Heinz Nixdorf (1925–1986) war ein deutscher Computerpionier und Unternehmer, der die Nixdorf Computer AG gründete und sie von einem winzigen Start-up zu einem großen internationalen Elektronik- und Computerunternehmen ausbaute. Aus einer armen Eisenbahnerfamilie stammend und durch den Kriegsdienst unterbrochen, kämpfte er sich zurück, um die Schule abzuschließen, angewandte Physik zu studieren und bei Remington Rand entscheidende Erfahrungen in der Rechnerentwicklung zu sammeln. Mit früher Unterstützung des Energieversorgers RWE schuf er Deutschlands ersten röhrenbasierten Rechner, wechselte dann zur Transistor- und Halbleitertechnik und wurde zu einer führenden Figur des Wirtschaftswunders sowie zu einem wichtigen Förderer dezentraler Datenverarbeitung und beruflicher Bildung, bis er 1986 überraschend auf einer Messe starb.",
+      "tagline": "Kleincomputer für deutsche Unternehmen",
+      "summary": "Heinz Nixdorf baute ein deutsches Computerunternehmen rund um kompakte Anlagen für die elektronische Datenverarbeitung in Betrieben auf. Er gründete die Nixdorf Computer AG und entwickelte sie von einem kleinen Labor zu einem international tätigen Elektronikkonzern.",
       "portrait": {
         "image": "/portraits/heinz_nixdorf_thumbnail.webp",
-        "source": "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
-        "caption": "Stylized portrait based on historical photograph",
-        "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/db/NIXDORF_SW.jpg",
         "thumbnail": "/portraits/heinz_nixdorf_thumbnail.webp",
         "medium": "/portraits/heinz_nixdorf_medium.webp",
-        "full": "/portraits/heinz_nixdorf_full.webp"
+        "full": "/portraits/heinz_nixdorf_full.webp",
+        "source": "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/db/NIXDORF_SW.jpg",
+        "referenceUsed": true
       },
       "birthDate": "1925-04-09",
       "deathDate": "1986-03-17",
       "primaryRoles": [
         "Unternehmer",
-        "Informatiker"
+        "Computerpionier",
+        "Erfinder"
       ],
       "created": "2025-12-06T19:39:33.252435+01:00",
-      "lastUpdated": "2026-07-18T14:37:51.191034+00:00",
+      "lastUpdated": "2026-09-13T15:02:56.123647+02:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "42a6bbcc638aa2a8",
-        "translated_on": "2026-07-18T14:37:51.191049+00:00",
-        "translator": "manual"
+        "source_fingerprint": "dc14f38a7d24dd9d",
+        "translated_on": "2026-09-13T15:02:56.123647+02:00",
+        "translator": "openai:gpt-5.6-luna"
       }
     },
     {

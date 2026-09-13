@@ -1,253 +1,294 @@
 {
-  "dataset": "wiki-biographical-timelines",
-  "created_on": "2025-12-06",
+  "dataset": "Wikipedia biographical timeline",
+  "created_on": "2026-09-13",
   "person": {
     "name": "Heinz_Nixdorf",
     "birth_date": "1925-04-09",
     "death_date": "1986-03-17",
     "primary_roles": [
       "Unternehmer",
-      "Informatiker"
+      "Computerpionier",
+      "Erfinder"
     ],
-    "summary": "Heinz Nixdorf (1925–1986) war ein deutscher Computerpionier und Unternehmer. Er gründete die Nixdorf Computer AG und entwickelte sie von einem winzigen Start-up zu einem bedeutenden internationalen Elektronik- und Computerkonzern. Aus einer armen Eisenbahnerfamilie stammend und durch den Kriegsdienst unterbrochen, kämpfte er sich zurück, um die höhere Schule abzuschließen, angewandte Physik zu studieren und bei Remington Rand entscheidende Erfahrungen in der Entwicklung von Rechenmaschinen zu sammeln. Mit früher Unterstützung des Energieversorgers RWE entwickelte er Deutschlands ersten Röhrencomputer. Später setzte er auf Transistor- und Halbleitertechnik und wurde zu einer prägenden Figur des deutschen Wirtschaftswunders sowie zu einem wichtigen Wegbereiter der dezentralen Datenverarbeitung und der Aus- und Weiterbildung von Beschäftigten – bis zu seinem plötzlichen Tod auf einer Messe im Jahr 1986.",
+    "tagline": "Kleincomputer für deutsche Unternehmen",
+    "summary": "Heinz Nixdorf baute ein deutsches Computerunternehmen für kompakte Systeme zur betrieblichen Datenverarbeitung auf. Er gründete die Nixdorf Computer AG und entwickelte sie von einem kleinen Labor zu einem internationalen Elektronikkonzern.",
     "wikipedia": "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
     "portrait": {
       "image": "/portraits/heinz_nixdorf_thumbnail.webp",
-      "source": "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
-      "caption": "Stylized portrait based on historical photograph",
-      "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/db/NIXDORF_SW.jpg",
       "thumbnail": "/portraits/heinz_nixdorf_thumbnail.webp",
       "medium": "/portraits/heinz_nixdorf_medium.webp",
-      "full": "/portraits/heinz_nixdorf_full.webp"
+      "full": "/portraits/heinz_nixdorf_full.webp",
+      "source": "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/d/db/NIXDORF_SW.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "hardship_and_formative_years",
-      "headline": "Ein Anfang in Not",
+      "id": "a_determined_student",
+      "headline": "Ein entschlossener Schüler",
       "date_start": "1925-04-09",
       "date_start_precision": "day",
-      "date_end": "1942",
-      "date_end_precision": "year",
+      "date_end": "1945-05",
+      "date_end_precision": "month",
       "age_start": 0,
-      "age_end": 17,
-      "involved_people": [
-        "Walter Nixdorf",
-        "Änne Nixdorf"
-      ],
-      "location": "Deutschland"
+      "age_end": 20,
+      "involved_people": null,
+      "location": "Deutschland",
+      "illustration": {
+        "image": "/chapter_art/heinz_nixdorf/a_determined_student_medium.webp",
+        "medium": "/chapter_art/heinz_nixdorf/a_determined_student_medium.webp",
+        "full": "/chapter_art/heinz_nixdorf/a_determined_student_full.webp",
+        "concept": "A taut, pale thread rises from a cluster of dark pebbles and passes through a narrow gap in a layered slate wall, catching a thin band of dawn light against surrounding blackness.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "war_experience_and_academic_preparation",
-      "headline": "Vom Kriegsdienst zum Abitur",
-      "date_start": "1943",
+      "id": "building_the_first_machines",
+      "headline": "Die ersten Maschinen",
+      "date_start": "1947",
       "date_start_precision": "year",
-      "date_end": "1951",
+      "date_end": "1954",
       "date_end_precision": "year",
-      "age_start": 18,
-      "age_end": 26,
-      "involved_people": [
-        "Walter Sprick"
-      ],
-      "location": "Deutschland"
-    },
-    {
-      "id": "founding_innovations_in_impulstechnik",
-      "headline": "Pionier der Impulstechnik",
-      "date_start": "1952",
-      "date_start_precision": "year",
-      "date_end": "1959",
-      "date_end_precision": "year",
-      "age_start": 27,
-      "age_end": 34,
+      "age_start": 22,
+      "age_end": 29,
       "involved_people": [
         "Walter Sprick",
         "Alfred Wierzoich"
       ],
-      "location": "Geschichte der Bundesrepublik Deutschland"
+      "location": "Geschichte der Bundesrepublik Deutschland",
+      "illustration": {
+        "image": "/chapter_art/heinz_nixdorf/building_the_first_machines_medium.webp",
+        "medium": "/chapter_art/heinz_nixdorf/building_the_first_machines_medium.webp",
+        "full": "/chapter_art/heinz_nixdorf/building_the_first_machines_full.webp",
+        "concept": "At center, a glowing amber pulse travels through a floating maze of translucent glass channels, branching into orderly arcs before gathering as one bright, concentrated spark in darkness.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "small_computer_breakthroughs",
-      "headline": "Aufstieg zum Kleincomputer-Pionier",
+      "id": "claiming_the_small_computer",
+      "headline": "Der Kleincomputer setzt sich durch",
       "date_start": "1959",
       "date_start_precision": "year",
-      "date_end": "1968-10",
-      "date_end_precision": "month",
+      "date_end": "1968-10-01",
+      "date_end_precision": "day",
       "age_start": 34,
       "age_end": 43,
       "involved_people": [
         "Otto Müller"
       ],
-      "location": "Geschichte der Bundesrepublik Deutschland"
+      "location": "Geschichte der Bundesrepublik Deutschland",
+      "illustration": {
+        "image": "/chapter_art/heinz_nixdorf/claiming_the_small_computer_medium.webp",
+        "medium": "/chapter_art/heinz_nixdorf/claiming_the_small_computer_medium.webp",
+        "full": "/chapter_art/heinz_nixdorf/claiming_the_small_computer_full.webp",
+        "concept": "A compact arrangement of interlocking matte tiles hovers in darkness, each tile shifting into a precise luminous grid; one small central tile locks the whole expanding pattern into alignment.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "global_expansion_and_legacy",
-      "headline": "Das Zeitalter der Expansion",
-      "date_start": "1968-10",
-      "date_start_precision": "month",
+      "id": "a_company_goes_global",
+      "headline": "Ein Unternehmen wird global",
+      "date_start": "1969",
+      "date_start_precision": "year",
       "date_end": "1986-03-17",
       "date_end_precision": "day",
-      "age_start": 43,
+      "age_start": 44,
       "age_end": 60,
-      "involved_people": [],
-      "location": "International"
+      "involved_people": [
+        "Kurt Bendlin"
+      ],
+      "location": "Weltweit",
+      "illustration": {
+        "image": "/chapter_art/heinz_nixdorf/a_company_goes_global_medium.webp",
+        "medium": "/chapter_art/heinz_nixdorf/a_company_goes_global_medium.webp",
+        "full": "/chapter_art/heinz_nixdorf/a_company_goes_global_full.webp",
+        "concept": "A radiant orb of fine copper filaments unfurls outward into wide concentric currents, its strands reaching the edges of a deep midnight field while a faint halo opens around its core.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     }
   ],
+  "conclusion": "Heinz Nixdorfs System 820 trug dazu bei, die dezentrale elektronische Datenverarbeitung für mittelständische Unternehmen zu etablieren. Die Bank-, Handels- und Geschäftssysteme von Nixdorf Computer wurden von späteren Nachfolgeunternehmen weitergeführt, darunter Siemens Nixdorf und Wincor Nixdorf.",
   "events": [
     {
       "date": "1925-04-09",
       "date_precision": "day",
       "age": 0,
       "title": "Geburt in Paderborn",
-      "description": "Heinz Nixdorf wird in Paderborn als ältestes von fünf Kindern des Eisenbahners Walter Nixdorf und seiner Frau Änne geboren. Kurz nach seiner Geburt zieht die Familie nach Torgau in Sachsen und kehrt erst 1931 nach Paderborn zurück. Seine Kindheit ist geprägt von der wiederkehrenden Arbeitslosigkeit des Vaters und materieller Not. Später bestimmt diese Erfahrung als Unternehmer sein besonderes Augenmerk auf die Schaffung von Arbeitsplätzen.",
+      "description": "Heinz Nixdorf wird in Paderborn als ältestes von fünf Kindern geboren. Sein Vater Walter Nixdorf arbeitet bei der Eisenbahn. Zeiten der Arbeitslosigkeit des Vaters bringen die Familie in finanzielle Bedrängnis.",
       "locations": [
         {
           "name_historic": "Paderborn",
           "name_modern": "Paderborn, Deutschland",
           "centroid": [
-            8.75439,
-            51.71892
+            8.754,
+            51.718
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-candle",
+      "chapter": "a_determined_student",
+      "weight": 0.2,
+      "event_class": {
+        "type": "birth",
+        "father": "Walter Nixdorf",
+        "mother": "Änne Nixdorf, née Ströhmeier",
+        "characterization": "Arbeiterfamilie"
+      },
+      "involved_people": [
+        "Walter Nixdorf",
+        "Änne Nixdorf"
+      ]
+    },
+    {
+      "date": "1939",
+      "date_precision": "year",
+      "date_end": "1942",
+      "date_end_precision": "year",
+      "age": 14,
+      "title": "Erhält ein Schulstipendium",
+      "description": "Ein Stipendium ermöglicht Heinz Nixdorf von 1939 bis 1942 den Besuch von Lehrerbildungsanstalten in Vallendar, Boppard und Alfeld. Er will nicht Lehrer werden. 1941 gestattet ihm das Kultusministerium den Besuch des Reismann-Gymnasiums in Paderborn.",
+      "locations": [
+        {
+          "name_historic": "Vallendar",
+          "name_modern": "Vallendar, Deutschland",
+          "centroid": [
+            7.6142479,
+            50.4001381
           ],
           "primary": true
         },
         {
-          "name_historic": "Torgau",
-          "name_modern": "Torgau, Deutschland",
+          "name_historic": "Boppard",
+          "name_modern": "Boppard, Deutschland",
           "centroid": [
-            13.00633,
-            51.5602
+            7.5885884,
+            50.2312823
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Alfeld",
+          "name_modern": "Alfeld (Leine), Deutschland",
+          "centroid": [
+            9.8253376,
+            51.9869477
           ],
           "primary": false
         }
       ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
+      ],
+      "event_type_icon": "mdi-trophy",
+      "chapter": "a_determined_student",
+      "weight": 0.3
+    },
+    {
+      "date": "1943-06-01",
+      "date_precision": "day",
+      "date_note": "Seine NSDAP-Mitgliedschaft wurde rückwirkend auf den 20. April 1943 datiert",
+      "age": 18,
+      "title": "Beginnt den Kriegsdienst",
+      "description": "1943 tritt Heinz Nixdorf in den [[Reich Labor Service|Reichsarbeitsdienst]] ein. Er wird zu einer [[Luftwaffe|Luftwaffenschule]] auf dem Ith im Weserbergland eingezogen. Am 1. Juni beantragt er die Aufnahme in die [[Nazi Party|NSDAP]]. In der Schule erwirbt er alle drei Segelfliegerlizenzen.",
+      "locations": [
+        {
+          "name_historic": "Ith, Weserbergland",
+          "name_modern": "Ith, Deutschland",
+          "centroid": [
+            9.5268449,
+            52.0889241
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-shield",
+      "chapter": "a_determined_student",
+      "annotations": {
+        "Reich Labor Service": {
+          "explanation": "Der Reichsarbeitsdienst war eine Zwangsarbeits- und Ausbildungseinrichtung des nationalsozialistischen Deutschlands. Nixdorf trat ihm vor seiner militärischen Ausbildung bei.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Reich_Labour_Service"
+        },
+        "Luftwaffe": {
+          "explanation": "Die Luftwaffe war die Luftstreitkraft des nationalsozialistischen Deutschlands. Nixdorf besuchte eine ihrer Schulen und absolvierte dort eine Segelflugausbildung.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Luftwaffe"
+        },
+        "Nazi Party": {
+          "explanation": "Die NSDAP war die politische Organisation, die Deutschland unter Adolf Hitler von 1933 bis 1945 regierte. Nixdorf beantragte während seiner Ausbildung 1943 die Aufnahme.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Nazi_Party"
+        }
+      },
+      "weight": 0.3
+    },
+    {
+      "date": "1945-05",
+      "date_precision": "month",
+      "age": 20,
+      "title": "Kehrt nach Paderborn zurück",
+      "description": "Nachdem die Luftwaffen-Panzerdivision Hermann Göring in Böhmen geschlagen worden ist, entgeht Heinz Nixdorf der Gefangennahme. Im Mai 1945 kehrt er nach Paderborn zurück. Sein Vater war 1944 an der Ostfront gefallen. Nixdorf arbeitet in der Landwirtschaft, um seine Mutter und Geschwister zu unterstützen.",
+      "locations": [
+        {
+          "name_historic": "Paderborn",
+          "name_modern": "Paderborn, Deutschland",
+          "centroid": [
+            8.754,
+            51.718
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Böhmen",
+          "name_modern": "Böhmen, Tschechische Republik",
+          "centroid": [
+            15.0,
+            49.75
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "a_determined_student",
+      "annotations": {
+        "Panzer-Division Hermann Göring": {
+          "explanation": "The Panzer-Division Hermann Göring was a German armored formation of the Luftwaffe that fought on several fronts during World War II.",
+          "wikipedia_url": "https://de.wikipedia.org/wiki/Fallschirm-Panzer-Division_1_%E2%80%9EHermann_G%C3%B6ring%E2%80%9C"
+        }
+      },
+      "weight": 0.4,
       "involved_people": [
         "Walter Nixdorf",
         "Änne Nixdorf"
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Heinz_Nixdorf"
-      ],
-      "event_type_icon": "mdi-candle",
-      "chapter": "hardship_and_formative_years",
-      "event_class": {
-        "type": "birth",
-        "father": "Walter Nixdorf",
-        "mother": "Änne Nixdorf (geb. Ströhmeier)"
-      }
-    },
-    {
-      "date": "1941",
-      "date_precision": "year",
-      "date_end": "1942",
-      "date_end_precision": "year",
-      "age": 16,
-      "title": "Bruch mit der Lehrerlaufbahn",
-      "description": "Dank Stipendien für seine guten schulischen Leistungen besucht Nixdorf zwischen 1939 und 1942 mehrere Lehrerbildungsanstalten, fühlt sich jedoch durch die Erwartung eingeengt, Lehrer werden zu sollen. Gegen den Willen seiner Mutter und seiner Lehrer bittet er 1941 das Preußische Kultusministerium in [[Berlin|Berlin]] um die Erlaubnis, auf das [[Reismann‑Gymnasium|Reismann-Gymnasium]] in Paderborn zu wechseln. Nachdem das Ministerium seinem Antrag stattgibt, kehrt er auf den klassischen Bildungsweg am Gymnasium zurück und zeigt besonderes Talent in Mathematik und den Naturwissenschaften.",
-      "locations": [
-        {
-          "name_historic": "Berlin",
-          "name_modern": "Berlin, Deutschland",
-          "centroid": [
-            13.405,
-            52.52
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Paderborn",
-          "name_modern": "Paderborn, Deutschland",
-          "centroid": [
-            8.7665,
-            51.7189
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": null,
-      "sources": [],
-      "event_type_icon": "mdi-school",
-      "chapter": "hardship_and_formative_years",
-      "annotations": {
-        "Berlin": {
-          "explanation": "Damals die Hauptstadt Preußens innerhalb des nationalsozialistischen Deutschlands und Sitz zentraler Ministerien wie des Preußischen Kultusministeriums, das Schulwesen und Lehrerausbildung kontrollierte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Berlin"
-        },
-        "Reismann‑Gymnasium": {
-          "explanation": "Ein traditionsreiches humanistisches Gymnasium in Paderborn mit klassischem Lehrplan, der auf das Abitur als Hochschulzugangsprüfung vorbereitete.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Reismann-Gymnasium_Paderborn"
-        }
-      }
-    },
-    {
-      "date": "1943",
-      "date_precision": "year",
-      "date_end": "1947",
-      "date_end_precision": "year",
-      "date_note": "Umfasst den Kriegsdienst ab 1943 und den Abschluss des Abiturs 1947",
-      "age": 18,
-      "title": "Kriegsdienst und spätes Abitur",
-      "description": "1943 wird Nixdorf zum [[Reichsarbeitsdienst|Reichsarbeitsdienst]] und anschließend zur Ausbildung an einer Luftwaffenschule im [[Weserbergland|Weserbergland]] einberufen. Dank seines sportlichen Talents erwirbt er dort mehrere Segelflugzeugführerscheine. 1943 tritt er der [[NSDAP|NSDAP]] bei und dient später in der Eliteeinheit Panzer-Division „Hermann Göring“. Nach deren Niederlage in Böhmen entgeht er der Gefangenschaft und schlägt sich im Mai 1945 nach Paderborn durch. Da sein Vater 1944 an der Ostfront gefallen ist, muss der Zwanzigjährige seine verwitwete Mutter und die Geschwister zunächst durch landwirtschaftliche Arbeit mitversorgen, bevor er seine unterbrochene Schulbildung abschließen kann. Erst 1947 darf er am Reismann-Gymnasium das Abitur ablegen und besteht es. Damit steht ihm der Weg zur Universität offen.",
-      "locations": [
-        {
-          "name_historic": "Weserbergland",
-          "name_modern": "Weserbergland, Deutschland",
-          "centroid": [
-            9.4,
-            52.0
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Böhmen",
-          "name_modern": "Böhmen, Tschechien",
-          "centroid": [
-            14.7,
-            49.8
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Paderborn",
-          "name_modern": "Paderborn, Deutschland",
-          "centroid": [
-            8.75439,
-            51.71892
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Heinz_Nixdorf",
-        "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
-      ],
-      "event_type_icon": "mdi-shield",
-      "chapter": "war_experience_and_academic_preparation",
-      "annotations": {
-        "Reichsarbeitsdienst": {
-          "explanation": "Der Reichsarbeitsdienst war eine staatliche Zwangsarbeitsorganisation im nationalsozialistischen Deutschland, die junge Männer und Frauen zu paramilitärischer Arbeit und vormilitärischer Ausbildung vor oder anstelle des regulären Militärdienstes einberief.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Reich_Labour_Service"
-        },
-        "Weserbergland": {
-          "explanation": "Das Weserbergland ist eine hügelige Region am Mittellauf der Weser im Nordwesten Deutschlands, die im Zweiten Weltkrieg wegen ihrer Topografie für verschiedene militärische Ausbildungseinrichtungen genutzt wurde.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Weser_Uplands"
-        },
-        "NSDAP": {
-          "explanation": "Die NSDAP (Nationalsozialistische Deutsche Arbeiterpartei) war die von Adolf Hitler geführte faschistische Partei, die Deutschland von 1933 bis 1945 regierte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Nazi_Party"
-        }
-      }
+      "background": "Die Nixdorfs waren schon vor dem Krieg mehrfach umgezogen, bevor der Krieg Heinz’ Schulzeit unterbrach. Walter Nixdorfs Arbeit führte die Familie kurz nach Heinz’ Geburt von Paderborn nach Torgau in Sachsen. 1931 kehrten sie nach Paderborn zurück. Heinz besuchte zunächst eine katholische Volksschule, wo sich seine Begabung für Mathematik und Naturwissenschaften zeigte. Dank guter schulischer Leistungen erhielt er ein Stipendium und besuchte von 1939 bis 1942 Lehrerbildungsanstalten. Er lernte zunächst in Vallendar bei Koblenz, dann in Boppard am Rhein und schließlich in Alfeld an der Leine. Die Ausbildung führte zum Lehrerberuf, den er nicht ergreifen wollte.\n\nHeinz setzte sich gegen den Willen seiner Mutter und seiner Lehrer für seinen eigenen Weg ein. Er reichte beim Kultusministerium in Berlin eine Eingabe ein. Das Ministerium erlaubte ihm 1941 den Wechsel an das Reismann-Gymnasium in Paderborn. Seine Ausbildung führte nicht unmittelbar zur Reifeprüfung. 1943 kam er zum Reichsarbeitsdienst und anschließend an die Luftwaffenschule auf dem Ith im Weserbergland. Am 1. Juni 1943 beantragte er die Aufnahme in die NSDAP. Die Partei nahm ihn rückwirkend zum 20. April unter der Mitgliedsnummer 9.595.797 auf.\n\nDer Krieg unterbrach seinen Bildungsweg und verzögerte seine Hochschulzulassung bis 1947. Am Reismann-Gymnasium legte er sie ab. Ein weiteres Stipendium ermöglichte ihm anschließend den Wechsel von Paderborn an die Goethe-Universität Frankfurt, wo er angewandte Physik studierte und außerdem Seminare der Betriebswirtschaftslehre besuchte. Sein Weg zur Physik hatte mit dem Kampf gegen die Lehrerausbildung begonnen. 1951 führte er ihn als Werkstudent in die Entwicklungsabteilung von Remington Rand."
     },
     {
       "date": "1947",
       "date_precision": "year",
-      "date_end": "1951",
-      "date_end_precision": "year",
       "age": 22,
-      "title": "Studium und Ausbildung bei Remington Rand",
-      "description": "Mit einem Stipendium studiert Nixdorf ab 1947 an der Goethe-Universität Frankfurt angewandte Physik und ergänzt seine naturwissenschaftliche Arbeit durch Seminare in Betriebswirtschaftslehre. 1951 wird er Werkstudent in der Entwicklungsabteilung der deutschen Tochtergesellschaft des amerikanischen Büromaschinenherstellers Remington Rand. Dort hilft er bei der Entwicklung einfacher Zählgeräte und lernt die Grundlagen des Baus elektronischer Rechenmaschinen kennen. Dabei arbeitet er eng mit dem Abteilungsleiter Walter Sprick zusammen. Als Sprick das Unternehmen verlässt, weil Remington seine Projekte nicht länger unterstützt, überträgt er seine Erfindungen und Patentrechte an Nixdorf. Damit verfügt der junge Physiker über die technologische Grundlage für eigene Systeme wie den Elektronensaldierer und den Elektronenmultiplizierer.",
+      "title": "Beginnt ein Physikstudium",
+      "description": "1947 legt Heinz Nixdorf am Reismann-Gymnasium in Paderborn das [[Abitur|deutsche Abitur]] ab. Mit einem Stipendium beginnt er an der Goethe-Universität Frankfurt ein Studium der angewandten Physik. Außerdem besucht er Seminare der Betriebswirtschaftslehre.",
       "locations": [
+        {
+          "name_historic": "Paderborn",
+          "name_modern": "Paderborn, Deutschland",
+          "centroid": [
+            8.7524,
+            51.7189
+          ],
+          "primary": true
+        },
         {
           "name_historic": "Frankfurt am Main",
           "name_modern": "Frankfurt am Main, Deutschland",
@@ -255,6 +296,59 @@
             8.6821,
             50.1109
           ],
+          "primary": false
+        }
+      ],
+      "sources": [],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Paderborn-Reismann-Gymnasium.jpg/960px-Paderborn-Reismann-Gymnasium.jpg",
+          "caption": "Reismann-Gymnasium in Paderborn",
+          "source": "https://commons.wikimedia.org/wiki/File:Paderborn-Reismann-Gymnasium.jpg",
+          "creator": "Athde",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+        }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "building_the_first_machines",
+      "annotations": {
+        "Abitur": {
+          "explanation": "Das Abitur ist der deutsche Schulabschluss und die Zugangsberechtigung zum Hochschulstudium.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Abitur"
+        }
+      },
+      "weight": 0.4
+    },
+    {
+      "date": "1951",
+      "date_precision": "year",
+      "age": 26,
+      "title": "Beginnt bei Remington Rand",
+      "description": "1951 wird Heinz Nixdorf Werkstudent in der Entwicklungsabteilung der deutschen Tochtergesellschaft von Remington Rand. Er arbeitet an einfachen Multiplizier- und Buchungsmaschinen mit. Er wird Assistent des Physikers Walter Sprick, des Leiters der Abteilung.",
+      "locations": [],
+      "involved_people": [
+        "Walter Sprick"
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "building_the_first_machines",
+      "weight": 0.5
+    },
+    {
+      "date": "1952",
+      "date_precision": "year",
+      "age": 27,
+      "title": "Gründet ein Impulslabor",
+      "description": "1952 beendet Heinz Nixdorf im neunten Semester sein Physikstudium. RWE, ein Elektrizitätsunternehmen in Essen, stellt 30.000 Mark für eine röhrenbasierte Rechenmaschine bereit. Nixdorf gründet in Essen das Heinz Nixdorf Labor für Impulstechnik. Walter Sprick bürgt für die Finanzierung und überträgt Nixdorf seine Erfindungen und sein Patent.",
+      "locations": [
+        {
+          "name_historic": "Essen",
+          "name_modern": "Essen, Deutschland",
+          "centroid": [
+            7.0116,
+            51.4556
+          ],
           "primary": true
         }
       ],
@@ -262,114 +356,82 @@
         "Walter Sprick"
       ],
       "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
         "https://de.wikipedia.org/wiki/Walter_Sprick"
       ],
-      "event_type_icon": "mdi-school",
-      "chapter": "war_experience_and_academic_preparation"
-    },
-    {
-      "date": "1952",
-      "date_precision": "year",
-      "age": 27,
-      "title": "Gründung des Labor für Impulstechnik",
-      "description": "Von den Möglichkeiten elektronischer Rechenmaschinen auf Basis von [[vacuum tube|Elektronenröhren]] überzeugt, trägt Nixdorf seine Ideen großen Unternehmen in [[North Rhine-Westphalia|Nordrhein-Westfalen]] vor. Beim Energieversorger [[Rheinisch-Westfälische Elektrizitätswerk|Rheinisch-Westfälische Elektrizitätswerk]] (RWE) in Essen gewinnt er die Unterstützung des Leiters der Lochkartenabteilung. Dieser vermittelt ihm einen Entwicklungsauftrag über 30.000 Mark, für den Walter Sprick persönlich bürgt. Im neunten Semester bricht Nixdorf sein Physikstudium ab und gründet 1952 in den Kellerräumen des RWE-Verwaltungsgebäudes in Essen das Heinz Nixdorf Labor für Impulstechnik (LFI). Bald darauf stellt er den Radio- und Fernsehtechniker Alfred Wierzoich als ersten Mitarbeiter ein.",
-      "locations": [
+      "images": [
         {
-          "name_historic": "Essen",
-          "name_modern": "Essen, Nordrhein-Westfalen, Deutschland",
-          "centroid": [
-            7.01228,
-            51.45564
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Nordrhein-Westfalen",
-          "name_modern": "Nordrhein-Westfalen, Deutschland",
-          "centroid": [
-            7.6,
-            51.5
-          ],
-          "primary": false
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Heinz_Nixdorf_RWE_Essen_1952.JPG/960px-Heinz_Nixdorf_RWE_Essen_1952.JPG",
+          "caption": "Heinz Nixdorf bei der Arbeit bei RWE in Essen, 1952",
+          "source": "https://commons.wikimedia.org/wiki/File:Heinz_Nixdorf_RWE_Essen_1952.JPG",
+          "creator": "Unknown authorUnknown author",
+          "license": "CC BY-SA 3.0 de",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
         }
-      ],
-      "involved_people": [
-        "Walter Sprick",
-        "Alfred Wierzoich"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Walter_Sprick"
       ],
       "event_type_icon": "mdi-hammer",
-      "chapter": "founding_innovations_in_impulstechnik",
-      "annotations": {
-        "vacuum tube": {
-          "explanation": "Ein frühes elektronisches Bauteil zur Steuerung des Stromflusses in Geräten wie Radios und frühen Computern, bevor sich Transistoren allgemein durchsetzten.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Vacuum_tube"
-        },
-        "North Rhine-Westphalia": {
-          "explanation": "Ein Bundesland im Westen Deutschlands, das sich nach dem Krieg zu einer bedeutenden Industrie- und Technologieregion entwickelte und Sitz zahlreicher großer Energieversorger und Hersteller ist.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/North_Rhine-Westphalia"
-        },
-        "Rheinisch-Westfälische Elektrizitätswerk": {
-          "explanation": "Ein großer regionaler Energieversorger im Westen Deutschlands, heute Teil der RWE AG, der eine wichtige Rolle bei der industriellen Entwicklung nach dem Krieg spielte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/RWE"
+      "chapter": "building_the_first_machines",
+      "weight": 0.95,
+      "background": "Die kaufmännische Datenverarbeitung in der Bundesrepublik Deutschland stützte sich weiterhin stark auf Lochkartengeräte und elektromechanische Büromaschinen. Tabelliermaschinen konnten Daten von Lochkarten sortieren und ausdrucken. Ihre zahnrad- und relaisgesteuerten Mechanismen führten Multiplikationen und Divisionen nur langsam aus. Große Hersteller wie IBM beherrschten den Computermarkt mit Großrechnern. Für kleinere Unternehmen blieb der Markt für Buchungs- und Rechengeräte offen für kompakte Maschinen.\n\nWalter Sprick hatte bereits ein funktionierendes Beispiel für die technische Grundlage des Labors gebaut. Während er an der Universität Kiel seine Promotion finanzierte, entwickelte er für die Schleswig-Holsteinische Landesbrandkasse einen elektronischen Rechner. Er wurde 1951 fertiggestellt. Das System verband eine röhrenbasierte Zusatzmaschine, die Dezimalmultiplikationen und -divisionen schnell ausführte, mit einer Tabelliermaschine. Die Tabelliermaschine übernahm den bestehenden Lochkartenablauf. Spricks Konstruktion war Deutschlands erster praktisch eingesetzter Röhrencomputer.\n\nDie Arbeit stützte sich außerdem auf eine zweite Forschungslinie Spricks. Bis 1952 hatte er ein Verfahren zum optischen Lesen geschriebener Zeichen entwickelt. Ein deutsches Patent für das Zeichenerkennungsverfahren wurde auf den 29. Juni 1952 datiert. Die Technik erfasste die Umrisse gescannter Zeichen als elektrische Signale. IBM brachte 1966 den Mehrzweckleser IBM 1287 heraus, der Arbeiten aufgriff, die von Evon C. Greanias weiterentwickelt worden waren.\n\nDer erste Mitarbeiter des Labors war Alfred Wierzoich, ein ausgebildeter Radio- und Fernsehtechniker. Er nahm am 1. September 1952 seine Arbeit auf. Ein Freund steuerte weitere 10.000 Deutsche Mark bei. Die frühe Arbeit des Labors entstand aus dem Bedarf an schnelleren kaufmännischen Berechnungen bei gleichzeitiger Beibehaltung der Lochkartenverarbeitung. Das erste ausgelieferte System nutzte Röhrentechnik, um für die Buchhaltung von RWE Informationen auf Lochkarten zu verarbeiten.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Visible_Punching_Machine.png/960px-Visible_Punching_Machine.png",
+          "caption": "Sichtbare Lochmaschine der Powers Accounting Machine Company",
+          "source": "https://commons.wikimedia.org/wiki/File:Visible_Punching_Machine.png",
+          "creator": "W. E. FREEMAN",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "punched card tabulating machine"
         }
-      }
+      ]
     },
     {
       "date": "1954",
       "date_precision": "year",
       "age": 29,
-      "title": "Erster deutscher Röhrencomputer",
-      "description": "Anfang 1954 liefert das kleine Team des Labor für Impulstechnik sein erstes bedeutendes Produkt an die Buchhaltungsabteilung von RWE: den ES, eine auf [[vacuum tube|Elektronenröhren]] basierende elektronische Rechenmaschine. Das Gerät verarbeitet Daten von Lochkarten und gilt als erster in Deutschland gebauter Röhrencomputer. Rasch folgen weitere Entwicklungen, die allesamt bei RWE installiert werden. Deshalb muss Nixdorf noch 1954 zusätzliche Räume in der Nähe des Energieversorgers anmieten und die Abhängigkeit seines Unternehmens von diesem einzigen Kunden allmählich verringern.",
+      "title": "Liefert den ES-Rechner aus",
+      "description": "Anfang 1954 liefert das Heinz Nixdorf Labor für Impulstechnik den ES an die Buchhaltung von RWE in Essen. Heinz Nixdorf leitet die Entwicklung gemeinsam mit Alfred Wierzoich. Walter Sprick unterstützt die Arbeiten technisch auf Grundlage seiner früheren Forschung.",
       "locations": [
         {
           "name_historic": "Essen",
           "name_modern": "Essen, Deutschland",
           "centroid": [
-            7.0123,
+            7.0116,
             51.4556
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Heinz_Nixdorf",
-        "https://en.wikipedia.org/wiki/Nixdorf_Computer"
+      "involved_people": [
+        "Alfred Wierzoich",
+        "Walter Sprick"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Logo_Labor_fuer_Impulstechnik.JPG",
-          "caption": "Logo Labor für Impulstechnik Heinz Nixdorf",
-          "source": "https://commons.wikimedia.org/wiki/File:Logo_Labor_fuer_Impulstechnik.JPG",
-          "creator": "Heinz Nixdorf MuseumsForum",
-          "license": "CC BY-SA 3.0 de",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
-        }
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+        "https://de.wikipedia.org/wiki/Walter_Sprick"
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "founding_innovations_in_impulstechnik",
-      "annotations": {
-        "vacuum tube": {
-          "explanation": "Ein frühes elektronisches Bauteil, das den Stromfluss in einem luftleeren, versiegelten Glas- oder Metallkörper steuert. Vor dem Siegeszug der Transistoren wurde es zum Bau von Verstärkern, Radios und den ersten Computergenerationen eingesetzt.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Vacuum_tube"
-        }
+      "chapter": "building_the_first_machines",
+      "weight": 0.75,
+      "event_class": {
+        "type": "invention",
+        "title": "Elektronischer Rechner ES",
+        "description": "Elektronenröhren und Lochkarten führten für die Buchhaltung von RWE Buchungsberechnungen über elektronisch gesteuerte Rechenschaltungen aus.",
+        "impact": "Das Labor verfügte damit über eine funktionierende Maschine für einen bedeutenden Industriekunden."
       }
     },
     {
       "date": "1959",
       "date_precision": "year",
       "age": 34,
-      "title": "Umzug des Unternehmens nach Paderborn",
-      "description": "Auf der Suche nach Expansionsmöglichkeiten und günstigeren Kostenstrukturen verlegt Nixdorf 1959 den Firmensitz von Essen in seine Heimatstadt Paderborn. Die mittelgroße westfälische Stadt bietet niedrigere Löhne und ein großes Arbeitskräftepotenzial, sodass er flexibler wachsen kann als im Ruhrgebiet. Bereits 1961 beschäftigt er dort rund 50 Menschen und entwickelt den einstigen Nischenanbieter zu einem rasch expandierenden Elektronikhersteller.",
+      "title": "Zieht nach Paderborn",
+      "description": "1959 verlegt Heinz Nixdorf den Sitz seines Unternehmens von Essen in seine Heimatstadt Paderborn. Paderborn bietet mehr Raum für die Expansion. Außerdem gibt es dort mehr verfügbare Arbeitskräfte.",
       "locations": [
         {
           "name_historic": "Essen",
           "name_modern": "Essen, Deutschland",
           "centroid": [
-            7.0123,
+            7.0116,
             51.4556
           ],
           "primary": false
@@ -378,42 +440,36 @@
           "name_historic": "Paderborn",
           "name_modern": "Paderborn, Deutschland",
           "centroid": [
-            8.7544,
+            8.7524,
             51.7189
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Ruhrgebiet",
-          "name_modern": "Ruhrgebiet, Deutschland",
-          "centroid": [
-            7.2,
-            51.5
-          ],
-          "primary": false
         }
       ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Heinz_Nixdorf",
-        "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
-      ],
+      "sources": [],
       "event_type_icon": "mdi-home-switch-outline",
-      "chapter": "founding_innovations_in_impulstechnik"
+      "chapter": "claiming_the_small_computer",
+      "weight": 0.6,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Essen, Geschichte der Bundesrepublik Deutschland",
+        "to_location": "Paderborn, Geschichte der Bundesrepublik Deutschland",
+        "characterization": "Unternehmenserweiterung"
+      }
     },
     {
       "date": "1965",
       "date_precision": "year",
       "age": 40,
-      "title": "Vorstellung der Wanderer Logatronic",
-      "description": "Angesichts rückläufiger Bestellungen wichtiger Kunden wie Wanderer-Werke und Bull wagt Nixdorf den Schritt zu einer neuen Generation kompakter Computer. Er gewinnt den Ingenieur Otto Müller, dessen Ideen für eine Tischrechenmaschine ihm auf der [[Hannover Messe|Hannover Messe]] aufgefallen sind, und unterstützt Müllers Konzept schließlich trotz anfänglicher Zweifel. 1965 wird die daraus entstandene Wanderer Logatronic auf der Hannover Messe vorgestellt: der erste vollständig mit Halbleitertechnik gebaute und nach modularen Prinzipien konzipierte Kleincomputer. Diese technische Revolution legt den Grundstein für eine neue Produktfamilie.",
+      "title": "Wanderer Logatronic auf der Hannover-Messe",
+      "description": "1965 präsentiert Heinz Nixdorf die Wanderer Logatronic auf der Hannover-Messe in Hannover. Der Entwicklungsingenieur Otto Müller entwirft den modularen Tischcomputer. Er verwendet [[semiconductors|Halbleiterbauelemente]]. Die Logatronic verschafft Nixdorfs Unternehmen ein eigenes Kleincomputerprodukt.",
       "locations": [
         {
           "name_historic": "Hannover",
           "name_modern": "Hannover, Deutschland",
           "centroid": [
-            9.73322,
-            52.37052
+            9.732,
+            52.3759
           ],
           "primary": true
         }
@@ -422,184 +478,222 @@
         "Otto Müller"
       ],
       "sources": [
-        "https://de.wikipedia.org/wiki/Hannover-Messe",
-        "https://de.wikipedia.org/wiki/Otto_M%C3%BCller_(Computeringenieur)"
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+        "https://de.wikipedia.org/wiki/Otto_M%C3%BCller_(Computerpionier)"
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "small_computer_breakthroughs",
+      "chapter": "claiming_the_small_computer",
       "annotations": {
-        "Hannover Messe": {
-          "explanation": "Eine international bedeutende Industriemesse, die jährlich in Hannover stattfindet und auf der Unternehmen neue Technologien und Produkte präsentieren.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Hannover_Messe"
+        "semiconductors": {
+          "explanation": "Halbleiter sind elektronische Materialien, deren Leitfähigkeit gesteuert werden kann. Dadurch können sie als Bauteile wie Transistoren dienen. Ihr Einsatz machte die Logatronic zu einem kleineren Rechner mit Halbleitertechnik als die früheren röhrenbasierten Maschinen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Semiconductor"
         }
-      }
+      },
+      "weight": 0.85
     },
     {
       "date": "1967",
       "date_precision": "year",
       "age": 42,
-      "title": "Einführung des Nixdorf Systems 820",
-      "description": "Aufbauend auf der Logatronic entwickelt Nixdorfs Unternehmen das Nixdorf System 820, das ab 1967 als universeller Kleincomputer auf den Markt kommt. Das System verfügt über einen [[magnetic-core memory|Magnetkernspeicher]], eine integrierte Tastatur und eine Schreibmaschine zur Ausgabe. Es ist frei programmierbar und damit ideal für die dezentrale elektronische Datenverarbeitung in mittelständischen Unternehmen. Partner wie Wanderer-Werke, Kienzle-Apparate und Ruf-Buchhaltung produzieren es unter verschiedenen Markennamen. Das System trifft einen klaren Bedarf und festigt Nixdorfs Ruf als Pionier der Kleincomputertechnik. Zugleich beginnt er mit dem Aufbau eines eigenen bundesweiten Vertriebsnetzes und entwickelt sein Unternehmen vom Komponentenlieferanten zum Komplettanbieter von Computern.",
+      "title": "Bringt das System 820 heraus",
+      "description": "1967 entwickelt Nixdorfs Unternehmen in Paderborn die Wanderer Logatronic zum Nixdorf System 820 weiter. Otto Müller leitet die Entwicklung. Heinz Nixdorf baut ein Vertriebsnetz auf, um das System direkt mittelständischen Unternehmen anzubieten.",
       "locations": [
         {
           "name_historic": "Paderborn",
           "name_modern": "Paderborn, Deutschland",
           "centroid": [
-            8.75439,
-            51.71892
+            8.7524,
+            51.7189
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [],
-      "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "small_computer_breakthroughs",
-      "annotations": {
-        "magnetic-core memory": {
-          "explanation": "Eine Form des Direktzugriffsspeichers, bei der Daten mithilfe winziger magnetisierter Ferritringe gespeichert werden. Magnetkernspeicher waren von den 1950er-Jahren bis Anfang der 1970er-Jahre weit verbreitet, bevor sie durch Halbleiterspeicher ersetzt wurden.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Magnetic-core_memory"
+      "involved_people": [
+        "Otto Müller"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+        "https://de.wikipedia.org/wiki/Otto_M%C3%BCller_(Computerpionier)"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Nixdorf_820_von_1968.jpg/960px-Nixdorf_820_von_1968.jpg",
+          "caption": "Nixdorf-System-820-Computer von 1968",
+          "source": "https://commons.wikimedia.org/wiki/File:Nixdorf_820_von_1968.jpg",
+          "creator": "Heinz Nixdorf MuseumsForum",
+          "license": "CC BY-SA 3.0 de",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
         }
-      }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "claiming_the_small_computer",
+      "weight": 1.0,
+      "event_class": {
+        "type": "invention",
+        "title": "Nixdorf System 820",
+        "description": "Ein frei programmierbarer Kleincomputer mit Magnetkernspeicher, integrierter Tastatur und Schreibmaschinenausgabe in einem modularen System.",
+        "impact": "Das System etablierte Nixdorf als Anbieter dezentraler elektronischer Datenverarbeitung."
+      },
+      "background": "Mitte der 1960er-Jahre war das Labor für Impulstechnik weiterhin von der Geschäftslage jener Büromaschinenhersteller abhängig, die seine Bauteile vertrieben. Die Bestellungen der Wanderer-Werke waren zurückgegangen. Der französische Hersteller Bull geriet in finanzielle Schwierigkeiten und verringerte seine Gerätebestellungen stark. Die dadurch entstandenen Überkapazitäten setzten das Paderborner Unternehmen erheblich unter Druck. Die Kienzle-Apparate GmbH aus Villingen bot an, das Labor zu übernehmen und Nixdorf zum Leiter ihrer Entwicklungsabteilung zu machen. Er wollte die Eigenständigkeit des Unternehmens bewahren, während dieses ein Produkt mit eigenen Kunden brauchte.\n\nOtto Müller hatte sich schon vor seiner Ankunft in Paderborn mit der Idee eines kompakten Computers beschäftigt. Bei Telefunken hatte er gemeinsam mit seiner Frau den fast fertiggestellten TR 10 angeboten, den Telefunken für seine Zwecke als zu klein beurteilt hatte. Anschließend arbeitete er im Forschungszentrum von IBM in den Vereinigten Staaten. Nixdorf holte die Müllers 1964 nach Deutschland zurück. Müllers frühere Erfahrung passte zu der Lücke, die die großen Computerhersteller in der betrieblichen Datenverarbeitung hinterließen. IBM und andere weltweit tätige Unternehmen konzentrierten sich auf Großrechner. Viele mittelständische Unternehmen benötigten weiterhin Geräte für die Buchhaltung und routinemäßige Berechnungen.\n\nDie vorausgegangene Logatronic hatte den technischen Ausgangspunkt geliefert. Sie war auf der Hannover-Messe 1965 als tischgroße Maschine mit modularem Aufbau und Halbleiterelektronik vorgestellt worden. Die Entscheidung, Müllers eigenständige Konstruktion in Serie zu fertigen, war auch durch seine Frau angeregt worden, weil Nixdorf bezweifelte, dass der Ingenieur die Aufgabe bewältigen konnte. Das daraus entstandene Produkt wurde zum ersten kommerziell erfolgreichen Computer des Unternehmens.\n\nDer Verkauf des Systems schuf die Grundlage für eine neue Stellung des Unternehmens. Kienzle in Villingen und Ruf-Buchhaltung Hegnauer & Heilmann in Karlsruhe fertigten Varianten unter eigenem Namen und vertrieben sie in ganz Deutschland. Die direkte Vertriebsorganisation von Nixdorf brachte das Unternehmen mit Geschäftskunden außerhalb des bisherigen Kreises von Büromaschinenpartnern in Kontakt. Im April 1968 erwarb Nixdorf für acht Millionen Deutsche Mark die Mehrheit an der Wanderer AG. Die verbundenen Unternehmen bildeten im Oktober desselben Jahres die Nixdorf Computer AG. Sie verfügte über Wanderers bundesweite Vertriebsorganisation, Produktionskapazitäten und elektromechanisches Fachwissen."
     },
     {
       "date": "1968-04",
       "date_precision": "month",
-      "date_end": "1968-10",
-      "date_end_precision": "month",
-      "date_note": "Der April 1968 markiert den Erwerb der Aktienmehrheit; die rechtliche Verschmelzung trat am 1. Oktober 1968 in Kraft",
+      "date_end": "1968-10-01",
+      "date_end_precision": "day",
       "age": 43,
-      "title": "Gründung der Nixdorf Computer AG",
-      "description": "Im April 1968 erwirbt Nixdorf für acht Millionen D-Mark die Aktienmehrheit an der Wanderer AG, größtenteils finanziert aus einbehaltenen Gewinnen. Am 1. Oktober 1968 werden die ehemaligen Wanderer-Werke und das Labor für Impulstechnik zur Nixdorf Computer AG mit Sitz in Paderborn verschmolzen. Über Nacht gewinnt Nixdorf nicht nur leistungsfähige Entwicklungs- und Produktionsabteilungen, sondern auch ein deutschlandweites Vertriebs- und Servicenetz sowie wertvolles Know-how in der Feinmechanik und Elektromechanik. Die neue Aktiengesellschaft wird zum Vehikel seiner späteren internationalen Expansion.",
+      "title": "Gründet die Nixdorf Computer AG",
+      "description": "Im April 1968 erwirbt Heinz Nixdorf für acht Millionen Deutsche Mark die Mehrheit an der Wanderer AG. Der Kauf verschafft seinem Labor für Impulstechnik Zugang zu Wanderers Entwicklung, Produktion und bundesweiter Vertriebsorganisation. Am 1. Oktober wird aus den verbundenen Unternehmen die Nixdorf Computer AG.",
       "locations": [
         {
           "name_historic": "Paderborn",
           "name_modern": "Paderborn, Deutschland",
           "centroid": [
-            8.75439,
-            51.71892
+            8.7543,
+            51.7189
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Chemnitz",
-          "name_modern": "Chemnitz, Deutschland",
-          "centroid": [
-            12.92041,
-            50.83226
-          ],
-          "primary": false
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Nixdorf_Computer",
-        "https://en.wikipedia.org/wiki/Heinz_Nixdorf"
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "small_computer_breakthroughs"
+      "chapter": "claiming_the_small_computer",
+      "weight": 0.98
+    },
+    {
+      "date": "1969",
+      "date_precision": "year",
+      "age": 44,
+      "title": "Erhält amerikanischen Produktionsauftrag",
+      "description": "1969 reist Heinz Nixdorf nach der Übernahme der Wanderer AG in die Vereinigten Staaten, um neue Absatzmöglichkeiten zu suchen. In Chicago bestellt Victor Comptometer 10.000 Conti-Rechenmaschinen bei den Wanderer-Werken. Der Auftrag hat einen Wert von 100 Millionen Deutschen Mark. Wanderer erweitert seine Produktionskapazitäten, um ihn zu erfüllen.",
+      "locations": [
+        {
+          "name_historic": "Chicago",
+          "name_modern": "Chicago, Illinois, USA",
+          "centroid": [
+            -87.6298,
+            41.8781
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "a_company_goes_global",
+      "weight": 0.7
     },
     {
       "date": "1972",
       "date_precision": "year",
-      "date_note": "Umfasst die Expansionsschritte nach der Übernahme von Wanderer, darunter das Geschäft mit Victor Comptometer und den Ausbau des weltweiten Vertriebs",
       "age": 47,
-      "title": "Einstieg in den US-Markt",
-      "description": "Nach der Übernahme von Wanderer reist Nixdorf in die Vereinigten Staaten, um Geschäftsmöglichkeiten auszuloten. Dabei entdeckt er eine vernachlässigte Nische für Minicomputer in Banken, Supermärkten, der Industrie und bei Krankenversicherungen. Der amerikanische Büromaschinenhersteller Victor Comptometer in Chicago erteilt einen Großauftrag über 10.000 „Conti“-Rechenmaschinen im Wert von rund 100 Millionen D-Mark und zwingt Nixdorf damit, seine Produktionskapazitäten auszubauen. Anschließend übernimmt er Victor Comptometer und verschafft Nixdorf Computer eine eigene amerikanische Tochtergesellschaft sowie einen Fuß in einem von US-Giganten wie IBM beherrschten Markt. Bis 1972 ist das Unternehmen in 22 Ländern weltweit vertreten und hat sich zu einem wahrhaft internationalen Elektronikkonzern entwickelt.",
+      "title": "Erreicht 22 Länder",
+      "description": "Bis 1972 ist die Nixdorf Computer AG von ihrer Zentrale in Paderborn aus in 22 Ländern tätig. Ihre elektronischen Rechenmaschinen und Computer werden von Banken, Supermärkten, Industrieunternehmen und Krankenversicherungen eingesetzt. Große amerikanische Computerhersteller schenken diesem Markt weitgehend keine Beachtung.",
       "locations": [
-        {
-          "name_historic": "Chicago",
-          "name_modern": "Chicago, USA",
-          "centroid": [
-            -87.6244212,
-            41.8755616
-          ],
-          "primary": true
-        },
         {
           "name_historic": "Paderborn",
           "name_modern": "Paderborn, Deutschland",
           "centroid": [
-            8.752653,
-            51.7177044
+            8.7524,
+            51.7189
           ],
-          "primary": false
+          "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Heinz_Nixdorf",
-        "https://en.wikipedia.org/wiki/Nixdorf_Computer"
-      ],
+      "sources": [],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "global_expansion_and_legacy"
+      "chapter": "a_company_goes_global",
+      "weight": 0.8
     },
     {
       "date": "1974",
       "date_precision": "year",
       "age": 49,
-      "title": "Ausbau des Technologiecampus Paderborn",
-      "description": "Ab 1974 entwickelt Nixdorf den Standort Paderborn systematisch zu einem modernen Hochtechnologie-Campus. Entlang des ehemaligen Unteren Frankfurter Wegs, der später in Heinz-Nixdorf-Ring umbenannt wird, entstehen nahezu jedes Jahr neue Produktionsanlagen und Bürogebäude, um mit der boomenden Nachfrage Schritt zu halten. Der Komplex wird zu einem sichtbaren Symbol für die Rolle der Nixdorf Computer AG im deutschen Wirtschaftswunder – und für Heinz Nixdorfs Überzeugung, dass industrielles Wachstum mit umfassender innerbetrieblicher Ausbildung und Weiterbildung der Belegschaft verbunden sein muss.",
+      "title": "Baut Produktionsgelände in Paderborn",
+      "description": "1974 beginnt Nixdorf mit dem Bau moderner Produktionsanlagen in Paderborn. Das Unternehmen errichtet außerdem seine Zentrale im Bereich der Paderauen.",
       "locations": [
         {
           "name_historic": "Paderborn",
           "name_modern": "Paderborn, Deutschland",
           "centroid": [
-            8.75439,
-            51.71892
+            8.7524,
+            51.7189
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Heinz_Nixdorf",
-        "https://en.wikipedia.org/wiki/Nixdorf_Computer"
-      ],
+      "sources": [],
       "event_type_icon": "mdi-office-building",
-      "chapter": "global_expansion_and_legacy"
+      "chapter": "a_company_goes_global",
+      "weight": 0.55
+    },
+    {
+      "date": "1979",
+      "date_precision": "year",
+      "age": 54,
+      "title": "Baut Betriebssport aus",
+      "description": "1979 holt Heinz Nixdorf Kurt Bendlin als Leiter für Ausbildung und Sportförderung zur Nixdorf Computer AG nach Paderborn. Bendlin hatte den Weltrekord im Zehnkampf gehalten und eine olympische Bronzemedaille gewonnen. Er organisiert körperliches Training für die Beschäftigten des Unternehmens. Nixdorf macht Sport zu einem Bestandteil der Mitarbeiterentwicklung.",
+      "locations": [
+        {
+          "name_historic": "Paderborn",
+          "name_modern": "Paderborn, Deutschland",
+          "centroid": [
+            8.7524,
+            51.7189
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Kurt Bendlin"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Kurt_Bendlin"
+      ],
+      "event_type_icon": "mdi-run",
+      "chapter": "a_company_goes_global",
+      "annotations": {
+        "decathlon": {
+          "explanation": "The decathlon combines ten track-and-field events, including running, jumping, and throwing disciplines. Bendlin set a world record in the event before joining Nixdorf Computer AG.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Decathlon"
+        }
+      },
+      "weight": 0.25
     },
     {
       "date": "1986-03-17",
       "date_precision": "day",
       "age": 60,
-      "title": "Plötzlicher Tod auf der Hannover Messe",
-      "description": "Am 17. März 1986 stirbt Heinz Nixdorf während seines Besuchs der [[CeBIT|Cebit-Computermesse]] auf dem Messegelände in Hannover völlig unerwartet. Sein Tod erschüttert die deutsche Computerindustrie, da er zu ihren dynamischsten und sichtbarsten Unternehmerpersönlichkeiten gehört hatte. Die Nixdorf Computer AG, inzwischen ein Konzern mit einem Umsatz von mehreren Milliarden D-Mark und zehntausenden Beschäftigten weltweit, verliert ihren Gründer auf dem Höhepunkt ihres internationalen Erfolgs.",
+      "title": "Stirbt auf der CeBIT",
+      "description": "Heinz Nixdorf erleidet während seines Besuchs der ersten [[CeBIT|CeBIT-Messe für Informationstechnik]] in Hannover einen tödlichen Herzinfarkt. Er stirbt am 17. März 1986 auf dem Messegelände.",
       "locations": [
         {
           "name_historic": "Hannover",
-          "name_modern": "Hannover, Niedersachsen, Deutschland",
+          "name_modern": "Hannover, Deutschland",
           "centroid": [
-            9.73201,
-            52.37589
+            9.732,
+            52.3759
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [
-        "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
-        "https://de.wikipedia.org/wiki/Cebit"
-      ],
+      "sources": [],
       "event_type_icon": "mdi-cross",
-      "chapter": "global_expansion_and_legacy",
-      "annotations": {
-        "CeBIT": {
-          "explanation": "Die CeBIT (Centrum für Büroautomation, Informationstechnologie und Telekommunikation) war von 1986 bis 2018 eine der weltweit größten Messen für Informationstechnik und fand jährlich in Hannover statt.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Cebit"
-        }
-      },
+      "chapter": "a_company_goes_global",
+      "weight": 0.7,
       "event_class": {
         "type": "death",
-        "characterization": "plötzlicher Tod"
+        "cause": "Herzinfarkt",
+        "characterization": "während der CeBIT"
       }
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "611176978650ea08",
-    "translated_on": "2026-08-02T12:11:15.050950+00:00",
+    "source_fingerprint": "004d8fb68260dbc3",
+    "translated_on": "2026-09-13T15:02:45.204475+02:00",
     "translator": "openai:gpt-5.6-luna"
   }
 }

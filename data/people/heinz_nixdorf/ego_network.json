@@ -1,227 +1,118 @@
 {
-  "dataset": "wikipedia_ego_network_heinz_nixdorf",
-  "created_on": "2025-12-06",
+  "dataset": "Heinz Nixdorf ego network",
+  "created_on": "2026-09-13",
   "ego": {
     "name": "Heinz Nixdorf",
     "birth_year": 1925,
     "death_year": 1986,
     "primary_roles": [
-      "entrepreneur",
-      "computer scientist"
+      "Entrepreneur",
+      "Computer pioneer",
+      "Inventor"
     ],
-    "summary": "Heinz Nixdorf (1925–1986) was a German computer pioneer and entrepreneur who founded Nixdorf Computer AG and built it from a small start‑up into a major international electronics and computing company. Coming from a poor railway family, he studied applied physics, learned electronic calculator design at Remington Rand under Walter Sprick, and in 1952 founded his own pulse‑technology lab with crucial backing from utility RWE. By developing tube, then transistor and semiconductor‑based small computers such as the Wanderer Logatronic and Nixdorf System 820, and by investing heavily in workforce training, he became a leading figure of the German Wirtschaftswunder until his sudden death at the CeBIT trade fair in 1986.",
+    "summary": "Heinz Nixdorf was a German computer pioneer and entrepreneur who built a small electronics laboratory into Nixdorf Computer AG, an international producer of business computer systems. He helped establish a market for compact, decentralized data-processing systems and also invested personally in employee training and sports programs.",
     "wikipedia": "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
   },
   "connections": [
     {
       "person_name": "Walter Nixdorf",
-      "relationship_type": "family/father",
-      "relationship_description": "Father of Heinz Nixdorf, a travelling salesman and later railway employee whose intermittent unemployment and early death in World War II deeply shaped Heinz’s upbringing and his later emphasis on job creation.",
-      "start_year": 1925,
-      "end_year": 1944,
+      "relationship_description": "Nixdorf’s father worked for the railroad. Periods of unemployment left the family short of money, and he died on the Eastern Front in 1944.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Family life in Torgau and Paderborn",
-        "Support and constraints around Heinz’s schooling choices",
-        "Household work and farm work after World War II losses"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
       ],
-      "notes": "Described as often unemployed in the 1920s and 1930s; killed on the Eastern Front in 1944, leaving Heinz at age twenty as the main male supporter of the six‑person family."
+      "notes": "After Walter Nixdorf’s death, Heinz helped support his mother and siblings through agricultural work.",
+      "relationship_type": "family/father"
     },
     {
-      "person_name": "Änne Nixdorf (geb. Ströhmeier)",
-      "relationship_type": "family/mother",
-      "relationship_description": "Mother of Heinz Nixdorf, who opposed his wish to leave the teacher‑training path but whom he ultimately defied by petitioning the Prussian Ministry of Education to transfer to a Gymnasium.",
-      "start_year": 1925,
-      "end_year": 1986,
+      "person_name": "Änne Nixdorf",
+      "relationship_description": "Änne Nixdorf, née Ströhmeier, raised Heinz in a financially strained Paderborn household. She opposed his early effort to leave teacher training for an academic education.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Family life in Torgau and Paderborn",
-        "Decisions about Heinz’s schooling and scholarships",
-        "Postwar household supported partly by Heinz’s farm work"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
       ],
-      "notes": "As mother and teachers pressed him to remain on the teacher‑training track, her resistance prompted Nixdorf’s early experience of asserting his own educational and professional path."
+      "notes": "After Walter Nixdorf’s death in 1944, Heinz worked in agriculture to help support her household.",
+      "relationship_type": "family/mother"
     },
     {
       "person_name": "Walter Sprick",
-      "relationship_type": "professional/mentor",
-      "relationship_description": "Physicist and head of the development department at Remington Rand’s German subsidiary, who took Nixdorf on as an assistant, taught him electronic calculator design, and later transferred his inventions and patent rights and personally guaranteed the first RWE development contract.",
-      "start_year": 1951,
-      "end_year": 1986,
+      "relationship_description": "Sprick directed the Remington Rand department where Nixdorf became his assistant. He guaranteed Nixdorf’s first RWE funding and transferred inventions and a patent that supported the early laboratory.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Development of counting devices and electronic calculators at Remington Rand",
-        "Transfer and further development of Sprick’s patents into products like the Elektronensaldierer and Elektronenmultiplizierer",
-        "Financing and technical advice for the Heinz Nixdorf Labor für Impulstechnik",
-        "Ongoing technical collaboration during the firm’s early growth"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
         "https://de.wikipedia.org/wiki/Walter_Sprick"
       ],
-      "notes": "Sprick not only trained Nixdorf technically but also underwrote the 30,000‑Mark RWE contract that enabled Nixdorf to found his own lab, and later supported him during product development crises."
+      "notes": "Sprick's technical work and financial guarantee helped make Nixdorf's 1952 laboratory possible.",
+      "relationship_type": "innovation/mentor"
     },
     {
       "person_name": "Alfred Wierzoich",
-      "relationship_type": "professional/employee",
-      "relationship_description": "Radio and television technician hired as Nixdorf’s first employee at the Labor für Impulstechnik, helping to build the early tube‑based calculators and computers.",
-      "start_year": 1952,
-      "end_year": null,
+      "relationship_description": "Wierzoich was Nixdorf’s first employee and an early technical collaborator at the Heinz Nixdorf Laboratory for Impulse Technology. He worked with Nixdorf on the ES computer.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Development and construction of early electronic calculators for RWE",
-        "Scaling up production capacity in Essen in the early 1950s",
-        "Transition from bespoke calculators to electronic computing modules"
-      ],
       "sources": [
-        "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
+        "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
+        "https://de.wikipedia.org/wiki/Walter_Sprick"
       ],
-      "notes": "He joined on 1 September 1952 as the company’s first developer; his role illustrates how Nixdorf began building a team around his own engineering leadership."
+      "notes": "He was a trained radio and television technician.",
+      "relationship_type": "innovation/employee"
     },
     {
       "person_name": "Otto Müller",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Development engineer and computer pioneer recruited by Nixdorf after Müller’s ideas for a compact desktop calculator impressed him at the Hannover Messe; together they realized the Wanderer Logatronic and the Nixdorf System 820, foundational products in small‑computer history.",
-      "start_year": 1964,
-      "end_year": 1969,
+      "relationship_description": "Nixdorf recruited Müller as a development engineer and gave him scope to pursue an independent computer design. Müller created the Wanderer Logatronic and led work on its successor, the Nixdorf System 820.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Conceptualization and development of a transistorized, modular desk‑top computer",
-        "Launch of the Wanderer Logatronic at the Hannover Messe 1965",
-        "Further development into the freely programmable Nixdorf System 820",
-        "Positioning Nixdorf as a pioneer of decentralized electronic data processing"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
-        "https://de.wikipedia.org/wiki/Otto_M%C3%BCller_(Computeringenieur)"
+        "https://de.wikipedia.org/wiki/Otto_M%C3%BCller_(Computerpionier)"
       ],
-      "notes": "Nixdorf initially doubted whether Müller was up to the task of implementing his microprogrammed design, but ultimately backed him; the success of Logatronic and System 820 became central to Nixdorf’s strategy."
+      "notes": "Müller left Nixdorf in 1969 to establish his own computer-engineering business.",
+      "relationship_type": "innovation/engineer_collaborator"
     },
     {
       "person_name": "Ilse Müller",
-      "relationship_type": "social/friend",
-      "relationship_description": "First wife and close collaborator of Otto Müller, whose personal intervention during a crucial decision phase helped persuade Nixdorf to back Otto Müller’s new desk‑top computer project.",
-      "start_year": 1964,
-      "end_year": 1969,
+      "relationship_description": "Ilse Müller returned to Germany with her husband Otto when Nixdorf’s company recruited them in 1964. She helped persuade Nixdorf to approve Otto Müller’s desk-computer design.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Private discussions around the risk of launching a new small‑computer line",
-        "Indirect support for the Wanderer Logatronic development through advocacy for Otto Müller’s concept"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
-        "https://de.wikipedia.org/wiki/Otto_M%C3%BCller_(Computeringenieur)"
+        "https://de.wikipedia.org/wiki/Otto_M%C3%BCller_(Computerpionier)"
       ],
-      "notes": "The Heinz‑Nixdorf article notes that the ‘Frau von Otto Müller’ intervened to change Nixdorf’s mind; the Otto‑Müller article identifies his first wife and long‑time business partner as Ilse Müller."
+      "notes": "The main article identifies her as Otto Müller's wife; the related article identifies her as Ilse Müller.",
+      "relationship_type": "innovation/collaborator"
     },
     {
       "person_name": "Klaus Luft",
-      "relationship_type": "professional/protégé",
-      "relationship_description": "Sales chief and long‑time Nixdorf manager whom Heinz Nixdorf favored as his successor and who became CEO of Nixdorf Computer AG shortly after Nixdorf’s death.",
-      "start_year": 1969,
-      "end_year": 1986,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Building and leading the national and international sales organization of Nixdorf Computer AG",
-        "Strategic planning and executive management during the company’s expansion",
-        "Succession planning for the leadership of Nixdorf Computer AG"
-      ],
+      "relationship_description": "Luft was a senior sales executive at Nixdorf Computer AG. He became chief executive shortly after Nixdorf’s death in April 1986.",
+      "strength": "moderate",
       "sources": [
         "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
         "https://en.wikipedia.org/wiki/Klaus_Luft"
       ],
-      "notes": "The Nixdorf article states that sales chief Klaus Luft, favored by Nixdorf, took over in April 1986; Luft’s own biography notes a 17‑year executive career at Nixdorf culminating in the CEO role."
+      "notes": "Luft had worked for Nixdorf Computer AG for more than 17 years in executive roles before becoming chief executive.",
+      "relationship_type": "professional/successor"
     },
     {
       "person_name": "Kurt Bendlin",
-      "relationship_type": "professional/consultant",
-      "relationship_description": "Olympic decathlete who, at Nixdorf’s personal initiative, became the sports advisor for apprentices at Nixdorf Computer AG, shaping the company’s emphasis on physical fitness.",
-      "start_year": 1978,
-      "end_year": 1986,
+      "relationship_description": "Nixdorf brought former decathlon world-record holder and Olympic bronze medalist Kurt Bendlin into the company’s sports program. Bendlin led training and sports promotion at Nixdorf Computer AG from 1979.",
       "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Design and supervision of compulsory sports training for apprentices",
-        "Promotion of health‑oriented corporate culture at Nixdorf Computer AG",
-        "Use of sport as part of employee development after Nixdorf’s own heart attack"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Heinz_Nixdorf",
         "https://de.wikipedia.org/wiki/Kurt_Bendlin"
       ],
-      "notes": "After suffering a heart attack in 1978, Nixdorf mandated sports lessons for apprentices and secured Bendlin ‘on his personal initiative’ as contact person for sports at the company."
-    },
-    {
-      "person_name": "Jörg Schomburg",
-      "relationship_type": "professional/peer",
-      "relationship_description": "Director credited with making the first standalone CeBIT a success; that inaugural 1986 fair, organized under his leadership, was overshadowed by Nixdorf’s fatal heart attack on the Hannover fairgrounds.",
-      "start_year": 1986,
-      "end_year": 1986,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Participation in the first independent CeBIT trade fair in Hannover",
-        "Public representation of the West German IT and computer industry in 1986"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Cebit",
-        "https://de.wikipedia.org/wiki/Heinz_Nixdorf"
-      ],
-      "notes": "Although no close personal cooperation is documented, Schomburg’s role as CeBIT organizer and the fact that Nixdorf died at this event highlight their shared context in the German IT trade‑fair scene."
-    },
-    {
-      "person_name": "Renate Nixdorf",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Wife and later widow of Heinz Nixdorf, who after his death became a key figure in preserving and expanding his entrepreneurial and philanthropic legacy through foundations and corporate governance.",
-      "start_year": null,
-      "end_year": 1986,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Family life",
-        "Ownership and governance of Nixdorf Computer AG",
-        "Support for educational and technology‑oriented foundations after his death"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Heinz_Nixdorf"
-      ],
-      "notes": "The exact year of marriage is not stated in the provided text, but multiple Wikipedia sources note that his widow Renate played a central role in the Heinz Nixdorf Stiftung and related institutions."
+      "notes": "Nixdorf Computer AG included physical training in its employee-development program.",
+      "relationship_type": "professional/advisor"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Heinz Nixdorf’s family background—especially his parents’ poverty, his father Walter’s unemployment and war death, and his mother Änne’s educational expectations—strongly shaped his drive for independence and job creation. His marriage to Renate Nixdorf provided personal support and later continuity for his entrepreneurial and philanthropic legacy."
+      "summary": "Nixdorf grew up in a household affected by his father’s intermittent unemployment. After Walter Nixdorf died on the Eastern Front in 1944, Heinz worked in agriculture to help support his mother and siblings in Paderborn."
+    },
+    {
+      "relationship_type": "innovation",
+      "summary": "Nixdorf’s technical circle turned early experience with calculating machines into a computer business. Walter Sprick provided mentorship, a financial guarantee, and technical rights for the first laboratory. Alfred Wierzoich helped build the ES, while Otto Müller’s Logatronic and System 820 gave the company its own small-computer systems."
     },
     {
       "relationship_type": "professional",
-      "summary": "Nixdorf’s professional network centers on mentors like Walter Sprick, early employees such as Alfred Wierzoich, key innovators like Otto Müller, and senior executives including sales chief and successor Klaus Luft. These relationships underpinned the technical breakthroughs from tube calculators to semiconductor‑based small computers, as well as the rapid commercial expansion of Nixdorf Computer AG."
-    },
-    {
-      "relationship_type": "social",
-      "summary": "His more personal and social ties intersected with his work, from Ilse Müller’s encouragement during a critical innovation decision to his engagement of Olympic decathlete Kurt Bendlin to foster a culture of sport and health among apprentices. Even looser connections, such as to CeBIT organizer Jörg Schomburg, place him within a broader community that shaped the public face of Germany’s computer industry."
+      "summary": "Nixdorf Computer AG linked employee training with organized sport in Paderborn. Kurt Bendlin directed training and sports support from 1979. Klaus Luft represented the company’s sales leadership and became chief executive after Nixdorf’s death."
     }
   ]
 }
