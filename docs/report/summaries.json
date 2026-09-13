@@ -127,19 +127,19 @@
       }
     },
     "m_translate": {
-      "fingerprint": "423aae5049fa4bec",
+      "fingerprint": "c6490ce91dc6b984",
       "summary": {
-        "description": "Translates the meta story while preserving its structure and annotation links. Reuses settled person names and event titles from localized person data, and resolves each metaphor once across the story.",
+        "description": "Translates the meta story while preserving its links to the localized person records. It carries settled name forms and event titles into the story, and makes one consistent choice for each metaphor across titles and prose.",
         "input": "the meta story and localized person data",
         "output": "a localized meta story",
         "source": "gpt-5.6-terra"
       }
     },
     "p_backgrounds": {
-      "fingerprint": "255fdcf117bc54e3",
+      "fingerprint": "e0cdb8220ec5ac9c",
       "summary": {
-        "description": "Writes a background report for each event the story can open in depth, using the reviewed event, the subject’s article, related articles, and the surrounding story. It replaces event citations only with URLs it was shown, so the sources beneath the report document that event. It also leaves searches for images of the report’s concrete subjects.",
-        "input": "reviewed events, articles, and story outline",
+        "description": "Writes a background report for each selected event from the reviewed article, related research, and the story’s existing context. It also replaces weak event citations with shown sources and leaves image searches tied to details in the report.",
+        "input": "reviewed events, research, and story context",
         "output": "background reports, sources, and image searches",
         "source": "gpt-5.6-terra"
       }
@@ -298,10 +298,10 @@
       }
     },
     "p_translate": {
-      "fingerprint": "eabf230cc17df2b6",
+      "fingerprint": "24c35fd5edcfd14d",
       "summary": {
-        "description": "Translates the reports, events, network, and registry into the target language. It overlays translated text on the English records, leaving dates, links, coordinates, and identifiers unchanged; the glossary and source evidence govern names.",
-        "input": "English person data, reports, and name mapping",
+        "description": "Translates the narrative text across the person’s events, network, registry, and reports. It applies the name glossary and target-language evidence, while the merge keeps dates, coordinates, links, and identifiers from the English record.",
+        "input": "the person record, reports, and name mapping",
         "output": "localized person data",
         "source": "gpt-5.6-terra"
       }

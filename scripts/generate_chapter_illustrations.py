@@ -173,7 +173,11 @@ def load_dataset(person_id: str) -> Dict[str, Any]:
 
 def _excerpt(text: str, limit: int = EVENT_EXCERPT_CHARS) -> str:
     """A single-line excerpt of a description, with interface markup removed."""
-    plain = re.sub(r"\[\[[^\[\]|]+\|([^\[\]]+)\]\]", r"\1", text or "")
+    plain = re.sub(
+        r"\[\[([^\[\]|]+)(?:\|([^\[\]]*))?\]\]",
+        lambda m: m.group(2) or m.group(1),
+        text or "",
+    )
     plain = re.sub(r"[*_#`]", "", plain)
     plain = " ".join(plain.split())
     return plain[:limit].rstrip() + ("…" if len(plain) > limit else "")

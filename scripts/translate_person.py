@@ -302,9 +302,6 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
     # below are kept out of the payload to avoid.
     has_reports = any(event.get("background") for event in data.get("events", []))
     for event in data.get("events", []):
-        marked_terms = set(
-            _ANNOTATION_MARKER_RE.findall(event.get("description") or "")
-        )
         entry: Dict[str, Any] = {
             "title": event.get("title", ""),
             "description": event.get("description", ""),
@@ -320,15 +317,18 @@ def extract_life_events_translatables(data: Dict[str, Any]) -> Dict[str, Any]:
             "images": [
                 {"caption": img.get("caption")} for img in (event.get("images") or [])
             ],
-            # Only the annotations the description actually marks up. An
-            # orphan — an entry whose [[term|display]] marker is missing from
-            # the text — reaches no reader, and offering one to the translator
-            # invites it to write the marker the text is missing, which the
-            # merge then rejects as an invented marker.
+            # Every annotation the event defines, marked up in the
+            # description or not. The markup stopped being the only route to
+            # one when `parseDescriptionSegments` began finding an unmarked
+            # term in the prose itself, and roughly one annotation in nine is
+            # defined without being marked; extracting only the marked ones
+            # left those explanations in English under a German slide. A
+            # translator that answers with the marker the text is missing
+            # costs nothing — `_reconcile_markers` strips a marker the source
+            # does not have.
             "annotations": [
                 {"term": term, "explanation": ann.get("explanation", "")}
                 for term, ann in (event.get("annotations") or {}).items()
-                if term in marked_terms
             ],
         }
         # The report, taken apart: its paragraphs as an array the length
@@ -462,16 +462,35 @@ def _require_same_length(kind: str, source: List[Any], translated: List[Any]) ->
         )
 
 
-_ANNOTATION_MARKER_RE = re.compile(r"\[\[([^\[\]|]+)\|")
+# A marker comes in two forms, and the interface reads both: ``[[term|display]]``
+# shows the display text, and the bare ``[[term]]`` shows the term itself (see
+# ``parseDescriptionSegments`` in ``src/utils/story/prose.js``). The research is
+# asked for the first and writes the second about one marker in eight. Matched
+# on the pipe alone, every bare marker was invisible here: its annotation never
+# reached the payload, so its explanation stayed English on a German slide, and
+# a translation that dropped the marker passed the check below unnoticed.
+_ANNOTATION_MARKER_RE = re.compile(r"\[\[([^\[\]|]+)(?:\|[^\[\]]*)?\]\]")
+
+
+def _strip_marker_of(term: str, text: str) -> str:
+    """Reduce this term's markup, in either form, to the text the reader sees."""
+    return re.sub(
+        rf"\[\[{re.escape(term)}(?:\|([^\[\]]*))?\]\]",
+        lambda match: match.group(1) if match.group(1) is not None else term,
+        text,
+    )
 
 
 def _reconcile_markers(kind: str, source: str, translated: str) -> str:
     """Return the translation with its annotation markers made to match the source.
 
-    A description carries its annotations as ``[[term|display]]``: the display
-    text is translated, the term is an id the document's ``annotations`` map is
-    keyed by. The two ways a translation can get that wrong are not equally
-    damaging, and the merge treats them differently.
+    A description carries its annotations as ``[[term|display]]``, or as the
+    bare ``[[term]]``: the display text is translated, the term is an id the
+    document's ``annotations`` map is keyed by. A translation may give a bare
+    marker a display text of its own — that is how a German sentence words the
+    term differently without touching the id — and only the terms are compared
+    here, so it passes. The two ways a translation can get a marker wrong are
+    not equally damaging, and the merge treats them differently.
 
     A marker the model *invented* names nothing — the reader is shown the
     display text with the markup stripped, which is exactly what the interface
@@ -493,7 +512,7 @@ def _reconcile_markers(kind: str, source: str, translated: str) -> str:
 
     repaired = translated or ""
     for term in set(translated_terms) - set(source_terms):
-        repaired = re.sub(rf"\[\[{re.escape(term)}\|([^\]]*)\]\]", r"\1", repaired)
+        repaired = _strip_marker_of(term, repaired)
 
     remaining = sorted(_ANNOTATION_MARKER_RE.findall(repaired))
     if remaining != source_terms:
@@ -1355,6 +1374,11 @@ GENERAL RULES:
 4. Descriptions may contain [[term|display]] annotation markers:
    - Keep the marker syntax and the term (before the |) EXACTLY as-is.
    - Translate ONLY the display text (after the |).
+   - A marker may also arrive bare, as [[term]] with no display text; the
+     reader is then shown the term itself. Where your sentence words that term
+     differently, write the wording in as [[term|display]] and keep the term
+     before the | exactly as it is. Giving a bare marker its display text is
+     the one change you may make to a marker.
    - Annotation "term" keys in the payload must be returned UNCHANGED.
    - The set of markers is FIXED. Every marker in a source description must
      appear exactly once in your translation of it, and you must NEVER add a

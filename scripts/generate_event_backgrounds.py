@@ -79,9 +79,15 @@ REPORT_MODEL = DEFAULT_MODEL
 # already planned.
 REPORT_REASONING_EFFORT = BULK_REASONING_EFFORT
 
-# ``[[term|display]]`` markers are an interface detail; the event is shown to
-# the model as the reader reads it.
-_MARKER = re.compile(r"\[\[[^\[\]|]+\|([^\[\]]+)\]\]")
+# ``[[term|display]]`` markers, and the bare ``[[term]]`` the research writes
+# about one marker in eight, are an interface detail; the event is shown to the
+# model as the reader reads it.
+_MARKER = re.compile(r"\[\[([^\[\]|]+)(?:\|([^\[\]]*))?\]\]")
+
+
+def _plain(text: str) -> str:
+    """A description with its annotation markup reduced to the words it wraps."""
+    return _MARKER.sub(lambda m: m.group(2) or m.group(1), text or "")
 
 
 class BackgroundOnly(BaseModel):
@@ -639,7 +645,7 @@ def _story_outline(events: List[Dict[str, Any]], index: int) -> List[str]:
             continue
         entry = f"{event.get('date', '?')} — {event.get('title', '')}"
         if abs(position - index) == 1:
-            description = _MARKER.sub(r"\1", event.get("description") or "")
+            description = _plain(event.get("description") or "")
             if description:
                 entry += f": {description}"
         lines.append(entry)
@@ -722,7 +728,7 @@ def build_report_prompt(
     event_section += "=" * 60 + "\n\n"
     event_section += f"Title: {event.get('title', '')}\n"
     event_section += f"Date: {event.get('date', '')}\n"
-    description = _MARKER.sub(r"\1", event.get("description") or "")
+    description = _plain(event.get("description") or "")
     event_section += f"Description: {description}\n"
     event_section += f"Subject: {person_name}\n"
 
