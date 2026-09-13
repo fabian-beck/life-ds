@@ -45,6 +45,7 @@ def _payload(**overrides):
         "primary": "#49D6FF",
         "secondary": "#FFC857",
         "background": "#08121F",
+        "palette_rationale": "the brass and enamel of a Königsberg lecture-hall instrument",
         "background_pattern_svg": TILE,
         "separator_glyph_svg": GLYPH,
         "heading_font": "Space Grotesk",
@@ -110,14 +111,32 @@ class RetryTests(unittest.TestCase):
         self.assertTrue(prompts[1].startswith("PROMPT"))
         self.assertIn("secondary #0C1A2C", prompts[1])
 
-    def test_a_second_rejection_fails_the_step(self):
-        with mock.patch.object(
-            generate_person_style,
-            "call_openai",
-            lambda prompt, model: _payload(secondary="#0C1A2C"),
-        ):
+    def test_an_answer_that_never_clears_fails_the_step(self):
+        """The budget is spent, then the step fails rather than shipping it."""
+        calls = []
+
+        def fake_call(prompt, model):
+            calls.append(prompt)
+            return _payload(secondary="#0C1A2C")
+
+        with mock.patch.object(generate_person_style, "call_openai", fake_call):
             with self.assertRaises(ValueError):
                 generate_valid_style("PROMPT", "model")
+        self.assertEqual(len(calls), generate_person_style.STYLE_ATTEMPTS)
+
+    def test_a_palette_without_its_derivation_is_asked_again(self):
+        """The rejection names the missing field, so the retry can supply it."""
+        answers = [_payload(palette_rationale="warm and cool"), _payload()]
+        prompts = []
+
+        def fake_call(prompt, model):
+            prompts.append(prompt)
+            return answers.pop(0)
+
+        with mock.patch.object(generate_person_style, "call_openai", fake_call):
+            style = generate_valid_style("PROMPT", "model")
+        self.assertIn("Königsberg", style["palette_rationale"])
+        self.assertIn("palette_rationale", prompts[1])
 
 
 class CorpusContrastTests(unittest.TestCase):
@@ -125,8 +144,9 @@ class CorpusContrastTests(unittest.TestCase):
         """The floor is set where the corpus already stands; a style under it
         would be a regression the reader sees as unreadable labels."""
         styles = json.loads(
-            (Path(__file__).resolve().parents[1] / "data" / "person_styles.json")
-            .read_text(encoding="utf-8")
+            (
+                Path(__file__).resolve().parents[1] / "data" / "person_styles.json"
+            ).read_text(encoding="utf-8")
         )["styles"]
         failing = {
             person_id: palette_problems(

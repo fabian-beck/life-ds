@@ -649,9 +649,12 @@ STEPS: List[Step] = [
         "call_openai",
         summary=(
             "Derives a color and type system for the story from the person's "
-            "era and field, and rejects a palette whose text colors fall under "
-            "a computed contrast floor, asking the model once more with the "
-            "reason."
+            "own work: the step is shown the events that depict something, with "
+            "the captions of the pictures the story carries, and must return "
+            "the sentence naming what the palette was read off. It rejects a "
+            "palette whose text colors fall under a computed contrast floor, "
+            "or that arrives without that derivation, asking the model once "
+            "more with the reason."
         ),
         depends_on=[Dep("p_img_verify", "the finished life events")],
         prompts=["build_prompt", "build_retry_prompt", "call_openai"],

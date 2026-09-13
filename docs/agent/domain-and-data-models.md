@@ -41,6 +41,7 @@ Each person has a unique `id` (snake_case, e.g., `alan_turing`) and exists in th
          "primary": "#5ED0FF",
          "secondary": "#9A7BFF",
          "background": "#040A18",
+         "palette_rationale": "the blue-grey steel and paper tape of the Bombe at Bletchley Park",
          "background_pattern_svg": "<svg>...</svg>",
          "heading_font": "Space Grotesk",
          "body_font": "IBM Plex Sans"
@@ -50,6 +51,8 @@ Each person has a unique `id` (snake_case, e.g., `alan_turing`) and exists in th
    ```
 
    Note the top-level `styles` wrapper — entries are nested under it, not at the root.
+
+   `palette_rationale` names what `primary` and `secondary` were read off — a work, a material, an object, or a place belonging to this person. The style step is given the events of the life that depict something, with the captions of the pictures the story carries, and rejects a palette that arrives without the sentence. Nothing in the application reads the field; it is there so the derivation is on the record and a palette that fits no one is visible as such. Entries generated before 2026-09-13 carry no `palette_rationale` and were not derived from the person at all; they are flagged in `data/outdated.md`.
 
 3. **`data/people/{person_id}/`** - Person-specific data folder:
    - `life_events.json` - Chronological life events with locations, images, categories, and optional chapter groupings

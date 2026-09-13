@@ -290,6 +290,73 @@ def sanitise_separator_glyph_svg(
     return compact_svg(sanitised)
 
 
+LIFE_STAGE_EVENT_TYPES = {"birth", "death", "marriage_partnership", "migration"}
+"""Event classes that place a life rather than show what its work looked like.
+
+Every dataset opens with a birth and a schooling, so the first events in
+chronological order are the same handful of childhood scenes for everyone. The
+style step used to be shown exactly those, which is why the palette it returned
+could not have been derived from the person: nothing in front of it was.
+"""
+
+WORK_EVENT_TYPES = {"publication", "invention"}
+"""Event classes that name a made thing, the one a palette can be read off."""
+
+STYLE_EVENT_SAMPLES = 6
+"""How many events the style prompt carries. Enough for a working life, few
+enough that the prompt stays about the palette rather than the biography."""
+
+
+def visual_relevance(event: Dict[str, Any]) -> int:
+    """How much an event can tell the style step about how this person's work looked.
+
+    The images are the strongest evidence the dataset holds: an event that
+    carries one carries its caption too, and those captions name the works
+    themselves—"Frederick C. Robie House", "View of Taliesin from below". A
+    life-stage event carries none of that however well it is written.
+    """
+    score = 2 if event.get("images") else 0
+    event_class = event.get("event_class")
+    event_type = event_class.get("type") if isinstance(event_class, dict) else None
+    if event_type in WORK_EVENT_TYPES:
+        score += 1
+    elif event_type in LIFE_STAGE_EVENT_TYPES:
+        score -= 2
+    return score
+
+
+def style_event_samples(events: list[Any]) -> list[Dict[str, Any]]:
+    """The events the style prompt is shown, chosen for what they depict.
+
+    Ranked by `visual_relevance` and returned in the order the life ran, so the
+    prompt reads as a working life rather than a list of highlights. Ties keep
+    chronological order, which makes the selection deterministic for a given
+    dataset: the same person yields the same prompt on a rerun.
+    """
+    usable = [event for event in events if isinstance(event, dict)]
+    ranked = sorted(
+        range(len(usable)), key=lambda index: (-visual_relevance(usable[index]), index)
+    )
+    samples: list[Dict[str, Any]] = []
+    for index in sorted(ranked[:STYLE_EVENT_SAMPLES]):
+        event = usable[index]
+        sample = {
+            key: event.get(key)
+            for key in ("title", "date", "description")
+            if event.get(key)
+        }
+        captions = [
+            image["caption"]
+            for image in event.get("images") or []
+            if isinstance(image, dict) and image.get("caption")
+        ]
+        if captions:
+            sample["depicted"] = captions
+        if sample:
+            samples.append(sample)
+    return samples
+
+
 def load_dataset_context(person_id: str) -> Dict[str, Any]:
     context: Dict[str, Any] = {}
     # Updated to use subdirectory structure
@@ -316,17 +383,7 @@ def load_dataset_context(person_id: str) -> Dict[str, Any]:
                 if person.get(key)
             }
         if isinstance(events, list) and events:
-            highlights = []
-            for event in events[:5]:
-                if not isinstance(event, dict):
-                    continue
-                highlights.append(
-                    {
-                        key: event.get(key)
-                        for key in ("title", "date", "description")
-                        if event.get(key)
-                    }
-                )
+            highlights = style_event_samples(events)
             if highlights:
                 context["event_samples"] = highlights
     elif REGISTER_PATH.exists():
@@ -351,14 +408,23 @@ def load_dataset_context(person_id: str) -> Dict[str, Any]:
 def build_prompt(subject: str, person_id: str, context: Dict[str, Any]) -> str:
     details: list[str] = [
         "Design a cohesive dark-mode visual identity for the following person.",
-        "Return a JSON object with fields: primary, secondary, background, background_pattern_svg, separator_glyph_svg, heading_font, body_font.",
+        "Return a JSON object with fields: primary, secondary, background, palette_rationale, background_pattern_svg, separator_glyph_svg, heading_font, body_font.",
         "Rules:",
         "- primary, secondary, and background must be hex colors in #RRGGBB format.",
-        "- background must remain dark (perceived luminance under 0.18).",
-        "- primary and secondary are set as heading, label, and glyph colors directly on the background, so each must reach a WCAG contrast ratio of at least 4.5:1 against it. A palette in which either falls under "
-        + f"{MIN_TEXT_CONTRAST:g}:1 is rejected and regenerated."
-        + " Prefer a muted, era-appropriate palette for a historical figure and a more saturated one for a modern one, but never at the cost of that contrast.",
-        "- primary and secondary should also be distinguishable from each other; the story uses them for different roles.",
+        "- background must remain dark (perceived luminance under 0.18). That is a ceiling, not a target: the range from near-black to a deep tinted ground is all available, and the ground may carry the same hue the person's work does.",
+        "- primary and secondary are set as heading, label, and glyph colors directly on the background, so each must reach a WCAG contrast ratio of at least "
+        + f"{MIN_TEXT_CONTRAST:g}:1 against it. A palette in which either falls under that is rejected and regenerated.",
+        "- Clear the floor; do not race past it. A color pushed toward white to be safe has given up the hue that identifies the story, and a pale tint of a color is not that color. Aim for legible and saturated together.",
+        "- primary and secondary must be distinguishable from each other; the story uses them for different roles.",
+        "",
+        "PALETTE DERIVATION (CRITICAL):",
+        "- Derive primary and secondary from what this person made and lived among—the materials, pigments, surfaces, bindings, instruments, and light of their own work. The palette is evidence about them, not decoration around them.",
+        "- Read the context below for that evidence. The event titles and descriptions name the works, and the `depicted` captions name what the story actually shows: a building, a first edition, a manuscript, an instrument, a room. Those are the things whose colors you are looking for.",
+        "- When the person has a documented signature color, use it. Frank Lloyd Wright has Cherokee Red; Yves Klein has his blue; a designer, painter, or architect with a known palette gets that palette rather than an interpretation of it.",
+        "- When the person left no visual record of their own—a mathematician, a physician, a civil servant, a soldier—read the palette off the material world their work sat in: the ink and rag paper of their century, the cloth or leather of a binding, the brass and glass of an instrument, the stone or tile of the place they worked, the dye of an academic gown, a flag, a uniform, a laboratory. Every life has surfaces even when it has no artworks.",
+        "- Amber or gold against cyan or sky blue is where a dark interface goes when the palette is derived from nothing: it is the most legible pair on a near-black ground, which is a fact about screens and not about this person. Choose it only when this person's own work genuinely calls for it, and if you do, name that work in palette_rationale.",
+        "- The two colors do not have to be complementary, and a palette need not be built from opposites at all: two colors drawn from the same object—a pigment and the ground it was laid on, a cover and its stamped lettering—often fit a person better than a color wheel does.",
+        '- palette_rationale is one sentence naming the specific work, material, object, or place primary and secondary are taken from. Write it as evidence: "the ochre and slate of Fallingwater\'s sandstone and concrete", not "warm and cool tones evoking creativity". A rationale that would fit any other person means the palette has not yet been derived from this one—go back to the context and derive it.',
         "- background_pattern_svg must be a 160x160 tileable SVG string that uses ONLY pure black (#000000) and pure white (#FFFFFF).",
         "- The tile must be painted edge to edge over a black ground, with the marks in white. The story multiplies the tile against its primary color, so any part left transparent renders as a flat wash of that color instead of a pattern.",
         "- CRITICAL: NO gray shades allowed—only #000000 (black) and #FFFFFF (white). No #111111, #EEEEEE, or any other color values.",
@@ -473,12 +539,41 @@ def call_openai(prompt: str, model: str) -> Dict[str, Any]:
     return cast(Dict[str, Any], json.loads(content))
 
 
+MIN_RATIONALE_WORDS = 6
+"""A rationale shorter than this is a label, not a derivation.
+
+The field exists to make the model commit to where the colors came from: a
+sentence that has to name a work, a material, or a place cannot be written for
+an amber and a cyan the model reached for out of habit. What the model names is
+not something code can verify — the length is only a floor under the answer, and
+the sentence is there for the person who later asks why a story looks like this.
+"""
+
+
+def normalize_rationale(value: Any) -> str:
+    """The one sentence saying where the palette came from, or a rejection."""
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(
+            "palette_rationale must be a sentence naming the work, material, "
+            "or place primary and secondary are derived from."
+        )
+    rationale = " ".join(value.split())
+    if len(rationale.split()) < MIN_RATIONALE_WORDS:
+        raise ValueError(
+            f"palette_rationale '{rationale}' is too short to name where the "
+            "colors came from; write a sentence naming the specific work, "
+            "material, object, or place."
+        )
+    return rationale
+
+
 def normalize_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     if not isinstance(payload, dict):
         raise ValueError("Response payload must be a JSON object.")
     primary = payload.get("primary")
     secondary = payload.get("secondary")
     background = payload.get("background")
+    rationale = payload.get("palette_rationale")
     pattern_svg = payload.get("background_pattern_svg")
     separator_svg = payload.get("separator_glyph_svg")
     heading_font = payload.get("heading_font")
@@ -496,6 +591,7 @@ def normalize_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     problems = palette_problems(primary, secondary, background)
     if problems:
         raise ValueError(" ".join(problems))
+    rationale = normalize_rationale(rationale)
     if not isinstance(pattern_svg, str) or "<svg" not in pattern_svg:
         raise ValueError(
             "background_pattern_svg must be an SVG string containing '<svg'."
@@ -519,6 +615,7 @@ def normalize_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
         "primary": primary.upper(),
         "secondary": secondary.upper(),
         "background": background.upper(),
+        "palette_rationale": rationale,
         "background_pattern_svg": compact_pattern,
         "separator_glyph_svg": compact_separator,
         "heading_font": heading_font.strip(),
@@ -550,8 +647,12 @@ def write_styles(data: Dict[str, Any]) -> None:
     )
 
 
-STYLE_ATTEMPTS = 2
-"""How many times the model may answer before a rejected palette fails the step."""
+STYLE_ATTEMPTS = 3
+"""How many times the model may answer before a rejected palette fails the step.
+
+Three rather than two since the palette has to arrive derived: an answer can now
+miss the contrast floor or the derivation, and the retry that names one reason
+should not be the last chance to satisfy the other."""
 
 
 def build_retry_prompt(prompt: str, error: Exception) -> str:
@@ -613,6 +714,7 @@ def generate_style(
     print(
         f"[Step 4/5] Colors: primary={style_config['primary']}, secondary={style_config['secondary']}, background={style_config['background']}"
     )
+    print(f"[Step 4/5] Palette derived from: {style_config['palette_rationale']}")
     print(
         f"[Step 4/5] Fonts: heading={style_config['heading_font']}, body={style_config['body_font']}"
     )
