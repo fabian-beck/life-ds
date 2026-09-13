@@ -1,478 +1,215 @@
 {
-  "dataset": "wikipedia-egonetwork",
-  "created_on": "2025-12-02",
+  "dataset": "Konrad Zuse ego network",
+  "created_on": "2026-09-13",
   "ego": {
     "name": "Konrad Zuse",
     "birth_year": 1910,
     "death_year": 1995,
     "primary_roles": [
-      "engineer",
-      "computer scientist",
-      "inventor"
+      "Inventor",
+      "Computer scientist",
+      "Civil engineer",
+      "Entrepreneur"
     ],
-    "summary": "Konrad Zuse (1910–1995) was a German civil engineer, pioneering computer scientist, inventor and businessman. Working largely in Germany before, during and after World War II, he designed and built some of the earliest programmable, fully automatic, binary floating‑point computers (Z1–Z4), created the high‑level language Plankalkül, and founded Zuse KG, one of the first computer companies. His work, much of it initially isolated from Anglo‑American developments, has led many to regard him as a father of the modern computer.",
+    "summary": "Konrad Zuse was a German civil engineer, inventor, and entrepreneur who developed the Z1, Z3, and Z4 computing machines and designed the Plankalkül programming language. He founded Zuse KG after World War II.",
     "wikipedia": "https://en.wikipedia.org/wiki/Konrad_Zuse"
   },
   "connections": [
     {
       "person_name": "Maria Zuse",
-      "relationship_type": "family/mother",
-      "relationship_description": "Zuse’s mother; the family apartment became his workshop for the earliest machines, showing direct practical support for his work.",
-      "start_year": 1910,
-      "end_year": 1955,
+      "relationship_description": "Konrad Zuse's mother, Maria Zuse raised him with Emil Zuse in Berlin, Braunsberg, and Hoyerswerda. The family home later gave him space for the Z1 workshop.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life",
-        "provided home used as workshop for Z1 and Z2",
-        "emotional and practical support during early career"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "notes": "The Z1 and Z2 were constructed in his parents’ Berlin living room, indicating substantial familial support."
+      "notes": "The family apartment in Berlin later housed Zuse's workshop for the Z1.",
+      "relationship_type": "family/mother"
     },
     {
       "person_name": "Emil Zuse",
-      "relationship_type": "family/father",
-      "relationship_description": "Zuse’s father, a postal official who helped fund the early computers—Wikipedia notes he was even reactivated from retirement to co-finance the development.",
-      "start_year": 1910,
-      "end_year": 1955,
+      "relationship_description": "Konrad Zuse's father, Emil Zuse worked as a postal official. He returned from retirement to help finance his son's early computer development.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life",
-        "financial support of early computers",
-        "use of family apartment as workshop"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "notes": "German article notes he was reactivated from retirement to help finance Konrad’s work and that he inspired confidence in others to back the machines."
+      "notes": "Zuse built the Z1 in his parents' Berlin apartment.",
+      "relationship_type": "family/father"
     },
     {
-      "person_name": "Unnamed older sister",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Zuse’s older sister, whom he later cited when reflecting on the limits faced by intelligent women of her generation.",
-      "start_year": 1910,
-      "end_year": 1995,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "childhood family life"
-      ],
+      "person_name": "Gisela Brandes",
+      "relationship_description": "Gisela Brandes was Konrad Zuse's wife and the mother of their five children. She shared the practical demands of family life during the years of Zuse KG.",
+      "strength": "strong",
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "notes": "He is quoted as saying she had the misfortune of being born an intelligent person and a woman at that time, revealing his awareness of gender barriers."
+      "notes": "Their marriage lasted until Konrad Zuse's death in 1995.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Horst Zuse",
+      "relationship_description": "Horst Zuse was Konrad Zuse's eldest son and became a computer scientist who later reconstructed the Z3 and published books about his father.",
+      "strength": "strong",
+      "sources": [
+        "https://de.wikipedia.org/wiki/Konrad_Zuse",
+        "https://de.wikipedia.org/wiki/Horst_Zuse"
+      ],
+      "notes": "Born in 1945, Horst Zuse helped preserve and interpret his father's computing legacy.",
+      "relationship_type": "family/son"
     },
     {
       "person_name": "Helmut Schreyer",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Electrical engineer from Zuse’s AV Motiv circle who collaborated on early computer work and urged the move toward vacuum-tube electronics.",
-      "start_year": 1937,
-      "end_year": 1984,
+      "relationship_description": "Helmut Schreyer met Zuse through the AV Motiv student association in 1937. He became a friend and collaborator in Zuse's early computer work, including the Z3.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "student fraternity AV Motiv",
-        "co‑development and demonstration of relay and tube circuits",
-        "collaboration on Z1 and Z3",
-        "joint presentations of electronic computing concepts"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Helmut_Schreyer",
-        "https://en.wikipedia.org/wiki/Z3_(computer)",
-        "https://de.wikipedia.org/wiki/Konrad_Zuse"
-      ],
-      "notes": "They met in AV Motiv in 1937; Schreyer co‑built the Z3 and proposed an electronic computer design. Articles describe their relationship as a lifelong friendship."
-    },
-    {
-      "person_name": "Herbert A. Wagner",
-      "relationship_type": "professional/patron",
-      "relationship_description": "At Henschel, Wagner helped have Zuse classified as ‘unabkömmlich’ (indispensable), keeping him assigned to technical work during WWII.",
-      "start_year": 1940,
-      "end_year": 1945,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "work at Henschel Flugzeug‑Werke",
-        "development of Hs 293 glide bomb",
-        "development of special computers S1 and S2 for wing measurement",
-        "mediating support from Reich Air Ministry"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse",
-        "https://en.wikipedia.org/wiki/Z3_(computer)"
+        "https://de.wikipedia.org/wiki/Helmut_Schreyer"
       ],
-      "notes": "Served as intermediary between Zuse and the Reich Air Ministry; his support illustrates Zuse’s entanglement with the German war economy."
-    },
-    {
-      "person_name": "Günther Bock",
-      "relationship_type": "professional/patron",
-      "relationship_description": "DVL technical director who backed Zuse after a Z2 demonstration and helped finance development of the Z3.",
-      "start_year": 1940,
-      "end_year": 1943,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "demonstration of Z2 at DVL",
-        "funding and oversight of Z3 development for aeronautical calculations"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Konrad_Zuse",
-        "https://en.wikipedia.org/wiki/Z1_(computer)",
-        "https://en.wikipedia.org/wiki/Z3_(computer)"
-      ],
-      "notes": "His decision to support the Z3 was crucial in moving Zuse’s work from a private project to one with state backing."
-    },
-    {
-      "person_name": "Alwin Walther",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "German applied mathematician at TH Darmstadt; his institute cooperated with Zuse KG on computing projects, and he was part of the 1947 Göttingen colloquium where Zuse’s computing work was discussed with Alan Turing and others.",
-      "start_year": 1940,
-      "end_year": 1966,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "wartime and postwar applied mathematics for industry and military",
-        "participation in 1947 Göttingen meeting on computing with Zuse and Turing",
-        "cooperation between Zuse KG and his institute on early computers"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Konrad_Zuse",
-        "https://de.wikipedia.org/wiki/Alwin_Walther"
-      ],
-      "notes": "Walther later became a major figure in German computing and knew Zuse professionally; both were important in early European computer development."
-    },
-    {
-      "person_name": "Joseph Jennissen",
-      "relationship_type": "professional/patron",
-      "relationship_description": "Reich Air Ministry supervisor who acted as a liaison/overseer for ministry orders placed with Zuse’s firm during the Z3 period.",
-      "start_year": 1941,
-      "end_year": 1945,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "oversight of government contracts for Zuse Apparatebau",
-        "liaison between Reich Air Ministry and Zuse’s firm"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Z3_(computer)"
-      ],
-      "notes": "He exemplifies the institutional ties between Zuse’s company and the Nazi aviation bureaucracy."
-    },
-    {
-      "person_name": "Gisela Zuse (née Brandes)",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Zuse’s wife (married January 1945); she shared wartime flight and postwar rebuilding while raising their five children.",
-      "start_year": 1945,
-      "end_year": 1995,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "marriage",
-        "raising five children",
-        "flight from Berlin to Allgäu with the Z4",
-        "family ‘repair trip’ journeys to customer sites",
-        "support of his later writing and painting"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Konrad_Zuse",
-        "https://en.wikipedia.org/wiki/Konrad_Zuse"
-      ],
-      "notes": "They fled with the disassembled Z4 via Göttingen into the Allgäu; family trips to repair customer machines in a VW Beetle are described in the German article."
-    },
-    {
-      "person_name": "Horst Konrad Zuse",
-      "relationship_type": "family/child",
-      "relationship_description": "Zuse’s eldest son, later a computer science professor who helped document and reconstruct his father’s machines.",
-      "start_year": 1945,
-      "end_year": 1995,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life",
-        "historical documentation of Zuse’s work",
-        "reconstruction of Z3 and Z3 replicas",
-        "coauthoring books about Konrad Zuse"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Horst_Zuse",
-        "https://en.wikipedia.org/wiki/Konrad_Zuse",
-        "https://en.wikipedia.org/wiki/Z3_(computer)"
-      ],
-      "notes": "Horst Zuse helped direct a modern reconstruction of the Z3 (1997–2003) and built another himself (completed 2010), and co‑authored biographies of his father."
-    },
-    {
-      "person_name": "Wernher von Braun",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Rocket engineer; Zuse and his team joined von Braun’s group fleeing toward Bavaria near the end of WWII, transporting the Z4 with them.",
-      "start_year": 1945,
-      "end_year": 1945,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "joint flight from Harz region toward Bavaria with V‑2 development group",
-        "coordinated transport of the Z4 computer"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Konrad_Zuse",
-        "https://en.wikipedia.org/wiki/Z4_(computer)",
-        "https://en.wikipedia.org/wiki/Wernher_von_Braun"
-      ],
-      "notes": "They met when Zuse’s group attached itself to von Braun’s evacuation column; there is no evidence of later close collaboration."
-    },
-    {
-      "person_name": "Charles Babbage",
-      "relationship_type": "intellectual/influence",
-      "relationship_description": "19th‑century English mathematician and inventor of the Analytical Engine, which Zuse later acknowledged as anticipating his own work and called Babbage the ‘real father of the computer’.",
-      "start_year": 1946,
-      "end_year": 1995,
-      "strength": "moderate",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "conceptual lineage of programmable calculating machines",
-        "Zuse’s historical and philosophical reflections on computing"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Konrad_Zuse",
-        "https://en.wikipedia.org/wiki/Z1_(computer)"
-      ],
-      "notes": "Zuse stated he learned of Babbage only long after WWII; Babbage’s ideas retrospectively influenced how Zuse interpreted his own achievements."
-    },
-    {
-      "person_name": "Heinz Billing",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Physicist and German computer pioneer who, according to later accounts, met with Zuse in the 1947 Göttingen colloquium with Alan Turing and others to exchange information on computing.",
-      "start_year": 1947,
-      "end_year": 1950,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "participation in postwar Göttingen colloquium on computing (with Turing, Walther, Womersley, Porter)",
-        "exchange of ideas on digital computers and storage"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Konrad_Zuse",
-        "https://de.wikipedia.org/wiki/Heinz_Billing"
-      ],
-      "notes": "Billing later built the G1–G3 computers; his memoirs are a key source on the Göttingen meeting involving Zuse."
-    },
-    {
-      "person_name": "Alan Turing",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "British mathematician and computer scientist; he and Zuse both participated in a 1947 colloquium in Göttingen with several German researchers, discussing early computing concepts.",
-      "start_year": 1947,
-      "end_year": 1954,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Göttingen colloquium on computing and numerical methods",
-        "discussion of stored‑program concepts and early machine designs"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Konrad_Zuse",
-        "https://en.wikipedia.org/wiki/Alan_Turing",
-        "https://de.wikipedia.org/wiki/Heinz_Billing"
-      ],
-      "notes": "They worked independently during the war; the postwar colloquium appears to be their main documented direct interaction."
-    },
-    {
-      "person_name": "Monika Zuse",
-      "relationship_type": "family/child",
-      "relationship_description": "Daughter of Konrad and Gisela Zuse; one of their five children.",
-      "start_year": 1948,
-      "end_year": 1995,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life",
-        "participation in family repair trips in VW Beetle"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Konrad_Zuse"
-      ],
-      "notes": "Little detail is given beyond being named; included to represent his daughters in the family network."
+      "notes": "In 1938, they demonstrated a vacuum-tube switching circuit and discussed building an electronic computer; Schreyer collaborated on the Z3 presented in 1941.",
+      "relationship_type": "innovation/collaborator"
     },
     {
       "person_name": "Eduard Stiefel",
-      "relationship_type": "professional/patron",
-      "relationship_description": "ETH Zürich mathematician who evaluated the Z4 in 1949 and secured its ETH rental, a deal that helped finance Zuse’s postwar company work.",
-      "start_year": 1949,
-      "end_year": 1955,
+      "relationship_description": "Eduard Stiefel visited Zuse in the Allgäu in 1949 to inspect the Z4, then arranged its rental for use at ETH Zurich.",
       "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "evaluation of Z4 in Allgäu",
-        "negotiation and signing of ETH Zürich rental contract",
-        "use of Z4 at ETH for applied mathematics",
-        "collaboration on further projects such as M9/Z9 and ERMETH inspiration"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Z4_(computer)",
+        "https://de.wikipedia.org/wiki/Konrad_Zuse",
+        "https://de.wikipedia.org/wiki/Eduard_Stiefel"
+      ],
+      "notes": "The Z4 rental supplied crucial funds that enabled Zuse to found Zuse KG in 1949.",
+      "relationship_type": "innovation/client"
+    },
+    {
+      "person_name": "Monika Zuse",
+      "relationship_description": "Monika Zuse was one of Konrad Zuse and Gisela Brandes's five children.",
+      "strength": "moderate",
+      "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "notes": "The ETH Festschrift for Zuse’s centenary details Stiefel’s role and the extensive use of the Z4 (1950–1955); his financial commitment enabled Zuse to found Zuse KG."
+      "notes": null,
+      "relationship_type": "family/daughter"
     },
     {
       "person_name": "Ernst Zuse",
-      "relationship_type": "family/child",
-      "relationship_description": "Son of Konrad and Gisela Zuse; one of their five children.",
-      "start_year": 1950,
-      "end_year": 1995,
+      "relationship_description": "Ernst Zuse was one of Konrad Zuse and Gisela Brandes's five children.",
       "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life",
-        "family travel to service computers"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "notes": null
+      "notes": null,
+      "relationship_type": "family/son"
     },
     {
       "person_name": "Hannelore Zuse",
-      "relationship_type": "family/child",
-      "relationship_description": "Daughter of Konrad and Gisela Zuse; one of their five children.",
-      "start_year": 1950,
-      "end_year": 1995,
+      "relationship_description": "Hannelore Zuse was one of Konrad Zuse and Gisela Brandes's five children.",
       "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "notes": null
+      "notes": null,
+      "relationship_type": "family/daughter"
     },
     {
       "person_name": "Peter Zuse",
-      "relationship_type": "family/child",
-      "relationship_description": "Youngest son of Konrad and Gisela Zuse; one of their five children.",
-      "start_year": 1950,
-      "end_year": 1995,
+      "relationship_description": "Peter Zuse was one of Konrad Zuse and Gisela Brandes's five children.",
       "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "family life"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "notes": null
+      "notes": null,
+      "relationship_type": "family/son"
     },
     {
-      "person_name": "Ambros Speiser",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Engineer at ETH Zürich who led construction of ERMETH; the Z4’s presence at ETH under Stiefel and Zuse’s company inspired and informed Speiser’s own computer design.",
-      "start_year": 1950,
-      "end_year": 1955,
+      "person_name": "Wilfried de Beauclair",
+      "relationship_description": "Wilfried de Beauclair met Zuse in Berlin in 1942 and saw the Z3. He later supported work on the Z4 with punched-tape equipment from Darmstadt.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "operation of Z4 at ETH Zürich",
-        "development of ERMETH as a successor inspired by the Z4",
-        "technical exchanges with Zuse KG"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Z4_(computer)"
+        "https://de.wikipedia.org/wiki/Wilfried_de_Beauclair",
+        "https://de.wikipedia.org/wiki/Konrad_Zuse"
       ],
-      "notes": "Though not a close personal collaborator of Zuse, Speiser’s work was directly influenced by the Z4’s capabilities and experience."
+      "notes": "Their technical cooperation developed into a friendship.",
+      "relationship_type": "innovation/collaborator"
     },
     {
-      "person_name": "Heinz Rutishauser",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Swiss mathematician and pioneer of numerical analysis and programming languages; an ETH Zürich colleague involved in ERMETH and ALGOL, whose work built on experience with the Z4 installed via Zuse’s arrangement with Stiefel.",
-      "start_year": 1950,
-      "end_year": 1970,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "work at ETH Zürich’s Institute for Applied Mathematics",
-        "use and study of Z4 as a working research tool",
-        "development of early programming languages and compilers"
-      ],
+      "person_name": "Herbert Wagner",
+      "relationship_description": "Herbert Wagner helped secure Zuse's classification as indispensable for wartime work at Henschel. The intervention kept Zuse out of military deployment.",
+      "strength": "moderate",
       "sources": [
-        "https://en.wikipedia.org/wiki/Heinz_Rutishauser",
-        "https://en.wikipedia.org/wiki/Z4_(computer)"
+        "https://de.wikipedia.org/wiki/Konrad_Zuse",
+        "https://de.wikipedia.org/wiki/Herbert_Wagner_(Ingenieur)"
       ],
-      "notes": "No direct collaboration is recorded, but Rutishauser’s environment and projects were strongly shaped by the Z4 that Zuse provided to ETH."
+      "notes": "This intervention kept Zuse from military deployment and enabled his work on specialized computing devices for the Hs 293 project.",
+      "relationship_type": "professional/advocate"
     },
     {
-      "person_name": "George Stibitz",
-      "relationship_type": "professional/peer",
-      "relationship_description": "American computing pioneer connected to Zuse mainly through later recognition of parallel contributions to digital computing.",
-      "start_year": 1965,
-      "end_year": 1995,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "joint recognition via Harry H. Goode Memorial Award",
-        "participation in the broader international computer science community"
-      ],
+      "person_name": "Günther Bock",
+      "relationship_description": "Günther Bock helped finance development of the Z3 after Zuse demonstrated the Z2 in 1940. He acted through the German Aeronautical Research Institute.",
+      "strength": "moderate",
       "sources": [
-        "https://en.wikipedia.org/wiki/Konrad_Zuse",
-        "https://en.wikipedia.org/wiki/George_Stibitz"
+        "https://de.wikipedia.org/wiki/Konrad_Zuse",
+        "https://de.wikipedia.org/wiki/G%C3%BCnther_Bock_(Aeronautiker)"
       ],
-      "notes": "Their work was independent; the connection here is through shared professional honours and recognition as ‘fathers’ of the digital computer."
+      "notes": "Bock later negotiated institutional cooperation with Zuse during his directorship of the German Aeronautical Research Institute.",
+      "relationship_type": "professional/funder"
     },
     {
-      "person_name": "John Vincent Atanasoff",
-      "relationship_type": "professional/peer",
-      "relationship_description": "Another early computing pioneer often mentioned alongside Zuse in historical comparisons about priority and invention.",
-      "start_year": 1973,
-      "end_year": 1995,
+      "person_name": "Wernher von Braun",
+      "relationship_description": "Zuse's team briefly traveled with Wernher von Braun's evacuation group near the end of World War II. The association arose during the flight from Berlin with the Z4.",
       "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "parallel early computer inventions",
-        "being subjects of comparative histories and legal decisions about computer invention"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Konrad_Zuse",
-        "https://de.wikipedia.org/wiki/John_Atanasoff"
+        "https://de.wikipedia.org/wiki/Konrad_Zuse",
+        "https://en.wikipedia.org/wiki/Wernher_von_Braun"
       ],
-      "notes": "No direct contact is documented in the provided text, but Atanasoff’s legal recognition influenced how Zuse’s contributions were framed internationally."
+      "notes": "Their direct association was brief and arose from the wartime evacuation.",
+      "relationship_type": "professional/colleague"
+    },
+    {
+      "person_name": "Wilhelm Britzelmayr",
+      "relationship_description": "Zuse presented his applied logic and ideas related to Plankalkül in Wilhelm Britzelmayr's logic colloquia at Ludwig Maximilian University of Munich during the winter semester of 1948–49.",
+      "strength": "weak",
+      "sources": [
+        "https://de.wikipedia.org/wiki/Konrad_Zuse"
+      ],
+      "notes": "The colloquia gave Zuse an early postwar forum for his programming-language ideas.",
+      "relationship_type": "academic/colleague"
+    },
+    {
+      "person_name": "Heinz Billing",
+      "relationship_description": "Konrad Zuse and Heinz Billing took part in a 1947 colloquium with British computing specialists, where German researchers discussed binary numbers and data storage.",
+      "strength": "weak",
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Billing"
+      ],
+      "notes": "The meeting linked Zuse to other early postwar German computer pioneers and international specialists.",
+      "relationship_type": "academic/peer"
+    },
+    {
+      "person_name": "Alwin Walther",
+      "relationship_description": "Konrad Zuse and Alwin Walther were among the German computer researchers who participated in a 1947 exchange with British scientists and computing specialists.",
+      "strength": "weak",
+      "sources": [
+        "https://de.wikipedia.org/wiki/Heinz_Billing",
+        "https://de.wikipedia.org/wiki/Alwin_Walther"
+      ],
+      "notes": "Walther's Darmstadt institute also indirectly assisted Zuse's Z4 work through Wilfried de Beauclair and its punched-tape equipment.",
+      "relationship_type": "academic/peer"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Konrad Zuse’s family shaped both his daily life and his earliest breakthroughs: **Maria Zuse** and **Emil Zuse** provided the apartment space and backing that let him build his first machines, while his wife **Gisela Zuse (née Brandes)** and their children shared the upheaval of wartime flight and the routines of postwar rebuilding. Later, **Horst Konrad Zuse** helped document and reconstruct his father’s computers, extending the family’s role into Zuse’s legacy."
+      "summary": "Zuse's parents gave his first computer work a practical base. Their Berlin apartment housed the Z1 workshop, and Emil Zuse returned from retirement to help fund development. Gisela Brandes and their children shared the disruptions of the 1945 flight and the demands of running Zuse KG. Their eldest son, Horst, later documented and reconstructed parts of his father's technical work."
+    },
+    {
+      "relationship_type": "innovation",
+      "summary": "Zuse relied on collaborators who could help turn designs into working machines. Helmut Schreyer worked with him on early computing projects and the Z3. Wilfried de Beauclair supplied practical support for the Z4. Eduard Stiefel arranged the Z4 rental to ETH Zurich in 1949, bringing the funds that supported Zuse KG."
     },
     {
       "relationship_type": "professional",
-      "summary": "Zuse’s professional circle mixed close technical collaboration and institutional patronage. **Helmut Schreyer** stands out as an early collaborator from the AV Motiv milieu, while wartime support and oversight came through figures such as **Herbert A. Wagner**, **Günther Bock**, and **Joseph Jennissen**. Postwar momentum hinged on **Eduard Stiefel** and ETH Zürich contacts (including **Ambros Speiser** and **Heinz Rutishauser**), alongside occasional intersections with researchers like **Alwin Walther**, **Heinz Billing**, and **Alan Turing**."
+      "summary": "Wartime employers and funders gave Zuse access to resources for computer development. Herbert Wagner secured Zuse's protected work position at Henschel. Günther Bock helped obtain funding for the Z3 through the German Aeronautical Research Institute. During the evacuation from Berlin, Zuse's team briefly traveled with Wernher von Braun's group while carrying the Z4 toward Bavaria."
     },
     {
-      "relationship_type": "other",
-      "summary": "Beyond direct collaborators, Zuse’s story is linked to wider computing history through intellectual lineage and later recognition: **Charles Babbage** as a retrospective influence, and figures like **George Stibitz** and **John Vincent Atanasoff** as points of comparison in how different pioneers’ contributions were remembered."
+      "relationship_type": "academic",
+      "summary": "Academic contacts brought Zuse's independent engineering work into postwar discussions of logic and computing. Wilhelm Britzelmayr's Munich colloquium gave Zuse a forum for ideas related to Plankalkül in 1948 and 1949. Contacts with Heinz Billing and Alwin Walther connected him with other German researchers working on electronic and numerical computing."
     }
   ]
 }
