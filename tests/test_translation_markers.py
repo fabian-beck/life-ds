@@ -8,11 +8,10 @@ overlays translated text onto a copy of the English document, so a term the
 model dropped or rewrote is not repaired by anything downstream — the annotation
 it was the only route to goes dark.
 
-This guard is what makes it safe to translate on the small model: a weaker
-translator is allowed to produce flatter prose, not a half-linked document. A
-marker the model *added* is the exception, because it costs nothing to undo:
-it names no annotation, and both the merge and the interface reduce it to the
-display text it wraps.
+This guard is what bounds what a weaker translation can cost: flatter prose,
+never a half-linked document. A marker the model *added* is the exception,
+because it costs nothing to undo: it names no annotation, and both the merge
+and the interface reduce it to the display text it wraps.
 """
 
 import sys

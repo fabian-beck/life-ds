@@ -43,9 +43,8 @@ from openai import OpenAI
 from pydantic import BaseModel, Field
 
 from config import (
-    BULK_MODEL,
-    BULK_REASONING_EFFORT,
     DEFAULT_MODEL,
+    DEFAULT_REASONING_EFFORT,
     GLOSSARY_MODEL,
     GLOSSARY_REASONING_EFFORT,
     enable_utf8_console,
@@ -495,9 +494,9 @@ def _reconcile_markers(kind: str, source: str, translated: str) -> str:
     A marker the model *invented* names nothing — the reader is shown the
     display text with the markup stripped, which is exactly what the interface
     does with a marker no annotation answers. So it is stripped here rather
-    than paid for with the whole document: the small model this step runs on
-    reliably marks up terms it recognizes in the text, and one such flourish
-    used to leave a life story untranslated in every language.
+    than paid for with the whole document: a translator reliably marks up terms
+    it recognizes in the text, and one such flourish used to leave a life story
+    untranslated in every language.
 
     A marker the model *dropped or renamed* is a real loss: the annotation it
     was the only route to becomes unreachable, and nothing downstream can put
@@ -571,12 +570,12 @@ def _rebuild_background(
     under English headings; and a passage sent as one string came back with
     four paragraphs merged into three.
 
-    A translator that merged two paragraphs into one — which the small model
-    does on a long report about once every dozen events — leaves the headings
-    with no place to stand. That is not worth discarding a document over the
-    way a changed list of images or annotations is: the reader would lose the
-    whole German story to save its section headings. So the prose is kept as
-    it came back and the report is set undivided, with a line in the log.
+    A translator that merged two paragraphs into one — which the small tier did
+    on a long report about once every dozen events — leaves the headings with
+    no place to stand. That is not worth discarding a document over the way a
+    changed list of images or annotations is: the reader would lose the whole
+    German story to save its section headings. So the prose is kept as it came
+    back and the report is set undivided, with a line in the log.
     """
     source_paragraphs = _paragraphs_of(source or "")
     if not source_paragraphs:
@@ -615,10 +614,12 @@ def _rebuild_background(
 
 
 # German runs a little longer than English, so a translation this much shorter
-# is not a translation. The report is the longest text in the corpus and the
-# small model summarizes it rather than translating it once a document carries
-# a dozen of them: two of the five lives came back at two-thirds length, with
-# every paragraph present and every second detail gone.
+# is not a translation. The report is the longest text in the corpus and a
+# translator summarizes it rather than translating it once a document carries a
+# dozen of them: at the small tier two of the five lives came back at two-thirds
+# length, with every paragraph present and every second detail gone. The tier
+# this call runs on is the remedy (see TRANSLATION_MODEL); the measurement stays
+# as what says when the remedy did not hold.
 _ABRIDGED_BELOW = 0.8
 
 
@@ -630,8 +631,8 @@ def _warn_if_abridged(source: str, translated: str) -> None:
     if ratio < _ABRIDGED_BELOW:
         print(
             f"  Warning: background reads as abridged, not translated "
-            f"({ratio:.0%} of the source's length). Re-run with "
-            f"--model {DEFAULT_MODEL}."
+            f"({ratio:.0%} of the source's length). It is written as it came "
+            f"back; translate this dataset again."
         )
 
 
@@ -902,14 +903,19 @@ def collect_person_names(
     return names
 
 
-# Translating a payload is the call that extract-translate-merge was built to
-# make safe: the model never sees a date, a coordinate, a URL or an id, the
-# merge rejects a response whose lists changed length, and markers are checked
-# against the source afterwards, so a weaker translator produces flatter prose
-# rather than a broken document. Low rather than no reasoning, because idiom is
-# the one thing this call is asked to get right.
-TRANSLATION_MODEL = BULK_MODEL
-TRANSLATION_REASONING_EFFORT = BULK_REASONING_EFFORT
+# Extract-translate-merge protects the document, not its language: the model
+# never sees a date, a coordinate, a URL or an id, the merge rejects a response
+# whose lists changed length, and markers are checked against the source, so a
+# weaker translator returns a document that merges cleanly and reads as a
+# calque. Nothing downstream rewrites it — the sentence a German reader sees is
+# whatever this one call wrote — which is the condition BULK_MODEL exists to
+# avoid, and the call reads a whole document at once, which is what the small
+# model is worst at: a life whose events all carry background reports came back
+# summarized rather than translated. What the call is asked for is idiom, and
+# the judgment of when a phrase names a work rather than describing one, so it
+# runs on the reasoning tier at its full effort.
+TRANSLATION_MODEL = DEFAULT_MODEL
+TRANSLATION_REASONING_EFFORT = DEFAULT_REASONING_EFFORT
 
 
 def collect_place_names(life_events: Optional[Dict[str, Any]]) -> List[str]:
@@ -1451,7 +1457,18 @@ def translate_life_events(
             "7. Chapter headlines are short, evocative book-chapter titles — "
             "keep them punchy (2-5 words).\n"
             "8. Event titles are crisp headlines (2-6 words); use sentence-style "
-            "phrasing natural for the target language.\n"
+            "phrasing natural for the target language. A headline that names a "
+            "work, an invention, or a program usually shortens the full name "
+            "its description and event_class carry, and the short form is still "
+            "that name: rule 9 governs it, so keep the original unless the "
+            "target language has an established form of its own. Name the thing "
+            "rather than translating the English words for it, and recast the "
+            "headline around the name where that reads better than the source's "
+            "own shape (for German: 'Publishes Augmentation Framework' is the "
+            "report the description calls Augmenting Human Intellect, so the "
+            "headline reads 'Augmenting Human Intellect erscheint'; 'Rahmen für "
+            "Erweiterung veröffentlicht' translates the words and names "
+            "nothing).\n"
             "9. An event_class block is a compact fact card the reader sees "
             "beside the event, not prose:\n"
             "   - characterization, duration, and significance are fragments "

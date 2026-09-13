@@ -34,11 +34,13 @@ is weakest at recalling detail from a long context.
 GLOSSARY_MODEL = DEFAULT_MODEL
 """The model for the calls that settle a document's vocabulary before it is written.
 
-Translation itself runs on the small model, and a glossary call is the
-exception: it is one small call per document and language, and everything
+A glossary call is one small call per document and language, and everything
 downstream matches on what it decides. A name rendered two ways is a broken
 cross-reference rather than an awkward sentence, and a metaphor rendered
-literally once is rendered literally in every passage that repeats it.
+literally once is rendered literally in every passage that repeats it. The
+translation the glossary feeds runs on the same tier, for the reason given at
+``translate_person.TRANSLATION_MODEL``: its wording is checked by nothing and
+rewritten by nothing.
 """
 
 WORKERS = int(os.getenv("LIFE_DS_WORKERS", "4"))
