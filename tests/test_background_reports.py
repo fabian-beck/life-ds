@@ -10,7 +10,10 @@ one screen apart, which is the failure the whole layer was designed around.
 
 from __future__ import annotations
 
+import json
+import shutil
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -93,6 +96,149 @@ class DeepEventSelectionTests(unittest.TestCase):
         # chip is the third item, exactly as the interface counts it.
         self.assertEqual(select_deep_event_indexes([thin], network), {0})
         self.assertEqual(select_deep_event_indexes([thin], {}), set())
+
+
+class RelevanceGateTests(unittest.TestCase):
+    """A report stands only where the call found something around the event.
+
+    The step used to take whatever prose came back, and for an event its
+    sources record in a sentence what came back was the life instead: the
+    layer under Engelbart's 1951 wedding opened on his 1948 degree and closed
+    on a company he founded in 1956. The call now notes what the sources say
+    about the event before it writes, so the two answers can disagree — and
+    the one made before the prose was under way is the one kept.
+    """
+
+    def parsed(self, background, material):
+        return backgrounds.BackgroundOnly(
+            background=background,
+            event_specific_material=material,
+            sources=[],
+            background_image_queries=[],
+        )
+
+    def test_a_grounded_report_is_kept(self) -> None:
+        self.assertEqual(
+            backgrounds.accepted_report(
+                self.parsed("The report.", ["They met at Ames Research Center."])
+            ),
+            "The report.",
+        )
+
+    def test_a_report_with_no_material_behind_it_is_refused(self) -> None:
+        self.assertEqual(backgrounds.accepted_report(self.parsed("A resume.", [])), "")
+        self.assertEqual(
+            backgrounds.accepted_report(self.parsed("A resume.", ["  ", ""])), ""
+        )
+
+    def test_one_honest_note_is_enough(self) -> None:
+        # How much material carries a report stays the call's judgment: a
+        # count here would only move the padding from the prose to the list.
+        self.assertEqual(
+            backgrounds.accepted_report(self.parsed("One paragraph.", ["A fact."])),
+            "One paragraph.",
+        )
+
+    def test_a_refusal_and_a_failed_call_both_leave_nothing(self) -> None:
+        self.assertEqual(backgrounds.accepted_report(self.parsed(None, ["A fact."])), "")
+        self.assertEqual(backgrounds.accepted_report(None), "")
+
+    def test_the_log_separates_a_refusal_from_a_defect(self) -> None:
+        self.assertIn("no answer", backgrounds._decline_reason(None))
+        self.assertIn(
+            "nothing event-specific",
+            backgrounds._decline_reason(self.parsed("A resume.", [])),
+        )
+        self.assertIn(
+            "say nothing around this event",
+            backgrounds._decline_reason(self.parsed(None, [])),
+        )
+
+
+class RefusalReachesTheDatasetTests(unittest.TestCase):
+    """What a refused report does to the event it was refused for.
+
+    A rewrite is how a sharpened gate clears the reports the old one let
+    through, so the refusal has to reach the file: an event whose report the
+    call now declines must lose the passage and the pictures it is carrying,
+    or the pass that was meant to remove it changes nothing.
+    """
+
+    def setUp(self) -> None:
+        self.people = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, self.people, ignore_errors=True)
+        (self.people / "someone").mkdir()
+        patched = mock.patch.object(backgrounds, "PEOPLE_DIR", self.people)
+        patched.start()
+        self.addCleanup(patched.stop)
+
+    def write_dataset(self, **extra: Any) -> Path:
+        path = self.people / "someone" / "life_events.json"
+        path.write_text(
+            json.dumps(
+                {
+                    "person": {
+                        "name": "Someone",
+                        "wikipedia": "https://en.wikipedia.org/wiki/Someone",
+                    },
+                    "events": [event("Marries", weight=0.5, **extra)],
+                },
+                ensure_ascii=False,
+            ),
+            encoding="utf-8",
+        )
+        return path
+
+    def run_step(self, parsed: Any, **kwargs: Any) -> Dict[str, Any]:
+        path = self.people / "someone" / "life_events.json"
+        with mock.patch.object(
+            backgrounds, "parse_structured", return_value=parsed
+        ), mock.patch.object(backgrounds, "illustrate_event", return_value=[]):
+            backgrounds.generate_event_backgrounds(
+                "someone", mock.MagicMock(), **kwargs
+            )
+        return json.loads(path.read_text(encoding="utf-8"))["events"][0]
+
+    def parsed(self, background, material, sources=()):
+        return backgrounds.BackgroundOnly(
+            background=background,
+            event_specific_material=list(material),
+            sources=list(sources),
+            background_image_queries=[],
+        )
+
+    def test_a_rewrite_that_refuses_takes_the_stale_report_with_it(self) -> None:
+        self.write_dataset(
+            background="A resume under a wedding.",
+            background_images=[{"url": "https://example.org/ringstrasse.jpg"}],
+        )
+        written = self.run_step(self.parsed(None, []), overwrite=True)
+        self.assertNotIn("background", written)
+        self.assertNotIn("background_images", written)
+
+    def test_an_event_that_never_had_one_is_left_as_it_was(self) -> None:
+        self.write_dataset()
+        written = self.run_step(self.parsed(None, []))
+        self.assertNotIn("background", written)
+        self.assertEqual(
+            written["sources"],
+            ["https://en.wikipedia.org/wiki/S0", "https://en.wikipedia.org/wiki/S1"],
+        )
+
+    def test_a_refused_report_still_corrects_the_citations(self) -> None:
+        # The call read this event against these articles either way, and an
+        # event with no report is no reason to keep a citation that documents
+        # a different episode.
+        self.write_dataset()
+        written = self.run_step(
+            self.parsed(None, [], ["https://en.wikipedia.org/wiki/Someone"])
+        )
+        self.assertEqual(written["sources"], ["https://en.wikipedia.org/wiki/Someone"])
+
+    def test_a_grounded_report_is_written(self) -> None:
+        self.write_dataset()
+        written = self.run_step(self.parsed("The report.", ["A fact about it."]))
+        self.assertEqual(written["background"], "The report.")
 
 
 class IllustrationTests(unittest.TestCase):

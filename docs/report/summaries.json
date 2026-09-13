@@ -136,11 +136,11 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "e0cdb8220ec5ac9c",
+      "fingerprint": "84932a4661b12220",
       "summary": {
-        "description": "Writes a background report for each selected event from the reviewed article, related research, and the story’s existing context. It also replaces weak event citations with shown sources and leaves image searches tied to details in the report.",
-        "input": "reviewed events, research, and story context",
-        "output": "background reports, sources, and image searches",
+        "description": "Writes event-specific background only when the reviewed articles add context beyond the event itself. It drops stale reports that fail this test and refreshes each event’s citations from the articles it was given, including events left without a report.",
+        "input": "the reviewed events, articles, and story outline",
+        "output": "background reports and event-specific citations",
         "source": "gpt-5.6-terra"
       }
     },

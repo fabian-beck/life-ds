@@ -10,6 +10,12 @@ the events the story will offer one on. The research used to write a report for
 every event; most of them could never be reached, and each cost the run a
 long-prose call and an illustration critic.
 
+A selected event is where a report may go, not where one has to: the call
+notes what its sources say about the event before it writes, and an event they
+record without documenting — a wedding in half a sentence, a move in one — gets
+none. The story then offers no way down there, which is what
+``hasBackgroundReport`` in ``src/utils/story/eventDepth.js`` is for.
+
 The report is the one thing in the pipeline written for a reader rather than
 extracted for a schema. Its material is the same material the research sees — the
 event, the subject, and the cached related articles filtered down to the ones
@@ -76,7 +82,14 @@ REPORT_MODEL = DEFAULT_MODEL
 # deliberation: the material is supplied, the questions to answer are listed,
 # and the shape is prescribed to the paragraph. Reasoning was a third of what
 # this step spent and bought a plan for prose that the instructions had
-# already planned.
+# already planned. The gate put a judgment back in front of that, which is the
+# kind of thing an effort tier usually decides, so it was measured here rather
+# than assumed: on a subject article that carries a career and records a
+# wedding in one sentence, four runs on this tier gathered one to three notes
+# and refused the report every time, and four on the same event with an
+# article that actually discusses it gathered seventeen to twenty-two and
+# wrote one every time. The judgment is a reading, and reading is what this
+# tier does well.
 REPORT_REASONING_EFFORT = BULK_REASONING_EFFORT
 
 # ``[[term|display]]`` markers, and the bare ``[[term]]`` the research writes
@@ -93,6 +106,17 @@ def _plain(text: str) -> str:
 class BackgroundOnly(BaseModel):
     """The report, asked for on its own — and its sources and searches.
 
+    The material comes first, before the prose, because the order of the
+    fields is the order the call writes them in: a report asked for straight
+    away is a report already being written by the time the question of whether
+    there is one to write comes up. Engelbart's wedding is what that cost. The
+    article records it in a sentence, the call had a word budget to fill, and
+    the layer under a 1951 wedding opened on his 1948 degree, went on to
+    Berkeley, and closed on the company he founded in 1956 — every sentence
+    true, sourced, and about four other slides. Listing what the sources say
+    about this event in particular is a question that can be answered with
+    nothing, and a call that has just answered it with nothing writes null.
+
     The sources come along because the depth layer prints them under the
     passage, which is the first time in this application that an event's own
     provenance is put in front of a reader: they used to be pooled on the
@@ -104,18 +128,41 @@ class BackgroundOnly(BaseModel):
     this event and at those same articles.
     """
 
+    event_specific_material: List[str] = Field(
+        default_factory=list,
+        description=(
+            "FILL THIS BEFORE WRITING ANYTHING ELSE, and be exhaustive: "
+            "every fact the articles give that stands around THIS event — how "
+            "it came about, what it took, the circumstances, the room, the "
+            "machine, the money, the people in it and what they were to the "
+            "subject, how it went, how it was received, what followed from "
+            "it. One short note per fact, in your own words. Working material "
+            "rather than prose, so a fact the description also carries belongs "
+            "here when the sources give more of it; what does not belong is a "
+            "fact about something else — the era, the subject's career at "
+            "large, the institution in general. Empty when the sources record "
+            "the event without saying anything around it, which is a normal "
+            "and frequent answer."
+        ),
+    )
     background: Optional[str] = Field(
         None,
         description=(
-            "A background report for this event, 250-350 words in 2-4 "
-            "paragraphs separated by blank lines: the situation it sat in, the "
-            "concrete specifics, a scene or episode told at length, and what "
-            "came of it. One or two '## Section heading' lines may divide it "
+            "NULL unless event_specific_material says something around the "
+            "event; a list that only restates that it happened is an event "
+            "with no background to report, and the story then simply offers "
+            "no way down. Otherwise a "
+            "background report for this event, up to 350 words in 2-4 "
+            "paragraphs separated by blank lines, written from those notes "
+            "and going no wider than they reach: the situation this event sat "
+            "in, its concrete specifics, one thing told at length, and what "
+            "came of it. Shorter where the notes are fewer — never padded "
+            "toward a length with the era, the city, or the rest of the "
+            "life. One or two '## Section heading' lines may divide it "
             "where it turns to a different thing, never above the first "
             "paragraph; that heading line is the only markup allowed — the "
             "prose is plain text with no other Markdown. Prose for a reader, "
-            "not a list. Null when the sources give nothing beyond the "
-            "description."
+            "not a list."
         ),
     )
     sources: List[str] = Field(
@@ -130,17 +177,22 @@ class BackgroundOnly(BaseModel):
         description=(
             "3-4 Wikimedia Commons search queries, each for a DIFFERENT thing "
             "the background report names — the machine, the building, the "
-            "document, the place. Not portraits of the subject."
+            "document, the place. Not portraits of the subject. Empty when "
+            "the background is null: there is no report to illustrate."
         ),
     )
 
 
 SYSTEM = (
     "You are a research assistant specializing in biographical event details. "
-    "You are writing one field: a short passage of background, in prose, for a "
-    "reader who has just read the event's own description and wants to know "
-    "what surrounded it. It must add to that description rather than restate "
-    "it. All output must be in American English only."
+    "You decide first whether the sources have anything to say around one "
+    "event, and only then write it: a short passage of background, in prose, "
+    "for a reader who has just read the event's own description and wants to "
+    "know what surrounded it. It must add to that description rather than "
+    "restate it, and it must be about that event rather than about the life "
+    "or the era around it. An event the sources record without documenting "
+    "gets no passage, and you say so by returning null. All output must be in "
+    "American English only."
 )
 
 # The slide already carries the event. The report is the one part of the
@@ -151,14 +203,72 @@ SYSTEM = (
 # the end; the earlier wording here asked for "tension" and for "what is
 # contested", and the reports answered with a contrast in three sentences of
 # four, each fact set against an alternative nobody had proposed.
+#
+# The gate opens the block because "do not restate the description" and "write
+# 250-350 words" between them leave exactly one way out for an event the
+# sources record in a sentence, and the reports took it: they wrote the life
+# instead. A wedding got the groom's degree, his doctorate and the company he
+# founded five years later; Otto Wagner's two marriages each got the
+# Ringstrasse. None of it repeated the description, all of it was sourced, and
+# none of it was background to a wedding. What the earlier wording lacked was
+# not a prohibition but a decision to make first — the instructions assumed a
+# report and asked only how to write it, so the model never reached the
+# question of whether there was one. Returning null costs the reader nothing:
+# `hasBackgroundReport` in eventDepth.js offers the way down only where a
+# report stands, so an event without one is a slide the reader swipes past.
 REPORT_INSTRUCTIONS = """\
-THE BACKGROUND REPORT:
-- Write 250-350 words, in 2-4 paragraphs, for a curious reader who has finished the
-  description and wants the story behind it. This is by far the longest thing
-  you write here and the only one addressed to a reader rather than to a schema.
+IS THERE A REPORT HERE AT ALL? GATHER, THEN DECIDE:
+- The layer you are writing does not have to exist. The story offers the way down
+  only where a report was written, so an event without one costs the reader
+  nothing — they finish the description and swipe on. A report that had nothing to
+  say and said it anyway costs them a screen of prose that is not about what they
+  opened
+- GATHER FIRST, IN EVENT_SPECIFIC_MATERIAL, before you write a word of prose. Read
+  the articles below properly, past their opening paragraphs, and note EVERY fact
+  they give that stands around this event: how it came about, what it took, the
+  circumstances it happened in, the room, the machine, the money, the people in it
+  and what they were to the subject, how it went, how it was received, what
+  followed from it. One short note per fact. Be exhaustive here — this list is
+  where the reading happens, and a list of one from an article that discusses the
+  event at length means you skimmed it
+- Notes are working material, not prose, so the rules about the description do not
+  apply to them: note a fact the description also carries if the sources give more
+  of it. What disqualifies a note is being about something else — the era, the
+  city, the institution, the subject's career at large — rather than about this
+  event
+- THEN JUDGE THE LIST YOU HAVE. Several notes that say something around the event
+  are a report; write it from them. A list that only restates that the event
+  happened — its date, its names, the bare fact — is not a report, however famous
+  the person or eventful the decade
+- WHEN THE LIST COMES TO NOTHING, RETURN NULL FOR THE BACKGROUND. This is a correct
+  answer and a frequent one. Lives are documented unevenly: the famous paper has
+  twenty paragraphs behind it and the wedding has half a sentence — "in 1951 he
+  married her", "the family moved to Bern" — and the honest report on the wedding
+  is no report. Null is also the answer when the call fails to find material it
+  suspects exists; write nothing rather than filling in from memory
+- THE FAILURE THIS EXISTS TO STOP: an event the sources record in a sentence, and a
+  passage that fills the space with everything around it. A 1951 wedding whose
+  report opens on the groom's 1948 degree, moves to the doctorate he began after
+  it, and ends on the company he founded in 1956 is a résumé printed under a
+  wedding — true in every sentence, sourced, and about four other slides. Ask of
+  each paragraph before you keep it: would this sit just as well under the slide
+  before or the slide after? Then it is not background to this event, and if
+  nothing is left once you have cut it, the answer is null
+- Thin sources are a reason to write less or nothing. They are never a reason to
+  write wider
+
+THE BACKGROUND REPORT, once the gate above is passed:
+- Write for a curious reader who has finished the description and wants the story
+  behind it. This is by far the longest thing you write here and the only one
+  addressed to a reader rather than to a schema.
   Depth here is specificity, not length: a reader who has chosen to scroll down
   has asked for what the description could not hold, and every sentence that
   restates it or hedges toward the general spends the budget on nothing
+- LENGTH FOLLOWS THE MATERIAL: up to 350 words in 2-4 paragraphs where your notes
+  carry it, fewer where they do not. There is no minimum. One paragraph that is
+  entirely about this event is a better layer than three that reach past it, and
+  padding a thin report out to a length is precisely how a report stops being
+  about its event. Never write toward a word count
 - Prose. Complete sentences, no bullets, no lists
 - Separate paragraphs with a blank line
 - HEADINGS, where the report turns to a genuinely different thing: a line of its
@@ -177,8 +287,10 @@ THE BACKGROUND REPORT:
   sentence — 'after Childe Harold's Pilgrimage', not 'after *Childe Harold's
   Pilgrimage*' — and any asterisks you write will show on screen as asterisks
 - BUILD IT LIKE A REPORT, roughly in this order, as the material allows:
-  1. THE SITUATION. What was going on around the event — the institution, the field,
-     the war, the politics, the household. Open here, not on the subject's name
+  1. THE SITUATION THIS EVENT SAT IN. Not the era and not the life, but the
+     circumstances the sources attach to this event: the institution as it bore on
+     it, the state of the work it belonged to, the household it happened in, the
+     politics that reached it. Open here, not on the subject's name
   2. THE SPECIFICS. The concrete detail that makes it real: who else was working on
      it, what the state of the art was, how long it took, what it cost, what it was
      competing against, the machine, the room, the number, the rule
@@ -203,13 +315,24 @@ THE BACKGROUND REPORT:
   * The reader has just read the description. Repeating any of it is a failure
   * Do not re-tell what happened, who was there, when, or where
   * Every sentence must carry a fact or a consequence the description lacks
+- HARD RULE - BE ABOUT THIS EVENT:
+  * Every paragraph answers "what surrounded THIS event". A paragraph about the
+    subject's career, the city's century, or the field's development is off the
+    slide unless this event is what it is about
+  * A sentence equally true printed under a different event of this life belongs to
+    that event. The other slides tell their own stories, and the outline below says
+    which ones they are
+  * Test each paragraph before you keep it: if this event were struck from the
+    story, would the paragraph still stand exactly as written? Then it is not
+    background to it
 - GROUNDING: the articles below are your material — use them. Read past their first
   paragraph. Do not speculate, and do not invent numbers, names, or dates. Where the
   sources are thin, write less rather than padding with generalities
 - Do NOT use [[term|display]] markers here - they belong in the description only
 - Write for someone who does not know the field. Name what an insider would assume
 - American English. No bullet points, no meta-commentary about sources
-- Return null only if the sources give you nothing beyond the description
+- Return null whenever the gate at the top is not passed, and whenever cutting the
+  paragraphs that are not about this event would leave nothing standing
 
 SOURCES (1-3 Wikipedia URLs):
 - URLs that document THIS event, chosen from the subject's article and the related
@@ -229,6 +352,45 @@ BACKGROUND_IMAGE_QUERIES (3-4 short Commons searches):
 - Only things the report actually mentions. Return an empty list rather than
   guessing at something that might exist
 """
+
+
+def accepted_report(parsed: Optional[BackgroundOnly]) -> str:
+    """The passage the call is allowed to keep, or "" when it has no ground.
+
+    The gate at the top of the instructions asks the call to note what the
+    sources say about this event before it writes anything, and to return null
+    when that comes to nothing. A call that notes nothing and then writes three
+    paragraphs anyway has written exactly the report the gate exists to refuse,
+    and it is refused here: the two answers contradict each other, and the one
+    made before the prose was under way is the one to believe.
+
+    This is the whole of the enforcement. How much material is enough stays a
+    judgment for the call that read the articles — a count would only teach it
+    to pad the list instead of the prose — so a single honest note that
+    carries a paragraph is accepted, and an empty list is not.
+    """
+    if parsed is None:
+        return ""
+    passage = (parsed.background or "").strip()
+    if not passage:
+        return ""
+    if not [note for note in parsed.event_specific_material if str(note).strip()]:
+        return ""
+    return passage
+
+
+def _decline_reason(parsed: Optional[BackgroundOnly]) -> str:
+    """Why an event ends the step without a report, for the run log.
+
+    The three cases read the same in the dataset and mean different things in
+    a log: a refusal the gate was built for, a call that contradicted its own
+    gate, and a call that failed. Only the last is a defect.
+    """
+    if parsed is None:
+        return "the call gave no answer"
+    if (parsed.background or "").strip():
+        return "it wrote one with nothing event-specific behind it"
+    return "the sources say nothing around this event"
 
 
 # ============================================================================
@@ -818,6 +980,9 @@ def generate_event_backgrounds(
     the events and the ego network as they stand on disk. An event the rule
     does not select gets no report — the story would never show it — and a
     selected event that already carries one is left alone unless ``overwrite``.
+    A selected event whose sources say nothing around it gets none either, and
+    under ``overwrite`` loses the one it has: the refusal is the point of the
+    rewrite, so it has to reach the dataset.
     """
     path = PEOPLE_DIR / person_id / "life_events.json"
     data = read_json(path)
@@ -874,8 +1039,14 @@ def generate_event_backgrounds(
     if workers > 1:
         print(f"  {person_id}: writing {len(targets)} report(s), {workers} at a time")
 
-    def write_report(index: int) -> bool:
-        """Report, sources, and pictures for one event; whether it got one."""
+    def write_report(index: int) -> str:
+        """Report, sources, and pictures for one event; what became of it.
+
+        Returns what the event ended up with: ``"written"`` for a report,
+        ``"dropped"`` where a report already on the event did not survive the
+        gate, ``"sources"`` where only the citations moved, and ``"none"``
+        where the event is left exactly as it was found.
+        """
         event = events[index]
         title = str(event.get("title", "")).encode("ascii", "replace").decode("ascii")
         print(f"  {person_id}[{index}] {title}")
@@ -897,29 +1068,53 @@ def generate_event_backgrounds(
             text_format=BackgroundOnly,
             label=f"Background for '{title}'",
         )
-        passage = (parsed.background or "").strip() if parsed is not None else ""
-        if parsed is None or not passage:
-            print(f"    [!] no passage for [{index}]; leaving the event without one")
-            return False
-        event["background"] = passage
+        passage = accepted_report(parsed)
+        outcome = "written"
+        if parsed is not None and passage:
+            event["background"] = passage
+            illustrate_event(client, event, passage, parsed.background_image_queries)
+        else:
+            outcome = "none"
+            print(f"    [!] no report for [{index}]: {_decline_reason(parsed)}")
+            # An overwrite pass is how a sharpened gate clears the reports the
+            # old one let through, so a refused event loses the passage it had
+            # along with the pictures that illustrated it. Without this the
+            # rewrite that was meant to remove a report leaves it standing.
+            had_report = event.pop("background", None)
+            had_pictures = event.pop("background_images", None)
+            if had_report or had_pictures:
+                outcome = "dropped"
+                print(f"    the report already on [{index}] is dropped")
 
         # Only URLs the call was actually shown. A model asked for a citation
         # will write a plausible one, and a plausible Wikipedia URL that 404s is
-        # worse than the wrong-but-real article it replaces.
-        allowed = citable_urls(person_wikipedia, related, event.get("sources"))
-        chosen = keep_citable(parsed.sources, allowed)
-        if chosen and chosen != event.get("sources"):
-            print(f"    sources of [{index}]: {event.get('sources')} -> {chosen}")
-            event["sources"] = chosen
+        # worse than the wrong-but-real article it replaces. This runs whether
+        # or not there is a report: the call read this event against these
+        # articles either way, and a refused report is no reason to leave a
+        # citation that documents a different episode in place.
+        if parsed is not None:
+            allowed = citable_urls(person_wikipedia, related, event.get("sources"))
+            chosen = keep_citable(parsed.sources, allowed)
+            if chosen and chosen != event.get("sources"):
+                print(f"    sources of [{index}]: {event.get('sources')} -> {chosen}")
+                event["sources"] = chosen
+                if outcome == "none":
+                    outcome = "sources"
+        return outcome
 
-        illustrate_event(client, event, passage, parsed.background_image_queries)
-        return True
+    outcomes = map_concurrently(targets, write_report, workers=workers)
+    written = outcomes.count("written")
+    dropped = outcomes.count("dropped")
 
-    written = sum(map_concurrently(targets, write_report, workers=workers))
-
-    if written:
+    if any(outcome != "none" for outcome in outcomes):
         write_json(path, data)
-        print(f"  {person_id}: wrote {written} report(s) to {path.name}")
+        refused = len(outcomes) - written
+        summary = f"wrote {written} report(s)"
+        if refused:
+            summary += f", refused {refused}"
+        if dropped:
+            summary += f" (dropping {dropped} that had one)"
+        print(f"  {person_id}: {summary} in {path.name}")
         _propagate_sources(person_id, events)
     return written
 
