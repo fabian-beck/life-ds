@@ -393,7 +393,7 @@ def sync_chapter_illustrations(
     return updated
 
 
-def generate_chapter_illustrations(
+def _illustrate_chapters(
     person_id: str,
     *,
     chapter_ids: Optional[Sequence[str]] = None,
@@ -404,12 +404,7 @@ def generate_chapter_illustrations(
     concepts_only: bool = False,
     dry_run: bool = False,
 ) -> Dict[str, Any]:
-    """Write an abstract illustration for each chapter that does not have one.
-
-    Returns a result dict with ``success`` and the chapters it generated, so the
-    person pipeline can record the step without catching an exception per
-    chapter.
-    """
+    """Write an abstract illustration for each chapter that does not have one."""
     dataset = load_dataset(person_id)
     chapters = dataset.get("chapters") or []
     if not chapters:
@@ -569,6 +564,76 @@ def generate_chapter_illustrations(
         "failed": failed,
         "message": message,
     }
+
+
+def prune_orphaned_illustrations(person_id: str) -> List[str]:
+    """Remove the chapter art files no chapter of the person's story refers to.
+
+    The files are named by chapter id, so a regenerated story whose chapters
+    carry new ids leaves the old chapters' pictures behind, and nothing in the
+    application reaches them. A file stays while any language copy names it.
+    A person with no dataset to read keeps every file, since there is then no
+    record of which ones are in use. Returns the names of the removed files.
+    """
+    directory = CHAPTER_ART_DIR / person_id
+    paths = event_files(person_id)
+    if not directory.is_dir() or not paths:
+        return []
+
+    referenced = set()
+    for path in paths:
+        for chapter in read_json(path).get("chapters") or []:
+            illustration = chapter.get("illustration") or {}
+            for key in ("image", "medium", "full"):
+                if isinstance(illustration.get(key), str):
+                    referenced.add(illustration[key])
+
+    removed: List[str] = []
+    for file in sorted(directory.iterdir()):
+        if file.is_file() and f"/chapter_art/{person_id}/{file.name}" not in referenced:
+            file.unlink()
+            removed.append(file.name)
+    return removed
+
+
+def generate_chapter_illustrations(
+    person_id: str,
+    *,
+    chapter_ids: Optional[Sequence[str]] = None,
+    master_style_path: Path = DEFAULT_MASTER_STYLE_PATH,
+    model: str = DEFAULT_IMAGE_MODEL,
+    concept_model: str = DEFAULT_MODEL,
+    force: bool = False,
+    concepts_only: bool = False,
+    dry_run: bool = False,
+) -> Dict[str, Any]:
+    """Illustrate the chapters, then remove the files no chapter refers to.
+
+    Returns a result dict with ``success``, the chapters it generated, and the
+    files it removed, so the person pipeline can record the step without
+    catching an exception per chapter. A dry run and a concepts-only run write
+    no images and remove none.
+    """
+    result = _illustrate_chapters(
+        person_id,
+        chapter_ids=chapter_ids,
+        master_style_path=master_style_path,
+        model=model,
+        concept_model=concept_model,
+        force=force,
+        concepts_only=concepts_only,
+        dry_run=dry_run,
+    )
+    if dry_run or concepts_only:
+        return result
+
+    removed = prune_orphaned_illustrations(person_id)
+    for name in removed:
+        print(f"  − Removed {name}, which no chapter refers to")
+    if removed:
+        result["message"] += f"; removed {len(removed)} unused file(s)"
+    result["removed"] = removed
+    return result
 
 
 def parse_args(argv: Any) -> argparse.Namespace:

@@ -726,7 +726,10 @@ STEPS: List[Step] = [
             "Draws each concept in the same master style the portraits are "
             "transferred toward, so a chapter slide is lit like the rest of the "
             "story. The content comes from the prompt rather than a second "
-            "reference image — there is nothing to be faithful to."
+            "reference image — there is nothing to be faithful to. The files "
+            "are named by chapter id, and the step removes every file no "
+            "chapter refers to, so a story whose chapters were renamed keeps "
+            "no pictures of the old ones."
         ),
         depends_on=[
             Dep("p_chapter_concepts", "one visual concept per chapter"),
