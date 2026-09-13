@@ -266,8 +266,13 @@
     });
   }
 
+  // Only a slide whose event is followed by a background report reports
+  // progress. A plain event slide whose text overruns the screen scrolls as
+  // well, and reading it to its end is not a descent: it must neither fade the
+  // map out nor count as entering the depth layer.
   function handleSlideScroll(event, index) {
     if (index !== activeIndex) return;
+    if (!slideHasDepth(slides[index], deepEventIndexes)) return;
     depthProgress = readDepthProgress(event.currentTarget);
   }
 
@@ -383,24 +388,16 @@
     return mappedIndex;
   })();
 
-  // Determine if current slide is a chapter, conclusion, invention, or publication slide (for map fade)
+  // The slides that carry no event of their own — a chapter title and the
+  // conclusion — blend the map out, because there is no place for it to show.
+  // An event slide keeps it whatever the event is about: an invention and a
+  // publication happen somewhere too, and the map is the only thing on screen
+  // that says where. The one thing that fades it on an event slide is the
+  // descent into a background report, which `depthProgress` drives.
   $: isChapterSlide = (() => {
     if (activeIndex < 0 || activeIndex >= slides.length) return false;
-    const slide = slides[activeIndex];
-    const slideType = slide?.type;
-
-    // Fade map for chapter/conclusion slides
-    if (slideType === "chapter" || slideType === "conclusion") return true;
-
-    // Also fade map for invention and publication events
-    if (
-      slideType === "event" &&
-      (slide?.event_class?.type === "invention" ||
-        slide?.event_class?.type === "publication")
-    )
-      return true;
-
-    return false;
+    const slideType = slides[activeIndex]?.type;
+    return slideType === "chapter" || slideType === "conclusion";
   })();
 
   $: activeCoordinates =
