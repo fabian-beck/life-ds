@@ -68,7 +68,7 @@ class ContractTests(unittest.TestCase):
             title="Takes Charge of Hut 8",
             description="Turing leads Hut 8 at Bletchley Park.",
         )
-        prompt = build_research_prompt_base(skeleton, "Alan Turing", [])
+        prompt = build_research_prompt_base(skeleton, "Alan Turing", []).text
         self.assertIn("It is read in sequence", prompt)
 
 

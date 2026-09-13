@@ -167,7 +167,7 @@ class PresentDayPhotographTests(unittest.TestCase):
         returns the building of that kind standing there today."""
         from events.prompts.research import build_research_prompt_base
 
-        prompt = build_research_prompt_base(SKELETONS[1], "Alan Turing", [])
+        prompt = build_research_prompt_base(SKELETONS[1], "Alan Turing", []).text
         queries = prompt[prompt.index("6. IMAGE_SEARCH_QUERIES") :]
         queries = queries[: queries.index("AVAILABLE ICONS")]
         self.assertIn("Name a PARTICULAR thing", queries)

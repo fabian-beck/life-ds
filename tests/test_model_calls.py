@@ -1,10 +1,15 @@
-"""The shared model call: what it retries, and what it says when it gives up.
+"""The shared model call: what it retries, what it caches, and what it says when it gives up.
 
 Every step reaches the API through ``parse_structured``, so its retry policy
 is the pipeline's retry policy. The distinction it draws is between a failure
 that a second identical request could survive — a dropped connection, a rate
 limit, a 502 — and one it cannot: a malformed request is malformed on the third
 attempt too, and a refusal is an answer rather than an outage.
+
+The same call decides what the provider may reuse. A step whose calls share a
+long prefix says where that prefix ends, and the request carries a breakpoint
+there and a key derived from the prefix itself; a step whose calls share
+nothing is sent exactly as it was written.
 """
 
 from __future__ import annotations
@@ -200,6 +205,165 @@ class ParseStructuredOrRaiseTests(unittest.TestCase):
 
     def test_it_is_a_runtime_error_for_callers_that_still_catch_one(self) -> None:
         self.assertTrue(issubclass(model_calls.ModelCallFailed, RuntimeError))
+
+
+class PromptPrefixTests(unittest.TestCase):
+    """Where a request says its reusable prefix ends, and what that sends.
+
+    The provider reuses a prefix only up to a breakpoint some request wrote,
+    and the one it places by itself covers the whole prompt — unique per event,
+    so every research call used to write an entry no later call could claim.
+    """
+
+    def _sent(self, messages) -> dict:
+        client = _client(_ok())
+        parse_structured(
+            client,
+            model="gpt-test",
+            reasoning_effort="low",
+            input=messages,
+            text_format=Answer,
+            label="a step",
+        )
+        return client.responses.parse.call_args.kwargs
+
+    def test_an_unmarked_request_asks_for_nothing(self) -> None:
+        kwargs = self._sent([{"role": "user", "content": "prompt"}])
+        self.assertNotIn("prompt_cache_key", kwargs)
+        self.assertNotIn("prompt_cache_options", kwargs)
+        self.assertEqual(kwargs["input"], [{"role": "user", "content": "prompt"}])
+
+    def test_the_marked_message_carries_the_breakpoint(self) -> None:
+        kwargs = self._sent(
+            [
+                {"role": "system", "content": "be helpful"},
+                model_calls.ends_prompt_prefix(
+                    {"role": "user", "content": "the article"}
+                ),
+                {"role": "user", "content": "this event"},
+            ]
+        )
+        self.assertEqual(
+            kwargs["input"][1]["content"],
+            [
+                {
+                    "type": "input_text",
+                    "text": "the article",
+                    "prompt_cache_breakpoint": {"mode": "explicit"},
+                }
+            ],
+        )
+        # The marker is ours, not the API's.
+        self.assertNotIn(model_calls.PREFIX_END_KEY, kwargs["input"][1])
+        self.assertEqual(kwargs["input"][2], {"role": "user", "content": "this event"})
+        self.assertEqual(kwargs["prompt_cache_options"], {"mode": "explicit"})
+
+    def test_calls_sharing_a_prefix_share_a_key(self) -> None:
+        """The routing key is the point: a prefix reaches the same cache."""
+
+        def key(event: str) -> str:
+            return self._sent(
+                [
+                    {"role": "system", "content": "be helpful"},
+                    model_calls.ends_prompt_prefix(
+                        {"role": "user", "content": "the article"}
+                    ),
+                    {"role": "user", "content": event},
+                ]
+            )["prompt_cache_key"]
+
+        self.assertEqual(key("born in London"), key("dies in Wilmslow"))
+
+    def test_a_changed_prefix_stops_claiming_the_old_entry(self) -> None:
+        def key(article: str) -> str:
+            return self._sent(
+                [
+                    model_calls.ends_prompt_prefix(
+                        {"role": "user", "content": article}
+                    ),
+                    {"role": "user", "content": "this event"},
+                ]
+            )["prompt_cache_key"]
+
+        self.assertNotEqual(key("the article"), key("the article, revised"))
+
+    def test_an_empty_prefix_is_no_prefix(self) -> None:
+        """A life whose article was never cached has nothing to reuse."""
+        kwargs = self._sent(
+            [
+                model_calls.ends_prompt_prefix({"role": "user", "content": ""}),
+                {"role": "user", "content": "this event"},
+            ]
+        )
+        self.assertNotIn("prompt_cache_key", kwargs)
+        self.assertEqual(kwargs["input"][0]["content"], "")
+
+    def test_blocks_keep_their_own_shape(self) -> None:
+        """A prompt that already carries blocks — an image, say — keeps them."""
+        kwargs = self._sent(
+            [
+                model_calls.ends_prompt_prefix(
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "input_text", "text": "the article"},
+                            {"type": "input_image", "image_url": "https://x/y.png"},
+                        ],
+                    }
+                )
+            ]
+        )
+        blocks = kwargs["input"][0]["content"]
+        self.assertEqual(blocks[0], {"type": "input_text", "text": "the article"})
+        self.assertEqual(blocks[1]["prompt_cache_breakpoint"], {"mode": "explicit"})
+
+    def test_the_caller_s_own_messages_are_left_alone(self) -> None:
+        """Preparation copies: a caller that appends a turn and calls again
+        must not find a breakpoint already in the list it holds."""
+        messages = [
+            model_calls.ends_prompt_prefix({"role": "user", "content": "the article"})
+        ]
+        self._sent(messages)
+        self.assertEqual(
+            messages,
+            [
+                {
+                    "role": "user",
+                    "content": "the article",
+                    model_calls.PREFIX_END_KEY: True,
+                }
+            ],
+        )
+
+
+class PromptTests(unittest.TestCase):
+    """The two-part prompt the research and the report builders return."""
+
+    def test_the_text_is_the_two_parts_joined(self) -> None:
+        prompt = model_calls.Prompt(shared="the article\n", specific="this event\n")
+        self.assertEqual(prompt.text, "the article\nthis event\n")
+
+    def test_the_messages_mark_the_end_of_the_shared_part(self) -> None:
+        messages = model_calls.Prompt(
+            shared="the article", specific="this event"
+        ).messages("be helpful")
+        self.assertEqual(
+            [message["role"] for message in messages], ["system", "user", "user"]
+        )
+        self.assertTrue(messages[1][model_calls.PREFIX_END_KEY])
+        self.assertNotIn(model_calls.PREFIX_END_KEY, messages[2])
+
+    def test_nothing_shared_is_sent_as_one_turn(self) -> None:
+        messages = model_calls.Prompt(shared="", specific="this event").messages(
+            "be helpful"
+        )
+        self.assertEqual(
+            messages,
+            [
+                {"role": "system", "content": "be helpful"},
+                {"role": "user", "content": "this event"},
+            ],
+        )
 
 
 if __name__ == "__main__":

@@ -136,20 +136,20 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "bf8558c30e68b832",
+      "fingerprint": "5bfcccf4cef400d9",
       "summary": {
-        "description": "Writes a background report only for events selected for the story’s deeper layer, grounding it in reviewed material and the subject’s article. Rechecks each report’s citations against supplied URLs, so each event carries sources that actually document it.",
-        "input": "reviewed events, network, and Wikipedia material",
-        "output": "background reports, sources, and event illustrations",
+        "description": "Writes detailed background reports only for the story's selected deep events, using reviewed event material and related articles. It renews each event's citations from URLs it was shown, so the provenance attached to the report documents that event.",
+        "input": "the reviewed events and Wikipedia material",
+        "output": "background reports, citations, and image queries",
         "source": "gpt-5.6-terra"
       }
     },
     "p_chapter_art": {
-      "fingerprint": "ea178806cdc09dc2",
+      "fingerprint": "c2a3cc333bd93b60",
       "summary": {
-        "description": "Turns each chapter concept into an abstract light-drawn emblem. It uses the portrait style as a treatment reference, so the chapter art shares the story’s color and visual language without implying a factual scene.",
-        "input": "chapter concepts, interface style, and life events",
-        "output": "an illustration for each chapter",
+        "description": "Draws one abstract chapter image from each chapter concept. It carries the portrait style and story colors into the chapter images, while the concept supplies the subject; it also removes images left by renamed or deleted chapters.",
+        "input": "chapter concepts, story colors, and style",
+        "output": "an illustration for each current chapter",
         "source": "gpt-5.6-terra"
       }
     },
@@ -172,11 +172,11 @@
       }
     },
     "p_events_p2": {
-      "fingerprint": "fe02380c14921bae",
+      "fingerprint": "f24b14eda788ec7b",
       "summary": {
-        "description": "Researches each proposed event from the subject’s article, using related articles to fill gaps. Writes the event’s evidence, context, and leads for later illustration. Keeps a failed event unresolved so one bad call does not remove it.",
-        "input": "event skeletons and Wikipedia material",
-        "output": "researched event details and illustration leads",
+        "description": "Expands each proposed event into a sourced account of what happened, where, and who took part. It keeps the subject’s article as the authority and confines the prose to the event’s moment; a failed call leaves the event unresolved without stopping the story.",
+        "input": "the event skeleton and Wikipedia material",
+        "output": "a researched account for each event",
         "source": "gpt-5.6-terra"
       }
     },

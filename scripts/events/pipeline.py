@@ -636,10 +636,10 @@ def research_event_details(
         get_client(),
         model=model,
         reasoning_effort=RESEARCH_REASONING_EFFORT,
-        input=[
-            {"role": "system", "content": system},
-            {"role": "user", "content": prompt},
-        ],
+        # Two messages, not one: the material every event of this life is
+        # researched against goes in the first, and the call marks its end as
+        # the prefix the other fifteen calls reuse.
+        input=prompt.messages(system),
         text_format=EventDetails,
         label=f"Research of '{event_skeleton.title}'",
         attempts=retry_count + 1,

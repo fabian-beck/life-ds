@@ -27,6 +27,15 @@ steps in that last group call :func:`parse_structured_or_raise`, which is the
 same call ending in a :class:`ModelCallFailed` instead of a ``None`` nobody
 downstream would know how to interpret.
 
+**One cache breakpoint per shared prefix.** A step that researches sixteen
+events sends the same article, the same second source and the same
+instructions sixteen times. The provider reuses a repeated prefix only up to a
+breakpoint that a request wrote, and the one it places by itself covers the
+whole prompt — which every call ends differently, so nothing ever matched and
+every call wrote a prefix no later call could use. A call site marks where its
+reusable part ends with :func:`ends_prompt_prefix`, or hands over a
+:class:`Prompt` that already knows, and the breakpoint goes there.
+
 The parsed object is *not* validated here beyond its schema. Identifiers still
 have to be matched against real entities, and lists against the source they
 must align with, in the step that knows what they mean.
@@ -34,9 +43,12 @@ must align with, in the step that knows what they mean.
 
 from __future__ import annotations
 
+import hashlib
+import json
 import os
 import time
-from typing import Any, Dict, List, Optional, Sequence, Type, TypeVar, cast
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Sequence, Tuple, Type, TypeVar, cast
 
 from openai import APIConnectionError, APIStatusError, OpenAI
 from pydantic import BaseModel
@@ -53,6 +65,134 @@ RETRYABLE_STATUS = frozenset({408, 409, 429, 500, 502, 503, 504})
 DEFAULT_ATTEMPTS = 3
 BACKOFF_SECONDS = 2.0
 """Delay before attempt N+1, multiplied by N — 2 s, then 4 s."""
+
+PREFIX_END_KEY = "ends_prompt_prefix"
+"""Marks the message a request's reusable prefix ends at. Stripped before the wire."""
+
+CACHE_BREAKPOINT = {"mode": "explicit"}
+"""The breakpoint itself, as the API spells it."""
+
+
+def ends_prompt_prefix(message: Dict[str, Any]) -> Dict[str, Any]:
+    """Say that the reusable part of the prompt ends with ``message``.
+
+    Everything up to and including it is what the step's calls have in common;
+    what follows is this call's own. The marker travels as a key on the message
+    rather than as a separate argument so that a caller assembling a list of
+    turns marks the boundary where it builds it.
+    """
+    return {**message, PREFIX_END_KEY: True}
+
+
+@dataclass(frozen=True)
+class Prompt:
+    """One prompt, cut where the part its step repeats ends.
+
+    The research of an event and the report on one are each written against a
+    life's own article, its second source and a fixed task description, with
+    only the event, its class and its articles differing. Held as two strings
+    the split survives to the call site, which turns it into the two messages
+    the breakpoint sits between; joined into one string it would have to be cut
+    again by searching for a heading.
+    """
+
+    shared: str
+    specific: str
+
+    @property
+    def text(self) -> str:
+        """The whole prompt, the way a reader or a test sees it."""
+        return self.shared + self.specific
+
+    def messages(self, system: str) -> List[Dict[str, Any]]:
+        """The input for :func:`parse_structured`, the prefix marked.
+
+        A life whose article was never cached leaves ``shared`` empty. There is
+        then no prefix to reuse, and the prompt goes as the single message it
+        was before, rather than as an empty turn carrying a breakpoint.
+        """
+        if not self.shared:
+            return [
+                {"role": "system", "content": system},
+                {"role": "user", "content": self.specific},
+            ]
+        return [
+            {"role": "system", "content": system},
+            ends_prompt_prefix({"role": "user", "content": self.shared}),
+            {"role": "user", "content": self.specific},
+        ]
+
+
+def _content_blocks(content: Any) -> Optional[List[Dict[str, Any]]]:
+    """``content`` as blocks a breakpoint can be attached to, or None.
+
+    A message is usually a plain string, which the API also takes as a single
+    text block; a breakpoint is a field of a block, so the string has to become
+    one. Content that is already a list of blocks keeps them.
+    """
+    if isinstance(content, str):
+        return [{"type": "input_text", "text": content}] if content else None
+    if isinstance(content, list) and content:
+        return [dict(block) for block in content]
+    return None
+
+
+def _with_breakpoint(content: Any) -> Optional[List[Dict[str, Any]]]:
+    """``content`` with the prefix ending after its last block."""
+    blocks = _content_blocks(content)
+    if blocks is None:
+        return None
+    blocks[-1] = {**blocks[-1], "prompt_cache_breakpoint": dict(CACHE_BREAKPOINT)}
+    return blocks
+
+
+def _prefix_cache_key(model: str, prefix: Sequence[Dict[str, Any]]) -> str:
+    """A routing key the calls sharing ``prefix`` arrive at independently.
+
+    The provider routes by this key, so two calls that could reuse a prefix
+    have to send the same one. Hashing the prefix itself is the only version of
+    that which cannot drift: no call site names its key, and a prompt that
+    changed by a character stops claiming the entry written for the old one.
+    """
+    material = json.dumps(
+        [model, list(prefix)], sort_keys=True, ensure_ascii=False, default=str
+    )
+    return hashlib.sha256(material.encode("utf-8")).hexdigest()[:32]
+
+
+def _prepare_input(
+    model: str, input: Sequence[Dict[str, Any]]
+) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    """The messages as the API takes them, and the caching arguments they earn.
+
+    Requests with no marked message are sent exactly as before, which is what
+    the call sites whose prompts repeat nothing want: an explicit mode with no
+    breakpoint in it would cache nothing at all.
+    """
+    messages: List[Dict[str, Any]] = []
+    prefix: Optional[List[Dict[str, Any]]] = None
+    for original in input:
+        message = dict(original)
+        marked = bool(message.pop(PREFIX_END_KEY, False))
+        if marked:
+            blocks = _with_breakpoint(message.get("content"))
+            marked = blocks is not None
+            if blocks is not None:
+                message["content"] = blocks
+        messages.append(message)
+        if marked and prefix is None:
+            # The first boundary, not the last: it is the one the whole step
+            # shares, and a later one is shared by fewer of its calls.
+            prefix = list(messages)
+    if prefix is None:
+        return messages, {}
+    return messages, {
+        "prompt_cache_key": _prefix_cache_key(model, prefix),
+        # Without this the provider adds a breakpoint of its own at the end of
+        # the prompt, and writes a prefix that ends with this call's own event.
+        "prompt_cache_options": {"mode": "explicit"},
+    }
+
 
 _shared_client: Optional[OpenAI] = None
 
@@ -213,7 +353,7 @@ def _parse_structured(
     drops it; only the raising variant needs it a second time, to put in the
     exception a caller will surface far from this log line.
     """
-    messages: List[Dict[str, Any]] = [dict(message) for message in input]
+    messages, caching = _prepare_input(model, input)
     last_error = ""
 
     for attempt in range(1, max(1, attempts) + 1):
@@ -223,6 +363,7 @@ def _parse_structured(
                 reasoning=cast(Any, {"effort": reasoning_effort}),
                 input=cast(Any, messages),
                 text_format=text_format,
+                **cast(Any, caching),
             )
         except Exception as error:  # noqa: BLE001 — classified immediately below
             reason = f"{type(error).__name__}: {error}"

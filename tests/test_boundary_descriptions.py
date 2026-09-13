@@ -106,7 +106,7 @@ class ResearchTests(unittest.TestCase):
             skeleton("Born in London", "1912-06-23", BirthClassification()),
             "Alan Turing",
             [],
-        )
+        ).text
         self.assertIn(BIRTH_DESCRIPTION_GUIDANCE, prompt)
         self.assertIn(BOUNDARY_REWRITE_NOTE, prompt)
         self.assertLess(
@@ -118,7 +118,7 @@ class ResearchTests(unittest.TestCase):
             skeleton("Dies in Wilmslow", "1954-06-07", DeathClassification()),
             "Alan Turing",
             [],
-        )
+        ).text
         self.assertIn(DEATH_DESCRIPTION_GUIDANCE, prompt)
         self.assertIn(BOUNDARY_REWRITE_NOTE, prompt)
 
@@ -133,7 +133,7 @@ class ResearchTests(unittest.TestCase):
             ),
             "Alan Turing",
             [],
-        )
+        ).text
         self.assertNotIn(BOUNDARY_REWRITE_NOTE, prompt)
         self.assertNotIn(BIRTH_DESCRIPTION_GUIDANCE, prompt)
 

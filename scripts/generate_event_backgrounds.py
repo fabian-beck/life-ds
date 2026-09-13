@@ -60,7 +60,7 @@ from utils.concurrency import map_concurrently, worker_count
 from utils.datasets import person_ids
 from utils.event_depth import get_event_weight, select_deep_event_indexes
 from utils.json_io import read_json, write_json
-from utils.model_calls import parse_structured
+from utils.model_calls import Prompt, parse_structured
 from utils.prose_style import PROSE_STYLE_INSTRUCTIONS
 from utils.wikipedia_cache import get_cache_dir
 
@@ -687,8 +687,14 @@ def build_report_prompt(
     person_summary: Optional[str] = None,
     network: Optional[Dict[str, Any]] = None,
     subject_article: Optional[Dict[str, Any]] = None,
-) -> str:
-    """The whole prompt for one report: the event, the rules, the material."""
+) -> Prompt:
+    """The whole prompt for one report, cut where its reusable part ends.
+
+    The material and the rules are the same for every report of a person; the
+    event, the story around it and the articles chosen for it are not. The call
+    site marks the boundary so the provider reuses the first part instead of
+    reading it again per report.
+    """
     skeleton = _skeleton(event)
     network = network or {}
     filtered = filter_related_articles_for_event(
@@ -708,11 +714,8 @@ def build_report_prompt(
         if connection.get("relationship_description")
     }
 
-    # The material and the rules first, this event last. The reports of one
-    # person are written against the same article and the same instructions,
-    # so leading with them leaves a prefix identical across the calls; the
-    # event, the story around it and the articles chosen for it are what
-    # differ, and they follow.
+    # The material and the rules first, this event last: a provider reuses a
+    # repeated prefix only while nothing varying precedes it.
     event_section = "\n" + "=" * 60 + "\n"
     event_section += "WRITE THE BACKGROUND REPORT FOR THIS EVENT:\n"
     event_section += "=" * 60 + "\n\n"
@@ -731,15 +734,15 @@ def build_report_prompt(
         )
         event_section += "\n".join(panel) + "\n"
 
-    prompt = _subject_article_prompt_section(subject_article)
+    shared = _subject_article_prompt_section(subject_article)
 
-    prompt += "\n" + "=" * 60 + "\n"
-    prompt += REPORT_INSTRUCTIONS
-    prompt += "\n" + PROSE_STYLE_INSTRUCTIONS + "\n"
+    shared += "\n" + "=" * 60 + "\n"
+    shared += REPORT_INSTRUCTIONS
+    shared += "\n" + PROSE_STYLE_INSTRUCTIONS + "\n"
 
-    prompt += event_section
+    specific = event_section
 
-    prompt += build_background_avoidance(
+    specific += build_background_avoidance(
         known_annotations=known,
         story_outline=_story_outline(events, index),
         person_summary=person_summary,
@@ -747,8 +750,8 @@ def build_report_prompt(
         cited_sources=cited,
     )
 
-    prompt += _related_articles_prompt_section(filtered)
-    return prompt
+    specific += _related_articles_prompt_section(filtered)
+    return Prompt(shared=shared, specific=specific)
 
 
 # ============================================================================
@@ -905,22 +908,16 @@ def generate_event_backgrounds(
             client,
             model=REPORT_MODEL,
             reasoning_effort=REPORT_REASONING_EFFORT,
-            input=[
-                {"role": "system", "content": SYSTEM},
-                {
-                    "role": "user",
-                    "content": build_report_prompt(
-                        event,
-                        person_name,
-                        related,
-                        events=events,
-                        index=index,
-                        person_summary=person_summary,
-                        network=network,
-                        subject_article=subject_article,
-                    ),
-                },
-            ],
+            input=build_report_prompt(
+                event,
+                person_name,
+                related,
+                events=events,
+                index=index,
+                person_summary=person_summary,
+                network=network,
+                subject_article=subject_article,
+            ).messages(SYSTEM),
             text_format=BackgroundOnly,
             label=f"Background for '{title}'",
         )

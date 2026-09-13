@@ -20,6 +20,7 @@ from urllib.parse import quote
 from events.event_classes import EVENT_CLASS_CONFIG
 from events.schemas import EventSkeleton
 from icon_categories import format_icon_categories_for_prompt
+from utils.model_calls import Prompt
 from utils.prose_style import PROSE_STYLE_INSTRUCTIONS, description_contract_prompt
 
 
@@ -92,20 +93,22 @@ def build_research_prompt_base(
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
     subject_article: Optional[Dict[str, Any]] = None,
-) -> str:
+) -> Prompt:
     """
     Build base research prompt (common sections for all event types).
 
     Used for standard events (no classification) and as foundation for class-specific prompts.
     Focus on specific details for THIS event only (no images; the image step adds them).
+
+    Returned in two parts. Every event of a life is researched against the same
+    article, the same second source and the same task description, and the call
+    marks where that shared material ends so the provider can reuse it across
+    the sixteen or so calls a person costs.
     """
-    # The material first, the event last. Every event of a life is researched
-    # against the same article, the same second source and the same task
-    # description, so those blocks are identical across the sixteen or so
-    # calls a person costs, but a provider discounts a repeated prefix only
-    # while nothing varying precedes it, and the four lines naming the event
-    # used to precede all of it. Stated at the end the event also reads as the
-    # question the material has been laid out to answer.
+    # The material first, the event last. A provider discounts a repeated
+    # prefix only while nothing varying precedes it, and the four lines naming
+    # the event used to precede all of it. Stated at the end the event also
+    # reads as the question the material has been laid out to answer.
     event_section = "\n" + "=" * 60 + "\n"
     event_section += "RESEARCH DETAILS FOR THIS SPECIFIC EVENT:\n"
     event_section += "=" * 60 + "\n\n"
@@ -260,9 +263,11 @@ def build_research_prompt_base(
     prompt += format_icon_categories_for_prompt()
     prompt += "\n"
 
-    prompt += event_section
-
-    return prompt + _related_articles_prompt_section(filtered_related_articles)
+    return Prompt(
+        shared=prompt,
+        specific=event_section
+        + _related_articles_prompt_section(filtered_related_articles),
+    )
 
 
 def _subject_article_prompt_section(subject_article: Optional[Dict[str, Any]]) -> str:
@@ -332,10 +337,13 @@ def build_research_prompt_classified(
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
     subject_article: Optional[Dict[str, Any]] = None,
-) -> str:
+) -> Prompt:
     """
     Generic research prompt builder for classified events.
     Uses EVENT_CLASS_CONFIG to generate event-class-specific guidance.
+
+    The class-specific guidance belongs to this event, so it follows the shared
+    material rather than joining it.
     """
     # Get base prompt (sections 0-5)
     base = build_research_prompt_base(
@@ -351,12 +359,16 @@ def build_research_prompt_classified(
     class_type = event_skeleton.event_class.type if event_skeleton.event_class else None
     if class_type not in EVENT_CLASS_CONFIG:
         # Fallback to base prompt if config not found
-        return base + _related_articles_prompt_section(filtered_related_articles)
+        return Prompt(
+            shared=base.shared,
+            specific=base.specific
+            + _related_articles_prompt_section(filtered_related_articles),
+        )
 
     config = EVENT_CLASS_CONFIG[class_type]
 
     # Build class-specific guidance section
-    prompt = base + f"\n\n{config['display_name']} EVENT SPECIFIC GUIDANCE:\n"
+    prompt = base.specific + f"\n\n{config['display_name']} EVENT SPECIFIC GUIDANCE:\n"
     prompt += "=" * 60 + "\n"
     prompt += f"This event has been classified as {config['name']} by the proposal.\n"
 
@@ -369,4 +381,7 @@ def build_research_prompt_classified(
         prompt += f"{focus_item}\n"
     prompt += "\n"
 
-    return prompt + _related_articles_prompt_section(filtered_related_articles)
+    return Prompt(
+        shared=base.shared,
+        specific=prompt + _related_articles_prompt_section(filtered_related_articles),
+    )
