@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate complete person dataset by running all three generation scripts."""
+"""Generate a person's story by running the steps of the person pipeline."""
 
 import argparse
 import json
@@ -75,10 +75,56 @@ class RunLog:
             )
 
 
+# The steps of a run in the order they run: the name that `--skip-<name>` and
+# `--only` use, the label the run log prints, and what the step writes. Each
+# step reads what the earlier ones left on disk, so a step skipped here keeps
+# its existing data for the steps after it.
+STEPS: Tuple[Tuple[str, str, str], ...] = (
+    ("events", "Life events", "the life events, with their images and places"),
+    ("style", "Interface style", "the interface style"),
+    ("network", "Ego network", "the ego network"),
+    ("portrait", "Portrait", "the stylized portrait"),
+    ("chapter-art", "Chapter illustrations", "the illustrations of the chapters"),
+    ("review", "Review", "the review of the life events and the ego network"),
+    ("backgrounds", "Background reports", "the depth-layer background reports"),
+    ("translate", "Translation", "the translation into --translate-langs"),
+)
+STEP_NAMES = [name for name, _, _ in STEPS]
+STEP_LABELS = {name: label for name, label, _ in STEPS}
+
+
+def _step_list(value: str) -> List[str]:
+    """Parse a comma-separated list of step names."""
+    names = [name.strip() for name in value.split(",") if name.strip()]
+    unknown = [name for name in names if name not in STEP_NAMES]
+    if unknown or not names:
+        raise argparse.ArgumentTypeError(
+            f"unknown step {', '.join(unknown) or repr(value)}; "
+            f"steps are {', '.join(STEP_NAMES)}"
+        )
+    return names
+
+
+def skip_reasons(args: argparse.Namespace) -> Dict[str, Optional[str]]:
+    """The flag that skips each step, or None for a step the run performs."""
+    reasons: Dict[str, Optional[str]] = {}
+    for name in STEP_NAMES:
+        if getattr(args, "skip_" + name.replace("-", "_")):
+            reasons[name] = f"--skip-{name}"
+        elif args.only is not None and name not in args.only:
+            reasons[name] = f"--only {','.join(args.only)}"
+        else:
+            reasons[name] = None
+    return reasons
+
+
 def parse_args(argv: Any) -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
-        description="Generate complete person dataset (life events, interface style, and ego network)."
+        description=(
+            "Generate a person's story by running every step of the person "
+            "pipeline, or the steps --only and the --skip flags leave."
+        )
     )
     parser.add_argument(
         "subject", help="Person to research, e.g. 'Ada Lovelace' or 'henry_II'."
@@ -98,29 +144,17 @@ def parse_args(argv: Any) -> argparse.Namespace:
         ),
     )
     parser.add_argument(
-        "--dataset-only",
-        action="store_true",
-        help="Generate only life events dataset (skip interface style and network).",
+        "--only",
+        type=_step_list,
+        metavar="STEP[,STEP...]",
+        help=f"Run only the steps named ({', '.join(STEP_NAMES)}).",
     )
+    for name, _, what in STEPS:
+        parser.add_argument(f"--skip-{name}", action="store_true", help=f"Skip {what}.")
     parser.add_argument(
-        "--style-only",
+        "--skip-db",
         action="store_true",
-        help="Generate only interface style (skip dataset and network).",
-    )
-    parser.add_argument(
-        "--network-only",
-        action="store_true",
-        help="Generate only ego network (skip dataset and interface style).",
-    )
-    parser.add_argument(
-        "--skip-review",
-        action="store_true",
-        help="Skip the automatic review step after generation.",
-    )
-    parser.add_argument(
-        "--skip-portrait",
-        action="store_true",
-        help="Skip portrait generation (stylized artwork from reference image).",
+        help="Leave Deutsche Biographie out of the sources of the life events.",
     )
     parser.add_argument(
         "--portrait-model",
@@ -147,29 +181,9 @@ def parse_args(argv: Any) -> argparse.Namespace:
         help="Creator or credited source of the reference portrait.",
     )
     parser.add_argument(
-        "--skip-chapter-art",
-        action="store_true",
-        help="Skip the abstract illustrations for the chapter slides.",
-    )
-    parser.add_argument(
         "--chapter-art-model",
         default=CHAPTER_ART_MODEL,
         help=f"OpenAI model for the chapter illustrations (default: {CHAPTER_ART_MODEL}).",
-    )
-    parser.add_argument(
-        "--skip-db",
-        action="store_true",
-        help="Skip fetching Deutsche Biographie data as additional source.",
-    )
-    parser.add_argument(
-        "--skip-backgrounds",
-        action="store_true",
-        help="Skip writing the depth-layer background reports.",
-    )
-    parser.add_argument(
-        "--skip-translate",
-        action="store_true",
-        help="Skip automatic translation after generation.",
     )
     parser.add_argument(
         "--usage-json",
@@ -204,12 +218,13 @@ def main(argv: Any = None) -> int:
     style_model = args.model or STYLE_MODEL
     network_model = args.model or NETWORK_MODEL
 
-    # Determine which steps to run
-    run_dataset = not (args.style_only or args.network_only)
-    run_style = not (args.dataset_only or args.network_only)
-    run_network = not (args.dataset_only or args.style_only)
-
+    skipped = skip_reasons(args)
     run_log = RunLog()
+
+    def skip(step: str) -> None:
+        reason = skipped[step] or ""
+        print(f"\n⊘ Skipping {STEP_LABELS[step].lower()} ({reason})")
+        run_log.record(STEP_LABELS[step], STEP_SKIPPED, reason)
 
     def banner(text: str) -> None:
         print("\n" + "=" * 60)
@@ -221,7 +236,7 @@ def main(argv: Any = None) -> int:
 
     # Step 1: Generate life events dataset
     usage.begin_step("Life events")
-    if run_dataset:
+    if not skipped["events"]:
         banner("STEP 1/8: Generating life events dataset")
         try:
             dataset_path, person_id = generate_dataset(
@@ -237,12 +252,11 @@ def main(argv: Any = None) -> int:
             print(f"\n✗ Life events dataset generation failed: {error}")
             run_log.record("Life events", STEP_FAILED, str(error))
     else:
-        print("\n⊘ Skipping life events dataset generation")
-        run_log.record("Life events", STEP_SKIPPED, "not requested")
+        skip("events")
 
     # Every step after the dataset one is filed under a person id, and step 1
-    # is where a run normally learns it. Under --style-only and --network-only
-    # that step does not run at all, and a run whose dataset step failed has no
+    # is where a run normally learns it. Under --skip-events that step does
+    # not run at all, and a run whose dataset step failed has no
     # id either, so the id is resolved from the data already on disk: the
     # registry and data/people/ both answer to a name or an id. A person
     # neither knows is genuinely new, and the steps below skip themselves as
@@ -266,7 +280,7 @@ def main(argv: Any = None) -> int:
 
     # Step 2: Generate interface style
     usage.begin_step("Interface style")
-    if run_style:
+    if not skipped["style"]:
         banner("STEP 2/8: Generating interface style")
         try:
             style_result = generate_style(
@@ -280,12 +294,11 @@ def main(argv: Any = None) -> int:
             print(f"\n✗ Interface style generation failed: {error}")
             run_log.record("Interface style", STEP_FAILED, str(error))
     else:
-        print("\n⊘ Skipping interface style generation")
-        run_log.record("Interface style", STEP_SKIPPED, "not requested")
+        skip("style")
 
     # The two image steps are drawn in the story's primary and secondary color,
     # so they are downstream of the style rather than beside it. A person whose
-    # style step failed — or was never asked for, as under --dataset-only — has
+    # style step failed — or was skipped for a person who never had one — has
     # no palette to draw in, and an image drawn in a default one would be cached
     # under the person's name and never redrawn. The check reads what is on
     # disk, so a style written by an earlier run still counts.
@@ -325,7 +338,7 @@ def main(argv: Any = None) -> int:
 
     # Step 3: Generate ego network
     usage.begin_step("Ego network")
-    if run_network:
+    if not skipped["network"]:
         banner("STEP 3/8: Generating ego network")
         try:
             network_path = generate_person_network(
@@ -340,14 +353,12 @@ def main(argv: Any = None) -> int:
             print(f"\n✗ Ego network generation failed: {error}")
             run_log.record("Ego network", STEP_FAILED, str(error))
     else:
-        print("\n⊘ Skipping ego network generation")
-        run_log.record("Ego network", STEP_SKIPPED, "not requested")
+        skip("network")
 
     # Step 4: Generate portrait (if not skipped)
     usage.begin_step("Portrait")
-    if args.skip_portrait:
-        print("\n⊘ Skipping portrait generation (--skip-portrait flag)")
-        run_log.record("Portrait", STEP_SKIPPED, "--skip-portrait")
+    if skipped["portrait"]:
+        skip("portrait")
     elif style_missing:
         print(f"\n⊘ Skipping portrait generation ({no_style_reason})")
         run_log.record("Portrait", STEP_SKIPPED, no_style_reason)
@@ -406,9 +417,8 @@ def main(argv: Any = None) -> int:
     # colors they are drawn in, and after the dataset, whose chapters they
     # illustrate — a person with neither simply has nothing to draw.
     usage.begin_step("Chapter illustrations")
-    if args.skip_chapter_art:
-        print("\n⊘ Skipping chapter illustrations (--skip-chapter-art flag)")
-        run_log.record("Chapter illustrations", STEP_SKIPPED, "--skip-chapter-art")
+    if skipped["chapter-art"]:
+        skip("chapter-art")
     elif style_missing:
         print(f"\n⊘ Skipping chapter illustrations ({no_style_reason})")
         run_log.record("Chapter illustrations", STEP_SKIPPED, no_style_reason)
@@ -438,7 +448,7 @@ def main(argv: Any = None) -> int:
 
     # Step 6: Review (if not skipped)
     usage.begin_step("Review")
-    if not args.skip_review:
+    if not skipped["review"]:
         print("\n" + "=" * 60)
         print("STEP 6/8: REVIEWING GENERATED DATA")
         print("=" * 60)
@@ -462,8 +472,7 @@ def main(argv: Any = None) -> int:
             print("  Generated data is still usable, but not reviewed.")
             run_log.record("Review", STEP_FAILED, str(error))
     else:
-        print("\n⊘ Skipping review step (--skip-review flag)")
-        run_log.record("Review", STEP_SKIPPED, "--skip-review")
+        skip("review")
 
     # Step 7: Depth-layer background reports. After review, so the reports
     # build on the reviewed English text and its annotations; before
@@ -471,9 +480,8 @@ def main(argv: Any = None) -> int:
     # own deep-event selection and writes a report only where the story will
     # offer one.
     usage.begin_step("Background reports")
-    if args.skip_backgrounds:
-        print("\n⊘ Skipping background reports (--skip-backgrounds flag)")
-        run_log.record("Background reports", STEP_SKIPPED, "--skip-backgrounds")
+    if skipped["backgrounds"]:
+        skip("backgrounds")
     elif not person_id:
         print("\n⊘ Skipping background reports (no person_id resolved)")
         run_log.record("Background reports", STEP_SKIPPED, "no person ID resolved")
@@ -495,9 +503,11 @@ def main(argv: Any = None) -> int:
     translate_langs = [
         code.strip() for code in args.translate_langs.split(",") if code.strip()
     ]
-    if args.skip_translate or not translate_langs:
-        print("\n⊘ Skipping translation step (--skip-translate flag)")
-        run_log.record("Translation", STEP_SKIPPED, "--skip-translate")
+    if skipped["translate"]:
+        skip("translate")
+    elif not translate_langs:
+        print("\n⊘ Skipping translation (no --translate-langs)")
+        run_log.record("Translation", STEP_SKIPPED, "no --translate-langs")
     elif not person_id:
         print("\n⊘ Skipping translation step (no person_id resolved)")
         run_log.record("Translation", STEP_SKIPPED, "no person ID resolved")

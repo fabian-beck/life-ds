@@ -231,17 +231,18 @@ class PaletteChangeRedrawsTheImagesTests(unittest.TestCase):
 class PersonIdWithoutTheDatasetStepTests(unittest.TestCase):
     """A run that skips the dataset step still knows whose story it is.
 
-    `--style-only` and `--network-only` skip step 1, which was the only place
-    a run learned the person id, so every later step lost it: the portrait and
-    the chapter art raised "No person ID resolved", and the background reports
-    and the translation skipped themselves. The id is resolved from the
-    existing data instead, which is what a run over an existing person has.
+    `--skip-events` skips step 1, which was the only place a run learned the
+    person id, so every later step lost it: the portrait and the chapter art
+    raised "No person ID resolved", and the background reports and the
+    translation skipped themselves. The id is resolved from the existing data
+    instead, which is what a run over an existing person has.
     """
 
     ARGV = [
         "Ada Lovelace",
         "--no-register",
-        "--network-only",
+        "--skip-events",
+        "--skip-style",
         "--skip-review",
         "--skip-backgrounds",
         "--skip-translate",
@@ -281,6 +282,65 @@ class PersonIdWithoutTheDatasetStepTests(unittest.TestCase):
         code, seen = self._run_without_the_dataset_step(None)
         self.assertEqual(seen, {}, "an image was drawn for nobody")
         self.assertEqual(code, 0, "skipping for an unknown person is not a failure")
+
+
+class StepFlagTests(unittest.TestCase):
+    """Every step is skipped by its own name, and `--only` takes the same names.
+
+    The flags once named combinations instead: `--dataset-only` skipped the
+    style and the network together, so no run could regenerate the events and
+    the network while keeping the style.
+    """
+
+    def _reached(self, *flags):
+        reached = []
+
+        def stub(step, result):
+            def run(*args, **kwargs):
+                reached.append(step)
+                return result
+
+            return run
+
+        with _styles(ada_lovelace={"primary": "#FF8800", "secondary": "#1155AA"}):
+            code = _run(
+                ["Ada Lovelace", "--no-register", *flags],
+                generate_dataset=stub(
+                    "events", ("data/people/ada_lovelace", "ada_lovelace")
+                ),
+                generate_style=stub("style", {"id": "ada_lovelace"}),
+                generate_person_network=stub("network", "network.json"),
+                generate_portrait=stub(
+                    "portrait", {"success": True, "local_path": "portrait.png"}
+                ),
+                generate_chapter_illustrations=stub(
+                    "chapter-art", {"success": True, "generated": [], "message": ""}
+                ),
+                review_person_data=stub("review", True),
+                generate_event_backgrounds=stub("backgrounds", 0),
+            )
+        self.assertEqual(code, 0)
+        return reached
+
+    def test_a_skipped_step_leaves_the_others_running(self) -> None:
+        reached = self._reached("--skip-style", "--skip-portrait", "--skip-translate")
+        self.assertEqual(
+            reached, ["events", "network", "chapter-art", "review", "backgrounds"]
+        )
+
+    def test_only_runs_the_steps_it_names(self) -> None:
+        self.assertEqual(self._reached("--only", "network,events"), ["events", "network"])
+
+    def test_every_step_has_a_skip_flag_of_its_name(self) -> None:
+        for name in pipeline.STEP_NAMES:
+            args = pipeline.parse_args(["Ada Lovelace", f"--skip-{name}"])
+            reasons = pipeline.skip_reasons(args)
+            self.assertEqual(reasons[name], f"--skip-{name}")
+            self.assertEqual([step for step, why in reasons.items() if why], [name])
+
+    def test_an_unknown_step_name_is_rejected(self) -> None:
+        with self.assertRaises(SystemExit), patch("sys.stderr"):
+            pipeline.parse_args(["Ada Lovelace", "--only", "dataset"])
 
 
 class RunLogTests(unittest.TestCase):

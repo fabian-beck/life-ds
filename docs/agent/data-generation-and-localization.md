@@ -46,6 +46,12 @@ python scripts/generate_person.py "Albert Einstein"
 
 This runs the whole pipeline: the three generators, the portrait and chapter art, review, the depth-layer background reports, and translation.
 
+**Skipping steps**: each of the eight steps has a flag of its name — `--skip-events`, `--skip-style`, `--skip-network`, `--skip-portrait`, `--skip-chapter-art`, `--skip-review`, `--skip-backgrounds`, and `--skip-translate` — and `--only` takes the same names, comma-separated, to run just those. A skipped step leaves its data on disk as it is, and the later steps read that data, so a story regenerated in its existing style and with its existing portrait is one run:
+
+```bash
+python scripts/generate_person.py steve_jobs --skip-style --skip-portrait
+```
+
 1. `generate_person_events.py` - Life events via a proposal call and a research call per event (the command line over `events/pipeline.py`)
 2. `generate_person_style.py` - Visual design
 3. `generate_person_network.py` - Ego network

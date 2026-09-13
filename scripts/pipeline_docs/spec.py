@@ -497,6 +497,7 @@ STEPS: List[Step] = [
             "description_contract_prompt",
         ],
         inputs=["wiki_cache", "db_cache"],
+        skip_flag="--skip-events",
         model_from="generate_person_events.py",
     ),
     Step(
@@ -530,6 +531,7 @@ STEPS: List[Step] = [
         ],
         calls_per_run="12–16 (one per event)",
         inputs=["wiki_cache", "db_cache"],
+        skip_flag="--skip-events",
     ),
     Step(
         "p_img_search",
@@ -548,6 +550,7 @@ STEPS: List[Step] = [
         ),
         depends_on=[Dep("p_events_p1", "event skeletons")],
         prompts=["generate_image_search_strings"],
+        skip_flag="--skip-events",
     ),
     Step(
         "p_img_fetch",
@@ -619,6 +622,7 @@ STEPS: List[Step] = [
             "STAND_IN_REJECTION_INSTRUCTIONS",
             "match_images_to_events",
         ],
+        skip_flag="--skip-events",
     ),
     Step(
         "p_img_verify",
@@ -647,6 +651,7 @@ STEPS: List[Step] = [
         prompts=["verify_portrait_depicts_person"],
         calls_per_run="0-1",
         outputs=["life_events", "persons"],
+        skip_flag="--skip-events",
     ),
     Step(
         "p_geocode",
@@ -683,7 +688,7 @@ STEPS: List[Step] = [
         prompts=["build_prompt", "build_retry_prompt", "call_openai"],
         inputs=["life_events"],
         outputs=["person_styles"],
-        skip_flag="--dataset-only / --network-only",
+        skip_flag="--skip-style",
     ),
     Step(
         "p_network",
@@ -700,7 +705,7 @@ STEPS: List[Step] = [
         prompts=["build_prompt", "call_openai"],
         inputs=["wiki_cache", "life_events"],
         outputs=["ego_network"],
-        skip_flag="--dataset-only / --style-only",
+        skip_flag="--skip-network",
     ),
     Step(
         "p_portrait",
