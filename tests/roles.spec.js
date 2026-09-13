@@ -1,97 +1,104 @@
 import { test, expect } from "@playwright/test";
-import { normalizeRole, roleVocabulary } from "../src/utils/roles.js";
-// The shipped German registry, so the pairs the test claims are merged are the
-// ones a reader actually meets.
-import personsDe from "../data/persons_de.json" with { type: "json" };
+import { roleKey, roleLabel } from "../src/utils/roles.js";
 
-const germanRoles = personsDe.people.flatMap(
-  (person) => person.primaryRoles ?? []
-);
-
-test("a role is compared trimmed and lowercased", () => {
-  expect(normalizeRole("  Mathematician ")).toBe("mathematician");
-  expect(normalizeRole(null)).toBe("");
-  expect(normalizeRole(42)).toBe("");
+test("a role is keyed trimmed, lowercased, and with its spacing collapsed", () => {
+  expect(roleKey("  Mathematician ")).toBe("mathematician");
+  expect(roleKey("political  advisor")).toBe("political advisor");
+  expect(roleKey(null)).toBe("");
+  expect(roleKey(42)).toBe("");
 });
 
-test("English roles are compared as written", () => {
-  const roles = roleVocabulary(["Mathematician", "writer"], "en");
-  expect(roles.key("mathematician")).toBe("mathematician");
-  expect(roles.label("mathematician")).toBe("Mathematician");
-  expect(roles.key("writer")).toBe("writer");
-});
-
-test("the two German forms of one role share a key", () => {
-  const roles = roleVocabulary(
-    ["Mathematikerin", "Mathematiker", "Architektin", "Architekt"],
-    "de"
+test("a language without gendered role names keys the role as written", () => {
+  expect(roleKey("Mathematician", "en")).toBe("mathematician");
+  // The reduction is German, so it must not shorten an English role name.
+  expect(roleKey("writer", "en")).toBe("writer");
+  expect(roleKey("designer", "en")).toBe("designer");
+  expect(roleKey("Mathematikerin", "en")).not.toBe(
+    roleKey("Mathematiker", "en")
   );
-  expect(roles.key("Mathematikerin")).toBe(roles.key("Mathematiker"));
-  expect(roles.key("Architektin")).toBe(roles.key("Architekt"));
-  expect(roles.key("Mathematikerin")).not.toBe(roles.key("Architekt"));
 });
 
-test("an irregular German pair shares a key too", () => {
-  // "Pathologin" drops the masculine "-e", "Beamtin" the masculine "-er", and
-  // "Ärztin" carries an umlaut its masculine form does not.
-  const roles = roleVocabulary(
-    ["Pathologe", "Pathologin", "Beamter", "Beamtin", "Arzt", "Ärztin"],
-    "de"
-  );
-  expect(roles.key("Pathologin")).toBe(roles.key("Pathologe"));
-  expect(roles.key("Beamtin")).toBe(roles.key("Beamter"));
-  expect(roles.key("Ärztin")).toBe(roles.key("Arzt"));
-});
-
-test("a merged pair is labeled inclusively, from the stem both forms share", () => {
-  const roles = roleVocabulary(
-    ["Mathematikerin", "Mathematiker", "Pathologe", "Pathologin", "Physikerin"],
-    "de"
-  );
-  expect(roles.label("Mathematiker")).toBe("Mathematiker:in");
-  expect(roles.label("Mathematikerin")).toBe("Mathematiker:in");
-  expect(roles.label("Pathologe")).toBe("Patholog:in");
-  // Without a masculine counterpart in the data there is no pair to label.
-  expect(roles.label("Physikerin")).toBe("Physikerin");
-});
-
-test("only a pair the data carries is merged", () => {
-  // A word ending in "in" is not read as a feminine role name on its own: the
-  // masculine form has to occur in the data as well.
-  const german = roleVocabulary(["Kapitänin", "Mathematiker"], "de");
-  expect(german.key("Kapitänin")).toBe("kapitänin");
-  expect(german.label("Kapitänin")).toBe("Kapitänin");
-});
-
-test("only German merges its gendered forms", () => {
-  const english = roleVocabulary(["Mathematikerin", "Mathematiker"], "en");
-  expect(english.key("Mathematikerin")).not.toBe(english.key("Mathematiker"));
-});
-
-test("a role the vocabulary never saw is still keyed and labeled", () => {
-  const roles = roleVocabulary(["Mathematiker"], "de");
-  expect(roles.key(" Physikerin ")).toBe("physikerin");
-  expect(roles.label(" Physikerin ")).toBe("Physikerin");
-  expect(roles.key(null)).toBe("");
-  expect(roles.label(undefined)).toBe("");
-});
-
-test("the German registry's gendered pairs all merge", () => {
-  const roles = roleVocabulary(germanRoles, "de");
+test("the German forms of one role share a key", () => {
   for (const [feminine, masculine] of [
+    // The regular suffix, on its own and with an umlaut.
     ["Mathematikerin", "Mathematiker"],
-    ["Physikerin", "Physiker"],
-    ["Informatikerin", "Informatiker"],
     ["Schriftstellerin", "Schriftsteller"],
     ["Architektin", "Architekt"],
-    ["Designerin", "Designer"],
-    ["Dichterin", "Dichter"],
-    ["Erfinderin", "Erfinder"],
-    ["Künstlerin", "Künstler"],
-    ["Hochschullehrerin", "Hochschullehrer"],
+    ["Professorin", "Professor"],
+    ["Präsidentin", "Präsident"],
+    ["Journalistin", "Journalist"],
+    ["Ingenieurin", "Ingenieur"],
+    ["Ärztin", "Arzt"],
+    ["Köchin", "Koch"],
+    ["Gräfin", "Graf"],
+    ["Bäuerin", "Bauer"],
+    // The weak and adjectival nouns, whose masculine form ends in "e" or "er".
+    ["Pathologin", "Pathologe"],
+    ["Pädagogin", "Pädagoge"],
+    ["Beamtin", "Beamter"],
+    ["Industrielle", "Industrieller"],
+    // The irregular feminine, and the compound that pairs "-mann" with "-frau".
+    ["Prinzessin", "Prinz"],
+    ["Geschäftsfrau", "Geschäftsmann"],
+    ["Kauffrau", "Kaufmann"],
   ]) {
-    expect(germanRoles).toContain(feminine);
-    expect(germanRoles).toContain(masculine);
-    expect(roles.key(feminine)).toBe(roles.key(masculine));
+    expect(roleKey(feminine, "de"), `${feminine} / ${masculine}`).toBe(
+      roleKey(masculine, "de")
+    );
   }
+});
+
+test("different German roles keep different keys", () => {
+  // One name per profession, across the shapes the reduction cuts into:
+  // "-er", "-e", "-or", "-ent", "-ist", "-eur", and the compounds.
+  const distinct = [
+    "Mathematiker",
+    "Informatiker",
+    "Physiker",
+    "Chemiker",
+    "Architekt",
+    "Philosoph",
+    "Dichter",
+    "Designer",
+    "Erfinder",
+    "Kaiser",
+    "Monarch",
+    "Lehrer",
+    "Hochschullehrer",
+    "Pathologe",
+    "Pädagoge",
+    "Professor",
+    "Präsident",
+    "Publizist",
+    "Redakteur",
+    "Offizier",
+    "Marineoffizier",
+    "Geschäftsmann",
+    "Staatsmann",
+    "Widerstandskämpfer",
+  ];
+  const keys = new Set(distinct.map((role) => roleKey(role, "de")));
+  expect(keys.size).toBe(distinct.length);
+});
+
+test("a short role keeps the ending that would leave no stem", () => {
+  expect(roleKey("Abt", "de")).toBe("abt");
+  expect(roleKey("Erbin", "de")).toBe(roleKey("Erbe", "de"));
+  expect(roleKey("Patin", "de")).toBe(roleKey("Pate", "de"));
+});
+
+test("a role the data carries in both forms is labeled inclusively", () => {
+  expect(roleLabel(["Mathematiker", "Mathematikerin"])).toBe("Mathematiker:in");
+  expect(roleLabel(["Mathematikerin", "Mathematiker"])).toBe("Mathematiker:in");
+  // The inclusive form is built on the feminine name's stem, which is what the
+  // irregular pairs need.
+  expect(roleLabel(["Pathologe", "Pathologin"])).toBe("Patholog:in");
+  expect(roleLabel(["Arzt", "Ärztin"])).toBe("Ärzt:in");
+});
+
+test("a role the data carries in one form is labeled as written", () => {
+  expect(roleLabel(["Physikerin"])).toBe("Physikerin");
+  expect(roleLabel([" Mathematician "])).toBe("Mathematician");
+  expect(roleLabel([])).toBe("");
+  expect(roleLabel(null)).toBe("");
 });

@@ -18,7 +18,7 @@
     initialsFromName,
     styleVars,
   } from "../utils/helpers.js";
-  import { roleVocabulary } from "../utils/roles.js";
+  import { roleKey, roleLabel } from "../utils/roles.js";
   import { computeYearsLabel } from "../utils/story/dates.js";
   import { getThumbnailUrl } from "../utils/story/images.js";
   import { assetUrl } from "../utils/assetUrl.js";
@@ -258,39 +258,39 @@
     }
   }
 
-  // One key per role, so a German masculine/feminine pair is one filter tag
-  // under one inclusive label; see src/utils/roles.js.
-  $: roleTags = roleVocabulary(
-    entries.flatMap((entry) =>
-      Array.isArray(entry.primaryRoles) ? entry.primaryRoles : []
-    ),
-    $currentLanguage
-  );
-
-  // Compute tag frequencies from entries (with case-insensitive grouping and
-  // merged masculine/feminine role names in German).
+  // One tag per role key, so the German forms of a role are one tag under one
+  // inclusive label; see src/utils/roles.js.
   $: tagFrequencies = (() => {
-    const frequencies = new Map(); // normalized tag -> {display: string, count: number}
+    // Role key -> {forms: the role as the entries write it, count: people}
+    const frequencies = new Map();
     entries.forEach((entry) => {
       if (Array.isArray(entry.primaryRoles)) {
         const entryTags = new Map();
         entry.primaryRoles.forEach((role) => {
           if (role && typeof role === "string") {
-            entryTags.set(roleTags.key(role), roleTags.label(role));
+            entryTags.set(roleKey(role, $currentLanguage), role);
           }
         });
-        entryTags.forEach((display, normalized) => {
-          const existing = frequencies.get(normalized);
+        entryTags.forEach((form, key) => {
+          const existing = frequencies.get(key);
           if (existing) {
+            existing.forms.add(form);
             existing.count += 1;
           } else {
-            frequencies.set(normalized, { display, count: 1 });
+            frequencies.set(key, { forms: new Set([form]), count: 1 });
           }
         });
       }
     });
     // Filter to only tags that cover at least 2 persons
-    return new Map([...frequencies].filter(([_, data]) => data.count >= 2));
+    return new Map(
+      [...frequencies]
+        .filter(([, data]) => data.count >= 2)
+        .map(([key, data]) => [
+          key,
+          { display: roleLabel([...data.forms]), count: data.count },
+        ])
+    );
   })();
 
   // Get top 10 most frequent tags
@@ -383,7 +383,8 @@
           if (!Array.isArray(entry.primaryRoles)) return false;
           return entry.primaryRoles.some(
             (role) =>
-              typeof role === "string" && activeTags.has(roleTags.key(role))
+              typeof role === "string" &&
+              activeTags.has(roleKey(role, $currentLanguage))
           );
         });
       }

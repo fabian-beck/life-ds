@@ -4,7 +4,7 @@
  */
 import { displayName } from "../helpers.js";
 import { findPersonMentions } from "../personNames.js";
-import { roleVocabulary } from "../roles.js";
+import { roleKey } from "../roles.js";
 
 /**
  * Get the subcategory from a relationship type string.
@@ -531,8 +531,8 @@ export function getBirthParents(event, egoNetwork) {
  * again. Someone with no role in common is not offered at all, which is why
  * the list can come back empty.
  *
- * Roles are compared by the keys of the registry's role vocabulary, so a
- * German `Mathematikerin` and a `Mathematiker` share the role they name.
+ * Roles are compared by their keys, so a German `Mathematikerin` and a
+ * `Mathematiker` share the role they name; see `src/utils/roles.js`.
  *
  * @param {Object} [inputs] - What the scoring reads
  * @param {Object} [inputs.person] - The story's subject; without one the
@@ -563,16 +563,9 @@ export function relatedPersonsByRole({
   );
   if (!subject) return [];
 
-  const vocabulary = roleVocabulary(
-    [
-      ...(person.primary_roles || []),
-      ...people.flatMap((entry) => entry.primaryRoles || []),
-    ],
-    language
-  );
   // The subject's own words for its roles, by the key they are compared under.
   const subjectRoles = new Map(
-    (person.primary_roles || []).map((role) => [vocabulary.key(role), role])
+    (person.primary_roles || []).map((role) => [roleKey(role, language), role])
   );
   if (subjectRoles.size === 0) return [];
 
@@ -580,7 +573,7 @@ export function relatedPersonsByRole({
     .filter((entry) => entry.id !== subject.id)
     .map((entry) => {
       const roles = new Set(
-        (entry.primaryRoles || []).map((role) => vocabulary.key(role))
+        (entry.primaryRoles || []).map((role) => roleKey(role, language))
       );
       const sharedRoles = [...subjectRoles]
         .filter(([key]) => roles.has(key))
