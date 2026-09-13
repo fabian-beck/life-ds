@@ -676,7 +676,7 @@ def scan_script(path: Path, shared_constants: Dict[str, str]) -> ScriptFacts:
     ai_calls: List[AiCall] = []
     cli_flags: List[CliFlag] = []
 
-    # Module-level prompt constants (e.g. STYLE_TRANSFER_PROMPT).
+    # Module-level prompt constants (e.g. CONCEPT_SYSTEM_PROMPT).
     for constant_name, expr in constants.items():
         if not PROMPT_CONSTANT_RE.search(constant_name):
             continue

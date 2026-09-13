@@ -52,31 +52,6 @@ EDIT_MODELS = (
 """Models that edit from several input images at once. A model outside
 this list falls back to text-only generation and loses the likeness."""
 
-# Style transfer prompt for consistent artistic treatment
-STYLE_TRANSFER_PROMPT = """Apply the artistic style, color treatment, lighting technique, and rendering approach of the first reference image to the second reference image.
-
-PRESERVE FROM SECOND IMAGE:
-- Facial likeness and features EXACTLY
-- Expression and gaze direction
-- Pose and head position
-- Composition and framing
-- Historical period clothing and styling
-
-TRANSFER FROM FIRST IMAGE:
-- Artistic rendering style (painterly, illustrative, photographic, etc.)
-- Color palette and color grading
-- Lighting approach and contrast
-- Background treatment
-- Edge treatment and finishing
-- Overall aesthetic mood
-
-CRITICAL:
-- The person in the output must be recognizably the same person from the second image
-- Do NOT change facial features, expression, or likeness
-- Do NOT add decorative elements not present in either image
-- Maintain clean, professional quality suitable for biographical visualization
-"""
-
 MANDATORY_PORTRAIT_FRAMING = """MANDATORY PORTRAIT FRAMING:
 - ALWAYS generate a vertical biographical portrait with the person's face dominant
 - Use a head-and-shoulders or upper-torso crop, similar in scale to the FIRST IMAGE
@@ -904,7 +879,7 @@ def generate_portrait(
 1. FIRST IMAGE: A style reference showing the artistic treatment to apply
 2. SECOND IMAGE: The portrait to transform (this is the PRIMARY source)
 
-Your task: Transform the SECOND IMAGE into a light-drawing portrait using the artistic style from the FIRST IMAGE.
+Your task: Redraw the person in the SECOND IMAGE as a light drawing, in the technique of the FIRST IMAGE.
 
 CRITICAL - PRESERVE EXACTLY from SECOND IMAGE:
 - Facial likeness and all distinctive features
@@ -913,6 +888,13 @@ CRITICAL - PRESERVE EXACTLY from SECOND IMAGE:
 - Natural shoulder orientation when visible in the portrait crop
 - The person must be IMMEDIATELY recognizable as the same individual
 - Hair style and clothing silhouette
+
+CRITICAL - DISCARD from SECOND IMAGE - it supplies who the person is, never how the picture is made:
+- Discard its rendering completely: no photographic or painted surface survives into the output
+- Remove all continuous tone - no skin texture, no pores, no wrinkles rendered as shading, no fabric weave, no smooth gradients anywhere
+- Remove its own colors - skin, hair, eyes, and clothing are drawn in the palette below, never in natural or photographic color
+- Do NOT hand back the SECOND IMAGE with glowing strokes laid on top of it; the output is drawn from nothing in the FIRST IMAGE's technique
+- A modern color photograph must come out as unmistakably a drawing. If the result could be mistaken for a photograph with an effect applied to it, it is wrong.
 
 {MANDATORY_PORTRAIT_FRAMING}
 
@@ -923,28 +905,28 @@ NO FRAME OR BORDER - the portrait must be borderless:
 - The background must extend uninterrupted to all four edges of the output with no ring, arch, ellipse, or containing shape
 
 ARTISTIC TREATMENT - Apply from FIRST IMAGE:
-- Light-drawing / light-painting aesthetic (glowing strokes in darkness)
-- BROAD, BOLD STROKES of light - thick, luminous lines as if drawn with moving light source
-- Sketchy, expressive quality - not photorealistic
-- Visible light trails and streaks showing movement
-- Deep black or very dark background (night photography effect)
-- Long-exposure photography feel
+- The whole image is a line drawing made of glowing filaments on pitch black, exactly as in the FIRST IMAGE
+- Draw edges and contours only: jaw, brow, nose, lips, eyelids, single hair strands, collar, and the folds of clothing are each traced by a thin luminous line
+- Leave the interior of every form unfilled - cheeks, forehead, and garments stay black between the lines, and the shape is read from the lines alone
+- Where a surface needs volume, build it from a few sparse parallel strokes that follow its curve, never from a filled or graded area
+- Fine, hair-thin strokes, not thick bars or ribbons of light
+- Sketchy and expressive: a stroke may overshoot, trail off, or leave a contour open
+- Deep black background, uninterrupted to all four edges
 
-COLOR PALETTE:
-- Base colors: Pure white (#FFFFFF), {colors['primary']}, and {colors['secondary']}
-- White should be the dominant color for the main portrait structure
-- Use the two accent colors ({colors['primary']} and {colors['secondary']}) creatively for highlights and emphasis
-- You may blend and mix these colors for aesthetic effect where appropriate
-- Ensure the overall appearance is visually harmonious and aesthetically pleasing
+COLOR PALETTE - the two accent colors identify the story, so they must be plainly visible:
+- The strokes carry three colors only: pure white (#FFFFFF), {colors['primary']}, and {colors['secondary']}, on black. No other hue appears anywhere in the image, and no natural skin, hair, or fabric color.
+- Both accents must be unmistakable at a glance and read as the colors they are, at full strength - not a faint tint, a wash, or a near-white version of either
+- Give each accent a territory of its own, large enough to see across the portrait: one takes the hair and the lit side, the other the clothing and the rim lighting on the shadowed side, so the two meet rather than pooling in one corner
+- White carries the face and the main structure; the accents run through everything around it and blend into the white where strokes meet
 - Strong contrast between bright glowing strokes and pitch-black background
 - Light should have slight bloom/glow effect
 
 OUTPUT FORMAT:
 - Portrait format with 2:3 aspect ratio (vertical orientation)
 - Head-and-shoulders or upper-torso framing; the face must remain the focal point
-- The portrait is "sketched" entirely with glowing light strokes against darkness
+- Every part of the portrait, the face included, is drawn with glowing strokes against darkness
 
-REMEMBER: The SECOND IMAGE provides identity, likeness, expression, and recognizable features. The FIRST IMAGE provides only the artistic style. Crop and reframe the SECOND IMAGE whenever needed to produce a true portrait. The result must look like the same person, with NO frame, border, or oval surround."""
+REMEMBER: The SECOND IMAGE provides identity, likeness, expression, and recognizable features, and nothing about how the picture is made. The FIRST IMAGE provides the technique: what a stroke looks like, how much of the subject is left black, and how a finished drawing in this style reads. Crop and reframe the SECOND IMAGE whenever needed to produce a true portrait. The result must look like the same person, drawn, with NO frame, border, or oval surround."""
 
                     # Pass both images as file objects in a list
                     # Open files and keep references to close them properly

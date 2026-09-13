@@ -694,7 +694,7 @@ STEPS: List[Step] = [
             "is updated with the finished portrait."
         ),
         depends_on=[Dep("p_style", "primary and secondary color")],
-        prompts=["STYLE_TRANSFER_PROMPT", "generate_portrait"],
+        prompts=["generate_portrait"],
         inputs=["persons", "person_styles"],
         outputs=["portrait", "persons", "life_events"],
         skip_flag="--skip-portrait",
