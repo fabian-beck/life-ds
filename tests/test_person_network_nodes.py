@@ -91,16 +91,12 @@ class CollectiveNameTests(unittest.TestCase):
                 is_collective = conn.get("entity_kind") in ("organization", "group")
                 if generator.looks_collective(name) and not is_collective:
                     flagged.append((path.parent.name, name))
-        # The two untyped collectives the corpus still carries, flagged in
-        # data/outdated.md; they leave this list with the regeneration.
-        known = [
-            (
-                "joseph_weizenbaum",
-                "General Electric Computer Development Laboratory colleagues (collective)",
-            ),
-            ("joseph_weizenbaum", "Students at MIT and other universities (collective)"),
-        ]
-        self.assertEqual(flagged, known)
+        self.assertEqual(
+            flagged,
+            [],
+            "each of these is either an individual the heuristic misreads or a "
+            "collective node the schema no longer admits",
+        )
 
 
 if __name__ == "__main__":
