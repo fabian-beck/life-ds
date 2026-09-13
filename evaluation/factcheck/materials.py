@@ -24,7 +24,6 @@ from .paths import cache_dir
 from .text import Chunk, chunk_text, collapse
 
 WIKIPEDIA = "Wikipedia"
-DEUTSCHE_BIOGRAPHIE = "Deutsche Biographie"
 COMMONS = "Wikimedia Commons"
 
 
@@ -135,21 +134,6 @@ def load_materials(person_id: str) -> List[Material]:
                 )
             )
 
-    biographie = _read(directory / "deutsche_biographie.json")
-    if isinstance(biographie, dict) and not biographie.get("not_found"):
-        text = _deutsche_biographie_text(biographie)
-        if text:
-            materials.append(
-                Material(
-                    id="db",
-                    title=str(biographie.get("name") or person_id),
-                    url=str(biographie.get("url") or ""),
-                    source=DEUTSCHE_BIOGRAPHIE,
-                    language="de",
-                    text=text,
-                )
-            )
-
     images = _read(directory / "commons_images.json")
     if isinstance(images, list):
         text = _commons_text(images)
@@ -166,61 +150,6 @@ def load_materials(person_id: str) -> List[Material]:
             )
 
     return materials
-
-
-def _deutsche_biographie_text(data: Dict[str, Any]) -> str:
-    """Flatten the Deutsche Biographie record into quotable prose.
-
-    The record mixes a free-text article with a metadata block; both are
-    evidence, and both are rendered here as labeled lines so that a quote of
-    either can be located in one string.
-    """
-    lines: List[str] = []
-    name = data.get("name")
-    if name:
-        lines.append(f"Deutsche Biographie: {name}")
-
-    metadata = data.get("metadata") or {}
-    for key in ("birth", "death"):
-        entry = metadata.get(key)
-        if isinstance(entry, dict):
-            when = entry.get("date") or entry.get("year")
-            where = entry.get("place")
-            label = "Born" if key == "birth" else "Died"
-            parts = [str(when) for when in [when] if when]
-            if where:
-                parts.append(f"in {where}")
-            if parts:
-                lines.append(f"{label}: {' '.join(parts)}")
-
-    for key, label in (
-        ("professions", "Professions"),
-        ("work_places", "Work places"),
-        ("alternate_names", "Also known as"),
-    ):
-        values = metadata.get(key)
-        if isinstance(values, list) and values:
-            lines.append(f"{label}: {', '.join(str(value) for value in values)}")
-
-    summary = metadata.get("brief_summary")
-    if summary:
-        lines.append(f"Summary: {summary}")
-
-    for relationship in metadata.get("relationships") or []:
-        if isinstance(relationship, dict):
-            related_name = relationship.get("name") or relationship.get("person")
-            kind = relationship.get("type") or relationship.get("relation")
-            if related_name:
-                lines.append(f"Relationship: {related_name} ({kind or 'unspecified'})")
-
-    for key in ("article", "article_text", "text", "index_text"):
-        body = data.get(key)
-        if isinstance(body, str) and body.strip():
-            lines.append("")
-            lines.append(body.strip())
-            break
-
-    return "\n\n".join(lines).strip()
 
 
 def _commons_text(images: List[Any]) -> str:

@@ -152,11 +152,6 @@ def parse_args(argv: Any) -> argparse.Namespace:
     for name, _, what in STEPS:
         parser.add_argument(f"--skip-{name}", action="store_true", help=f"Skip {what}.")
     parser.add_argument(
-        "--skip-db",
-        action="store_true",
-        help="Leave Deutsche Biographie out of the sources of the life events.",
-    )
-    parser.add_argument(
         "--portrait-model",
         default=DEFAULT_PORTRAIT_MODEL,
         help=f"OpenAI model for portrait generation (default: {DEFAULT_PORTRAIT_MODEL}).",
@@ -244,7 +239,6 @@ def main(argv: Any = None) -> int:
                 person_id=person_id_override,
                 update_registry=update_registry,
                 model=dataset_model,
-                use_deutsche_biographie=not args.skip_db,
             )
             print(f"\n✓ Life events dataset written to {dataset_path}")
             run_log.record("Life events", STEP_OK)

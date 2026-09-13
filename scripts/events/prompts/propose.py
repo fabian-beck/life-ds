@@ -13,7 +13,6 @@ def build_proposal_prompt(
     summary_data: Dict[str, Any],
     subject: str,
     related_articles: Optional[List[Dict[str, Any]]] = None,
-    deutsche_biographie_text: Optional[str] = None,
 ) -> str:
     """
     Build proposal prompt for generating event skeletons and chapters.
@@ -41,10 +40,6 @@ def build_proposal_prompt(
         combined += (
             f"Full extract (truncated to 12k characters if needed):\n{truncated}\n"
         )
-
-    # Include Deutsche Biographie data if available
-    if deutsche_biographie_text:
-        combined += f"\n\n{deutsche_biographie_text}\n"
 
     # Include related articles for broad context
     if related_articles and len(related_articles) > 0:

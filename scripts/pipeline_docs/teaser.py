@@ -173,8 +173,8 @@ PARTS: Tuple[Part, ...] = (
         "sources",
         "Source material",
         "Article prose, images, and place names are fetched from Wikipedia, "
-        "the Deutsche Biographie, Wikimedia Commons, Openverse, and Nominatim, "
-        "and cached before any step reads them.",
+        "Wikimedia Commons, Openverse, and Nominatim, and cached before any "
+        "step reads them.",
         (8, 40, 196, 150),
         decor="sources",
         lines=("Article prose", "Images", "Place names"),

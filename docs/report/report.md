@@ -57,7 +57,7 @@ The [[person-pipeline|personal story pipeline]] derives data for one biography, 
 ::: pipeline lane=person
 :::
 
-*Sources*. An [[step:p_wiki_fetch|acquisition]] step loads the subject's Wikipedia article and linked article titles. An AI-based [[step:p_wiki_select|selection]] call selects the most relevant titles before their full texts are fetched. The fetched articles and Commons image metadata are cached for reuse by later steps and reruns. In addition, a second [[step:p_db|biographical source]] is consulted for German and European figures.
+*Sources*. An [[step:p_wiki_fetch|acquisition]] step loads the subject's Wikipedia article and linked article titles. An AI-based [[step:p_wiki_select|selection]] call selects the most relevant titles before their full texts are fetched. The fetched articles and Commons image metadata are cached for reuse by later steps and reruns.
 
 *Events*. The events and the main narrative are derived from that material. The first AI-based call [[step:p_events_p1|proposes]] twelve to sixteen events with titles, dates, descriptions, a classification, and a weight, and groups them into three to six chapters. A second call per event then [[step:p_events_p2|researches]] each event in detail against the relevant articles: the historic and modern name of its place, the people involved, a semantic icon, and image searches that would illustrate it. [[step:p_geocode|Geocoding]] looks up exact coordinates for the places by their modern names.
 

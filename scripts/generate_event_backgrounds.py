@@ -12,10 +12,10 @@ long-prose call and an illustration critic.
 
 The report is the one thing in the pipeline written for a reader rather than
 extracted for a schema. Its material is the same material the research sees — the
-event, the subject, the cached related articles filtered down to the ones
-about this event, the Deutsche Biographie text where it is cached — plus what
-only this later step can know: the annotations, chips, and citations already
-on the slide, and the rest of the story as the reader can swipe to it.
+event, the subject, and the cached related articles filtered down to the ones
+about this event — plus what only this later step can know: the annotations,
+chips, and citations already on the slide, and the rest of the story as the
+reader can swipe to it.
 
 Inside ``generate_person.py`` this runs after review and before translation,
 so the reports build on the reviewed English text and the translator sees
@@ -58,7 +58,6 @@ from events.prompts.research import (
 from events.schemas import CLASSIFICATION_MODELS, EventSkeleton
 from utils.concurrency import map_concurrently, worker_count
 from utils.datasets import person_ids
-from utils.deutsche_biographie import format_for_prompt, get_cached_deutsche_biographie
 from utils.event_depth import get_event_weight, select_deep_event_indexes
 from utils.json_io import read_json, write_json
 from utils.model_calls import parse_structured
@@ -590,17 +589,6 @@ def _wikipedia_page(person_id: str) -> Optional[Dict[str, Any]]:
         return None
 
 
-def _deutsche_biographie_text(person_id: str) -> Optional[str]:
-    """The cached Deutsche Biographie context, formatted as the research saw it."""
-    try:
-        data = get_cached_deutsche_biographie(person_id)
-    except Exception:  # noqa: BLE001 — an absent cache is a normal state here
-        return None
-    if not data:
-        return None
-    return format_for_prompt(data)
-
-
 def _skeleton(event: Dict[str, Any]) -> EventSkeleton:
     """The parts of a stored event the article filter reads.
 
@@ -698,7 +686,6 @@ def build_report_prompt(
     index: int,
     person_summary: Optional[str] = None,
     network: Optional[Dict[str, Any]] = None,
-    deutsche_biographie_text: Optional[str] = None,
     subject_article: Optional[Dict[str, Any]] = None,
 ) -> str:
     """The whole prompt for one report: the event, the rules, the material."""
@@ -722,10 +709,10 @@ def build_report_prompt(
     }
 
     # The material and the rules first, this event last. The reports of one
-    # person are written against the same article, the same second source and
-    # the same instructions, so leading with them leaves a prefix identical
-    # across the calls; the event, the story around it and the articles chosen
-    # for it are what differ, and they follow.
+    # person are written against the same article and the same instructions,
+    # so leading with them leaves a prefix identical across the calls; the
+    # event, the story around it and the articles chosen for it are what
+    # differ, and they follow.
     event_section = "\n" + "=" * 60 + "\n"
     event_section += "WRITE THE BACKGROUND REPORT FOR THIS EVENT:\n"
     event_section += "=" * 60 + "\n\n"
@@ -745,9 +732,6 @@ def build_report_prompt(
         event_section += "\n".join(panel) + "\n"
 
     prompt = _subject_article_prompt_section(subject_article)
-
-    if deutsche_biographie_text:
-        prompt += "\n" + deutsche_biographie_text + "\n"
 
     prompt += "\n" + "=" * 60 + "\n"
     prompt += REPORT_INSTRUCTIONS
@@ -902,7 +886,6 @@ def generate_event_backgrounds(
         client = OpenAI(api_key=api_key)
 
     related = _related_articles(person_id)
-    db_text = _deutsche_biographie_text(person_id)
     subject_article = _wikipedia_page(person_id)
 
     # The reports are written side by side. Each one reads the story as it
@@ -934,7 +917,6 @@ def generate_event_backgrounds(
                         index=index,
                         person_summary=person_summary,
                         network=network,
-                        deutsche_biographie_text=db_text,
                         subject_article=subject_article,
                     ),
                 },

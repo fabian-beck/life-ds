@@ -136,11 +136,11 @@
       }
     },
     "p_backgrounds": {
-      "fingerprint": "52ef1de7659829e6",
+      "fingerprint": "bf8558c30e68b832",
       "summary": {
-        "description": "Selects the story’s deepest events and writes grounded reports around the reviewed descriptions. It refreshes each report’s event-specific sources from the supplied articles and leaves image searches for the places, objects, and documents the report names.",
-        "input": "the reviewed events, articles, and network",
-        "output": "background reports, sources, and image searches",
+        "description": "Writes a background report only for events selected for the story’s deeper layer, grounding it in reviewed material and the subject’s article. Rechecks each report’s citations against supplied URLs, so each event carries sources that actually document it.",
+        "input": "reviewed events, network, and Wikipedia material",
+        "output": "background reports, sources, and event illustrations",
         "source": "gpt-5.6-terra"
       }
     },
@@ -162,30 +162,21 @@
         "source": "gpt-5.6-terra"
       }
     },
-    "p_db": {
-      "fingerprint": "d476c9db28135f3c",
-      "summary": {
-        "description": "Adds biographical evidence for German and European figures to the shared source record. It uses the Wikipedia title and life dates to distinguish people, then keeps only reusable article text while preserving open metadata and genealogy when the article license blocks reuse.",
-        "input": "the Wikipedia article and life dates",
-        "output": "additional biographical material",
-        "source": "gpt-5.6-terra"
-      }
-    },
     "p_events_p1": {
-      "fingerprint": "d506c6f192370f7b",
+      "fingerprint": "dd45b217838f4666",
       "summary": {
-        "description": "Selects the events that carry a person’s life story and groups them into chronological chapters. It compares events across the full record, since significance and phase boundaries emerge from the life as a whole. It leaves a dated narrative spine and a conclusion on what persisted.",
-        "input": "the selected articles and biography material",
-        "output": "a chaptered life plan with event skeletons",
+        "description": "Selects the events that carry a life and orders them into chapters. It compares moments across the whole record, so importance and chapter breaks reflect the shape of the life rather than isolated facts. Leaves a dated narrative spine and a conclusion about work that persists.",
+        "input": "the article and selected related articles",
+        "output": "a chaptered life timeline and conclusion",
         "source": "gpt-5.6-terra"
       }
     },
     "p_events_p2": {
-      "fingerprint": "29f9b8889d67d1d3",
+      "fingerprint": "fe02380c14921bae",
       "summary": {
-        "description": "Expands each proposed event into a sourced account with its people, places, and story-specific details. It keeps the subject’s article as the primary evidence and leaves an unresolved event in the story when research fails.",
-        "input": "an event skeleton and biographical articles",
-        "output": "a researched account for each event",
+        "description": "Researches each proposed event from the subject’s article, using related articles to fill gaps. Writes the event’s evidence, context, and leads for later illustration. Keeps a failed event unresolved so one bad call does not remove it.",
+        "input": "event skeletons and Wikipedia material",
+        "output": "researched event details and illustration leads",
         "source": "gpt-5.6-terra"
       }
     },

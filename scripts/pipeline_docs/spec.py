@@ -189,10 +189,10 @@ GROUPS: List[Group] = [
     Group(
         "sources",
         "Sources",
-        ["p_wiki_fetch", "p_wiki_select", "p_db"],
+        ["p_wiki_fetch", "p_wiki_select"],
         note=(
             "Everything the pipeline learns about the person before any writing "
-            "happens: fetch, then narrow, plus the second biographical source."
+            "happens: fetch, then narrow."
         ),
     ),
     Group(
@@ -325,14 +325,6 @@ ARTIFACTS: List[Artifact] = [
         concept="sources",
     ),
     Artifact(
-        "db_cache",
-        "Deutsche Biographie material",
-        "data/people/{id}/_cache/deutsche_biographie.json",
-        "cache",
-        "ADB text (CC-BY-NC-SA) and CC0 metadata only; NDB text is excluded by license.",
-        concept="sources",
-    ),
-    Artifact(
         "life_events",
         "Life events",
         "data/people/{id}/life_events.json",
@@ -449,26 +441,6 @@ STEPS: List[Step] = [
         outputs=["wiki_cache"],
     ),
     Step(
-        "p_db",
-        "Fetch Deutsche Biographie",
-        SHARED,
-        EXTERNAL,
-        "utils/deutsche_biographie.py",
-        "format_for_prompt",
-        byline="Deutsche Biographie API",
-        summary=(
-            "Adds a second biographical source for German and European figures, "
-            "with a per-record license check that drops NDB text."
-        ),
-        depends_on=[
-            Dep("p_wiki_fetch", "article title + birth/death years for disambiguation")
-        ],
-        prompts=["format_for_prompt"],
-        inputs=["wiki_cache"],
-        outputs=["db_cache"],
-        skip_flag="--skip-db",
-    ),
-    Step(
         "p_events_p1",
         "Propose events",
         PERSON,
@@ -487,16 +459,13 @@ STEPS: List[Step] = [
             "are dated afterwards from the events they hold, so a chapter can "
             "never begin after one of its own events."
         ),
-        depends_on=[
-            Dep("p_wiki_select", "the selected related articles"),
-            Dep("p_db", "ADB biography text"),
-        ],
+        depends_on=[Dep("p_wiki_select", "the selected related articles")],
         prompts=[
             "build_proposal_prompt",
             "propose_events",
             "description_contract_prompt",
         ],
-        inputs=["wiki_cache", "db_cache"],
+        inputs=["wiki_cache"],
         skip_flag="--skip-events",
         model_from="generate_person_events.py",
     ),
@@ -530,7 +499,7 @@ STEPS: List[Step] = [
             "format_icon_categories_for_prompt",
         ],
         calls_per_run="12–16 (one per event)",
-        inputs=["wiki_cache", "db_cache"],
+        inputs=["wiki_cache"],
         skip_flag="--skip-events",
     ),
     Step(
@@ -889,7 +858,7 @@ STEPS: List[Step] = [
             "_subject_article_prompt_section",
             "REPORT_INSTRUCTIONS",
         ],
-        inputs=["life_events", "ego_network", "wiki_cache", "db_cache"],
+        inputs=["life_events", "ego_network", "wiki_cache"],
         outputs=["life_events", "person_de"],
         calls_per_run="one per deep event — roughly one per chapter",
         skip_flag="--skip-backgrounds",

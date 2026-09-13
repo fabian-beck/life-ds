@@ -117,18 +117,6 @@ try:
 except ImportError:
     fetch_related_articles = None  # type: ignore[assignment]
 
-# Import Deutsche Biographie utilities
-try:
-    from utils.deutsche_biographie import (
-        ensure_deutsche_biographie_cache,
-        get_cached_deutsche_biographie,
-        format_for_prompt as format_db_for_prompt,
-    )
-except ImportError:
-    ensure_deutsche_biographie_cache = None  # type: ignore[assignment]
-    get_cached_deutsche_biographie = None  # type: ignore[assignment]
-    format_db_for_prompt = None  # type: ignore[assignment]
-
 # Constants
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 REGISTER_PATH = DATA_DIR / "persons.json"
@@ -601,7 +589,6 @@ def research_event_details(
     all_related_articles: List[Dict[str, Any]],
     model: str = RESEARCH_MODEL,
     retry_count: int = 2,
-    deutsche_biographie_text: Optional[str] = None,
     subject_article: Optional[Dict[str, Any]] = None,
 ) -> EventDetails:
     """
@@ -623,7 +610,6 @@ def research_event_details(
             event_skeleton,
             person_name,
             filtered_articles,
-            deutsche_biographie_text=deutsche_biographie_text,
             subject_article=subject_article,
         )
     else:
@@ -632,7 +618,6 @@ def research_event_details(
             event_skeleton,
             person_name,
             filtered_articles,
-            deutsche_biographie_text=deutsche_biographie_text,
             subject_article=subject_article,
         )
 
@@ -678,7 +663,6 @@ def research_all_event_details(
     person_name: str,
     all_related_articles: List[Dict[str, Any]],
     model: str = RESEARCH_MODEL,
-    deutsche_biographie_text: Optional[str] = None,
     subject_article: Optional[Dict[str, Any]] = None,
 ) -> List[EventDetails]:
     """Research details for all events (no images; the image step adds them).
@@ -715,7 +699,6 @@ def research_all_event_details(
             person_name,
             all_related_articles,
             model,
-            deutsche_biographie_text=deutsche_biographie_text,
             subject_article=subject_article,
         )
 
@@ -1251,7 +1234,6 @@ def generate_person_events(
     update_registry: bool = True,
     model: str = DEFAULT_MODEL,
     use_cache: bool = True,
-    use_deutsche_biographie: bool = True,
 ) -> Tuple[Path, str]:
     """
     Generate person life events dataset using proposal-and-research approach.
@@ -1262,7 +1244,6 @@ def generate_person_events(
         update_registry: Whether to update persons.json registry
         model: OpenAI model to use
         use_cache: Whether to use cached Wikipedia materials
-        use_deutsche_biographie: Whether to fetch/use Deutsche Biographie data
 
     Returns:
         Tuple of (file_path, person_id)
@@ -1345,36 +1326,6 @@ def generate_person_events(
             f"[Step 3/10] Using {len(related_articles) if related_articles else 0} related articles from cache"
         )
 
-    # Load Deutsche Biographie data (best-effort)
-    db_prompt_text = None
-    if use_deutsche_biographie and ensure_deutsche_biographie_cache is not None:
-        try:
-            # Extract birth/death years from Wikipedia for disambiguation
-            _db_birth_year = None
-            _db_death_year = None
-            _wiki_extract = page_data.get("extract", "")
-            _year_match = re.search(
-                r"\((\d{4})\s*[-–]\s*(\d{4})\)", _wiki_extract[:500]
-            )
-            if _year_match:
-                _db_birth_year = int(_year_match.group(1))
-                _db_death_year = int(_year_match.group(2))
-
-            db_data = ensure_deutsche_biographie_cache(
-                person_id=identifier,
-                person_name=article_title,
-                birth_year=_db_birth_year,
-                death_year=_db_death_year,
-            )
-            if db_data and format_db_for_prompt is not None:
-                db_prompt_text = format_db_for_prompt(db_data)
-                if db_prompt_text:
-                    print("[Step 3b/10] Deutsche Biographie data included in prompts")
-        except Exception as e:
-            print(f"[Step 3b/10] Warning: Deutsche Biographie fetch failed ({e})")
-    elif not use_deutsche_biographie:
-        print("[Step 3b/10] Deutsche Biographie skipped by request")
-
     # PROPOSAL: the event skeletons and chapters
     print(
         f"[Step 4/11] Proposing the events (model: {model}, reasoning: {PROPOSAL_REASONING_EFFORT})..."
@@ -1384,7 +1335,6 @@ def generate_person_events(
         summary_data,
         subject,
         related_articles,
-        deutsche_biographie_text=db_prompt_text,
     )
     life_plan = propose_events(proposal_prompt, model)
     print(
@@ -1400,7 +1350,6 @@ def generate_person_events(
         event_skeletons=life_plan.event_skeletons,
         person_name=life_plan.person.name,
         all_related_articles=related_articles or [],
-        deutsche_biographie_text=db_prompt_text,
         subject_article=page_data,
     )
     print(f"[Step 5/11] Researched details for {len(event_details_list)} events")

@@ -366,34 +366,6 @@ python scripts/clear_caches.py --max-age 1h --dry-run
 
 Supported duration units: `s` (seconds), `m` (minutes), `h` (hours), `d` (days), `w` (weeks)
 
-### Deutsche Biographie Integration
-
-The generation pipeline automatically fetches supplementary biographical data from [Deutsche Biographie](https://www.deutsche-biographie.de/) (deutsche-biographie.de) via their open Solr API. This provides additional context for the AI generation, especially for German/European historical figures.
-
-**How it works**:
-1. After Wikipedia caching, searches Deutsche Biographie by person name (with birth/death year disambiguation)
-2. Checks article licensing per record:
-   - **CC0 metadata** (dates, places, professions, relationships): Always included
-   - **ADB article text** (Allgemeine Deutsche Biographie, pre-1900): CC-BY-NC-SA — included as AI context
-   - **NDB article text** (Neue Deutsche Biographie): CC-BY-NC-ND — **excluded** (no derivatives allowed)
-3. Cached to `data/people/{person_id}/_cache/deutsche_biographie.json`
-4. Formatted and included in the proposal and the research AI prompts
-
-**CLI flag**: Use `--skip-db` to disable Deutsche Biographie fetching:
-```bash
-python scripts/generate_person.py "Albert Einstein" --skip-db
-```
-
-**Key files**:
-- `scripts/utils/deutsche_biographie.py` — API client, caching, license checking, prompt formatting
-- Integration in `scripts/events/pipeline.py` (fetched per person) and `scripts/events/prompts/` (proposal and research prompts)
-- Integration in `scripts/cache_wikipedia_materials.py` (caching step)
-
-**Limitations**:
-- Name matching works best for names that are similar in English and German
-- For translated names (Henry → Heinrich, Charles → Karl), the search may not find the correct record
-- Providing birth/death years improves disambiguation accuracy
-
 ## Translation System
 
 ### Overview

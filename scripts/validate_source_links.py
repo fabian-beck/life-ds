@@ -56,8 +56,8 @@ def parse_article(url: str) -> Optional[Tuple[str, str]]:
 
     Wikipedia and Wikisource both answer the same API at the same path, so
     both are checkable here. Returns None for anything else — the data also
-    cites Deutsche Biographie, Commons file pages, DOIs, and museum sites, none
-    of which this checker knows how to ask about.
+    cites Commons file pages, DOIs, and museum sites, none of which this
+    checker knows how to ask about.
     """
     parts = urlsplit(url)
     if not parts.netloc.endswith((".wikipedia.org", ".wikisource.org")):

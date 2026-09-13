@@ -31,7 +31,7 @@ Output: `evaluation/out/facts/<person_id>.json`, one file per person, carrying a
 
 The sample is stratified by person, so people are represented in proportion to how many claims their story makes, and it is seeded, so the same `--sample` and `--seed` always draw the same facts. Pass `--checkable-only` to exclude the claims stage one marked as interpretation.
 
-The materials searched are the ones the generation pipeline read: the Wikipedia cache in `data/people/<person_id>/_cache/` — the main article, the lead summary, the German article, the related articles, the Deutsche Biographie record, and the Commons image descriptions. Checking a story against material it never saw would confuse two different failures, and only one of them is the pipeline's. The cache is not committed; when it is missing, the stage says so and names the command that rebuilds it:
+The materials searched are the ones the generation pipeline read: the Wikipedia cache in `data/people/<person_id>/_cache/` — the main article, the lead summary, the German article, the related articles, and the Commons image descriptions. Checking a story against material it never saw would confuse two different failures, and only one of them is the pipeline's. The cache is not committed; when it is missing, the stage says so and names the command that rebuilds it:
 
 ```powershell
 python scripts/cache_wikipedia_materials.py "Alan Turing" --id alan_turing

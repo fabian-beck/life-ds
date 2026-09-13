@@ -74,10 +74,10 @@ class RepairSourceUrlsTests(unittest.TestCase):
         )
 
     def test_a_non_wikipedia_source_is_carried_through(self) -> None:
-        connection = _connection("https://www.deutsche-biographie.de/sfz1234.html")
+        connection = _connection("https://doi.org/10.1109/MAHC.2003.1253887")
         generator.repair_source_urls([connection], RELATED)
         self.assertEqual(
-            connection["sources"], ["https://www.deutsche-biographie.de/sfz1234.html"]
+            connection["sources"], ["https://doi.org/10.1109/MAHC.2003.1253887"]
         )
 
     def test_nothing_is_rewritten_without_a_cache_to_check_against(self) -> None:

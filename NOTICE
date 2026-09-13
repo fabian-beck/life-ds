@@ -18,7 +18,7 @@ src/fonts.css self-hosts the families the stories set text in, from the @fontsou
 
 Story text and metadata — data/
 
-Generated from Wikipedia articles, published under CC BY-SA 4.0, and from Deutsche Biographie records. Of the latter, the metadata fields are CC0 and only the ADB article text (CC BY-NC-SA) is read; the NDB article text (CC BY-NC-ND) is never used, which scripts/utils/deutsche_biographie.py enforces per record. The generated stories are derived from those sources rather than written from nothing, so reuse should follow the sources' terms.
+Generated from Wikipedia articles, published under CC BY-SA 4.0. Stories generated before the pipeline dropped Deutsche Biographie as a second source still cite its records; data/outdated.md names them, and of that material only the CC0 metadata fields and the ADB article text (CC BY-NC-SA) were ever read. The generated stories are derived from those sources rather than written from nothing, so reuse should follow the sources' terms.
 
 Event images — referenced, not stored
 

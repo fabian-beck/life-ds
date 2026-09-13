@@ -91,7 +91,6 @@ def build_research_prompt_base(
     event_skeleton: EventSkeleton,
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
-    deutsche_biographie_text: Optional[str] = None,
     subject_article: Optional[Dict[str, Any]] = None,
 ) -> str:
     """
@@ -121,10 +120,6 @@ def build_research_prompt_base(
         event_section += f"Event Class: {class_type}\n"
 
     prompt = _subject_article_prompt_section(subject_article)
-
-    # Add Deutsche Biographie context if available
-    if deutsche_biographie_text:
-        prompt += "\n" + deutsche_biographie_text + "\n"
 
     prompt += "\n" + "=" * 60 + "\n"
     prompt += "TASK: Provide the following details for THIS specific event:\n"
@@ -336,19 +331,17 @@ def build_research_prompt_classified(
     event_skeleton: EventSkeleton,
     person_name: str,
     filtered_related_articles: List[Dict[str, Any]],
-    deutsche_biographie_text: Optional[str] = None,
     subject_article: Optional[Dict[str, Any]] = None,
 ) -> str:
     """
     Generic research prompt builder for classified events.
     Uses EVENT_CLASS_CONFIG to generate event-class-specific guidance.
     """
-    # Get base prompt (sections 0-5) — DB text included via base
+    # Get base prompt (sections 0-5)
     base = build_research_prompt_base(
         event_skeleton,
         person_name,
         [],
-        deutsche_biographie_text=deutsche_biographie_text,
         subject_article=subject_article,
     )
 

@@ -74,7 +74,7 @@ class ParseArticleTests(unittest.TestCase):
 
     def test_other_hosts_are_not_this_checker_s_business(self) -> None:
         for url in [
-            "https://www.deutsche-biographie.de/gnd118560093.html",
+            "https://doi.org/10.1098/rsnr.2019.0011",
             "https://commons.wikimedia.org/wiki/File:Ada.jpg",
             "https://architectuul.com/architect/geoffrey-bawa",
         ]:
