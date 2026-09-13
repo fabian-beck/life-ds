@@ -98,6 +98,8 @@ Before starting any generation script, `generate_person.py` and its parts, `gene
 
 A run that was started and whose log shows `Failed to fetch`, `429`, or `Cache read failed` is stopped, and nothing it wrote is committed. Never commit the output of such a run and never repair it by hand.
 
+A clean run's output is committed exactly as the run wrote it. A session that finds a defect in that output — a validator finding, a file the run left behind, a sentence that contradicts its source — does not correct it by hand: it edits no generated file, deletes no file the generator should have removed, and adds no allowlist entry, threshold, or exception that lets a finding pass. It reports the finding to the owner with the file and the reason, and when the finding would fail a check, it commits nothing until the owner has decided. The fix belongs in the generator, and the dataset is regenerated with it. A validator's allowlist, such as `ACCEPTED` in `validate_event_dates.py`, is extended only at the owner's explicit request.
+
 A regeneration session therefore works in the primary repository throughout and commits and pushes from there, rather than creating an `agent/<session>` worktree it would only have to copy caches into. Stage only the files the run touched so unrelated working-tree changes survive, and rebase onto `origin/main` before pushing — a run takes on the order of fifteen minutes, and `main` can advance meanwhile.
 
 ### Integrate Directly into Main
