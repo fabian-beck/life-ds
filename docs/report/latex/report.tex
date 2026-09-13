@@ -450,7 +450,7 @@ The steps of the personal story pipeline (Figure~\ref{fig:pipeline-person}) and 
 \tabrowrule
 \stepref{kindexternal}{\textbf{Geocode places}} & Adds map coordinates to places in life events. It prefers the researcher's modern name so renamed historic places retain a current map location. & Historic and modern place names & Coordinates on life events &  & 1 \\
 \tabrowrule
-\stepref{kindai}{\textbf{Design interface style}} & Derives a dark color, type, and geometric pattern system from the person's work and the objects pictured in the story. It treats the palette rationale as evidence and retries palettes whose text colors cannot remain legible on the chosen ground. & Finished life events and depicted captions & An evidence-based interface style & \code{gpt{-}\allowbreak{}5.6{-}\allowbreak{}luna (low)} & 1 \\
+\stepref{kindai}{\textbf{Design interface style}} & Derives the story's colors and type from the person's work and the things depicted in its events. Rejects colors that cannot remain legible on the dark ground, then retries once with the reason. & Finished life events and depicted captions & A color, type, and pattern system & \code{gpt{-}\allowbreak{}5.6{-}\allowbreak{}luna (low)} & 1 \\
 \tabrowrule
 \stepref{kindai}{\textbf{Build ego network}} & Builds the subject's network from finished life events and Wikipedia material. It keeps only documented direct ties between named people, so later story work can join personal, professional, and political relationships without treating institutions as people. & Finished life events and Wikipedia material & A documented network of personal ties & \code{gpt{-}\allowbreak{}5.6{-}\allowbreak{}terra (medium)} & 1 \\
 \tabrowrule

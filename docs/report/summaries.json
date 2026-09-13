@@ -289,11 +289,11 @@
       }
     },
     "p_style": {
-      "fingerprint": "3f1f3926ac531b86",
+      "fingerprint": "856007a69ae2b58d",
       "summary": {
-        "description": "Derives a dark color, type, and geometric pattern system from the person’s work and the objects pictured in the story. It treats the palette rationale as evidence and retries palettes whose text colors cannot remain legible on the chosen ground.",
+        "description": "Derives the story’s colors and type from the person’s work and the things depicted in its events. Rejects colors that cannot remain legible on the dark ground, then retries once with the reason.",
         "input": "finished life events and depicted captions",
-        "output": "an evidence-based interface style",
+        "output": "a color, type, and pattern system",
         "source": "gpt-5.6-terra"
       }
     },
