@@ -174,3 +174,28 @@ test("a subject with no roles matches nobody", () => {
     })
   ).toEqual([]);
 });
+
+// German names a role by gender, so the two words for one profession have to
+// count as the shared role they are; see src/utils/roles.js.
+const germanRegistry = {
+  people: [
+    { id: "subject", name: "Ada Lovelace", primaryRoles: ["Mathematikerin"] },
+    { id: "peer", name: "Charles Babbage", primaryRoles: ["Mathematiker"] },
+    { id: "other", name: "Zaha Hadid", primaryRoles: ["Architektin"] },
+  ],
+};
+const germanSubject = {
+  name: "Ada Lovelace",
+  primary_roles: ["Mathematikerin"],
+};
+
+test("a German story relates a Mathematikerin to a Mathematiker", () => {
+  const related = relatedPersonsByRole({
+    person: germanSubject,
+    registry: germanRegistry,
+    language: "de",
+  });
+  expect(related.map((r) => r.person.id)).toEqual(["peer"]);
+  // The shared role is named the way the subject's own data writes it.
+  expect(related[0].sharedRoles).toEqual(["Mathematikerin"]);
+});

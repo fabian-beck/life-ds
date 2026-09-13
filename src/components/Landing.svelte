@@ -18,6 +18,7 @@
     initialsFromName,
     styleVars,
   } from "../utils/helpers.js";
+  import { roleVocabulary } from "../utils/roles.js";
   import { computeYearsLabel } from "../utils/story/dates.js";
   import { getThumbnailUrl } from "../utils/story/images.js";
   import { assetUrl } from "../utils/assetUrl.js";
@@ -164,36 +165,6 @@
     push(newPath);
   }
 
-  // Normalize tag for comparison (lowercase, trim)
-  function normalizeTag(tag) {
-    return tag.trim().toLowerCase();
-  }
-
-  function getFilterTag(role, language, knownRoles) {
-    const normalized = normalizeTag(role);
-
-    if (language !== "de") {
-      return { normalized, display: role };
-    }
-
-    // Merge a German masculine/feminine pair only when both forms actually
-    // occur in the data. This avoids treating unrelated words ending in
-    // "in" as gendered role names.
-    if (normalized.endsWith("in")) {
-      const masculine = normalized.slice(0, -2);
-      if (knownRoles.has(masculine)) {
-        return {
-          normalized: masculine,
-          display: `${knownRoles.get(masculine)}:in`,
-        };
-      }
-    } else if (knownRoles.has(`${normalized}in`)) {
-      return { normalized, display: `${role}:in` };
-    }
-
-    return { normalized, display: role };
-  }
-
   function toggleTag(normalizedTag) {
     if (activeTags.has(normalizedTag)) {
       activeTags.delete(normalizedTag);
@@ -287,14 +258,13 @@
     }
   }
 
-  $: knownRoles = new Map(
+  // One key per role, so a German masculine/feminine pair is one filter tag
+  // under one inclusive label; see src/utils/roles.js.
+  $: roleTags = roleVocabulary(
     entries.flatMap((entry) =>
-      Array.isArray(entry.primaryRoles)
-        ? entry.primaryRoles
-            .filter((role) => role && typeof role === "string")
-            .map((role) => [normalizeTag(role), role])
-        : []
-    )
+      Array.isArray(entry.primaryRoles) ? entry.primaryRoles : []
+    ),
+    $currentLanguage
   );
 
   // Compute tag frequencies from entries (with case-insensitive grouping and
@@ -306,8 +276,7 @@
         const entryTags = new Map();
         entry.primaryRoles.forEach((role) => {
           if (role && typeof role === "string") {
-            const tag = getFilterTag(role, $currentLanguage, knownRoles);
-            entryTags.set(tag.normalized, tag.display);
+            entryTags.set(roleTags.key(role), roleTags.label(role));
           }
         });
         entryTags.forEach((display, normalized) => {
@@ -412,10 +381,10 @@
       if (activeTags.size > 0) {
         result = result.filter((entry) => {
           if (!Array.isArray(entry.primaryRoles)) return false;
-          return entry.primaryRoles.some((role) => {
-            const tag = getFilterTag(role, $currentLanguage, knownRoles);
-            return activeTags.has(tag.normalized);
-          });
+          return entry.primaryRoles.some(
+            (role) =>
+              typeof role === "string" && activeTags.has(roleTags.key(role))
+          );
         });
       }
 

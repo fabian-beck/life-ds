@@ -443,9 +443,7 @@ def main(argv: Any = None) -> int:
     # Step 6: Review (if not skipped)
     usage.begin_step("Review")
     if not skipped["review"]:
-        print("\n" + "=" * 60)
-        print("STEP 6/8: REVIEWING GENERATED DATA")
-        print("=" * 60)
+        banner("STEP 6/8: Reviewing generated data")
         print("Running quality review and polish...")
         print("(Only high-confidence changes will be applied)")
 
