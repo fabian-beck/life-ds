@@ -140,11 +140,14 @@
     return Array.from(sourcesSet);
   })();
 
-  // Compute related persons by role overlap
+  // Compute related persons by role overlap. The language decides how the
+  // roles are compared: German names them by gender, and the same profession
+  // has to count as shared across the two forms.
   $: relatedPersons = relatedPersonsByRole({
     person,
     registry: personsRegistry,
     egoNetwork,
+    language: $currentLanguage,
   });
 
   $: slides = buildSlides({

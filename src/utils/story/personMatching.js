@@ -4,6 +4,7 @@
  */
 import { displayName } from "../helpers.js";
 import { findPersonMentions } from "../personNames.js";
+import { roleVocabulary } from "../roles.js";
 
 /**
  * Get the subcategory from a relationship type string.
@@ -530,20 +531,27 @@ export function getBirthParents(event, egoNetwork) {
  * again. Someone with no role in common is not offered at all, which is why
  * the list can come back empty.
  *
+ * Roles are compared by the keys of the registry's role vocabulary, so a
+ * German `Mathematikerin` and a `Mathematiker` share the role they name.
+ *
  * @param {Object} [inputs] - What the scoring reads
  * @param {Object} [inputs.person] - The story's subject; without one the
  *   list is empty
  * @param {Object} [inputs.registry] - `persons.json`, as `{ people: [...] }`;
  *   without it the list is empty
  * @param {Object} [inputs.egoNetwork] - The subject's network, if loaded
+ * @param {string} [inputs.language] - Current language code, which decides
+ *   whether gendered role names are merged
  * @param {number} [inputs.limit] - How many to return
  * @returns {Array<{person: Object, overlapCount: number, score: number,
- *   sharedRoles: Array<string>}>} Candidates, highest score first
+ *   sharedRoles: Array<string>}>} Candidates, highest score first; each shared
+ *   role is named as the subject's own data writes it
  */
 export function relatedPersonsByRole({
   person,
   registry,
   egoNetwork = null,
+  language = "en",
   limit = 5,
 } = {}) {
   const people = registry?.people;
@@ -555,8 +563,16 @@ export function relatedPersonsByRole({
   );
   if (!subject) return [];
 
-  const subjectRoles = new Set(
-    (person.primary_roles || []).map((role) => role.toLowerCase())
+  const vocabulary = roleVocabulary(
+    [
+      ...(person.primary_roles || []),
+      ...people.flatMap((entry) => entry.primaryRoles || []),
+    ],
+    language
+  );
+  // The subject's own words for its roles, by the key they are compared under.
+  const subjectRoles = new Map(
+    (person.primary_roles || []).map((role) => [vocabulary.key(role), role])
   );
   if (subjectRoles.size === 0) return [];
 
@@ -564,9 +580,11 @@ export function relatedPersonsByRole({
     .filter((entry) => entry.id !== subject.id)
     .map((entry) => {
       const roles = new Set(
-        (entry.primaryRoles || []).map((role) => role.toLowerCase())
+        (entry.primaryRoles || []).map((role) => vocabulary.key(role))
       );
-      const sharedRoles = [...subjectRoles].filter((role) => roles.has(role));
+      const sharedRoles = [...subjectRoles]
+        .filter(([key]) => roles.has(key))
+        .map(([, role]) => role);
       const inNetwork = egoNetwork?.connections?.some((connection) =>
         connection.person_name
           ?.toLowerCase()
