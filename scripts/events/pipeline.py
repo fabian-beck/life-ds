@@ -1275,16 +1275,16 @@ def generate_person_events(
         Tuple of (file_path, person_id)
     """
 
-    print(f"[Step 1/10] Fetching Wikipedia article for '{subject}'...")
+    print(f"[Step 1/11] Fetching Wikipedia article for '{subject}'...")
     page_data = fetch_wikipedia_extract(subject, _fetch_wikipedia_page)
     article_title = page_data.get("title", subject)
-    print(f"[Step 1/10] Found article '{article_title}'")
+    print(f"[Step 1/11] Found article '{article_title}'")
 
     # Use provided person_id or generate from article title
     identifier = person_id or slugify(article_title)
 
     # Load cache (no Commons images; the image step fetches them)
-    print(f"[Step 2/10] Loading cached materials for '{identifier}'...")
+    print(f"[Step 2/11] Loading cached materials for '{identifier}'...")
     related_articles = None
     summary_data = {}
 
@@ -1307,26 +1307,26 @@ def generate_person_events(
                         related_path.read_text(encoding="utf-8")
                     )
                     print(
-                        f"[Step 2/10] Using cached materials ({len(related_articles)} related articles)"
+                        f"[Step 2/11] Using cached materials ({len(related_articles)} related articles)"
                     )
                 except json.JSONDecodeError:
-                    print("[Step 2/10] Using cached materials (no related articles)")
+                    print("[Step 2/11] Using cached materials (no related articles)")
             else:
-                print("[Step 2/10] Using cached materials (no related articles)")
+                print("[Step 2/11] Using cached materials (no related articles)")
 
             page_data = cached_page
             summary_data = cached_summary
         except Exception as e:
-            print(f"[Step 2/10] Cache unavailable ({e}), fetching directly...")
+            print(f"[Step 2/11] Cache unavailable ({e}), fetching directly...")
             summary_data = fetch_wikipedia_summary(article_title)
     else:
-        print("[Step 2/10] Retrieving summary details...")
+        print("[Step 2/11] Retrieving summary details...")
         summary_data = fetch_wikipedia_summary(article_title)
 
     # Fetch related articles if not already loaded from cache
     if related_articles is None and fetch_related_articles is not None:
         print(
-            f"[Step 3/10] Fetching related articles (model: {model}, reasoning: {RELATED_ARTICLES_REASONING})..."
+            f"[Step 3/11] Fetching related articles (model: {model}, reasoning: {RELATED_ARTICLES_REASONING})..."
         )
         try:
             related_articles = fetch_related_articles(
@@ -1336,20 +1336,20 @@ def generate_person_events(
                 use_cache=use_cache,
                 person_id=identifier,
             )
-            print(f"[Step 3/10] Found {len(related_articles)} related articles")
+            print(f"[Step 3/11] Found {len(related_articles)} related articles")
 
             if related_articles and use_cache:
                 cache_dir = get_cache_dir(identifier)
                 related_path = cache_dir / "related_articles.json"
                 cache_dir.mkdir(parents=True, exist_ok=True)
                 write_json(related_path, related_articles)
-                print(f"[Step 3/10] Cached {len(related_articles)} related articles")
+                print(f"[Step 3/11] Cached {len(related_articles)} related articles")
         except Exception as e:
-            print(f"[Step 3/10] Warning: Failed to fetch related articles ({e})")
+            print(f"[Step 3/11] Warning: Failed to fetch related articles ({e})")
             related_articles = []
     else:
         print(
-            f"[Step 3/10] Using {len(related_articles) if related_articles else 0} related articles from cache"
+            f"[Step 3/11] Using {len(related_articles) if related_articles else 0} related articles from cache"
         )
 
     # PROPOSAL: the event skeletons and chapters
