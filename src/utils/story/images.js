@@ -133,6 +133,54 @@ export function getThumbnailUrl(imageOrPortrait, width = 400) {
   return assetUrl(imageUrl);
 }
 /**
+ * The widest source this application ever asks a host for.
+ *
+ * A picture on an event slide can grow to nearly the full width of the
+ * viewport, so on a desktop screen the request would otherwise climb to the
+ * 3840px step Wikimedia offers next — several megabytes for a backdrop that is
+ * masked, desaturated, and dimmed. The last step below it is sharp enough at
+ * every size the slide uses.
+ */
+const MAX_SOURCE_WIDTH = 1920;
+
+/**
+ * The device pixel ratio beyond which more source pixels stop being visible.
+ *
+ * Phones report 3 and above, which would triple the bytes of every picture on
+ * the connection least able to afford them.
+ */
+const MAX_SOURCE_PIXEL_RATIO = 2;
+
+/**
+ * The source width a picture needs to stay sharp in the box it is drawn into.
+ *
+ * The box is filled with `object-fit: cover`, so the picture is scaled until
+ * both of its edges reach the box and the surplus is cropped: a wide picture
+ * in a tall box is scaled by the box's height, and the width it then needs is
+ * larger than the box. Asking for the box width alone is what leaves a
+ * landscape photograph visibly soft on a large screen.
+ * @param {number} boxWidth - Width of the box in CSS pixels
+ * @param {number} boxHeight - Height of the box in CSS pixels
+ * @param {number} imageAspect - The picture's own width divided by its height
+ * @param {number} [pixelRatio] - Device pixel ratio of the screen
+ * @returns {number} Width to request, capped at the largest useful source
+ */
+export function coverSourceWidth(
+  boxWidth,
+  boxHeight,
+  imageAspect,
+  pixelRatio = 1
+) {
+  if (!(boxWidth > 0) || !(boxHeight > 0) || !(imageAspect > 0)) return 0;
+  const ratio = Math.min(
+    Math.max(Number.isFinite(pixelRatio) ? pixelRatio : 1, 1),
+    MAX_SOURCE_PIXEL_RATIO
+  );
+  const needed = Math.max(boxWidth, boxHeight * imageAspect) * ratio;
+  return Math.min(MAX_SOURCE_WIDTH, Math.ceil(needed));
+}
+
+/**
  * Filter and validate image data for display.
  * @param {Array} images - Array of image objects or URLs
  * @returns {Array} Valid image objects

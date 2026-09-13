@@ -19,7 +19,11 @@
     getDateNote,
     getEventAgeRange,
   } from "../utils/story/dates.js";
-  import { getThumbnailUrl, getValidImages } from "../utils/story/images.js";
+  import {
+    coverSourceWidth,
+    getThumbnailUrl,
+    getValidImages,
+  } from "../utils/story/images.js";
   import {
     getBirthParents,
     getMarriagePartner,
@@ -201,6 +205,9 @@
       imageLoadGeneration += 1;
       loadedImageUrls = new Set();
       failedImageUrls = new Set();
+      requestedImageWidths = {};
+      loadedImageWidths = {};
+      imageWidthCeilings = {};
     }
   }
 
@@ -209,44 +216,78 @@
   }
 
   function handleThumbnailError(imageUrl) {
+    // A host whose file is smaller than the box answers the wider address with
+    // an error rather than with the picture. Nothing is wrong with the picture
+    // itself — the narrower source it is already showing loaded — so the
+    // request falls back to that one and stays there.
+    const loaded = loadedImageWidths[imageUrl];
+    if (loaded && loaded < imageWidth(imageUrl)) {
+      imageWidthCeilings = { ...imageWidthCeilings, [imageUrl]: loaded };
+      requestedImageWidths = { ...requestedImageWidths, [imageUrl]: loaded };
+      return;
+    }
     failedImageUrls = new Set(failedImageUrls).add(imageUrl);
   }
 
-  // Sizes the thumbnail container and mask from the image's aspect ratio and
-  // the room the event actually leaves free on its slide: a slide with little
-  // text lets the picture grow into the empty top and side, a full one keeps
-  // it the corner accent it always was. Re-run on resize/rotation, not only
-  // on load.
-  function applyImageLayout(img) {
-    // Clamp extreme aspect ratios so the container never becomes an elongated
-    // sliver. The <img> keeps object-fit: cover, so images more extreme than
-    // these bounds get cropped to fit the clamped container rather than
-    // stretching the thumbnail across the slide.
-    const MIN_LAYOUT_ASPECT = 0.5; // tallest allowed (1:2 portrait)
-    const MAX_LAYOUT_ASPECT = 2.0; // widest allowed (2:1 landscape)
-    const rawAspect = img.naturalWidth / img.naturalHeight;
-    const imageAspect = Math.max(
-      MIN_LAYOUT_ASPECT,
-      Math.min(MAX_LAYOUT_ASPECT, rawAspect)
-    );
+  // Clamp extreme aspect ratios so the container never becomes an elongated
+  // sliver. The <img> keeps object-fit: cover, so images more extreme than
+  // these bounds get cropped to fit the clamped container rather than
+  // stretching the thumbnail across the slide.
+  const MIN_LAYOUT_ASPECT = 0.5; // tallest allowed (1:2 portrait)
+  const MAX_LAYOUT_ASPECT = 2.0; // widest allowed (2:1 landscape)
 
+  // The proportions a picture is assumed to have before it has loaded: an
+  // ordinary landscape photograph. The box depends on the picture, so the
+  // first request can only be an estimate; `requestImageWidth` raises it once
+  // the picture's real proportions are known.
+  const ESTIMATED_IMAGE_ASPECT = 1.5;
+
+  // The source width asked of the image host, per picture. The same
+  // photograph is drawn across a few hundred pixels on a phone and across most
+  // of a desktop screen, so a constant width leaves the desktop reader looking
+  // at an enlarged thumbnail. The width follows the box the layout gives the
+  // picture, and is only ever raised: the file already on screen stays the one
+  // displayed until a larger one arrives, and asking for a smaller file again
+  // would trade sharpness for a second download.
+  let requestedImageWidths = {};
+  let loadedImageWidths = {};
+  let imageWidthCeilings = {};
+  $: estimatedImageWidth = estimateImageWidth(validImages.length);
+
+  function imageWidth(imageUrl) {
+    return requestedImageWidths[imageUrl] ?? estimatedImageWidth;
+  }
+
+  function requestImageWidth(imageUrl, width) {
+    if (!imageUrl || !(width > 0)) return;
+    const ceiling = imageWidthCeilings[imageUrl];
+    const capped = ceiling ? Math.min(width, ceiling) : width;
+    if (capped <= imageWidth(imageUrl)) return;
+    requestedImageWidths = { ...requestedImageWidths, [imageUrl]: capped };
+  }
+
+  function estimateImageWidth(imageCount) {
+    const room = measureImageRoom(null, imageCount);
+    const box = imageBox(ESTIMATED_IMAGE_ASPECT, room);
+    return coverSourceWidth(
+      box.width,
+      box.height,
+      ESTIMATED_IMAGE_ASPECT,
+      window.devicePixelRatio
+    );
+  }
+
+  // The free room is measured from the slide rather than assumed from the
+  // viewport: the strip above the event's first line, and the column right
+  // of the description. Either budget may be exceeded by roughly the width
+  // of the picture's faded edge — the image is a backdrop, the mask thins
+  // it out long before the budget line, and the text keeps its shadows.
+  // Several images split the vertical room instead of each taking all of
+  // it, since they stack in one column. Before the slide is laid out there is
+  // nothing to measure, and the viewport fractions below stand in.
+  function measureImageRoom(imagesContainerEl, fallbackImageCount = 1) {
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-
-    // Largest box of the image's aspect that fits a width x height budget.
-    const fitBudget = (maxWidth, maxHeight) => {
-      const width = Math.min(maxWidth, maxHeight * imageAspect);
-      return { width, height: width / imageAspect };
-    };
-
-    // The free room is measured from the slide rather than assumed from the
-    // viewport: the strip above the event's first line, and the column right
-    // of the description. Either budget may be exceeded by roughly the width
-    // of the picture's faded edge — the image is a backdrop, the mask thins
-    // it out long before the budget line, and the text keeps its shadows.
-    // Several images split the vertical room instead of each taking all of
-    // it, since they stack in one column.
-    const imagesContainerEl = img.closest(".event-images");
     const slideRoot = imagesContainerEl?.parentElement ?? null;
     const slideRect = slideRoot?.getBoundingClientRect();
     const headerRect = slideRoot
@@ -258,7 +299,7 @@
     const imageCount = Math.max(
       1,
       imagesContainerEl?.querySelectorAll(".image-thumbnail:not(.image-failed)")
-        .length ?? 1
+        .length ?? fallbackImageCount
     );
 
     const headroom = headerRect
@@ -267,6 +308,22 @@
     const sideRoom = descriptionRect
       ? Math.max(0, (slideRect?.right ?? viewportWidth) - descriptionRect.right)
       : viewportWidth * 0.25;
+
+    return { viewportWidth, viewportHeight, headroom, sideRoom, imageCount };
+  }
+
+  // The box a picture of these proportions gets in that room: a slide with
+  // little text lets it grow into the empty top and side, a full one keeps it
+  // the corner accent it always was.
+  function imageBox(imageAspect, room) {
+    const { viewportWidth, viewportHeight, headroom, sideRoom, imageCount } =
+      room;
+
+    // Largest box of the image's aspect that fits a width x height budget.
+    const fitBudget = (maxWidth, maxHeight) => {
+      const width = Math.min(maxWidth, maxHeight * imageAspect);
+      return { width, height: width / imageAspect };
+    };
 
     // Above the text: nearly the whole width, down to the first line. The
     // faded lower edge may enter the text's first lines, which lets a genuinely
@@ -293,6 +350,36 @@
         chosen = candidate;
       }
     }
+    return chosen;
+  }
+
+  // Sizes the thumbnail container and mask from the image's aspect ratio and
+  // the room the event actually leaves free on its slide, and asks the host
+  // for a source that carries that box. Re-run on resize/rotation, not only
+  // on load.
+  function applyImageLayout(img) {
+    const rawAspect = img.naturalWidth / img.naturalHeight;
+    const imageAspect = Math.max(
+      MIN_LAYOUT_ASPECT,
+      Math.min(MAX_LAYOUT_ASPECT, rawAspect)
+    );
+
+    const room = measureImageRoom(img.closest(".event-images"));
+    const { viewportWidth, viewportHeight } = room;
+    const chosen = imageBox(imageAspect, room);
+
+    // The picture covers the box at its own proportions, not the clamped ones
+    // the box was built from, so the crop of a panorama is what has to be
+    // sharp.
+    requestImageWidth(
+      img.dataset.sourceUrl,
+      coverSourceWidth(
+        chosen.width,
+        chosen.height,
+        rawAspect,
+        window.devicePixelRatio
+      )
+    );
 
     const containerWidth = (chosen.width / viewportWidth) * 100;
     const containerHeight = (chosen.height / viewportHeight) * 100;
@@ -345,6 +432,10 @@
     }
     const currentLoadGeneration = imageLoadGeneration;
 
+    loadedImageWidths = {
+      ...loadedImageWidths,
+      [imageUrl]: imageWidth(imageUrl),
+    };
     applyImageLayout(img);
 
     requestAnimationFrame(() => {
@@ -400,8 +491,11 @@
           </span>
         {/if}
         <img
-          src={getThumbnailUrl(imgUrl, 400)}
-          srcset={`${getThumbnailUrl(imgUrl, 400)} 1x, ${getThumbnailUrl(imgUrl, 800)} 2x`}
+          src={getThumbnailUrl(
+            imgUrl,
+            requestedImageWidths[imgUrl] ?? estimatedImageWidth
+          )}
+          data-source-url={imgUrl}
           alt=""
           loading="lazy"
           decoding="async"
