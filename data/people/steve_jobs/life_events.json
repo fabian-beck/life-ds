@@ -1,17 +1,17 @@
 {
-  "dataset": "Wikipedia Biographical Timeline",
-  "created_on": "2026-09-12",
+  "dataset": "Steve Jobs Biographical Timeline",
+  "created_on": "2026-09-13",
   "person": {
     "name": "Steve_Jobs",
     "birth_date": "1955-02-24",
     "death_date": "2011-10-05",
     "primary_roles": [
-      "businessman",
+      "entrepreneur",
       "inventor",
-      "investor"
+      "executive"
     ],
     "tagline": "The iPhone in Every Pocket",
-    "summary": "Steve Jobs co-founded Apple with Steve Wozniak and led the company through the personal-computer revolution. After founding NeXT and acquiring Pixar, he returned to Apple to oversee products including the iMac, iPod, and iPhone.",
+    "summary": "Steve Jobs co-founded Apple and guided products that brought graphical computing, digital music, smartphones, and tablets to mass markets. After founding NeXT and leading Pixar, he returned to Apple and led the company until illness forced his resignation.",
     "wikipedia": "https://en.wikipedia.org/wiki/Steve_Jobs",
     "portrait": {
       "image": "/portraits/steve_jobs_thumbnail.webp",
@@ -27,8 +27,8 @@
   },
   "chapters": [
     {
-      "id": "silicon_valley_origins",
-      "headline": "Early Influences",
+      "id": "restless_beginnings",
+      "headline": "Restless Beginnings",
       "date_start": "1955-02-24",
       "date_start_precision": "day",
       "date_end": "1974",
@@ -36,18 +36,26 @@
       "age_start": 0,
       "age_end": 19,
       "involved_people": [
-        "Paul Jobs",
+        "Paul Reinhold Jobs",
         "Clara Jobs",
         "Robert Palladino",
         "Daniel Kottke",
         "Neem Karoli Baba",
         "Haidakhan Babaji"
       ],
-      "location": "California"
+      "location": "Western United States",
+      "illustration": {
+        "image": "/chapter_art/steve_jobs/restless_beginnings_medium.webp",
+        "medium": "/chapter_art/steve_jobs/restless_beginnings_medium.webp",
+        "full": "/chapter_art/steve_jobs/restless_beginnings_full.webp",
+        "concept": "A single bright filament wanders through a dark field of layered, translucent paper, slipping between irregular cutouts before rising into a faint circular glow. Its path feels searching, unfinished, and quietly electric.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "apple_takes_shape",
-      "headline": "Apple Takes Shape",
+      "id": "apple_rise",
+      "headline": "The Apple Breakthrough",
       "date_start": "1976-04-01",
       "date_start_precision": "day",
       "date_end": "1984-01-24",
@@ -57,27 +65,43 @@
       "involved_people": [
         "Steve Wozniak",
         "Ronald Wayne",
-        "Rod Holt",
-        "Jef Raskin",
-        "Andy Hertzfeld"
+        "Paul Terrell",
+        "Rod Holt"
       ],
-      "location": "California"
+      "location": "Silicon Valley",
+      "illustration": {
+        "image": "/chapter_art/steve_jobs/apple_rise_medium.webp",
+        "medium": "/chapter_art/steve_jobs/apple_rise_medium.webp",
+        "full": "/chapter_art/steve_jobs/apple_rise_full.webp",
+        "concept": "From a small luminous seed at center, crisp rectangular planes unfold outward in precise ascending layers, their edges catching white and amber light against deep black. The expanding geometry suggests an idea rapidly becoming a new order.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "exile_and_animation",
-      "headline": "Exile and Animation",
-      "date_start": "1985",
-      "date_start_precision": "year",
-      "date_end": "1991-03-18",
+      "id": "starting_over",
+      "headline": "The Second Act",
+      "date_start": "1985-09",
+      "date_start_precision": "month",
+      "date_end": "1995-11-22",
       "date_end_precision": "day",
       "age_start": 30,
-      "age_end": 36,
+      "age_end": 40,
       "involved_people": [
         "John Sculley",
         "Laurene Powell",
-        "Kōbun Chino Otogawa"
+        "Kōbun Chino Otogawa",
+        "John Lasseter"
       ],
-      "location": "United States"
+      "location": "California",
+      "illustration": {
+        "image": "/chapter_art/steve_jobs/starting_over_medium.webp",
+        "medium": "/chapter_art/steve_jobs/starting_over_medium.webp",
+        "full": "/chapter_art/steve_jobs/starting_over_full.webp",
+        "concept": "A fractured obsidian sphere hangs in darkness, its separated pieces slowly orbiting a warm inner core while a ribbon of prismatic light arcs between them. Breakage becomes a balanced, generative constellation.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
       "id": "apple_reborn",
@@ -91,11 +115,19 @@
       "involved_people": [
         "Jony Ive"
       ],
-      "location": "United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/steve_jobs/apple_reborn_medium.webp",
+        "medium": "/chapter_art/steve_jobs/apple_reborn_medium.webp",
+        "full": "/chapter_art/steve_jobs/apple_reborn_full.webp",
+        "concept": "A polished silver droplet hovers above a pool of black glass, sending perfectly concentric rings of blue-white light across the surface. At the center, the reflection sharpens from blur into brilliant clarity.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     },
     {
-      "id": "the_final_year",
-      "headline": "The Final Year",
+      "id": "final_years",
+      "headline": "The Final Handoff",
       "date_start": "2011-08-24",
       "date_start_precision": "day",
       "date_end": "2011-10-05",
@@ -106,21 +138,29 @@
         "Tim Cook",
         "Laurene Powell Jobs"
       ],
-      "location": "California"
+      "location": "California",
+      "illustration": {
+        "image": "/chapter_art/steve_jobs/final_years_medium.webp",
+        "medium": "/chapter_art/steve_jobs/final_years_medium.webp",
+        "full": "/chapter_art/steve_jobs/final_years_full.webp",
+        "concept": "A delicate lattice of golden threads narrows into a single glowing strand, which passes seamlessly into a wider stream of light flowing beyond the frame. Around it, the darkness is calm, spacious, and softening.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-13"
+      }
     }
   ],
-  "conclusion": "Steve Jobs helped bring personal computers to a mass consumer market through Apple and the Macintosh. After returning to Apple, he led the company behind the iMac, iPod, and iPhone. Pixar became a leading animation studio under The Walt Disney Company.",
+  "conclusion": "Steve Jobs co-founded Apple, founded NeXT, and led Pixar as chairman and majority shareholder. His work with collaborators including Steve Wozniak, Jony Ive, John Lasseter, and Tim Cook shaped the personal computer, digital music, smartphone, and computer-animation businesses.",
   "events": [
     {
       "date": "1955-02-24",
       "date_precision": "day",
       "age": 0,
       "title": "Birth in San Francisco",
-      "description": "Paul Jobs worked as a repossession agent in San Francisco. Clara Jobs worked as a bookkeeper. After Clara had an ectopic pregnancy, the couple sought to adopt a child. They promised to pay for Jobs’s college tuition.",
+      "description": "Steve Jobs was born in San Francisco to Joanne Carole Schieble and Abdulfattah \"John\" Jandali. Schieble arranged his adoption after her parents opposed the relationship. Paul and Clara Jobs adopted him after promising to pay for his college education. Paul worked as a mechanic, and Clara worked as a bookkeeper.",
       "locations": [
         {
           "name_historic": "San Francisco",
-          "name_modern": "San Francisco, California, USA",
+          "name_modern": "San Francisco, California, United States",
           "centroid": [
             -122.4194,
             37.7749
@@ -128,33 +168,34 @@
           "primary": true
         }
       ],
+      "involved_people": [
+        "Joanne Carole Schieble",
+        "Abdulfattah Jandali",
+        "Paul Reinhold Jobs",
+        "Clara Jobs"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Mona_Simpson"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "silicon_valley_origins",
-      "annotations": {
-        "closed adoption": {
-          "explanation": "A closed adoption keeps identifying information and contact between the birth and adoptive families confidential.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Closed_adoption"
-        }
-      },
+      "chapter": "restless_beginnings",
       "weight": 0.3,
       "event_class": {
         "type": "birth",
         "father": "Abdulfattah \"John\" Jandali",
         "mother": "Joanne Carole Schieble",
-        "characterization": "adoptive working family"
+        "characterization": "working-class household"
       }
     },
     {
       "date": "1972-09",
       "date_precision": "month",
-      "date_end": "1972-12",
-      "date_end_precision": "month",
+      "date_end": "1972",
+      "date_end_precision": "year",
       "age": 17,
       "title": "Leaves Reed College",
-      "description": "Paul and Clara Jobs paid the tuition despite the strain on their finances. Jobs withdrew after one semester. He remained at Reed College in Portland, Oregon, to audit selected classes, including Robert Palladino’s calligraphy course.",
+      "description": "Steve Jobs enrolled at Reed College in Portland in September 1972. He withdrew after one semester. He stayed in Portland and audited classes that interested him. Robert Palladino taught the calligraphy course that Jobs attended.",
       "locations": [
         {
           "name_historic": "Portland",
@@ -167,40 +208,39 @@
         }
       ],
       "involved_people": [
-        "Paul Jobs",
-        "Clara Jobs",
         "Robert Palladino"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Daniel_Kottke"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "silicon_valley_origins",
-      "weight": 0.45,
-      "background": "Reed College was the only school to which Jobs insisted on applying in September 1972. The private college in Portland cost more than Paul and Clara Jobs could comfortably afford. Jobs had met Chrisann Brennan at Homestead High School, and their relationship continued while he was in Oregon. At Reed, he became friends with Robert Friedland, then the student-body president. Friedland later owned the All One Farm commune in Oregon. Daniel Kottke, another Reed undergraduate, became a close friend there.\n\nAfter leaving the degree program, Jobs stayed in the Reed community without a dormitory room. He slept on the floors of friends’ dorm rooms. He returned Coke bottles for food money. He also walked to the local Hare Krishna temple for its weekly free meals. These years brought him into contact with the counterculture around the college and with Zen Buddhism, which he and Brennan began practicing through the Zen teacher Kōbun Chino Otogawa.\n\nThe letterforms he studied at Reed supplied a design concern that computer makers usually treated as secondary. Jobs later recalled learning about serif and sans-serif typefaces, varied spacing between letter pairs, and the visual proportions of type. When the Macintosh was designed, he said those lessons led to multiple typefaces and proportionally spaced fonts. In his 2005 Stanford commencement address, he described the later computer as the first with that combination of typographic features."
+      "chapter": "restless_beginnings",
+      "weight": 0.4,
+      "background": "Reed was the only college to which Jobs had insisted on applying. The private school in Portland carried a cost that Paul and Clara Jobs could scarcely afford. He left after a semester without telling them because he did not want their money spent on an education he considered meaningless. He remained in Portland without the demands of a formal course load. He could sit in on classes that held his attention. During this period, he slept on the floors of friends’ dormitory rooms. He returned Coke bottles for food money. He also went each week to the local Hare Krishna temple for free meals.\n\nThe calligraphy instruction offered a close study of letterforms. Jobs later recalled learning about serif and sans-serif typefaces, variations in the space between letter combinations, and the qualities that make type proportionally spaced. He said the work had no practical use at the time. The details stayed with him. When the Macintosh was being designed roughly a decade later, he drew on what he had learned in Portland. The computer received multiple typefaces and proportionally spaced fonts. Jobs said that personal computers might have lacked such type if he had not attended the class.\n\nReed also supplied friendships that remained part of his life beyond college. He became friends there with Robert Friedland, then the student-body president. He also met Daniel Kottke as an undergraduate at Reed. Kottke later remained in touch after transferring to Columbia University. He worked on early Apple hardware after Jobs invited him to a hobbyist computer project in 1976. The Portland years gave Jobs a period outside a prescribed academic program, with enough access to Reed’s classes to pursue typography alongside the people and interests he kept afterward."
     },
     {
       "date": "1974",
       "date_precision": "year",
       "age": 19,
-      "title": "Searches India for Enlightenment",
-      "description": "Jobs traveled through India with his Reed College friend Daniel Kottke to seek spiritual instruction. They visited Kainchi, a religious retreat associated with Neem Karoli Baba. They then traveled to a retreat associated with Haidakhan Babaji after finding Kainchi nearly deserted.",
+      "title": "Travels Through India",
+      "description": "Steve Jobs traveled through India with his Reed College friend Daniel Kottke in 1974. They visited the Kainchi retreat associated with Neem Karoli Baba. They also traveled to an [[ashram]], a religious retreat, associated with Haidakhan Babaji. Jobs returned to the United States after seven months and continued practicing Zen Buddhism.",
       "locations": [
         {
           "name_historic": "Kainchi, India",
-          "name_modern": "Kainchi, India",
+          "name_modern": "Kainchi, Uttarakhand, India",
           "centroid": [
-            79.402,
-            29.388
+            79.431,
+            29.619
           ],
           "primary": true
         },
         {
-          "name_historic": "India",
-          "name_modern": "India",
+          "name_historic": "Haidakhan, India",
+          "name_modern": "Haidakhan, Uttarakhand, India",
           "centroid": [
-            78.9629,
-            20.5937
+            79.527,
+            29.133
           ],
           "primary": false
         }
@@ -215,33 +255,41 @@
         "https://en.wikipedia.org/wiki/Daniel_Kottke"
       ],
       "event_type_icon": "mdi-walk",
-      "chapter": "silicon_valley_origins",
-      "weight": 0.35
+      "chapter": "restless_beginnings",
+      "weight": 0.3,
+      "annotations": {
+        "ashram": {
+          "explanation": "An ashram is a religious community or retreat centered on spiritual teaching and practice.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Ashram"
+        }
+      }
     },
     {
       "date": "1976-04-01",
       "date_precision": "day",
       "age": 21,
-      "title": "Founds Apple Computer",
-      "description": "Steve Jobs, Steve Wozniak, and Ronald Wayne formed Apple Computer Company as a partnership in Los Altos, California. Wayne drafted the original partnership agreement. Jobs and Wozniak formed the company to develop and sell Wozniak’s [[Apple I|Apple I computer]].",
+      "title": "Co-founds Apple Computer",
+      "description": "Steve Jobs, Steve Wozniak, and Ronald Wayne formed Apple Computer as a partnership on April 1, 1976. They worked from Jobs's parents' home in Los Altos. Computer retailer Paul Terrell ordered 50 assembled [[Apple I|Apple I computers]]. The order gave the partners their first production job.",
       "locations": [
         {
           "name_historic": "Los Altos",
-          "name_modern": "Los Altos, California, USA",
+          "name_modern": "Los Altos, California, United States",
           "centroid": [
-            -122.1147,
-            37.2358
+            -122.1141,
+            37.3852
           ],
           "primary": true
         }
       ],
       "involved_people": [
         "Steve Wozniak",
-        "Ronald Wayne"
+        "Ronald Wayne",
+        "Paul Terrell"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/Ronald_Wayne"
+        "https://en.wikipedia.org/wiki/Ronald_Wayne",
+        "https://en.wikipedia.org/wiki/Daniel_Kottke"
       ],
       "images": [
         {
@@ -253,25 +301,25 @@
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "apple_takes_shape",
+      "event_type_icon": "mdi-hammer",
+      "chapter": "apple_rise",
       "annotations": {
         "Apple I": {
-          "explanation": "The Apple I was an early personal computer designed by Steve Wozniak. Jobs and Wozniak founded Apple to develop and sell it to computer hobbyists.",
+          "explanation": "The Apple I was the first computer sold by the new Apple partnership. Wozniak designed it for the growing personal-computer hobbyist market.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Apple_I"
         }
       },
       "weight": 1.0,
-      "background": "In 1975, the Homebrew Computer Club gave Bay Area hobbyists a place to trade designs and ideas about small computers. Wozniak was designing calculators at Hewlett-Packard when he completed the basic Apple I design. Jobs had already learned that small electronic devices could be sold through the blue boxes he and Wozniak made for free long-distance calls. The first plan was to sell bare Apple I circuit boards to hobbyists for $50 each. Wozniak sold his HP scientific calculator to help finance the first batch. Jobs sold his Volkswagen van. Daniel Kottke later recalled that he was the only person regularly working in the Crist Drive garage. Wozniak arrived about once a week with new code. Jobs spent long hours in the kitchen calling potential investors.\n\nComputer retailer Paul Terrell ordered 50 fully assembled Apple I machines for $500 each. His Byte Shop had a reputation for slow payment. Jobs obtained a $15,000 line of credit for the parts needed to fill the order. The credit alarmed Wayne because each member of a partnership was personally responsible for its debts. Wayne had assets that creditors could seize. He had spent a year repaying debts after his slot-machine manufacturing business failed in 1971.\n\nWayne prepared the Apple I Operations Manual and drew detailed circuit diagrams that enabled the circuit-board artwork to be made for larger production. He also created the company’s first logo, Apple Newton, which pictured Isaac Newton under an apple tree. Wayne’s inventory and documentation methods from Atari were adapted for the new company. Twelve days after the partnership began, he filed an amendment withdrawing from it and accepted $800 for his stake. Wozniak later said that Wayne stayed for a few months. In January 1977, Apple became a corporation with funding and credit arranged by Mike Markkula.",
+      "background": "The Homebrew Computer Club had given hobbyists in Silicon Valley a place to exchange designs and ideas during 1975. Wozniak brought a computer design to that milieu after building it for his own use. Jobs saw a business in selling the board to hobbyists. The pair had already learned that electronics could be sold when they made illegal blue boxes for free long-distance calls. Jobs handled sales for roughly 200 blue boxes at $150 each. He and Wozniak also worked on Atari’s Breakout project. Wozniak reduced its chip count to 45 within four days. Atari later reengineered the design for testing and added missing features.\n\nThe new firm began with little cash. Wozniak sold his HP scientific calculator. Jobs sold his Volkswagen van. They initially planned to sell bare Apple I circuit boards for $50 each. Jobs sought investors from the kitchen of his parents’ home. Daniel Kottke later recalled that he was the only person regularly working in the garage. Wozniak arrived about once a week with code to test. Kottke and Jobs’s sister Patty assembled boards part-time during the summer.\n\n## Ronald Wayne’s departure\n\nWayne held a 10 percent stake under the original agreement. Jobs and Wozniak each held 45 percent. Wayne had been invited to help settle an intense discussion between them about computer design and the industry’s future. He drew the first Apple Newton logo and wrote the Apple I Operations Manual. His documentation and inventory systems from Atari were adapted for Apple.\n\nA $15,000 line of credit for materials created a personal risk for Wayne. A partnership made each member liable for debts incurred by the others. Wayne had assets that creditors could seize. His earlier slot-machine business had failed in 1971, and he spent a year repaying its debts. Twelve days after the partnership began, he filed an amendment withdrawing from it. He received $800 for his stake. Wozniak later said Wayne may have remained for a few months. In 1977, Mike Markkula’s funding helped turn the partnership into an incorporated company.",
       "background_images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Apple_I_%281976%29_-_Computer_History_Museum.jpg/960px-Apple_I_%281976%29_-_Computer_History_Museum.jpg",
-          "caption": "Apple-1 personal computer.",
-          "source": "https://commons.wikimedia.org/wiki/File:Apple_I_(1976)_-_Computer_History_Museum.jpg",
-          "creator": "Michael Hicks from Saint Paul, MN, USA",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-          "query": "Apple I computer"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Apple_I_at_the_Computer_History_Museum.jpg/960px-Apple_I_at_the_Computer_History_Museum.jpg",
+          "caption": "Apple I at the Computer History Museum",
+          "source": "https://commons.wikimedia.org/wiki/File:Apple_I_at_the_Computer_History_Museum.jpg",
+          "creator": "Todd Dailey",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+          "query": "Apple I circuit board"
         },
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_first_logo.png",
@@ -288,8 +336,8 @@
       "date": "1977-04",
       "date_precision": "month",
       "age": 22,
-      "title": "Introduces the Apple II",
-      "description": "The Apple II appeared at the West Coast Computer Faire in San Francisco. Steve Wozniak designed the computer. Steve Jobs directed its molded plastic case and presented it as a consumer product ready for use.",
+      "title": "Launches Apple II",
+      "description": "Steve Jobs and Steve Wozniak introduced the Apple II at the West Coast Computer Faire in San Francisco in April 1977. Wozniak designed the computer. Jobs helped shape its case and presented it as a [[consumer computer|computer for individual buyers]]. The Apple II became one of the first highly successful mass-produced microcomputers.",
       "locations": [
         {
           "name_historic": "San Francisco",
@@ -311,24 +359,30 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Apple_II_Plus%2C_Museum_of_the_Moving_Image.jpg/960px-Apple_II_Plus%2C_Museum_of_the_Moving_Image.jpg",
-          "caption": "Apple II computer on museum display",
-          "source": "https://commons.wikimedia.org/wiki/File:Apple_II_Plus,_Museum_of_the_Moving_Image.jpg",
-          "creator": "Marcin Wichary",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Apple_II%2C_1977%2C_Computer_History_Museum.jpg/960px-Apple_II%2C_1977%2C_Computer_History_Museum.jpg",
+          "caption": "Apple II computer from 1977",
+          "source": "https://commons.wikimedia.org/wiki/File:Apple_II,_1977,_Computer_History_Museum.jpg",
+          "creator": "The wub",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "apple_takes_shape",
+      "chapter": "apple_rise",
+      "annotations": {
+        "consumer computer": {
+          "explanation": "A consumer computer is designed for individuals to use at home or work rather than for a large institution. The Apple II helped expand the early personal-computer market.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Personal_computer"
+        }
+      },
       "weight": 0.9
     },
     {
       "date": "1984-01-24",
       "date_precision": "day",
       "age": 28,
-      "title": "Launches the Macintosh",
-      "description": "Steve Jobs introduced the Macintosh at Apple’s annual shareholders meeting in Cupertino, California. He had taken over the project from Jef Raskin. He presented the computer at De Anza College.",
+      "title": "Unveils the Macintosh",
+      "description": "Steve Jobs introduced the Macintosh at Apple’s annual shareholders meeting at De Anza College in Cupertino on January 24, 1984. The Macintosh used a [[graphical user interface|graphical user interface]], with pictures, windows, and menus controlled by a mouse. It became the first mass-produced computer with this kind of interface.",
       "locations": [
         {
           "name_historic": "Cupertino",
@@ -340,17 +394,13 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Jef Raskin",
-        "Andy Hertzfeld"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd_-_edited.jpg/960px-Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd_-_edited.jpg",
-          "caption": "Steve Jobs with Macintosh computer, January 1984",
+          "caption": "Steve Jobs with the Macintosh in January 1984",
           "source": "https://commons.wikimedia.org/wiki/File:Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg",
           "creator": "Photo: Bernard Gotfryd - Edited from tif by Cart",
           "license": "Public domain",
@@ -358,21 +408,27 @@
         }
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "apple_takes_shape",
+      "chapter": "apple_rise",
       "weight": 0.95,
       "event_class": {
         "type": "invention",
         "title": "Macintosh",
-        "description": "A personal computer combines a graphical user interface, mouse control, display, keyboard, and compact all-in-one case for general consumers.",
-        "impact": "The Macintosh helped launch desktop publishing in 1985 when Apple added the LaserWriter printer and Aldus PageMaker software became available."
+        "description": "The Macintosh combines a graphical user interface, mouse controls, and an all-in-one design for personal computing.",
+        "impact": "The Macintosh helped launch desktop publishing in 1985 when Apple added the LaserWriter printer and Aldus PageMaker software."
+      },
+      "annotations": {
+        "graphical user interface": {
+          "explanation": "A graphical user interface lets people operate software through visual elements such as icons, windows, and menus instead of typed commands.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Graphical_user_interface"
+        }
       }
     },
     {
-      "date": "1985",
-      "date_precision": "year",
+      "date": "1985-09",
+      "date_precision": "month",
       "age": 30,
-      "title": "Leaves Apple to Found NeXT",
-      "description": "Apple’s board backed John Sculley’s reorganization plan and removed Steve Jobs from his operating role. Jobs resigned from Apple on September 17, 1985. He founded NeXT with five former Apple employees. NeXT developed computers for higher-education and business customers.",
+      "title": "Founds NeXT After Apple",
+      "description": "Steve Jobs resigned from Apple in September 1985 after a power struggle with chief executive John Sculley and Apple’s board. He left the Macintosh group. Jobs then founded [[NeXT]], a computer-platform company, with former Apple employees. NeXT developed computers for higher-education and business customers.",
       "locations": [
         {
           "name_historic": "Cupertino",
@@ -393,24 +449,30 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/NeXTcube_computer_%281990%29_-_Computer_History_Museum.jpg/960px-NeXTcube_computer_%281990%29_-_Computer_History_Museum.jpg",
-          "caption": "NeXT Cube computer",
-          "source": "https://commons.wikimedia.org/wiki/File:NeXTcube_computer_(1990)_-_Computer_History_Museum.jpg",
-          "creator": "Michael Hicks from Saint Paul, MN, USA",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Living_Computers_-_NeXT_Cube_%2839802959523%29.jpg/960px-Living_Computers_-_NeXT_Cube_%2839802959523%29.jpg",
+          "caption": "NeXT Cube workstation",
+          "source": "https://commons.wikimedia.org/wiki/File:Living_Computers_-_NeXT_Cube_(39802959523).jpg",
+          "creator": "Michael Dunn from Silicon Valley, USA",
           "license": "CC BY 2.0",
           "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
-      "event_type_icon": "mdi-exit-to-app",
-      "chapter": "exile_and_animation",
-      "weight": 0.8
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "starting_over",
+      "weight": 0.8,
+      "annotations": {
+        "NeXT": {
+          "explanation": "NeXT was Jobs’s computer company after his first departure from Apple. Its software and operating-system technology later returned to Apple through Apple’s acquisition of the company.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/NeXT"
+        }
+      }
     },
     {
-      "date": "1986",
-      "date_precision": "year",
-      "age": 31,
-      "title": "Acquires Pixar",
-      "description": "Steve Jobs bought Lucasfilm’s computer graphics division and established it as the independent company Pixar. Jobs became Pixar’s chairman and majority shareholder. Pixar specialized in computer hardware and animation.",
+      "date": "1986-01",
+      "date_precision": "month",
+      "age": 30,
+      "title": "Buys Pixar",
+      "description": "Steve Jobs bought Lucasfilm’s computer graphics division in 1986. The division became Pixar. Jobs became Pixar’s chairman and majority shareholder. Pixar developed computer graphics hardware and animation.",
       "locations": [
         {
           "name_historic": "California",
@@ -428,30 +490,27 @@
       ],
       "images": [
         {
-          "url": "https://live.staticflickr.com/2267/2444967762_a3e192bb9e_b.jpg",
-          "caption": "Pixar Image Computer",
-          "source": "https://www.flickr.com/photos/24539921@N08/2444967762",
-          "creator": "Pargon",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Pixar_HQ_Emeryville%2C_California.jpg/960px-Pixar_HQ_Emeryville%2C_California.jpg",
+          "caption": "Pixar headquarters in Emeryville, California",
+          "source": "https://commons.wikimedia.org/wiki/File:Pixar_HQ_Emeryville,_California.jpg",
+          "creator": "Sharon Hahn Darlin",
           "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "exile_and_animation",
+      "event_type_icon": "mdi-chart-line",
+      "chapter": "starting_over",
       "weight": 0.85,
-      "involved_people": [
-        "John Lasseter"
-      ],
-      "background": "Computer-generated imagery was still an unusual part of feature animation when Lucasfilm’s computer division employed John Lasseter. Lasseter had trained in the Character Animation program at the California Institute of the Arts. Disney animators Jack Hannah and T. Hee created the program. His teachers included Disney veterans Eric Larson, Frank Thomas, and Ollie Johnston. Fellow students included Brad Bird, John Musker, Henry Selick, Tim Burton, and Chris Buck. Lasseter made Lady and the Lamp in 1979 and Nitemare in 1980. Each short won a student Academy Award for Animation.\n\nLasseter joined Walt Disney Productions after graduating in 1979. Disney had reviewed about 10,000 portfolios during its late-1970s talent search. The studio selected about 150 apprentices. About 45 remained permanent employees. Lasseter worked on an intended sequence called The Emperor and the Nightingale for the uncompleted Disney project Musicana. The work later contributed to the development of Fantasia 2000. Disney dismissed Lasseter after he promoted computer animation. He then joined Lucasfilm and worked with computer-generated imagery there.\n\nThe new company retained Lasseter as a creative force while it pursued computer hardware and animation. Lasseter eventually directed Toy Story in 1995. He also directed A Bug’s Life, Toy Story 2, Cars, and Cars 2. Toy Story received a Special Achievement Award from the Academy of Motion Picture Arts and Sciences. Lasseter won an Academy Award for the animated short Tin Toy. He oversaw Pixar films and associated projects through 2018. Five animated films he executive-produced later earned more than $1 billion each worldwide, including Toy Story 3, Frozen, Zootopia, Finding Dory, and Incredibles 2.",
+      "background": "Lucasfilm’s computer division had grown from work on digital effects for films. Its Graphics Group combined engineers with a small animation team. Ed Catmull led the group. Alvy Ray Smith served as executive vice president. George Lucas sought a buyer while facing the financial effects of his divorce. The new company began with roughly 40 employees and needed revenue from its own products.\n\nIts first commercial focus was the Pixar Image Computer. The machine processed high-resolution digital images for government, medical, and scientific customers. Pixar also developed RenderMan, software that created realistic lighting and surfaces in computer-generated images. The hardware business brought little profit. The group’s animation work gave it a public identity through short films.\n\nJohn Lasseter supplied the link between traditional animation and the new technology. Disney had hired him as an animator after he left the California Institute of the Arts in 1979. He became interested in combining hand-drawn characters with computer-generated backgrounds after seeing Tron. Lasseter and Glen Keane proposed a computer-assisted version of Where the Wild Things Are. Disney dismissed Lasseter after the proposal. He joined Lucasfilm, where he made The Adventures of André and Wally B. with the Graphics Group. The short used computer animation for its characters and scenery.\n\nLasseter stayed with Pixar and directed Luxo Jr. in 1986. The short centered on two desk lamps. It earned an Academy Award nomination and helped establish Pixar’s animation unit. Tin Toy won the Academy Award for Best Animated Short Film in 1988. The success of Tin Toy led Disney to approach Pixar about a feature film, which became Toy Story.",
       "background_images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Pixar_computer_1980s.jpg/960px-Pixar_computer_1980s.jpg",
-          "caption": "Pixar computer from 1980s.",
-          "source": "https://commons.wikimedia.org/wiki/File:Pixar_computer_1980s.jpg",
-          "creator": "Brad Montgomery",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Pixar_Image_Computer_%28411108501%29.jpg/960px-Pixar_Image_Computer_%28411108501%29.jpg",
+          "caption": "Pixar Image Computer",
+          "source": "https://commons.wikimedia.org/wiki/File:Pixar_Image_Computer_(411108501).jpg",
+          "creator": "Adam Schuster from Orlando, FL, USA",
           "license": "CC BY 2.0",
           "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-          "query": "Lucasfilm computer division"
+          "query": "Pixar Image Computer"
         }
       ]
     },
@@ -460,47 +519,91 @@
       "date_precision": "day",
       "age": 36,
       "title": "Marries Laurene Powell",
-      "description": "Steve Jobs met Laurene Powell after she spoke with him at a Stanford Business School lecture in October 1989. Powell was an MBA student. They married in Yosemite National Park on March 18, 1991. Zen monk Kōbun Chino Otogawa conducted the Buddhist ceremony.",
+      "description": "Steve Jobs married Laurene Powell on March 18, 1991, at the Ahwahnee Hotel in Yosemite National Park. They had met after Jobs spoke at Stanford Business School in 1989. Kōbun Chino Otogawa led their [[Zen Buddhism|Zen Buddhist]] ceremony. Otogawa was Jobs’s Zen teacher.",
       "locations": [
         {
           "name_historic": "Yosemite National Park",
-          "name_modern": "Yosemite National Park, California",
+          "name_modern": "Yosemite National Park, California, United States",
           "centroid": [
-            -119.5164635,
-            37.8393004
+            -119.5383,
+            37.8651
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Laurene Powell Jobs",
+        "Laurene Powell",
         "Kōbun Chino Otogawa"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs",
         "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/AHWAHNEE_HOTEL_IN_YOSEMITE_NATIONAL_PARK_-_AT_DUSK.jpg/960px-AHWAHNEE_HOTEL_IN_YOSEMITE_NATIONAL_PARK_-_AT_DUSK.jpg",
+          "caption": "Ahwahnee Hotel in Yosemite National Park",
+          "source": "https://commons.wikimedia.org/wiki/File:AHWAHNEE_HOTEL_IN_YOSEMITE_NATIONAL_PARK_-_AT_DUSK.jpg",
+          "creator": "JERRYE AND ROY KLOTZ MD",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+        }
+      ],
       "event_type_icon": "mdi-ring",
-      "chapter": "exile_and_animation",
-      "weight": 0.55,
+      "chapter": "starting_over",
+      "annotations": {
+        "Zen Buddhism": {
+          "explanation": "Zen Buddhism is a Buddhist tradition that emphasizes meditation and direct awareness. Jobs pursued Zen practice for many years.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Zen"
+        }
+      },
+      "weight": 0.5,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
         "partner": "Laurene Powell Jobs",
         "duration": "until his death",
         "children": 3,
-        "characterization": "devoted marriage"
+        "characterization": "lasting marriage"
       }
+    },
+    {
+      "date": "1995-11-22",
+      "date_precision": "day",
+      "age": 40,
+      "title": "Releases Toy Story",
+      "description": "Pixar released Toy Story on November 22, 1995. It was the company’s first feature-length film. Steve Jobs led Pixar as chairman and majority shareholder. John Lasseter directed the film.",
+      "locations": [],
+      "involved_people": [
+        "John Lasseter"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/John_Lasseter"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Toy_Story_VHS_tape.jpg/960px-Toy_Story_VHS_tape.jpg",
+          "caption": "Toy Story VHS tape",
+          "source": "https://commons.wikimedia.org/wiki/File:Toy_Story_VHS_tape.jpg",
+          "creator": "JJBers",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+        }
+      ],
+      "event_type_icon": "mdi-movie",
+      "chapter": "starting_over",
+      "weight": 0.85
     },
     {
       "date": "1997-07",
       "date_precision": "month",
       "age": 42,
       "title": "Returns to Apple",
-      "description": "Apple acquired NeXT in December 1996, bringing Steve Jobs back to Apple. In July 1997, Apple appointed him interim chief executive in Cupertino, California. The company faced falling sales and a weakened product line.",
+      "description": "Apple made Steve Jobs its interim chief executive in July 1997. Apple had acquired NeXT, the computer company Jobs founded, in 1996. Jobs returned as Apple faced severe financial losses. He led the company’s effort to recover.",
       "locations": [
         {
-          "name_historic": "Cupertino, California",
+          "name_historic": "Cupertino",
           "name_modern": "Cupertino, California, USA",
           "centroid": [
             -122.0322,
@@ -512,30 +615,20 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/NEXT_Cube-IMG_7146.jpg/960px-NEXT_Cube-IMG_7146.jpg",
-          "caption": "NeXTcube workstation",
-          "source": "https://commons.wikimedia.org/wiki/File:NEXT_Cube-IMG_7146.jpg",
-          "creator": "Rama & Musée Bolo",
-          "license": "CC BY-SA 2.0 fr",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/fr/deed.en"
-        }
-      ],
       "event_type_icon": "mdi-briefcase",
       "chapter": "apple_reborn",
       "weight": 0.95
     },
     {
-      "date": "1998-05",
-      "date_precision": "month",
-      "age": 43,
-      "title": "Unveils the iMac",
-      "description": "Steve Jobs introduced the iMac in Cupertino, California, with industrial designer Jony Ive. The display and computer shared one translucent case. The machine was designed for internet access.",
+      "date": "2001-10-23",
+      "date_precision": "day",
+      "age": 46,
+      "title": "Introduces the iPod",
+      "description": "Steve Jobs introduced the iPod at Apple headquarters in Cupertino on October 23, 2001. The iPod was a portable digital music player. Jony Ive led Apple’s industrial-design work on the product. Jobs presented it as Apple’s next music device.",
       "locations": [
         {
           "name_historic": "Cupertino",
-          "name_modern": "Cupertino, California, USA",
+          "name_modern": "Cupertino, California, United States",
           "centroid": [
             -122.0322,
             37.323
@@ -552,49 +645,12 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/IMac_G3_Bondi_Blue.png/960px-IMac_G3_Bondi_Blue.png",
-          "caption": "Bondi Blue iMac G3",
-          "source": "https://commons.wikimedia.org/wiki/File:IMac_G3_Bondi_Blue.png",
-          "creator": "True Tech Talk Time",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "apple_reborn",
-      "weight": 0.8
-    },
-    {
-      "date": "2001-10-23",
-      "date_precision": "day",
-      "age": 46,
-      "title": "Introduces the iPod",
-      "description": "Steve Jobs presented the iPod at Apple’s headquarters in Cupertino, California. The iPod was Apple’s new portable music player. It worked with [[iTunes]], Apple’s software for organizing digital music.",
-      "locations": [
-        {
-          "name_historic": "Cupertino",
-          "name_modern": "Cupertino, California, USA",
-          "centroid": [
-            -122.0322,
-            37.323
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Jony Ive"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/IPod_first_generation_click-wheel-2004-11-30.jpg/960px-IPod_first_generation_click-wheel-2004-11-30.jpg",
-          "caption": "First-generation iPod click wheel",
-          "source": "https://commons.wikimedia.org/wiki/File:IPod_first_generation_click-wheel-2004-11-30.jpg",
-          "creator": "https://www.flickr.com/people/pvera/",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Ipod-classic-6th-gen.jpg/960px-Ipod-classic-6th-gen.jpg",
+          "caption": "iPod Classic sixth-generation music player",
+          "source": "https://commons.wikimedia.org/wiki/File:Ipod-classic-6th-gen.jpg",
+          "creator": "Evan-Amos",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
@@ -603,41 +659,37 @@
       "event_class": {
         "type": "invention",
         "title": "iPod",
-        "description": "A hard-drive digital music player uses a scroll wheel and iTunes synchronization to organize and carry thousands of songs.",
-        "impact": "The iPod creates a major new consumer electronics business for Apple."
-      },
-      "annotations": {
-        "iTunes": {
-          "explanation": "iTunes was Apple software for organizing, playing, and synchronizing digital music with devices such as the iPod.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/ITunes"
-        }
+        "description": "The iPod is a compact digital music player that stores songs on a hard drive and syncs with iTunes.",
+        "impact": "The iPod made Apple a major seller of portable music players and helped establish its digital-music business."
       }
     },
     {
-      "date": "2003",
-      "date_precision": "year",
+      "date": "2003-10",
+      "date_precision": "month",
+      "date_end": "2004-07",
+      "date_end_precision": "month",
       "age": 48,
       "title": "Receives Cancer Diagnosis",
-      "description": "Steve Jobs learned that he had a [[pancreatic neuroendocrine tumor]]. He initially pursued dietary and alternative treatments for the condition.",
-      "locations": [],
+      "description": "Doctors diagnosed Steve Jobs with a [[pancreatic neuroendocrine tumor|pancreatic neuroendocrine tumor]] in October 2003. He initially chose dietary and alternative treatments. He underwent surgery to remove the tumor in July 2004.",
+      "locations": [
+        {
+          "name_historic": "California",
+          "name_modern": "California, United States",
+          "centroid": [
+            -118.755997,
+            36.7014631
+          ],
+          "primary": true
+        }
+      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Pancreatic_neuroendocrine_tumour_--_intermed_mag.jpg/960px-Pancreatic_neuroendocrine_tumour_--_intermed_mag.jpg",
-          "caption": "Micrograph of pancreatic neuroendocrine tumor",
-          "source": "https://commons.wikimedia.org/wiki/File:Pancreatic_neuroendocrine_tumour_--_intermed_mag.jpg",
-          "creator": "Nephron",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
       ],
       "event_type_icon": "mdi-hospital",
       "chapter": "apple_reborn",
       "annotations": {
         "pancreatic neuroendocrine tumor": {
-          "explanation": "This tumor begins in hormone-producing cells of the pancreas. It differs biologically from the more common pancreatic cancers that begin in pancreatic ducts.",
+          "explanation": "This is a tumor that begins in the pancreas’s hormone-producing cells. It differs from the more common form of pancreatic cancer.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Pancreatic_neuroendocrine_tumor"
         }
       },
@@ -647,8 +699,8 @@
       "date": "2007-01-09",
       "date_precision": "day",
       "age": 51,
-      "title": "Reveals the iPhone",
-      "description": "Steve Jobs introduced the iPhone at the Macworld Conference and Expo in San Francisco. He presented it as a mobile phone, a widescreen iPod, and an internet communications device.",
+      "title": "Unveils the iPhone",
+      "description": "Steve Jobs introduced the iPhone at [[Macworld]], an Apple trade conference, in San Francisco on January 9, 2007. The device combined a phone, internet browser, camera, and iPod music player. Jony Ive worked with Jobs on its design.",
       "locations": [
         {
           "name_historic": "San Francisco",
@@ -679,32 +731,29 @@
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
       "chapter": "apple_reborn",
+      "annotations": {
+        "Macworld": {
+          "explanation": "Macworld was a trade conference and exhibition centered on Apple products and software. Apple used its keynote presentations there to announce major products.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Macworld"
+        }
+      },
       "weight": 1.0,
       "event_class": {
         "type": "invention",
         "title": "iPhone",
-        "description": "A touchscreen mobile device combines telephony, web browsing, music playback, software applications, and multi-touch controls in one handheld computer.",
-        "impact": "The iPhone establishes Apple as a major maker of smartphones and mobile software platforms."
+        "description": "The iPhone combines a cellular phone, touchscreen computer, internet browser, camera, and iPod music player in one device.",
+        "impact": "The iPhone established Apple as a major smartphone maker and created a platform for software distributed through mobile app stores."
       },
-      "background": "Apple entered 2007 with the iPod and iTunes already giving it a large presence in digital music. The company’s hardware group had also spent years developing compact products around a close working relationship between Jobs and Jony Ive. Apple’s earlier handheld Newton had failed in the 1990s. The new project put a phone, music player, and web device into a category where physical keyboards, small displays, and carrier-controlled software were standard.\n\nThe presentation depended on a live demonstration. Jobs moved through music, photographs, web pages, maps, email, and a phone call on a large screen behind him. He used a touch interface built around gestures such as swiping and pinching. Ive joined the demonstration by telephone. The call made Ive the first person to speak publicly with Jobs through the new device. Jobs also placed a prank call to a Starbucks store, ordering 4,000 lattes before ending the call.\n\n## Software and sales\n\nApple’s first model went on sale in the United States on June 29, 2007. It initially ran software supplied by Apple and did not offer the later App Store for independent software makers. The company announced in 2007 that it would support third-party applications the following year. The App Store opened in 2008 alongside iPhone OS 2.0.\n\nThe first iPhone reached one million sales after 74 days. It was sold through an exclusive arrangement with AT&T in the United States. Apple later extended the line into a platform for mobile software and services. Ive continued to lead Apple’s industrial design work on the iPhone and its successors.",
+      "background": "Apple entered 2007 with the iPod established as its consumer product line and with iTunes central to its music business. The company had been developing a touch-controlled handset in secrecy. Jobs directed the work with a small group of engineers and designers. The first model used a 3.5-inch display and a single physical Home button. It was sold in 4 GB and 8 GB versions for $499 and $599. Cingular Wireless became its exclusive United States carrier. The arrangement tied the phone to a two-year service contract.\n\nThe public presentation used a sequence that made the product’s scope easy to follow. Jobs described it first as three separate products. He named a widescreen iPod with touch controls. He named a mobile phone. He named an Internet communications device. He then repeated the sequence before revealing that Apple had made one device. Ive placed the first call from the new phone after the presentation. The company’s industrial-design group had already made thinness and the removal of visible controls central concerns in products such as the iMac and iPod.\n\nThe first iPhone reached stores in the United States on June 29, 2007. Customers formed long lines outside Apple and AT&T stores. Apple sold 1.39 million iPhones during 2007. The original model’s software did not initially allow outside developers to install native applications. Apple released a software development kit in 2008. That release accompanied the App Store, where programs could be distributed to iPhone users. Apple followed the first model with the iPhone 3G in 2008.",
       "background_images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Steve_Jobs_presents_iPhone.jpg/960px-Steve_Jobs_presents_iPhone.jpg",
-          "caption": "MacWorld Conference & Expo 2007 - San Francisco Steven P. Jobs present Apple's phone : the iPhone",
-          "source": "https://commons.wikimedia.org/wiki/File:Steve_Jobs_presents_iPhone.jpg",
-          "creator": "Blake Patterson",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-          "query": "Macworld Conference Expo San Francisco"
-        },
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Original_iPhone_docked.jpg/960px-Original_iPhone_docked.jpg",
-          "caption": "Original iPhone in dock, restarting.",
-          "source": "https://commons.wikimedia.org/wiki/File:Original_iPhone_docked.jpg",
-          "creator": "Andrew from London, UK",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-          "query": "first generation iPhone"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/First_iPhone_Macworld_2007_DSCF1283.agr.jpg/960px-First_iPhone_Macworld_2007_DSCF1283.agr.jpg",
+          "caption": "First public showing of the Apple iPhone at the 2007 MacWorld show in San Fransisco. Note: time is EST. See File:Albert S.",
+          "source": "https://commons.wikimedia.org/wiki/File:First_iPhone_Macworld_2007_DSCF1283.agr.jpg",
+          "creator": "ArnoldReinhold",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "original iPhone 2007"
         }
       ]
     },
@@ -713,8 +762,18 @@
       "date_precision": "day",
       "age": 56,
       "title": "Resigns as Apple CEO",
-      "description": "Steve Jobs told Apple’s board that he could no longer meet his duties as chief executive. He asked the board to appoint Tim Cook as his successor. Jobs remained chairman of the board.",
-      "locations": [],
+      "description": "Steve Jobs resigned as Apple’s chief executive on August 24, 2011, because his health had declined. Apple’s board named Tim Cook chief executive. The board elected Jobs chairman.",
+      "locations": [
+        {
+          "name_historic": "Cupertino, California",
+          "name_modern": "Cupertino, California, United States",
+          "centroid": [
+            -122.0322,
+            37.323
+          ],
+          "primary": true
+        }
+      ],
       "involved_people": [
         "Tim Cook"
       ],
@@ -723,36 +782,15 @@
         "https://en.wikipedia.org/wiki/Tim_Cook"
       ],
       "event_type_icon": "mdi-exit-to-app",
-      "chapter": "the_final_year",
-      "weight": 0.75,
-      "background": "Apple had already arranged for Tim Cook to run day-to-day operations during an earlier medical leave in 2009. In January 2011, the board approved a third medical leave for Jobs. Cook again took charge of daily operations. Jobs continued to make most major decisions during the leave. His public appearances became rare. He introduced the iPad 2 in March and appeared at Apple’s Worldwide Developers Conference in June. Apple had become a company with about $100 billion in annual revenue by the time of the leadership change. Forbes contributor Robin Ferracone wrote in September that Jobs and Cook had helped take Apple from $11 billion in revenue in 1995 to less than $6 billion in 1998, then to $100 billion in 2011.\n\nIn his letter to Apple’s board, Jobs invoked a standard he said he had set for himself. He wrote that he would be the first to let the board know if he could no longer meet Apple’s expectations and duties. He wrote, “Unfortunately, that day has come.” He also said he believed Apple’s “brightest and most innovative days” lay ahead. The letter named Cook as the person Jobs recommended to lead the company. The board acted that day.\n\nCook had joined Apple in 1998 after working for IBM, Intelligent Electronics, and Compaq. At Apple, he closed factories and warehouses and shifted production to contract manufacturers. His operations group cut inventory from months to days. It also made long-term advance investments in flash memory beginning in 2005. Those contracts secured supplies for the iPod Nano, iPhone, and iPad. Cook had become chief operating officer in 2007. He had already served as acting chief executive during Jobs’s absences.\n\nApple’s leadership passed to Cook six weeks before Jobs died from complications of pancreatic cancer on October 5. In 2012, Cook reorganized the executive team after the troubled release of Apple Maps. Scott Forstall left his position overseeing iOS, and responsibilities were distributed among other senior executives, including Jony Ive.",
-      "background_images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/IPad_2_front_camera_demonstration.jpg/960px-IPad_2_front_camera_demonstration.jpg",
-          "caption": "Front camera of iPad 2 at Apple's first product demo",
-          "source": "https://commons.wikimedia.org/wiki/File:IPad_2_front_camera_demonstration.jpg",
-          "creator": "Blake Patterson",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-          "query": "Apple iPad 2"
-        },
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/WWDC_2011_-_Moscone_West_Exterior.jpg/960px-WWDC_2011_-_Moscone_West_Exterior.jpg",
-          "caption": "Moscone Center with Apple logo on it. WWDC 2011",
-          "source": "https://commons.wikimedia.org/wiki/File:WWDC_2011_-_Moscone_West_Exterior.jpg",
-          "creator": "This photo was taken by Anton Zelenov. Please credit this with : Photo : Anton Zelenov in the immediate vicinity of the image. If you use one of my photos, please email me (account needed) or leave me a short message on my discussion page. It would be greatly appreciated. Do not copy this image illegally by ignoring the terms of the license below, as it is not in the public domain. If you would like special permission to use, license, or purchase the image please contact me to negotiate terms.",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-          "query": "Apple Worldwide Developers Conference 2011"
-        }
-      ]
+      "chapter": "final_years",
+      "weight": 0.7
     },
     {
       "date": "2011-10-05",
       "date_precision": "day",
       "age": 56,
-      "title": "Dies in Palo Alto",
-      "description": "Jobs’s health declined after his cancer returned. He died at his Palo Alto home with his wife, Laurene Powell Jobs, and family members nearby.",
+      "title": "Death in Palo Alto",
+      "description": "Steve Jobs had undergone surgery for his pancreatic neuroendocrine tumor in 2004. He received a liver transplant in 2009. He died at his Palo Alto home on October 5, 2011, from tumor-related respiratory arrest.",
       "locations": [
         {
           "name_historic": "Palo Alto",
@@ -771,14 +809,15 @@
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "the_final_year",
-      "weight": 0.65,
+      "chapter": "final_years",
+      "weight": 0.8,
       "event_class": {
         "type": "death",
-        "cause": "tumor-related respiratory arrest",
+        "cause": "pancreatic neuroendocrine tumor",
         "characterization": "after cancer recurrence",
         "place_of_rest": "Alta Mesa Memorial Park, Palo Alto"
-      }
+      },
+      "background": "Apple had already put Tim Cook in charge of daily operations during Jobs’s medical leave. The company’s board had made Cook chief executive six weeks earlier. Jobs remained chairman. Apple was preparing for the iPhone 4S launch when the company issued its announcement. The board called him “a visionary and creative genius.” Cook told Apple employees that the company had lost “an amazing human being and irreplaceable leader.”\n\nCustomers and admirers gathered outside Apple Stores around the world. They left flowers, apples, candles, handwritten notes, and photographs at storefronts. Apple replaced its home page with a black-and-white photograph and the years of Jobs’s life. The company opened an online memorial page for messages from the public. It received more than a million tributes from customers, colleagues, and friends. Flags at Apple and Pixar flew at half-staff. The Walt Disney Company also lowered its flags, since Jobs was Disney’s largest individual shareholder after its purchase of Pixar.\n\nA small private funeral took place two days later. Apple held an invitation-only memorial service at Stanford University on October 16. The program included performances by Joan Baez, Yo-Yo Ma, and Norah Jones. Bono spoke at the service. Former Vice President Al Gore, who had served on Apple’s board, also attended. At the time of his death, Jobs’s holdings in Apple and Disney were estimated at about $10.2 billion. Laurene Powell Jobs inherited most of the estate and became Disney’s largest individual shareholder through the Pixar shares."
     }
   ]
 }

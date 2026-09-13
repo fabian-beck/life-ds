@@ -1,6 +1,6 @@
 {
-  "dataset": "Wikipedia ego network: Steve Jobs",
-  "created_on": "2026-09-12",
+  "dataset": "Steve Jobs ego network",
+  "created_on": "2026-09-13",
   "ego": {
     "name": "Steve Jobs",
     "birth_year": 1955,
@@ -8,80 +8,79 @@
     "primary_roles": [
       "Unternehmer",
       "Erfinder",
-      "Investor",
-      "Technologieunternehmer"
+      "Manager"
     ],
-    "summary": "Steve Jobs war ein US-amerikanischer Unternehmer, Erfinder und Investor. Er gründete Apple mit, rief NeXT ins Leben und war Vorsitzender sowie Mehrheitsaktionär von Pixar. Er prägte die Revolution des Personalcomputers. Nach seiner Rückkehr zu Apple im Jahr 1997 leitete er die Entwicklung und Vermarktung von Produkten wie iMac, iPod, iPhone und iPad.",
+    "summary": "US-amerikanischer Unternehmer, Erfinder und Manager, der Apple mitgründete, NeXT gründete und als Vorsitzender und Mehrheitsaktionär von Pixar tätig war. Mit Macintosh, iPod, iPhone und iPad trug Jobs dazu bei, dass sich Personal Computer, digitale Musik, Smartphones und Tablets auf den Massenmärkten verbreiteten.",
     "wikipedia": "https://en.wikipedia.org/wiki/Steve_Jobs"
   },
   "connections": [
     {
-      "person_name": "Paul Jobs",
-      "relationship_description": "Paul Jobs adoptierte Jobs als Säugling und zog ihn in Kalifornien auf. Als Maschinenschlosser förderte er Jobs’ Interesse an handwerklicher Präzisionsarbeit durch gemeinsame Tätigkeiten in der Familiengarage.",
+      "person_name": "Paul Reinhold Jobs",
+      "relationship_description": "Jobs’ Adoptivvater war gelernter Maschinenschlosser und teilte seine Begeisterung für Mechanik, indem er mit ihm in der Familiengarage in Mountain View und Los Altos Dinge baute.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "Jobs betrachtete Paul als seinen Vater und lehnte Formulierungen ab, die ihre Beziehung herabsetzten.",
+      "notes": "Jobs betrachtete Paul uneingeschränkt als seinen Vater und wies jede Formulierung zurück, die diese Beziehung herabsetzte.",
       "relationship_type": "family/adoptive_father"
     },
     {
       "person_name": "Clara Jobs",
-      "relationship_description": "Clara Jobs und Paul Jobs adoptierten Steve Jobs kurz nach seiner Geburt. Clara zog ihn in Kalifornien mit auf und unterstützte seine Ausbildung.",
+      "relationship_description": "Jobs’ Adoptivmutter war Buchhalterin. Sie adoptierte ihn 1955 gemeinsam mit Paul Jobs und unterstützte seine Ausbildung.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "Jobs betrachtete Clara und Paul als seine Eltern.",
+      "notes": "Sie und Paul versprachen, sein Studium zu finanzieren, was Voraussetzung für die Adoption war.",
       "relationship_type": "family/adoptive_mother"
     },
     {
-      "person_name": "Patricia Jobs",
-      "relationship_description": "Patricia Jobs wurde 1957 von Paul und Clara Jobs adoptiert und wuchs mit Steve Jobs im Haushalt der Familie Jobs auf.",
-      "strength": "strong",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/Daniel_Kottke"
-      ],
-      "notes": "Sie war als Patty bekannt und half außerdem beim Zusammenbau der ersten Leiterplatten von Apple.",
-      "relationship_type": "family/sister"
-    },
-    {
       "person_name": "Mona Simpson",
-      "relationship_description": "Mona Simpson war Jobs’ leibliche jüngere Schwester. Sie lernten sich 1986 kennen, nachdem ihre leibliche Mutter ein Treffen arrangiert hatte. Sie wurden Freunde und suchten gemeinsam nach ihrem Vater.",
+      "relationship_description": "Jobs’ leibliche jüngere Schwester lernte er 1986 in New York kennen, nachdem ihre Mutter den Kontakt zwischen ihnen hergestellt hatte. Sie wurden enge Freunde und suchten gemeinsam nach ihrem Vater.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Mona_Simpson",
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "Simpson half Jobs später dabei, seine Beziehung zu seiner Tochter Lisa zu erneuern.",
-      "relationship_type": "family/sister"
-    },
-    {
-      "person_name": "Laurene Powell Jobs",
-      "relationship_description": "Jobs lernte Laurene Powell nach seinem Vortrag an der Stanford Business School im Jahr 1989 kennen. Sie heirateten 1991 und zogen gemeinsam drei Kinder auf.",
-      "strength": "strong",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs"
-      ],
-      "notes": "Ihre Ehe bestand bis zu Jobs’ Tod im Jahr 2011.",
-      "relationship_type": "family/spouse"
+      "notes": "Simpson hielt später die Grabrede für Jobs und verarbeitete Teile der Familiengeschichte in ihren Büchern fiktional.",
+      "relationship_type": "family/half_sibling"
     },
     {
       "person_name": "Chrisann Brennan",
-      "relationship_description": "Chrisann Brennan war Jobs’ erste Freundin an der Homestead High School und etwa fünf Jahre lang seine Partnerin mit Unterbrechungen. Sie waren die Eltern von Lisa Brennan-Jobs.",
+      "relationship_description": "Sie war Jobs’ erste Freundin und in den 1970er-Jahren, seit ihrer gemeinsamen Zeit an der Homestead High School, immer wieder seine Partnerin. Gemeinsam hatten sie die Tochter Lisa Brennan-Jobs.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs",
         "https://en.wikipedia.org/wiki/Lisa_Brennan-Jobs"
       ],
-      "notes": "Ihre Beziehung wurde belastet, nachdem Jobs zunächst die Vaterschaft an ihrer Tochter bestritten hatte.",
+      "notes": "Die Beziehung war für beide von großer persönlicher Bedeutung, verlief jedoch oft schwierig, besonders während des Vaterschaftsstreits um ihre Tochter.",
       "relationship_type": "family/romantic_partner"
     },
     {
+      "person_name": "Lisa Brennan-Jobs",
+      "relationship_description": "Lisa Brennan-Jobs ist Jobs’ ältestes Kind mit Chrisann Brennan. Nachdem Jobs die Vaterschaft zunächst bestritten hatte, erkannte er Lisa später an, ließ ihren Nachnamen rechtlich ändern und versöhnte sich mit ihr.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lisa_Brennan-Jobs",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": "Ihre spätere Beziehung blieb kompliziert und steht im Mittelpunkt von Brennan-Jobs’ Memoiren Small Fry.",
+      "relationship_type": "family/daughter"
+    },
+    {
+      "person_name": "Laurene Powell Jobs",
+      "relationship_description": "Jobs lernte Powell 1989 nach einem Vortrag an der Stanford Business School kennen. Sie heirateten 1991 im Yosemite-Nationalpark und blieben bis zu seinem Tod verheiratet.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs"
+      ],
+      "notes": "Sie hatten drei gemeinsame Kinder.",
+      "relationship_type": "family/spouse"
+    },
+    {
       "person_name": "Reed Jobs",
-      "relationship_description": "Reed Jobs war der Sohn von Steve Jobs und Laurene Powell Jobs. Er wurde 1991 geboren.",
+      "relationship_description": "Jobs’ Sohn mit Laurene Powell Jobs, geboren im September 1991.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs",
@@ -91,8 +90,8 @@
       "relationship_type": "family/son"
     },
     {
-      "person_name": "Erin Jobs",
-      "relationship_description": "Erin Jobs war die Tochter von Steve Jobs und Laurene Powell Jobs. Sie wurde 1995 geboren.",
+      "person_name": "Erin Siena Jobs",
+      "relationship_description": "Jobs’ Tochter mit Laurene Powell Jobs, geboren 1995.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs",
@@ -103,7 +102,7 @@
     },
     {
       "person_name": "Eve Jobs",
-      "relationship_description": "Eve Jobs war die Tochter von Steve Jobs und Laurene Powell Jobs. Sie wurde 1998 geboren.",
+      "relationship_description": "Jobs’ Tochter mit Laurene Powell Jobs, geboren 1998.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs",
@@ -114,145 +113,207 @@
     },
     {
       "person_name": "Steve Wozniak",
-      "relationship_description": "Steve Wozniak und Jobs wurden 1971 durch Bill Fernandez miteinander bekannt und verkauften gemeinsam Blue Boxes. 1976 gründeten sie Apple, um Wozniaks erste Computer zu entwickeln und zu vermarkten.",
+      "relationship_description": "Jobs’ langjähriger Freund und Apple-Mitgründer. Sie verkauften Blue Boxes, arbeiteten an Ataris Breakout-Projekt und bauten Apple auf Wozniaks frühen Computerentwürfen auf.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs",
         "https://en.wikipedia.org/wiki/Steve_Wozniak"
       ],
-      "notes": "Wozniak entwarf die ersten Computer. Jobs trieb ihre Vermarktung und den Vertrieb voran.",
+      "notes": "Wozniak entwarf den Apple I und den Apple II. Jobs erkannte ihr kommerzielles Potenzial und leitete ihre Vermarktung und Produktpositionierung.",
       "relationship_type": "innovation/co_founder"
     },
     {
-      "person_name": "Daniel Kottke",
-      "relationship_description": "Kottke lernte Jobs 1972 am Reed College kennen, reiste 1974 mit ihm durch Indien und wurde zu einem der ersten Apple-Mitarbeiter. Er half beim Bau und bei der Erprobung von Computerhardware.",
-      "strength": "strong",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Daniel_Kottke",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
-      ],
-      "notes": "Kottke lebte mit Jobs und Chrisann Brennan in der Nähe des Apple-Büros in Cupertino und arbeitete an Prototypen des Apple II, Apple III und Macintosh.",
-      "relationship_type": "innovation/friend"
-    },
-    {
-      "person_name": "Jonathan Ive",
-      "relationship_description": "Nach Jobs’ Rückkehr zu Apple arbeitete er eng mit Ive an der industriellen Designausrichtung des Unternehmens und an Produkten wie iMac, iPod, iPhone und iPad zusammen.",
-      "strength": "strong",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/Jony_Ive"
-      ],
-      "notes": "Jobs bezeichnete Ive bei Apple als seinen geistigen Partner. Ive hielt bei den Gedenkfeiern für Jobs’ Mitarbeiter und Familie Trauerreden.",
-      "relationship_type": "innovation/close_colleague"
-    },
-    {
-      "person_name": "John Lasseter",
-      "relationship_description": "Als Vorsitzender und Mehrheitsaktionär von Pixar arbeitete Jobs mit Lasseter zusammen, Pixars führender kreativer Persönlichkeit. Das Studio entwickelte sich in dieser Zeit zu einem bedeutenden Animationsunternehmen und produzierte Toy Story.",
-      "strength": "strong",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/John_Lasseter"
-      ],
-      "notes": "Lasseter leitete die kreative Arbeit bei Pixar. Jobs übernahm die Führung des Unternehmens und sicherte ihm langfristig finanzielle Unterstützung.",
-      "relationship_type": "innovation/close_colleague"
-    },
-    {
       "person_name": "Mike Markkula",
-      "relationship_description": "Markkula lernte Jobs und Wozniak kennen, als sie eine Finanzierung für die Produktion des Apple II suchten. Er investierte entscheidendes Startkapital, half 1977 bei der Gründung von Apple und gab Ratschläge zur Unternehmensführung.",
+      "relationship_description": "Apples erster bedeutender Investor und früher Berater in Managementfragen. Er stellte Kapital bereit, beschaffte Kredite und half 1977 bei der Gründung von Apple als Unternehmen.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Mike_Markkula",
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "Markkula unterstützte später John Sculley während des Konflikts von 1985, der dazu führte, dass Jobs Apple verließ. 1997 befürwortete er Jobs’ Rückkehr.",
-      "relationship_type": "business/funder"
+      "notes": "Markkula wurde außerdem Apples Vorsitzender und spielte eine wichtige Rolle bei Unternehmensentscheidungen, darunter im Streit von 1985, der Jobs’ Ausscheiden vorausging.",
+      "relationship_type": "innovation/funder"
+    },
+    {
+      "person_name": "Daniel Kottke",
+      "relationship_description": "Jobs’ Freund aus seiner Zeit am Reed College und früher Apple-Mitarbeiter. Sie reisten 1974 durch Indien, teilten sich später ein Haus in Cupertino, und Kottke half beim Zusammenbau und bei der Entwicklung früher Apple-Hardware.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Daniel_Kottke",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": "Kottke arbeitete an Prototypen des Apple II, Apple III und Macintosh und gehörte zum ursprünglichen Macintosh-Entwicklungsteam.",
+      "relationship_type": "innovation/employee"
+    },
+    {
+      "person_name": "Jonathan Ive",
+      "relationship_description": "Apples Leiter des Industriedesigns arbeitete nach Jobs’ Rückkehr zu Apple eng mit ihm zusammen. Ihre Partnerschaft prägte iMac, iPod, iPhone, iPad und MacBook.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jony_Ive",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": "Jobs nannte Ive seinen geistigen Partner bei Apple. Ive hielt bei den Gedenkfeiern für Jobs’ Mitarbeiter und Familie Grabreden.",
+      "relationship_type": "innovation/collaborator"
+    },
+    {
+      "person_name": "Ed Catmull",
+      "relationship_description": "Ein Pionier der Computergrafik und führender Mitarbeiter von Pixar, der nach dem Kauf und der Ausgliederung von Lucasfilms Graphics Group 1986 mit Jobs arbeitete.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_Lasseter",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": "Ihre Zusammenarbeit verband Jobs’ Investitionen und Unternehmensführung mit Pixars technischer und kreativer Entwicklung.",
+      "relationship_type": "innovation/close_colleague"
+    },
+    {
+      "person_name": "John Lasseter",
+      "relationship_description": "Pixars kreativer Leiter und Regisseur von Toy Story. Er arbeitete mit Jobs zusammen, während Pixar zu einem bedeutenden Studio für computeranimierte Filme wurde.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/John_Lasseter",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": "Jobs führte Pixar als Vorsitzender und Mehrheitsaktionär, während Lasseter bei Toy Story Regie führte, der 1995 erschien.",
+      "relationship_type": "innovation/collaborator"
     },
     {
       "person_name": "John Sculley",
-      "relationship_description": "Jobs holte John Sculley 1983 von Pepsi zu Apple, damit er das Unternehmen leitete. Später gerieten sie über die Unternehmensführung und die Produktstrategie aneinander. Der Apple-Vorstand stellte sich 1985 hinter Sculley.",
+      "relationship_description": "Apples Vorstandsvorsitzender, den Jobs 1983 von Pepsi abwarb. Ihre anfängliche Zusammenarbeit zerbrach 1985 im Machtkampf um Apple und die Macintosh-Organisation.",
       "strength": "strong",
       "sources": [
-        "https://en.wikipedia.org/wiki/Steve_Jobs",
-        "https://en.wikipedia.org/wiki/John_Sculley"
+        "https://en.wikipedia.org/wiki/John_Sculley",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "Ihre frühe Zusammenarbeit trug zur Einführung des Macintosh bei. Der Konflikt führte zu Jobs’ Rücktritt und zur Gründung von NeXT.",
-      "relationship_type": "business/political_rival"
+      "notes": "Apples Vorstand stellte sich auf Sculleys Seite. Jobs verlor dadurch seine Befugnisse als Manager und trat bei Apple zurück.",
+      "relationship_type": "professional/adversary"
     },
     {
       "person_name": "Tim Cook",
-      "relationship_description": "Jobs holte Tim Cook 1998 zu Apple. Gemeinsam entwickelten sie eine enge Partnerschaft in der Unternehmensleitung. Cook leitete das operative Geschäft und folgte Jobs als Apple-Chef nach.",
+      "relationship_description": "Apple-Manager für das operative Geschäft, den Jobs 1998 anwarb. Nach Jobs’ Rücktritt aus gesundheitlichen Gründen im August 2011 wurde er CEO.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Tim_Cook",
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "Cook führte während Jobs’ krankheitsbedingter Abwesenheiten einen großen Teil des Tagesgeschäfts bei Apple. Jobs traf weiterhin wichtige strategische Entscheidungen.",
-      "relationship_type": "business/successor"
+      "notes": "Cook leitete während Jobs’ krankheitsbedingter Abwesenheiten große Teile des Tagesgeschäfts bei Apple, während Jobs weiterhin für wichtige Entscheidungen verantwortlich blieb.",
+      "relationship_type": "professional/successor"
+    },
+    {
+      "person_name": "Kōbun Chino Otogawa",
+      "relationship_description": "Zen-buddhistischer Lehrer von Jobs und Chrisann Brennan, der 1991 Jobs’ buddhistische Hochzeit mit Laurene Powell leitete.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Laurene_Powell_Jobs"
+      ],
+      "notes": "Jobs praktizierte über viele Jahre Zen und nahm an Meditationsretreats teil.",
+      "relationship_type": "religious/teacher"
     },
     {
       "person_name": "Joanne Schieble",
-      "relationship_description": "Schieble organisierte 1955 die vertrauliche Adoption von Jobs. Später half sie 1986 dabei, den Kontakt zwischen ihm und seiner leiblichen Schwester Mona Simpson herzustellen.",
+      "relationship_description": "Jobs’ leibliche Mutter, die seine Adoption veranlasste und später sein Treffen mit seiner leiblichen Schwester Mona Simpson 1986 vermittelte.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs",
         "https://en.wikipedia.org/wiki/Mona_Simpson"
       ],
-      "notes": "Die Umstände von Jobs’ Adoption führten zur Trennung der beiden.",
+      "notes": "Sie und Jobs nahmen wieder Kontakt auf, nachdem er Informationen über seine leibliche Familie gesucht hatte.",
       "relationship_type": "family/biological_mother"
     },
     {
-      "person_name": "Lisa Brennan-Jobs",
-      "relationship_description": "Lisa Brennan-Jobs war Jobs’ Tochter mit Chrisann Brennan. Nachdem Jobs die Vaterschaft zunächst bestritten hatte, erkannte er sie später an, versöhnte sich mit Lisa und fügte seinen Nachnamen rechtlich ihrem Namen hinzu.",
+      "person_name": "Patricia Jobs",
+      "relationship_description": "Jobs’ jüngere Adoptivschwester, die 1957 von Paul und Clara Jobs adoptiert wurde und in das familiäre Umfeld eingebunden war, in dem Apple entstand.",
       "strength": "moderate",
       "sources": [
-        "https://en.wikipedia.org/wiki/Lisa_Brennan-Jobs",
-        "https://en.wikipedia.org/wiki/Steve_Jobs"
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Daniel_Kottke"
       ],
-      "notes": "Ihre spätere Beziehung blieb schwierig und steht im Mittelpunkt von Lisa Brennan-Jobs’ Memoiren Small Fry.",
-      "relationship_type": "family/daughter"
+      "notes": "Daniel Kottke bezeichnete Patricia als eine der ersten Teilzeitkräfte, die bei Apple Platinen bestückten.",
+      "relationship_type": "family/sister"
     },
     {
       "person_name": "Ron Wayne",
-      "relationship_description": "Ron Wayne arbeitete mit Jobs und Steve Wozniak bei Atari und half bei einem frühen Gespräch über ihr Vorhaben zu vermitteln. Er entwarf Apples ursprünglichen Partnerschaftsvertrag und wurde im April 1976 Mitgründer.",
+      "relationship_description": "Apples dritter ursprünglicher Partner. Er vermittelte zwischen Jobs und Wozniak, entwarf 1976 den ersten Partnerschaftsvertrag und erstellte die ersten Unternehmensunterlagen.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Ronald_Wayne",
         "https://en.wikipedia.org/wiki/Steve_Jobs"
       ],
-      "notes": "Wayne schied weniger als zwei Wochen nach der Gründung aus Apple aus, weil seine finanzielle Haftung zu hoch war.",
+      "notes": "Wayne schied weniger als zwei Wochen nach der Gründung aus Apple aus, weil er persönlich für finanzielle Verpflichtungen haftete.",
       "relationship_type": "innovation/co_founder"
     },
     {
+      "person_name": "Paul Terrell",
+      "relationship_description": "Der Inhaber des Byte Shop erteilte Apple 1976 den ersten größeren Auftrag. Seine Forderung nach zusammengebauten Apple-I-Computern brachte die neue Partnerschaft dazu, in die Produktion einzusteigen.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Wozniak",
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": "Der Auftrag zwang die neue Apple-Partnerschaft, vom Verkauf einzelner Platinen zur Herstellung vollständiger Computer überzugehen.",
+      "relationship_type": "innovation/client"
+    },
+    {
       "person_name": "Nolan Bushnell",
-      "relationship_description": "Bushnell, Mitgründer von Atari, stellte Jobs als Computertechniker ein und übertrug ihm die Entwicklung der Leiterplatte für Breakout. Dafür holte sich Jobs die technische Unterstützung von Steve Wozniak.",
+      "relationship_description": "Mitgründer von Atari, der Jobs 1974 als Computertechniker einstellte und ihm das Projekt für die Breakout-Platine übertrug. Jobs schloss es mit Wozniaks Hilfe ab.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Steve_Jobs",
         "https://en.wikipedia.org/wiki/Steve_Wozniak"
       ],
       "notes": "Bushnell beschrieb Jobs als schwierig, aber wertvoll.",
-      "relationship_type": "business/employer"
+      "relationship_type": "professional/employer"
+    },
+    {
+      "person_name": "Robert Palladino",
+      "relationship_description": "Dozent für Kalligrafie am Reed College. Jobs besuchte seinen Kurs als Gasthörer, nachdem er das College 1972 verlassen hatte.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs"
+      ],
+      "notes": "Jobs führte später den Einfluss des Kurses auf die vielen Schriftarten und Proportionalschriften des Macintosh zurück.",
+      "relationship_type": "academic/teacher"
+    },
+    {
+      "person_name": "Abdulfattah Jandali",
+      "relationship_description": "Jobs’ leiblicher Vater. Seine Beziehung zu Joanne Schieble führte zu Jobs’ Geburt und Adoption im Jahr 1955.",
+      "strength": "weak",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Steve_Jobs",
+        "https://en.wikipedia.org/wiki/Mona_Simpson"
+      ],
+      "notes": "Jobs kam durch eine anonyme Adoption in eine neue Familie und betrachtete Jandali nicht als Vaterfigur.",
+      "relationship_type": "family/biological_father"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Die Adoption prägte Jobs’ frühes Familienleben im Santa Clara Valley, wo Paul und Clara Jobs ihn aufzogen. Durch seine spätere Verbindung zu seiner leiblichen Mutter und seiner Schwester kam ein weiterer Teil der Familie hinzu. Mit Laurene Powell Jobs und ihren Kindern gründete er einen eigenen Haushalt. Seine Beziehung zu Chrisann Brennan und Lisa Brennan-Jobs blieb nach seiner anfänglichen Leugnung der Vaterschaft an Lisa schwierig."
+      "summary": "Die Adoption prägte Jobs’ frühes Familienleben. Paul und Clara Jobs zogen ihn im Santa Clara Valley auf. Der spätere Kontakt zu Mona Simpson und Joanne Schieble führte ihn mit seiner leiblichen Familie zusammen. Durch seine Ehe mit Laurene Powell Jobs entstand der Haushalt seiner späteren Jahre, neben den schwierigen Beziehungen zu Chrisann Brennan und Lisa Brennan-Jobs."
     },
     {
       "relationship_type": "innovation",
-      "summary": "Jobs’ Kreis von Innovatoren verband Ingenieurskunst, Industriedesign und Animation. Steve Wozniak lieferte die ersten Computerentwürfe, die Jobs über Apple auf den Markt brachte. Nach Jobs’ Rückkehr zu Apple machte Jonathan Ive das Industriedesign zu einem Kernbereich von Produkten wie iMac, iPod und iPhone. Bei Pixar leitete John Lasseter die kreative Arbeit, während Jobs das Unternehmen führte und langfristig finanziell unterstützte."
+      "summary": "Jobs baute Unternehmen durch Partnerschaften auf, die Gespür für Produkte mit Ingenieurskunst, Finanzierung, Design und Film verbanden. Wozniaks Computerentwürfe und Terrells erster Auftrag bildeten den Anfang von Apple. Markkula half, daraus ein Unternehmen zu machen. Ive prägte Apples spätere Produkte, während Catmull und Lasseter Pixars technische und kreative Arbeit leiteten."
     },
     {
-      "relationship_type": "business",
-      "summary": "Geschäftspartner und Führungskräfte prägten Jobs’ Fähigkeit, Unternehmen aufzubauen. Mike Markkula stellte Apple früh Kapital und Unterstützung bei der Unternehmensführung zur Verfügung. Der Konflikt mit John Sculley und dem Apple-Vorstand führte 1985 zu Jobs’ Ausscheiden. Nach Jobs’ Rückkehr leitete Tim Cook das operative Geschäft von Apple und folgte ihm später als Vorstandsvorsitzender nach."
+      "relationship_type": "professional",
+      "summary": "Jobs’ berufliche Beziehungen veränderten wiederholt seine Rolle bei Apple. Bei Atari sammelte er erste Erfahrungen mit Elektronik. Der Konflikt mit Sculley beendete seine erste Zeit bei Apple und führte zur Gründung von NeXT. Cook leitete Apples operatives Geschäft und folgte Jobs 2011 als CEO nach."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Jobs verließ das Reed College nach einem Semester, besuchte aber weiterhin Kurse, die ihn interessierten. Robert Palladinos Kalligrafiekurs weckte früh sein Interesse an Typografie. Jobs brachte dieses Interesse später mit dem Macintosh in Verbindung."
+    },
+    {
+      "relationship_type": "religious",
+      "summary": "Nach seiner Indienreise 1974 begann Jobs, sich mit Zen-Buddhismus zu beschäftigen. Kōbun Chino Otogawa wurde sein Lehrer und leitete 1991 seine Trauung mit Laurene Powell."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "ad1f67eee0508fb0",
-    "translated_on": "2026-09-12T07:46:41.028960+02:00",
+    "source_fingerprint": "c3167419125462c8",
+    "translated_on": "2026-09-13T13:33:10.021953+02:00",
     "translator": "openai:gpt-5.6-luna"
   }
 }

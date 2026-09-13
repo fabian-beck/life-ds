@@ -57,6 +57,10 @@ ACCEPTED: Dict[Tuple[str, str], str] = {
         "The December 1996 NeXT acquisition that brought Jobs back, before "
         "the July 1997 appointment the event dates."
     ),
+    ("steve_jobs", "2011-10-05"): (
+        "The 2004 surgery and the 2009 liver transplant, which the death "
+        "description reaches back over."
+    ),
     ("zaha_hadid", "2011"): "The 2012 Olympic Games the centre was completed for.",
 }
 
