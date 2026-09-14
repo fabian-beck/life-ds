@@ -1,17 +1,17 @@
 {
-  "dataset": "biographical_timeline",
-  "created_on": "2026-01-04",
+  "dataset": "Herman Hollerith biographical timeline",
+  "created_on": "2026-09-14",
   "person": {
     "name": "Herman_Hollerith",
     "birth_date": "1860-02-29",
     "death_date": "1929-11-17",
     "primary_roles": [
-      "Erfinder",
       "Statistiker",
-      "Unternehmer"
+      "Erfinder",
+      "Geschäftsmann"
     ],
-    "tagline": "Pionier der Lochkartenstatistik",
-    "summary": "Herman Hollerith war ein deutsch-amerikanischer Statistiker und Erfinder. Er entwickelte elektromechanische Lochkartensysteme, mit denen sich große Informationsmengen zusammenstellen und sortieren ließen – zunächst im großen Maßstab bei der Volkszählung in den Vereinigten Staaten. Sein Unternehmen baute er auf der Vermietung von Tabelliermaschinen und Lochkarten an Behörden und Firmen auf; später wurde es Teil der Computing-Tabulating-Recording Company, einer Vorläuferin von IBM.",
+    "tagline": "Lochkarten zählen Nationen",
+    "summary": "Herman Hollerith war ein deutsch-amerikanischer Statistiker, Erfinder und Geschäftsmann, der elektromechanische Maschinen zur Verarbeitung von Lochkarten entwickelte. Seine Geräte halfen bei der Auswertung der Volkszählung von 1890 in den Vereinigten Staaten und begründeten ein System, das Regierungen und Unternehmen weltweit übernahmen. Er gründete die Tabulating Machine Company, die später Teil des Unternehmens IBM wurde.",
     "wikipedia": "https://en.wikipedia.org/wiki/Herman_Hollerith",
     "portrait": {
       "image": "/portraits/herman_hollerith_thumbnail.webp",
@@ -19,183 +19,147 @@
       "medium": "/portraits/herman_hollerith_medium.webp",
       "full": "/portraits/herman_hollerith_full.webp",
       "source": "https://en.wikipedia.org/wiki/Herman_Hollerith",
-      "caption": "Stylized portrait based on historical photograph",
+      "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/4/42/Hollerith.jpg"
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/4/42/Hollerith.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "immigrant_roots",
-      "headline": "Wurzeln in der Fremde",
+      "id": "origins_and_training",
+      "headline": "Zahlen gewinnen Macht",
       "date_start": "1860-02-29",
       "date_start_precision": "day",
-      "date_end": "1874",
+      "date_end": "1882",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 14,
-      "involved_people": [
-        "Georg Hollerith"
-      ],
-      "location": "Vereinigte Staaten"
-    },
-    {
-      "id": "engineering_mind_awakened",
-      "headline": "Der Ingenieur erwacht",
-      "date_start": "1875",
-      "date_start_precision": "year",
-      "date_end": "1879",
-      "date_end_precision": "year",
-      "age_start": 15,
-      "age_end": 19,
+      "age_end": 22,
       "involved_people": null,
-      "location": "Vereinigte Staaten"
+      "location": "Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/herman_hollerith/origins_and_training_medium.webp",
+        "medium": "/chapter_art/herman_hollerith/origins_and_training_medium.webp",
+        "full": "/chapter_art/herman_hollerith/origins_and_training_full.webp",
+        "concept": "A single dark mineral prism floats in velvet blackness, its interior crossed by faint amber seams that gradually align into a precise crystalline grid. One corner glows as though hidden order is beginning to condense.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-14"
+      }
     },
     {
-      "id": "machines_for_information",
-      "headline": "Maschinen für Informationen",
-      "date_start": "1882",
-      "date_start_precision": "year",
-      "date_end": "1886",
-      "date_end_precision": "year",
-      "age_start": 22,
-      "age_end": 26,
-      "involved_people": null,
-      "location": "Vereinigte Staaten"
-    },
-    {
-      "id": "census_breakthrough",
-      "headline": "Durchbruch bei der Volkszählung",
-      "date_start": "1884",
-      "date_start_precision": "year",
-      "date_end": "1890-06-02",
-      "date_end_precision": "day",
+      "id": "the_punched_card_system",
+      "headline": "Daten werden elektrisch",
+      "date_start": "1884-09-23",
+      "date_start_precision": "day",
+      "date_end": "1889-04",
+      "date_end_precision": "month",
       "age_start": 24,
-      "age_end": 30,
-      "involved_people": null,
-      "location": "Vereinigte Staaten"
-    },
-    {
-      "id": "building_the_punched_card_empire",
-      "headline": "Das Lochkartenimperium",
-      "date_start": "1896",
-      "date_start_precision": "year",
-      "date_end": "1911-06-16",
-      "date_end_precision": "day",
-      "age_start": 36,
-      "age_end": 51,
+      "age_end": 29,
       "involved_people": [
-        "Charles R. Flint"
+        "John Shaw Billings"
       ],
-      "location": "Vereinigte Staaten"
+      "location": "Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/herman_hollerith/the_punched_card_system_medium.webp",
+        "medium": "/chapter_art/herman_hollerith/the_punched_card_system_medium.webp",
+        "full": "/chapter_art/herman_hollerith/the_punched_card_system_full.webp",
+        "concept": "An ivory rectangular plane hovers in darkness, punctured by an orderly field of tiny circular voids. Fine blue electrical filaments leap through selected openings, gathering into a bright, concentrated pulse beneath the surface.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-14"
+      }
     },
     {
-      "id": "quiet_legacy_years",
-      "headline": "Jahre des stillen Nachruhms",
-      "date_start": "1921",
+      "id": "machines_for_the_world",
+      "headline": "Zählen im großen Maßstab",
+      "date_start": "1890",
       "date_start_precision": "year",
+      "date_end": "1906",
+      "date_end_precision": "year",
+      "age_start": 30,
+      "age_end": 46,
+      "involved_people": [
+        "Robert P. Porter",
+        "Carroll D. Wright",
+        "John Shaw Billings"
+      ],
+      "location": "Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/herman_hollerith/machines_for_the_world_medium.webp",
+        "medium": "/chapter_art/herman_hollerith/machines_for_the_world_medium.webp",
+        "full": "/chapter_art/herman_hollerith/machines_for_the_world_full.webp",
+        "concept": "Hundreds of small brass discs sweep outward in widening orbital rings around a luminous central core, each leaving a brief arc of light. The expanding formation suggests vast quantities becoming rhythmically ordered.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-14"
+      }
+    },
+    {
+      "id": "corporate_final_years",
+      "headline": "In einem größeren Unternehmen",
+      "date_start": "1911-06-16",
+      "date_start_precision": "day",
       "date_end": "1929-11-17",
       "date_end_precision": "day",
-      "age_start": 61,
+      "age_start": 51,
       "age_end": 69,
-      "involved_people": null,
-      "location": "Vereinigte Staaten"
+      "involved_people": [
+        "Charles Ranlett Flint"
+      ],
+      "location": "Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/herman_hollerith/corporate_final_years_medium.webp",
+        "medium": "/chapter_art/herman_hollerith/corporate_final_years_medium.webp",
+        "full": "/chapter_art/herman_hollerith/corporate_final_years_full.webp",
+        "concept": "Several differently textured streams of liquid metal converge into one broad reflective ribbon, then continue across darkness toward a dimming horizon. Near the far edge, the ribbon gently separates into soft, fading ripples.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-14"
+      }
     }
   ],
-  "conclusion": "Herman Hollerith machte aus dem Engpass der Volkszählung eine neue Denkweise: Informationen ließen sich mechanisieren und in großem Maßstab verarbeiten. Sein Lochkartensystem beschleunigte nicht nur das Zählen – es gab auch die Richtung für die moderne Datenverarbeitung und jene Unternehmenslinie vor, aus der IBM hervorgehen sollte.",
+  "conclusion": "Holleriths Lochkartenverfahren blieben jahrzehntelang für Volkszählungen, Versicherungsunterlagen, die Buchhaltung und andere groß angelegte Datenverarbeitungen von zentraler Bedeutung. Lochkarten dienten noch während eines Großteils des 20. Jahrhunderts als Ein- und Ausgabemedium für Computer. Die Tabulating Machine Company ging 1911 in der Computing-Tabulating-Recording Company auf. Das Unternehmen nahm 1924 den Namen International Business Machines an.",
   "events": [
     {
       "date": "1860-02-29",
       "date_precision": "day",
       "age": 0,
-      "title": "Geboren in Buffalo, New York",
-      "description": "Herman Hollerith wurde in Buffalo, New York, als Sohn deutscher Einwanderer geboren. Sein Vater, Georg Hollerith, war ein Achtundvierziger, der sich an den [[Revolutions of 1848 in the German states|Umwälzungen von 1848 in den deutschen Staaten]] beteiligt hatte, bevor er auswanderte. In den Vereinigten Staaten arbeitete er als Lehrer und lutherischer Geistlicher. Holleriths frühe Jahre spielten sich in diesem Einwandererhaushalt ab, in dem Bildung und ein Neuanfang keine Schlagworte, sondern tägliche Notwendigkeiten waren.",
+      "title": "Geburt in einer Einwandererfamilie in Buffalo",
+      "description": "Herman Hollerith wurde in Buffalo als Sohn der deutschen Einwanderer Georg Hollerith und Franciska Brunn Hollerith geboren. Georg Hollerith arbeitete als Lehrer und lutherischer Geistlicher.",
       "locations": [
         {
           "name_historic": "Buffalo",
-          "name_modern": "Buffalo, New York, Vereinigte Staaten",
+          "name_modern": null,
+          "primary": true,
           "centroid": [
             -78.8781493,
             42.8864163
-          ],
-          "primary": true
+          ]
         }
-      ],
-      "involved_people": [
-        "Georg Hollerith"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Herman_Hollerith"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "immigrant_roots",
-      "annotations": {
-        "Forty-eighter": {
-          "explanation": "A term for German-speaking political refugees and emigrants who left after the failed 1848–1849 revolutions, many bringing liberal ideals to the United States.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Forty-eighters"
-        },
-        "Revolutions of 1848 in the German states": {
-          "explanation": "Eine Reihe liberaler und nationaler Aufstände in den deutschsprachigen Staaten, die sich 1848 und 1849 ereigneten und schließlich niedergeschlagen wurden; einige Beteiligte veranlassten sie zur Auswanderung.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Revolutions_of_1848_in_the_German_states"
-        }
-      },
+      "chapter": "origins_and_training",
+      "weight": 0.2,
       "event_class": {
         "type": "birth",
-        "father": "Georg Hollerith"
+        "father": "Georg Hollerith",
+        "mother": "Franciska Brunn Hollerith",
+        "characterization": "deutsche Einwandererfamilie"
       }
     },
     {
       "date": "1875",
       "date_precision": "year",
       "age": 15,
-      "title": "Besucht das City College of New York",
-      "description": "1875 schrieb sich Hollerith am [[City College of New York|City College of New York]] in New York City ein, um seine höhere Ausbildung zu beginnen.",
+      "title": "Studium am City College",
+      "description": "1875 begann Herman Hollerith im Alter von etwa fünfzehn Jahren sein Studium am City College of New York. Seine akademische Ausbildung nahm in New York City ihren Anfang, bevor er an der Columbia Ingenieurwissenschaften studierte.",
       "locations": [
         {
           "name_historic": "New York City",
-          "name_modern": "New York City, Vereinigte Staaten",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
           "centroid": [
-            -74.0060152,
-            40.7127281
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Herman_Hollerith",
-        "https://en.wikipedia.org/wiki/City_College_of_New_York"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/CityCollegeofNewYork.JPG/960px-CityCollegeofNewYork.JPG",
-          "caption": "Hauptgebäude des City College of New York",
-          "source": "https://commons.wikimedia.org/wiki/File:CityCollegeofNewYork.JPG",
-          "creator": "Гатерас",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-school",
-      "chapter": "engineering_mind_awakened",
-      "annotations": {
-        "City College of New York": {
-          "explanation": "Eine öffentliche Hochschule in New York City, die 1847 als Free Academy gegründet wurde, später Teil des Systems der City University of New York wurde und für erschwingliche Hochschulbildung bekannt war.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/City_College_of_New_York"
-        }
-      }
-    },
-    {
-      "date": "1879",
-      "date_precision": "year",
-      "age": 19,
-      "title": "Abschluss an der Columbia School of Mines",
-      "description": "1879, im Alter von 19 Jahren, schloss Hollerith die [[Columbia School of Mines|Columbia School of Mines]] als Bergbauingenieur ab. Damit beendete er ein Studium, das auf praktische Ingenieursarbeit und quantitatives Denken ausgerichtet war.",
-      "locations": [
-        {
-          "name_historic": "New York City",
-          "name_modern": "New York City, Vereinigte Staaten",
-          "centroid": [
-            -74.0060152,
-            40.7127281
+            -74.006,
+            40.7128
           ],
           "primary": true
         }
@@ -203,303 +167,286 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Herman_Hollerith"
       ],
-      "images": [
+      "event_type_icon": "mdi-school",
+      "chapter": "origins_and_training",
+      "weight": 0.25
+    },
+    {
+      "date": "1879",
+      "date_precision": "year",
+      "age": 19,
+      "title": "Abschluss im Bergbauingenieurwesen",
+      "description": "1879 erwarb Herman Hollerith an der Columbia School of Mines in New York City einen Abschluss im Bergbauingenieurwesen. Damit schloss er seine frühe technische Ausbildung ab, bevor er sich mit statistischen Maschinen befasste.",
+      "locations": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/%22COLUMBIA_UNIVERSITY%22_%22LIBRARY%22_%22HAVEMEYER_HALL%22_%22SCHERMERHORN_HALL%22_%22FAYERWEATHER_HALL%22_%22ST_PAULS_CHAPEL%22_%22OBSERVATORY%22_%22SCHOOL_OF_MINES%22_%22SCHOOL_OF_ENGINEERING%22_map_in_1916%2C_from-_Bromley_Manhattan_Plate_132_publ._1916_%28cropped%29.jpg/960px-thumbnail.jpg",
-          "caption": "Karte von 1916 mit den Gebäuden der Columbia University, darunter die School of Mines",
-          "source": "https://commons.wikimedia.org/wiki/File:\"COLUMBIA_UNIVERSITY\"_\"LIBRARY\"_\"HAVEMEYER_HALL\"_\"SCHERMERHORN_HALL\"_\"FAYERWEATHER_HALL\"_\"ST_PAULS_CHAPEL\"_\"OBSERVATORY\"_\"SCHOOL_OF_MINES\"_\"SCHOOL_OF_ENGINEERING\"_map_in_1916,_from-_Bromley_Manhattan_Plate_132_publ._1916_(cropped).jpg",
-          "creator": "George W. Bromley and Walter S. Bromley",
-          "license": "Public domain"
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
         }
       ],
-      "event_type_icon": "mdi-school",
-      "chapter": "engineering_mind_awakened",
-      "annotations": {
-        "Columbia School of Mines": {
-          "explanation": "Die Ingenieurschule des Columbia College, der späteren Columbia University, an der im späten 19. Jahrhundert Bergbau, Metallurgie und verwandte angewandte Wissenschaften gelehrt wurden.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Fu_Foundation_School_of_Engineering_and_Applied_Science#History"
+      "involved_people": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/PSM_V70_D097_Columbia_university_school_of_mines.jpg/960px-PSM_V70_D097_Columbia_university_school_of_mines.jpg",
+          "caption": "Columbia University School of Mines",
+          "source": "https://commons.wikimedia.org/wiki/File:PSM_V70_D097_Columbia_university_school_of_mines.jpg",
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null
         }
-      }
+      ],
+      "event_type_icon": "mdi-certificate",
+      "chapter": "origins_and_training",
+      "weight": 0.4
     },
     {
       "date": "1882",
       "date_precision": "year",
       "age": 22,
-      "title": "Lehrt am MIT",
-      "description": "1882 trat Hollerith in den Lehrkörper des [[Massachusetts Institute of Technology|Massachusetts Institute of Technology (MIT)]] ein und unterrichtete Maschinenbau. In derselben praxisnahen Umgebung aus Laboren und Werkstätten begann er mit ersten Versuchen zur Idee der [[punched card|Lochkarte]]: Informationen als physisches Muster darzustellen, das eine Maschine lesen und zählen konnte.",
+      "title": "Lehrt Ingenieurwesen am MIT",
+      "description": "1882 trat Herman Hollerith in das Massachusetts Institute of Technology in Boston ein und lehrte dort Maschinenbau. Er begann mit [[punched cards|Lochkarten]] zu experimentieren, Papierkarten, die Informationen durch Lochmuster speichern.",
       "locations": [
         {
-          "name_historic": "Cambridge",
-          "name_modern": "Cambridge, Massachusetts, Vereinigte Staaten",
+          "name_historic": "Boston, Massachusetts",
+          "name_modern": null,
+          "primary": true,
           "centroid": [
-            -71.1040018,
-            42.3656347
-          ],
-          "primary": true
+            -71.0578303,
+            42.3588336
+          ]
         }
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Herman_Hollerith"
       ],
       "event_type_icon": "mdi-school-outline",
-      "chapter": "machines_for_information",
+      "chapter": "origins_and_training",
       "annotations": {
-        "Massachusetts Institute of Technology": {
-          "explanation": "Ein US-amerikanisches Institut für Naturwissenschaften und Ingenieurwesen, 1861 gegründet, das Unterricht im Klassenzimmer mit Labor- und Werkstattarbeit verbindet.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Massachusetts_Institute_of_Technology"
-        },
-        "punched card": {
-          "explanation": "Eine stabile Karte, auf der Daten durch Löcher an festgelegten Stellen gespeichert werden und die zum Zählen, Sortieren oder Tabellieren mechanisch oder elektrisch gelesen werden kann.",
+        "punched cards": {
+          "explanation": "Lochkarten wurden vor der elektronischen Datenspeicherung zu einem Standardmedium für die Speicherung maschinenlesbarer Informationen. Eine Maschine konnte das Lochmuster einer Karte lesen, um Datensätze zu sortieren oder zu zählen.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Punched_card"
         }
-      }
+      },
+      "weight": 0.55
     },
     {
       "date": "1884-09-23",
       "date_precision": "day",
       "age": 24,
-      "title": "Erstes Tabellierpatent eingereicht",
-      "description": "Am 23. September 1884 reichte Hollerith einen US-Patentantrag mit dem Titel „Art of Compiling Statistics“ ein. Darin führte er seinen Versuch aus, die statistische Zusammenstellung in einen wiederholbaren, maschinell unterstützten Vorgang zu verwandeln – eine Arbeit, die mit seiner zunehmenden Beschäftigung mit der Statistik der Bundesvolkszählung zusammenhing.",
+      "title": "Patentantrag für Statistikverfahren",
+      "description": "Am 23. September 1884 reichte Herman Hollerith während seiner Tätigkeit für das staatliche Census Office in Washington, D.C. einen Patentantrag mit dem Titel Art of Compiling Statistics ein. John Shaw Billings hatte vorgeschlagen, Zählwerke mithilfe elektrischer Verbindungen zu steuern. Hollerith entwickelte diese Idee zu einem Verfahren zur Zusammenstellung statistischer Informationen weiter.",
       "locations": [
         {
           "name_historic": "Washington, D.C.",
           "name_modern": "Washington, D.C., Vereinigte Staaten",
           "centroid": [
-            -77.0365427,
-            38.8950368
+            -77.0369,
+            38.9072
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "John Shaw Billings"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/1890_United_States_census",
-        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company",
-        "https://en.wikipedia.org/wiki/United_States_Patent_and_Trademark_Office"
+        "https://en.wikipedia.org/wiki/Herman_Hollerith",
+        "https://en.wikipedia.org/wiki/John_Shaw_Billings"
       ],
       "event_type_icon": "mdi-certificate",
-      "chapter": "machines_for_information",
+      "chapter": "the_punched_card_system",
+      "weight": 0.9,
       "event_class": {
         "type": "invention",
-        "title": "Art of Compiling Statistics",
-        "description": "Ein Lochkartenverfahren, bei dem einzelne Daten erfasst und Summen durch elektromechanisches Lesen und Zählen gebildet wurden."
-      }
-    },
-    {
-      "date": "1884",
-      "date_precision": "year",
-      "age": 24,
-      "title": "Beginnt in Washington mit der Volkszählung",
-      "description": "1884 gab Hollerith seine Lehrtätigkeit auf und nahm in Washington, D.C., eine statistische Tätigkeit bei der Regierung auf, beim [[United States Census Office]]. Damit rückte er dem Engpass nahe, den seine Maschinen überwinden sollten: Wie ließen sich nationale Statistiken schnell genug zusammenstellen und veröffentlichen, damit sie ihren praktischen Wert behielten?",
-      "locations": [
-        {
-          "name_historic": "Boston",
-          "name_modern": "Boston, Massachusetts, Vereinigte Staaten",
-          "centroid": [
-            -71.0578303,
-            42.3588336
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Washington, D.C.",
-          "name_modern": "Washington, DC, Vereinigte Staaten",
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/United_States_Census_Bureau"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Census_Bureau_headquarters%2C_Suitland%2C_Maryland%2C_2007.jpg/960px-Census_Bureau_headquarters%2C_Suitland%2C_Maryland%2C_2007.jpg",
-          "caption": "Hauptsitz des United States Census Bureau in Suitland, Maryland",
-          "source": "https://commons.wikimedia.org/wiki/File:Census_Bureau_headquarters,_Suitland,_Maryland,_2007.jpg",
-          "creator": "United States Census Bureau / Oficina del Censo de los Estados Unidos",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "machines_for_information",
-      "event_class": {
-        "type": "migration",
-        "from_location": "Massachusetts",
-        "to_location": "Washington, D.C.",
-        "characterization": "berufliche Chance"
-      },
-      "annotations": {
-        "United States Census Office": {
-          "explanation": "The federal census organization in the 19th century; it later evolved into today’s permanent U.S. Census Bureau.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Census_Bureau"
-        }
+        "title": "Elektrisches Lochkarten-Tabelliersystem",
+        "description": "Das System speichert Daten als Löcher in Karten und verwendet elektrisch gesteuerte Zählwerke, um ausgewählte Kartenpositionen auszuzählen.",
+        "impact": "Mit dem Antrag begann das Patentverfahren für die elektrische Zählmethode, die später durch das US-Patent 395.782 geschützt wurde."
       }
     },
     {
       "date": "1886",
       "date_precision": "year",
       "age": 26,
-      "title": "Entwickelt das Lochkartenformat",
-      "description": "Mitte der 1880er Jahre nahm Holleriths zentrale Erfindung Gestalt an. Auf Anregung von [[John Shaw Billings]] verfolgte er ein Verfahren, bei dem ein Merkmal durch das Vorhandensein oder Fehlen eines Lochs an einer bestimmten Stelle der Karte festgehalten wurde; elektrische Kontakte konnten Stromkreise schließen und mechanische Zählwerke weiterschalten. Es war eine einfache Idee mit schonungslos großem Anspruch: Statistiken sollten sich so verhalten, als wären sie etwas, das eine Maschine zählen konnte.",
-      "locations": [],
-      "sources": [
-        "https://en.wikipedia.org/wiki/1890_United_States_census"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Hollerith_card_reader_closeup.jpg/960px-Hollerith_card_reader_closeup.jpg",
-          "caption": "Lochkartenleser an Holleriths Tabelliermaschine für die Volkszählung",
-          "source": "https://commons.wikimedia.org/wiki/File:Hollerith_card_reader_closeup.jpg",
-          "creator": "Marcin Wichary",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
-        }
-      ],
-      "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "machines_for_information",
-      "annotations": {
-        "John Shaw Billings": {
-          "explanation": "An American physician and statistics-minded administrator credited in Hollerith’s biography with suggesting the electrical-contact approach that shaped Hollerith’s tabulation mechanism.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/John_Shaw_Billings"
-        }
-      },
-      "involved_people": [
-        "John Shaw Billings"
-      ],
-      "location_coordinates": [
-        {
-          "label": "Washington, D.C.",
-          "name": "Washington, D.C., United States",
-          "primary": true,
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "source": "logical inference from Hollerith’s Washington census-work period in provided biography excerpt"
-        }
-      ]
-    },
-    {
-      "date": "1889-01-08",
-      "date_precision": "day",
-      "age": 28,
-      "title": "Erhält ein wegweisendes US-Patent",
-      "description": "Am 8. Januar 1889 wurde Herman Hollerith von der [[United States Patent Office|United States Patent Office]] das [[U.S. Patent 395,782|US-Patent 395,782]] erteilt. Das stärkte seine Stellung, während er darauf zuging, für die bevorstehende US-Volkszählung von 1890 Lochkarten-Tabelliergeräte zu liefern.",
+      "title": "Karten für Volkszählungsdaten",
+      "description": "1886 entwickelte Herman Hollerith Lochkarten, um für das Census Office in Washington, D.C. einzelne statistische Datensätze zu erfassen. Ein Loch an einer festgelegten Stelle der Karte konnte eine Angabe über eine Person darstellen. Das Kartenlayout erlaubte es den Bedienern, ausgewählte Angaben zu zählen oder zu sortieren.",
       "locations": [
         {
           "name_historic": "Washington, D.C.",
           "name_modern": "Washington, D.C., Vereinigte Staaten",
           "centroid": [
-            -77.0365427,
-            38.8950368
+            -77.0369,
+            38.9072
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "John Shaw Billings"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/1890_United_States_census",
-        "https://en.wikipedia.org/wiki/United_States_Patent_and_Trademark_Office"
+        "https://en.wikipedia.org/wiki/Herman_Hollerith",
+        "https://en.wikipedia.org/wiki/John_Shaw_Billings"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Counting_wheels_%282586171146%29.jpg/960px-Counting_wheels_%282586171146%29.jpg",
-          "caption": "Zählräder von Holleriths Tabelliermaschine",
-          "source": "https://commons.wikimedia.org/wiki/File:Counting_wheels_(2586171146).jpg",
-          "creator": "Erik Pitti from San Diego, CA, USA",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Hollerith_card_punch.agr.JPG/960px-Hollerith_card_punch.agr.JPG",
+          "caption": "Hollerith-Lochkartenstanzer im Computer History Museum",
+          "source": "https://commons.wikimedia.org/wiki/File:Hollerith_card_punch.agr.JPG",
+          "creator": "ArnoldReinhold",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+        }
+      ],
+      "event_type_icon": "mdi-lightbulb-on-outline",
+      "chapter": "the_punched_card_system",
+      "weight": 0.85,
+      "event_class": {
+        "type": "invention",
+        "title": "Hollerith-Lochkarte",
+        "description": "Die Karte speichert codierte Angaben durch das Vorhandensein oder Fehlen von Löchern an festen Positionen, die in Zeilen und Spalten angeordnet sind.",
+        "impact": "Das Kartenformat ermöglichte es, einzelne statistische Angaben maschinell zu sortieren und zu zählen."
+      }
+    },
+    {
+      "date": "1889-01-08",
+      "date_precision": "day",
+      "age": 28,
+      "title": "Patent für Statistikverfahren",
+      "description": "Am 8. Januar 1889 erhielt Herman Hollerith in Washington, D.C. das US-Patent 395.782. Das Patent schützte ein Verfahren, einzelne statistische Angaben als Löcher in Karten zu erfassen und sie mit elektrisch betriebenen mechanischen Zählwerken zu zählen.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., Vereinigte Staaten",
+          "centroid": [
+            -77.0369,
+            38.9072
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "John Shaw Billings"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/HollerithMachine.CHM.jpg/960px-HollerithMachine.CHM.jpg",
+          "caption": "Nachbau eines frühen Hollerith-Tabellierers und Sortierkastens",
+          "source": "https://commons.wikimedia.org/wiki/File:HollerithMachine.CHM.jpg",
+          "creator": "Adam Schuster",
           "license": "CC BY 2.0",
           "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
       "event_type_icon": "mdi-certificate",
-      "chapter": "census_breakthrough",
-      "annotations": {
-        "U.S. Patent 395,782": {
-          "explanation": "Ein Hollerith am 8. Januar 1889 erteiltes US-Patent für sein lochkartenbasiertes Tabelliersystem – ein entscheidender Schritt auf dem Weg zur mechanisierten Verarbeitung von Volkszählungsdaten.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Tabulating_machine"
-        },
-        "United States Patent Office": {
-          "explanation": "Die US-Bundesbehörde zur Erteilung von Patenten, die später zur heutigen USPTO umorganisiert wurde und im 19. Jahrhundert ihren Sitz in Washington, D.C., hatte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Patent_and_Trademark_Office"
-        }
+      "chapter": "the_punched_card_system",
+      "weight": 0.95,
+      "event_class": {
+        "type": "invention",
+        "title": "Verfahren zur Zusammenstellung von Statistiken",
+        "description": "Perforierte, nicht leitende Karten steuern elektrische Stromkreise, die mechanische Zählwerke für einzelne oder zusammengefasste statistische Angaben betätigen.",
+        "impact": "Das Patent schützte das Funktionsprinzip von Holleriths Tabelliergeräten."
       }
     },
     {
       "date": "1889-04",
       "date_precision": "month",
       "age": 29,
-      "title": "Veröffentlicht eine Abhandlung zum Tabelliersystem",
-      "description": "Im April 1889 beschrieb Hollerith sein System in „An Electric Tabulating System“ und erläuterte, wie gelochte Karten elektrische Stromkreise steuern und Zählwerke weiterschalten konnten. Er reichte die Abhandlung bei der Columbia University als Teil jener Arbeit ein, die später die Grundlage für seine Promotion bilden sollte.",
-      "locations": [],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Herman_Hollerith"
-      ],
-      "event_type_icon": "mdi-file-document",
-      "chapter": "census_breakthrough",
-      "event_class": {
-        "type": "publication",
-        "title": "An Electric Tabulating System",
-        "publication_type": "article",
-        "publisher": "The Quarterly, Columbia University School of Mines",
-        "significance": "technische Darstellung"
-      },
-      "location_coordinates": [
-        {
-          "label": "New York City",
-          "name": "New York City, United States",
-          "primary": true,
-          "centroid": [
-            -74.0060152,
-            40.7127281
-          ],
-          "source": "linked to Columbia University in the provided biography excerpt"
-        }
-      ]
-    },
-    {
-      "date": "1890-06-02",
-      "date_precision": "day",
-      "age": 30,
-      "title": "Tabelliert die US-Volkszählung von 1890",
-      "description": "Als am 2. Juni die Erhebung für die Volkszählung von 1890 begann, bereitete sich das Census Office auf eine beispiellose Tabellierarbeit vor. Unter der Leitung von [[Robert P. Porter]] wurden die Daten vertraglich mit [[Hollerith tabulating machine|Holleriths Lochkarten-Tabelliermaschinen]] verarbeitet: Papierstapel wurden in zähl- und sortierbare Karten verwandelt – und das Verfahren bewies, dass es sich auf nationaler Ebene einsetzen ließ.",
+      "title": "An Electric Tabulating System erscheint",
+      "description": "Im April 1889 veröffentlichte Herman Hollerith An Electric Tabulating System in der Vierteljahresschrift der Columbia University School of Mines. Er reichte die Arbeit an der Columbia University als Doktorarbeit ein. Der Aufsatz beschrieb das von ihm entwickelte System zur Zusammenstellung statistischer Daten.",
       "locations": [
         {
-          "name_historic": "Washington, D.C.",
-          "name_modern": "Washington, D.C., Vereinigte Staaten",
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
           "centroid": [
-            -77.0365427,
-            38.8950368
+            -74.006,
+            40.7128
           ],
           "primary": true
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/1890_United_States_census"
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "event_type_icon": "mdi-file-document",
+      "chapter": "the_punched_card_system",
+      "weight": 0.7,
+      "event_class": {
+        "type": "publication",
+        "title": "An Electric Tabulating System",
+        "publication_type": "article",
+        "publisher": "The Quarterly, Columbia University School of Mines",
+        "significance": "technische Beschreibung",
+        "impact": "Die veröffentlichte Darstellung diente als Holleriths Doktorarbeit an der Columbia University."
+      }
+    },
+    {
+      "date": "1890",
+      "date_precision": "year",
+      "age": 30,
+      "title": "Hollerith-Maschinen zählen die Bevölkerung",
+      "description": "1890 setzte das Census Office der Vereinigten Staaten Herman Holleriths Maschinen in Washington, D.C. zur Auswertung der nationalen Volkszählung ein. Die Volkszählung erfasste 62.979.766 Einwohner. Robert P. Porter war zu Beginn der Arbeiten Superintendent of the Census.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., Vereinigte Staaten",
+          "centroid": [
+            -77.0365,
+            38.9072
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Robert P. Porter"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/1890_United_States_census",
+        "https://en.wikipedia.org/wiki/Herman_Hollerith",
+        "https://en.wikipedia.org/wiki/John_Shaw_Billings"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7c/1890_Census_Hollerith_Electrical_Counting_Machines_Sci_Amer.jpg",
-          "caption": "Holleriths elektrische Tabelliermaschine für die Volkszählung von 1890",
-          "source": "https://commons.wikimedia.org/wiki/File:1890_Census_Hollerith_Electrical_Counting_Machines_Sci_Amer.jpg",
-          "creator": "Artist not credited.",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/This_is_a_card_puncher%2C_an_integral_part_of_the_tabulation_system_used_by_the_United_States_Census_Bureau_to_compile..._-_NARA_-_513295.tif/lossy-page1-960px-This_is_a_card_puncher%2C_an_integral_part_of_the_tabulation_system_used_by_the_United_States_Census_Bureau_to_compile..._-_NARA_-_513295.tif.jpg",
+          "caption": "Lochkartenstanzer des Census Bureau von 1890",
+          "source": "https://commons.wikimedia.org/wiki/File:This_is_a_card_puncher,_an_integral_part_of_the_tabulation_system_used_by_the_United_States_Census_Bureau_to_compile..._-_NARA_-_513295.tif",
+          "creator": "Unknown authorUnknown author or not provided",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "census_breakthrough",
-      "annotations": {
-        "Hollerith tabulating machine": {
-          "explanation": "Ein von Herman Hollerith erfundenes elektromechanisches Datenverarbeitungssystem mit Lochkarten, das bei der US-Volkszählung von 1890 eingesetzt wurde, um das Zählen und Sortieren der Erhebungsdaten zu beschleunigen.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Tabulating_machine"
+      "event_type_icon": "mdi-chart-bar",
+      "chapter": "machines_for_the_world",
+      "weight": 1.0,
+      "background": "Das Census Office stand vor einer weitaus größeren Aufgabe als 1880. Die Auswertung jener früheren Volkszählung hatte acht Jahre gedauert. Die neue Volkszählung erfasste mehr Angaben zu jeder Person und erforderte mehr veröffentlichte Berichte. Das Census Bureau hatte Hollerith mit dem Bau der Geräte für diese Arbeit beauftragt.\n\nJeder Datensatz wurde auf eine Lochkarte übertragen. Ein Loch an einer bestimmten Stelle erfasste eine konkrete Information. Die Karten steuerten elektrische Stromkreise. Diese Stromkreise aktivierten Elektromagnete, die mechanische Zählwerke für die ausgewählten Kategorien weiterschalteten.\n\nNach sechs Wochen wurde eine vorläufige Haushaltszählung bekannt gegeben. Sie ergab 62.947.714 Einwohner. Bei dieser Zählung waren keine Lochkarten verwendet worden. Viele Menschen bezweifelten die Zahl, weil sie mit einer Bevölkerung von mindestens 75 Millionen gerechnet hatten. Die vollständige Auswertung dauerte sechs Jahre, gegenüber acht Jahren bei der Volkszählung von 1880.\n\nEin Großteil der ursprünglichen Unterlagen der Volkszählung wurde bei einem Brand im Gebäude des Handelsministeriums 1921 beschädigt oder zerstört. Die erhaltenen Originalbögen zur Bevölkerung wurden später auf staatliche Anordnung 1934 oder 1935 vernichtet.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/The_Hollerith_census_tabulator_%282585340347%29.jpg/960px-The_Hollerith_census_tabulator_%282585340347%29.jpg",
+          "caption": "Der Hollerith-Tabellierer für die Volkszählung (2585340347)",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Hollerith_census_tabulator_(2585340347).jpg",
+          "creator": "Erik Pitti from San Diego, CA, USA",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "query": "Hollerith census tabulator"
         },
-        "Robert P. Porter": {
-          "explanation": "Superintendent of the 1890 United States census, the first U.S. census to use Hollerith’s machines at scale.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/1890_United_States_census"
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Photograph_of_Commerce_Department_Building_%2864-NAD-264%29.jpg/960px-Photograph_of_Commerce_Department_Building_%2864-NAD-264%29.jpg",
+          "caption": "Originalbeschriftung: Dies ist einer der Gründe, weshalb Regierungsvertreter den Bau eines Nationalarchivgebäudes gefordert haben, in dem die unschätzbaren Unterlagen der.",
+          "source": "https://commons.wikimedia.org/wiki/File:Photograph_of_Commerce_Department_Building_(64-NAD-264).jpg",
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Commerce Department building fire 1921"
         }
-      },
-      "involved_people": [
-        "Robert P. Porter"
       ]
     },
     {
@@ -507,58 +454,30 @@
       "date_precision": "year",
       "age": 30,
       "title": "Promotion an der Columbia University",
-      "description": "1890 erhielt Hollerith an der [[Columbia University|Columbia University]] in New York den Doktorgrad (PhD). Seine Tabelliermaschine bildete die Grundlage für die Dissertation über ihre Anwendung bei der statistischen Zusammenstellung.",
+      "description": "1890 erhielt Herman Hollerith für seine Arbeit am Tabelliersystem an der Columbia University in New York City den Doktorgrad. Seine Dissertation war 1889 unter dem Titel An Electric Tabulating System erschienen.",
       "locations": [
         {
           "name_historic": "New York City",
-          "name_modern": "New York City, Vereinigte Staaten",
+          "name_modern": "New York City, New York, Vereinigte Staaten",
           "centroid": [
-            -74.0060152,
-            40.7127281
+            -74.006,
+            40.7128
           ],
           "primary": true
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Herman_Hollerith",
-        "https://en.wikipedia.org/wiki/IBM"
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
       ],
-      "event_type_icon": "mdi-certificate",
-      "chapter": "census_breakthrough",
-      "annotations": {
-        "Columbia University": {
-          "explanation": "Eine private Forschungsuniversität der Ivy League in Manhattan, New York City, offiziell Columbia University in the City of New York.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Columbia_University"
-        }
-      }
-    },
-    {
-      "date": "1890",
-      "date_precision": "year",
-      "age": 30,
-      "title": "Erhält die Elliott-Cresson-Medaille",
-      "description": "1890 erhielt Hollerith für seine Tabelliermaschine mit Lochkarten die [[Elliott Cresson Medal|Elliott-Cresson-Medaille des Franklin Institute]]. Diese viel beachtete Auszeichnung stärkte sein öffentliches Ansehen, während er die neue Technik bekannt machte.",
-      "locations": [
-        {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
-          "centroid": [
-            -75.1635262,
-            39.9527237
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Elliott-Cresson-Medaille"
-      ],
-      "event_type_icon": "mdi-medal",
-      "chapter": "census_breakthrough",
-      "annotations": {
-        "Elliott Cresson Medal": {
-          "explanation": "Die höchste Auszeichnung des Franklin Institute, die von 1875 bis 1997 für herausragende Leistungen in Wissenschaft, Ingenieurwesen und Erfindungswesen verliehen wurde.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Elliott-Cresson-Medaille"
-        }
+      "event_type_icon": "mdi-book-open-variant",
+      "chapter": "machines_for_the_world",
+      "weight": 0.55,
+      "event_class": {
+        "type": "publication",
+        "title": "In connection with the electric tabulation system which has been adopted by U.S. government for the work of the census bureau",
+        "publication_type": "thesis",
+        "publisher": "Columbia University School of Mines",
+        "significance": "Doktorarbeit"
       }
     },
     {
@@ -566,81 +485,90 @@
       "date_precision": "year",
       "age": 36,
       "title": "Gründet die Tabulating Machine Company",
-      "description": "1896 gründete Hollerith die [[Tabulating Machine Company|Tabulating Machine Company]], um die Vermietung und Wartung von Lochkartengeräten auf eine formelle geschäftliche Grundlage zu stellen. Das Unternehmen belieferte US-Volkszählungsämter und gewerbliche Kunden wie Versicherungsfirmen mit Tabelliermaschinen und verwandten Geräten.",
+      "description": "1896 gründete Herman Hollerith die Tabulating Machine Company, nachdem er zuvor unter dem Namen Hollerith Electric Tabulating System tätig gewesen war. Das Unternehmen vermietete Tabelliermaschinen und weitere Geräte. Es verkaufte außerdem Lochkarten an Statistikämter, Versicherungsgesellschaften und andere Kunden.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith",
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "machines_for_the_world",
+      "weight": 0.85
+    },
+    {
+      "date": "1900",
+      "date_precision": "year",
+      "age": 40,
+      "title": "Maschinen bei der Volkszählung 1900",
+      "description": "1900 setzte das Census Office der Vereinigten Staaten Herman Holleriths Tabelliermaschinen erneut zur Auswertung der nationalen Volkszählung ein. Die Tabulating Machine Company vermietete ihre Geräte auch an Statistikämter und gewerbliche Kunden in mehreren Ländern.",
       "locations": [
         {
           "name_historic": "Washington, D.C.",
-          "name_modern": "Washington, D.C., Vereinigte Staaten",
+          "name_modern": null,
+          "primary": true,
           "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "primary": true
+            -77.0363849,
+            38.8950982
+          ]
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company",
-        "https://en.wikipedia.org/wiki/IBM"
+        "https://en.wikipedia.org/wiki/Herman_Hollerith",
+        "https://en.wikipedia.org/wiki/1900_United_States_census"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Tabulating_Machine_Co._plant.jpg",
-          "caption": "Werk der Tabulating Machine Co.",
-          "source": "https://commons.wikimedia.org/wiki/File:Tabulating_Machine_Co._plant.jpg",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-hammer",
-      "chapter": "building_the_punched_card_empire",
-      "annotations": {
-        "Tabulating Machine Company": {
-          "explanation": "Holleriths 1896 gegründetes Unternehmen, das Tabelliersysteme mit Lochkarten vermarktete und vermietete; später ging es in der Computing-Tabulating-Recording Company (CTR) auf, einer Vorläuferin von IBM.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
-        }
-      }
+      "event_type_icon": "mdi-chart-bar",
+      "chapter": "machines_for_the_world",
+      "weight": 0.75,
+      "involved_people": [
+        "Frederick Howard Wines",
+        "Walter F. Willcox"
+      ]
     },
     {
       "date": "1906",
       "date_precision": "year",
       "age": 46,
-      "title": "Führt die Schalttafel ein",
-      "description": "1906 führte Hollerith die Schalttafel der Tabelliermaschine Type I ein. Diese praktische Neuerung machte es schneller und weniger fehleranfällig, die Maschine für neue Fragen und Kunden neu zu verdrahten. Damit wandelte sich die einmalig für eine Volkszählung gedachte Maschine zu einem konfigurierbaren System, das Bediener von Auftrag zu Auftrag anpassen konnten.",
-      "locations": [],
+      "title": "Ein umverdrahtbarer Tabellierer",
+      "description": "1906 führte Herman Hollerith über sein Unternehmen in Washington, D.C. den Type I Tabulator ein. Sein Steckbrett erlaubte es den Bedienern, die Maschine für unterschiedliche Lochkartenaufgaben umzudrahten, ohne die Maschine selbst zu verändern.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., Vereinigte Staaten",
+          "centroid": [
+            -77.0365,
+            38.9072
+          ],
+          "primary": true
+        }
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "building_the_punched_card_empire",
+      "chapter": "machines_for_the_world",
+      "weight": 0.8,
       "event_class": {
         "type": "invention",
-        "title": "Schalttafel der Tabelliermaschine Type I",
-        "description": "Eine Schalttafel nach Art eines Steckbretts, mit der sich Tabelliermaschinen für unterschiedliche Zähl- und Sortierprogramme rasch neu verdrahten ließen."
+        "title": "Steckbrett des Type I Tabulator",
+        "description": "Ein herausnehmbares Steckbrett ermöglicht es Bedienern, Tabellierfunktionen für unterschiedliche Lochkartenaufgaben umzudrahten, ohne die Maschine selbst zu verändern.",
+        "impact": "Das Steckbrett vereinfachte das Umverdrahten beim Wechsel von einer Aufgabe zur nächsten."
       }
     },
     {
       "date": "1911-06-16",
       "date_precision": "day",
       "age": 51,
-      "title": "Unternehmen geht in der CTR auf",
-      "description": "Am 16. Juni 1911 fusionierte Holleriths Tabulating Machine Company mit drei weiteren Firmen – der Bundy Manufacturing Company, der International Time Recording Company und der Computing Scale Company of America – zur [[Computing-Tabulating-Recording Company|Computing-Tabulating-Recording Company (CTR)]]. Der von dem Finanzier Charles Ranlett Flint eingefädelte Zusammenschluss beendete Holleriths Unabhängigkeit, nicht aber seinen Einfluss: Er blieb in einer technischen Funktion innerhalb des größeren Unternehmens tätig.",
+      "title": "Tabulating Company geht in CTR auf",
+      "description": "Am 16. Juni 1911 fusionierte Charles Ranlett Flint Herman Holleriths Tabulating Machine Company im Staat New York mit drei weiteren Herstellern. Das neue Unternehmen erhielt den Namen Computing-Tabulating-Recording Company. Sein Sitz war in Endicott, New York.",
       "locations": [
-        {
-          "name_historic": "New York City",
-          "name_modern": "New York City, Vereinigte Staaten",
-          "centroid": [
-            -74.0060152,
-            40.7127281
-          ],
-          "primary": true
-        },
         {
           "name_historic": "Endicott, New York",
           "name_modern": "Endicott, New York, Vereinigte Staaten",
           "centroid": [
-            -76.0493684,
-            42.098408
+            -76.0494,
+            42.0984
           ],
-          "primary": false
+          "primary": true
         }
       ],
       "involved_people": [
@@ -648,115 +576,96 @@
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company",
+        "https://en.wikipedia.org/wiki/Herman_Hollerith",
         "https://en.wikipedia.org/wiki/IBM"
       ],
-      "event_type_icon": "mdi-handshake",
-      "chapter": "building_the_punched_card_empire",
-      "annotations": {
-        "Computing-Tabulating-Recording Company": {
-          "explanation": "Eine 1911 durch die Fusion von vier Unternehmen, darunter Holleriths Tabulating Machine Company, gegründete Holdinggesellschaft; später wurde sie in International Business Machines (IBM) umbenannt.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
+      "event_type_icon": "mdi-source-merge",
+      "chapter": "corporate_final_years",
+      "weight": 0.75,
+      "background": "Nach Abschluss ihrer Arbeiten an der Volkszählung der Vereinigten Staaten von 1900 benötigte die Tabulating Machine Company Einnahmen für Jahre ohne Volkszählungsauftrag. Sie erschloss Anwendungen für Unternehmen in den Vereinigten Staaten und im Ausland, die Maschinen zum Stanzen, Sortieren und Tabellieren von Karten nutzten. Flint erwarb das Unternehmen für 2,3 Millionen Dollar. Hollerith erhielt aus der Transaktion 1,2 Millionen Dollar.\n\nCTR begann mit 1.300 Beschäftigten. Die Unternehmen stellten Zeiterfassungssysteme für Beschäftigte, Waagen, automatische Aufschnittmaschinen und Lochkartengeräte her. Die neue Holdinggesellschaft hatte Anleiheschulden von 6,5 Millionen Dollar. Die Guaranty Trust Company hatte ihr 4 Millionen Dollar geliehen. Flint bewertete sie mit 17,5 Millionen Dollar. Ihre Sachanlagen beliefen sich auf 1 Million Dollar. Ein Aktienprospekt von 1911 führte für die vier Unternehmen im Vorjahr einen gemeinsamen Nettogewinn von 950.000 Dollar auf.\n\nFlint beschrieb die Gruppe als drei voneinander getrennte Geschäftszweige. Er erwartete, dass jeder einzelne Zweig unter normalen Umständen Zinsen und Tilgungszahlungen für die Anleihen erwirtschaften würde. Unter außergewöhnlichen Umständen sollten die drei Zweige dem Unternehmen drei Möglichkeiten geben, seinen Verpflichtungen nachzukommen und Dividenden zu zahlen. Die beteiligten Unternehmen behielten ihre etablierten Namen bis zu ihrer Eingliederung im Jahr 1933.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Computing_Scale_at_Burnaby_Village_Museum_%2836582526791%29.jpg/960px-Computing_Scale_at_Burnaby_Village_Museum_%2836582526791%29.jpg",
+          "caption": "Waage der Computing Scale Company of Canada im Burnaby Village Museum.",
+          "source": "https://commons.wikimedia.org/wiki/File:Computing_Scale_at_Burnaby_Village_Museum_(36582526791).jpg",
+          "creator": "Ruth Hartnup from Vancouver, Canada",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "query": "Computing Scale Company scale"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/L%26H_time_clock_01.jpg/960px-L%26H_time_clock_01.jpg",
+          "caption": "Die Stechuhr der Lowman & Hanford Printing Company, 68 S. Washington Street, im Viertel Pioneer Square in Seattle, Washington.",
+          "source": "https://commons.wikimedia.org/wiki/File:L&H_time_clock_01.jpg",
+          "creator": "Joe Mabel",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "query": "International Time Recording time clock"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/RK_0705_00640_Berkel.jpg/960px-RK_0705_00640_Berkel.jpg",
+          "caption": "Berkel-Schinkenschneidemaschine",
+          "source": "https://commons.wikimedia.org/wiki/File:RK_0705_00640_Berkel.jpg",
+          "creator": "Reinhard Kraasch",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "automatic meat slicer"
         }
-      }
+      ]
     },
     {
       "date": "1921",
       "date_precision": "year",
       "age": 61,
-      "title": "Ruhestand als beratender Ingenieur",
-      "description": "1921 beendete Hollerith seine beratende Tätigkeit für die Organisation [[Computing-Tabulating-Recording Company|CTR]]. Er hatte in Georgetown, Washington, D.C., gewohnt und in der Nähe ein Geschäftsbüro für seine beruflichen Angelegenheiten unterhalten – eine unspektakuläre Umgebung für jemanden, dessen Ideen gerade zur industriellen Routine wurden.",
-      "locations": [
-        {
-          "name_historic": "Washington, D.C.",
-          "name_modern": "Washington, D.C., Vereinigte Staaten",
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "primary": true
-        }
-      ],
+      "title": "Rückzug aus der Unternehmensberatung",
+      "description": "1921 zog sich Herman Hollerith aus seiner Tätigkeit als beratender Ingenieur bei der Computing-Tabulating-Recording Company zurück. Damit endete seine aktive Arbeit für das Nachfolgeunternehmen der Tabulating Machine Company.",
+      "locations": [],
+      "involved_people": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/IBM"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Tabulating_Machine_Co_org_chart.mw.jpg/960px-Tabulating_Machine_Co_org_chart.mw.jpg",
-          "caption": "Organigramm der Tabulating Machine Co., Dezember 1917",
-          "source": "https://commons.wikimedia.org/wiki/File:Tabulating_Machine_Co_org_chart.mw.jpg",
-          "creator": "Marcin Wichary",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
-        }
+        "https://en.wikipedia.org/wiki/Herman_Hollerith",
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
       ],
       "event_type_icon": "mdi-account-clock",
-      "chapter": "quiet_legacy_years",
-      "annotations": {
-        "Computing-Tabulating-Recording Company": {
-          "explanation": "Das 1911 durch die Fusion mehrerer Unternehmen, darunter Holleriths Firma, entstandene Unternehmen; 1924 wurde es in International Business Machines (IBM) umbenannt.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
-        }
-      }
+      "chapter": "corporate_final_years",
+      "weight": 0.35
     },
     {
       "date": "1929-11-17",
       "date_precision": "day",
       "age": 69,
-      "title": "Stirbt in Washington, D.C.",
-      "description": "Herman Hollerith starb am 17. November 1929 im Alter von 69 Jahren in Washington, D.C.; als Todesursache wurde ein Herzinfarkt angegeben. Er wurde auf dem [[Oak Hill Cemetery|Oak Hill Cemetery]] in Georgetown beigesetzt.",
+      "title": "Tod in Washington mit neunundsechzig",
+      "description": "In seinen letzten Jahren lebte Herman Hollerith in Georgetown, Washington, D.C. Er starb am 17. November 1929 im Alter von neunundsechzig Jahren in Washington an einem Herzinfarkt.",
       "locations": [
         {
           "name_historic": "Washington, D.C.",
           "name_modern": "Washington, D.C., Vereinigte Staaten",
           "centroid": [
-            -77.0365427,
-            38.8950368
+            -77.0369,
+            38.9072
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Washington, D.C.",
-          "name_modern": "Washington, D.C., Vereinigte Staaten",
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "primary": false
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Oak_Hill_Cemetery_(Washington,_D.C.)",
-        "https://en.wikipedia.org/wiki/Herman_Hollerith"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Hollerith_Herman_grave.jpg/849px-Hollerith_Herman_grave.jpg",
-          "caption": "Grab von Herman Hollerith",
-          "source": "https://commons.wikimedia.org/wiki/File:Hollerith_Herman_grave.jpg",
-          "creator": "Author and original uploader is Astrochemist at en.wikipedia",
-          "license": "Public domain"
-        }
+        "https://en.wikipedia.org/wiki/Herman_Hollerith",
+        "https://en.wikipedia.org/wiki/Oak_Hill_Cemetery_(Washington,_D.C.)"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "quiet_legacy_years",
-      "annotations": {
-        "Oak Hill Cemetery": {
-          "explanation": "Ein historischer Parkfriedhof im Stadtteil Georgetown von Washington, D.C., der Mitte des 19. Jahrhunderts gegründet wurde und auf dem zahlreiche bedeutende Amerikaner beigesetzt sind.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Oak_Hill_Cemetery_(Washington,_D.C.)"
-        }
-      },
+      "chapter": "corporate_final_years",
+      "weight": 0.4,
       "event_class": {
         "type": "death",
         "cause": "Herzinfarkt",
-        "place_of_rest": "Oak Hill Cemetery in Georgetown"
+        "characterization": "im Alter von neunundsechzig Jahren",
+        "place_of_rest": "Oak Hill Cemetery, Washington, D.C."
       }
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "697d7996370097a2",
-    "translated_on": "2026-08-02T12:12:39.708366+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "5f9e9e3a7a2cf50a",
+    "translated_on": "2026-09-14T08:55:27.200335+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia_ego_network",
-  "created_on": "2026-01-14",
+  "dataset": "Vannevar Bush ego network",
+  "created_on": "2026-09-14",
   "ego": {
     "name": "Vannevar Bush",
     "birth_year": 1890,
@@ -8,506 +8,292 @@
     "primary_roles": [
       "Ingenieur",
       "Erfinder",
-      "Wissenschaftsmanager"
+      "Wissenschaftsorganisator"
     ],
-    "summary": "Vannevar Bush war ein US-amerikanischer Ingenieur, Erfinder und Wissenschaftsmanager, der während des Zweiten Weltkriegs zu einem zentralen Organisator der wissenschaftlichen Forschung und Entwicklung in den Vereinigten Staaten wurde. Er leitete das Office of Scientific Research and Development (OSRD), war am Beginn und an der Verwaltung der frühen Arbeiten am Manhattan-Projekt beteiligt, prägte die Wissenschaftspolitik der Vereinigten Staaten und beeinflusste durch seine Arbeiten am Analogrechner sowie durch das Memex-Konzept die Informatik und die Informationswissenschaft.",
+    "summary": "Vannevar Bush war ein US-amerikanischer Ingenieur, Erfinder und Wissenschaftsorganisator. Er entwickelte Analogrechner, entwarf das Memex und leitete über das Office of Scientific Research and Development einen großen Teil der wissenschaftlichen Kriegsforschung der Vereinigten Staaten. Nach dem Krieg setzte er sich für eine dauerhafte staatliche Förderung der Grundlagenforschung ein.",
     "wikipedia": "https://en.wikipedia.org/wiki/Vannevar_Bush"
   },
   "connections": [
     {
       "person_name": "Richard Perry Bush",
-      "relationship_type": "family/father",
-      "relationship_description": "Vater; ein universalistischer Geistlicher, der Bushs frühe familiäre Umgebung und Ausbildung in Massachusetts prägte.",
-      "start_year": 1890,
-      "end_year": null,
+      "relationship_description": "Richard Perry Bush war Bushs Vater und universalistischer Pastor in Everett. Wie sein Sohn besuchte er das Tufts College.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "familiäres Aufwachsen in Massachusetts",
-        "gemeinsame Verbindung zur Tradition des Tufts College"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
-      "notes": "Bush wurde nach John Vannevar benannt, einem Freund seines Vaters."
+      "notes": "Bush wurde nach John Vannevar benannt, einem alten Freund seines Vaters.",
+      "relationship_type": "family/father"
     },
     {
-      "person_name": "Emma Linwood Paine",
-      "relationship_type": "family/mother",
-      "relationship_description": "Mutter; Teil von Bushs frühem Familienleben in Everett und Chelsea, Massachusetts.",
-      "start_year": 1890,
-      "end_year": null,
+      "person_name": "Emma Linwood Paine Bush",
+      "relationship_description": "Bushs Mutter zog ihn im Haushalt der Familie Bush in Everett und später in Chelsea, Massachusetts, groß.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "familiäres Aufwachsen in Everett und Chelsea, Massachusetts"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
-      "notes": "Sie wird als Tochter einer angesehenen Familie aus Provincetown beschrieben."
-    },
-    {
-      "person_name": "Edith Bush",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Ältere Schwester; gehörte zu Bushs Haushalt während seiner Kindheit.",
-      "start_year": 1890,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "gemeinsames Aufwachsen in Massachusetts"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": null
-    },
-    {
-      "person_name": "Reba Bush",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Ältere Schwester; gehörte zu Bushs Haushalt während seiner Kindheit.",
-      "start_year": 1890,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "gemeinsames Aufwachsen in Massachusetts"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": null
+      "notes": "Sie stammte aus einer angesehenen Familie aus Provincetown.",
+      "relationship_type": "family/mother"
     },
     {
       "person_name": "Phoebe Clara Davis",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Ehefrau; sie waren während der Tufts-Zeit miteinander liiert und heirateten im August 1916. Sie hatten zwei Söhne.",
-      "start_year": 1911,
-      "end_year": 1974,
+      "relationship_description": "Bush und Phoebe Clara Davis stammten beide aus Chelsea, Massachusetts. Sie heirateten im August 1916 und hatten zwei Söhne.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Liebesbeziehung während der Tufts-Zeit",
-        "Ehe- und Familienleben",
-        "Unterstützung Bushs bei frühen beruflichen Veränderungen"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
-      "notes": "Die Hochzeit fand in demselben Monat statt, in dem Bush seine Promotion abschloss (August 1916)."
-    },
-    {
-      "person_name": "Arthur Edwin Kennelly",
-      "relationship_type": "academic/advisor",
-      "relationship_description": "Doktorvater am MIT; ein früher Streit über die Betreuung wurde für Bush zu einem prägenden beruflichen Konflikt.",
-      "start_year": 1914,
-      "end_year": 1916,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Doktorandenbetreuung",
-        "Vorbereitung der Dissertation in Elektrotechnik"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": "Ein bemerkenswerter früher Konflikt in Bushs beruflicher Entwicklung."
+      "notes": "Ihre Ehe bestand bis zu ihrem Tod im Jahr 1969, und sie hatten zwei Söhne.",
+      "relationship_type": "family/spouse"
     },
     {
       "person_name": "Richard Davis Bush",
-      "relationship_type": "family/child",
-      "relationship_description": "Sohn von Vannevar Bush und Phoebe Clara Davis.",
-      "start_year": 1916,
-      "end_year": null,
+      "relationship_description": "Richard Davis Bush war einer von Bushs beiden Söhnen mit Phoebe Clara Davis.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Familienleben"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
-      "notes": null
+      "notes": null,
+      "relationship_type": "family/son"
     },
     {
       "person_name": "John Hathaway Bush",
-      "relationship_type": "family/child",
-      "relationship_description": "Sohn von Vannevar Bush und Phoebe Clara Davis.",
-      "start_year": 1916,
-      "end_year": null,
+      "relationship_description": "John Hathaway Bush war einer von Bushs beiden Söhnen mit Phoebe Clara Davis.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Familienleben"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
-      "notes": null
-    },
-    {
-      "person_name": "Harold Power",
-      "relationship_type": "professional/employer",
-      "relationship_description": "Mit AMRAD verbundener Eigentümer, der Bush mit der Leitung des Firmenlabors betraute, während Bush zugleich an der Tufts tätig war.",
-      "start_year": 1916,
-      "end_year": 1919,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Leitung des AMRAD-Labors",
-        "frühe Forschungs- und Entwicklungsarbeiten zur Funktechnik"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": "Bushs Arbeit bei AMRAD überschnitt sich mit seiner Anstellung an der Tufts und seiner frühen Forschung während des Ersten Weltkriegs."
-    },
-    {
-      "person_name": "Dugald C. Jackson",
-      "relationship_type": "academic/mentor",
-      "relationship_description": "Prägende Persönlichkeit der Elektrotechnik am MIT, unter der Bush nach seinem Eintritt in das MIT 1919 arbeitete.",
-      "start_year": 1919,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Arbeit im Fachbereich Elektrotechnik des MIT",
-        "Lehr- und Laboraufgaben"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/Dugald_C._Jackson"
-      ],
-      "notes": null
-    },
-    {
-      "person_name": "Laurence K. Marshall",
-      "relationship_type": "professional/industry_partner",
-      "relationship_description": "Industriepartner, der Bush half, dessen ingenieurwissenschaftliche Ideen in Unternehmen zu überführen, darunter die spätere Raytheon.",
-      "start_year": 1922,
-      "end_year": null,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Gründung der Spencer Thermostat Company",
-        "American Appliance Company und Umstrukturierung zu Raytheon",
-        "Vermarktung der S-Röhre"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/Raytheon"
-      ],
-      "notes": "Marshall beschaffte frühes Kapital und spielte eine zentrale Rolle bei der strategischen Ausrichtung auf Stromversorgungen für Funkgeräte."
-    },
-    {
-      "person_name": "William H. Timbie",
-      "relationship_type": "academic/collaborator",
-      "relationship_description": "Kollege und MIT-Professor; verfasste gemeinsam mit Bush das einführende Lehrbuch Principles of Electrical Engineering (1922).",
-      "start_year": 1922,
-      "end_year": 1922,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "gemeinsame Verfassung eines Lehrbuchs zur Elektrotechnik",
-        "Lehrtätigkeit am MIT"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": null
-    },
-    {
-      "person_name": "Al Spencer",
-      "relationship_type": "professional/industry_partner",
-      "relationship_description": "AMRAD-Techniker, der den Thermostatschalter erfand, den ein von Bush mitorganisiertes Unternehmen, die Spencer Thermostat Company, auf den Markt brachte.",
-      "start_year": 1922,
-      "end_year": 1931,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Vermarktung des Thermostatschalters",
-        "Gründung und Ausbau der Spencer Thermostat Company"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": "Nachdem die AMRAD-Leitung kein Interesse gezeigt hatte, entwickelte Bush den geschäftlichen Weg zur Vermarktung des Geräts."
-    },
-    {
-      "person_name": "Richard S. Aldrich",
-      "relationship_type": "professional/industry_partner",
-      "relationship_description": "Half gemeinsam mit Marshall bei der Finanzierung und Gründung der Spencer Thermostat Company, die Bush als Berater beschäftigte.",
-      "start_year": 1922,
-      "end_year": 1931,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Unternehmensgründung und Finanzierung",
-        "industrielle Vermarktung des Thermostatschalters"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": "Das Unternehmen ging später in der Metals & Controls Corporation auf."
-    },
-    {
-      "person_name": "Herbert R. Stewart",
-      "relationship_type": "academic/student",
-      "relationship_description": "Student, dessen Arbeit am Integraphen am MIT in Bushs Überlegungen zum späteren Differentialanalysator einfloss.",
-      "start_year": 1924,
-      "end_year": 1926,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Entwicklung eines frühen Analogrechners (Integraph)",
-        "Betreuung von Forschungsarbeiten am MIT"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": "Bushs Betreuung prägte nachweislich die Wahl und Ausrichtung von Stewarts Gerät."
-    },
-    {
-      "person_name": "Charles G. Smith",
-      "relationship_type": "professional/industry_partner",
-      "relationship_description": "Physiker, dessen Erfindung der S-Röhre gemeinsam mit Bush und Marshall vermarktet wurde und zum Kernprodukt des frühen Raytheon-Konzerns wurde.",
-      "start_year": 1924,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Vermarktung der S-Röhre",
-        "Raytheon-Aufsicht (Vorstandsarbeit) und frühe Produktentwicklung"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/Raytheon"
-      ],
-      "notes": "Smith wird ausdrücklich als Erfinder der Spannungsreglerröhre genannt."
+      "notes": null,
+      "relationship_type": "family/son"
     },
     {
       "person_name": "Harold Hazen",
-      "relationship_type": "academic/student",
-      "relationship_description": "Doktorand, der unter Bushs Betreuung frühere Integraph-Ideen weiterentwickelte und am Bau des Differentialanalysators (Analogrechners) mitwirkte.",
-      "start_year": 1927,
-      "end_year": 1931,
+      "relationship_description": "Hazen schlug vor, Herbert R. Stewarts Arbeiten zum Integraphen auf Differentialgleichungen zweiter Ordnung auszudehnen. Von 1927 bis 1931 betreute Bush Hazen bei der Arbeit am Differentialanalysator.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Entwicklung des Differentialanalysators am MIT",
-        "ingenieurwissenschaftliche Forschung und Prototypenbau"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Vannevar_Bush",
         "https://en.wikipedia.org/wiki/Differential_analyser"
       ],
-      "notes": "Bei der praktischen Konstruktion in den Jahren 1928 bis 1931 wird er häufig neben Bush genannt."
-    },
-    {
-      "person_name": "Norbert Wiener",
-      "relationship_type": "academic/collaborator",
-      "relationship_description": "Mathematiker, der Bush bei den mathematischen Aspekten seines Lehrbuchs zur Schaltungstheorie eng beriet und einen Anhang zu Operational Circuit Analysis (1929) verfasste.",
-      "start_year": 1928,
-      "end_year": 1929,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Zusammenarbeit an einem Lehrbuch",
-        "mathematische Beratung zu Operationskalkül und Schaltungstheorie"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": "Bush schrieb Wiener ausdrücklich zu, ihn vor „mancher mathematischen Klippe“ bewahrt zu haben."
-    },
-    {
-      "person_name": "Edith Clarke",
-      "relationship_type": "professional/peer",
-      "relationship_description": "Ingenieur bei General Electric, der Bushs Differentialanalysator zur Lösung von Problemen der elektrischen Energieübertragung einsetzte und damit die bemerkenswerte industrielle Nutzung von Bushs Rechenwerkzeugen verkörperte.",
-      "start_year": 1928,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Einsatz des Differentialanalysators für ingenieurwissenschaftliche Berechnungen",
-        "Wissenstransfer zwischen der Innovation am MIT und der Praxis bei GE"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": "Die Verbindung könnte indirekt über die Nutzung der Maschine zustande gekommen sein, ist jedoch ausdrücklich dokumentiert."
-    },
-    {
-      "person_name": "Karl Taylor Compton",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Präsident des MIT, der Bush 1932 zum Vizepräsidenten und Dekan der Ingenieurwissenschaften ernannte; nach anfänglichen Auseinandersetzungen entwickelten beide eine tragfähige Arbeitsbeziehung.",
-      "start_year": 1930,
-      "end_year": null,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Reform der MIT-Verwaltung",
-        "Aufsicht über Regeln für Professorenberatung und institutionelle Strategie"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/Karl_Taylor_Compton"
-      ],
-      "notes": "Zunächst gerieten sie über die Einschränkung von Beratertätigkeiten der Professoren aneinander, arbeiteten später jedoch eng zusammen."
-    },
-    {
-      "person_name": "Emanuel Goldberg",
-      "relationship_type": "professional/influence",
-      "relationship_description": "Früherer Erfinder, dessen Ideen zur Mikrofilm-Indexierung als wichtiger Einfluss auf Bushs Memex-Konzept gelten.",
-      "start_year": 1930,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "konzeptioneller Einfluss auf Memex und Informationsabruf",
-        "Ideen zu Mikrofilmselektor und Indexierung"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/Memex"
-      ],
-      "notes": "Der Einfluss wird als bedeutend beschrieben, auch wenn die Verbindung wahrscheinlich indirekt über frühere Arbeiten bestand."
+      "notes": "Ihre Maschine war der erste praktisch breit einsetzbare universelle Differentialanalysator.",
+      "relationship_type": "academic/student"
     },
     {
       "person_name": "Claude Shannon",
-      "relationship_type": "academic/student",
-      "relationship_description": "Doktorand aus Bushs MIT-Labor und dessen Arbeit am Differentialanalysator; seine wegweisende Dissertation über die Anwendung der Booleschen Algebra auf Schaltkreise gab der Theorie digitaler Schaltungen entscheidende Impulse.",
-      "start_year": 1936,
-      "end_year": 1938,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Arbeit im Umfeld von Bushs Labor für Differentialanalysatoren",
-        "Entwicklung einer von Bushs Umfeld beeinflussten Theorie der Schaltkreise"
-      ],
+      "relationship_description": "Shannon arbeitete am MIT als wissenschaftlicher Assistent an Bushs Differentialanalysator und verfasste 1937 seine wegweisende Masterarbeit, in der er die Boolesche Algebra auf Relais- und Schaltkreise anwandte.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Vannevar_Bush",
         "https://en.wikipedia.org/wiki/Claude_Shannon",
         "https://en.wikipedia.org/wiki/A_Symbolic_Analysis_of_Relay_and_Switching_Circuits"
       ],
-      "notes": "Shannon wird als einer von Bushs Doktoranden beschrieben; außerdem arbeitete Shannon als wissenschaftlicher Assistent am Analysator."
+      "notes": "Bush regte Shannon außerdem an, am Cold Spring Harbor Laboratory über mathematische Genetik zu promovieren.",
+      "relationship_type": "academic/student"
     },
     {
-      "person_name": "Cameron Forbes",
-      "relationship_type": "professional/rival",
-      "relationship_description": "Vorsitzender des Verwaltungsrats der Carnegie Institution, der mit Bush über Führungsfragen und die Ausrichtung der Institution aneinandergeriet.",
-      "start_year": 1938,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Verwaltung und Aufsicht der Carnegie Institution",
-        "Auseinandersetzungen über die Leitung des Instituts"
-      ],
+      "person_name": "Laurence K. Marshall",
+      "relationship_description": "Marshall unterstützte Bushs Bemühungen um die Vermarktung, war sein Geschäftspartner in der Spencer Thermostat Company und gründete mit ihm die American Appliance Company, aus der später Raytheon hervorging.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
-      "notes": "Der Konflikt wird als Teil umfassenderer Spannungen um die Leitung der CIW beschrieben."
+      "notes": "1924 brachten sie gemeinsam mit Charles G. Smith den S-Röhren-Spannungsregler auf den Markt.",
+      "relationship_type": "business/business_partner"
     },
     {
-      "person_name": "Harry H. Laughlin",
-      "relationship_type": "professional/adversary",
-      "relationship_description": "Mit der Carnegie Institution verbundener Eugenikverwalter, dessen Programm Bush im Zuge institutioneller Reformen abzuschaffen begann.",
-      "start_year": 1938,
-      "end_year": 1944,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "institutionelle Überprüfung des Eugenikprogramms",
-        "Umstrukturierung und Schließung des Eugenics/Genetics Record Office"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
-      ],
-      "notes": "Bushs Vorgehen führte zu Mittelkürzungen und schließlich zur Schließung im Jahr 1944."
-    },
-    {
-      "person_name": "Joseph Sweetman Ames",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Vorsitzender des National Advisory Committee for Aeronautics (NACA), der erkrankte; Bush übernahm als stellvertretender Vorsitzender seine Aufgaben und wurde bald darauf selbst Vorsitzender.",
-      "start_year": 1938,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Wechsel an der NACA-Spitze",
-        "Planung der staatlichen Luftfahrtforschung"
-      ],
+      "person_name": "Franklin D. Roosevelt",
+      "relationship_description": "Roosevelt billigte im Juni 1940 Bushs Vorschlag für das National Defense Research Committee und stützte sich später bei der Organisation der wissenschaftlichen Kriegsforschung durch das OSRD auf Bush.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/National_Advisory_Committee_for_Aeronautics"
+        "https://en.wikipedia.org/wiki/Franklin_D._Roosevelt"
       ],
-      "notes": "Ames’ Erkrankung beschleunigte Bushs Aufstieg in eine erweiterte Führungsrolle."
+      "notes": "Roosevelt billigte Bushs Vorschlag für das National Defense Research Committee im Jahr 1940 und ernannte ihn 1941 zum Direktor des OSRD. 1945 übergab Bush Präsident Harry S. Truman Science, The Endless Frontier.",
+      "relationship_type": "political/patron"
     },
     {
-      "person_name": "John Campbell Merriam",
-      "relationship_type": "professional/rival",
-      "relationship_description": "Bushs Vorgänger als Präsident der Carnegie Institution; er erteilte weiterhin ungebetene Ratschläge und trug damit zu den Spannungen in der Führung bei.",
-      "start_year": 1938,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Führungswechsel an der Carnegie Institution",
-        "Auseinandersetzungen über fortdauernden Einfluss und institutionelle Politik"
+      "person_name": "James B. Conant",
+      "relationship_description": "James Bryant Conant arbeitete mit Bush im NDRC, folgte ihm nach der Gründung des OSRD als dessen Vorsitzender nach und blieb ein wichtiger Partner in der Kriegsforschung und bei der Leitung des Manhattan-Projekts.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush",
+        "https://en.wikipedia.org/wiki/James_B._Conant"
       ],
+      "notes": "Bush war Conants Stellvertreter im Military Policy Committee, das das Manhattan-Projekt beaufsichtigte.",
+      "relationship_type": "political/ally"
+    },
+    {
+      "person_name": "Alfred Lee Loomis",
+      "relationship_description": "Bush berief Loomis in das NDRC. Dort leitete Loomis das Microwave Committee und wirkte am Aufbau des MIT Radiation Laboratory zur Entwicklung von Radar mit.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alfred_Lee_Loomis"
+      ],
+      "notes": "Ihre Zusammenarbeit verband private wissenschaftliche Ressourcen, die Forschung am MIT und das staatliche System der Kriegsforschung.",
+      "relationship_type": "political/ally"
+    },
+    {
+      "person_name": "Arthur Edwin Kennelly",
+      "relationship_description": "Arthur Edwin Kennelly war 1916 Bushs Doktorvater für Elektrotechnik am MIT. Sie gerieten aneinander, als Kennelly zusätzliche Arbeiten für die Dissertation verlangte, die Bush ablehnte.",
+      "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
-      "notes": null
+      "notes": "Der Fachbereichsvorsitzende setzte sich über Kennelly hinweg, sodass Bush den gemeinsamen Doktorgrad von MIT und Harvard erhielt.",
+      "relationship_type": "academic/teacher"
+    },
+    {
+      "person_name": "Dugald C. Jackson",
+      "relationship_description": "Nach seinem Eintritt in die elektrotechnische Fakultät des MIT im Jahr 1919 arbeitete Bush unter Dugald C. Jackson.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null,
+      "relationship_type": "academic/superior"
+    },
+    {
+      "person_name": "William H. Timbie",
+      "relationship_description": "Bush und sein MIT-Kollege Timbie veröffentlichten 1922 gemeinsam Principles of Electrical Engineering.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null,
+      "relationship_type": "academic/collaborator"
+    },
+    {
+      "person_name": "Herbert R. Stewart",
+      "relationship_description": "Stewart war Bushs Masterstudent und baute 1925 auf Bushs Anregung einen Integraphen, der zur Entwicklung des Differentialanalysators beitrug.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush",
+        "https://en.wikipedia.org/wiki/Differential_analyser"
+      ],
+      "notes": null,
+      "relationship_type": "academic/student"
+    },
+    {
+      "person_name": "Norbert Wiener",
+      "relationship_description": "Norbert Wiener half Bush bei mathematischen Schwierigkeiten und schrieb einen Anhang zu Bushs Lehrbuch Operational Circuit Analysis von 1929.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Bush beschrieb ihre Beziehung als außergewöhnlich angenehme Zusammenarbeit zwischen einem Ingenieur und einem Mathematiker.",
+      "relationship_type": "academic/collaborator"
+    },
+    {
+      "person_name": "Frederick Terman",
+      "relationship_description": "Frederick Terman promovierte 1924 unter Bushs Betreuung am MIT in Elektrotechnik zum ScD.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frederick_Terman"
+      ],
+      "notes": "Später wurde Terman ein bedeutender Hochschuladministrator und eine wichtige Persönlichkeit bei der Entwicklung des Silicon Valley.",
+      "relationship_type": "academic/student"
+    },
+    {
+      "person_name": "Harold Power",
+      "relationship_description": "Power, Eigentümer von AMRAD, stellte Bush 1916 ein, damit er das Labor des Unternehmens leitete, während Bush am Tufts College lehrte.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Die Stelle im Labor wurde Bush besser bezahlt als seine Tätigkeit am Tufts College.",
+      "relationship_type": "business/employer"
+    },
+    {
+      "person_name": "Al Spencer",
+      "relationship_description": "Nachdem die Leitung von AMRAD von einer Weiterverfolgung abgesehen hatte, wollte Bush Spencers Erfindung eines thermostatischen Schalters vermarkten.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Die daraus entstandene Spencer Thermostat Company trug zu Bushs finanzieller Unabhängigkeit bei.",
+      "relationship_type": "business/collaborator"
+    },
+    {
+      "person_name": "Richard S. Aldrich",
+      "relationship_description": "Aldrich unterstützte gemeinsam mit Marshall die Spencer Thermostat Company, für die Bush als Berater tätig war.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null,
+      "relationship_type": "business/business_partner"
+    },
+    {
+      "person_name": "Charles G. Smith",
+      "relationship_description": "Bush, Marshall und Smith richteten die American Appliance Company auf die Vermarktung von Smiths S-Röhren-Spannungsregler für Radios aus.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": "Das Unternehmen wurde in Raytheon Company umbenannt.",
+      "relationship_type": "business/collaborator"
+    },
+    {
+      "person_name": "Frank B. Jewett",
+      "relationship_description": "Jewett gehörte zu den Wissenschaftlern und Verwaltungsfachleuten, die Bush 1940 für das National Defense Research Committee zusammenbrachte.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null,
+      "relationship_type": "political/ally"
+    },
+    {
+      "person_name": "Richard C. Tolman",
+      "relationship_description": "Richard C. Tolman war Mitglied des National Defense Research Committee, das 1940 unter Bushs Vorsitz organisiert wurde.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null,
+      "relationship_type": "political/ally"
+    },
+    {
+      "person_name": "Harold G. Bowen",
+      "relationship_description": "Konteradmiral Bowen gehörte zu den militärischen und wissenschaftlichen Vertretern, die 1940 unter Bush in das National Defense Research Committee aufgenommen wurden.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null,
+      "relationship_type": "political/ally"
+    },
+    {
+      "person_name": "George V. Strong",
+      "relationship_description": "Brigadegeneral Strong gehörte zu den Vertretern der Armee, die ab 1940 über das National Defense Research Committee mit Bush zusammenarbeiteten.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "notes": null,
+      "relationship_type": "political/ally"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Bushs Familie – seine Eltern, zwei Schwestern, seine Frau Phoebe Clara Davis und zwei Söhne – bildete den stabilen privaten Hintergrund einer ungewöhnlich öffentlichen Laufbahn."
+      "summary": "Bush wuchs in Everett in einem Haushalt auf, der durch Richard Perry Bushs Tätigkeit als universalistischer Geistlicher und die Verbindung der Familie zum Tufts College geprägt war. 1916 heiratete er Phoebe Clara Davis, die er aus Chelsea kannte. Sie zogen zwei Söhne groß, während Bushs akademische, industrielle und öffentliche Aufgaben zunahmen."
     },
     {
       "relationship_type": "academic",
-      "summary": "Bushs Netzwerk am MIT umfasst Mentoren und Verwaltungsleiter, enge Mitarbeiter sowie Studenten, deren Arbeit mit dem Analogrechnen und der frühen Theorie digitaler Schaltungen verbunden war."
+      "summary": "Das MIT war der Ort von Bushs Hochschullaufbahn, seiner ingenieurwissenschaftlichen Arbeit und seiner technischen Zusammenarbeit. Arthur Edwin Kennelly betreute seine Doktorarbeit, und Dugald C. Jackson leitete den Fachbereich, dem Bush 1919 beitrat. Bush arbeitete mit William H. Timbie und Norbert Wiener zusammen und betreute Studenten wie Herbert R. Stewart, Harold Hazen, Claude Shannon und Frederick Terman. Stewart und Hazen leisteten Beiträge zu den Arbeiten, aus denen der Differentialanalysator hervorging."
     },
     {
-      "relationship_type": "professional",
-      "summary": "Bush schlug eine Brücke zwischen Industrie und staatlicher Wissenschaftsverwaltung: von der frühen Vermarktung bei Raytheon über die Leitung der Carnegie Institution und die NACA bis hin zu den einflussreichen Ideen hinter dem Memex."
+      "relationship_type": "business",
+      "summary": "Bushs industrielle Tätigkeit begann bei AMRAD, wo Harold Power ihn mit der Leitung eines Labors betraute, während er am Tufts College lehrte. Al Spencer, Laurence K. Marshall, Richard S. Aldrich und Charles G. Smith brachten ihn mit Unternehmungen für Thermostate und Radiogeräte in Verbindung. Die American Appliance Company vermarktete Smiths S-Röhren-Spannungsregler und wurde später zu Raytheon."
+    },
+    {
+      "relationship_type": "political",
+      "summary": "Während des Zweiten Weltkriegs brachte Bush Wissenschaftler, Industrieforscher und Militärvertreter für die staatliche Verteidigungsforschung zusammen. Roosevelt billigte 1940 das NDRC und ernannte Bush 1941 zum Leiter des OSRD. Conant, Loomis, Jewett, Tolman, Bowen und Strong arbeiteten in einem Netzwerk, das Hochschulen, Industrie und Teilstreitkräfte mit der Kriegsforschung verband."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "54306fd0618067f9",
-    "translated_on": "2026-08-02T12:45:15.079615+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "fa868e1fefab243a",
+    "translated_on": "2026-09-14T08:45:19.836498+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

@@ -1,307 +1,161 @@
 {
-  "dataset": "wikipedia_ego_network",
-  "created_on": "2026-01-04",
+  "dataset": "Herman Hollerith ego network",
+  "created_on": "2026-09-14",
   "ego": {
     "name": "Herman Hollerith",
     "birth_year": 1860,
     "death_year": 1929,
     "primary_roles": [
-      "Erfinder",
       "Statistiker",
+      "Erfinder",
       "Unternehmer"
     ],
-    "summary": "Deutsch-amerikanischer Statistiker, Erfinder und Unternehmer, der die elektromechanische Auswertung von Lochkarten entscheidend vorantrieb und sie erstmals im großen Maßstab bei der Verarbeitung von Volkszählungsdaten in den Vereinigten Staaten einsetzte. Er gründete die Tabulating Machine Company, die später in der Computing-Tabulating-Recording Company (CTR) aufging und 1924 in IBM umbenannt wurde.",
+    "summary": "Herman Hollerith war ein deutsch-amerikanischer Statistiker, Erfinder und Unternehmer, der elektromechanische Lochkarten-Tabelliermaschinen entwickelte. Sein System beschleunigte die Volkszählung der Vereinigten Staaten von 1890. Die Tabulating Machine Company ging später in dem Unternehmen auf, das 1924 in International Business Machines umbenannt wurde.",
     "wikipedia": "https://en.wikipedia.org/wiki/Herman_Hollerith"
   },
   "connections": [
     {
       "person_name": "Georg Hollerith",
-      "relationship_type": "family/father",
-      "relationship_description": "Holleriths Vater; ein deutscher Einwanderer, ein sogenannter „Forty-eighter“, der als Lehrer und lutherischer Geistlicher arbeitete.",
-      "start_year": 1860,
-      "end_year": null,
+      "relationship_description": "Holleriths Vater war ein deutscher Einwanderer, Lehrer und lutherischer Geistlicher, der ihn in Buffalo großzog.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben in Buffalo, New York",
-        "Einwandererhaushalt und bildungsorientierte Erziehung"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Herman_Hollerith"
       ],
-      "notes": "Holleriths Mutter wird im vorliegenden Auszug lediglich als deutsches Elternteil mit Migrationshintergrund erwähnt; ihr Name wird nicht genannt."
+      "notes": "Georg Hollerith hatte an den deutschen Revolutionen von 1848–1849 teilgenommen.",
+      "relationship_type": "family/father"
+    },
+    {
+      "person_name": "Franciska Brunn Hollerith",
+      "relationship_description": "Franciska Brunn Hollerith war Holleriths aus Deutschland eingewanderte Mutter und gehörte zum Haushalt in Buffalo, in dem er seine frühe Kindheit verbrachte.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+      ],
+      "notes": null,
+      "relationship_type": "family/mother"
     },
     {
       "person_name": "John Shaw Billings",
-      "relationship_type": "professional/mentor",
-      "relationship_description": "Höhergestellte Persönlichkeit aus Volkszählungswesen und medizinischer Statistik, die den Ansatz vorschlug, der Hollerith zur Entwicklung einer lochkartenbasierten elektromechanischen Auswertung für Volkszählungsdaten führte.",
-      "start_year": 1880,
-      "end_year": 1890,
+      "relationship_description": "Billings schlug während seiner Arbeit im Volkszählungsamt vor, Zählwerke durch elektrische Kontakte zu steuern. Hollerith entwickelte diesen Gedanken zu seinem Lochkarten-Tabelliersystem weiter.",
       "strength": "strong",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Statistische Zusammenstellung von Daten zur Volkszählung in den Vereinigten Staaten",
-        "Frühe konzeptionelle Entwicklung der Lochkartenauswertung"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Herman_Hollerith",
         "https://en.wikipedia.org/wiki/John_Shaw_Billings"
       ],
-      "notes": "Billings wird im vorliegenden Auszug ausdrücklich zugeschrieben, den Mechanismus beziehungsweise Ansatz angeregt zu haben, den Hollerith weiterentwickelte."
+      "notes": "Billings gab den ursprünglichen Anstoß. Hollerith entwarf das praktische elektromechanische System und ließ es patentieren.",
+      "relationship_type": "innovation/inspiration"
     },
     {
-      "person_name": "Francis Amasa Walker",
-      "relationship_type": "contextual/influence",
-      "relationship_description": "Leiter der Volkszählung von 1880 in den Vereinigten Staaten; die langsame Bearbeitung dieser Volkszählung bildete einen Teil des Hintergrunds für die spätere Mechanisierung.",
-      "start_year": 1880,
-      "end_year": 1880,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Rahmenbedingungen der Volkszählungsverwaltung: Rückstände und Bearbeitungsengpässe bei der Volkszählung von 1880"
-      ],
+      "person_name": "Charles Ranlett Flint",
+      "relationship_description": "Flint organisierte 1911 den Zusammenschluss, durch den die Tabulating Machine Company in die Computing-Tabulating-Recording Company eingegliedert wurde. Hollerith erhielt bei dieser Transaktion 1,2 Millionen Dollar.",
+      "strength": "strong",
       "sources": [
-        "https://en.wikipedia.org/wiki/1880_United_States_census",
-        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company",
+        "https://en.wikipedia.org/wiki/IBM"
       ],
-      "notes": "Die Verbindung ist indirekter institutioneller Art: Die Schwierigkeiten bei der Bearbeitung der Volkszählung von 1880 ebneten den Weg für Holleriths mechanisierten Ansatz."
+      "notes": "Hollerith blieb dem Nachfolgeunternehmen bis 1921 als beratender Ingenieur verbunden.",
+      "relationship_type": "business/business_partner"
     },
     {
       "person_name": "Robert P. Porter",
-      "relationship_type": "professional/client",
-      "relationship_description": "Leiter der Volkszählung von 1890 in den Vereinigten Staaten, bei der Holleriths Tabelliermaschinen erstmals in großem Maßstab eingesetzt wurden.",
-      "start_year": 1889,
-      "end_year": 1893,
+      "relationship_description": "Porter leitete von 1889 bis 1893 die Volkszählung und beaufsichtigte die Volkszählung von 1890, deren Auswertung Holleriths Tabelliermaschinen nutzte.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Praktischer Einsatz der Lochkartenauswertung bei der Volkszählung der Vereinigten Staaten von 1890"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/1890_United_States_census",
         "https://en.wikipedia.org/wiki/Herman_Hollerith"
       ],
-      "notes": "Auf der Seite zur Volkszählung wird Porter ausdrücklich als Leiter der Zählung genannt, bei der Holleriths Maschinen erstmals zum Einsatz kamen."
+      "notes": null,
+      "relationship_type": "professional/supervisor"
     },
     {
       "person_name": "Carroll D. Wright",
-      "relationship_type": "contextual/influence",
-      "relationship_description": "Nach Robert P. Porter amtierender Leiter der Volkszählung während des verlängerten statistischen Programms von 1890, das auf Holleriths Maschinen zurückgriff.",
-      "start_year": 1893,
-      "end_year": 1897,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Fortführung und Überwachung der statistischen Arbeiten nach der Erhebung von 1890"
-      ],
+      "relationship_description": "Wright folgte Robert P. Porter 1893 als Leiter der Volkszählung nach. Er beaufsichtigte die fortlaufenden Arbeiten zur Auswertung der Volkszählung von 1890, für die Holleriths System eingesetzt wurde.",
+      "strength": "moderate",
       "sources": [
-        "https://en.wikipedia.org/wiki/1890_United_States_census"
+        "https://en.wikipedia.org/wiki/1890_United_States_census",
+        "https://en.wikipedia.org/wiki/Herman_Hollerith"
       ],
-      "notes": "Die Verbindung besteht indirekt über die Leitung der Volkszählung und nicht aufgrund einer belegten engen Zusammenarbeit."
+      "notes": null,
+      "relationship_type": "professional/supervisor"
     },
     {
       "person_name": "Frederick Howard Wines",
-      "relationship_type": "contextual/influence",
-      "relationship_description": "In die statistische Aufsicht über die Volkszählung von 1900 eingebunden; seine Tätigkeit stand mit der fortgesetzten Nutzung von Holleriths Geräten durch die Regierung in Zusammenhang.",
-      "start_year": 1899,
-      "end_year": 1901,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Statistische Aufsicht bei der Volkszählung der Vereinigten Staaten von 1900 unter Einsatz von Hollerith-Systemen"
-      ],
+      "relationship_description": "Wines gehörte zu den Beamten, die die statistischen Arbeiten für die Volkszählung der Vereinigten Staaten von 1900 beaufsichtigten. Holleriths Unternehmen lieferte dafür erneut Tabelliergeräte.",
+      "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/1900_United_States_census",
         "https://en.wikipedia.org/wiki/Herman_Hollerith"
       ],
-      "notes": "Im Artikel zur Volkszählung von 1900 wird Wines als Verantwortlicher für die Statistik genannt; auf Holleriths Seite wird vermerkt, dass seine Maschinen bei der Volkszählung von 1900 erneut eingesetzt wurden."
+      "notes": null,
+      "relationship_type": "professional/supervisor"
     },
     {
       "person_name": "Walter F. Willcox",
-      "relationship_type": "contextual/influence",
-      "relationship_description": "Statistiker, der mit der Aufsicht über die Volkszählung der Vereinigten Staaten von 1900 betraut war, während Holleriths Tabellierverfahren weiter eingesetzt wurde.",
-      "start_year": 1899,
-      "end_year": 1901,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Statistische Aufsicht bei der Volkszählung der Vereinigten Staaten von 1900 unter Einsatz von Hollerith-Systemen"
-      ],
+      "relationship_description": "Willcox teilte sich die Aufsicht über die Statistiken der Volkszählung der Vereinigten Staaten von 1900. Dadurch war er beruflich mit den Volkszählungsarbeiten verbunden, die von Holleriths Tabelliermaschinen unterstützt wurden.",
+      "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/1900_United_States_census",
         "https://en.wikipedia.org/wiki/Herman_Hollerith"
       ],
-      "notes": "Wie bei Wines handelt es sich um eine institutionelle Verbindung, die sich aus den Aufgaben im Rahmen der Volkszählungsaufsicht ergibt."
-    },
-    {
-      "person_name": "Willy Heidinger",
-      "relationship_type": "business/business_partner",
-      "relationship_description": "Gründer der DEHOMAG in Deutschland, die als Lizenznehmerin und Vertriebsgesellschaft sowie als Vermieterin von Lochkartenmaschinen nach Holleriths Vorbild und zugehöriger Ausrüstung auf dem deutschen Markt tätig wurde.",
-      "start_year": 1910,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Technologielizenzierung und Vermarktung von Lochkartenmaschinen in Deutschland"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/DEHOMAG"
-      ],
-      "notes": "Die Verbindung ist vor allem technologischer und geschäftlicher Art: Holleriths System wurde von einem ausländischen Lizenznehmer kommerziell genutzt."
-    },
-    {
-      "person_name": "Charles Ranlett Flint",
-      "relationship_type": "professional/business_partner",
-      "relationship_description": "Finanzier und sogenannter „Trust-Organisator“, der die Fusion von 1911 zur Gründung der CTR arrangierte und Holleriths Tabelliergeschäft im Zuge dieses Vorgangs erwarb.",
-      "start_year": 1911,
-      "end_year": 1921,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Eingliederung der Tabulating Machine Company in die CTR",
-        "Unternehmerischer Übergang; Hollerith blieb nach der Fusion beratender Ingenieur"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company",
-        "https://en.wikipedia.org/wiki/Herman_Hollerith"
-      ],
-      "notes": "Quellen zur CTR belegen Flints Rolle und die Kaufbedingungen; Hollerith blieb bis zu seinem Ruhestand als Berater tätig."
-    },
-    {
-      "person_name": "George Winthrop Fairchild",
-      "relationship_type": "professional/superior",
-      "relationship_description": "Vorsitzender der CTR nach der Fusion von 1911; Hollerith arbeitete als beratender Ingenieur innerhalb der CTR-Struktur.",
-      "start_year": 1911,
-      "end_year": 1921,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "CTR-Leitung während Holleriths Tätigkeit als Berater"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
-      ],
-      "notes": "Die Verbindung ist auf Ebene der Unternehmensstruktur dokumentiert, nicht durch persönliche Anekdoten."
-    },
-    {
-      "person_name": "Frank N. Kandolf",
-      "relationship_type": "professional/superior",
-      "relationship_description": "Ab 1912 Präsident der CTR; Teil des Führungsumfelds während Holleriths Jahren als beratender Ingenieur.",
-      "start_year": 1912,
-      "end_year": 1921,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "CTR-Geschäftsbetrieb und Eingliederung von Tochtergesellschaften mit Auswirkungen auf das Tabelliergeschäft"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
-      ],
-      "notes": "Er wird aufgrund der belegten zeitlichen Überschneidung mit Holleriths Tätigkeit als Berater aufgenommen."
+      "notes": null,
+      "relationship_type": "professional/supervisor"
     },
     {
       "person_name": "Thomas J. Watson Sr.",
-      "relationship_type": "professional/successor",
-      "relationship_description": "1914 Generaldirektor der CTR und später deren Präsident; er räumte dem auf Holleriths Technologie beruhenden Tabelliergeschäft Vorrang ein und baute es aus. Während Watsons früher Führungszeit bei der CTR war Hollerith weiterhin als beratender Ingenieur tätig.",
-      "start_year": 1914,
-      "end_year": 1921,
+      "relationship_description": "Als Präsident der Computing-Tabulating-Recording Company leitete Watson ab 1914 das Nachfolgeunternehmen. Hollerith war bis zu seinem Eintritt in den Ruhestand 1921 als beratender Ingenieur tätig.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Organisatorische Entwicklung von CTR und IBM rund um lochkartenbasierte Tabelliersysteme",
-        "Fortführung des mit den Tabelliermaschinen verbundenen Miet- und Servicemodells"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company",
-        "https://en.wikipedia.org/wiki/Thomas_J._Watson",
-        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+        "https://en.wikipedia.org/wiki/Thomas_J._Watson"
       ],
-      "notes": "Der CTR-Artikel beschreibt Watsons strategische Konzentration auf das Tabelliergeschäft; Hollerith wird dort bis 1921 als beratender Ingenieur geführt."
+      "notes": "Watson benannte das Unternehmen 1924 in International Business Machines um.",
+      "relationship_type": "business/supervisor"
     },
     {
-      "person_name": "Brian Randell",
-      "relationship_type": "professional/editor",
-      "relationship_description": "Computerhistoriker und Herausgeber, der Holleriths Beschreibung seines Systems von 1889 in einem Quellenband von 1982 erneut veröffentlichte und damit das spätere historische Verständnis prägte.",
-      "start_year": 1982,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Bewahrung und Verbreitung von Holleriths technischen Schriften",
-        "Historische Einordnung der Anfänge des digitalen Rechnens"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Herman_Hollerith"
-      ],
-      "notes": "Eine nachgelagerte Verbindung über Holleriths Nachwirkung; sie ist editorischer und kuratorischer Art."
-    },
-    {
-      "person_name": "Virginia Hollerith",
-      "relationship_type": "family/child",
-      "relationship_description": "Holleriths Tochter; sie wird vor allem in späteren Archiv- und Nachlassverweisen erwähnt, nicht in einer ausführlichen biografischen Darstellung.",
-      "start_year": null,
-      "end_year": null,
+      "person_name": "George Winthrop Fairchild",
+      "relationship_description": "Fairchild führte während eines Teils von Holleriths Tätigkeit als beratender Ingenieur nach dem Zusammenschluss von 1911 den Vorsitz der Computing-Tabulating-Recording Company.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familienbeziehung"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Herman_Hollerith"
+        "https://en.wikipedia.org/wiki/Computing-Tabulating-Recording_Company"
       ],
-      "notes": "Der vorliegende Auszug verweist indirekt auf sie, und zwar über Archivmaterial zur Nachlassregelung, ohne Lebensdaten zu nennen."
+      "notes": "Fairchild leitete CTR von 1911 bis 1912 und blieb in den frühen Jahren unter Watson Vorsitzender des Unternehmens.",
+      "relationship_type": "business/superior"
     },
     {
-      "person_name": "Richard Hollerith",
-      "relationship_type": "family/grandchild",
-      "relationship_description": "Holleriths Enkel; er wird über eine Sammlung von Familienpapieren beziehungsweise Archivmaterial erwähnt und nicht in einer direkten biografischen Darstellung.",
-      "start_year": null,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familienbeziehung"
-      ],
+      "person_name": "Willy Heidinger",
+      "relationship_description": "Heidinger gründete 1910 in Berlin die Deutsche Hollerith-Maschinen Gesellschaft als Lizenznehmerin von Holleriths Tabulating Machine Company. Sie vertrieb und vermietete Holleriths Lochkartengeräte in Deutschland.",
+      "strength": "moderate",
       "sources": [
+        "https://de.wikipedia.org/wiki/DEHOMAG",
         "https://en.wikipedia.org/wiki/Herman_Hollerith"
       ],
-      "notes": "Der Auszug erwähnt die „Richard Hollerith Papers“ und weist ihn als Holleriths Enkel aus, dokumentiert jedoch keine unmittelbaren Begegnungen."
+      "notes": "Die Verbindung brachte Holleriths Technologie noch vor der späteren Eingliederung des Unternehmens in die Konzernstruktur von IBM auf den deutschen Markt.",
+      "relationship_type": "business/industry_partner"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Die Angaben zur Familie sind im vorliegenden Auszug begrenzt: Georg Hollerith steht am Anfang im Mittelpunkt, während spätere Nachkommen hauptsächlich über Archivverweise erscheinen."
+      "summary": "Hollerith wuchs in Buffalo in einem Haushalt deutscher Einwanderer auf. Sein Vater war Lehrer und lutherischer Geistlicher. Dieser familiäre Hintergrund ging seiner Aufnahme in das technische Bildungswesen New Yorks im Alter von etwa fünfzehn Jahren voraus."
+    },
+    {
+      "relationship_type": "innovation",
+      "summary": "Die Arbeit im Volkszählungsamt konfrontierte Hollerith mit der praktischen Aufgabe, große Mengen statistischer Daten zu verarbeiten. John Shaw Billings regte eine elektrische Zählmethode an. Hollerith entwickelte daraus ein Lochkartensystem und ließ dessen Funktionsweise patentieren."
     },
     {
       "relationship_type": "professional",
-      "summary": "Das berufliche Netzwerk dominiert: Billings als wichtiger früher Impulsgeber, Verantwortliche des Volkszählungswesens im Zusammenhang mit den Einsätzen von 1890 und 1900 sowie CTR-Führungskräfte, die an der Fusion von 1911 und ihren Folgen beteiligt waren."
+      "summary": "Die Arbeit an den Bundesvolkszählungen brachte Holleriths Maschinen bei landesweiten Bevölkerungsstatistiken zum Einsatz. Bei der Volkszählung von 1890 wurden seine Geräte unter Robert P. Porters Leitung verwendet. Spätere Volkszählungsbeamte setzten die Maschinen des Unternehmens bei den fortlaufenden Arbeiten zur Volkszählung von 1890 und bei der Volkszählung von 1900 ein."
     },
     {
-      "relationship_type": "other",
-      "summary": "Eine kleine Zahl nachwirkender Verbindungen – etwa Brian Randells Neuveröffentlichung von 1982 – zeigt, wie Holleriths Arbeit in die Geschichte des Rechnens eingeordnet wurde."
+      "relationship_type": "business",
+      "summary": "Die Tabulating Machine Company vermietete Maschinen und verkaufte Karten an Volkszählungsämter, Versicherungen und andere Kunden. Charles Ranlett Flint gliederte das Unternehmen 1911 in die Computing-Tabulating-Recording Company ein. Hollerith blieb bis 1921 beratender Ingenieur, während das Nachfolgeunternehmen unter neuer Führung wuchs."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "1bb3bcc8e4408c51",
-    "translated_on": "2026-08-02T12:12:50.225640+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "caf92cc07dda5d46",
+    "translated_on": "2026-09-14T08:55:51.111696+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

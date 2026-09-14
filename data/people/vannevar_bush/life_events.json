@@ -1,6 +1,6 @@
 {
-  "dataset": "Biographical timeline outlines",
-  "created_on": "2026-01-14",
+  "dataset": "Wikipedia biographical timeline",
+  "created_on": "2026-09-14",
   "person": {
     "name": "Vannevar_Bush",
     "birth_date": "1890-03-11",
@@ -10,8 +10,8 @@
       "inventor",
       "science administrator"
     ],
-    "tagline": "Architect of wartime science policy",
-    "summary": "Vannevar Bush was an American engineer and inventor who became a central organizer of U.S. scientific research and development during World War II. As a senior science administrator, he helped shape federal relationships with academic and industrial research and argued for sustained government support of science after the war.",
+    "tagline": "Memex and Wartime Science",
+    "summary": "Vannevar Bush was an American engineer and science administrator who organized much of the United States' wartime research during World War II. He built influential analog computers, proposed the memex, and pressed the federal government to sustain basic scientific research.",
     "wikipedia": "https://en.wikipedia.org/wiki/Vannevar_Bush",
     "portrait": {
       "image": "/portraits/vannevar_bush_thumbnail.webp",
@@ -19,15 +19,16 @@
       "medium": "/portraits/vannevar_bush_medium.webp",
       "full": "/portraits/vannevar_bush_full.webp",
       "source": "https://en.wikipedia.org/wiki/Vannevar_Bush",
-      "caption": "Stylized portrait based on historical photograph",
+      "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Vannevar_Bush%2C_1938%2C_Harris_%26_Ewing_%28cropped%29.jpg"
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Vannevar_Bush%2C_1938%2C_Harris_%26_Ewing_%28cropped%29.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "massachusetts_mind_in_motion",
-      "headline": "Massachusetts Mind in Motion",
+      "id": "early_training",
+      "headline": "A Pastor's Son",
       "date_start": "1890-03-11",
       "date_start_precision": "day",
       "date_end": "1916-08",
@@ -35,111 +36,126 @@
       "age_start": 0,
       "age_end": 26,
       "involved_people": [
-        "Richard Perry Bush",
-        "Emma Linwood Paine",
         "Edith Bush",
         "Reba Bush",
+        "Arthur Edwin Kennelly",
         "Phoebe Clara Davis"
       ],
-      "location": "Massachusetts"
+      "location": "Massachusetts",
+      "illustration": {
+        "image": "/chapter_art/vannevar_bush/early_training_medium.webp",
+        "medium": "/chapter_art/vannevar_bush/early_training_medium.webp",
+        "full": "/chapter_art/vannevar_bush/early_training_full.webp",
+        "concept": "A single pale thread rises from a dark pool, passing through a tilted brass ring and branching into delicate arcs of light. Tiny droplets gather along the arcs, suggesting curiosity becoming measured direction.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-14"
+      }
     },
     {
-      "id": "applied_science_baptism",
-      "headline": "Applied Science Baptism",
-      "date_start": "1917",
+      "id": "machines_take_shape",
+      "headline": "Machines Take Shape",
+      "date_start": "1919",
       "date_start_precision": "year",
-      "date_end": "1924",
+      "date_end": "1932",
       "date_end_precision": "year",
-      "age_start": 27,
-      "age_end": 34,
+      "age_start": 29,
+      "age_end": 42,
       "involved_people": [
         "Dugald C. Jackson",
         "Laurence K. Marshall",
-        "Charles G. Smith"
-      ],
-      "location": "United States"
-    },
-    {
-      "id": "analog_future_built",
-      "headline": "Building the Analog Future",
-      "date_start": "1927",
-      "date_start_precision": "year",
-      "date_end": "1931",
-      "date_end_precision": "year",
-      "age_start": 37,
-      "age_end": 41,
-      "involved_people": [
+        "Richard S. Aldrich",
+        "Charles G. Smith",
         "Harold Hazen",
-        "Norbert Wiener"
+        "Herbert R. Stewart",
+        "Karl T. Compton"
       ],
-      "location": "Massachusetts"
+      "location": "New England",
+      "illustration": {
+        "image": "/chapter_art/vannevar_bush/machines_take_shape_medium.webp",
+        "medium": "/chapter_art/vannevar_bush/machines_take_shape_medium.webp",
+        "full": "/chapter_art/vannevar_bush/machines_take_shape_full.webp",
+        "concept": "Centered in darkness, translucent amber discs rotate at different speeds around a luminous core, linked by taut silver filaments. Their overlapping shadows form a shifting web of curves, conveying calculation taking physical form.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-14"
+      }
     },
     {
-      "id": "the_science_czar_emerges",
-      "headline": "The Science Czar Emerges",
-      "date_start": "1932",
-      "date_start_precision": "year",
-      "date_end": "1941-06-28",
-      "date_end_precision": "day",
-      "age_start": 42,
-      "age_end": 51,
+      "id": "science_at_war",
+      "headline": "Science at War",
+      "date_start": "1938-05",
+      "date_start_precision": "month",
+      "date_end": "1942",
+      "date_end_precision": "year",
+      "age_start": 48,
+      "age_end": 52,
       "involved_people": [
-        "Karl T. Compton",
         "Franklin D. Roosevelt",
+        "James B. Conant",
+        "Frank B. Jewett",
+        "Richard C. Tolman",
+        "Harold G. Bowen, Sr.",
+        "George V. Strong",
         "Henry L. Stimson",
-        "James B. Conant"
+        "George C. Marshall",
+        "Leslie R. Groves",
+        "Wilhelm D. Styer",
+        "William R. Purnell"
       ],
-      "location": "United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/vannevar_bush/science_at_war_medium.webp",
+        "medium": "/chapter_art/vannevar_bush/science_at_war_medium.webp",
+        "full": "/chapter_art/vannevar_bush/science_at_war_full.webp",
+        "concept": "A dense cluster of cold-white beams converges on a suspended black sphere, then divides into sharply ordered channels radiating outward. The surrounding darkness carries faint red haze, suggesting immense force gathered under urgent control.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-14"
+      }
     },
     {
-      "id": "blueprints_for_peacetime_power",
-      "headline": "Blueprints for Peacetime Power",
+      "id": "postwar_blueprint",
+      "headline": "The Postwar Blueprint",
       "date_start": "1945-07-01",
       "date_start_precision": "day",
-      "date_end": "1955",
-      "date_end_precision": "year",
+      "date_end": "1974-06-28",
+      "date_end_precision": "day",
       "age_start": 55,
-      "age_end": 65,
+      "age_end": 84,
       "involved_people": [
         "Harry S. Truman"
       ],
-      "location": "United States"
-    },
-    {
-      "id": "closing_the_circuit",
-      "headline": "Closing the Circuit",
-      "date_start": "1955",
-      "date_start_precision": "year",
-      "date_end": "1974-06-28",
-      "date_end_precision": "day",
-      "age_start": 65,
-      "age_end": 84,
-      "involved_people": null,
-      "location": "Massachusetts"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/vannevar_bush/postwar_blueprint_medium.webp",
+        "medium": "/chapter_art/vannevar_bush/postwar_blueprint_medium.webp",
+        "full": "/chapter_art/vannevar_bush/postwar_blueprint_full.webp",
+        "concept": "An open field of floating glass panes recedes into darkness, each catching a different fragment of blue light. Fine luminous paths weave freely among the panes, joining and separating like an ever-expanding constellation of thought.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-14"
+      }
     }
   ],
-  "conclusion": "Vannevar Bush turned American science into an instrument of national purpose—then argued it must also serve knowledge itself. His legacy lives in the modern research state and in the dream of information navigated by association.",
+  "conclusion": "Vannevar Bush's differential analyzer helped establish the use of analog machines for scientific and engineering calculation. His essay As We May Think informed later work on hypertext, personal computing, and digital information systems. The National Science Foundation funds research and education across American universities, laboratories, and scientific organizations.",
   "events": [
     {
       "date": "1890-03-11",
       "date_precision": "day",
       "age": 0,
-      "title": "Born in Everett, Massachusetts, near Boston",
-      "description": "Vannevar Bush was born in Everett, Massachusetts, the third child and only son of Universalist minister Richard Perry Bush and Emma Linwood Paine. He grew up alongside his sisters Edith and Reba, and the family moved to nearby Chelsea in 1892.",
+      "title": "Birth in Everett",
+      "description": "Vannevar Bush was born in Everett, Massachusetts, to Richard Perry Bush, a local [[Universalist pastor]], and Emma Linwood Paine Bush. He was the third child and only son in a family that included his older sisters, Edith and Reba.",
       "locations": [
         {
-          "name_historic": "Everett",
+          "name_historic": "Everett, Massachusetts",
           "name_modern": "Everett, Massachusetts, United States",
           "centroid": [
-            -71.0542002,
-            42.4085897
+            -71.1722,
+            42.4084
           ],
           "primary": true
         }
       ],
       "involved_people": [
         "Richard Perry Bush",
-        "Emma Linwood Paine",
+        "Emma Linwood Paine Bush",
         "Edith Bush",
         "Reba Bush"
       ],
@@ -147,32 +163,34 @@
         "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "massachusetts_mind_in_motion",
+      "chapter": "early_training",
       "annotations": {
-        "Everett, Massachusetts": {
-          "explanation": "An industrial city just north of Boston in Middlesex County, Massachusetts, incorporated in 1892 (after Bush’s birth).",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Everett,_Massachusetts"
+        "Universalist pastor": {
+          "explanation": "A Universalist pastor was a minister in a Christian tradition that taught universal salvation. Richard Perry Bush served the local congregation in Everett.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Universalism"
         }
       },
+      "weight": 0.2,
       "event_class": {
         "type": "birth",
         "father": "Richard Perry Bush",
-        "mother": "Emma Linwood Paine"
+        "mother": "Emma Linwood Paine",
+        "characterization": "Universalist minister's family"
       }
     },
     {
       "date": "1913",
       "date_precision": "year",
       "age": 23,
-      "title": "Graduates from Tufts with dual degrees",
-      "description": "In 1913, Bush completed Tufts College’s accelerated program, earning both a Bachelor of Science and a Master of Science. A popular student, he held class leadership roles and managed the football team in his senior year. For his master’s thesis he invented and patented a “profile tracer,” a terrain-mapping device for surveyors—an early sign of the practical, patent-minded engineering that would define his career.",
+      "title": "Graduates from Tufts",
+      "description": "Vannevar Bush graduated from Tufts College in Medford, Massachusetts, in 1913. Tufts awarded him Bachelor of Science and Master of Science degrees. For his master’s thesis, he designed and patented a [[profile tracer]], a wheeled device that helped surveyors plot terrain.",
       "locations": [
         {
-          "name_historic": "Medford",
-          "name_modern": "Medford, Massachusetts, United States",
+          "name_historic": "Medford, Massachusetts",
+          "name_modern": "Medford, Massachusetts, USA",
           "centroid": [
-            -71.105611,
-            42.418429
+            -71.1062,
+            42.4184
           ],
           "primary": true
         }
@@ -183,209 +201,153 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Tufts_College_panorama%2C_1907.png/960px-Tufts_College_panorama%2C_1907.png",
-          "caption": "Panorama of Tufts College in 1907",
+          "caption": "Tufts College panorama, photographed in 1907",
           "source": "https://commons.wikimedia.org/wiki/File:Tufts_College_panorama,_1907.png",
-          "creator": "Unknown author Unknown author",
-          "license": "Public domain"
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "massachusetts_mind_in_motion",
+      "event_type_icon": "mdi-certificate",
+      "chapter": "early_training",
+      "weight": 0.5,
       "annotations": {
-        "Tufts College": {
-          "explanation": "The institution now known as Tufts University; it was commonly referred to as Tufts College in the early 20th century.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Tufts_University"
-        },
-        "Medford, Massachusetts": {
-          "explanation": "A city just northwest of Boston where Tufts is located; it was the setting for Bush’s undergraduate and master’s studies.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Medford,_Massachusetts"
+        "profile tracer": {
+          "explanation": "Bush’s profile tracer recorded the contours of ground as it moved over terrain. It was his first patented invention.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Vannevar_Bush"
         }
-      },
-      "event_class": {
-        "type": "invention",
-        "title": "Profile tracer",
-        "description": "A wheeled terrain-mapping device that tracked ground contours and plotted them via a pen as it was pushed forward.",
-        "impact": "It demonstrated Bush’s early practical inventiveness and introduced him to patenting and applied engineering design."
-      },
+      }
+    },
+    {
+      "date": "1916-04",
+      "date_precision": "month",
+      "age": 26,
+      "title": "Earns Engineering Doctorate",
+      "description": "In April 1916, Vannevar Bush submitted a doctoral thesis on oscillating-current circuits at the Massachusetts Institute of Technology in Cambridge, Massachusetts. MIT and Harvard University awarded him a joint doctorate in engineering. His MIT adviser, Arthur Edwin Kennelly, demanded additional work. The department chairman overruled Kennelly after Bush refused, while Bush sought the financial security to marry Phoebe Clara Davis.",
+      "locations": [
+        {
+          "name_historic": "Cambridge, Massachusetts",
+          "name_modern": "Cambridge, Massachusetts, USA",
+          "centroid": [
+            -71.1097,
+            42.3736
+          ],
+          "primary": true
+        }
+      ],
       "involved_people": [
+        "Arthur Edwin Kennelly",
         "Phoebe Clara Davis"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Massachusetts_Institute_of_Technology%2C_Boston%2C_Mass_%28NYPL_b12647398-74365%29.tiff/lossy-page1-960px-Massachusetts_Institute_of_Technology%2C_Boston%2C_Mass_%28NYPL_b12647398-74365%29.tiff.jpg",
+          "caption": "Massachusetts Institute of Technology campus, circa 1916",
+          "source": "https://commons.wikimedia.org/wiki/File:Massachusetts_Institute_of_Technology,_Boston,_Mass_(NYPL_b12647398-74365).tiff",
+          "creator": "Detroit Publishing Company",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-book-open-variant",
+      "chapter": "early_training",
+      "weight": 0.55,
+      "background": "A $1,500 scholarship had brought Bush to Clark University for doctoral study under Arthur Gordon Webster. Webster wanted him to work in acoustics. Bush left rather than take up a subject that did not interest him, then entered MIT's electrical engineering program.\n\nThe submitted dissertation carried the full title Oscillating-Current Circuits: An Extension of the Theory of Generalized Angular Velocities, with Applications to the Coupled Circuit and the Artificial Transmission Line. Its subject joined mathematical theory to coupled electrical circuits and artificial transmission lines.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Artificial_Telephone_Line_6000ft%2C_24_gauge%2C_Schematic.png/960px-Artificial_Telephone_Line_6000ft%2C_24_gauge%2C_Schematic.png",
+          "caption": "Schematic of an artificial telephone line section for 6000 feet of 24 gauge twisted pair.",
+          "source": "https://commons.wikimedia.org/wiki/File:Artificial_Telephone_Line_6000ft,_24_gauge,_Schematic.png",
+          "creator": "Constant314",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "artificial transmission line"
+        }
       ]
     },
     {
       "date": "1916-08",
       "date_precision": "month",
       "age": 26,
-      "title": "Earns doctorate and marries Phoebe Davis",
-      "description": "In August 1916, after leaving a planned doctorate at Clark University, Bush completed a doctorate in electrical engineering through a joint MIT–Harvard arrangement. His adviser, Arthur Edwin Kennelly, demanded additional work, and the dispute became an early test of Bush’s stubborn independence. Later that month, Bush married Phoebe Clara Davis, his longtime sweetheart from his Tufts years.",
-      "locations": [
-        {
-          "name_historic": "Cambridge, Massachusetts",
-          "name_modern": "Cambridge, Massachusetts, United States",
-          "centroid": [
-            -71.1040018,
-            42.3656347
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Boston, Massachusetts",
-          "name_modern": "Boston, Massachusetts, United States",
-          "centroid": [
-            -71.0578303,
-            42.3588336
-          ],
-          "primary": false
-        }
-      ],
+      "title": "Marries Phoebe Davis",
+      "description": "In August 1916, Vannevar Bush married Phoebe Clara Davis. They had dated while both lived in Chelsea, Massachusetts. Bush taught at Tufts College and worked in electrical engineering as their married life began.",
+      "locations": [],
       "involved_people": [
-        "Phoebe Clara Davis",
-        "Arthur Edwin Kennelly"
+        "Phoebe Clara Davis"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "massachusetts_mind_in_motion",
+      "chapter": "early_training",
+      "weight": 0.4,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
         "partner": "Phoebe Clara Davis",
-        "children": 2
-      }
-    },
-    {
-      "date": "1917",
-      "date_precision": "year",
-      "age": 27,
-      "title": "Joins NRC for World War I research",
-      "description": "After the United States entered World War I, Bush joined the National Research Council’s wartime research effort. He worked on a submarine-detection concept meant to sense disturbances in Earth’s magnetic field. In tests, the approach could work from wooden ships, but it proved unreliable when deployed from metal vessels such as destroyers.",
-      "locations": [
-        {
-          "name_historic": "Washington, D.C.",
-          "name_modern": "Washington, D.C., United States",
-          "centroid": [
-            -77.0365427,
-            38.8950368
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/National_Research_Council_(United_States)"
-      ],
-      "event_type_icon": "mdi-microscope",
-      "chapter": "applied_science_baptism",
-      "annotations": {
-        "National Research Council": {
-          "explanation": "A U.S. organization founded in 1916 to mobilize scientific and technical expertise for national needs, including coordinating research for the government during World War I.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/National_Research_Council_(United_States)"
-        }
+        "duration": "until her death in 1969",
+        "children": 2,
+        "characterization": "long marriage"
       }
     },
     {
       "date": "1919",
       "date_precision": "year",
       "age": 29,
-      "title": "Joins MIT electrical engineering faculty",
-      "description": "In 1919, Bush left Tufts to join MIT’s Department of Electrical Engineering in Cambridge, working under Dugald C. Jackson. At MIT he balanced teaching and laboratory responsibilities with practical industrial problems in radio and electrical systems.",
+      "title": "Joins MIT Faculty",
+      "description": "In 1919, Vannevar Bush left Tufts University for the Department of Electrical Engineering at the Massachusetts Institute of Technology in Cambridge, Massachusetts. He worked under department head Dugald C. Jackson. He also continued work with [[AMRAD|the American Radio and Research Corporation]], a radio company connected to his earlier work at Tufts.",
       "locations": [
         {
-          "name_historic": "Cambridge",
+          "name_historic": "Cambridge, Massachusetts",
           "name_modern": "Cambridge, Massachusetts, United States",
           "centroid": [
-            -71.1040018,
-            42.3656347
+            -71.1097,
+            42.3736
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Medford",
-          "name_modern": "Medford, Massachusetts, United States",
-          "centroid": [
-            -71.1061639,
-            42.4184296
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
         "Dugald C. Jackson"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/Dugald_C._Jackson"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Massachusetts_Institute_of_Technology_campus_aerial_1921_US_Army.jpg/960px-Massachusetts_Institute_of_Technology_campus_aerial_1921_US_Army.jpg",
-          "caption": "MIT campus aerial view (U.S. Army), 1921",
-          "source": "https://commons.wikimedia.org/wiki/File:Massachusetts_Institute_of_Technology_campus_aerial_1921_US_Army.jpg",
-          "creator": "Captain A.W. Stevens, U.S. Army Air Service",
-          "license": "Public domain"
-        }
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "applied_science_baptism",
+      "chapter": "machines_take_shape",
       "annotations": {
-        "Cambridge, Massachusetts": {
-          "explanation": "City across the Charles River from Boston that hosts MIT and Harvard, forming a major U.S. academic and engineering hub.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Cambridge,_Massachusetts"
+        "AMRAD": {
+          "explanation": "The American Radio and Research Corporation was a radio company whose laboratory Bush continued to work for after leaving Tufts. It had begun broadcasting music from the Tufts campus in 1916."
         }
-      }
+      },
+      "weight": 0.6
     },
     {
-      "date": "1922",
-      "date_precision": "year",
+      "date": "1922-07-07",
+      "date_precision": "day",
       "age": 32,
-      "title": "Founds company that becomes Raytheon",
-      "description": "In 1922, Bush helped found the business that would become the Raytheon Company, working with industrial collaborator Laurence K. Marshall and physicist Charles G. Smith. The enterprise commercialized a voltage-regulator tube known as the S-tube for radio power supplies, and its success brought Bush significant personal wealth while deepening his ties to industrial research.",
-      "locations": [
-        {
-          "name_historic": "Cambridge, Massachusetts",
-          "name_modern": "Cambridge, Massachusetts, United States",
-          "centroid": [
-            -71.1040018,
-            42.3656347
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Boston, Massachusetts",
-          "name_modern": "Boston, Massachusetts, United States",
-          "centroid": [
-            -71.0578303,
-            42.3588336
-          ],
-          "primary": false
-        }
-      ],
+      "title": "Launches Electronics Venture",
+      "description": "On July 7, 1922, Laurence K. Marshall established the American Appliance Company with Vannevar Bush, Richard S. Aldrich, and Charles G. Smith as directors. The company first pursued silent refrigerators. It later made electronic devices, including Smith’s [[S-tube]] voltage regulator.",
+      "locations": [],
       "involved_people": [
         "Laurence K. Marshall",
+        "Richard S. Aldrich",
         "Charles G. Smith"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/Raytheon"
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Raytheon_headquarters.jpg/960px-Raytheon_headquarters.jpg",
-          "caption": "Raytheon headquarters in Waltham, Massachusetts",
-          "source": "https://commons.wikimedia.org/wiki/File:Raytheon_headquarters.jpg",
-          "creator": "Coolcaesar at English Wikipedia",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
-        }
-      ],
-      "event_type_icon": "mdi-chart-line",
-      "chapter": "applied_science_baptism",
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "machines_take_shape",
       "annotations": {
         "S-tube": {
-          "explanation": "An early gas-filled voltage-regulator tube commercialized in the mid-1920s; its success became a key product line for the company that soon took the name Raytheon.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Raytheon"
+          "explanation": "The S-tube was a voltage-regulator tube developed by Charles G. Smith. It allowed radios to operate from household electrical power instead of requiring two different types of batteries."
         }
-      }
+      },
+      "weight": 0.65
     },
     {
       "date": "1927",
@@ -393,15 +355,15 @@
       "date_end": "1931",
       "date_end_precision": "year",
       "age": 37,
-      "title": "Begins building the differential analyzer",
-      "description": "In 1927, at MIT in Cambridge, Bush began developing a differential analyzer with students and colleagues, including Harold Hazen. The machine was a mechanical analog computer built to solve differential equations at a scale that hand calculation couldn’t match. The project grew out of earlier work such as a [[integraph]] built in Bush’s orbit at MIT, and it became one of the best-known examples of large-scale analog computation.",
+      "title": "Builds Differential Analyzer",
+      "description": "At MIT in Cambridge, Massachusetts, Vannevar Bush began building the differential analyzer, a mechanical analog computer for solving differential equations, in 1927. He built on an integraph, a machine that performed graphical integration, made earlier by Herbert R. Stewart. Harold Hazen proposed extending Stewart’s work to second-order differential equations. Bush supervised Hazen as the analyzer was completed in 1931.",
       "locations": [
         {
           "name_historic": "Cambridge, Massachusetts",
-          "name_modern": "Cambridge, Massachusetts, United States",
+          "name_modern": "Cambridge, Massachusetts, USA",
           "centroid": [
-            -71.1040018,
-            42.3656347
+            -71.1097,
+            42.3736
           ],
           "primary": true
         }
@@ -411,83 +373,55 @@
         "Herbert R. Stewart"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush",
         "https://en.wikipedia.org/wiki/Differential_analyser",
-        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+        "https://en.wikipedia.org/wiki/Claude_Shannon"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Product_Integraph_with_Vannevar_Bush.png/960px-Product_Integraph_with_Vannevar_Bush.png",
-          "caption": "Vannevar Bush and colleagues working on product integraph at MIT",
+          "caption": "Vannevar Bush working on the product integraph",
           "source": "https://commons.wikimedia.org/wiki/File:Product_Integraph_with_Vannevar_Bush.png",
           "creator": "George H. Davis, Jr. (1126 Boylston St, Boston). Published in the Tech Review",
-          "license": "Public domain"
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-lightbulb-on-outline",
-      "chapter": "analog_future_built",
-      "annotations": {
-        "MIT": {
-          "explanation": "The Massachusetts Institute of Technology, where Bush worked as an engineer and professor and where the early differential analyzer project was developed.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Massachusetts_Institute_of_Technology"
-        },
-        "integraph": {
-          "explanation": "A mechanical instrument for performing integration and drawing curves; at MIT it served as a precursor concept to Bush’s later analog computing work.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Integraph"
-        }
-      },
+      "chapter": "machines_take_shape",
+      "weight": 0.95,
       "event_class": {
         "type": "invention",
-        "title": "Differential analyzer",
-        "description": "A mechanical–electrical analog computer using interconnected integrators, shafts, and plotting mechanisms to solve differential equations with many variables.",
-        "impact": "It provided a powerful calculation tool for engineers and became a flagship example of large-scale analog computation."
-      }
-    },
-    {
-      "date": "1929",
-      "date_precision": "year",
-      "age": 39,
-      "title": "Publishes Operational Circuit Analysis textbook",
-      "description": "In 1929, Bush published Operational Circuit Analysis, a circuit-theory text aimed at engineering students. He credited close collaboration with mathematician Norbert Wiener, who contributed an appendix to clarify several mathematical points.",
-      "locations": [
+        "title": "Differential Analyzer",
+        "description": "A mechanical and electrical analog computer uses interconnected integrators, shafts, and pens to calculate and plot solutions to differential equations.",
+        "impact": "The analyzer became a model for later analog computers used in scientific and engineering calculation."
+      },
+      "background": "The machine’s six integrators could be linked with an epicyclic differential mechanism that added or subtracted their outputs. Gear ratios set whole-number multiplication or division. Fractional settings required an operator to keep a stylus on a multiplier table. The same table could also represent functions such as polynomials.\n\nBush called the device a “continuous integraph” in a 1928 article. His 1931 article gave it the name “differential analyzer.” He wrote that its interconnected integrators shared a basic idea with Lord Kelvin’s earlier design. Bush later said that he had learned of Kelvin’s work only after the first machine was operating. The Franklin Institute awarded him the Louis E. Levy Medal in 1928.\n\nClaude Shannon ran the analyzer in Bush’s laboratory in 1936. Its complicated circuits led Shannon to develop switching circuits based on Boolean algebra for his 1937 master’s thesis.",
+      "background_images": [
         {
-          "name_historic": "Cambridge, Massachusetts",
-          "name_modern": "Cambridge, Massachusetts, USA",
-          "centroid": [
-            -71.1040018,
-            42.3656347
-          ],
-          "primary": true
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Integrator_Unit%2C_Differential_Analyzer%2C_by_Vannevar_Bush_with_Harold_Hazen%2C_1928-1931_-_MIT_Museum_-_Cambridge%2C_MA_-_DSC09127.jpg/960px-Integrator_Unit%2C_Differential_Analyzer%2C_by_Vannevar_Bush_with_Harold_Hazen%2C_1928-1931_-_MIT_Museum_-_Cambridge%2C_MA_-_DSC09127.jpg",
+          "caption": "Exhibit in the MIT Museum - Cambridge, Massachusetts, USA. As a useful object, this work is not subject to copyright protection.",
+          "source": "https://commons.wikimedia.org/wiki/File:Integrator_Unit,_Differential_Analyzer,_by_Vannevar_Bush_with_Harold_Hazen,_1928-1931_-_MIT_Museum_-_Cambridge,_MA_-_DSC09127.jpg",
+          "creator": "Daderot",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+          "query": "MIT differential analyzer"
         }
-      ],
-      "involved_people": [
-        "Norbert Wiener"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/As_We_May_Think"
-      ],
-      "event_type_icon": "mdi-book",
-      "chapter": "analog_future_built",
-      "event_class": {
-        "type": "publication",
-        "title": "Operational Circuit Analysis",
-        "publication_type": "book",
-        "significance": "textbook",
-        "impact": "It provided a rigorous framework for electrical engineering analysis and became a widely used reference in technical instruction."
-      }
+      ]
     },
     {
       "date": "1932",
       "date_precision": "year",
       "age": 42,
-      "title": "Becomes MIT vice president and engineering dean",
-      "description": "In 1932, under MIT president Karl T. Compton, Bush was appointed to the newly created role of vice president at the Massachusetts Institute of Technology, and also became dean of the MIT School of Engineering. The posts placed him in senior authority over budgets and faculty priorities, where he had to balance academic ideals against the pull of outside consulting and national demands.",
+      "title": "Leads MIT Engineering",
+      "description": "In 1932, MIT president Karl T. Compton appointed Vannevar Bush vice president of the institute and dean of its School of Engineering in Cambridge, Massachusetts. Bush continued his engineering research and industry work while holding the two offices.",
       "locations": [
         {
           "name_historic": "Cambridge, Massachusetts",
-          "name_modern": "Cambridge, Massachusetts, United States",
+          "name_modern": "Cambridge, Massachusetts, USA",
           "centroid": [
-            -71.1040018,
-            42.3656347
+            -71.1097,
+            42.3736
           ],
           "primary": true
         }
@@ -496,148 +430,185 @@
         "Karl T. Compton"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/Karl_Taylor_Compton"
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Vannevar_Bush_and_Karl_Compton_conversing_1932.jpg/960px-Vannevar_Bush_and_Karl_Compton_conversing_1932.jpg",
+          "caption": "Karl Compton meets with Vannevar Bush in 1932",
+          "source": "https://commons.wikimedia.org/wiki/File:Vannevar_Bush_and_Karl_Compton_conversing_1932.jpg",
+          "creator": "Massachusetts Institute of Technology Historical Collections, courtesy AIP Emilio Segrè Visual Archives",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "the_science_czar_emerges"
+      "chapter": "machines_take_shape",
+      "weight": 0.65
     },
     {
       "date": "1938-05",
       "date_precision": "month",
       "age": 48,
-      "title": "Leads Carnegie Institution and takes NACA helm",
-      "description": "In May 1938, Bush became president of the Carnegie Institution of Washington, shifting from campus administration to directing a major private research organization in Washington. That same year he joined the National Advisory Committee for Aeronautics (NACA) and soon became its chairman as leadership changed hands. At Carnegie, Bush also pushed institutional reforms, including moving to shut down the [[Eugenics Record Office]]—a decision that brought him into conflict with influential figures inside and around the institution.",
+      "title": "Takes Carnegie Presidency",
+      "description": "In May 1938, Vannevar Bush accepted the presidency of the Carnegie Institution of Washington in Washington, D.C. The privately endowed research institution operated eight major laboratories. Its annual research budget was about $1.5 million.",
       "locations": [
         {
-          "name_historic": "Cambridge",
-          "name_modern": "Cambridge, Massachusetts, USA",
-          "centroid": [
-            -71.1040018,
-            42.3656347
-          ],
-          "primary": false
-        },
-        {
           "name_historic": "Washington, D.C.",
-          "name_modern": "Washington, District of Columbia, USA",
+          "name_modern": "Washington, D.C., USA",
           "centroid": [
-            -77.0365427,
-            38.8950368
+            -77.0369,
+            38.9072
           ],
           "primary": true
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/Carnegie_Institution_for_Science",
-        "https://en.wikipedia.org/wiki/National_Advisory_Committee_for_Aeronautics"
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Carnegie_Institute_Head_says_U.S._should_advance_research_as_defense_measure._Washington%2C_D.C.%2C_Jan._17._Richard_C._Patterson%2C_Jr.%2C_Assistant_Secretary_of_Commerce%2C_and_Vannevar_Bush%2C_LCCN2016874817.jpg/960px-thumbnail.jpg",
-          "caption": "Vannevar Bush with Richard C. Patterson Jr., Washington, D.C.",
-          "source": "https://commons.wikimedia.org/wiki/File:Carnegie_Institute_Head_says_U.S._should_advance_research_as_defense_measure._Washington,_D.C.,_Jan._17._Richard_C._Patterson,_Jr.,_Assistant_Secretary_of_Commerce,_and_Vannevar_Bush,_LCCN2016874817.jpg",
-          "creator": "Harris & Ewing, photographer",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/PSM_V76_D210_Carnegie_institution_administration_buiding_in_washington.png/960px-PSM_V76_D210_Carnegie_institution_administration_buiding_in_washington.png",
+          "caption": "Carnegie Institution administration building in Washington",
+          "source": "https://commons.wikimedia.org/wiki/File:PSM_V76_D210_Carnegie_institution_administration_buiding_in_washington.png",
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "the_science_czar_emerges",
-      "annotations": {
-        "Carnegie Institution of Washington": {
-          "explanation": "A private research organization founded in 1902 (now the Carnegie Institution for Science) that funds and operates laboratories across multiple scientific disciplines.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Carnegie_Institution_for_Science"
-        },
-        "National Advisory Committee for Aeronautics": {
-          "explanation": "A U.S. federal advisory body (1915–1958) that coordinated aeronautics research and later became part of NASA.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/National_Advisory_Committee_for_Aeronautics"
-        },
-        "Eugenics Record Office": {
-          "explanation": "A once-influential U.S. eugenics organization at Cold Spring Harbor that later became widely criticized; Bush moved to close it during his Carnegie presidency.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Eugenics_Record_Office"
-        }
-      },
-      "event_class": {
-        "type": "migration",
-        "from_location": "Massachusetts",
-        "to_location": "Washington, D.C.",
-        "characterization": "career leadership"
-      },
-      "involved_people": [
-        "Joseph Sweetman Ames",
-        "Cameron Forbes",
-        "Harry H. Laughlin"
-      ]
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "science_at_war",
+      "weight": 0.7
     },
     {
       "date": "1940-06",
       "date_precision": "month",
-      "date_end": "1941-06-28",
-      "date_end_precision": "day",
       "age": 50,
-      "title": "Helps create National Defense Research Committee",
-      "description": "In June 1940, as war in Europe intensified, Bush urged the Roosevelt administration to centralize U.S. scientific work for national defense. He became chairman of the National Defense Research Committee (NDRC), which coordinated and funded military research—and in 1941 it was folded into the [[Office of Scientific Research and Development|OSRD]], expanding Bush’s authority over wartime R&D.",
+      "title": "Organizes Defense Research",
+      "description": "President Franklin D. Roosevelt approved Vannevar Bush’s proposal for the [[National Defense Research Committee|National Defense Research Committee (NDRC)]] on June 12, 1940. The committee was formally established on June 27 with Bush as chairman. Bush brought university scientists, industrial researchers, and military representatives together to coordinate defense research.",
       "locations": [
         {
           "name_historic": "Washington, D.C.",
           "name_modern": "Washington, D.C., United States",
           "centroid": [
-            -77.0365427,
-            38.8950368
+            -77.0365,
+            38.9072
           ],
           "primary": true
         }
       ],
       "involved_people": [
         "Franklin D. Roosevelt",
-        "Henry L. Stimson",
-        "James B. Conant"
+        "James B. Conant",
+        "Frank B. Jewett",
+        "Richard C. Tolman",
+        "Harold G. Bowen, Sr.",
+        "George V. Strong"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Franklin_D._Roosevelt",
-        "https://en.wikipedia.org/wiki/Henry_L._Stimson",
-        "https://en.wikipedia.org/wiki/James_B._Conant"
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/NDRC_first_meeting_19400702.png/960px-NDRC_first_meeting_19400702.png",
-          "caption": "First meeting of the National Defense Research Committee, 1940",
+          "caption": "First meeting of the National Defense Research Committee",
           "source": "https://commons.wikimedia.org/wiki/File:NDRC_first_meeting_19400702.png",
-          "creator": "Unknown author Unknown author",
-          "license": "Public domain"
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-microscope",
-      "chapter": "the_science_czar_emerges",
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "science_at_war",
       "annotations": {
         "National Defense Research Committee": {
-          "explanation": "A U.S. government committee established in 1940 to coordinate and fund scientific research for military purposes, serving as a precursor to the wartime Office of Scientific Research and Development.",
+          "explanation": "The National Defense Research Committee was a federal organization created to coordinate scientific research for military purposes during World War II. It operated under Bush’s leadership until its work was incorporated into the Office of Scientific Research and Development in 1941.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/National_Defense_Research_Committee"
-        },
-        "Office of Scientific Research and Development": {
-          "explanation": "A U.S. wartime agency created in 1941 to coordinate scientific research for the military; Bush led it during World War II.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Office_of_Scientific_Research_and_Development"
         }
-      }
+      },
+      "weight": 0.85
+    },
+    {
+      "date": "1941-06-28",
+      "date_precision": "day",
+      "age": 51,
+      "title": "Directs OSRD",
+      "description": "On June 28, 1941, President Franklin D. Roosevelt established the Office of Scientific Research and Development by Executive Order 8807. He appointed Vannevar Bush to direct the civilian agency. The OSRD absorbed the National Defense Research Committee and coordinated military, medical, and scientific research for the United States war effort.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0365,
+            38.8951
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Franklin D. Roosevelt"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "science_at_war",
+      "weight": 1.0,
+      "background": "Congressional appropriations gave the new office the money to operate on a far larger scale. It grew to 850 full-time employees, handled roughly 2,500 contracts worth over $536 million, and generated between 30,000 and 35,000 reports. Its work included medical research and the mass production of penicillin and sulfa drugs.\n\nBush set broad policy and left individual divisions to qualified supervisors. He kept the agency's mission narrowly defined to prevent duplicated work across government offices. Funding decisions required him to divide projects among government laboratories, universities, and industry. Military leaders questioned whether civilian researchers could keep secrets and deliver usable equipment. The struggle to retain scientific workers sharpened during the Army's 1944 manpower crisis. The OSRD requested draft deferments for about 9,725 employees of its contractors. All but 63 were approved."
+    },
+    {
+      "date": "1942",
+      "date_precision": "year",
+      "age": 52,
+      "title": "Guides Atomic Bomb Program",
+      "description": "In 1942, Vannevar Bush pressed for the American atomic-bomb program to move under Army control. He sought faster construction and clearer oversight. Bush chaired the Military Policy Committee with James B. Conant, Brigadier General Wilhelm D. Styer, and Rear Admiral William R. Purnell. The committee supervised the program under President Franklin D. Roosevelt’s Top Policy Group.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0369,
+            38.9072
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Franklin D. Roosevelt",
+        "James B. Conant",
+        "Wilhelm D. Styer",
+        "William R. Purnell"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Vannevar_Bush_Edward_L_Bowles_and_American_commanders_c1944.jpg/960px-Vannevar_Bush_Edward_L_Bowles_and_American_commanders_c1944.jpg",
+          "caption": "Vannevar Bush with American commanders, circa 1944",
+          "source": "https://commons.wikimedia.org/wiki/File:Vannevar_Bush_Edward_L_Bowles_and_American_commanders_c1944.jpg",
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "science_at_war",
+      "annotations": {
+        "Manhattan Project": {
+          "explanation": "The Manhattan Project was the United States Army-led program to develop atomic weapons during World War II. In 1942, its administration was reorganized and accelerated under Army direction.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Manhattan_Project"
+        }
+      },
+      "weight": 0.95
     },
     {
       "date": "1945-07-01",
       "date_precision": "day",
       "age": 55,
-      "title": "Publishes “As We May Think” in The Atlantic",
-      "description": "In July 1945, shortly after the war in Europe ended, Bush published “As We May Think” in The Atlantic. He framed it as a response to the problem of managing a rapidly expanding scientific record and described the [[memex|memex]] as a way to store and retrieve knowledge through associative links. The essay has often been described as visionary and influential, and it helped cement Bush’s postwar role not just as an organizer of science, but as a public thinker about information itself.",
-      "locations": [
-        {
-          "name_historic": "Boston",
-          "name_modern": "Boston, Massachusetts, United States",
-          "centroid": [
-            -71.0578303,
-            42.3588336
-          ],
-          "primary": true
-        }
-      ],
+      "title": "Publishes As We May Think",
+      "description": "In July 1945, Vannevar Bush published As We May Think, reworking ideas from his 1939 essay Mechanization and the Record. He called for better access to accumulated scientific knowledge. He described the [[memex]], a hypothetical microfilm system for storing documents and notes. Its users could create [[associative trails|linked sequences of documents and annotations]].",
+      "locations": [],
       "sources": [
         "https://en.wikipedia.org/wiki/As_We_May_Think",
         "https://en.wikipedia.org/wiki/Memex"
@@ -645,53 +616,49 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/The_Memex_%283002477109%29.jpg/960px-The_Memex_%283002477109%29.jpg",
-          "caption": "Illustration and title of \"As We May Think\"",
+          "caption": "Illustration from Vannevar Bush's As We May Think",
           "source": "https://commons.wikimedia.org/wiki/File:The_Memex_(3002477109).jpg",
           "creator": "Time Inc.",
-          "license": "Public domain"
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "blueprints_for_peacetime_power",
+      "chapter": "postwar_blueprint",
       "annotations": {
+        "associative trails": {
+          "explanation": "An associative trail was Bush’s proposed way to connect an arbitrary sequence of microfilm pages with links, comments, and side paths. Users could save and share these trails as organized routes through information.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Memex"
+        },
         "memex": {
-          "explanation": "A hypothetical personal information workstation Bush described as using microfilm and linking material through user-created associative “trails,” often cited as an early influence on later hypertext ideas.",
+          "explanation": "The memex was Bush’s proposed personal information machine. It used microfilm and controls to let a user store, retrieve, and connect records.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Memex"
         }
       },
+      "weight": 0.95,
       "event_class": {
         "type": "publication",
         "title": "As We May Think",
-        "publication_type": "article",
+        "publication_type": "essay",
         "publisher": "The Atlantic",
-        "significance": "visionary",
-        "impact": "It offered a detailed concept for associative information storage and retrieval, proposing new ways to navigate and link recorded knowledge.",
-        "source_link": {
-          "url": "https://en.wikipedia.org/wiki/As_We_May_Think",
-          "kind": "wikipedia",
-          "site": "Wikipedia",
-          "entity": "Q610709",
-          "resolved_by": "wikipedia",
-          "resolved_on": "2026-08-02"
-        }
+        "significance": "memex proposal",
+        "impact": "The essay influenced later developers of hypertext, personal computing, and systems for organizing digital information."
       },
-      "involved_people": [
-        "Emanuel Goldberg"
-      ]
+      "background": "The essay came out as Bush worried about science’s destructive wartime uses. He urged scientists to improve access to the accumulated record of human knowledge. He objected to alphabetical and numerical filing systems that forced a record into a single location unless it was copied. He argued that machines could take over tedious numerical tasks and leave people to work on scientific theory.\n\nBush grounded the proposal in technologies he considered attainable. He envisioned ultra-high-resolution microfilm, cameras, several viewing screens, and electromechanical controls built into a desk-sized private library. Electric photocells would read coded symbols beside microfilm frames while reels ran at high speed and stopped on command. A transparent platen would let a user photograph handwritten notes, photographs, and memoranda onto blank spaces on the machine’s film.\n\nA September 10 abridgment in Life carried fanciful illustrations of the desk and related devices. Alfred D. Crimi’s illustration pictured a desk that could bring files and materials rapidly to its operator."
     },
     {
-      "date": "1945-07",
-      "date_precision": "month",
+      "date": "1945-07-25",
+      "date_precision": "day",
       "age": 55,
-      "title": "Delivers Science, the Endless Frontier report",
-      "description": "In July 1945, Bush submitted Science, The Endless Frontier to President Truman, translating wartime research coordination into a peacetime argument for sustained federal support of basic research. The report helped shape the movement that ultimately led to the creation of the [[National Science Foundation|National Science Foundation]].",
+      "title": "Presents a Postwar Science Plan",
+      "description": "On July 25, 1945, Vannevar Bush delivered Science, The Endless Frontier to President Harry S. Truman in Washington, D.C. The report called for sustained federal support for basic research. It also called for investment in medical research, scientific education, and civilian uses of wartime discoveries.",
       "locations": [
         {
           "name_historic": "Washington, D.C.",
           "name_modern": "Washington, D.C., United States",
           "centroid": [
-            -77.0365427,
-            38.8950368
+            -77.0365,
+            38.8951
           ],
           "primary": true
         }
@@ -700,42 +667,70 @@
         "Harry S. Truman"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Vannevar_Bush",
-        "https://en.wikipedia.org/wiki/Harry_S._Truman"
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "blueprints_for_peacetime_power",
-      "annotations": {
-        "Harry S. Truman": {
-          "explanation": "Truman became U.S. president in April 1945 after Franklin D. Roosevelt's death; Bush addressed the report to him early in Truman's presidency.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Harry_S._Truman"
-        },
-        "National Science Foundation": {
-          "explanation": "A U.S. federal agency that funds scientific research and education; Bush's 1945 report became a key influence on the push to create it.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/National_Science_Foundation"
-        }
-      },
+      "chapter": "postwar_blueprint",
+      "weight": 0.95,
       "event_class": {
         "type": "publication",
         "title": "Science, The Endless Frontier",
         "publication_type": "essay",
+        "publisher": "U.S. Government Printing Office",
         "significance": "policy blueprint",
-        "impact": "It articulated a federal rationale for supporting basic research and proposed institutional approaches for long-term national science funding."
+        "impact": "The report supplied a framework for expanded federal support of scientific research after World War II."
       }
     },
     {
-      "date": "1955",
-      "date_precision": "year",
-      "age": 65,
-      "title": "Steps down as Carnegie Institution president",
-      "description": "In 1955, Bush stepped down as president of the Carnegie Institution of Washington, closing a long stretch of institutional leadership. He moved away from day-to-day administration, but his wartime and postwar science-policy architecture continued to shape U.S. research for decades.",
+      "date": "1950-05-10",
+      "date_precision": "day",
+      "age": 60,
+      "title": "Congress Creates the National Science Foundation",
+      "description": "On May 10, 1950, President Harry S. Truman signed legislation creating the National Science Foundation (NSF). The law established a federal agency to support civilian scientific research, a goal Vannevar Bush had advocated in his 1945 report Science, the Endless Frontier.",
       "locations": [
         {
           "name_historic": "Washington, D.C.",
           "name_modern": "Washington, D.C., United States",
           "centroid": [
-            -77.0365427,
-            38.8950368
+            -77.0365,
+            38.9072
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Harry S. Truman"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Vannevar_Bush"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/NSF_logo.png/960px-NSF_logo.png",
+          "caption": "Official National Science Foundation logo",
+          "source": "https://commons.wikimedia.org/wiki/File:NSF_logo.png",
+          "creator": "U.S. National Science Foundation",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-file-document-edit",
+      "chapter": "postwar_blueprint",
+      "weight": 0.9
+    },
+    {
+      "date": "1955",
+      "date_precision": "year",
+      "age": 65,
+      "title": "Leaves Carnegie Institution",
+      "description": "In 1955, Vannevar Bush ended his presidency of the Carnegie Institution of Washington. He had led the institution since 1938.",
+      "locations": [
+        {
+          "name_historic": "Washington, D.C.",
+          "name_modern": "Washington, D.C., United States",
+          "centroid": [
+            -77.0369,
+            38.9072
           ],
           "primary": true
         }
@@ -744,27 +739,22 @@
         "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
       "event_type_icon": "mdi-exit-to-app",
-      "chapter": "blueprints_for_peacetime_power",
-      "annotations": {
-        "Carnegie Institution of Washington": {
-          "explanation": "A privately funded U.S. research organization (founded in 1902, now the Carnegie Institution for Science) headquartered in Washington, D.C., which supported major basic-science programs.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Carnegie_Institution_for_Science"
-        }
-      }
+      "chapter": "postwar_blueprint",
+      "weight": 0.45
     },
     {
       "date": "1974-06-28",
       "date_precision": "day",
       "age": 84,
-      "title": "Dies in Belmont, Massachusetts, at 84",
-      "description": "Vannevar Bush died on June 28, 1974, in Belmont, Massachusetts, at the age of 84.",
+      "title": "Death in Belmont",
+      "description": "Vannevar Bush died in Belmont, Massachusetts, on June 28, 1974, after a [[stroke]]. His wife, Phoebe Clara Davis Bush, had died in 1969. Bush spent his final years near Boston.",
       "locations": [
         {
-          "name_historic": "Belmont",
+          "name_historic": "Belmont, Massachusetts",
           "name_modern": "Belmont, Massachusetts, United States",
           "centroid": [
-            -71.1786655,
-            42.3959296
+            -71.1787,
+            42.3959
           ],
           "primary": true
         }
@@ -773,10 +763,23 @@
         "https://en.wikipedia.org/wiki/Vannevar_Bush"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "closing_the_circuit",
+      "chapter": "postwar_blueprint",
+      "annotations": {
+        "stroke": {
+          "explanation": "A stroke occurs when blood flow to part of the brain is blocked or a blood vessel in the brain ruptures. It can cause sudden and severe impairment or death.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Stroke"
+        }
+      },
+      "weight": 0.3,
       "event_class": {
-        "type": "death"
-      }
+        "type": "death",
+        "cause": "stroke",
+        "characterization": "after later illness",
+        "place_of_rest": "South Dennis, Massachusetts"
+      },
+      "involved_people": [
+        "Phoebe Clara Davis"
+      ]
     }
   ]
 }
