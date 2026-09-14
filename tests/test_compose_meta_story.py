@@ -184,3 +184,40 @@ def test_the_prompt_asks_the_description_for_background_on_the_subject():
     assert "does not summarize the cast, the components, or the data" in prompt
     assert "no roll call of professions" in prompt
     assert "150-200 words, the description the larger part" in prompt
+
+
+def test_the_prompt_asks_the_description_to_pick_up_the_opening():
+    """The scene in the header is the subject's, and the description says so.
+
+    Asked for background on the subject, the composer wrote a description
+    that could have stood under any opening, and the scene above it was
+    left as decoration. The prompt now chooses the moment for what it shows
+    of the subject and turns the description's first sentence from the
+    moment to the subject; this holds the wording that carries the rule.
+    """
+    captured = {}
+
+    def fake_parse(client, **kwargs):
+        captured["prompt"] = kwargs["input"][1]["content"]
+        return None
+
+    with mock.patch.object(compose_meta_story, "parse_structured", fake_parse):
+        compose_meta_story.run_composition(
+            make_dataset(),
+            {"people": []},
+            "",
+            {},
+            client=None,
+            model="model",
+            reasoning_effort="low",
+        )
+
+    prompt = " ".join(captured["prompt"].split())
+    assert "Choose the moment for what it shows of the subject" in prompt
+    assert "The description then picks the scene up." in prompt
+    assert "turns from the moment to the subject" in prompt
+    assert (
+        "A description that could stand under any opening has dropped the scene"
+        in prompt
+    )
+    assert "The conclusion may return to the opening's moment" in prompt

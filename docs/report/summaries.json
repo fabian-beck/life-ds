@@ -109,11 +109,11 @@
       }
     },
     "m_p8": {
-      "fingerprint": "d57f565e8788db41",
+      "fingerprint": "6cc6caf7060f4bcd",
       "summary": {
-        "description": "Rewrites the assembled account as one story, from its opening through its timeline, circles, and places. It sets their order and voice from the whole, and can remove map stops that do not support the story.",
-        "input": "circle narration, map stops, and biographical material",
-        "output": "a unified meta story",
+        "description": "Composes the assembled material into one story, rewriting component text in a shared voice and choosing its narrative order. It can remove map stops that do not support the throughline, then leaves a finished meta story for later styling and translation.",
+        "input": "the narrations, source material, and person registry",
+        "output": "a composed meta story",
         "source": "gpt-5.6-terra"
       }
     },

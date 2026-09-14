@@ -46,7 +46,14 @@ What the prompt still carries is what the model cannot infer:
   have in common — so a reader who did not know what quantum physics or the
   American Revolution was met the cast before the subject. The subject is the
   one thing the components cannot introduce, and general knowledge of it is
-  the one place the composer may reach beyond the material.
+  the one place the composer may reach beyond the material. Told that much,
+  the composer wrote a description that could have stood under any opening:
+  the computing story followed a 1968 demonstration of a mouse and a screen
+  with a definition of computing, and the scene above it was left as
+  decoration. So the moment is chosen for what it shows of the subject, the
+  description's first sentence turns from the moment to the subject before
+  the background widens, and the conclusion may return to the moment once
+  the reader knows what led to it.
 - **The section introductions** — each section body is one full paragraph
   that opens its section on the question the component answers, hints at
   the shape of the answer without giving it, and adds background only where
@@ -362,15 +369,17 @@ class CompositionResult(BaseModel):
     tagline: str = Field(description="3-10 words")
     opening: List[StoryBlock] = Field(
         description="The story's opening prose: one documented moment told "
-        "as a scene; opening and description together stay within roughly "
+        "as a scene, chosen for what it shows of the subject the title "
+        "names; opening and description together stay within roughly "
         "150-200 words of paragraph text"
     )
     description: List[StoryBlock] = Field(
         description="The prose following the opening, still in the page "
-        "header: brief background on the subject the title names, what it "
-        "is and where it stands in history, never a summary of the people "
-        "or the components; the larger part of the shared 150-200 word "
-        "budget"
+        "header: it picks the scene up, its first sentence turning from "
+        "the moment to the subject the title names, then gives brief "
+        "background on that subject, what it is and where it stands in "
+        "history, never a summary of the people or the components; the "
+        "larger part of the shared 150-200 word budget"
     )
     section_headings: ComposedSectionHeadings = Field(
         description="Headings for the four sections"
@@ -401,7 +410,8 @@ class CompositionResult(BaseModel):
     )
     conclusion: List[StoryBlock] = Field(
         description="The closing section's prose — the last prose on the "
-        "page; one short paragraph"
+        "page; one short paragraph, which may return to the opening's "
+        "moment now that the reader knows what led to it"
     )
     chapters: List[ComposedChapter] = Field(
         description="One entry per chapter, same order as given"
@@ -956,21 +966,33 @@ paragraph above the component.
 THE HEADER. The opening and the description are the page's introduction, and
 the reader arrives knowing nothing of the subject. The opening is one
 documented moment from the material told as a scene, with its date, its
-place, and its person named. The description then gives the background of the
-subject the title names, before the page turns to the people: what the field,
-the movement, the place, or the period is, in plain words; where and when it
-stands in history; how things stood when the first of these lives entered it;
-and what had changed by the end of the story's span. Write it as the brief
-background a good teacher gives before the first name, from general knowledge
-of the subject and from the historical context in the material. It does not
-summarize the cast, the components, or the data: no sentence listing who did
-what, no roll call of professions ("mathematicians defined it, engineers built
-it, programmers made it usable"), no sentence on what the lives have in
-common or how they connect. The timeline, the cards, and the conclusion carry
-all of that. A person is named in the description only where the background
-needs the name. The background of the subject as a whole belongs here and
-nowhere else on the page; the section introductions below carry only what is
-specific to their own question.
+place, and its person named. Choose the moment for what it shows of the
+subject the title names: the subject at work, or the point where what the
+story spans first becomes visible. The description then picks the scene up.
+Its first sentence turns from the moment to the subject, saying what the
+reader has just watched an instance of — the machine in the demonstration,
+the shape on the drawing board, the cause in the speech — and from there the
+description widens into the background of the subject the title names,
+before the page turns to the people: what the field, the movement, the place,
+or the period is, in plain words; where and when it stands in history; how
+things stood when the first of these lives entered it; and what had changed
+by the end of the story's span. A description that could stand under any
+opening has dropped the scene: after a demonstration of a mouse and a screen,
+"Computing is the use of machines to represent information" opens a textbook,
+and the scene above it is left as decoration. Write the background as the
+brief account a good teacher gives before the first name, from general
+knowledge of the subject and from the historical context in the material. It
+does not summarize the cast, the components, or the data: no sentence listing
+who did what, no roll call of professions ("mathematicians defined it,
+engineers built it, programmers made it usable"), no sentence on what the
+lives have in common or how they connect. The timeline, the cards, and the
+conclusion carry all of that. A person is named in the description only where
+the background needs the name, and the opening's person is one such name. The
+background of the subject as a whole belongs here and nowhere else on the
+page; the section introductions below carry only what is specific to their
+own question. The conclusion may return to the opening's moment once the
+reader knows what led to it and what followed; the section introductions
+never do, since they name no cast member.
 
 SECTION INTRODUCTIONS. Each section body is one full paragraph of roughly
 80-130 words between the section's heading and its component. It is the
