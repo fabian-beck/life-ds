@@ -6,8 +6,8 @@ segments are reader-facing through the locale files — the interface resolves
 vocabulary is closed: the generation schema types both segments as the
 Literals below, so a run cannot emit a token outside it, and a dataset that
 predates a vocabulary change is regenerated rather than migrated.
-`tests/test_relationship_vocabulary.py` holds the data, this module, and
-both locale files to one another.
+`tests/test_relationship_vocabulary.py` holds this module and both locale
+files to each other.
 
 Categories stay coarse: the interface opens one circle per category, so two
 categories that a reader cannot tell apart split one circle in two. That is
