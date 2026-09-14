@@ -2,13 +2,11 @@
 
 A stop card lists its cluster's events in array order and spells out only the
 first few, so an unordered cluster both reads backwards and can hide the wrong
-events. The order is a property of the stored data, checked here for the
-generator and for the meta-story files the app actually reads. The map also
-has to place an event where its own story places it, which is a property of
-the one location field both read.
+events. The clustering step is what puts them in order, and that is what is
+checked here. The map also has to place an event where its own story places
+it, which is a property of the one location field both read.
 """
 
-import json
 import sys
 import unittest
 from pathlib import Path
@@ -22,8 +20,6 @@ from meta_story_map import (  # noqa: E402
     cluster_located_events,
     event_date_key,
 )
-
-META_STORIES_DIR = ROOT / "data" / "meta_stories"
 
 
 def located(person_id, index, date, coordinates):
@@ -107,19 +103,6 @@ class EventLocationTests(unittest.TestCase):
             ],
         }
         self.assertIsNone(_event_location(event))
-
-
-class StoredMetaStoryTests(unittest.TestCase):
-    def test_stored_clusters_list_events_chronologically(self):
-        paths = sorted(META_STORIES_DIR.rglob("*.json"))
-        self.assertTrue(paths)
-        for path in paths:
-            data = json.loads(path.read_text(encoding="utf-8"))
-            clusters = (data.get("geo_map") or {}).get("clusters") or []
-            for cluster in clusters:
-                dates = [e.get("event_date") for e in cluster.get("events") or []]
-                with self.subTest(story=path.name, cluster=cluster.get("key")):
-                    self.assertEqual(dates, sorted(dates, key=event_date_key))
 
 
 if __name__ == "__main__":

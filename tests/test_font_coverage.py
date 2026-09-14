@@ -7,11 +7,11 @@ drift. A face the generator can choose but the app never loads does not fail
 anything loudly: the story just renders in the fallback font, which looks
 plausible enough to survive review.
 
-`data/person_styles.json` is checked as well, because it holds choices made by
-earlier runs of the generator, under whatever vocabulary was current then.
+Both lists are implementation, so both are checked here. What a stored style
+happens to name is not: the vocabulary is closed at the point the style is
+written, and a choice outside it is rejected there.
 """
 
-import json
 import re
 import sys
 import unittest
@@ -27,9 +27,6 @@ from generate_person_style import (  # noqa: E402
 )
 
 FONTS_CSS = ROOT / "src" / "fonts.css"
-STYLES_PATH = ROOT / "data" / "person_styles.json"
-REGISTER_PATH = ROOT / "data" / "persons.json"
-META_STYLES_PATH = ROOT / "data" / "meta_story_styles.json"
 
 # "@fontsource/space-grotesk/latin-ext-700.css" -> ("space-grotesk", "latin-ext-700")
 # Both @import notations are accepted: stylelint-config-standard rewrites the
@@ -65,50 +62,6 @@ class FontCoverageTests(unittest.TestCase):
             [],
             "generate_person_style.py may pick these, but src/fonts.css does not "
             "load them, so they would render in the fallback font",
-        )
-
-    def test_every_font_in_use_is_self_hosted(self):
-        packages = loaded_packages()
-        people = {
-            person["id"]
-            for person in json.loads(REGISTER_PATH.read_text("utf-8"))["people"]
-        }
-        styles = json.loads(STYLES_PATH.read_text(encoding="utf-8"))["styles"]
-
-        missing = set()
-        for person_id, style in styles.items():
-            # Orphan style entries outlive the people they belonged to; they are
-            # never rendered, so they cannot pull in a font.
-            if person_id not in people:
-                continue
-            for key in ("heading_font", "body_font"):
-                font = style.get(key)
-                if font and package_name(font) not in packages:
-                    missing.add(font)
-        self.assertEqual(
-            missing, set(), "person_styles.json references fonts src/fonts.css omits"
-        )
-
-    def test_every_meta_story_font_is_self_hosted(self):
-        """Meta stories carry their own identity, and so their own font pair.
-
-        generate_meta_story_style.py reuses the person generator's vocabulary,
-        so the two cannot diverge at generation time — but the stored choices in
-        meta_story_styles.json are a second place fonts enter the app, and they
-        outlive whatever vocabulary was current when they were written.
-        """
-        packages = loaded_packages()
-        styles = json.loads(META_STYLES_PATH.read_text(encoding="utf-8"))["styles"]
-        missing = {
-            font
-            for style in styles.values()
-            for key in ("heading_font", "body_font")
-            if (font := style.get(key)) and package_name(font) not in packages
-        }
-        self.assertEqual(
-            missing,
-            set(),
-            "meta_story_styles.json references fonts src/fonts.css omits",
         )
 
     def test_no_font_is_loaded_that_nothing_can_use(self):

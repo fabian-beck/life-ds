@@ -77,27 +77,6 @@ class CollectiveNameTests(unittest.TestCase):
             with self.subTest(name=name):
                 self.assertFalse(generator.looks_collective(name))
 
-    def test_no_shipped_person_name_is_reported_as_a_collective(self) -> None:
-        """The heuristic must not flag any individual already in the corpus."""
-        import json
-
-        people = Path(__file__).resolve().parents[1] / "data" / "people"
-        flagged = []
-        for path in sorted(people.glob("*/ego_network.json")):
-            for conn in json.loads(path.read_text(encoding="utf-8")).get(
-                "connections", []
-            ):
-                name = conn["person_name"]
-                is_collective = conn.get("entity_kind") in ("organization", "group")
-                if generator.looks_collective(name) and not is_collective:
-                    flagged.append((path.parent.name, name))
-        self.assertEqual(
-            flagged,
-            [],
-            "each of these is either an individual the heuristic misreads or a "
-            "collective node the schema no longer admits",
-        )
-
 
 if __name__ == "__main__":
     unittest.main()

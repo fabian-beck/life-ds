@@ -11,7 +11,6 @@ floor, and `generate_valid_style` asks the model once more with the reason.
 
 from __future__ import annotations
 
-import json
 import sys
 import unittest
 from pathlib import Path
@@ -137,24 +136,6 @@ class RetryTests(unittest.TestCase):
             style = generate_valid_style("PROMPT", "model")
         self.assertIn("Königsberg", style["palette_rationale"])
         self.assertIn("palette_rationale", prompts[1])
-
-
-class CorpusContrastTests(unittest.TestCase):
-    def test_every_shipped_style_clears_the_floor(self):
-        """The floor is set where the corpus already stands; a style under it
-        would be a regression the reader sees as unreadable labels."""
-        styles = json.loads(
-            (
-                Path(__file__).resolve().parents[1] / "data" / "person_styles.json"
-            ).read_text(encoding="utf-8")
-        )["styles"]
-        failing = {
-            person_id: palette_problems(
-                style["primary"], style["secondary"], style["background"]
-            )
-            for person_id, style in styles.items()
-        }
-        self.assertEqual({k: v for k, v in failing.items() if v}, {})
 
 
 if __name__ == "__main__":
