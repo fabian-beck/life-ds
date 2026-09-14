@@ -289,11 +289,11 @@
       }
     },
     "p_style": {
-      "fingerprint": "856007a69ae2b58d",
+      "fingerprint": "6f3bd2c9002439c7",
       "summary": {
-        "description": "Derives the story’s colors and type from the person’s work and the things depicted in its events. Rejects colors that cannot remain legible on the dark ground, then retries once with the reason.",
-        "input": "finished life events and depicted captions",
-        "output": "a color, type, and pattern system",
+        "description": "Derives a dark color, type, and geometric pattern system from the finished events and their depicted works. It requires the palette rationale to name the material evidence behind the colors. A contrast check rejects illegible palettes and sends the reason back for one revision.",
+        "input": "the finished life events",
+        "output": "an evidence-based interface style",
         "source": "gpt-5.6-terra"
       }
     },
