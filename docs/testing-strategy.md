@@ -14,7 +14,7 @@ The whole run finishes in about ten seconds and contains three things:
 
 - one Playwright smoke test at a phone viewport, `tests/smoke.spec.js`: the landing page, the search, opening a person story, moving from the chapter slide to the first event, and returning to the filtered landing page, with any script error or same-origin 404 along the way failing the run;
 - the browser-independent pure functions — the person-name matcher, the date and label helpers, the description and depth-prose builders — in a `logic` project with no browser at all; and
-- focused Python regression checks for the generation scripts and for the data they write: portrait file validation, keeping curated meta-story references synchronized with person events, holding the person registries, per-person directories, and style registry to the same set of people, and the technical report's own build.
+- focused Python checks for the generation scripts themselves: the gates a step writes through, the pure helpers it calls, portrait file validation, the vocabularies the generator and the interface share, and the technical report's own build.
 
 The smoke test answers one question: does the application still run. Everything a screen decides — layout, gestures, animation, localization, accessibility — is reviewed by AI exploration, which sees the page instead of a selector and finds what no assertion was written for.
 
@@ -24,7 +24,9 @@ Do not add a browser test to increase coverage. A second scripted scenario costs
 
 Add a browser assertion only when a regression is costly, silent, and repeatable — something exploration would plausibly walk past twice — and then extend the smoke journey rather than starting a second file. Anything that needs its own viewport, a map, a timed race, or seconds of waiting does not go in it. Remove a check when its risk is no longer material.
 
-Two habits are worth avoiding wherever a test does land, because both read as coverage and neither is:
+Do not add a check that reads the generated corpus. A test that scans `data/` asserts the state of a snapshot that the next regeneration moves, so it turns a data change into a red suite and a red suite into a bug report about data, and the rule it encodes lives in two places at once. The rule belongs in the step that writes the field, as a prompt instruction, a schema, a deterministic normalization, or a rejection that asks the model again — see the generation-pipeline rule in `AGENTS.md`. A dataset that a generator change leaves behind is flagged in `data/outdated.md` and regenerated, never asserted over.
+
+Two further habits are worth avoiding wherever a test does land, because both read as coverage and neither is:
 
 - **Restating the source.** A test that greps a file for a string it should not contain, asserts the words of a prompt constant, or re-parses a module the test file already imported fails only when someone edits the line it copies. Assert the behavior the line produces, or let it go.
 - **Sampling a value that is still moving.** Opacities, scroll positions, and anything mid-transition need `expect.poll` or a web-first assertion. A single sample of an animating value passes locally and fails on a loaded runner.

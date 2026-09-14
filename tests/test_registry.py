@@ -245,33 +245,5 @@ class UpdateRegisterTests(unittest.TestCase):
         self.assertEqual(entry["tagline"], "kept")
 
 
-class ShippedRegistryTests(unittest.TestCase):
-    """Reading and writing a real registry has to change nothing.
-
-    Three of the five writers used a bare `json.dumps` instead of the
-    repository's canonical writer. If `Registry.save()` disagreed with the
-    bytes already on disk, the first script to touch a registry would rewrite
-    the whole file and bury its own change in the diff.
-    """
-
-    def test_every_registry_round_trips_byte_for_byte(self) -> None:
-        data_dir = REPO_ROOT / "data"
-        paths = sorted(data_dir.glob("persons*.json")) + sorted(
-            data_dir.glob("meta_stories*.json")
-        )
-        self.assertGreater(len(paths), 2, "expected the shipped registries")
-        for path in paths:
-            with self.subTest(registry=path.name):
-                original = path.read_text(encoding="utf-8")
-                collection = (
-                    META_STORIES if path.name.startswith("meta_stories") else "people"
-                )
-                with tempfile.TemporaryDirectory() as tmp:
-                    copy = Path(tmp) / path.name
-                    copy.write_text(original, encoding="utf-8")
-                    Registry(copy, collection=collection).save()
-                    self.assertEqual(copy.read_text(encoding="utf-8"), original)
-
-
 if __name__ == "__main__":
     unittest.main()

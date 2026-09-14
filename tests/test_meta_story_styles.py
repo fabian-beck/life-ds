@@ -1,80 +1,32 @@
-"""The meta story style registry and the generator that writes into it.
+"""The frame vocabulary and the gate a meta story style is written through.
 
-The registry is data the app reads directly — an entry with a malformed color,
-an unloadable font or broken SVG markup would degrade the article silently, so
-the shape is checked here rather than discovered in the browser.
+A malformed color, an unloadable font or broken SVG markup would degrade the
+article silently, so ``normalize_payload`` is where each of those is caught —
+on the way into the registry, in the one step that writes it. What it lets
+through is checked here, together with the frame names, which have to mean the
+same thing in the generator, in ``metaStoryStyles.js``, and in the stylesheet
+that draws them.
 """
 
-import json
 import re
 import sys
 import unittest
 from pathlib import Path
-from xml.etree import ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 from generate_meta_story_style import (  # noqa: E402
-    BODY_FONT_CHOICES,
     FRAME_CHOICES,
-    HEADING_FONT_CHOICES,
     normalize_payload,
 )
 
-STYLES_PATH = ROOT / "data" / "meta_story_styles.json"
 FRAMES_JS = ROOT / "src" / "utils" / "metaStoryStyles.js"
 FRAMES_CSS = ROOT / "src" / "meta-frames.css"
-META_STORIES_REGISTER = ROOT / "data" / "meta_stories.json"
-
-HEX = re.compile(r"^#[0-9A-F]{6}$")
-
-MARK_FIELDS = ("separator_glyph_svg", "ornament_svg")
 
 
-def load_styles():
-    data = json.loads(STYLES_PATH.read_text(encoding="utf-8"))
-    return data["styles"]
-
-
-class MetaStoryStyleRegistryTests(unittest.TestCase):
-    def test_every_meta_story_has_a_style(self):
-        register = json.loads(META_STORIES_REGISTER.read_text(encoding="utf-8"))
-        story_ids = {entry["id"] for entry in register["meta_stories"]}
-        self.assertTrue(story_ids <= set(load_styles()))
-
-    def test_styles_belong_to_existing_meta_stories(self):
-        register = json.loads(META_STORIES_REGISTER.read_text(encoding="utf-8"))
-        story_ids = {entry["id"] for entry in register["meta_stories"]}
-        for story_id in load_styles():
-            with self.subTest(story_id=story_id):
-                self.assertIn(story_id, story_ids)
-
-    def test_colors_are_uppercase_hex(self):
-        for story_id, style in load_styles().items():
-            for field in ("primary", "secondary", "background"):
-                with self.subTest(story_id=story_id, field=field):
-                    self.assertRegex(style[field], HEX)
-
-    def test_fonts_are_in_the_choice_lists(self):
-        """A stored face outside the vocabulary is a font nothing will style.
-
-        That the app also *loads* each face is checked in
-        tests/test_font_coverage.py, which owns parsing src/fonts.css. This
-        assertion used to search index.html for the Google Fonts link; the
-        fonts are self-hosted now, so there is no link tag to search.
-        """
-        for story_id, style in load_styles().items():
-            with self.subTest(story_id=story_id):
-                self.assertIn(style["heading_font"], HEADING_FONT_CHOICES)
-                self.assertIn(style["body_font"], BODY_FONT_CHOICES)
-
-    def test_frames_are_in_the_vocabulary(self):
-        for story_id, style in load_styles().items():
-            with self.subTest(story_id=story_id):
-                self.assertIn(style["frame"], FRAME_CHOICES)
-
+class MetaStoryFrameTests(unittest.TestCase):
     def test_the_generator_and_the_app_know_the_same_frames(self):
         """The name in the data is only meaningful if both sides define it.
 
@@ -113,34 +65,6 @@ class MetaStoryStyleRegistryTests(unittest.TestCase):
         for selector, body in decorations:
             with self.subTest(selector=selector.splitlines()[-1][:60]):
                 self.assertIn("pointer-events: none", body)
-
-    def test_marks_are_valid_single_color_svg(self):
-        """The glyph and the ornament are drawn in the story's primary color."""
-        for story_id, style in load_styles().items():
-            for field in MARK_FIELDS:
-                with self.subTest(story_id=story_id, field=field):
-                    root = ET.fromstring(style[field])
-                    self.assertTrue(root.tag.endswith("svg"))
-                    colors = {
-                        value
-                        for element in root.iter()
-                        for key, value in element.attrib.items()
-                        if key in {"fill", "stroke"} and value != "none"
-                    }
-                    self.assertEqual(colors, {style["primary"]})
-
-    def test_background_pattern_is_black_and_white_only(self):
-        for story_id, style in load_styles().items():
-            with self.subTest(story_id=story_id):
-                root = ET.fromstring(style["background_pattern_svg"])
-                self.assertEqual(root.attrib.get("viewBox"), "0 0 160 160")
-                colors = {
-                    value
-                    for element in root.iter()
-                    for key, value in element.attrib.items()
-                    if key in {"fill", "stroke"}
-                }
-                self.assertTrue(colors <= {"#000000", "#FFFFFF", "none"}, colors)
 
 
 class NormalizePayloadTests(unittest.TestCase):

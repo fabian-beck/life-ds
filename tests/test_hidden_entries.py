@@ -1,11 +1,11 @@
-"""The hidden flag: what it may say, and that every registry says the same.
+"""The writers that set the hidden flag and carry it through a regeneration.
 
 A person or collection the deployed site should not show carries
-``"hidden": true`` in its registry entry, and nothing otherwise. The
-application reads the English registries as the reference; the localized
-ones are derived from them whole, so a flag the two disagree on is a
-derivation that has fallen behind. Both are counted here, along with the
-registry writer that has to carry the flag through a regeneration.
+``"hidden": true`` in its registry entry, and nothing otherwise. Every
+registry has to say the same, which is a property of ``set_hidden.py``
+writing all of them at once and of the meta-story registry writer keeping
+the flag it finds — both checked here against registries built for the
+test.
 """
 
 from __future__ import annotations
@@ -18,46 +18,14 @@ import unittest.mock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT / "data"
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import generate_meta_story  # noqa: E402
 import set_hidden  # noqa: E402
-from utils.registry import META_STORIES, PEOPLE  # noqa: E402
 
 
 def load_json(path):
     return json.loads(path.read_text(encoding="utf-8"))
-
-
-def flags(path, collection):
-    return {
-        entry["id"]: entry.get("hidden")
-        for entry in load_json(path)[collection]
-        if "hidden" in entry
-    }
-
-
-REGISTRIES = (
-    ("persons.json", "persons_*.json", PEOPLE),
-    ("meta_stories.json", "meta_stories_*.json", META_STORIES),
-)
-
-
-class HiddenFlagTests(unittest.TestCase):
-    def test_the_flag_is_the_boolean_true_or_absent(self):
-        for english, localized, collection in REGISTRIES:
-            for path in [DATA_DIR / english] + sorted(DATA_DIR.glob(localized)):
-                with self.subTest(registry=path.name):
-                    for entry_id, value in flags(path, collection).items():
-                        self.assertIs(value, True, entry_id)
-
-    def test_localized_registries_hide_what_the_english_one_hides(self):
-        for english, localized, collection in REGISTRIES:
-            reference = flags(DATA_DIR / english, collection)
-            for path in sorted(DATA_DIR.glob(localized)):
-                with self.subTest(registry=path.name):
-                    self.assertEqual(flags(path, collection), reference)
 
 
 class SetHiddenTests(unittest.TestCase):
