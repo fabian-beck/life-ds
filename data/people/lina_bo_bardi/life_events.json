@@ -1,6 +1,6 @@
 {
-  "dataset": "biographical_timeline",
-  "created_on": "2026-01-09",
+  "dataset": "Biographical timeline",
+  "created_on": "2026-09-19",
   "person": {
     "name": "Lina_Bo_Bardi",
     "birth_date": "1914-12-05",
@@ -10,8 +10,8 @@
       "designer",
       "editor"
     ],
-    "tagline": "Modernism rooted in Brazil",
-    "summary": "Italian-born architect and designer Lina Bo Bardi built a career in Brazil that linked modernist form to everyday social and cultural life through buildings, exhibitions, and objects. Her work helped broaden Brazilian modern architecture by treating popular culture, craft, and public institutions as central design materials.",
+    "tagline": "MASP and SESC Pompéia",
+    "summary": "Lina Bo Bardi was an Italian-born Brazilian architect and designer whose buildings made culture, art, work, and recreation part of shared public life. Her work joined modern construction with Brazilian materials, vernacular forms, and spaces made for everyday use.",
     "wikipedia": "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
     "portrait": {
       "image": "/portraits/lina_bo_bardi_thumbnail.webp",
@@ -19,96 +19,135 @@
       "medium": "/portraits/lina_bo_bardi_medium.webp",
       "full": "/portraits/lina_bo_bardi_full.webp",
       "source": "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-      "caption": "Stylized portrait based on historical photograph",
+      "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Lina_Bo_Bardi.jpg"
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Lina_Bo_Bardi.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "roman_roots",
-      "headline": "Roman Roots",
+      "id": "rome_to_milan",
+      "headline": "Drawing a New Path",
       "date_start": "1914-12-05",
       "date_start_precision": "day",
-      "date_end": "1939",
+      "date_end": "1943",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 25,
+      "age_end": 27,
       "involved_people": [
-        "Enrico Bo",
-        "Giovanna Bo"
+        "Graziella Bo",
+        "Carlo Pagani"
       ],
-      "location": "Italy"
+      "location": "Italy",
+      "illustration": {
+        "image": "/chapter_art/lina_bo_bardi/rome_to_milan_medium.webp",
+        "medium": "/chapter_art/lina_bo_bardi/rome_to_milan_medium.webp",
+        "full": "/chapter_art/lina_bo_bardi/rome_to_milan_full.webp",
+        "concept": "A single graphite line arcs across a deep charcoal field, then divides into crisp planes of pale paper-like light. Near its center, a small uncut stone anchors the composition, suggesting a path made through uncertainty.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "milan_under_siege",
-      "headline": "Milan Under Siege",
-      "date_start": "1939",
+      "id": "war_and_departure",
+      "headline": "Reconstruction Calls",
+      "date_start": "1944",
       "date_start_precision": "year",
-      "date_end": "1946-10",
-      "date_end_precision": "month",
-      "age_start": 25,
+      "date_end": "1946",
+      "date_end_precision": "year",
+      "age_start": 29,
       "age_end": 31,
       "involved_people": [
-        "Carlo Pagani",
-        "Gio Ponti",
-        "Federico Patellani",
-        "Bruno Zevi",
         "Pietro Maria Bardi"
       ],
-      "location": "Italy"
+      "location": "Italy",
+      "illustration": {
+        "image": "/chapter_art/lina_bo_bardi/war_and_departure_medium.webp",
+        "medium": "/chapter_art/lina_bo_bardi/war_and_departure_medium.webp",
+        "full": "/chapter_art/lina_bo_bardi/war_and_departure_full.webp",
+        "concept": "A fractured field of ash-gray slabs floats in darkness, their broken edges slowly drawing apart. From the widening seam, a warm band of amber light streams outward like a tide leaving a shattered shore.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "starting_over_in_brazil",
-      "headline": "Starting Over in Brazil",
-      "date_start": "1946-10",
-      "date_start_precision": "month",
+      "id": "a_brazilian_language",
+      "headline": "Brazil Takes Root",
+      "date_start": "1947-10-02",
+      "date_start_precision": "day",
       "date_end": "1951",
       "date_end_precision": "year",
-      "age_start": 31,
+      "age_start": 32,
       "age_end": 36,
       "involved_people": [
-        "Pietro Maria Bardi",
         "Assis Chateaubriand",
-        "Giancarlo Palanti"
+        "Pietro Maria Bardi"
       ],
-      "location": "Brazil"
+      "location": "Southeastern Brazil",
+      "illustration": {
+        "image": "/chapter_art/lina_bo_bardi/a_brazilian_language_medium.webp",
+        "medium": "/chapter_art/lina_bo_bardi/a_brazilian_language_medium.webp",
+        "full": "/chapter_art/lina_bo_bardi/a_brazilian_language_full.webp",
+        "concept": "A luminous transparent cube hovers among dense green translucent leaves, balanced on four slender white strokes. Inside, overlapping layers of ochre, coral, and blue glow softly, as if a new climate were entering the structure.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "museum_as_manifesto",
-      "headline": "Museum As Manifesto",
-      "date_start": "1955",
+      "id": "culture_in_common",
+      "headline": "Rooms for Everyone",
+      "date_start": "1957",
       "date_start_precision": "year",
       "date_end": "1968",
       "date_end_precision": "year",
-      "age_start": 40,
-      "age_end": 53,
+      "age_start": 42,
+      "age_end": 42,
       "involved_people": [
-        "Pietro Maria Bardi"
+        "Pietro Maria Bardi",
+        "Martim Gonçalves"
       ],
-      "location": "Brazil"
+      "location": "Brazil",
+      "illustration": {
+        "image": "/chapter_art/lina_bo_bardi/culture_in_common_medium.webp",
+        "medium": "/chapter_art/lina_bo_bardi/culture_in_common_medium.webp",
+        "full": "/chapter_art/lina_bo_bardi/culture_in_common_full.webp",
+        "concept": "A broad crimson beam suspends a clear rectangular volume over an open pool of shadow. Beneath it, dozens of small, differently textured colored forms gather in a loose, radiant constellation without touching.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "architecture_for_everyone",
-      "headline": "Architecture For Everyone",
+      "id": "public_space_finale",
+      "headline": "The Open Stage",
       "date_start": "1977",
       "date_start_precision": "year",
       "date_end": "1992-03-20",
       "date_end_precision": "day",
       "age_start": 62,
       "age_end": 77,
-      "involved_people": null,
-      "location": "Brazil"
+      "involved_people": [
+        "Zé Celso"
+      ],
+      "location": "São Paulo",
+      "illustration": {
+        "image": "/chapter_art/lina_bo_bardi/public_space_finale_medium.webp",
+        "medium": "/chapter_art/lina_bo_bardi/public_space_finale_medium.webp",
+        "full": "/chapter_art/lina_bo_bardi/public_space_finale_full.webp",
+        "concept": "Two rough concrete towers rise from a dark ground plane, joined by irregular glowing threads that stretch, sag, and cross through open space. At their base, a wide spiral of bright pigment unfurls like an invitation.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     }
   ],
-  "conclusion": "Lina Bo Bardi turned displacement into purpose, forging an architecture where museums, homes, and leisure spaces dignified ordinary life. Her legacy endures as a radical insistence that culture belongs to everyone—and that buildings can prove it.",
+  "conclusion": "Lina Bo Bardi's São Paulo Museum of Art continues to exhibit its collection in the building she designed on Avenida Paulista. SESC Pompéia remains a working center for sports, performances, workshops, and leisure in São Paulo. Casa de Vidro is preserved as the Instituto Bardi and presents her home, archive, and work to visitors.",
   "events": [
     {
       "date": "1914-12-05",
       "date_precision": "day",
       "age": 0,
       "title": "Birth in Rome",
-      "description": "Achillina Bo (later known as Lina Bo Bardi) was born on 5 December 1914 in Rome to Enrico Bo and Giovanna Bo, the first of two daughters; in her early years she showed a strong interest in art despite family expectations that did not fully align with her ambition to become an architect.",
+      "description": "Achillina Bo is born in Rome to Enrico and Giovanna Bo. She is their oldest child, and Graziella is born later.",
       "locations": [
         {
           "name_historic": "Rome",
@@ -122,70 +161,58 @@
       ],
       "involved_people": [
         "Enrico Bo",
-        "Giovanna Bo"
+        "Giovanna Bo",
+        "Graziella Bo"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "roman_roots",
+      "chapter": "rome_to_milan",
+      "weight": 0.2,
       "event_class": {
         "type": "birth",
         "father": "Enrico Bo",
-        "mother": "Giovanna Bo"
+        "mother": "Giovanna Bo",
+        "birth_name": "Achillina Bo",
+        "characterization": "Italian family"
       }
     },
     {
       "date": "1939",
       "date_precision": "year",
-      "age": 25,
-      "title": "Graduated in architecture",
-      "description": "In 1939, Bo Bardi graduated in architecture from the Rome College of Architecture, completing a final project titled “The Maternity and Infancy Care Centre” and entering professional life as Italy moved deeper into wartime conditions.",
+      "age": 24,
+      "title": "Graduates in Rome",
+      "description": "In 1939, Lina Bo Bardi graduated from the Rome College of Architecture at age 25 with a final project titled The Maternity and Infancy Care Centre. She then moved to Milan and began working with architect Carlo Pagani at Studio Bo e Pagani.",
       "locations": [
         {
           "name_historic": "Rome",
           "name_modern": "Rome, Italy",
           "centroid": [
-            12.4829321,
-            41.8933203
+            12.4964,
+            41.9028
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Milan",
+          "name_modern": "Milan, Italy",
+          "centroid": [
+            9.19,
+            45.4642
+          ],
+          "primary": false
         }
+      ],
+      "involved_people": [
+        "Carlo Pagani"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "roman_roots"
-    },
-    {
-      "date": "1939",
-      "date_precision": "year",
-      "date_end": "1943",
-      "date_end_precision": "year",
-      "age": 25,
-      "title": "Moved to Milan practice",
-      "description": "In 1939, she relocated to Milan and began working with architect Carlo Pagani at Studio Bo e Pagani. During this period she also collaborated with architect and designer Giò Ponti on the magazine Lo Stile, developing her skills as a designer and architectural illustrator within Italy’s modernist design culture.",
-      "locations": [
-        {
-          "name_historic": "Milan",
-          "name_modern": "Milan, Italy",
-          "centroid": [
-            9.1896346,
-            45.4641943
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Carlo Pagani",
-        "Gio Ponti"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Gio_Ponti"
-      ],
-      "event_type_icon": "mdi-home-switch-outline",
-      "chapter": "roman_roots"
+      "chapter": "rome_to_milan",
+      "weight": 0.5
     },
     {
       "date": "1942",
@@ -193,15 +220,15 @@
       "date_end": "1943",
       "date_end_precision": "year",
       "age": 27,
-      "title": "Opened independent studio",
-      "description": "In 1942, she opened her own architectural office in Milan to work independently as commissions dwindled during wartime. With limited architectural work available, she increasingly produced illustrations for newspapers and magazines; in 1943, her studio was destroyed in an aerial bombardment of the city.",
+      "title": "Opens a Milan Studio",
+      "description": "In 1942, Lina Bo Bardi opens her own architectural studio in Milan. Wartime commissions are scarce. An aerial bombing destroys the office in 1943.",
       "locations": [
         {
           "name_historic": "Milan",
           "name_modern": "Milan, Italy",
           "centroid": [
-            9.1896346,
-            45.4641943
+            9.19,
+            45.47
           ],
           "primary": true
         }
@@ -209,8 +236,19 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Via_Ges%C3%B9.jpg/960px-Via_Ges%C3%B9.jpg",
+          "caption": "Via Gesù, Milan, location of Bo Bardi’s studio",
+          "source": "https://commons.wikimedia.org/wiki/File:Via_Gesù.jpg",
+          "creator": "Lithobius",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+        }
+      ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "milan_under_siege"
+      "chapter": "rome_to_milan",
+      "weight": 0.45
     },
     {
       "date": "1944",
@@ -218,115 +256,93 @@
       "date_end": "1945",
       "date_end_precision": "year",
       "age": 29,
-      "title": "Edited Domus during war",
-      "description": "In 1944, in [[Milan|Milan]], Lina Bo Bardi worked as deputy director of the design and architecture magazine Domus during the final phase of World War II, and the pressures of wartime life and politics contributed to her growing involvement with the [[Italian Communist Party|Italian Communist Party (PCI)]].",
+      "title": "Edits Domus During the War",
+      "description": "From 1944 to 1945, Lina Bo Bardi serves as deputy director of [[Domus|Domus]], an Italian architecture and design magazine, in Milan. In 1945, Domus sends her through war-damaged Italy with Carlo Pagani and photographer Federico Patellani to document the destruction.",
       "locations": [
         {
           "name_historic": "Milan",
           "name_modern": "Milan, Italy",
           "centroid": [
-            9.1896346,
-            45.4641943
+            9.19,
+            45.46
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "Gio Ponti"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Gio_Ponti",
         "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Domus%2C_15_febbraio_1928.jpg/960px-Domus%2C_15_febbraio_1928.jpg",
-          "caption": "Domus magazine cover dated 15 February 1928",
-          "source": "https://commons.wikimedia.org/wiki/File:Domus,_15_febbraio_1928.jpg",
-          "creator": "Francesco Bini",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "milan_under_siege",
+      "chapter": "war_and_departure",
       "annotations": {
-        "Milan": {
-          "explanation": "Milan was a major center of Italian publishing and industrial design; Domus was produced there and the city was heavily affected by wartime disruption in 1943–1945.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Milan"
-        },
-        "Italian Communist Party": {
-          "explanation": "The Italian Communist Party (PCI) was a leading anti-fascist political force that gained influence during the Resistance and the collapse of Mussolini’s regime in 1943–1945.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Italian_Communist_Party"
+        "Domus": {
+          "explanation": "Founded in Milan in 1928, Domus is an influential Italian magazine about architecture, design, and the visual arts.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Domus_(magazine)"
         }
-      }
+      },
+      "weight": 0.55,
+      "involved_people": [
+        "Carlo Pagani",
+        "Federico Patellani"
+      ]
     },
     {
-      "date": "1945",
+      "date": "1946",
       "date_precision": "year",
-      "age": 30,
-      "title": "Documented postwar Italy",
-      "description": "In 1945, commissioned by [[Domus|Domus]], Lina Bo Bardi traveled through postwar Italy with Carlo Pagani and photographer Federico Patellani to document wartime damage and living conditions. Based in Milan, she and Pagani worked with Bruno Zevi to help launch the weekly magazine A – Attualità, Architettura, Abitazione, Arte, and also wrote for the newspaper Milano Sera.",
+      "age": 31,
+      "title": "Marries Pietro Maria Bardi",
+      "description": "In 1946, Lina Bo Bardi marries Pietro Maria Bardi in Rome. Pietro Maria Bardi works as an art critic and journalist.",
       "locations": [
         {
-          "name_historic": "Milan",
-          "name_modern": "Milan, Italy",
+          "name_historic": "Rome",
+          "name_modern": "Rome, Italy",
           "centroid": [
-            9.1896346,
-            45.4641943
+            12.4964,
+            41.9028
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Italy",
-          "name_modern": "Italy",
-          "centroid": [
-            12.674297,
-            42.6384261
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Carlo Pagani",
-        "Federico Patellani",
-        "Bruno Zevi"
+        "Pietro Maria Bardi"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Gio_Ponti",
-        "https://en.wikipedia.org/wiki/Bruno_Zevi"
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
       ],
-      "event_type_icon": "mdi-map-marker",
-      "chapter": "milan_under_siege",
-      "annotations": {
-        "Domus": {
-          "explanation": "Italian architecture and design magazine founded in 1928 by Gio Ponti; it commissioned and published reporting and criticism on postwar reconstruction and design culture.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Domus_(magazine)"
-        }
+      "event_type_icon": "mdi-ring",
+      "chapter": "war_and_departure",
+      "weight": 0.6,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Pietro Maria Bardi",
+        "duration": "until her death",
+        "characterization": "devoted partnership"
       }
     },
     {
       "date": "1946-10",
       "date_precision": "month",
       "age": 31,
-      "title": "Relocated to Brazil",
-      "description": "In October 1946, she left postwar Italy with her husband, [[Pietro Maria Bardi|Pietro Maria Bardi]], traveling to South America to start over amid the political and professional strain that followed their wartime activities. After arriving in Rio de Janeiro, they were welcomed by the Institute of Brazilian Architects, and she began re-establishing her architectural and design work in an unfamiliar cultural setting.",
+      "title": "Moves to Brazil",
+      "description": "In October 1946, Lina Bo Bardi and Pietro Maria Bardi travel from Rome to Rio de Janeiro. The [[Institute of Brazilian Architects]] receives them in Rio.",
       "locations": [
         {
-          "name_historic": "Rome",
+          "name_historic": "Rome, Italy",
           "name_modern": "Rome, Italy",
           "centroid": [
-            12.4829321,
-            41.8933203
+            12.4964,
+            41.9028
           ],
           "primary": false
         },
         {
-          "name_historic": "Rio de Janeiro",
-          "name_modern": "Rio de Janeiro, RJ, Brazil",
+          "name_historic": "Rio de Janeiro, Brazil",
+          "name_modern": "Rio de Janeiro, Brazil",
           "centroid": [
-            -43.2093727,
-            -22.9110137
+            -43.1729,
+            -22.9068
           ],
           "primary": true
         }
@@ -335,156 +351,79 @@
         "Pietro Maria Bardi"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi",
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "milan_under_siege",
-      "annotations": {
-        "Pietro Maria Bardi": {
-          "explanation": "Italian writer, art critic, and curator who became a central figure in Brazil’s postwar art scene, later serving as founding director of the São Paulo Museum of Art (MASP).",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
-        }
-      },
+      "chapter": "war_and_departure",
+      "weight": 0.8,
       "event_class": {
         "type": "migration",
         "from_location": "Italy",
         "to_location": "Brazil",
-        "characterization": "postwar relocation"
-      }
-    },
-    {
-      "date": "1946",
-      "date_precision": "year",
-      "age": 31,
-      "title": "Married Pietro Maria Bardi",
-      "description": "In Rome, she married him in 1946, formalizing a partnership that also supported their shared work in art criticism, publishing, and museum initiatives in the postwar cultural milieu.",
-      "locations": [
-        {
-          "name_historic": "Rome",
-          "name_modern": "Rome, Italy",
-          "centroid": [
-            12.4829321,
-            41.8933203
-          ],
-          "primary": true
+        "characterization": "postwar resettlement"
+      },
+      "annotations": {
+        "Institute of Brazilian Architects": {
+          "explanation": "The Institute of Brazilian Architects, known by the Portuguese initials IAB, is a professional association for architects in Brazil.",
+          "wikipedia_url": null
         }
-      ],
-      "involved_people": [
-        "Pietro Maria Bardi"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/d/d3/P.M._Bardi_na_It%C3%A1lia%2C_c._1925.jpg",
-          "caption": "Pietro Maria Bardi in Italy, circa 1925",
-          "source": "https://commons.wikimedia.org/wiki/File:P.M._Bardi_na_Itália,_c._1925.jpg",
-          "creator": "Unknown author Unknown author",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-ring",
-      "chapter": "milan_under_siege",
-      "event_class": {
-        "type": "marriage_partnership",
-        "subtype": "marriage",
-        "partner": "Pietro Maria Bardi",
-        "duration": "until death",
-        "characterization": "creative partnership"
-      }
+      },
+      "background": "Their participation in the Italian resistance had made postwar life in Italy difficult. Pietro Maria Bardi had already visited Brazil in 1933.\n\nAccounts of where the relocation settled differ. Pietro Maria Bardi’s article places the couple’s permanent move in São Paulo during 1946. Lina Bo Bardi’s article records their arrival in Rio de Janeiro."
     },
     {
       "date": "1947-10-02",
       "date_precision": "day",
       "age": 32,
-      "title": "Helped launch MASP",
-      "description": "In São Paulo, she became closely involved in the founding of the São Paulo Museum of Art (MASP), backed by Assis Chateaubriand and directed by her husband, [[Pietro Maria Bardi|Pietro Maria Bardi]]. Working with Bardi, she designed the conversion of floors in the Diários Associados building into temporary museum spaces and drafted early ideas for visitor circulation and how artworks would be encountered.",
+      "title": "Designs MASP's First Home",
+      "description": "On October 2, 1947, Assis Chateaubriand and Pietro Maria Bardi established the São Paulo Museum of Art (MASP) in São Paulo, with Bardi as its director. Lina Bo Bardi designed the museum's first galleries inside the São Paulo headquarters of the Diários Associados media group.",
       "locations": [
         {
           "name_historic": "São Paulo",
           "name_modern": "São Paulo, Brazil",
           "centroid": [
-            -46.6333824,
-            -23.5506507
+            -46.6333,
+            -23.5505
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Pietro Maria Bardi",
-        "Assis Chateaubriand"
+        "Assis Chateaubriand",
+        "Pietro Maria Bardi"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
         "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi",
         "https://en.wikipedia.org/wiki/Assis_Chateaubriand"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Museu_de_Arte_de_S%C3%A3o_Paulo_Assis_Chateaubriand_-_MASP.jpg/960px-Museu_de_Arte_de_S%C3%A3o_Paulo_Assis_Chateaubriand_-_MASP.jpg",
-          "caption": "Museu de Arte de São Paulo Assis Chateaubriand (MASP)",
-          "source": "https://commons.wikimedia.org/wiki/File:Museu_de_Arte_de_São_Paulo_Assis_Chateaubriand_-_MASP.jpg",
-          "creator": "Marcelo N Valente",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-account-multiple",
-      "chapter": "starting_over_in_brazil",
+      "event_type_icon": "mdi-office-building",
+      "chapter": "a_brazilian_language",
       "annotations": {
-        "Pietro Maria Bardi": {
-          "explanation": "Italian-born art dealer and curator who became the founding director of MASP and Lina Bo Bardi’s husband and close collaborator in its early organization.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
+        "MASP": {
+          "explanation": "MASP is the common acronym for the São Paulo Museum of Art, a major Brazilian art museum founded in 1947.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/S%C3%A3o_Paulo_Museum_of_Art"
+        },
+        "Diários Associados": {
+          "explanation": "Diários Associados was a Brazilian media conglomerate founded and directed by Assis Chateaubriand. Its São Paulo headquarters temporarily housed the museum's first offices and galleries.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Assis_Chateaubriand"
         }
-      }
+      },
+      "weight": 0.8
     },
     {
       "date": "1950",
       "date_precision": "year",
       "age": 35,
-      "title": "Redesigned MASP interiors",
-      "description": "In 1950, Lina Bo Bardi and fellow Italian immigrant Giancarlo Palanti redesigned MASP’s exhibition spaces inside the [[Diários Associados|Diários Associados]] building in São Paulo, moving away from traditional Beaux-Arts hanging conventions toward a more modern, composition-based approach to display influenced by interwar avant-garde practices.",
+      "title": "Launches Habitat Magazine",
+      "description": "In 1950, Lina Bo Bardi and Pietro Maria Bardi founded Habitat in São Paulo, Brazil. The magazine covered art, architecture, and design, and its title expressed Bo Bardi’s idea of an interior designed to support human life.",
       "locations": [
         {
           "name_historic": "São Paulo",
           "name_modern": "São Paulo, Brazil",
           "centroid": [
-            -46.6333824,
-            -23.5506507
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Giancarlo Palanti"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi",
-        "https://en.wikipedia.org/wiki/Assis_Chateaubriand"
-      ],
-      "event_type_icon": "mdi-drawing",
-      "chapter": "starting_over_in_brazil",
-      "annotations": {
-        "Diários Associados": {
-          "explanation": "A major Brazilian media conglomerate founded by Assis Chateaubriand; MASP’s early galleries were housed in its headquarters building in São Paulo.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Assis_Chateaubriand"
-        }
-      }
-    },
-    {
-      "date": "1951",
-      "date_precision": "year",
-      "age": 36,
-      "title": "Naturalized and built Glass House",
-      "description": "In 1951, Lina Bo Bardi became a naturalized Brazilian citizen and completed her first built work, the Casa de Vidro (“Glass House”), in the Morumbi district of São Paulo, designed as a home for herself and her husband, [[Pietro Maria Bardi|Pietro Maria Bardi]].",
-      "locations": [
-        {
-          "name_historic": "São Paulo",
-          "name_modern": "São Paulo, Brazil",
-          "centroid": [
-            -46.6333824,
-            -23.5506507
+            -46.6333,
+            -23.5505
           ],
           "primary": true
         }
@@ -493,60 +432,49 @@
         "Pietro Maria Bardi"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Casa_de_Vidro_%28Morumbi%2CSP%29.jpg/960px-Casa_de_Vidro_%28Morumbi%2CSP%29.jpg",
-          "caption": "Casa de Vidro (Lina Bo Bardi's house)",
-          "source": "https://commons.wikimedia.org/wiki/File:Casa_de_Vidro_(Morumbi,SP).jpg",
-          "creator": "Boaventuravinicius",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-office-building",
-      "chapter": "starting_over_in_brazil",
-      "annotations": {
-        "Pietro Maria Bardi": {
-          "explanation": "Italian-born writer, curator, and art dealer who became the founding director of the São Paulo Museum of Art (MASP) and was Lina Bo Bardi’s husband.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
-        }
-      }
+      "event_type_icon": "mdi-book",
+      "chapter": "a_brazilian_language",
+      "weight": 0.55
     },
     {
-      "date": "1955",
+      "date": "1951",
       "date_precision": "year",
-      "date_end": "1957",
-      "date_end_precision": "year",
-      "age": 40,
-      "title": "Taught at University of São Paulo",
-      "description": "In 1955, Lina Bo Bardi began teaching at the [[Faculty of Architecture and Urbanism|Faculty of Architecture and Urbanism]] at the [[University of São Paulo|University of São Paulo]] in São Paulo. Seeking a stable academic appointment, she prepared and submitted a teaching manuscript in 1957, “Propaedeutic Contribution to the Teaching of Architecture Theory,” outlining her approach to architectural education and theory.",
+      "age": 36,
+      "title": "Builds the Glass House",
+      "description": "In 1951, Lina Bo Bardi became a naturalized Brazilian citizen and completed Casa de Vidro in Morumbi, São Paulo. She designed the home for herself and Pietro Maria Bardi as a glass-walled living space raised on slender concrete columns above the wooded site.",
       "locations": [
         {
           "name_historic": "São Paulo",
           "name_modern": "São Paulo, Brazil",
           "centroid": [
-            -46.6333824,
-            -23.5506507
+            -46.6333,
+            -23.5505
           ],
           "primary": true
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
+      "involved_people": [
+        "Pietro Maria Bardi"
       ],
-      "event_type_icon": "mdi-school-outline",
-      "chapter": "museum_as_manifesto",
-      "annotations": {
-        "Faculty of Architecture and Urbanism": {
-          "explanation": "USP’s architecture and urbanism school (FAU-USP), founded in 1948 and one of Brazil’s most influential centers for architectural education."
-        },
-        "University of São Paulo": {
-          "explanation": "Major public university in São Paulo, founded in 1934, and among the most prominent research universities in Latin America.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_S%C3%A3o_Paulo"
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Casa_de_Vidro_-_Instituto_Bardi.jpg/960px-Casa_de_Vidro_-_Instituto_Bardi.jpg",
+          "caption": "Casa de Vidro, Lina Bo Bardi’s São Paulo home",
+          "source": "https://commons.wikimedia.org/wiki/File:Casa_de_Vidro_-_Instituto_Bardi.jpg",
+          "creator": "LeoINN",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
-      }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "a_brazilian_language",
+      "weight": 0.85,
+      "background": "Casa de Vidro stood on a 7,000-square-meter site in the remnants of the Atlantic Forest around São Paulo. It was one of the first three houses in Morumbi. The developer used the completed house to market the neighborhood's remaining lots under the slogan “Architecture and Nature.”\n\nBo Bardi treated the house as a test of how Italian modernism could work in Brazil. Mies van der Rohe's Farnsworth House and Charles and Ray Eames's Case Study House No. 8 were among the American houses then widely publicized. Bernard Rudofsky's courtyard houses in the Brazil Builds exhibition may also have informed her design. She drew from these examples while seeking a modern architecture connected to local forms and the wooded site.\n\nThin reinforced-concrete slabs and circular columns carry the main living area above the ground. The columns leave the land and vegetation running beneath it. A courtyard inside the open living space allows trees to grow up from the garden. The dining area, library, and fireplace seating remain open to the forest through the glass walls. Bedrooms occupy the portion of the house set on the hilltop. They face a narrow courtyard beside the staff wing. The kitchen joins the two parts of the plan and included labor-saving devices.\n\nThe forest later grew back around the building. It now conceals the house within the wealthy suburb Morumbi became."
     },
     {
       "date": "1957",
@@ -554,15 +482,15 @@
       "date_end": "1968",
       "date_end_precision": "year",
       "age": 42,
-      "title": "Built new MASP headquarters",
-      "description": "In 1957, she began designing the São Paulo Museum of Art’s new building on Avenida Paulista in [[São Paulo|São Paulo]], working closely with museum director Pietro Maria Bardi and overseeing the project through its long construction.",
+      "title": "Builds New MASP",
+      "description": "In 1957, Lina Bo Bardi begins the new São Paulo Museum of Art building on Avenida Paulista. Construction is completed in 1968. She displays paintings on glass easels across an open gallery above a public plaza.",
       "locations": [
         {
           "name_historic": "São Paulo",
           "name_modern": "São Paulo, Brazil",
           "centroid": [
-            -46.6333824,
-            -23.5506507
+            -46.6333,
+            -23.5505
           ],
           "primary": true
         }
@@ -571,51 +499,125 @@
         "Pietro Maria Bardi"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Lina_bo_bardi%2C_sao_paulo_april_2006_%28698665225%29.jpg/960px-Lina_bo_bardi%2C_sao_paulo_april_2006_%28698665225%29.jpg",
-          "caption": "MASP building (architect Lina Bo Bardi, 1957–1968)",
-          "source": "https://commons.wikimedia.org/wiki/File:Lina_bo_bardi,_sao_paulo_april_2006_(698665225).jpg",
-          "creator": "seier+seier",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/MASP_Brazil.jpg/960px-MASP_Brazil.jpg",
+          "caption": "MASP building on Avenida Paulista, São Paulo",
+          "source": "https://commons.wikimedia.org/wiki/File:MASP_Brazil.jpg",
+          "creator": "Wilfredor",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
         }
       ],
-      "event_type_icon": "mdi-office-building",
-      "chapter": "museum_as_manifesto",
-      "annotations": {
-        "São Paulo": {
-          "explanation": "Brazil’s largest city and the site of the São Paulo Museum of Art (MASP) on Avenida Paulista, where Lina Bo Bardi developed the museum’s new headquarters project.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/S%C3%A3o_Paulo"
+      "event_type_icon": "mdi-drawing",
+      "chapter": "culture_in_common",
+      "weight": 0.98,
+      "background": "Local legislation made the unobstructed view across the site a condition of the commission. Bo Bardi kept the middle of the building open and concentrated its galleries above and below ground level. A 74-meter suspended volume rests on four red concrete columns. Concrete beams run along its length. The structure used raw prestressed concrete without decorative ornament.\n\nBo Bardi called this approach “Poor Architecture.” She wanted a museum with a simple monumental form. MASP’s collection included works by Bosch, Mantegna, Titian, and Goya. In the gallery, each painting stood on a rough concrete block beneath a glass sheet. The works formed a loose grid without chronological order. Bo Bardi intended the arrangement to disrupt visitors’ expectations of how an art collection should be organized.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Masp.jpg/960px-Masp.jpg",
+          "caption": "Masp in Sao Paulo",
+          "source": "https://commons.wikimedia.org/wiki/File:Masp.jpg",
+          "creator": "Andredeak",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "MASP Avenida Paulista building"
         }
-      }
+      ]
     },
     {
-      "date": "1977",
+      "date": "1959",
       "date_precision": "year",
-      "age": 62,
-      "title": "Designed SESC Pompéia",
-      "description": "In 1977, in São Paulo, Lina Bo Bardi developed the design for the [[SESC|SESC]] Pompéia factory conversion, presenting it as a leisure center for everyday use rather than a solemn cultural monument, and favoring straightforward construction methods that could employ local craftspeople and workers.",
+      "age": 44,
+      "title": "Stages Bahia Exhibition",
+      "description": "In 1959, Lina Bo Bardi and theater director Martim Gonçalves create the Bahia exhibition in São Paulo for the Fifth São Paulo Biennial, an international art exhibition. The exhibition brings artworks, craft objects, music, and photographs from Bahia to Ibirapuera.",
       "locations": [
         {
           "name_historic": "São Paulo",
           "name_modern": "São Paulo, Brazil",
           "centroid": [
-            -46.6333824,
-            -23.5506507
+            -46.6333,
+            -23.5505
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Martim Gonçalves"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/S%C3%A3o_Paulo_Art_Biennial"
+      ],
+      "event_type_icon": "mdi-palette",
+      "chapter": "culture_in_common",
+      "weight": 0.65
+    },
+    {
+      "date": "1959",
+      "date_precision": "year",
+      "date_end": "1963",
+      "date_end_precision": "year",
+      "age": 44,
+      "title": "Reclaims Solar do Unhão",
+      "description": "In 1959, Lina Bo Bardi accepts an invitation from Bahia's governor to direct a new art museum in Salvador. She converts Solar do Unhão, a former sugar mill, for the museum. She preserves its colonial exterior and adds a staircase made with traditional materials and abstract geometry.",
+      "locations": [
+        {
+          "name_historic": "Salvador",
+          "name_modern": "Salvador, Brazil",
+          "centroid": [
+            -38.5014,
+            -12.9711
           ],
           "primary": true
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Museu_de_Arte_Moderna_da_Bahia_Solar_do_Unh%C3%A3o_Escada_Helicoidal_2021-8519.jpg/960px-Museu_de_Arte_Moderna_da_Bahia_Solar_do_Unh%C3%A3o_Escada_Helicoidal_2021-8519.jpg",
+          "caption": "Lina Bo Bardi’s helical staircase at Solar do Unhão",
+          "source": "https://commons.wikimedia.org/wiki/File:Museu_de_Arte_Moderna_da_Bahia_Solar_do_Unhão_Escada_Helicoidal_2021-8519.jpg",
+          "creator": "Paul R. Burley",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "culture_in_common",
+      "weight": 0.8
+    },
+    {
+      "date": "1977",
+      "date_precision": "year",
+      "date_end": "1986",
+      "date_end_precision": "year",
+      "age": 62,
+      "title": "Transforms SESC Pompéia",
+      "description": "In 1977, Lina Bo Bardi began redesigning a former steel drum and refrigerator factory in São Paulo as SESC Pompéia, a leisure center with spaces for sports, workshops, theater, and other activities. After seeing local residents use the site for social gatherings, football, dance, and theater, she preserved the factory sheds and added concrete towers connected by elevated walkways.",
+      "locations": [
+        {
+          "name_historic": "São Paulo",
+          "name_modern": "São Paulo, Brazil",
+          "centroid": [
+            -46.6333,
+            -23.5505
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Lina_Bo_Bardi%2C_SESC_Pomp%C3%A9ia._%288736296851%29.jpg/960px-Lina_Bo_Bardi%2C_SESC_Pomp%C3%A9ia._%288736296851%29.jpg",
-          "caption": "Lina Bo Bardi, SESC Pompéia",
+          "caption": "SESC Pompéia, São Paulo, designed by Lina Bo Bardi",
           "source": "https://commons.wikimedia.org/wiki/File:Lina_Bo_Bardi,_SESC_Pompéia._(8736296851).jpg",
           "creator": "paulisson miura from Cuiabá, Brasil",
           "license": "CC BY 2.0",
@@ -623,27 +625,61 @@
         }
       ],
       "event_type_icon": "mdi-drawing",
-      "chapter": "architecture_for_everyone",
-      "annotations": {
-        "SESC": {
-          "explanation": "Serviço Social do Comércio, a Brazilian private social-service network funded by the commerce sector that commissions cultural, educational, and leisure centers.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Servi%C3%A7o_Social_do_Com%C3%A9rcio"
-        }
-      }
+      "chapter": "public_space_finale",
+      "weight": 0.97,
+      "background": "SESC was linked to Brazil’s national unions and had been created in the 1940s to provide workers with health services and cultural activities. Bo Bardi called the redevelopment a leisure center. She wanted it to be a place for relaxation and enjoyment. Construction proceeded in stages through 1986.\n\nShe exposed the factory’s rough concrete by stripping off old plaster and sandblasting the surfaces. New openings in the walls received bright red sliding screens mounted inside. Her choice of materials gave labor and craftsmanship priority. She believed building work should create jobs for craftspeople and laborers.\n\nThe finished complex housed theaters, gymnasiums, a swimming pool, snack bars, leisure areas, restaurants, galleries, and workshops."
     },
     {
-      "date": "1989",
+      "date": "1984",
       "date_precision": "year",
-      "age": 74,
-      "title": "Received USP retrospective",
-      "description": "In 1989, the [[University of São Paulo|University of São Paulo (USP)]] mounted its first exhibition devoted to Lina Bo Bardi’s work, publicly recognizing her contributions while she was still active. The show brought together projects and designs that had often been met with skepticism in professional circles where she had long contended with being foreign-born and a woman.",
+      "age": 69,
+      "title": "Redesigns Teatro Oficina",
+      "description": "In 1984, Lina Bo Bardi redesigns a burned office building in São Paulo for Teatro Oficina, an experimental theater company. Director Zé Celso commissions the project. She builds the theater largely from painted scaffolding around a narrow stage without conventional seating.",
       "locations": [
         {
           "name_historic": "São Paulo",
           "name_modern": "São Paulo, Brazil",
           "centroid": [
-            -46.6333824,
-            -23.5506507
+            -46.6333,
+            -23.5505
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Zé Celso"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Z%C3%A9_Celso"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Teatro_Oficina_de_Lina_Bo_Bardi.jpg/960px-Teatro_Oficina_de_Lina_Bo_Bardi.jpg",
+          "caption": "Teatro Oficina designed by Lina Bo Bardi",
+          "source": "https://commons.wikimedia.org/wiki/File:Teatro_Oficina_de_Lina_Bo_Bardi.jpg",
+          "creator": "Igor Marotti",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "public_space_finale",
+      "weight": 0.78
+    },
+    {
+      "date": "1989",
+      "date_precision": "year",
+      "age": 74,
+      "title": "Receives São Paulo Survey",
+      "description": "In 1989, the University of São Paulo honored Lina Bo Bardi with the first exhibition of her work. The exhibition took place in São Paulo while she was continuing her architectural work there.",
+      "locations": [
+        {
+          "name_historic": "São Paulo",
+          "name_modern": "São Paulo, Brazil",
+          "centroid": [
+            -46.6333,
+            -23.5505
           ],
           "primary": true
         }
@@ -652,44 +688,35 @@
         "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
       ],
       "event_type_icon": "mdi-palette",
-      "chapter": "architecture_for_everyone",
-      "annotations": {
-        "University of São Paulo": {
-          "explanation": "Brazil’s largest public university, commonly known by the acronym USP; it is a major cultural and research institution in São Paulo.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_S%C3%A3o_Paulo"
-        }
-      }
+      "chapter": "public_space_finale",
+      "weight": 0.35
     },
     {
       "date": "1992-03-20",
       "date_precision": "day",
       "age": 77,
-      "title": "Died in São Paulo",
-      "description": "Lina Bo Bardi died on 20 March 1992 in [[Casa de Vidro|Casa de Vidro]] in São Paulo, aged 77.",
+      "title": "Dies at Casa de Vidro",
+      "description": "Lina Bo Bardi died at Casa de Vidro in São Paulo, the home she had designed in Morumbi. At her death, she left unfinished designs for a new São Paulo City Hall and a Cultural Center for Vera Cruz.",
       "locations": [
         {
           "name_historic": "São Paulo",
           "name_modern": "São Paulo, Brazil",
           "centroid": [
-            -46.6333824,
-            -23.5506507
+            -46.6333,
+            -23.5505
           ],
           "primary": true
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "architecture_for_everyone",
-      "annotations": {
-        "Casa de Vidro": {
-          "explanation": "The Glass House, Bo Bardi’s modernist residence in the Morumbi area of São Paulo, designed by her and completed in 1951."
-        }
-      },
+      "chapter": "public_space_finale",
+      "weight": 0.4,
       "event_class": {
-        "type": "death"
+        "type": "death",
+        "characterization": "at home"
       }
     }
   ]

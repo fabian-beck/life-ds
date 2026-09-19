@@ -1,10 +1,11 @@
 {
   "dataset": "meta_story",
-  "created_on": "2026-07-25T10:13:20.000829+02:00",
+  "created_on": "2026-09-19T12:48:01.577238+02:00",
   "meta_story": {
     "id": "organic_shapes_in_architecture",
-    "title": "Beyond the Box",
-    "tagline": "Nine designers opened architecture to life",
+    "title": "Architecture as Living Form",
+    "tagline": "How buildings learned from nature",
+    "description": "Organic architecture treats a building as a responsive body rather than a sealed box. Its shapes may grow from a hillside, follow the pull of gravity through a suspended roof, gather people around a courtyard, or translate plants, waves, bones, and caves into structure. From hand-worked ornament to computer-assisted curves, architects have repeatedly used natural form to make modern construction feel tactile, situated, and alive.\n\nThe idea has never meant one recognizable style. In Barcelona, Glasgow, and the American Midwest, it joined craft, ornament, and a close reading of site. Across Finland, Sri Lanka, and Brazil, it made climate, landscape, material, and communal life active partners in design. Later, experimental engineers and digital designers turned membranes, shell-like roofs, fluid circulation, and fractured geometry into new kinds of public space.",
     "person_ids": [
       "antoni_gaud",
       "charles_rennie_mackintosh",
@@ -16,21 +17,21 @@
       "friedensreich_hundertwasser",
       "zaha_hadid"
     ],
-    "date_range_start": "1883",
+    "date_range_start": "1878",
     "date_range_end": "2012",
-    "lastUpdated": "2026-09-06T08:43:29.683273+02:00"
+    "lastUpdated": "2026-09-19T12:50:36.785298+02:00"
   },
   "generation_metadata": {
     "hints": {
       "hint": "include Alvar Aalto and Geoffrey Bawa; consider Lina Bo Bardi"
     },
     "model": "gpt-5.6-terra",
-    "generated_at": "2026-07-25T10:13:20.000829+02:00"
+    "generated_at": "2026-09-19T12:48:01.577238+02:00"
   },
   "subtopics": [
     {
-      "id": "craft_growth_and_rebellion",
-      "title": "Crafted Resistance",
+      "id": "crafted_naturalism",
+      "title": "Crafted Naturalism",
       "person_ids": [
         "antoni_gaud",
         "charles_rennie_mackintosh",
@@ -38,181 +39,127 @@
       ]
     },
     {
-      "id": "buildings_belonging_to_place",
-      "title": "Place Shapes Buildings",
+      "id": "landscape_and_life",
+      "title": "Landscape and Life",
       "person_ids": [
         "frank_lloyd_wright",
         "alvar_aalto",
-        "geoffrey_bawa"
+        "geoffrey_bawa",
+        "lina_bo_bardi"
       ]
     },
     {
-      "id": "forces_fields_and_flow",
-      "title": "Form Under Pressure",
+      "id": "structures_in_motion",
+      "title": "Structures in Motion",
       "person_ids": [
         "frei_otto",
-        "lina_bo_bardi",
         "zaha_hadid"
       ]
     }
   ],
-  "opening": [
-    {
-      "type": "image",
-      "image": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Casa_Batll%C3%B3%2C_Barcelona_58.jpg/960px-Casa_Batll%C3%B3%2C_Barcelona_58.jpg",
-        "caption": "Casa Batlló, by architect Antoni Gaudí, Barcelona",
-        "source": "https://commons.wikimedia.org/wiki/File:Casa_Batlló,_Barcelona_58.jpg",
-        "person_id": "antoni_gaud",
-        "event_index": 12,
-        "image_index": 0
-      },
-      "layout": "full"
-    },
-    {
-      "type": "paragraph",
-      "text": "For more than a century, nine designers refused to treat architecture as a sealed box. They made craft, bodies, landscapes, vegetation, structural forces, and movement active parts of design."
-    }
-  ],
-  "description": [
-    {
-      "type": "paragraph",
-      "text": "They did not form a single school. Gaudí and Charles Rennie Mackintosh created richly coordinated environments; Frank Lloyd Wright and Alvar Aalto tied modern design to place and human experience; Frei Otto found form in physical forces; Lina Bo Bardi and Geoffrey Bawa opened buildings to social and tropical settings; Friedensreich Hundertwasser attacked uniformity; and Zaha Hadid turned dynamic drawings into public architecture."
-    },
-    {
-      "type": "paragraph",
-      "text": "Together, their lives trace an expanding idea of what could generate architectural form. What began in crafted surfaces and nature-derived ornament grew into experiments with climate, terrain, occupation, engineering, and continuous space."
-    }
-  ],
-  "section_headings": {
-    "timeline": "How Form Opened Outward",
-    "network": "Encounters and Parallel Paths",
-    "map": "Ideas Rooted in Place",
-    "conclusion": "A Wider Architecture"
-  },
-  "section_bodies": {
-    "timeline": [
-      {
-        "type": "paragraph",
-        "text": "Across four generations, each advance loosened another convention. Complete interiors gave way to buildings calibrated around health and movement; landscapes and tensile forces became design agents; and once-radical experiments eventually entered housing, civic complexes, museums, and global exhibitions."
-      },
-      {
-        "type": "paragraph",
-        "text": "The progression was not uninterrupted. World War II disrupted Aalto’s practice and delayed Wright’s Guggenheim project, while Brazil’s military coup ended Bo Bardi’s cultural work in Bahia and preceded her return to São Paulo. Yet the search for more responsive forms continued through those breaks."
-      }
-    ],
-    "network": [
-      {
-        "type": "image",
-        "image": {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg/960px-Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
-          "caption": "Frei Otto tensile structures for Munich 72 Olympics",
-          "source": "https://commons.wikimedia.org/wiki/File:Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
-          "person_id": "frei_otto",
-          "event_index": 9,
-          "image_index": 0
-        },
-        "layout": "right"
-      },
-      {
-        "type": "paragraph",
-        "text": "Shared concerns did not always arise from direct contact. Some affinities developed independently across countries and generations, but Frei Otto provides a documented line of transmission: he visited Wright at Taliesin and later drew on Gaudí’s forms while developing the Munich Olympic roofs."
-      },
-      {
-        "type": "paragraph",
-        "text": "Elsewhere, the strongest connections are comparative. Mackintosh and Hundertwasser resisted standardization by different means; Aalto and Bawa rooted modernism in local conditions; Bo Bardi and Hadid each reconsidered how people move through public space."
-      }
-    ],
-    "map": [
-      {
-        "type": "paragraph",
-        "text": "These experiments were inseparable from their settings. Barcelona and Glasgow supported early syntheses of architecture, craft, and interior design; São Paulo gave Bo Bardi settings for both domestic and collective life; Cologne became a testing ground for lightweight construction; and the forest near Dambulla shaped Bawa’s tropical modernism."
-      },
-      {
-        "type": "image",
-        "image": {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Kandalama_Hotel%2C_Dambulla-Arch.GeoffreyBawa-SriLanka.jpg/960px-Kandalama_Hotel%2C_Dambulla-Arch.GeoffreyBawa-SriLanka.jpg",
-          "caption": "Kandalama Hotel, Dambulla",
-          "source": "https://commons.wikimedia.org/wiki/File:Kandalama_Hotel,_Dambulla-Arch.GeoffreyBawa-SriLanka.jpg",
-          "person_id": "geoffrey_bawa",
-          "event_index": 14,
-          "image_index": 0
-        },
-        "layout": "full"
-      }
-    ]
-  },
   "chapters": [
     {
-      "id": "craft_nature_and_modern_style",
-      "title": "The Complete Environment (1883-1915)",
-      "date_start": "1883",
+      "id": "art_nouveau_roots",
+      "title": "Nature Enters the Building (1878-1911)",
+      "date_start": "1878",
       "date_start_precision": "year",
-      "date_end": "1915",
+      "date_end": "1911",
       "date_end_precision": "year",
       "person_events": [
         {
           "person_id": "antoni_gaud",
+          "event_date": "1878",
+          "event_date_precision": "year",
+          "event_title": "Receives Casa Vicens Commission",
+          "event_index": 5,
+          "theme_connection": "Manuel Vicens commissioned Gaudí to design a summer house in Barcelona’s Gràcia district. Ceramic tile, brick, and wrought iron formed a colorful exterior tied to its garden setting."
+        },
+        {
+          "person_id": "antoni_gaud",
           "event_date": "1883",
           "event_date_precision": "year",
-          "event_title": "Built Casa Vicens",
-          "event_index": 5,
-          "theme_connection": "Casa Vicens, Gaudí’s first major house, combined vegetal pattern, bold color, local materials, and irregular surfaces. Its crafted, nature-inflected language turned the domestic building into a richly detailed environment."
+          "event_title": "Takes Over Sagrada Família",
+          "event_index": 6,
+          "theme_connection": "Gaudí took charge of the Sagrada Família after its first architect left. He replaced the medieval Gothic design with branching forms and new structural geometry."
         },
         {
           "person_id": "charles_rennie_mackintosh",
-          "event_date": "1897",
+          "event_date": "1896",
           "event_date_precision": "year",
-          "event_title": "Glasgow School of Art rises on Renfrew Street",
-          "event_index": 7,
-          "theme_connection": "The Glasgow School of Art is Mackintosh’s landmark total work of architecture, unifying a highly articulated structure with bespoke interiors, fittings, light, and ornament. Its synthesis of craft and irregular, living-looking decorative language is indispensable to the pre-modernist strand of organic design."
+          "event_title": "Wins Art School Commission",
+          "event_index": 5,
+          "theme_connection": "Mackintosh served as project architect for the new Glasgow School of Art. He designed the building with its interiors, furniture, and ironwork."
         },
         {
           "person_id": "antoni_gaud",
           "event_date": "1900",
           "event_date_precision": "year",
-          "event_title": "Developed Park Güell project",
-          "event_index": 11,
-          "theme_connection": "Park Güell is a defining synthesis of landscape, architecture, handcraft, and structural experimentation: terraces, viaducts, mosaic surfaces, and columns make the site seem to grow from its terrain. It is a landmark demonstration of Gaudí’s botanical and geological architectural imagination."
+          "event_title": "Plans Park Güell",
+          "event_index": 8,
+          "theme_connection": "Eusebi Güell hired Gaudí to plan a garden community on a Barcelona hillside. Roads, terraces, service buildings, and shared spaces followed the slope."
         },
         {
           "person_id": "charles_rennie_mackintosh",
-          "event_date": "1902",
+          "event_date": "1903",
           "event_date_precision": "year",
-          "event_title": "Hill House and Willow Tearooms peak",
-          "event_index": 11,
-          "theme_connection": "At Hill House and the Willow Tearooms, Mackintosh coordinated rooms, furnishings, ornament, light, and stylized vegetal motifs. The commissions treated domestic and commercial interiors as complete, custom-designed environments."
+          "event_title": "Completes Willow Tearooms",
+          "event_index": 9,
+          "theme_connection": "Mackintosh designed the Willow Tearooms for Catherine Cranston in Glasgow. The facade, rooms, furniture, and ornament formed one interior environment, with decorative work by Margaret Macdonald."
         },
         {
           "person_id": "antoni_gaud",
           "event_date": "1904",
           "event_date_precision": "year",
-          "event_title": "Created landmark urban houses",
-          "event_index": 12,
-          "theme_connection": "Casa Batlló and Casa Milà transformed Barcelona apartment buildings with wave-like façades, bone- and cave-like details, sculptural roofscapes, and ambitious structural and spatial solutions. Both works advanced Gaudí’s architecture modeled on natural forms."
+          "event_title": "Remakes Casa Batlló",
+          "event_index": 9,
+          "theme_connection": "Gaudí reshaped Casa Batlló’s facade, rooms, roof, and light wells. Curving forms, colored glass, ceramic, and ironwork carried natural imagery through the house."
+        },
+        {
+          "person_id": "frank_lloyd_wright",
+          "event_date": "1905",
+          "event_date_precision": "year",
+          "event_title": "Designs Oak Park's Unity Temple",
+          "event_index": 5,
+          "theme_connection": "After a fire destroyed its church, an Oak Park congregation asked Wright to design Unity Temple. Reinforced concrete enclosed a compact worship room and connected community spaces."
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1906",
+          "event_date_precision": "year",
+          "event_title": "Builds Casa Milà",
+          "event_index": 10,
+          "theme_connection": "Gaudí designed Casa Milà with a rippling stone exterior, open courtyards, and flowing interiors. Sculptural chimneys and stair towers turned the roof into an inhabited landscape."
+        },
+        {
+          "person_id": "antoni_gaud",
+          "event_date": "1908",
+          "event_date_precision": "year",
+          "event_title": "Builds Colònia Güell Crypt",
+          "event_index": 11,
+          "theme_connection": "Gaudí tested slanting columns, catenary arches, and brick vaults in the unfinished crypt at Colònia Güell. The structure made the forces of weight visible."
+        },
+        {
+          "person_id": "frank_lloyd_wright",
+          "event_date": "1910",
+          "event_date_precision": "year",
+          "event_title": "Publishes the Wasmuth Portfolio in Berlin",
+          "event_index": 6,
+          "theme_connection": "Berlin publisher Ernst Wasmuth issued two volumes of Wright’s plans and line drawings. The portfolio carried his work from the United States to a European architectural audience."
         },
         {
           "person_id": "frank_lloyd_wright",
           "event_date": "1911",
           "event_date_precision": "year",
-          "event_title": "Builds Taliesin in Wisconsin",
-          "event_index": 9,
-          "theme_connection": "Taliesin is Wright’s foundational experiment in a building inseparable from its Wisconsin landscape, materials, outlooks, and patterns of living and working. As both an enduring architectural work and laboratory for his organic architecture, it is indispensable to the theme of buildings belonging to place."
-        },
-        {
-          "person_id": "antoni_gaud",
-          "event_date": "1915",
-          "event_date_precision": "year",
-          "event_title": "Focused entirely on Sagrada Família",
-          "event_index": 14,
-          "theme_connection": "Gaudí’s exclusive work on the Sagrada Família advanced an architecture of branching, biomorphic structure and craft-led masonry. Developed through models and on-site problem-solving, rather than conventional finished plans, it treated form, structure and symbolism as a continuing process."
+          "event_title": "Builds Taliesin in Spring Green",
+          "event_index": 7,
+          "theme_connection": "Wright began Taliesin on family land in the Wisconsin countryside. Low forms and local materials tied the house to the surrounding valley."
         }
       ],
       "historical_context": [],
-      "lead_in": "Around the turn of the 20th century, buildings, furnishings, ornament, and landscape were conceived as parts of a whole. Natural forms and local craft shaped both surfaces and spatial organization."
+      "lead_in": "Craft, ornament, and structure came together in houses, schools, churches, and public rooms. Curves and natural imagery began to shape entire buildings."
     },
     {
-      "id": "organic_modernism_emerges",
+      "id": "organic_modernism",
       "title": "Modernism Meets the Body (1929-1943)",
       "date_start": "1929",
       "date_start_precision": "year",
@@ -223,32 +170,64 @@
           "person_id": "alvar_aalto",
           "event_date": "1929",
           "event_date_precision": "year",
-          "event_title": "Builds Paimio Sanatorium",
+          "event_title": "Designs Paimio Sanatorium",
           "event_index": 5,
-          "theme_connection": "At Paimio Sanatorium, Aalto integrated building form, light, colour, ventilation, and furnishings around patients’ bodily experience. The bent-birch Paimio Chair was designed to make prolonged sitting more comfortable."
+          "theme_connection": "Alvar and Aino Aalto planned Paimio Sanatorium around tuberculosis treatment and rest. Wards, terraces, lighting, colors, furniture, and interiors responded to patients’ daily routines."
         },
         {
           "person_id": "alvar_aalto",
-          "event_date": "1937",
+          "event_date": "1931",
           "event_date_precision": "year",
-          "event_title": "Designs Villa Mairea",
-          "event_index": 8,
-          "theme_connection": "Villa Mairea is a canonical synthesis of modern architecture with forest-derived rhythms, tactile wood and brick, and an immersive domestic relationship to its Finnish landscape. Its abstraction of natural forms into columns, screens, and spatial sequences is central to the collection’s idea of buildings belonging to place."
+          "event_title": "Creates Paimio Chair",
+          "event_index": 6,
+          "theme_connection": "The Aaltos created the Paimio Chair for patients who spent long periods seated. Laminated birch bent into a continuous frame around a reclining seat shaped to support breathing."
+        },
+        {
+          "person_id": "frank_lloyd_wright",
+          "event_date": "1935",
+          "event_date_precision": "year",
+          "event_title": "Designs Fallingwater for the Kaufmanns",
+          "event_index": 12,
+          "theme_connection": "Edgar J. Kaufmann commissioned Wright to design a weekend house at Bear Run. Wright placed Fallingwater above the waterfall and extended concrete terraces over the stream."
+        },
+        {
+          "person_id": "alvar_aalto",
+          "event_date": "1935",
+          "event_date_precision": "year",
+          "event_title": "Completes Viipuri Library",
+          "event_index": 7,
+          "theme_connection": "Aalto completed Viipuri Library after eight years of design and construction. Skylights lit the reading rooms, while a wave-shaped wooden ceiling covered the lecture hall."
+        },
+        {
+          "person_id": "frank_lloyd_wright",
+          "event_date": "1936",
+          "event_date_precision": "year",
+          "event_title": "Designs S. C. Johnson Headquarters",
+          "event_index": 13,
+          "theme_connection": "Wright planned the S. C. Johnson headquarters around a large open workroom. Slender concrete columns widened at the top like trees to support the roof."
+        },
+        {
+          "person_id": "alvar_aalto",
+          "event_date": "1939",
+          "event_date_precision": "year",
+          "event_title": "Completes Villa Mairea",
+          "event_index": 9,
+          "theme_connection": "Alvar and Aino Aalto designed Villa Mairea with its furniture, lighting, interiors, and garden. Varied columns and natural materials carried the surrounding landscape into the house."
         },
         {
           "person_id": "frank_lloyd_wright",
           "event_date": "1943",
           "event_date_precision": "year",
-          "event_title": "Receives Guggenheim commission",
+          "event_title": "Accepts Guggenheim Museum Design Commission",
           "event_index": 14,
-          "theme_connection": "The Guggenheim commission began Wright’s long design process for a spiral museum organized as a continuous path rather than stacked galleries. The project occupied him through years of iterative design and controversy."
+          "theme_connection": "Solomon R. Guggenheim hired Wright to design a New York museum for nonobjective art. Wright organized the gallery as a continuous spiral ramp."
         }
       ],
       "historical_context": [
         {
           "id": "world_war_ii",
           "title": "World War II",
-          "description": "The war disrupted Alvar Aalto’s Finnish practice and delayed the realization of Frank Lloyd Wright’s Guggenheim project after its 1943 commission.",
+          "description": "World War II was the global conflict fought from 1939 to 1945, bringing invasion and war to Finland and aerial destruction to Italy. Fighting damaged Aalto's Viipuri Library and left it on Soviet territory, while bombing destroyed Bo Bardi's Milan office early in her career.",
           "date_start": "1939-09-01",
           "date_start_precision": "day",
           "date_end": "1945-09-02",
@@ -257,119 +236,175 @@
           "priority": 3
         }
       ],
-      "lead_in": "Aalto calibrated modern buildings around light, ventilation, acoustics, materials, and bodily comfort, while Wright conceived a museum as continuous movement. World War II disrupted their practices without ending the pursuit of a more humane modernism."
+      "lead_in": "Modern materials served comfort, health, work, and movement. Buildings took their form from patients, landscapes, and the routines of daily life."
     },
     {
-      "id": "landscape_structure_and_society",
-      "title": "Form Follows Conditions (1949-1975)",
-      "date_start": "1949",
+      "id": "climate_community_experiment",
+      "title": "Climate and Community (1947-1975)",
+      "date_start": "1947",
       "date_start_precision": "year",
       "date_end": "1975",
       "date_end_precision": "year",
       "person_events": [
         {
+          "person_id": "lina_bo_bardi",
+          "event_date": "1947-10-02",
+          "event_date_precision": "day",
+          "event_title": "Designs MASP's First Home",
+          "event_index": 6,
+          "theme_connection": "Lina Bo Bardi designed the first galleries of the São Paulo Museum of Art inside a media company headquarters. The new museum opened with Pietro Maria Bardi as director."
+        },
+        {
+          "person_id": "geoffrey_bawa",
+          "event_date": "1948",
+          "event_date_precision": "year",
+          "event_title": "Buys Lunuganga Estate",
+          "event_index": 4,
+          "theme_connection": "Bawa bought Lunuganga, an abandoned rubber estate near Bentota. He began shaping its tropical vegetation and terrain into a garden influenced by villas he had seen while traveling."
+        },
+        {
           "person_id": "alvar_aalto",
           "event_date": "1949",
           "event_date_precision": "year",
-          "event_title": "Designs Säynätsalo Town Hall",
-          "event_index": 12,
-          "theme_connection": "Baker House is a landmark of Aalto’s human-centered organic modernism: its serpentine plan responds to the Charles River and distributes views, while its brick and wood materiality makes a large dormitory feel tactile and domestic."
+          "event_title": "Completes Baker House",
+          "event_index": 11,
+          "theme_connection": "Aalto completed Baker House, a student residence at the Massachusetts Institute of Technology. Its curved plan gave rooms views of the Charles River and improved ventilation."
         },
         {
           "person_id": "lina_bo_bardi",
           "event_date": "1951",
           "event_date_precision": "year",
-          "event_title": "Naturalized and built Glass House",
-          "event_index": 10,
-          "theme_connection": "Casa de Vidro is Bo Bardi’s foundational built statement on architecture as an inhabited extension of landscape: its elevated glass volume and garden setting dissolve the conventional boundary between domestic interior and tropical site."
+          "event_title": "Builds the Glass House",
+          "event_index": 8,
+          "theme_connection": "Bo Bardi completed Casa de Vidro for herself and Pietro Maria Bardi in São Paulo. Slender concrete columns raised its glass-walled living space above the wooded site."
+        },
+        {
+          "person_id": "alvar_aalto",
+          "event_date": "1952",
+          "event_date_precision": "year",
+          "event_title": "Completes Säynätsalo Town Hall",
+          "event_index": 12,
+          "theme_connection": "Aalto arranged Säynätsalo Town Hall around a raised brick courtyard. The complex gathered the council chamber, offices, a library, shops, and apartments."
         },
         {
           "person_id": "frei_otto",
           "event_date": "1954",
           "event_date_precision": "year",
-          "event_title": "Publishes \"Das hängende Dach\" and teaches abroad",
-          "event_index": 5,
-          "theme_connection": "Das hängende Dach was the first comprehensive study of tensioned-surface structures, establishing a key theoretical and technical basis for Otto’s force-derived lightweight architecture and its influential experimental tradition."
+          "event_title": "Publishes Das hängende Dach Study",
+          "event_index": 7,
+          "theme_connection": "Otto published Das hängende Dach, a study of roofs carried by cables, nets, and membranes. A model of Dorton Arena had directed his attention toward structures held in tension."
         },
         {
-          "person_id": "frei_otto",
+          "person_id": "lina_bo_bardi",
           "event_date": "1957",
           "event_date_precision": "year",
-          "event_title": "Founds lightweight lab and builds Sternwellenzelt",
-          "event_index": 6,
-          "theme_connection": "The Sternwellenzelt was an early landmark built tensile roof, making Otto’s experimental lightweight principles visible at architectural scale through a structure shaped by tension rather than rigid mass."
+          "event_title": "Builds New MASP",
+          "event_index": 9,
+          "theme_connection": "Bo Bardi began the new São Paulo Museum of Art on Avenida Paulista. The completed museum suspended an open gallery above a public plaza and displayed paintings on glass easels."
         },
         {
-          "person_id": "frei_otto",
-          "event_date": "1967",
+          "person_id": "lina_bo_bardi",
+          "event_date": "1959",
           "event_date_precision": "year",
-          "event_title": "German Pavilion at Expo 67, Montreal",
-          "event_index": 8,
-          "theme_connection": "Otto's German Pavilion at Expo 67 made lightweight cable-net and membrane construction an internationally visible architectural achievement. Its efficiently spanning, flexible roof demonstrated how form could be derived from structural forces rather than imposed as a rigid enclosure."
+          "event_title": "Reclaims Solar do Unhão",
+          "event_index": 11,
+          "theme_connection": "Bo Bardi converted the former Solar do Unhão sugar mill into an art museum in Salvador. She preserved the colonial exterior and added a staircase made with traditional materials and abstract geometry."
         },
         {
           "person_id": "frei_otto",
           "event_date": "1968",
           "event_date_precision": "year",
-          "event_title": "Spans Munich Olympic site with tensile roofs",
+          "event_title": "Designs Olympic Canopy",
+          "event_index": 11,
+          "theme_connection": "Otto worked with Günter Behnisch and Behnisch & Partner on the Munich Olympic Park. A transparent cable-net canopy covered the stadium and nearby sports facilities."
+        },
+        {
+          "person_id": "geoffrey_bawa",
+          "event_date": "1969",
+          "event_date_precision": "year",
+          "event_title": "Completes Bentota Beach Hotel",
           "event_index": 9,
-          "theme_connection": "For the Munich Olympic grounds, Otto, Günter Behnisch, and Behnisch’s office developed sweeping cable-net roofs over the main sports facilities. Hanging-net and soap-film experiments informed the continuous roof landscape."
+          "theme_connection": "Bawa arranged the Bentota Beach Hotel around open-air rooms, gardens, and water. Ena de Silva supplied batik work, and Laki Senanayake made a brass peacock sculpture."
+        },
+        {
+          "person_id": "frei_otto",
+          "event_date": "1975",
+          "event_date_precision": "year",
+          "event_title": "Completes Mannheim’s Multihalle Grid Shell",
+          "event_index": 12,
+          "theme_connection": "Otto developed the Multihalle’s structural design with Carlfried Mutschler and Joachim Langner. A lightweight timber grid shell formed a broad, curving public interior for Mannheim’s federal garden show."
         },
         {
           "person_id": "friedensreich_hundertwasser",
           "event_date": "1975",
           "event_date_precision": "year",
-          "event_title": "Launches 'Tree Tenant' actions",
+          "event_title": "Publishes the Tree Tenant Manifesto",
           "event_index": 11,
-          "theme_connection": "Hundertwasser’s Tree Tenant action installed trees through building windows, accompanied by the manifesto “Inquilino Albero.” The project proposed vegetation as an inhabitant of architecture and challenged standardized urban building."
+          "theme_connection": "Hundertwasser placed about 15 trees through building windows during the Milan Triennale. His Tree Tenant Manifesto called the trees tenants of the buildings that held them."
         }
       ],
       "historical_context": [
         {
           "id": "brazilian_coup_1964",
           "title": "Brazilian Coup",
-          "description": "The military coup ended Lina Bo Bardi’s cultural work in Bahia and prompted her return to São Paulo, where she continued working under the ensuing dictatorship.",
+          "description": "Brazilian military forces deposed President João Goulart in 1964 and established a dictatorship. The new regime curtailed the cultural milieu in Bahia where Lina Bo Bardi led the Museum of Modern Art, and she returned to São Paulo to continue her work under censorship and repression.",
           "date_start": "1964-03-31",
           "date_start_precision": "day",
-          "date_end": null,
-          "date_end_precision": null,
+          "date_end": "1964-04-01",
+          "date_end_precision": "day",
           "wikipedia_url": "https://en.wikipedia.org/wiki/1964_Brazilian_coup_d%27%C3%A9tat",
           "priority": 2
         }
       ],
-      "lead_in": "Views, tropical landscapes, vegetation, and tensile forces became active design agents rather than decoration. Political upheaval disrupted Bo Bardi’s work in Brazil, while lightweight structures opened another path beyond rigid mass."
+      "lead_in": "The work spread across continents and grew more responsive to weather and public use. Lightweight structures and tropical landscapes expanded the meaning of organic form."
     },
     {
-      "id": "fluid_architecture_goes_global",
-      "title": "Experiments Become Landmarks (1977-2012)",
+      "id": "expressive_public_forms",
+      "title": "Ecology Becomes Public (1977-1997)",
       "date_start": "1977",
       "date_start_precision": "year",
-      "date_end": "2012",
+      "date_end": "1997",
       "date_end_precision": "year",
       "person_events": [
         {
           "person_id": "lina_bo_bardi",
           "event_date": "1977",
           "event_date_precision": "year",
-          "event_title": "Designed SESC Pompéia",
-          "event_index": 13,
-          "theme_connection": "Bo Bardi’s design for SESC Pompéia converted a São Paulo factory complex into a leisure center for everyday use. She favored straightforward construction methods that could employ local craftspeople and workers."
-        },
-        {
-          "person_id": "geoffrey_bawa",
-          "event_date": "1979",
-          "event_date_precision": "year",
-          "event_title": "Designs New Parliament",
-          "event_index": 11,
-          "theme_connection": "Bawa's Sri Lankan Parliament is a major civic work that integrates traditional roof forms, water, planting, and the regional landscape into a carefully staged public complex. It is a lasting, influential demonstration of his proposition that modern architecture can grow from place, climate, and local culture."
+          "event_title": "Transforms SESC Pompéia",
+          "event_index": 12,
+          "theme_connection": "Bo Bardi began converting a former factory into SESC Pompéia. The complex combined preserved industrial buildings with spaces for sports, workshops, theater, and recreation."
         },
         {
           "person_id": "friedensreich_hundertwasser",
           "event_date": "1982",
           "event_date_precision": "year",
-          "event_title": "Architectural turn and Hundertwasserhaus",
+          "event_title": "Designs Rosenthal’s Factory Facade in Selb",
           "event_index": 12,
-          "theme_connection": "Hundertwasser brought his opposition to uniformity into Vienna’s Hundertwasserhaus, a municipal housing project developed with professional architectural collaboration. Its irregular surfaces, vegetation, and vivid color translated his ecological visual language into a building."
+          "theme_connection": "Hundertwasser redesigned the facade of the Rosenthal porcelain factory in Selb. Irregular forms and vivid colors altered the industrial exterior."
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "1983",
+          "event_date_precision": "year",
+          "event_title": "Wins The Peak Competition",
+          "event_index": 5,
+          "theme_connection": "Hadid won the competition for The Peak, a proposed leisure club above Hong Kong. Her widely published drawings projected sharp horizontal forms across the hillside, though the complex was never built."
+        },
+        {
+          "person_id": "lina_bo_bardi",
+          "event_date": "1984",
+          "event_date_precision": "year",
+          "event_title": "Redesigns Teatro Oficina",
+          "event_index": 13,
+          "theme_connection": "Bo Bardi converted a burned São Paulo office building into Teatro Oficina. Painted scaffolding surrounded a narrow stage without conventional seating."
+        },
+        {
+          "person_id": "friedensreich_hundertwasser",
+          "event_date": "1986-02-17",
+          "event_date_precision": "day",
+          "event_title": "Hundertwasser House Opens in Vienna",
+          "event_index": 14,
+          "theme_connection": "The City of Vienna handed Hundertwasser House to its tenants. Hundertwasser supplied the artistic concept, while Josef Krawina and Peter Pelikan carried out the architectural planning."
         },
         {
           "person_id": "zaha_hadid",
@@ -377,35 +412,97 @@
           "event_date_precision": "year",
           "event_title": "Completes Vitra Fire Station",
           "event_index": 7,
-          "theme_connection": "The Vitra Fire Station was Hadid’s first major realized building, proving that her drawings’ dynamic, destabilized spatial language could be built. Its sharply articulated form was a pivotal transition from speculative geometry to an influential built alternative to static orthogonal architecture."
+          "theme_connection": "Hadid completed the Vitra Fire Station in raw concrete and glass. Sharp diagonal forms converged at the building’s center."
         },
         {
           "person_id": "geoffrey_bawa",
           "event_date": "1994",
           "event_date_precision": "year",
           "event_title": "Completes Kandalama Hotel",
-          "event_index": 14,
-          "theme_connection": "At Kandalama Hotel, Bawa embedded a long, terrain-hugging structure in the surrounding forest. Climate, vegetation, and landscape shaped how the hotel was occupied and experienced."
+          "event_index": 13,
+          "theme_connection": "Bawa set the Kandalama Hotel along a rocky hillside near Dambulla. Its long form opened toward a reservoir and forest."
         },
         {
-          "person_id": "frei_otto",
-          "event_date": "2000",
+          "person_id": "geoffrey_bawa",
+          "event_date": "1997",
           "event_date_precision": "year",
-          "event_title": "Japanese Pavilion at Expo 2000, Hannover",
-          "event_index": 13,
-          "theme_connection": "The Japanese Pavilion demonstrated an exceptionally lightweight gridshell using paper tubes and timber reinforcement at architectural scale. It made Otto’s force-informed structural research tangible in a pioneering renewable-material pavilion and remains a landmark of experimental lightweight construction."
+          "event_title": "Completes Lighthouse Hotel",
+          "event_index": 14,
+          "theme_connection": "Bawa completed the Lighthouse Hotel in Galle. Courtyards, terraces, stairways, and art organized movement toward views of the Indian Ocean."
+        }
+      ],
+      "historical_context": [
+        {
+          "id": "austrian_nuclear_referendum_1978",
+          "title": "Nuclear Referendum",
+          "description": "Austrian voters narrowly rejected the opening of the completed Zwentendorf nuclear power plant in a 1978 national referendum. Hundertwasser campaigned against nuclear power, and the vote directly aligned with his environmental activism and advocacy for ecological building.",
+          "date_start": "1978-11-05",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/1978_Austrian_nuclear_power_referendum",
+          "priority": 2
+        }
+      ],
+      "lead_in": "Factories, theaters, housing, hotels, and cultural centers acquired forceful new shapes. Environmental advocacy and communal use became part of the architectural program."
+    },
+    {
+      "id": "fluid_global_architecture",
+      "title": "Movement Shapes Space (2003-2012)",
+      "date_start": "2003",
+      "date_start_precision": "year",
+      "date_end": "2012",
+      "date_end_precision": "year",
+      "person_events": [
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2003",
+          "event_date_precision": "year",
+          "event_title": "Opens Contemporary Arts Center",
+          "event_index": 8,
+          "theme_connection": "Hadid’s Contemporary Arts Center opened in Cincinnati as her first major completed building. A black stairway connected interlocking galleries and made circulation part of the public interior."
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2005",
+          "event_date_precision": "year",
+          "event_title": "Opens Phaeno Science Center",
+          "event_index": 10,
+          "theme_connection": "Hadid raised the Phaeno Science Center seven meters above the ground. Ten inverted concrete cones supported the exhibition rooms and contained entrances, shops, and a cafe."
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2010",
+          "event_date_precision": "year",
+          "event_title": "Opens MAXXI Museum",
+          "event_index": 11,
+          "theme_connection": "MAXXI opened in Rome with galleries arranged along curving routes. Linear skylights filtered daylight across the layered paths."
+        },
+        {
+          "person_id": "zaha_hadid",
+          "event_date": "2011",
+          "event_date_precision": "year",
+          "event_title": "Guangzhou Opera House",
+          "event_index": 12,
+          "theme_connection": "Hadid designed Guangzhou Opera House as two smooth-edged volumes. The complex contained an 1,800-seat theater, a smaller multipurpose theater, an entry hall, and a salon."
         },
         {
           "person_id": "zaha_hadid",
           "event_date": "2012",
           "event_date_precision": "year",
-          "event_title": "Opens Broad Art Museum",
+          "event_title": "Olympic Venue and Damehood",
           "event_index": 13,
-          "theme_connection": "In 2012, Hadid was made a Dame Commander of the Order of the British Empire for services to architecture. The London Aquatics Centre provided a major public setting for her sweeping roof and continuous spatial geometry."
+          "theme_connection": "Hadid’s London Aquatics Centre hosted swimming events during the Summer Olympics. A sweeping roof covered the pools and spectator seating, and Elizabeth II made Hadid a Dame for services to architecture."
         }
       ],
       "historical_context": [],
-      "lead_in": "Housing, leisure centers, hotels, civic buildings, and museums joined movement, landscape, and social use within expansive spatial systems. Ideas developed through manifestos, models, and speculative drawings became major works of public architecture."
+      "lead_in": "Flowing routes and sweeping structures organized major public buildings. Museums, performance halls, and an Olympic venue turned circulation into visible form."
+    }
+  ],
+  "conclusion": [
+    {
+      "type": "paragraph",
+      "text": "The curves of Casa Batlló were one early answer to a question that remained open. Later buildings drew form from waterfalls, forests, gravity, tropical weather, public gathering, and human movement. Living form came to mean a changing relationship between structure, place, and the people inside."
     }
   ],
   "social_network": {
@@ -472,7 +569,7 @@
         "portrait": "/portraits/frei_otto_thumbnail.webp",
         "roles": [
           "architect",
-          "engineer"
+          "theorist"
         ],
         "birth_year": 1925
       },
@@ -493,7 +590,7 @@
         "type": "main",
         "portrait": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
         "roles": [
-          "artist",
+          "painter",
           "architect"
         ],
         "birth_year": 1928
@@ -505,88 +602,92 @@
         "portrait": "/portraits/zaha_hadid_thumbnail.webp",
         "roles": [
           "architect",
-          "designer"
+          "artist"
         ],
         "birth_year": 1950
-      },
-      {
-        "id": "sec:ludwig_mies_van_der_rohe",
-        "name": "Ludwig Mies van der Rohe",
-        "type": "secondary",
-        "portrait": null,
-        "roles": [],
-        "birth_year": null
       }
     ],
     "links": [
       {
-        "source": "frank_lloyd_wright",
-        "target": "frei_otto",
+        "source": "antoni_gaud",
+        "target": "friedensreich_hundertwasser",
         "kind": "main",
-        "relationship_type": "professional/acquaintance",
-        "relationship_description": "During his 1950 United States trip, Frei Otto visited Frank Lloyd Wright at Taliesin and encountered Wright's work and architectural ideas.",
+        "relationship_type": "academic/influence",
+        "relationship_description": "Gaudí's architecture inspired Friedensreich Hundertwasser, who was identified among the architects influenced by Gaudí's work.",
         "strength": "moderate",
         "endpoints": {
-          "frank_lloyd_wright": {
-            "relationship_type": "professional/acquaintance",
-            "relationship_description": "During his 1950 United States trip, Frei Otto visited Frank Lloyd Wright at Taliesin and encountered Wright's work and architectural ideas.",
+          "antoni_gaud": {
+            "relationship_type": "academic/influence",
+            "relationship_description": "Gaudí's architecture inspired Friedensreich Hundertwasser, who was identified among the architects influenced by Gaudí's work.",
             "strength": "moderate"
           },
-          "frei_otto": {
-            "relationship_type": "professional/acquaintance",
-            "relationship_description": "During his 1950 United States trip, Frei Otto visited Frank Lloyd Wright at Taliesin and encountered Wright's work and architectural ideas.",
+          "friedensreich_hundertwasser": {
+            "relationship_type": "academic/influence",
+            "relationship_description": "Gaudí's architecture inspired Friedensreich Hundertwasser, who was identified among the architects influenced by Gaudí's work.",
             "strength": "moderate"
           }
         },
-        "origin": "reviewed"
-      },
-      {
-        "source": "frei_otto",
-        "target": "sec:ludwig_mies_van_der_rohe",
-        "kind": "secondary",
-        "relationship_type": "professional/mentor",
-        "relationship_description": "Modernist architect whom Frei Otto visited in the United States in 1950; the encounter led to a lasting friendship, and Otto later recalculated the structure of Mies’s Neue Nationalgalerie in Berlin at Mies’s request.",
-        "strength": "strong",
-        "endpoints": {
-          "frei_otto": {
-            "relationship_type": "professional/mentor",
-            "relationship_description": "Modernist architect whom Frei Otto visited in the United States in 1950; the encounter led to a lasting friendship, and Otto later recalculated the structure of Mies’s Neue Nationalgalerie in Berlin at Mies’s request.",
-            "strength": "strong"
-          }
-        }
-      },
-      {
-        "source": "lina_bo_bardi",
-        "target": "sec:ludwig_mies_van_der_rohe",
-        "kind": "secondary",
-        "relationship_type": "professional/influence",
-        "relationship_description": "Modern architect; her Glass House is described as drawing from (among other works) Mies’s Farnsworth House, indicating a strong formal and conceptual influence.",
-        "strength": "weak",
-        "endpoints": {
-          "lina_bo_bardi": {
-            "relationship_type": "professional/influence",
-            "relationship_description": "Modern architect; her Glass House is described as drawing from (among other works) Mies’s Farnsworth House, indicating a strong formal and conceptual influence.",
-            "strength": "weak"
-          }
-        }
+        "origin": "review_added"
       },
       {
         "source": "antoni_gaud",
         "target": "frei_otto",
         "kind": "main",
-        "relationship_type": "intellectual/influence",
-        "relationship_description": "Frei Otto used Gaudí's forms in the construction of Munich's Olympic Stadium.",
+        "relationship_type": "innovation/inspiration",
+        "relationship_description": "Frei Otto drew on Gaudí's forms in constructing the Munich Olympic Stadium.",
         "strength": "moderate",
         "endpoints": {
           "antoni_gaud": {
-            "relationship_type": "intellectual/influence",
-            "relationship_description": "Frei Otto used Gaudí's forms in the construction of Munich's Olympic Stadium.",
+            "relationship_type": "innovation/inspiration",
+            "relationship_description": "Frei Otto drew on Gaudí's forms in constructing the Munich Olympic Stadium.",
             "strength": "moderate"
           },
           "frei_otto": {
-            "relationship_type": "intellectual/influence",
-            "relationship_description": "Frei Otto used Gaudí's forms in the construction of Munich's Olympic Stadium.",
+            "relationship_type": "innovation/inspiration",
+            "relationship_description": "Frei Otto drew on Gaudí's forms in constructing the Munich Olympic Stadium.",
             "strength": "moderate"
+          }
+        },
+        "origin": "review_added"
+      },
+      {
+        "source": "alvar_aalto",
+        "target": "frank_lloyd_wright",
+        "kind": "main",
+        "relationship_type": "professional/endorser",
+        "relationship_description": "Frank Lloyd Wright described Alvar Aalto's Finnish Pavilion for the 1939 New York World's Fair as a work of genius.",
+        "strength": "moderate",
+        "endpoints": {
+          "alvar_aalto": {
+            "relationship_type": "professional/endorser",
+            "relationship_description": "Frank Lloyd Wright described Alvar Aalto's Finnish Pavilion for the 1939 New York World's Fair as a work of genius.",
+            "strength": "moderate"
+          },
+          "frank_lloyd_wright": {
+            "relationship_type": "professional/endorser",
+            "relationship_description": "Frank Lloyd Wright described Alvar Aalto's Finnish Pavilion for the 1939 New York World's Fair as a work of genius.",
+            "strength": "moderate"
+          }
+        },
+        "origin": "review_added"
+      },
+      {
+        "source": "frei_otto",
+        "target": "frank_lloyd_wright",
+        "kind": "main",
+        "relationship_type": "professional/acquaintance",
+        "relationship_description": "During his American trip, Frei Otto became acquainted with Frank Lloyd Wright and Wright's work among the leading architects and buildings he encountered.",
+        "strength": "weak",
+        "endpoints": {
+          "frei_otto": {
+            "relationship_type": "professional/acquaintance",
+            "relationship_description": "During his American trip, Frei Otto became acquainted with Frank Lloyd Wright and Wright's work among the leading architects and buildings he encountered.",
+            "strength": "weak"
+          },
+          "frank_lloyd_wright": {
+            "relationship_type": "professional/acquaintance",
+            "relationship_description": "During his American trip, Frei Otto became acquainted with Frank Lloyd Wright and Wright's work among the leading architects and buildings he encountered.",
+            "strength": "weak"
           }
         },
         "origin": "review_added"
@@ -595,41 +696,16 @@
     "narration": {
       "circles": [
         {
-          "key": "antoni_gaud+frank_lloyd_wright+frei_otto",
+          "key": "antoni_gaud+frank_lloyd_wright+alvar_aalto+frei_otto+friedensreich_hundertwasser",
           "member_ids": [
             "antoni_gaud",
             "frank_lloyd_wright",
-            "frei_otto"
-          ],
-          "title": "Lines of Transmission",
-          "text": "Otto visited Wright at Taliesin during his 1950 trip to the United States, encountering Wright’s work and ideas firsthand. He later used Gaudí’s forms while developing the Munich Olympic Stadium, where hanging-net and soap-film experiments informed sweeping cable-net roofs."
-        },
-        {
-          "key": "charles_rennie_mackintosh+friedensreich_hundertwasser",
-          "member_ids": [
-            "charles_rennie_mackintosh",
+            "alvar_aalto",
+            "frei_otto",
             "friedensreich_hundertwasser"
           ],
-          "title": "Against Uniformity",
-          "text": "Mackintosh coordinated structure, interiors, furnishings, fittings, and ornament into complete environments. Decades later, Hundertwasser mounted a different challenge to standardization through irregular surfaces, vivid color, vegetation, and a rejection of straight lines."
-        },
-        {
-          "key": "alvar_aalto+geoffrey_bawa",
-          "member_ids": [
-            "alvar_aalto",
-            "geoffrey_bawa"
-          ],
-          "title": "Modernism Belongs Somewhere",
-          "text": "Aalto tempered modern construction with wood, brick, natural textures, and interiors calibrated to human experience. In Sri Lanka, Bawa joined modern design to tropical climate, water, planting, local materials, and vernacular roof forms."
-        },
-        {
-          "key": "lina_bo_bardi+zaha_hadid",
-          "member_ids": [
-            "lina_bo_bardi",
-            "zaha_hadid"
-          ],
-          "title": "Public Space Recast",
-          "text": "Bo Bardi directed architecture toward everyday social and cultural life, most visibly in the SESC Pompéia factory conversion. Hadid reorganized public institutions through angled planes, continuous routes, and flowing galleries, carrying radical geometry from drawings into built space."
+          "title": "A Chain of Influence",
+          "text": "Gaudí’s architecture inspired Hundertwasser and supplied forms that Otto drew on for the Munich Olympic Stadium. Otto became acquainted with Wright and his work during a trip through the United States. Wright later called Aalto’s Finnish Pavilion at the 1939 New York World’s Fair a work of genius."
         }
       ]
     }
@@ -638,38 +714,51 @@
     "clusters": [
       {
         "label": "Barcelona",
-        "score": 12.0,
+        "score": 17.0,
         "centroid": [
-          2.17615,
-          41.38321
+          2.14739,
+          41.3812
         ],
         "bbox": [
+          2.026,
+          41.363,
           2.1734,
-          41.38258,
-          2.17707,
           41.3851
         ],
-        "year_start": 1883,
-        "year_end": 1915,
+        "year_start": 1878,
+        "year_end": 1908,
         "events": [
           {
             "person_id": "antoni_gaud",
             "person_name": "Antoni Gaudí",
             "event_index": 5,
-            "event_title": "Built Casa Vicens",
+            "event_title": "Receives Casa Vicens Commission",
+            "event_date": "1878",
+            "place": "Barcelona",
+            "coordinates": [
+              2.1734,
+              41.3851
+            ],
+            "weight": 2.0
+          },
+          {
+            "person_id": "antoni_gaud",
+            "person_name": "Antoni Gaudí",
+            "event_index": 6,
+            "event_title": "Takes Over Sagrada Família",
             "event_date": "1883",
             "place": "Barcelona",
             "coordinates": [
-              2.177073,
-              41.3825802
+              2.1734,
+              41.3851
             ],
             "weight": 3.0
           },
           {
             "person_id": "antoni_gaud",
             "person_name": "Antoni Gaudí",
-            "event_index": 11,
-            "event_title": "Developed Park Güell project",
+            "event_index": 8,
+            "event_title": "Plans Park Güell",
             "event_date": "1900",
             "place": "Barcelona",
             "coordinates": [
@@ -681,26 +770,39 @@
           {
             "person_id": "antoni_gaud",
             "person_name": "Antoni Gaudí",
-            "event_index": 12,
-            "event_title": "Created landmark urban houses",
+            "event_index": 9,
+            "event_title": "Remakes Casa Batlló",
             "event_date": "1904",
             "place": "Barcelona",
             "coordinates": [
-              2.177073,
-              41.3825802
+              2.1734,
+              41.3851
             ],
             "weight": 3.0
           },
           {
             "person_id": "antoni_gaud",
             "person_name": "Antoni Gaudí",
-            "event_index": 14,
-            "event_title": "Focused entirely on Sagrada Família",
-            "event_date": "1915",
+            "event_index": 10,
+            "event_title": "Builds Casa Milà",
+            "event_date": "1906",
             "place": "Barcelona",
             "coordinates": [
-              2.177073,
-              41.3825802
+              2.1734,
+              41.3851
+            ],
+            "weight": 3.0
+          },
+          {
+            "person_id": "antoni_gaud",
+            "person_name": "Antoni Gaudí",
+            "event_index": 11,
+            "event_title": "Builds Colònia Güell Crypt",
+            "event_date": "1908",
+            "place": "Santa Coloma de Cervelló",
+            "coordinates": [
+              2.026,
+              41.363
             ],
             "weight": 3.0
           }
@@ -708,76 +810,147 @@
         "key": "barcelona"
       },
       {
-        "label": "Glasgow",
+        "label": "Paimio",
         "score": 5.0,
         "centroid": [
-          -4.25017,
-          55.86115
+          22.68932,
+          60.4567
         ],
         "bbox": [
-          -4.25017,
-          55.86115,
-          -4.25017,
-          55.86115
+          22.6892,
+          60.4567,
+          22.6894,
+          60.4567
         ],
-        "year_start": 1897,
-        "year_end": 1902,
+        "year_start": 1929,
+        "year_end": 1931,
         "events": [
           {
-            "person_id": "charles_rennie_mackintosh",
-            "person_name": "Charles Rennie Mackintosh",
-            "event_index": 7,
-            "event_title": "Glasgow School of Art rises on Renfrew Street",
-            "event_date": "1897",
-            "place": "Glasgow",
+            "person_id": "alvar_aalto",
+            "person_name": "Alvar Aalto",
+            "event_index": 5,
+            "event_title": "Designs Paimio Sanatorium",
+            "event_date": "1929",
+            "place": "Paimio",
             "coordinates": [
-              -4.2501687,
-              55.861155
+              22.6894,
+              60.4567
             ],
             "weight": 3.0
           },
           {
-            "person_id": "charles_rennie_mackintosh",
-            "person_name": "Charles Rennie Mackintosh",
-            "event_index": 11,
-            "event_title": "Hill House and Willow Tearooms peak",
-            "event_date": "1902",
-            "place": "Glasgow",
+            "person_id": "alvar_aalto",
+            "person_name": "Alvar Aalto",
+            "event_index": 6,
+            "event_title": "Creates Paimio Chair",
+            "event_date": "1931",
+            "place": "Paimio",
             "coordinates": [
-              -4.2501687,
-              55.861155
+              22.6892,
+              60.4567
             ],
             "weight": 2.0
           }
         ],
-        "key": "glasgow"
+        "key": "paimio"
+      },
+      {
+        "label": "Bear Run",
+        "score": 3.0,
+        "centroid": [
+          -79.45448,
+          39.95119
+        ],
+        "bbox": [
+          -79.45448,
+          39.95119,
+          -79.45448,
+          39.95119
+        ],
+        "year_start": 1935,
+        "year_end": 1935,
+        "events": [
+          {
+            "person_id": "frank_lloyd_wright",
+            "person_name": "Frank Lloyd Wright",
+            "event_index": 12,
+            "event_title": "Designs Fallingwater for the Kaufmanns",
+            "event_date": "1935",
+            "place": "Bear Run",
+            "coordinates": [
+              -79.454481,
+              39.9511859
+            ],
+            "weight": 3.0
+          }
+        ],
+        "key": "bear_run"
       },
       {
         "label": "São Paulo",
-        "score": 6.0,
+        "score": 13.0,
         "centroid": [
-          -46.63338,
-          -23.55065
+          -46.6333,
+          -23.5505
         ],
         "bbox": [
-          -46.63338,
-          -23.55065,
-          -46.63338,
-          -23.55065
+          -46.6333,
+          -23.5505,
+          -46.6333,
+          -23.5505
         ],
-        "year_start": 1951,
-        "year_end": 1977,
+        "year_start": 1947,
+        "year_end": 1984,
         "events": [
           {
             "person_id": "lina_bo_bardi",
             "person_name": "Lina Bo Bardi",
-            "event_index": 10,
-            "event_title": "Naturalized and built Glass House",
+            "event_index": 6,
+            "event_title": "Designs MASP's First Home",
+            "event_date": "1947-10-02",
+            "place": "São Paulo",
+            "coordinates": [
+              -46.6333,
+              -23.5505
+            ],
+            "weight": 1.0
+          },
+          {
+            "person_id": "lina_bo_bardi",
+            "person_name": "Lina Bo Bardi",
+            "event_index": 8,
+            "event_title": "Builds the Glass House",
             "event_date": "1951",
             "place": "São Paulo",
             "coordinates": [
-              -46.6333824,
-              -23.5506507
+              -46.6333,
+              -23.5505
+            ],
+            "weight": 3.0
+          },
+          {
+            "person_id": "lina_bo_bardi",
+            "person_name": "Lina Bo Bardi",
+            "event_index": 9,
+            "event_title": "Builds New MASP",
+            "event_date": "1957",
+            "place": "São Paulo",
+            "coordinates": [
+              -46.6333,
+              -23.5505
+            ],
+            "weight": 3.0
+          },
+          {
+            "person_id": "lina_bo_bardi",
+            "person_name": "Lina Bo Bardi",
+            "event_index": 12,
+            "event_title": "Transforms SESC Pompéia",
+            "event_date": "1977",
+            "place": "São Paulo",
+            "coordinates": [
+              -46.6333,
+              -23.5505
             ],
             "weight": 3.0
           },
@@ -785,12 +958,12 @@
             "person_id": "lina_bo_bardi",
             "person_name": "Lina Bo Bardi",
             "event_index": 13,
-            "event_title": "Designed SESC Pompéia",
-            "event_date": "1977",
+            "event_title": "Redesigns Teatro Oficina",
+            "event_date": "1984",
             "place": "São Paulo",
             "coordinates": [
-              -46.6333824,
-              -23.5506507
+              -46.6333,
+              -23.5505
             ],
             "weight": 3.0
           }
@@ -798,136 +971,158 @@
         "key": "sao_paulo"
       },
       {
-        "label": "Cologne",
-        "score": 3.0,
+        "label": "Bentota",
+        "score": 9.0,
         "centroid": [
-          6.9568,
-          50.9383
+          80.07267,
+          6.291
         ],
         "bbox": [
-          6.9568,
-          50.9383,
-          6.9568,
-          50.9383
+          80.0,
+          6.032,
+          80.217,
+          6.421
         ],
-        "year_start": 1957,
-        "year_end": 1957,
-        "events": [
-          {
-            "person_id": "frei_otto",
-            "person_name": "Frei Otto",
-            "event_index": 6,
-            "event_title": "Founds lightweight lab and builds Sternwellenzelt",
-            "event_date": "1957",
-            "place": "Cologne",
-            "coordinates": [
-              6.9568,
-              50.9383
-            ],
-            "weight": 3.0
-          }
-        ],
-        "key": "cologne"
-      },
-      {
-        "label": "Dambulla",
-        "score": 3.0,
-        "centroid": [
-          80.6517,
-          7.8742
-        ],
-        "bbox": [
-          80.6517,
-          7.8742,
-          80.6517,
-          7.8742
-        ],
-        "year_start": 1994,
-        "year_end": 1994,
+        "year_start": 1948,
+        "year_end": 1997,
         "events": [
           {
             "person_id": "geoffrey_bawa",
             "person_name": "Geoffrey Bawa",
-            "event_index": 14,
-            "event_title": "Completes Kandalama Hotel",
-            "event_date": "1994",
-            "place": "Dambulla",
+            "event_index": 4,
+            "event_title": "Buys Lunuganga Estate",
+            "event_date": "1948",
+            "place": "Bentota",
             "coordinates": [
-              80.6517,
-              7.8742
+              80.001,
+              6.421
+            ],
+            "weight": 3.0
+          },
+          {
+            "person_id": "geoffrey_bawa",
+            "person_name": "Geoffrey Bawa",
+            "event_index": 9,
+            "event_title": "Completes Bentota Beach Hotel",
+            "event_date": "1969",
+            "place": "Bentota",
+            "coordinates": [
+              80.0,
+              6.42
+            ],
+            "weight": 3.0
+          },
+          {
+            "person_id": "geoffrey_bawa",
+            "person_name": "Geoffrey Bawa",
+            "event_index": 14,
+            "event_title": "Completes Lighthouse Hotel",
+            "event_date": "1997",
+            "place": "Galle",
+            "coordinates": [
+              80.217,
+              6.032
             ],
             "weight": 3.0
           }
         ],
-        "key": "dambulla"
+        "key": "bentota"
       }
     ],
     "narration": {
       "stops": [
         {
           "key": "barcelona",
-          "title": "Nature in the City",
-          "text": "Barcelona became Gaudí’s sustained urban laboratory. From Casa Vicens and Park Güell to Casa Batlló, Casa Milà, and the Sagrada Família, he fused craft, structure, symbolism, and forms derived from botanical and geological life."
+          "title": "A City of Experiments",
+          "text": "Barcelona supplied Gaudí with repeated commissions for homes, a church, and a planned garden community. Casa Vicens introduced his use of ceramic, brick, and iron. The Sagrada Família, Park Güell, Casa Batlló, and Casa Milà let him apply structural and natural forms at larger scales. At nearby Santa Coloma de Cervelló, the Colònia Güell crypt became a workshop for arches, vaults, and slanting columns."
         },
         {
-          "key": "glasgow",
-          "title": "Rooms as Total Works",
-          "text": "Mackintosh shaped the Glasgow School of Art as a coordinated work of structure, fittings, finishes, light, and ornament. The Willow Tearooms extended that approach into commercial life, while nearby Hill House carried it into a complete domestic environment."
+          "key": "paimio",
+          "title": "Designing for Recovery",
+          "text": "The Paimio Sanatorium joined architecture to the routines of tuberculosis care. Its wards, terraces, colors, and lighting supported treatment and rest. The Paimio Chair carried the same work down to the scale of a patient’s breathing body."
+        },
+        {
+          "key": "bear_run",
+          "title": "House Above Water",
+          "text": "At Bear Run, Fallingwater occupied the ledges directly above a waterfall. Concrete terraces reached across the stream and joined the house to the rock, trees, and moving water."
         },
         {
           "key": "sao_paulo",
-          "title": "From Home to Commons",
-          "text": "Bo Bardi’s Casa de Vidro elevated a glass home within its garden, making domestic space an extension of the tropical site. At SESC Pompéia, she later converted an industrial complex into a leisure center for everyday use, relying on straightforward methods suited to local craftspeople and workers."
+          "title": "Rooms for Public Life",
+          "text": "São Paulo gave Bo Bardi commissions across private and public life. Casa de Vidro raised a home into a wooded site, while MASP suspended galleries above a city plaza. SESC Pompéia and Teatro Oficina later placed recreation and performance inside adapted urban structures."
         },
         {
-          "key": "cologne",
-          "title": "A Laboratory of Tension",
-          "text": "In Cologne, Otto established a center for lightweight construction and pursued experiments at full scale. The Sternwellenzelt made his principles visible in a tensile roof shaped by tension rather than structural mass."
-        },
-        {
-          "key": "dambulla",
-          "title": "Building with the Forest",
-          "text": "Near Dambulla, Bawa embedded the long Kandalama Hotel in a forested landscape instead of treating the site as a backdrop. Climate, terrain, and vegetation shaped its form and the experience of moving through it."
+          "key": "bentota",
+          "title": "Building with the Tropics",
+          "text": "Lunuganga near Bentota became Bawa’s long-running experiment in shaping gardens, terrain, and architecture together. The Bentota Beach Hotel organized rooms around open air, water, and vegetation. Farther along Sri Lanka’s southwest coast, the Lighthouse Hotel used courtyards and terraces to frame the Indian Ocean."
         }
       ]
     },
     "generation": {
-      "model": "gpt-5.6-terra",
-      "generated_at": "2026-07-25T10:13:58.036102+02:00",
-      "located_events": 27,
-      "rated_events": 27
+      "model": "gpt-5.6-luna",
+      "generated_at": "2026-09-19T12:48:31.438697+02:00",
+      "located_events": 43,
+      "rated_events": 43
     }
-  },
-  "conclusion": [
-    {
-      "type": "image",
-      "image": {
-        "url": "https://live.staticflickr.com/2823/34196059542_382de86c85_b.jpg",
-        "caption": "MAXXI Museum in Rome, exterior view",
-        "source": "https://www.flickr.com/photos/72746018@N00/34196059542",
-        "person_id": "zaha_hadid",
-        "event_index": 12,
-        "image_index": 0
-      },
-      "layout": "full"
-    },
-    {
-      "type": "paragraph",
-      "text": "Their common legacy is not a shared visual style. Gaudí’s mosaics, Otto’s cable nets, Bo Bardi’s factory conversion, Bawa’s landscape-bound hotel, and Hadid’s flowing galleries look radically different because each emerged from different materials, purposes, and settings."
-    },
-    {
-      "type": "paragraph",
-      "text": "What joins them is a rejection of architecture as an isolated, uniform object. Across 129 years, they repeatedly expanded the field of design until buildings could respond to craft, comfort, climate, terrain, community, engineering, vegetation, and motion—and belong more fully to the lives around them."
-    }
-  ],
-  "composition": {
-    "model": "gpt-5.6-sol",
-    "composed_at": "2026-08-09T20:43:10.011140+00:00",
-    "throughline": "Across more than a century, nine designers challenged architecture conceived as a sealed, standardized object. Their work progressively widened the forces allowed to shape buildings—from craft and natural form to bodily comfort, landscape, social use, structural tension, and movement. A few direct encounters linked these lives, while parallel experiments in distinct places reveal a broader reworking of modern architecture."
   },
   "section_order": [
     "timeline",
-    "network",
-    "map"
-  ]
+    "map",
+    "network"
+  ],
+  "opening": [
+    {
+      "type": "paragraph",
+      "text": "In 1904, textile industrialist Josep Batlló hired Antoni Gaudí to remake his home in Barcelona. Gaudí curved the facade, roof, and rooms. Colored glass and ceramic covered the surfaces. Light wells carried daylight into the house. The finished building seemed to possess the bones, skin, and shifting color of a living thing."
+    },
+    {
+      "type": "image",
+      "image": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Facade_of_Casa_Batll%C3%B3.jpg/960px-Facade_of_Casa_Batll%C3%B3.jpg",
+        "caption": "Main façade of Casa Batlló",
+        "source": "https://commons.wikimedia.org/wiki/File:Facade_of_Casa_Batlló.jpg",
+        "person_id": "antoni_gaud",
+        "event_index": 9,
+        "image_index": 0
+      },
+      "layout": "full"
+    }
+  ],
+  "description": [
+    {
+      "type": "paragraph",
+      "text": "Casa Batlló made natural form part of the structure and experience of architecture. This approach became known as organic architecture. It treated a building as part of its site and shaped rooms around human use. Art Nouveau had already brought plants, curves, and craft into design around the turn of the 20th century. Modern construction then expanded the available materials and scale. Concrete could form terraces and broad spans. Bent wood could follow the body. Cable nets could cover stadiums with little weight. Organic architecture never had one fixed appearance or organized membership. Its ideas changed as war damaged cities, modernism spread worldwide, and environmental politics entered public debate. By the early 21st century, museums and civic buildings used flowing geometry to turn movement itself into architectural form."
+    }
+  ],
+  "section_bodies": {
+    "timeline": [
+      {
+        "type": "paragraph",
+        "text": "Organic architecture changed as new materials widened what buildings could do. Early commissions joined structure with ornament and craft. Modern institutions later brought health, work, and public circulation into the design problem. World War II damaged buildings and interrupted careers in Europe. Brazil’s military dictatorship restricted the cultural world that supported public projects. Austria’s referendum on the Zwentendorf nuclear plant brought ecological politics into national debate. Across these conditions, natural form moved from visible curves and plant motifs toward bodily comfort, efficient structures, climate, shared space, and fluid movement."
+      }
+    ],
+    "map": [
+      {
+        "type": "paragraph",
+        "text": "Architectural work often accumulated where a patron or institution offered repeated commissions. A house could lead to a garden development or another residence. A health complex could generate furniture for the same patients. Museums and cultural centers gave one architect several chances to shape public life within a city. Resort development created long relationships with coasts, hills, vegetation, and weather. These concentrations also reveal the importance of return. Repeated work in one setting allowed an architectural idea to adjust to local materials, daily routines, and the physical character of the land."
+      }
+    ],
+    "network": [
+      {
+        "type": "paragraph",
+        "text": "Architects encountered distant work through published drawings, international exhibitions, professional praise, and travel. Portfolios allowed buildings to circulate before most readers could visit them. World’s fairs placed national architecture before an international audience. Study trips created personal contact with designers and structures abroad. The surviving record contains a small chain of direct acquaintance and stated influence within this group. Several other careers have no documented tie to another person here. Their presence points to ideas developing under similar design problems in different countries, with climate and commissions guiding the results."
+      }
+    ]
+  },
+  "section_headings": {
+    "timeline": "Forms Across a Century",
+    "map": "Where Ideas Took Root",
+    "network": "Lines of Influence",
+    "conclusion": "A Wider Nature"
+  },
+  "composition": {
+    "model": "gpt-5.6-sol",
+    "composed_at": "2026-09-19T12:50:36.785298+02:00",
+    "throughline": "Across more than a century, architects changed the meaning of building with nature. Crafted surfaces and site-based forms grew into structures shaped by gravity, climate, public life, and movement. A small chain of documented influence crossed this global history, while concentrated bodies of work arose from local patrons, institutions, and landscapes."
+  }
 }

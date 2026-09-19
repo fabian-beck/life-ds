@@ -1,6 +1,6 @@
 {
-  "dataset": "Biographical Timeline",
-  "created_on": "2026-09-06",
+  "dataset": "Zaha Hadid biographical timeline",
+  "created_on": "2026-09-19",
   "person": {
     "name": "Zaha_Hadid",
     "birth_date": "1950-10-31",
@@ -10,8 +10,8 @@
       "Künstlerin",
       "Designerin"
     ],
-    "tagline": "Architektur in Bewegung malen",
-    "summary": "Zaha Hadid war eine irakisch-britische Architektin. In ihren Gemälden, Zeichnungen und Bauwerken setzte sie gebrochene Flächen, fließende Linien und dramatische Raumfolgen ein. Nach Jahren einflussreicher, unausgeführter Projekte führte sie Zaha Hadid Architects zu bedeutenden Kultur-, öffentlichen und Sportbauten auf der ganzen Welt.",
+    "tagline": "Fließende Geometrie für öffentliche Bauten",
+    "summary": "Zaha Hadid war eine irakisch-britische Architektin, deren Gemälde und Bauten mit gebrochener, fließender Geometrie Museen, Kulturstätten und öffentliche Bauvorhaben neu gestalteten. Nach Jahren mit nicht realisierten Wettbewerbsentwürfen vollendete sie bedeutende Bauten in Europa, Asien und den Vereinigten Staaten und erhielt als erste Frau den Pritzker-Architekturpreis.",
     "wikipedia": "https://en.wikipedia.org/wiki/Zaha_Hadid",
     "portrait": {
       "image": "/portraits/zaha_hadid_thumbnail.webp",
@@ -27,108 +27,114 @@
   },
   "chapters": [
     {
-      "id": "baghdad_foundations",
-      "headline": "Anfänge in Bagdad",
+      "id": "baghdad_to_london",
+      "headline": "Neue Welten zeichnen",
       "date_start": "1950-10-31",
       "date_start_precision": "day",
-      "date_end": "1968",
+      "date_end": "1972",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 17,
+      "age_end": 21,
       "involved_people": [
-        "Foulath Hadid"
+        "Foulath Hadid",
+        "Rem Koolhaas",
+        "Ilias Zengelis",
+        "Bernard Tschumi"
       ],
-      "location": "Irak",
+      "location": "Irak und Vereinigtes Königreich",
       "illustration": {
-        "image": "/chapter_art/zaha_hadid/baghdad_foundations_medium.webp",
-        "medium": "/chapter_art/zaha_hadid/baghdad_foundations_medium.webp",
-        "full": "/chapter_art/zaha_hadid/baghdad_foundations_full.webp",
-        "concept": "A luminous field of sand-toned tessellated tiles slowly shifts into deep-blue riverlike currents, with a single crystalline polygon suspended at the meeting point. Fine mineral dust glows around it against velvety darkness.",
+        "image": "/chapter_art/zaha_hadid/baghdad_to_london_medium.webp",
+        "medium": "/chapter_art/zaha_hadid/baghdad_to_london_medium.webp",
+        "full": "/chapter_art/zaha_hadid/baghdad_to_london_full.webp",
+        "concept": "Against deep midnight, a luminous field of intersecting planes tilts outward from a single bright origin, each translucent layer carrying faint gradients of cobalt, vermilion, and ivory, as though a new spatial language is unfolding.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-06"
+        "generated_on": "2026-09-19"
       }
     },
     {
-      "id": "london_experiments",
-      "headline": "Neue Welten zeichnen",
-      "date_start": "1972",
+      "id": "unbuilt_visions",
+      "headline": "Die Papierarchitektin",
+      "date_start": "1977",
       "date_start_precision": "year",
-      "date_end": "1980",
+      "date_end": "1988",
       "date_end_precision": "year",
-      "age_start": 21,
-      "age_end": 29,
+      "age_start": 26,
+      "age_end": 37,
       "involved_people": [
         "Rem Koolhaas",
         "Ilias Zengelis",
-        "Bernard Tschumi",
-        "Peter Rice"
+        "Peter Rice",
+        "Patrik Schumacher",
+        "Philip Johnson",
+        "Mark Wigley"
       ],
-      "location": "Westeuropa",
+      "location": "Westeuropa und Vereinigte Staaten",
       "illustration": {
-        "image": "/chapter_art/zaha_hadid/london_experiments_medium.webp",
-        "medium": "/chapter_art/zaha_hadid/london_experiments_medium.webp",
-        "full": "/chapter_art/zaha_hadid/london_experiments_full.webp",
-        "concept": "A fan of razor-thin painted planes bursts outward from a dark central void, each plane tilted at a different impossible angle. Electric red, ivory, and charcoal surfaces seem to hover, casting long, misaligned shadows.",
+        "image": "/chapter_art/zaha_hadid/unbuilt_visions_medium.webp",
+        "medium": "/chapter_art/zaha_hadid/unbuilt_visions_medium.webp",
+        "full": "/chapter_art/zaha_hadid/unbuilt_visions_full.webp",
+        "concept": "A suspended crystal-like composition of razor-thin black shards and white slivers hovers over darkness, its fragments almost converging into a structure but remaining beautifully unresolved, casting long angular shadows into empty space.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-06"
+        "generated_on": "2026-09-19"
       }
     },
     {
-      "id": "built_breakthrough",
+      "id": "building_momentum",
       "headline": "Beton hebt ab",
-      "date_start": "1988",
+      "date_start": "1993",
       "date_start_precision": "year",
-      "date_end": "2003",
+      "date_end": "2004",
       "date_end_precision": "year",
-      "age_start": 37,
-      "age_end": 52,
+      "age_start": 42,
+      "age_end": 53,
       "involved_people": [
-        "Philip Johnson",
-        "Mark Wigley",
         "Rolf Fehlbaum",
-        "Rem Koolhaas"
+        "Rem Koolhaas",
+        "Thomas Pritzker"
       ],
-      "location": "Europa und die Vereinigten Staaten",
+      "location": "Europa und Vereinigte Staaten",
       "illustration": {
-        "image": "/chapter_art/zaha_hadid/built_breakthrough_medium.webp",
-        "medium": "/chapter_art/zaha_hadid/built_breakthrough_medium.webp",
-        "full": "/chapter_art/zaha_hadid/built_breakthrough_full.webp",
-        "concept": "A dense slate-gray mass splits into several sharply sheared wedges, as if caught mid-flight by an invisible force. Their edges flash with cold white light, while fragments of powdered stone trail into blackness.",
+        "image": "/chapter_art/zaha_hadid/building_momentum_medium.webp",
+        "medium": "/chapter_art/zaha_hadid/building_momentum_medium.webp",
+        "full": "/chapter_art/zaha_hadid/building_momentum_full.webp",
+        "concept": "A dense charcoal mass at center splits along several decisive diagonal seams, releasing brilliant white light and a sweep of pale mist; rigid facets seem to accelerate outward, transforming pressure into motion.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-06"
+        "generated_on": "2026-09-19"
       }
     },
     {
       "id": "global_commissions",
-      "headline": "Das Unmögliche bauen",
-      "date_start": "2004",
+      "headline": "Kurven über Kontinente",
+      "date_start": "2005",
       "date_start_precision": "year",
-      "date_end": "2011",
+      "date_end": "2013",
       "date_end_precision": "year",
-      "age_start": 53,
-      "age_end": 60,
+      "age_start": 54,
+      "age_end": 62,
       "involved_people": [
-        "Thomas Pritzker",
-        "Patrik Schumacher"
+        "Patrik Schumacher",
+        "Elisabeth II.",
+        "Eli Broad",
+        "Edythe Broad"
       ],
-      "location": "Europa und Nordamerika",
+      "location": "Europa, Asien und Vereinigte Staaten",
       "illustration": {
         "image": "/chapter_art/zaha_hadid/global_commissions_medium.webp",
         "medium": "/chapter_art/zaha_hadid/global_commissions_medium.webp",
         "full": "/chapter_art/zaha_hadid/global_commissions_full.webp",
-        "concept": "A broad silver ribbon loops and braids through open darkness, swelling into smooth currents before narrowing into swift crossings. Soft pools of cobalt and pearl light travel along its surface like flowing momentum.",
+        "concept": "In a dark void, a continuous silver ribbon broadens and curls through several fluid arcs, alternately folding into smooth hollows and lifted crests, with pools of cool light gliding across its metallic surface.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-06"
+        "generated_on": "2026-09-19"
       }
     },
     {
       "id": "final_honors",
-      "headline": "Die letzten Jahre",
-      "date_start": "2012",
-      "date_start_precision": "year",
+      "headline": "Letzte Ehrungen",
+      "date_start": "2016-02",
+      "date_start_precision": "month",
       "date_end": "2016-03-31",
       "date_end_precision": "day",
-      "age_start": 61,
+      "age_start": 65,
       "age_end": 65,
       "involved_people": null,
       "location": "Vereinigtes Königreich und Vereinigte Staaten",
@@ -136,23 +142,23 @@
         "image": "/chapter_art/zaha_hadid/final_honors_medium.webp",
         "medium": "/chapter_art/zaha_hadid/final_honors_medium.webp",
         "full": "/chapter_art/zaha_hadid/final_honors_full.webp",
-        "concept": "A burnished gold disc floats alone in darkness, its surface subtly folded into luminous facets. One fine seam opens at its rim, releasing a quiet drift of warm sparks that fades before reaching the edges.",
+        "concept": "A single radiant orb of molten gold floats within a wide ring of soft graphite dust, the ring opening gently at one point as fine particles drift outward into a quiet, velvety black expanse.",
         "creator": "AI generated artwork",
-        "generated_on": "2026-09-06"
+        "generated_on": "2026-09-19"
       }
     }
   ],
-  "conclusion": "Zaha Hadids Vitra-Feuerwache gehört weiterhin zum Vitra Campus in Weil am Rhein und wird als Ausstellungsraum genutzt. Das MAXXI ist weiterhin Italiens Nationalmuseum für zeitgenössische Kunst und Architektur in Rom. Das London Aquatics Centre dient weiterhin Sportlern und der Öffentlichkeit als bedeutende Schwimm- und Sprunganlage.",
+  "conclusion": "Zaha Hadid gilt als Schlüsselfigur der Architektur des späten 20. und frühen 21. Jahrhunderts. Zu ihren bedeutenden ausgeführten Bauten zählen das MAXXI-Museum in Rom, das Opernhaus Guangzhou, das London Aquatics Centre, das Phaeno Science Center und das Broad Art Museum.",
   "events": [
     {
       "date": "1950-10-31",
       "date_precision": "day",
       "age": 0,
       "title": "Geburt in Bagdad",
-      "description": "Ihr Vater Muhammad al-Hajj Husayn Hadid war ein wohlhabender Industrieller und politischer Organisator in Bagdad. Ihre Mutter Wajiha al-Sabunji war eine Künstlerin aus Mosul. Ihr Bruder Foulath gehörte zum Familienhaushalt.",
+      "description": "Zaha Hadid wird in Bagdad in eine wohlhabende Familie geboren. Ihr Vater Muhammad al-Hajj Husayn Hadid ist Industrieller und eine politische Persönlichkeit. Ihre Mutter Wajiha al-Sabunji ist eine Künstlerin aus Mosul. Ihr Bruder Foulath gehört zum Haushalt.",
       "locations": [
         {
-          "name_historic": "Bagdad",
+          "name_historic": "Bagdad, Irak",
           "name_modern": "Bagdad, Irak",
           "centroid": [
             44.3661,
@@ -162,7 +168,7 @@
         }
       ],
       "involved_people": [
-        "Mohammed Hadid",
+        "Muhammad al-Hajj Husayn Hadid",
         "Wajiha al-Sabunji",
         "Foulath Hadid"
       ],
@@ -170,21 +176,23 @@
         "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "baghdad_foundations",
-      "weight": 0.2,
+      "chapter": "baghdad_to_london",
+      "weight": 0.25,
       "event_class": {
         "type": "birth",
         "father": "Muhammad al-Hajj Husayn Hadid",
         "mother": "Wajiha al-Sabunji",
-        "characterization": "irakische Oberschichtfamilie"
+        "characterization": "wohlhabende Akademikerfamilie"
       }
     },
     {
       "date": "1968",
       "date_precision": "year",
-      "age": 17,
-      "title": "Studiert Mathematik in Beirut",
-      "description": "Hadid studiert Mathematik an der American University of Beirut im Libanon. Besuche antiker Städte im Südirak hatten ihr Interesse an Architektur und der gebauten Landschaft bereits geweckt.",
+      "date_end": "1971",
+      "date_end_precision": "year",
+      "age": 18,
+      "title": "Mathematikstudium in Beirut",
+      "description": "Zaha Hadid studiert Mathematik an der American University of Beirut im Libanon. In den 1960er Jahren hatte sie Internate in England und der Schweiz besucht.",
       "locations": [
         {
           "name_historic": "Beirut",
@@ -197,50 +205,28 @@
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Zaha_Hadid",
-        "https://en.wikipedia.org/wiki/Mohammed_Hadid"
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/American_University_of_Beirut_%28AUB%29.jpg/960px-American_University_of_Beirut_%28AUB%29.jpg",
-          "caption": "Campus der American University of Beirut",
-          "source": "https://commons.wikimedia.org/wiki/File:American_University_of_Beirut_(AUB).jpg",
-          "creator": "Mohamed Nanabhay from Qatar",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/American_University_of_Beirut_-_1970.jpg",
+          "caption": "Campus der American University of Beirut, 1970",
+          "source": "https://commons.wikimedia.org/wiki/File:American_University_of_Beirut_-_1970.jpg",
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "baghdad_foundations",
-      "weight": 0.35,
-      "background": "Bagdads politisches Leben gehörte schon vor ihrem Universitätsbesuch zur Welt von Hadids Familie. Ihr Vater Muhammad al-Hajj Husayn Hadid hatte von 1928 bis 1931 Wirtschaftswissenschaften an der London School of Economics studiert. Er kehrte in den Irak zurück und trat in das Finanzministerium ein. 1932 half er bei der Gründung der al-Ahali-Gruppe, die sich für Gemeinwohl und Reformen einsetzte. Die Gruppe trat 1937 geschlossen zurück, nachdem General Bakr Sidqi infolge eines Staatsstreichs nach diktatorischer Macht strebte. Muhammad Hadid wurde später stellvertretender Vorsitzender der Nationaldemokratischen Partei. Die Partei unterstützte eine Agrarreform, die Rechte der Arbeiter und die staatliche Kontrolle über die junge irakische Ölindustrie.\n\nNach dem irakischen Staatsstreich von 1958 ernannte Brigadegeneral Abd al-Karim Qasim Muhammad Hadid zum Finanzminister. Hadid nutzte Kredite aus der Sowjetunion und Osteuropa, um Industrieprojekte und Programme für arme Iraker zu fördern. Im März 1960 verließ er das Ministerium. Ein Staatsstreich brachte 1963 kurzzeitig die Baath-Partei an die Macht. Muhammad Hadid wurde vor Gericht gestellt, interniert und seines Vermögens beraubt. Nach einem späteren Staatsstreich wandte er sich der Wirtschaft zu.\n\nAuch die intellektuellen Interessen der Familie bewegten sich zwischen Kunst, Politik und internationaler Bildung. Hadids Mutter Wajiha al-Sabunji war eine Künstlerin aus Mosul. Ihr Bruder Foulath erinnerte sich später an ein Haus, in dem führende Mitglieder der Nationaldemokratischen Partei zu Gast waren. In den 1960er-Jahren besuchte Hadid Internate in England und der Schweiz. Ihrem Grundstudium an der American University of Beirut folgte 1972 der Umzug nach London, wo sie Architektur studierte. An der Architectural Association behandelte sie die Malerei als Entwurfsinstrument und griff mit Abstraktionen unausgeführte Experimente der modernen Architektur wieder auf. Ihr Abschlussprojekt Malevich’s Tektonik war der in Acryl gemalte Entwurf für ein 14-geschossiges Hotel auf der Hungerford Bridge in London. Geprägt war es vom Werk des suprematistischen Künstlers Kasimir Malewitsch.",
-      "background_images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Hungerford_Bridge%2C_London_-_geograph.org.uk_-_4786365.jpg/960px-Hungerford_Bridge%2C_London_-_geograph.org.uk_-_4786365.jpg",
-          "caption": "Hungerford Bridge, London",
-          "source": "https://commons.wikimedia.org/wiki/File:Hungerford_Bridge,_London_-_geograph.org.uk_-_4786365.jpg",
-          "creator": "Alan Hunt",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-          "query": "Hungerford Bridge London"
-        },
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Beirut._The_American_University_campus._%28St._George%27s_Bay_and_snow_covered_Jebel_Sennen_%28Lebanon%29_in_the_background%29_LOC_matpc.22014.tif/lossy-page1-960px-Beirut._The_American_University_campus._%28St._George%27s_Bay_and_snow_covered_Jebel_Sennen_%28Lebanon%29_in_the_background%29_LOC_matpc.22014.tif.jpg",
-          "caption": "Titel: Beirut. Der Campus der American University. (St. George’s Bay und der schneebedeckte Jebel Sennen (Libanon) im Hintergrund) Abstrakt/Medium: G.",
-          "source": "https://commons.wikimedia.org/wiki/File:Beirut._The_American_University_campus._(St._George's_Bay_and_snow_covered_Jebel_Sennen_(Lebanon)_in_the_background)_LOC_matpc.22014.tif",
-          "creator": "Matson Collection",
-          "license": "Public domain",
-          "licenseUrl": null,
-          "query": "American University of Beirut campus"
-        }
-      ]
+      "chapter": "baghdad_to_london",
+      "weight": 0.35
     },
     {
       "date": "1972",
       "date_precision": "year",
       "age": 21,
-      "title": "Zieht nach London",
-      "description": "1972 verließ Zaha Hadid Beirut und ging nach London, um an der Architectural Association School of Architecture Architektur zu studieren. Dort studierte sie bei Rem Koolhaas, Ilias Zengelis und Bernard Tschumi.",
+      "title": "Umzug nach London",
+      "description": "Zaha Hadid verlässt Beirut und geht nach London, um an der Architectural Association School of Architecture zu studieren. Dort unterrichten sie Rem Koolhaas, Ilias Zengelis und Bernard Tschumi. In großformatigen abstrakten Gemälden entwickelt sie Entwürfe, die von der [[Russian avant-garde|russischen Avantgarde]] geprägt sind, einer Bewegung der abstrakten Kunst und Gestaltung des frühen 20. Jahrhunderts.",
       "locations": [
         {
           "name_historic": "Beirut",
@@ -268,13 +254,12 @@
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
-        "https://en.wikipedia.org/wiki/Elia_Zenghelis",
-        "https://en.wikipedia.org/wiki/Rem_Koolhaas"
+        "https://en.wikipedia.org/wiki/Elia_Zenghelis"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Architectural_Association_School_of_Architecture_London_20060909.jpg/960px-Architectural_Association_School_of_Architecture_London_20060909.jpg",
-          "caption": "Architectural Association School of Architecture",
+          "caption": "Architectural Association School of Architecture, London",
           "source": "https://commons.wikimedia.org/wiki/File:Architectural_Association_School_of_Architecture_London_20060909.jpg",
           "creator": "Kaihsu Tai",
           "license": "CC BY-SA 3.0",
@@ -282,33 +267,28 @@
         }
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "london_experiments",
+      "chapter": "baghdad_to_london",
+      "annotations": {
+        "Russian avant-garde": {
+          "explanation": "Künstler und Designer dieser Bewegung experimentierten vor und nach der Russischen Revolution mit Abstraktion, geometrischen Formen und neuen Bildsprachen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Russian_avant-garde"
+        }
+      },
       "weight": 0.7,
       "event_class": {
         "type": "migration",
         "from_location": "Libanon",
-        "to_location": "London, England",
+        "to_location": "Vereinigtes Königreich",
         "characterization": "Architekturausbildung"
       },
-      "background": "Ende der 1960er-Jahre war die Architectural Association zu einem Zentrum radikaler Ideen geworden. Ilias Zengelis sagte, die Architektur befinde sich in einer Krise und die Suche nach neuen Wegen habe sich in die Hochschulen verlagert. Die AA holte Architekten wie Coop Himmelblau und Adolfo Natalini von Superstudio nach London. Zengelis lehrte dort seit 1963. Er brachte einen radikaleren avantgardistischen Ansatz in den Lehrplan ein. Koolhaas hatte ab 1968 dieselbe Schule besucht, bevor er sein Studium an der Cornell University und am Institute for Architecture and Urban Studies in New York fortsetzte.\n\nDie Schule bot ein Umfeld, in dem sich architektonische Ideen ebenso durch Bilder wie durch herkömmliche Baupläne entwickeln ließen. Hadid suchte eine Alternative zur traditionellen Architekturzeichnung. Sie nutzte die Malerei als Entwurfsinstrument. Dabei griff sie auf den Suprematismus und die russische Avantgarde zurück, besonders auf das Werk Kasimir Malewitschs. Die Abstraktion ermöglichte ihr, Experimente der modernen Architektur wieder aufzunehmen, die sie für unvollendet oder unerprobt hielt. Ihre Lehrer erkannten eine ungewöhnlich weitreichende visuelle Vorstellungskraft. Koolhaas nannte sie später „einen Planeten auf seiner eigenen Umlaufbahn“.\n\nZengelis erinnerte sich, sie „die Erfinderin der 89 Grad“ genannt zu haben, weil sich in ihrer Arbeit nichts im rechten Winkel festlegte. Er sagte, ihre Zeichnungen zerlegten Gebäude in winzige Stücke. Zugleich konzentrierte sie sich auf das räumliche Gesamtbild und schenkte praktischen Details wie Treppen wenig Beachtung. In seiner Erinnerung konnten die engen Treppenräume ihrer Zeichnungen dazu führen, dass ein Besucher mit dem Kopf an die Decke stieß. Er war überzeugt, die Konstruktionsdetails ließen sich später lösen, und sagte, damit habe sie recht gehabt. Die Atmosphäre der AA und der Kreis ihrer Lehrer führten nach ihrem Studium zur Zusammenarbeit mit Koolhaas und Zengelis.",
-      "background_images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Suprematist_Composition_-_Kazimir_Malevich.jpg/960px-Suprematist_Composition_-_Kazimir_Malevich.jpg",
-          "caption": "Russisch: «Супрематическая композиция (синий прямоугольник поверх красного луча) »Suprematist Compositionlabel QS:Len,\"Suprematist Composition\"label QS:Lru,\"Карт.",
-          "source": "https://commons.wikimedia.org/wiki/File:Suprematist_Composition_-_Kazimir_Malevich.jpg",
-          "creator": "Kazimir Malevich",
-          "license": "Public domain",
-          "licenseUrl": null,
-          "query": "Kazimir Malevich Suprematist painting"
-        }
-      ]
+      "background": "Die Architectural Association war bereits vor Hadids Ankunft ein Zentrum radikaler Architekturideen. Ilias Zengelis lehrte dort seit 1963. Er wurde dafür bekannt, avantgardistische Arbeiten in den Lehrplan aufzunehmen. Später erinnerte er sich daran, dass die Schule Kontakte zu Architekten und experimentellen Gruppen über Landesgrenzen hinweg aufgebaut hatte.\n\nIhre Lehrer erinnerten sich an ihren ungewöhnlich entschiedenen Gestaltungsansatz. Rem Koolhaas nannte sie bei ihrem Abschluss „einen Planeten in eigener Umlaufbahn“. Zengelis sagte, die Studierenden hätten sie die Erfinderin der „89 Grad“ genannt. Er erinnerte sich, dass ihr vor allem die Gesamtkomposition wichtig gewesen sei. Konstruktive Details wie Treppen und Verbindungen habe sie anderen zur späteren Ausarbeitung überlassen."
     },
     {
       "date": "1977",
       "date_precision": "year",
       "age": 26,
-      "title": "Abschluss an der AA",
-      "description": "Hadid beendet ihr Studium an der Architectural Association School of Architecture in London. Ihre Abschlussarbeit [[Malevich's Tektonik]] entwirft ein 14-geschossiges Hotel über der Hungerford Bridge. Sie stellt das Projekt als von [[Suprematism]] beeinflusstes Acrylgemälde dar, einer von Kasimir Malewitsch entwickelten abstrakten Kunstrichtung.",
+      "title": "Eintritt bei OMA",
+      "description": "Zaha Hadid schließt ihr Studium an der Architectural Association School of Architecture in London ab. Ihre Abschlussarbeit Malevich's Tektonik entwirft ein Hotel mit 14 Ebenen über der Hungerford Bridge. Sie tritt in das Architekturbüro Office for Metropolitan Architecture in Rotterdam ein und arbeitet dort mit Rem Koolhaas und Ilias Zengelis. Der Bauingenieur Peter Rice fördert ihre frühe Karriere.",
       "locations": [
         {
           "name_historic": "London",
@@ -317,43 +297,8 @@
             -0.1276,
             51.5072
           ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Zaha_Hadid"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Hungerford_Bridge%2C_London_-_geograph.org.uk_-_4786365.jpg/960px-Hungerford_Bridge%2C_London_-_geograph.org.uk_-_4786365.jpg",
-          "caption": "Hungerford Bridge, London",
-          "source": "https://commons.wikimedia.org/wiki/File:Hungerford_Bridge,_London_-_geograph.org.uk_-_4786365.jpg",
-          "creator": "Alan Hunt",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
-        }
-      ],
-      "event_type_icon": "mdi-book-open-variant",
-      "chapter": "london_experiments",
-      "annotations": {
-        "Suprematism": {
-          "explanation": "Kazimir Malevich developed Suprematism in Russia in the 1910s. It used geometric forms that did not depict recognizable objects.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Suprematism"
+          "primary": false
         },
-        "Malevich's Tektonik": {
-          "explanation": "Hadid's 1977 Architectural Association graduation project was a hotel proposal for Hungerford Bridge. She presented it as an acrylic painting rather than a conventional building drawing.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Zaha_Hadid"
-        }
-      },
-      "weight": 0.7
-    },
-    {
-      "date": "1977",
-      "date_precision": "year",
-      "age": 26,
-      "title": "Beginnt bei OMA",
-      "description": "Hadid zieht nach Rotterdam, um bei Rem Koolhaas und Ilias Zengelis im [[Office for Metropolitan Architecture|Office for Metropolitan Architecture]] zu arbeiten. Das Büro ist als OMA bekannt. Durch Koolhaas lernt sie den Bauingenieur Peter Rice kennen, der ihre frühe Laufbahn fördert.",
-      "locations": [
         {
           "name_historic": "Rotterdam",
           "name_modern": "Rotterdam, Niederlande",
@@ -370,26 +315,28 @@
         "Peter Rice"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Zaha_Hadid",
-        "https://en.wikipedia.org/wiki/Rem_Koolhaas",
-        "https://en.wikipedia.org/wiki/Peter_Rice_(structural_engineer)"
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Hungerford_Bridge%2C_London_-_geograph.org.uk_-_4786365.jpg/960px-Hungerford_Bridge%2C_London_-_geograph.org.uk_-_4786365.jpg",
+          "caption": "Hungerford Bridge, London",
+          "source": "https://commons.wikimedia.org/wiki/File:Hungerford_Bridge,_London_-_geograph.org.uk_-_4786365.jpg",
+          "creator": "Alan Hunt",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+        }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "london_experiments",
-      "annotations": {
-        "Office for Metropolitan Architecture": {
-          "explanation": "OMA ist ein internationales Architekturbüro, das 1975 in Rotterdam von Rem Koolhaas, Ilias Zengelis, Zoe Zenghelis und Madelon Vriesendorp gegründet wurde.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Office_for_Metropolitan_Architecture"
-        }
-      },
-      "weight": 0.5
+      "chapter": "unbuilt_visions",
+      "weight": 0.55
     },
     {
       "date": "1980",
       "date_precision": "year",
       "age": 29,
-      "title": "Eröffnet ihr Londoner Büro",
-      "description": "Hadid eröffnet Zaha Hadid Architects in London. Sie entwickelt Entwürfe mithilfe großformatiger Gemälde und Zeichnungen. Ihre Arbeit nutzt suprematistische Ideen sowie kantige, schwebende Formen.",
+      "title": "Gründet Büro in London",
+      "description": "Zaha Hadid gründet Zaha Hadid Architects in London. Sie beginnt an der Architectural Association School of Architecture zu lehren. Für radikale Architekturentwürfe fertigt sie äußerst detaillierte Zeichnungen an. Die meisten dieser Entwürfe werden nicht gebaut.",
       "locations": [
         {
           "name_historic": "London",
@@ -405,22 +352,60 @@
         "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "london_experiments",
-      "weight": 0.9
+      "chapter": "unbuilt_visions",
+      "weight": 0.8
+    },
+    {
+      "date": "1983",
+      "date_precision": "year",
+      "age": 32,
+      "title": "Gewinnt Wettbewerb für The Peak",
+      "description": "Zaha Hadid gewinnt den Wettbewerb für den The Peak Leisure Club, einen geplanten Freizeitkomplex oberhalb von Hongkong. Ihr Entwurf legt scharfkantige horizontale Formen über den Hang. Die Zeichnungen werden weithin veröffentlicht, doch das Projekt wird nicht gebaut. Nachdem er den Entwurf kennengelernt hat, beginnt Patrik Schumacher früh mit ihrem Büro zusammenzuarbeiten.",
+      "locations": [
+        {
+          "name_historic": "Hongkong",
+          "name_modern": "Hongkong",
+          "centroid": [
+            114.1694,
+            22.3193
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Patrik Schumacher"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://de.wikipedia.org/wiki/Patrik_Schumacher"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Model_of_%E2%80%9CThe_Peak%E2%80%9D_Resort%2C_Hong_Kong_by_Gary_Berkovich.jpg/960px-Model_of_%E2%80%9CThe_Peak%E2%80%9D_Resort%2C_Hong_Kong_by_Gary_Berkovich.jpg",
+          "caption": "Modell des Ferienresorts The Peak, Hongkong",
+          "source": "https://commons.wikimedia.org/wiki/File:Model_of_“The_Peak”_Resort,_Hong_Kong_by_Gary_Berkovich.jpg",
+          "creator": "Gary Berkovich",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+        }
+      ],
+      "event_type_icon": "mdi-trophy",
+      "chapter": "unbuilt_visions",
+      "weight": 0.7
     },
     {
       "date": "1988",
       "date_precision": "year",
       "age": 37,
-      "title": "In MoMA-Ausstellung vertreten",
-      "description": "Das Museum of Modern Art in New York nimmt Hadid zusammen mit sechs weiteren Architekten in die [[Deconstructivism in Architecture|Ausstellung „Deconstructivism in Architecture“]] auf. Philip Johnson und Mark Wigley kuratieren die Ausstellung. Sie stellt einer internationalen Öffentlichkeit Projekte mit fragmentierten architektonischen Formen vor.",
+      "title": "Ausstellung im MoMA",
+      "description": "Das Museum of Modern Art in New York zählt Zaha Hadid in Deconstructivism in Architecture zu sieben Architekten. Philip Johnson und Mark Wigley kuratieren die Ausstellung mit Bauten und Zeichnungen, die durch fragmentierte Formen und aufgebrochene Geometrien geprägt sind. Die Ausstellung macht Hadids Werk einem internationalen Publikum bekannt.",
       "locations": [
         {
-          "name_historic": "New York City",
-          "name_modern": "New York City, Vereinigte Staaten",
+          "name_historic": "New York",
+          "name_modern": "New York, Vereinigte Staaten",
           "centroid": [
-            -74.006,
-            40.7128
+            -73.9776,
+            40.7614
           ],
           "primary": true
         }
@@ -432,29 +417,39 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/1504/24372920641_e1d2cf7376_b.jpg",
+          "caption": "Ausstellung Deconstructivist Architecture im MoMA",
+          "source": "https://www.flickr.com/photos/136374633@N04/24372920641",
+          "creator": "ivtoran",
+          "license": "CC PDM 1.0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
+        }
+      ],
       "event_type_icon": "mdi-palette",
-      "chapter": "built_breakthrough",
+      "chapter": "unbuilt_visions",
       "annotations": {
-        "Deconstructivism in Architecture": {
-          "explanation": "Dekonstruktivismus war eine architektonische Tendenz der späten 1980er-Jahre, die mit gebrochen, geneigt oder gestört wirkenden Formen verbunden war. Die MoMA-Ausstellung von 1988 gab der Tendenz ihre bekannteste öffentliche Bezeichnung.",
+        "deconstructivism": {
+          "explanation": "Dekonstruktivismus wurde zur Bezeichnung für die Architektur des späten 20. Jahrhunderts, die sich von stabilen, rechtwinkligen Kompositionen löste und Zusammenstoß, Fragmentierung und Instabilität betonte.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Deconstructivism"
         }
       },
-      "weight": 0.7
+      "weight": 0.65
     },
     {
       "date": "1993",
       "date_precision": "year",
       "age": 42,
       "title": "Vitra-Feuerwache fertiggestellt",
-      "description": "Rolf Fehlbaum beauftragt Hadid mit dem Entwurf einer Feuerwache für den Vitra Campus in Weil am Rhein. Hadid stellt die Vitra-Feuerwache 1993 fertig. Sichtbetonwände und scharfe Diagonalflächen bilden die betriebsbereite Wache.",
+      "description": "Rolf Fehlbaum lädt Zaha Hadid ein, für Vitra, ein Möbelunternehmen mit einem Campus in Weil am Rhein, eine Feuerwache zu entwerfen. Die Vitra Fire Station wird aus Sichtbeton und Glas fertiggestellt. Scharfe diagonale Formen treffen im Zentrum des Gebäudes aufeinander.",
       "locations": [
         {
           "name_historic": "Weil am Rhein",
           "name_modern": "Weil am Rhein, Deutschland",
           "centroid": [
-            7.6283,
-            47.5931
+            7.627,
+            47.593
           ],
           "primary": true
         }
@@ -468,7 +463,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Vitra_Campus_-_Hadid_Fire_Station_-_full_view%2C_blue_sky.jpg/960px-Vitra_Campus_-_Hadid_Fire_Station_-_full_view%2C_blue_sky.jpg",
-          "caption": "Vitra-Feuerwache auf dem Vitra Campus",
+          "caption": "Vitra Fire Station auf dem Vitra Campus",
           "source": "https://commons.wikimedia.org/wiki/File:Vitra_Campus_-_Hadid_Fire_Station_-_full_view,_blue_sky.jpg",
           "creator": "Marsupium",
           "license": "CC0",
@@ -476,36 +471,15 @@
         }
       ],
       "event_type_icon": "mdi-office-building",
-      "chapter": "built_breakthrough",
-      "weight": 0.9,
-      "background": "Der Werkscampus von Vitra in Weil am Rhein war zu einem Ort geworden, an dem ein Möbelunternehmen Architekten mit Bauten für die öffentliche Aufmerksamkeit und die Produktion beauftragte. 1989 hatte Vitra den damals noch wenig bekannten Frank Gehry gebeten, dort ein Designmuseum zu entwerfen. Das Projekt für die Feuerwache entstand, als Hadids Entwürfe in Architekturzeitschriften vielfach abgedruckt wurden, obwohl nur wenige davon gebaut worden waren. Ihr Ansehen beruhte auf Lehre, Vorträgen und Gemälden von Projekten, deren kantige Formen die herkömmliche Gebäudegeometrie aufbrachen. Die Wache bot diesen Zeichnungen auf einem Industriegelände eine kleine, anspruchsvolle praktische Bewährungsprobe.\n\nDas fertige Bauwerk behandelte die Feuerwache als skulpturale Komposition. Beton und Glas wurden zu scharfkantigen Elementen zusammengefügt, die im Zentrum scheinbar aufeinanderprallen. Seine Wände und Flächen verliehen dem Gebäude die gedrängte, richtungsbetonte Qualität von Hadids gemalten Entwürfen. Das Projekt musste einen funktionierenden Rettungsdienst auf dem Vitra Campus beherbergen, dessen Gebäude zugleich Teil der Architektursammlung des Unternehmens waren. Die Entwurfspläne waren bereits vor Abschluss der Bauarbeiten in Architekturzeitschriften erschienen.\n\nWeil am Rhein eröffnete bald eine eigene städtische Feuerwache. Vitra’s Gebäude erfüllte seine ursprüngliche Notfallfunktion deshalb nur kurze Zeit. Es wurde zu einem Ausstellungsraum und steht dort neben Arbeiten von Gehry und anderen Architekten des Campus. Das Gebäude bot Hadids architektonischer Laufbahn erstmals eine bedeutende gebaute Plattform. Als sie 2004 den Pritzker-Architekturpreis erhielt, stellte die Jury fest, dass ihr fertiggestelltes Werk noch klein war, und nannte die Vitra-Feuerwache als eines von vier vollendeten Gebäuden.",
-      "background_images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Baden-W%C3%BCrttemberg_Weil_am_Rhein_Vitra_Fire_station_01.jpg/960px-Baden-W%C3%BCrttemberg_Weil_am_Rhein_Vitra_Fire_station_01.jpg",
-          "caption": "Baden-Württemberg, Weil am Rhein, Vitra-Feuerwache (Zaha Hadid)",
-          "source": "https://commons.wikimedia.org/wiki/File:Baden-Württemberg_Weil_am_Rhein_Vitra_Fire_station_01.jpg",
-          "creator": "Calips",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-          "query": "Vitra Fire Station Weil am Rhein"
-        },
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Vitra_Design_Museum_by_Frank_Gehry.jpg/960px-Vitra_Design_Museum_by_Frank_Gehry.jpg",
-          "caption": "Vitra Design Museum von Frank Gehry in Weil am Rhein, Deutschland, Februar 2014.",
-          "source": "https://commons.wikimedia.org/wiki/File:Vitra_Design_Museum_by_Frank_Gehry.jpg",
-          "creator": "Kotivalo",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-          "query": "Vitra Design Museum Gehry"
-        }
-      ]
+      "chapter": "building_momentum",
+      "weight": 0.85
     },
     {
       "date": "2003",
       "date_precision": "year",
       "age": 52,
-      "title": "Eröffnet Kunstzentrum in Cincinnati",
-      "description": "Das Contemporary Arts Center eröffnet in Cincinnati mit von Hadid entworfenen Galerien und öffentlichen Räumen. Sie gewinnt den Entwurfswettbewerb gegen Rem Koolhaas und andere Architekten. Damit ist sie die erste Frau, die ein Kunstmuseum in den Vereinigten Staaten entwirft.",
+      "title": "Eröffnung des Contemporary Arts Center",
+      "description": "Das Contemporary Arts Center eröffnet in Cincinnati, Ohio, in einem von Zaha Hadid entworfenen Gebäude. Hadid gewinnt den Wettbewerb gegen Rem Koolhaas und andere Architekten. Sie ist die erste Frau, die in den Vereinigten Staaten ein Kunstmuseum entwirft. Eine 30 Meter lange schwarze Treppe verbindet die Galerien zwischen geschwungenen und kantigen Betonwänden.",
       "locations": [
         {
           "name_historic": "Cincinnati",
@@ -534,15 +508,15 @@
         }
       ],
       "event_type_icon": "mdi-office-building",
-      "chapter": "built_breakthrough",
-      "weight": 0.82
+      "chapter": "building_momentum",
+      "weight": 0.7
     },
     {
       "date": "2004",
       "date_precision": "year",
       "age": 53,
-      "title": "Gewinnt den Pritzker-Preis",
-      "description": "Im Eremitage-Museum in Sankt Petersburg erhält Hadid den [[Pritzker Architecture Prize]]. Thomas Pritzker gibt die Auszeichnung bekannt. Hadid ist die erste Frau, die den Preis als Einzelperson erhält.",
+      "title": "Pritzker-Preis erhalten",
+      "description": "Zaha Hadid erhält im Staatlichen Eremitage-Museum in Sankt Petersburg den [[Pritzker Architecture Prize|Pritzker-Architekturpreis]]. Sie ist die erste Frau, die diese Auszeichnung erhält. Thomas Pritzker stellt fest, dass sie vier Gebäude vollendet hat.",
       "locations": [
         {
           "name_historic": "Sankt Petersburg",
@@ -560,26 +534,16 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Hermitage%2C_Leningrad_%28St._Petersburg%29.jpg/960px-Hermitage%2C_Leningrad_%28St._Petersburg%29.jpg",
-          "caption": "Eremitage-Museum in Sankt Petersburg",
-          "source": "https://commons.wikimedia.org/wiki/File:Hermitage,_Leningrad_(St._Petersburg).jpg",
-          "creator": "Chris Mitchell",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
       "event_type_icon": "mdi-trophy",
-      "chapter": "global_commissions",
+      "chapter": "building_momentum",
       "annotations": {
         "Pritzker Architecture Prize": {
-          "explanation": "The Pritzker Architecture Prize is an annual international award honoring an architect's body of built work and contributions to architecture.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Pritzker_Architecture_Prize"
+          "explanation": "Der Pritzker-Architekturpreis ist eine jährlich vergebene internationale Auszeichnung für Architekten, deren Werk herausragendes Talent und Leistungen erkennen lässt. Hadid war die erste Frau, die ihn erhielt.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Pritzker_Prize"
         }
       },
-      "weight": 0.95,
-      "background": "Bis 2004 hatten Architekturzeitschriften Hadids Gemälde und Wettbewerbsentwürfe bekannt gemacht, lange bevor viele ihrer Entwürfe gebaut wurden. Ihr Ansatz entwickelte sich aus dem Suprematismus und der russischen Avantgarde. An der Architectural Association in London unterrichteten sie Rem Koolhaas, Ilias Zengelis und Bernard Tschumi. Ihr Abschlussprojekt Malevich’s Tektonik entwarf in einem von Kasimir Malewitsch inspirierten Acrylgemälde ein 14-geschossiges Hotel über der Hungerford Bridge. Nach ihrem Abschluss 1977 arbeitete sie mit Koolhaas und Ilias Zengelis bei der Office for Metropolitan Architecture in Rotterdam. 1980 eröffnete sie ihr Londoner Büro.\n\nIhr früher öffentlicher Ruf beruhte stark auf Vorträgen, Zeichnungen und Entwürfen, die von Auftraggebern nicht gebaut wurden. Das Freizeitclub-Projekt The Peak in Hongkong von 1983 wurde zu einem der bekanntesten Beispiele. Ein Entwurf für ein Opernhaus in Cardiff brachte 1994 einen schmerzhaften Rückschlag. Die Wettbewerbsjury wählte ihren Entwurf aus, doch die Millennium Commission verweigerte die Finanzierung und übergab das Projekt einem anderen Architekten. Hadid fragte: „Wollen sie nichts als Mittelmäßigkeit?“ Das Museum of Modern Art steigerte 1988 ihr internationales Ansehen, als Philip Johnson und Mark Wigley sie in ihre Ausstellung Deconstructivism in Architecture aufnahmen.\n\nDie Jury berücksichtigte ein noch kleines gebautes Werk. Dazu gehörte die Vitra-Feuerwache in Weil am Rhein, ein scharfkantiges Bauwerk aus Beton und Glas, das Rolf Fehlbaum von Vitra in Auftrag gegeben hatte. Das Gebäude diente kurz als Feuerwache, bevor die Stadt eine eigene Anlage eröffnete. Danach wurde es zu einem Ausstellungsraum neben Arbeiten von Frank Gehry und anderen Designern. Die Bergisel-Schanze in Innsbruck verband eine 48 Meter hohe Schanze mit einem Café für 150 Gäste und Bergblick. Hadid nannte sie eine „organische Mischform“ aus Brücke und Turm. Außerdem gehörten das Parkhaus und der Endbahnhof Hoenheim North in Frankreich sowie das Contemporary Arts Center in Cincinnati zu ihrem Werk. Thomas Pritzker sagte, ihr fertiggestelltes Werk sei vergleichsweise klein, während ihre Energie und ihre Ideen größere Hoffnungen für die Zukunft weckten.",
+      "weight": 1.0,
+      "background": "Die vier mit dem Preis gewürdigten fertiggestellten Projekte reichten von der Vitra Fire Station bis zur Bergiselschanze in Innsbruck. Dazu gehörten auch das Parkhaus mit Endhaltestelle Hoenheim Nord in Frankreich und das Contemporary Arts Center in Cincinnati.\n\nThomas Pritzker sagte, dieses kleine Werk habe Hadid bereits große Anerkennung eingebracht. Er verwies auch auf das Potenzial, das er in ihrer Energie und ihren Ideen sah.",
       "background_images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fire_Station%2C_Vitra_Campus%2C_Weil_am_Rhein_-_Flickr_-_Mondo79.jpg/960px-Fire_Station%2C_Vitra_Campus%2C_Weil_am_Rhein_-_Flickr_-_Mondo79.jpg",
@@ -588,7 +552,7 @@
           "creator": "Mondo79",
           "license": "CC BY 2.0",
           "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-          "query": "Vitra Fire Station Weil am Rhein"
+          "query": "Vitra Fire Station"
         },
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Bergisel_ski_jump%2C_Innsbruck_A.jpg/960px-Bergisel_ski_jump%2C_Innsbruck_A.jpg",
@@ -597,11 +561,11 @@
           "creator": "Stefano Vigorelli",
           "license": "CC BY-SA 4.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-          "query": "Bergisel Ski Jump Innsbruck"
+          "query": "Bergisel Ski Jump"
         },
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Contemp_Art_Center.JPG/960px-Contemp_Art_Center.JPG",
-          "caption": "Das Contemporary Art Center in Cincinnati, Ohio, von Zaha Hadid.",
+          "caption": "Das Contemporary Art Center, Cincinnati, Ohio, von Zaha Hadid.",
           "source": "https://commons.wikimedia.org/wiki/File:Contemp_Art_Center.JPG",
           "creator": "No machine-readable author provided. Lanskeith17 assumed (based on copyright claims).",
           "license": "Public domain",
@@ -611,11 +575,45 @@
       ]
     },
     {
+      "date": "2005",
+      "date_precision": "year",
+      "age": 54,
+      "title": "Eröffnung des Phaeno Science Center",
+      "description": "Das Phaeno Science Center eröffnet in Wolfsburg. Zaha Hadid entwirft das Museum sieben Meter über dem Boden. Zehn umgekehrte kegelförmige Betonstützen tragen die Ausstellungsräume. Unter dem Gebäude enthalten die Stützen Eingänge, Geschäfte und ein Café.",
+      "locations": [
+        {
+          "name_historic": "Wolfsburg",
+          "name_modern": "Wolfsburg, Deutschland",
+          "centroid": [
+            10.7865,
+            52.4227
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Phaeno_Science_Center.jpg/960px-Phaeno_Science_Center.jpg",
+          "caption": "Phaeno Science Center, Wolfsburg",
+          "source": "https://commons.wikimedia.org/wiki/File:Phaeno_Science_Center.jpg",
+          "creator": "Nikola350",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "global_commissions",
+      "weight": 0.8
+    },
+    {
       "date": "2010",
       "date_precision": "year",
       "age": 59,
-      "title": "MAXXI-Museum eröffnet",
-      "description": "Rom eröffnet das Nationalmuseum der Künste des 21. Jahrhunderts, bekannt als MAXXI, in einem von Hadid entworfenen Gebäude. Patrik Schumacher arbeitet über Zaha Hadid Architects mit ihr zusammen. Sich kreuzende Galerien, Treppen und Wege gliedern den Innenraum des Museums.",
+      "title": "Eröffnung des MAXXI-Museums",
+      "description": "Roms [[MAXXI Museum|MAXXI-Museum]] eröffnet in einem von Zaha Hadid für zeitgenössische Kunst und Architektur entworfenen Gebäude. Seine Galerien verlaufen auf geschwungenen Wegen unter linearen Oberlichtern, die das Tageslicht filtern. Patrik Schumacher wirkt an der Planung des Projekts mit. Hadid erhält später im selben Jahr den Stirling Prize für das Gebäude.",
       "locations": [
         {
           "name_historic": "Rom",
@@ -635,58 +633,79 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/MAXXI_Museum_interior_04.JPG/960px-MAXXI_Museum_interior_04.JPG",
-          "caption": "Innenraum des MAXXI-Museums in Rom",
-          "source": "https://commons.wikimedia.org/wiki/File:MAXXI_Museum_interior_04.JPG",
-          "creator": "Commonurbock23",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+          "url": "https://live.staticflickr.com/2823/34196059542_382de86c85_b.jpg",
+          "caption": "MAXXI-Museum in Rom",
+          "source": "https://www.flickr.com/photos/72746018@N00/34196059542",
+          "creator": "dalbera",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
         }
       ],
       "event_type_icon": "mdi-office-building",
       "chapter": "global_commissions",
-      "weight": 0.95
-    },
-    {
-      "date": "2010",
-      "date_precision": "year",
-      "age": 59,
-      "title": "Erster Stirling Prize",
-      "description": "Das [[Royal Institute of British Architects|Royal Institute of British Architects (RIBA)]] verleiht Hadid für das MAXXI den [[Stirling Prize]]. Der Preis würdigt 2010 den Beitrag des Museums zur Architektur.",
-      "locations": [
-        {
-          "name_historic": "Rom",
-          "name_modern": "Rom, Italien",
-          "centroid": [
-            12.4964,
-            41.9028
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Zaha_Hadid"
-      ],
-      "event_type_icon": "mdi-trophy",
-      "chapter": "global_commissions",
+      "weight": 0.9,
       "annotations": {
-        "Stirling Prize": {
-          "explanation": "The Stirling Prize is an annual British architecture award presented by the Royal Institute of British Architects for a building considered to have made the greatest contribution to British architecture that year.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Stirling_Prize"
-        },
-        "Royal Institute of British Architects": {
-          "explanation": "RIBA ist der Berufsverband der Architekten im Vereinigten Königreich. Er vergibt den Stirling Prize und die Royal Gold Medal.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Royal_Institute_of_British_Architects"
+        "MAXXI Museum": {
+          "explanation": "MAXXI ist Italiens nationales Museum der Künste des 21. Jahrhunderts in Rom. Sein Name leitet sich von Museo nazionale delle arti del XXI secolo ab.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/MAXXI"
         }
       },
-      "weight": 0.7
+      "background": "Die Arbeiten am Museum erstrecken sich von 1998 bis 2010. Hadid nutzt die rechtwinkligen Raster des umliegenden Geländes, um die Gesamtform anzulegen. Glatte weiße Wände und eine schwarz-weiße Farbpalette verbinden das Äußere mit einer früheren Phase ihres Werks.\n\nGruppen aus je fünf schlanken Pylonen heben das Gebäude über den Boden. Eine verglaste Galerie ragt über den Platz und spendet darunter Schatten. Im Inneren überqueren Treppen und Brücken aus schwarzem Stahl einen zentralen Luftraum. Darunter leuchtet weißes Licht. Rowan Moore beschrieb die Galerien als gebogene längliche Röhren, die sich überlagern, kreuzen und übereinanderstapeln. Hadid sagte, sie wolle, dass das Gebäude „Zusammenfluss, Interferenz und Turbulenz“ hervorbringe.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Riverside_Museum_%2830244146743%29.jpg/960px-Riverside_Museum_%2830244146743%29.jpg",
+          "caption": "Riverside Museum (30244146743)",
+          "source": "https://commons.wikimedia.org/wiki/File:Riverside_Museum_(30244146743).jpg",
+          "creator": "Neil Williamson from Dundee, Scotland",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+          "query": "MAXXI Museum exterior"
+        }
+      ]
     },
     {
       "date": "2011",
       "date_precision": "year",
       "age": 60,
-      "title": "London Aquatics Centre fertiggestellt",
-      "description": "2011 stellt Zaha Hadid das London Aquatics Centre in London für die Olympischen Spiele 2012 fertig. Sein geschwungenes Dach überspannt die Wettkampfbecken und eine Zuschauertribüne im Olympiapark.",
+      "title": "Opernhaus Guangzhou",
+      "description": "Nach dem Gewinn eines internationalen Wettbewerbs im Jahr 2002 entwirft Zaha Hadid das Opernhaus Guangzhou in Guangzhou, China. Der Komplex besteht aus zwei Volumen mit glatt geschwungenen Kanten. Er umfasst ein Theater mit 1.800 Sitzplätzen, ein Mehrzwecktheater, eine Eingangshalle und einen Salon.",
+      "locations": [
+        {
+          "name_historic": "Guangzhou",
+          "name_modern": "Guangzhou, China",
+          "centroid": [
+            113.2644,
+            23.1291
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Patrik Schumacher"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Guangzhou_Opera_House%28Near%29.JPG/960px-Guangzhou_Opera_House%28Near%29.JPG",
+          "caption": "Opernhaus Guangzhou",
+          "source": "https://commons.wikimedia.org/wiki/File:Guangzhou_Opera_House(Near).JPG",
+          "creator": "Mr a",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "global_commissions",
+      "weight": 0.85
+    },
+    {
+      "date": "2012",
+      "date_precision": "year",
+      "age": 61,
+      "title": "Olympia-Austragungsort und Damewürde",
+      "description": "Hadids London Aquatics Centre ist Austragungsort der Schwimmwettbewerbe bei den Olympischen Sommerspielen 2012. Sein weit auskragendes Dach überspannt die Wettkampfbecken und Zuschauertribünen. Elisabeth II. ernennt Hadid für ihre Verdienste um die Architektur zur Dame.",
       "locations": [
         {
           "name_historic": "London",
@@ -698,39 +717,46 @@
           "primary": true
         }
       ],
+      "involved_people": [
+        "Elisabeth II."
+      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/London_Aquatics_Centre%2C_2023.jpg/960px-London_Aquatics_Centre%2C_2023.jpg",
-          "caption": "London Aquatics Centre, 2023",
-          "source": "https://commons.wikimedia.org/wiki/File:London_Aquatics_Centre,_2023.jpg",
-          "creator": "Thomas Dahlstrøm Nielsen",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/London_Aquatics_Centre_%2825109572020%29.jpg/960px-London_Aquatics_Centre_%2825109572020%29.jpg",
+          "caption": "London Aquatics Centre",
+          "source": "https://commons.wikimedia.org/wiki/File:London_Aquatics_Centre_(25109572020).jpg",
+          "creator": "Tom Parnell from Scottish Borders, Scotland",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
         }
       ],
       "event_type_icon": "mdi-office-building",
       "chapter": "global_commissions",
-      "weight": 0.92
+      "weight": 0.9
     },
     {
-      "date": "2012",
+      "date": "2013",
       "date_precision": "year",
-      "age": 61,
-      "title": "Broad Art Museum eröffnet",
-      "description": "Die Michigan State University eröffnet das Eli and Edythe Broad Art Museum in East Lansing. Hadid entwirft sein gefaltetes, kantiges Gebäude. Galerien, Lehrräume und öffentliche Wege liegen innerhalb seiner gefältelten Form.",
+      "age": 62,
+      "title": "Eröffnung des Broad Art Museum",
+      "description": "Das Eli and Edythe Broad Art Museum eröffnet an der Michigan State University in East Lansing, Michigan. Zaha Hadid entwirft die geneigten, gefalteten Fassaden aus Edelstahl. In den Galerien werden moderne und zeitgenössische Kunst gezeigt.",
       "locations": [
         {
           "name_historic": "East Lansing",
           "name_modern": "East Lansing, Michigan, Vereinigte Staaten",
           "centroid": [
-            -84.483,
-            42.735
+            -84.4839,
+            42.7369
           ],
           "primary": true
         }
+      ],
+      "involved_people": [
+        "Eli Broad",
+        "Edythe Broad"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid"
@@ -746,30 +772,15 @@
         }
       ],
       "event_type_icon": "mdi-office-building",
-      "chapter": "final_honors",
-      "weight": 0.82,
-      "involved_people": [
-        "Eli Broad"
-      ],
-      "background": "Der Auftrag entstand in einer Zeit, in der Hadid große öffentliche Gebäude auf mehreren Kontinenten entwarf. Zu ihren fertiggestellten Projekten gehörten bereits Museen in Cincinnati und Rom, ein Opernhaus in Guangzhou und das London Aquatics Centre. Das Gebäude in East Lansing war ihr zweites Projekt in den Vereinigten Staaten. Es bot 4.274 Quadratmeter Fläche für zeitgenössische und moderne Kunst sowie eine historische Sammlung.\n\nDas Museum hat die Form eines stark geneigten Parallelogramms. Seine gefältelte Außenhaut ist mit Edelstahl verkleidet. Die geneigten Flächen fangen aus wechselnden Richtungen Blicke auf die umliegende Nachbarschaft ein. Hadid schrieb, das Erscheinungsbild des Gebäudes verändere sich mit dem Wetter, der Tageszeit und dem Einfallswinkel des Sonnenlichts. Die Wirkung beschrieb sie als eine, die Neugier wecke und zugleich den vollständigen Blick auf das Innere zurückhalte.\n\nElaine Glusac schrieb in The New York Times, die Architektur „radikalisiere das Straßenbild“. Das Gebäude erschien später in einer Szene des Films Batman v Superman: Dawn of Justice aus dem Jahr 2016.",
-      "background_images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/MSU_Broad_Art_Museum_exterior_2.jpg/960px-MSU_Broad_Art_Museum_exterior_2.jpg",
-          "caption": "MSU Eli and Edythe Broad Art Museum – Michigan State University, East Lansing, Michigan. Blick von der East Circle Drive nach Nordosten",
-          "source": "https://commons.wikimedia.org/wiki/File:MSU_Broad_Art_Museum_exterior_2.jpg",
-          "creator": "Dj1997",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-          "query": "Broad Art Museum East Lansing"
-        }
-      ]
+      "chapter": "global_commissions",
+      "weight": 0.75
     },
     {
       "date": "2016-02",
       "date_precision": "month",
       "age": 65,
       "title": "Royal Gold Medal erhalten",
-      "description": "RIBA verleiht Hadid in London die Royal Gold Medal. Sie ist die erste Frau, die die Medaille als Einzelperson erhält.",
+      "description": "Das Royal Institute of British Architects verleiht Zaha Hadid in London seine Royal Gold Medal. Sie ist die erste Frau, die die Medaille als Einzelpreisträgerin erhält.",
       "locations": [
         {
           "name_historic": "London",
@@ -786,14 +797,14 @@
       ],
       "event_type_icon": "mdi-medal",
       "chapter": "final_honors",
-      "weight": 0.75
+      "weight": 0.8
     },
     {
       "date": "2016-03-31",
       "date_precision": "day",
       "age": 65,
       "title": "Tod in Miami",
-      "description": "Hadid wird in Miami wegen Bronchitis behandelt. Sie stirbt am 31. März im Mount Sinai Medical Center.",
+      "description": "Zaha Hadid befindet sich zur Behandlung einer [[bronchitis|Bronchitis]] in Miami. Sie erleidet einen Herzinfarkt und stirbt am 31. März 2016 im Mount Sinai Medical Center.",
       "locations": [
         {
           "name_historic": "Miami",
@@ -811,7 +822,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Mount_Sinai_Medical_Center_%28Miami%29.jpg/960px-Mount_Sinai_Medical_Center_%28Miami%29.jpg",
-          "caption": "Mount Sinai Medical Center in Miami",
+          "caption": "Mount Sinai Medical Center, Miami",
           "source": "https://commons.wikimedia.org/wiki/File:Mount_Sinai_Medical_Center_(Miami).jpg",
           "creator": "LittleT889",
           "license": "CC0",
@@ -822,15 +833,15 @@
       "chapter": "final_honors",
       "annotations": {
         "bronchitis": {
-          "explanation": "Bronchitis is inflammation of the airways that carry air to and from the lungs. It can cause coughing, breathing difficulty, and chest discomfort.",
+          "explanation": "Eine Bronchitis ist eine Entzündung der Atemwege, die Luft zur Lunge führen. Hadid wurde in Miami wegen dieser Erkrankung behandelt, als sie den Herzinfarkt erlitt, an dem sie starb.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Bronchitis"
         }
       },
-      "weight": 0.65,
+      "weight": 0.6,
       "event_class": {
         "type": "death",
         "cause": "Herzinfarkt",
-        "characterization": "wegen Bronchitis behandelt",
+        "characterization": "während einer Bronchitisbehandlung",
         "place_of_rest": "Brookwood Cemetery, Surrey"
       }
     }
@@ -838,8 +849,8 @@
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "dc8a0c76bbb23730",
-    "translated_on": "2026-09-06T08:48:27.029122+02:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "7389b0e79fc5db22",
+    "translated_on": "2026-09-19T12:41:48.964151+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

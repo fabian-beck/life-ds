@@ -1,17 +1,17 @@
 {
-  "dataset": "historical-biography",
-  "created_on": "2025-12-06",
+  "dataset": "Frei Otto biographical timeline",
+  "created_on": "2026-09-19",
   "person": {
     "name": "Frei_Otto",
     "birth_date": "1925-05-31",
     "death_date": "2015-03-09",
     "primary_roles": [
       "Architekt",
-      "Ingenieur",
+      "Theoretiker",
       "Hochschullehrer"
     ],
-    "tagline": "Pionier der leichten Zugarchitektur",
-    "summary": "Frei Otto war ein deutscher Architekt, Konstrukteur und Hochschullehrer, dessen experimentelle Arbeiten mit Seilnetzen, Gitterschalen und anderen zugbeanspruchten Konstruktionen die Architektur des 20. Jahrhunderts nachhaltig veränderten. Ausgehend von seinen Erfahrungen im Segelflug und im Bau von Kriegsgefangenenlagern entwickelte er zeitlebens das Ziel, mit möglichst wenig Material, Energie und Umweltbelastung zu bauen. In Stuttgart gründete er das Institut für Leichte Flächentragwerke und prägte Ikonen wie die Dächer des Münchner Olympiastadions und den Deutschen Pavillon auf der Expo 67. Als eine der führenden Stimmen der organischen und ökologischen Architektur erhielt er 2015, kurz vor seinem Tod, den Pritzker-Preis.",
+    "tagline": "Seilnetze für Leichtbauten",
+    "summary": "Frei Otto war ein deutscher Architekt und Hochschullehrer, der leichte Tragwerke auf der Grundlage von Seilnetzen, Membranen und Gittern entwickelte. Seine Arbeit verband experimentelle Modelle mit großen öffentlichen Bauten, darunter die Dächer des Münchner Olympiaparks und der Mannheimer Multihalle.",
     "wikipedia": "https://de.wikipedia.org/wiki/Frei_Otto",
     "portrait": {
       "image": "/portraits/frei_otto_thumbnail.webp",
@@ -19,16 +19,16 @@
       "medium": "/portraits/frei_otto_medium.webp",
       "full": "/portraits/frei_otto_full.webp",
       "source": "https://openverse.org/image/f970d4cf-d3f7-4478-92d8-9e794d71b9ec?q=frei+otto&p=5",
-      "caption": "Stylized portrait based on historical photograph",
+      "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
       "originalImage": "https://live.staticflickr.com/8706/16812037915_48d48dc18b_b.jpg",
-      "originalCaption": "Stylized portrait based on historical photograph"
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "artistic_origins_and_wartime_formative_years",
-      "headline": "Kunst, Krieg und Aufbruch",
+      "id": "origins_learning",
+      "headline": "Vom Fliegen lernen",
       "date_start": "1925-05-31",
       "date_start_precision": "day",
       "date_end": "1950",
@@ -36,9 +36,6 @@
       "age_start": 0,
       "age_end": 25,
       "involved_people": [
-        "Frei Otto's father",
-        "Frei Otto's mother",
-        "Frei Otto's paternal grandfather",
         "Erich Mendelsohn",
         "Ludwig Mies van der Rohe",
         "Richard Neutra",
@@ -46,122 +43,153 @@
         "Eero Saarinen",
         "Fred Severud"
       ],
-      "location": "Deutschland"
+      "location": "Deutschland und Frankreich",
+      "illustration": {
+        "image": "/chapter_art/frei_otto/origins_learning_medium.webp",
+        "medium": "/chapter_art/frei_otto/origins_learning_medium.webp",
+        "full": "/chapter_art/frei_otto/origins_learning_full.webp",
+        "concept": "A single translucent wing-like plane of pale fabric arcs upward from a dark field, its edge dissolving into fine airborne filaments. Cool dawn light catches the tension between lift and fragility.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "independent_practice_and_early_innovations",
-      "headline": "Eigenes Büro, erste Innovationen",
+      "id": "practice_method",
+      "headline": "Das hängende Dach",
       "date_start": "1952",
       "date_start_precision": "year",
-      "date_end": "1964",
+      "date_end": "1954",
       "date_end_precision": "year",
       "age_start": 27,
-      "age_end": 39,
+      "age_end": 29,
       "involved_people": [
-        "Ingrid Otto (née Smolla)",
-        "Johann-Gerhard Helmcke"
+        "Ingrid Smolla",
+        "Fred Severud",
+        "Peter Stromeyer"
       ],
-      "location": "Deutschland"
+      "location": "Deutschland",
+      "illustration": {
+        "image": "/chapter_art/frei_otto/practice_method_medium.webp",
+        "medium": "/chapter_art/frei_otto/practice_method_medium.webp",
+        "full": "/chapter_art/frei_otto/practice_method_full.webp",
+        "concept": "At center, a shallow basin of luminous threads hangs between four unseen points, dipping gracefully under its own pull. The surrounding darkness makes each taut line and soft curve feel newly discovered.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "iconic_lightweight_landmarks",
-      "headline": "Ikonen des Leichtbaus",
-      "date_start": "1967",
+      "id": "research_network",
+      "headline": "Leichtigkeit bauen",
+      "date_start": "1957",
       "date_start_precision": "year",
-      "date_end": "1975",
+      "date_end": "1967",
       "date_end_precision": "year",
-      "age_start": 42,
-      "age_end": 50,
+      "age_start": 32,
+      "age_end": 42,
       "involved_people": [
-        "Peter Stromeyer",
+        "Rolf Gutbrod",
+        "Peter Stromeyer"
+      ],
+      "location": "Geschichte der Bundesrepublik Deutschland und Kanada",
+      "illustration": {
+        "image": "/chapter_art/frei_otto/research_network_medium.webp",
+        "medium": "/chapter_art/frei_otto/research_network_medium.webp",
+        "full": "/chapter_art/frei_otto/research_network_full.webp",
+        "concept": "A suspended web of dewdrop-thin strands expands from a compact knot into an intricate luminous mesh, with tiny beads of light traveling along its crossings. The form suggests knowledge spreading through experiment.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
+    },
+    {
+      "id": "spanning_structures",
+      "headline": "Dächer ohne Gewicht",
+      "date_start": "1968",
+      "date_start_precision": "year",
+      "date_end": "1976",
+      "date_end_precision": "year",
+      "age_start": 43,
+      "age_end": 51,
+      "involved_people": [
         "Günter Behnisch",
-        "Fritz Leonhardt",
-        "Jörg Schlaich"
+        "Carlfried Mutschler",
+        "Joachim Langner"
       ],
-      "location": "Deutschland"
+      "location": "Geschichte der Bundesrepublik Deutschland",
+      "illustration": {
+        "image": "/chapter_art/frei_otto/spanning_structures_medium.webp",
+        "medium": "/chapter_art/frei_otto/spanning_structures_medium.webp",
+        "full": "/chapter_art/frei_otto/spanning_structures_full.webp",
+        "concept": "A vast, weightless canopy of interlocking silver arcs floats over blackness, rising and falling like a frozen wave. Light pools across its transparent surface, emphasizing breadth achieved through almost nothing.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "research_leadership_and_global_projects",
-      "headline": "Forschung und weltweite Projekte",
-      "date_start": "1976",
-      "date_start_precision": "year",
-      "date_end": "1998",
-      "date_end_precision": "year",
-      "age_start": 51,
-      "age_end": 73,
-      "involved_people": [
-        "Mahmoud Bodo Rasch"
-      ],
-      "location": "Deutschland"
-    },
-    {
-      "id": "late_experiments_and_lasting_recognition",
-      "headline": "Späte Experimente, bleibende Anerkennung",
-      "date_start": "2000",
+      "id": "last_workshop",
+      "headline": "Das Atelier Warmbronn",
+      "date_start": "1990",
       "date_start_precision": "year",
       "date_end": "2015-03-09",
       "date_end_precision": "day",
-      "age_start": 75,
+      "age_start": 65,
       "age_end": 89,
       "involved_people": [
-        "Shigeru Ban",
-        "Gottfried Böhm"
+        "Ingrid Smolla",
+        "Christine Otto-Kanstinger"
       ],
-      "location": "Deutschland"
+      "location": "Südwestdeutschland",
+      "illustration": {
+        "image": "/chapter_art/frei_otto/last_workshop_medium.webp",
+        "medium": "/chapter_art/frei_otto/last_workshop_medium.webp",
+        "full": "/chapter_art/frei_otto/last_workshop_full.webp",
+        "concept": "A delicate circular membrane, softly illuminated from within, rests in darkness with one outer edge fading into mist. Its remaining taut lines hold a quiet, persistent glow, suggesting work continued at the threshold of disappearance.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     }
   ],
+  "conclusion": "Frei Otto entwickelte Seilnetze, Membranen und Gitterschalen für Bauten, die wenig Material, Fläche und Energie benötigen. Die Dächer des Münchner Olympiaparks und die Mannheimer Multihalle sind herausragende Beispiele dieser Arbeit. Sein Institut für Leichte Flächentragwerke an der Universität Stuttgart besteht als ILEK fort.",
   "events": [
     {
       "date": "1925-05-31",
       "date_precision": "day",
       "age": 0,
       "title": "Geburt in Siegmar",
-      "description": "Frei Paul Otto wird in Siegmar, heute ein Stadtteil von Chemnitz, in eine kunstverbundene Familie hineingeboren. Sein Vater und sein Großvater sind Bildhauer, seine Eltern engagieren sich in der Reformbewegung des [[Deutscher Werkbund|Deutschen Werkbunds]]. Seine Mutter gibt ihm den ungewöhnlichen Vornamen „Frei“ als Ausdruck ihres Lebensmottos und nimmt damit seine spätere Suche nach einer offenen, flexiblen Architektur vorweg.",
+      "description": "Frei Paul Otto wurde in Siegmar, Deutschland, als Sohn von Eltern geboren, die dem [[German Werkbund|deutschen Zusammenschluss von Künstlern, Architekten und Gestaltern]] angehörten. Seinen Vornamen Frei erhielt er von seiner Mutter, deren Wahlspruch „frei“ lautete.",
       "locations": [
         {
-          "name_historic": "Siegmar (bei Chemnitz)",
+          "name_historic": "Siegmar",
           "name_modern": "Chemnitz, Deutschland",
           "centroid": [
-            12.8525,
-            50.8208
+            12.85,
+            50.83
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "Frei Otto's father",
-        "Frei Otto's mother",
-        "Frei Otto's paternal grandfather"
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
-      "sources": [],
       "event_type_icon": "mdi-candle",
-      "chapter": "artistic_origins_and_wartime_formative_years",
+      "chapter": "origins_learning",
       "annotations": {
-        "Deutscher Werkbund": {
-          "explanation": "Ein 1907 gegründeter deutscher Zusammenschluss von Künstlern, Architekten, Designern und Industriellen, der sich für hochwertige Gestaltung und die Verbindung von Kunst, Industrie und Handwerk in Alltagsgegenständen und Architektur einsetzte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Deutscher_Werkbund"
+        "German Werkbund": {
+          "explanation": "Der 1907 gegründete Deutsche Werkbund brachte Gestalter, Architekten, Künstler und Hersteller zusammen, um die Qualität industrieller Erzeugnisse und Bauten zu verbessern.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/German_Workers%27_Association"
         }
       },
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Bahnhof_Chemnitz-Siegmar%2C_Empfangsgeb%C3%A4ude_%281%29.jpg/960px-Bahnhof_Chemnitz-Siegmar%2C_Empfangsgeb%C3%A4ude_%281%29.jpg",
-          "caption": "Bahnhof Chemnitz-Siegmar, Empfangsgebäude (2021)",
-          "source": "https://commons.wikimedia.org/wiki/File:Bahnhof_Chemnitz-Siegmar,_Empfangsgebäude_(1).jpg",
-          "creator": "Aagnverglaser",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
+      "weight": 0.25,
       "event_class": {
-        "type": "birth"
+        "type": "birth",
+        "characterization": "Werkbund-Haushalt"
       }
     },
     {
       "date": "1943",
       "date_precision": "year",
       "age": 18,
-      "title": "Studium und Kriegsdienst",
-      "description": "Otto beginnt an der Technischen Hochschule Berlin Architektur zu studieren, doch sein Studium wird schon bald durch die Einberufung im Zweiten Weltkrieg unterbrochen. Als Jagdflieger ausgebildet und eingesetzt, erlebt er die technische Welt der Luftfahrt. Zugleich trägt er seine schulischen Erfahrungen mit dem Segelflug und Modellbau in sich – Bereiche, in denen er erstmals Leichtbau und gespannte Membranen über Gerippen erkundet hatte.",
+      "title": "Architekturstudium im Krieg",
+      "description": "1943 begann Frei Otto an der Technischen Universität Berlin Architektur zu studieren. Sein Studium wurde unterbrochen, als er im Zweiten Weltkrieg zum Jagdflieger ausgebildet und eingesetzt wurde.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -173,37 +201,26 @@
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/World_War_II"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "artistic_origins_and_wartime_formative_years",
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Berlin-Charlottenburg_Technische_Universit%C3%A4t_Berlin_498.jp.jpg/960px-Berlin-Charlottenburg_Technische_Universit%C3%A4t_Berlin_498.jp.jpg",
-          "caption": "Technische Universität Berlin, Kraft- und Fernheizwerk",
-          "source": "https://commons.wikimedia.org/wiki/File:Berlin-Charlottenburg_Technische_Universität_Berlin_498.jp.jpg",
-          "creator": "GFreihalter",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ]
+      "chapter": "origins_learning",
+      "weight": 0.45
     },
     {
       "date": "1945",
       "date_precision": "year",
-      "date_note": "Ungefähres Jahr seiner Gefangenschaft und Tätigkeit in Chartres; genaue Daten werden im Ausgangstext nicht genannt",
       "age": 20,
-      "title": "Kriegsgefangener und Baumeister",
-      "description": "1945 gerät Otto nahe [[Nuremberg|Nürnberg]] in französische Kriegsgefangenschaft und wird in ein Lager bei Chartres gebracht. Dort erhält er den Auftrag, an der Planung mehrerer Lagerbauten in äußerst sparender Leichtbauweise mitzuwirken. Jeden Tag inspiriert ihn dabei die steinerne „Leichtbau“-Struktur der Kathedrale von Chartres. Diese Erfahrung überzeugt ihn davon, dass sich mit minimalem Materialaufwand und intelligenter Formfindung zugleich effiziente und schöne Architektur schaffen lässt.",
+      "title": "Gefangenschaft in Chartres",
+      "description": "Nach seiner Gefangennahme nahe Nürnberg wurde Otto in einem französischen Kriegsgefangenenlager in Chartres festgehalten. Dort half er beim Entwurf mehrerer kostengünstiger Leichtbauten für das Lager. Die Steinkonstruktion der [[Chartres Cathedral|Kathedrale von Chartres]] war ihm täglich ein Beispiel für konstruktive Leichtigkeit.",
       "locations": [
         {
           "name_historic": "Nürnberg",
           "name_modern": "Nürnberg, Deutschland",
           "centroid": [
-            11.07675,
-            49.45203
+            11.0775,
+            49.4539
           ],
           "primary": false
         },
@@ -212,32 +229,40 @@
           "name_modern": "Chartres, Frankreich",
           "centroid": [
             1.489,
-            48.446
+            48.4469
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/World_War_II"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Kriegsgefangenenlager_-_POW_camp_-_Chartres_Winter_1946-47.jpg/960px-Kriegsgefangenenlager_-_POW_camp_-_Chartres_Winter_1946-47.jpg",
+          "caption": "Französisches Kriegsgefangenenlager bei Chartres",
+          "source": "https://commons.wikimedia.org/wiki/File:Kriegsgefangenenlager_-_POW_camp_-_Chartres_Winter_1946-47.jpg",
+          "creator": "Gerhard Meyer-Hentschel",
+          "license": "CC BY 2.5",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.5"
+        }
       ],
       "event_type_icon": "mdi-lock",
-      "chapter": "artistic_origins_and_wartime_formative_years",
+      "chapter": "origins_learning",
       "annotations": {
-        "Nuremberg": {
-          "explanation": "Eine Stadt im deutschen Bundesland Bayern, die während des Zweiten Weltkriegs ein bedeutendes militärisches und industrielles Zentrum war und später zum Schauplatz der alliierten Nachkriegsprozesse wegen Kriegsverbrechen wurde.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Nuremberg"
+        "Chartres Cathedral": {
+          "explanation": "Die Kathedrale von Chartres ist eine bedeutende gotische Kathedrale in Nordfrankreich, bekannt für ihre hohen Steingewölbe, Strebebögen und Glasfenster.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Chartres_Cathedral"
         }
-      }
+      },
+      "weight": 0.65
     },
     {
       "date": "1948",
       "date_precision": "year",
-      "date_end": "1950",
-      "date_end_precision": "year",
       "age": 23,
-      "title": "Studium in Berlin und Amerika",
-      "description": "Nach seiner Rückkehr nimmt Otto sein unterbrochenes Architekturstudium an der Technischen Hochschule Berlin wieder auf, unterstützt durch ein Stipendium der [[Studienstiftung des deutschen Volkes|Studienstiftung des deutschen Volkes]]. 1950 wählt ihn seine Fakultät für ein halbjähriges Studien- und Reisestipendium in den Vereinigten Staaten aus. Dort besucht er Erich Mendelsohn, Ludwig Mies van der Rohe, Richard Neutra, Frank Lloyd Wright, Eero Saarinen und den Ingenieur Fred Severud. Mit Mies verbindet ihn eine lebenslange Freundschaft; zugleich studiert er aus erster Hand die maßgeblichen Werke der damaligen Moderne.",
+      "title": "Rückkehr zum Studium in Berlin",
+      "description": "1948 nahm Frei Otto nach seiner Entlassung aus französischer Gefangenschaft das Architekturstudium an der Technischen Universität Berlin wieder auf. Die [[Studienstiftung des deutschen Volkes|Studienstiftung]] unterstützte sein Studium als deutsche Begabtenförderungsorganisation.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -247,49 +272,52 @@
             52.52
           ],
           "primary": true
-        },
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "origins_learning",
+      "weight": 0.4,
+      "annotations": {
+        "Studienstiftung des deutschen Volkes": {
+          "explanation": "Die Studienstiftung des deutschen Volkes ist Deutschlands größtes Begabtenförderungswerk für akademisch leistungsstarke Studierende.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Studienstiftung_des_deutschen_Volkes"
+        }
+      }
+    },
+    {
+      "date": "1950",
+      "date_precision": "year",
+      "age": 25,
+      "title": "Architekturstudium in Amerika",
+      "description": "1950 erhielt Frei Otto ein Stipendium seiner Fakultät für ein sechsmonatiges Architekturstudium in den Vereinigten Staaten. Er besuchte Bauten von Erich Mendelsohn, Ludwig Mies van der Rohe, Richard Neutra, Frank Lloyd Wright, Eero Saarinen und dem Ingenieur Fred Severud. In Severuds New Yorker Büro sah er ein Modell des Hängedachs der Dorton Arena in Raleigh, North Carolina.",
+      "locations": [
         {
-          "name_historic": "Chicago",
-          "name_modern": "Chicago, Illinois, USA",
+          "name_historic": "Vereinigte Staaten",
+          "name_modern": "Vereinigte Staaten",
           "centroid": [
-            -87.6298,
-            41.8781
+            -100.445882,
+            39.7837304
           ],
-          "primary": false
+          "primary": true
         },
         {
-          "name_historic": "Los Angeles",
-          "name_modern": "Los Angeles, Kalifornien, USA",
-          "centroid": [
-            -118.2437,
-            34.0522
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Spring Green",
-          "name_modern": "Spring Green, Wisconsin, USA",
-          "centroid": [
-            -90.0671,
-            43.1767
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Bloomfield Hills",
-          "name_modern": "Bloomfield Hills, Michigan, USA",
-          "centroid": [
-            -83.2805,
-            42.5836
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "New York City",
-          "name_modern": "New York City, New York, USA",
+          "name_historic": "New York",
+          "name_modern": "New York City, Vereinigte Staaten",
           "centroid": [
             -74.006,
             40.7128
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Raleigh",
+          "name_modern": "Raleigh, North Carolina, Vereinigte Staaten",
+          "centroid": [
+            -78.6382,
+            35.7796
           ],
           "primary": false
         }
@@ -303,25 +331,77 @@
         "Fred Severud"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frei_Otto",
-        "https://en.wikipedia.org/wiki/Ludwig_Mies_van_der_Rohe",
-        "https://en.wikipedia.org/wiki/Richard_Neutra"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
-      "event_type_icon": "mdi-trophy",
-      "chapter": "artistic_origins_and_wartime_formative_years",
-      "annotations": {
-        "Studienstiftung des deutschen Volkes": {
-          "explanation": "Die deutsche Studienstiftung des deutschen Volkes ist eine besonders selektive Förderorganisation, die akademisch herausragende Studierende in Deutschland unterstützt.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Studienstiftung"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Mies_van_der_Rohe_%281558321986%29.jpg/960px-Mies_van_der_Rohe_%281558321986%29.jpg",
+          "caption": "Von Ludwig Mies van der Rohe entworfene Wohnsiedlung",
+          "source": "https://commons.wikimedia.org/wiki/File:Mies_van_der_Rohe_(1558321986).jpg",
+          "creator": "Greg",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
         }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "origins_learning",
+      "weight": 0.55
+    },
+    {
+      "date": "1952",
+      "date_precision": "year",
+      "age": 27,
+      "title": "Heirat mit Ingrid Smolla",
+      "description": "Frei Otto heiratete 1952 Ingrid Smolla. Die Ehe bestand bis zu Ottos Tod.",
+      "locations": [],
+      "involved_people": [
+        "Ingrid Smolla"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "practice_method",
+      "weight": 0.45,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Ingrid Smolla",
+        "duration": "bis zu seinem Tod",
+        "children": 5,
+        "characterization": "dauerhafte Ehe"
       }
     },
     {
       "date": "1952",
       "date_precision": "year",
       "age": 27,
-      "title": "Eigenes Büro und Hochzeit",
-      "description": "Otto eröffnet sein eigenes Architekturbüro in [[Berlin-Zehlendorf|Berlin-Zehlendorf]] und etabliert sich als unabhängiger Gestalter mit Schwerpunkt auf experimentellen Formen und Konstruktionen. Im selben Jahr heiratet er Ingrid Smolla. Gemeinsam ziehen sie fünf Kinder groß und arbeiten später in seinem Warmbronner Atelier bei Leonberg zusammen – die Büropraxis wird zum Familienunternehmen.",
+      "title": "Eröffnet Berliner Atelier",
+      "description": "1952 eröffnete Frei Otto ein eigenes Architekturbüro in Berlin-Zehlendorf. Dort entwickelte er Entwürfe für Leichtbauten.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Deutschland",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "practice_method",
+      "weight": 0.55
+    },
+    {
+      "date": "1954",
+      "date_precision": "year",
+      "age": 29,
+      "title": "Studie Das hängende Dach",
+      "description": "1954 veröffentlichte Frei Otto Das hängende Dach, eine Untersuchung von Zugtragwerken, die Lasten über Seile, Netze oder Membranen abtragen. Das Modell der Dorton Arena, das er in Fred Severuds New Yorker Büro gesehen hatte, lenkte seine Aufmerksamkeit auf diese Dachform. Bei der Vorbereitung der Studie lernte Otto den Zeltfabrikanten Peter Stromeyer kennen.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -333,146 +413,61 @@
           "primary": true
         },
         {
-          "name_historic": "Leonberg",
-          "name_modern": "Leonberg, Deutschland",
+          "name_historic": "New York",
+          "name_modern": "New York City, Vereinigte Staaten",
           "centroid": [
-            8.995,
-            48.8
+            -74.006,
+            40.7128
           ],
           "primary": false
         }
       ],
       "involved_people": [
-        "Ingrid Otto (née Smolla)"
+        "Fred Severud",
+        "Peter Stromeyer"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frei_Otto"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
-      "event_type_icon": "mdi-ring",
-      "chapter": "independent_practice_and_early_innovations",
-      "annotations": {
-        "Berlin-Zehlendorf": {
-          "explanation": "Berlin-Zehlendorf ist ein südwestlicher Bezirk Berlins, der sich in der Nachkriegszeit zu einem wohlhabenden Wohn- und Bildungsstandort entwickelte und damit auch für professionelle Einrichtungen wie Architekturbüros attraktiv war.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Steglitz-Zehlendorf"
-        }
-      }
-    },
-    {
-      "date": "1954",
-      "date_precision": "year",
-      "date_end": "1962",
-      "date_end_precision": "year",
-      "date_note": "Die Dissertation entstand 1952–53, erschien 1954 und führte bis 1962 zu mehreren amerikanischen Gastprofessuren",
-      "age": 29,
-      "title": "„Das hängende Dach“ und Gastprofessuren",
-      "description": "Aufbauend auf Eindrücken von [[cable-net structures|Fred Severuds Modell der Seilnetzkonstruktion der Dorton Arena]] verfasst Otto eine wegweisende Dissertation über das „hängende Dach“ (Das hängende Dach). Sie erscheint 1954 als erste umfassende Untersuchung zugbeanspruchter Flächentragwerke. Das Buch verschafft ihm internationale Anerkennung und Einladungen zu Gastprofessuren an der Washington University in St. Louis (1958), der Yale University (1960) sowie 1962 an der University of California, Berkeley, am MIT und an Harvard. Dort vermittelt er amerikanischen Studierenden und Ingenieuren seine Forschungsmethoden.",
-      "locations": [
+      "images": [
         {
-          "name_historic": "Stuttgart",
-          "name_modern": "Stuttgart, Deutschland",
-          "centroid": [
-            9.1815,
-            48.7775
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "St. Louis",
-          "name_modern": "St. Louis, Missouri, USA",
-          "centroid": [
-            -90.1994,
-            38.627
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "New Haven",
-          "name_modern": "New Haven, Connecticut, USA",
-          "centroid": [
-            -72.9246,
-            41.3107
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Berkeley",
-          "name_modern": "Berkeley, Kalifornien, USA",
-          "centroid": [
-            -122.2727,
-            37.8715
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Cambridge",
-          "name_modern": "Cambridge, Massachusetts, USA",
-          "centroid": [
-            -71.1097,
-            42.3736
-          ],
-          "primary": false
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Dorton_Arena_%2835997447053%29.jpg/960px-Dorton_Arena_%2835997447053%29.jpg",
+          "caption": "J. S. Dorton Arena in Raleigh",
+          "source": "https://commons.wikimedia.org/wiki/File:Dorton_Arena_(35997447053).jpg",
+          "creator": "Billie Grace Ward from New York, USA",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
-      "involved_people": null,
-      "sources": [],
-      "event_type_icon": "mdi-book",
-      "chapter": "independent_practice_and_early_innovations",
-      "annotations": {
-        "cable-net structures": {
-          "explanation": "Eine leichte Tragwerksform, bei der ein Netz vorgespannter Seile Lasten vor allem über Zugkräfte abträgt und häufig Dächer mit großer Spannweite und geringem Materialaufwand ermöglicht.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Tensile_structure"
+      "event_type_icon": "mdi-book-open-variant",
+      "chapter": "practice_method",
+      "weight": 0.8,
+      "event_class": {
+        "type": "publication",
+        "title": "Das hängende Dach",
+        "publication_type": "thesis",
+        "significance": "technische Grundlage",
+        "impact": "Die Studie bringt Otto Einladungen zu Gastprofessuren an amerikanischen Universitäten."
+      },
+      "background": "Die Dorton Arena von Matthew Nowicki besaß ein sattelförmiges Seilnetzdach. Zwei einander gegenüberliegende halbkreisförmige Randseile trugen das Netz. Sie kreuzten sich an der Dachkante. Im Boden verankerte horizontale Stahlstäbe stabilisierten die Seile gegeneinander.\n\nOttos Forschung befasste sich mit Seilnetzen, Membranen und anderen Flächen, die Kräfte durch Zug aufnehmen. Sie war die erste umfassende Darstellung solcher zugbeanspruchten Flächentragwerke. Die Verbindung zu Peter Stromeyer eröffnete der Forschung während der Arbeit einen Weg zur Fertigung. Stromeyers Konstanzer Unternehmen stellte später Ottos Zeltkonstruktionen her, darunter den deutschen Pavillon für die Expo 67 in Montreal.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Expo_67%2C_pavillon_de_la_R%C3%A9publique_f%C3%A9d%C3%A9rale_d%27Allemagne.jpg/960px-Expo_67%2C_pavillon_de_la_R%C3%A9publique_f%C3%A9d%C3%A9rale_d%27Allemagne.jpg",
+          "caption": "Pavillon der Bundesrepublik Deutschland auf der Île Notre-Dame. Montréal, Québec, Kanada.",
+          "source": "https://commons.wikimedia.org/wiki/File:Expo_67,_pavillon_de_la_République_fédérale_d'Allemagne.jpg",
+          "creator": "Laurent Bélanger",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "German Pavilion Expo 67 Montreal"
         }
-      }
+      ]
     },
     {
       "date": "1957",
       "date_precision": "year",
       "age": 32,
-      "title": "Leichtbaulabor und Sternwellenzelt",
-      "description": "Zurück in Deutschland gründet Otto eine private [[Entwicklungsstätte für den Leichtbau|Entwicklungsstätte für den Leichtbau]] und schafft damit eine Werkstatt für Versuche im Maßstab 1:1. Im selben Jahr verwirklicht er eines seiner ersten bedeutenden Zeltdächer: das „Sternwellenzelt“ über dem Tanzbrunnen auf der [[Bundesgartenschau|Bundesgartenschau]] in Köln. Seine sternförmig gewellten Stoff- und Seilflächen erregen große öffentliche Aufmerksamkeit und zeigen das architektonische Potenzial temporärer Zugkonstruktionen.",
-      "locations": [
-        {
-          "name_historic": "Köln",
-          "name_modern": "Köln, Deutschland",
-          "centroid": [
-            6.9568,
-            50.9383
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
-      "sources": [],
-      "event_type_icon": "mdi-hammer",
-      "chapter": "independent_practice_and_early_innovations",
-      "annotations": {
-        "Entwicklungsstätte für den Leichtbau": {
-          "explanation": "Bezeichnung für Freie Ottos privates Versuchslabor zur Entwicklung leichter Tragwerke und zur Erprobung von Konstruktionen im Maßstab 1:1."
-        },
-        "Bundesgartenschau": {
-          "explanation": "Eine regelmäßig stattfindende deutsche Gartenschau des Bundes, die zugleich als Schauplatz experimenteller Landschafts- und Architekturentwürfe dient.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Bundesgartenschau"
-        }
-      },
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg/960px-Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg",
-          "caption": "Tanzbrunnen Köln, Sternwellenzelt von Frei Otto (1957)",
-          "source": "https://commons.wikimedia.org/wiki/File:Tanzbrunnen_Köln_(0343-51).jpg",
-          "creator": "Raimond Spekking",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ]
-    },
-    {
-      "date": "1961",
-      "date_precision": "year",
-      "date_end": "1964",
-      "date_end_precision": "year",
-      "age": 36,
-      "title": "Biologie- und Leichtbauinstitute",
-      "description": "An der Technischen Hochschule Berlin gründet Otto gemeinsam mit dem Biologen Johann-Gerhard Helmcke die Forschungsgruppe [[Biologie und Bauen|Biologie und Bauen]]. Ärzte, Paläontologen und Architekten untersuchen dort natürliche Strukturen sowie pneumatische und biologische Bauprinzipien. 1963 entwirft Otto den freistehenden Glockenturm einer evangelischen Kirche in Berlin-Schönow nach dem Skelett eines Kieselalgenorganismus. 1964 gründet er an der Technischen Hochschule Stuttgart das [[Institut für Leichte Flächentragwerke|Institut für Leichte Flächentragwerke (IL)]], das zum modellhaften Forschungszentrum für experimentelle Leichtdächer wird und später den Entwurf des Deutschen Pavillons auf der [[Expo 67|Expo 67]] beeinflusst.",
+      "title": "Gründet Zentrum für Leichtbau",
+      "description": "1957 gründete Frei Otto in Berlin ein Entwicklungszentrum für [[lightweight construction|Leichtbau]]. Der Ansatz nutzt Konstruktionsformen und Materialien effizient. Das Zentrum unterstützte seine Modelle und Versuche zu Dächern, die mit minimalem Material auskommen.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -482,7 +477,28 @@
             52.52
           ],
           "primary": true
-        },
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "research_network",
+      "annotations": {
+        "lightweight construction": {
+          "explanation": "Dieses Fachgebiet entwickelt Tragwerke, die mit weniger Material und Energie mehr leisten. Otto verfolgte diesen Ansatz mit Seilnetzen, Membranen, Gittern und physischen Modellen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Lightweight_structure"
+        }
+      },
+      "weight": 0.7
+    },
+    {
+      "date": "1964",
+      "date_precision": "year",
+      "age": 39,
+      "title": "Gründet Stuttgarter Leichtbauinstitut",
+      "description": "1964 gründete Frei Otto an der Technischen Universität Stuttgart das Institut für Leichte Flächentragwerke. Die Forschenden untersuchten dort Leichtbau und Naturformen.",
+      "locations": [
         {
           "name_historic": "Stuttgart",
           "name_modern": "Stuttgart, Deutschland",
@@ -490,8 +506,33 @@
             9.1829,
             48.7758
           ],
-          "primary": false
-        },
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/7720/17093696771_96ca8ee688_b.jpg",
+          "caption": "Frei Ottos Institut für Leichte Flächentragwerke",
+          "source": "https://www.flickr.com/photos/44343967@N00/17093696771",
+          "creator": "準建築人手札網站 Forgemind ArchiMedia",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+        }
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "research_network",
+      "weight": 0.85
+    },
+    {
+      "date": "1967",
+      "date_precision": "year",
+      "age": 42,
+      "title": "Deutscher Pavillon zur Expo 67",
+      "description": "1967 wirkte Frei Otto gemeinsam mit dem Architekten Rolf Gutbrod und weiteren Beteiligten am Entwurf des deutschen Pavillons für die Expo 67 in Montreal mit. Das Zeltbauunternehmen von Peter Stromeyer fertigte sein Dach aus einem Netz vorgespannter Seile.",
+      "locations": [
         {
           "name_historic": "Montreal",
           "name_modern": "Montreal, Kanada",
@@ -499,78 +540,41 @@
             -73.5673,
             45.5017
           ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Johann-Gerhard Helmcke"
-      ],
-      "sources": [],
-      "event_type_icon": "mdi-microscope",
-      "chapter": "independent_practice_and_early_innovations",
-      "annotations": {
-        "Biologie und Bauen": {
-          "explanation": "Eine interdisziplinäre Forschungsgruppe an der Technischen Hochschule Berlin, die untersuchte, wie biologische Formen und Prozesse Entwurf und Bauweisen beeinflussen können."
-        },
-        "Institut für Leichte Flächentragwerke": {
-          "explanation": "Ein von Frei Otto in Stuttgart gegründetes wegweisendes Institut für Leichtbau, das sich der experimentellen Erforschung von Seilnetz-, Membran- und Schalendächern widmete."
-        },
-        "Expo 67": {
-          "explanation": "Die 1967 in Montreal veranstaltete Weltausstellung, deren Pavillons avantgardistische Architektur und Ingenieurskunst präsentierten.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Expo_67"
-        }
-      },
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/0134-Stuttgart-Otto.jpg/960px-0134-Stuttgart-Otto.jpg",
-          "caption": "Institut für Leichte Flächentragwerke, Universität Stuttgart-Vaihingen",
-          "source": "https://commons.wikimedia.org/wiki/File:0134-Stuttgart-Otto.jpg",
-          "creator": "Kamahele",
-          "license": "CC BY-SA 3.0 de",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
-        }
-      ]
-    },
-    {
-      "date": "1967",
-      "date_precision": "year",
-      "age": 42,
-      "title": "Deutscher Pavillon auf der Expo 67",
-      "description": "Für die Weltausstellung 1967 in Montreal entwirft Otto gemeinsam mit dem Zeltdachbauer Peter Stromeyer den viel bewunderten Deutschen Pavillon. Stromeyer fertigt die großen Membrandächer in Konstanz. Die filigranen Seilnetze und textilen Flächen verkörpern Ottos Ideal der „leichten, flexiblen Bauten“: Sie benötigen wenig Material und schaffen zugleich großzügige, offene öffentliche Räume. Damit präsentiert der Pavillon die deutsche Nachkriegsarchitektur als technologisch experimentierfreudig und gesellschaftlich zukunftsorientiert.",
-      "locations": [
-        {
-          "name_historic": "Montreal",
-          "name_modern": "Montreal, Kanada",
-          "centroid": [
-            -73.5698065,
-            45.5031824
-          ],
           "primary": true
-        },
-        {
-          "name_historic": "Konstanz",
-          "name_modern": "Konstanz, Deutschland",
-          "centroid": [
-            9.1750718,
-            47.659216
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
+        "Rolf Gutbrod",
         "Peter Stromeyer"
       ],
-      "sources": [],
-      "event_type_icon": "mdi-drawing",
-      "chapter": "iconic_lightweight_landmarks",
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://de.wikipedia.org/wiki/Rolf_Gutbrod",
+        "https://de.wikipedia.org/wiki/Multihalle"
+      ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c5/1967_July_Expo_67_Montreal_%2810%29.jpg",
-          "caption": "Expo 67 Montreal, Juli 1967",
-          "source": "https://commons.wikimedia.org/wiki/File:1967_July_Expo_67_Montreal_(10).jpg",
-          "creator": "ArtLink2Fun",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://live.staticflickr.com/4178/34552599895_06d0246cec_b.jpg",
+          "caption": "Frei Ottos deutscher Pavillon auf der Expo 67",
+          "source": "https://www.flickr.com/photos/147316538@N02/34552599895",
+          "creator": "bianca.maggio",
+          "license": "CC PDM 1.0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "research_network",
+      "weight": 0.9,
+      "background": "Der Pavillon umfasste ein doppelt gekrümmtes Dach in Form einer hölzernen Gitterschale. Es überspannte einen Vortragssaal und ein Foyer. Der Ansatz der Gitterschale wurde später beim Dach des Münchner Olympiaparks weiterentwickelt.\n\nOttos Artikel datiert den Auguste-Perret-Preis der Union Internationale des Architectes für den Pavillon auf 1967. Gutbrods Artikel datiert die Auszeichnung auf 1968.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Expo_67%2C_pavillon_de_la_R%C3%A9publique_f%C3%A9d%C3%A9rale_d%27Allemagne.jpg/960px-Expo_67%2C_pavillon_de_la_R%C3%A9publique_f%C3%A9d%C3%A9rale_d%27Allemagne.jpg",
+          "caption": "Pavillon der Bundesrepublik Deutschland auf der Île Notre-Dame. Montréal, Québec, Kanada.",
+          "source": "https://commons.wikimedia.org/wiki/File:Expo_67,_pavillon_de_la_République_fédérale_d'Allemagne.jpg",
+          "creator": "Laurent Bélanger",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "German Pavilion Expo 67 Montreal"
         }
       ]
     },
@@ -580,92 +584,109 @@
       "date_end": "1972",
       "date_end_precision": "year",
       "age": 43,
-      "title": "Olympiadächer für München",
-      "description": "Gemeinsam mit Günter Behnisch und dessen Büro entwickelt und verwirklicht Otto die weitgespannte [[cable-net structure|Seilnetzkonstruktion]] über den wichtigsten Sportanlagen des Münchner Olympiageländes von 1972. Als er 1968 gebeten wird, unerwartete Probleme bei Spannweiten und Formen zu lösen, gewinnt er die endgültige Geometrie anhand von Hängemodellen und Seifenfilmen. Die Ingenieure Fritz Leonhardt und Jörg Schlaich passen das Konzept anschließend an die Sicherheitsvorschriften an. Obwohl Otto die Randseile und Masten schwerer findet, als es seinem Ideal entspricht, wird das Ensemble zu einem Wahrzeichen der deutschen Nachkriegsarchitektur und zu einer weltweit bekannten Ikone des Leichtbaus.",
+      "title": "Entwirft Olympiadach",
+      "description": "1968 arbeitete Frei Otto in München mit Günter Behnisch und dem Architektenteam Behnisch & Partner am Seilnetzdach für die wichtigsten Sportstätten des Olympiaparks. Der Entwurf überspannte das Olympiastadion und benachbarte Anlagen mit einem durchgehenden, transparenten Dach, das von abgehängten Stahlseilen getragen wurde.",
       "locations": [
         {
           "name_historic": "München",
           "name_modern": "München, Deutschland",
           "centroid": [
-            11.576124,
-            48.137154
+            11.582,
+            48.1351
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Günter Behnisch",
-        "Fritz Leonhardt",
-        "Jörg Schlaich"
+        "Günter Behnisch"
       ],
       "sources": [
-        "https://de.wikipedia.org/wiki/Günter_Behnisch"
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://de.wikipedia.org/wiki/G%C3%BCnter_Behnisch"
       ],
-      "event_type_icon": "mdi-drawing",
-      "chapter": "iconic_lightweight_landmarks",
-      "annotations": {
-        "cable-net structure": {
-          "explanation": "Ein leichtes Tragwerk, bei dem ein Netz vorgespannter Seile ein dünnes Dach oder eine Membran trägt und dadurch große stützenfreie Spannweiten mit geringem Materialaufwand ermöglicht.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Tensile_structure"
-        }
-      },
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg/960px-Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
-          "caption": "Zugkonstruktionen von Frei Otto für die Olympischen Spiele München 1972",
+          "caption": "Frei Ottos Zugtragwerke bei den Olympischen Spielen in München",
           "source": "https://commons.wikimedia.org/wiki/File:Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
           "creator": "Jorge Royan",
           "license": "CC BY-SA 3.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
         }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "spanning_structures",
+      "weight": 1.0,
+      "background": "Das geplante Dach brachte unerwartete Probleme mit sich, weil es so große Flächen überspannen musste. Günter Behnisch zog Frei Otto hinzu, nachdem diese Schwierigkeiten aufgetreten waren. Das Team entwickelte eine Fassung des schwebenden Dachs, das Otto zuvor für den deutschen Pavillon der Expo 67 in Montreal entworfen hatte.\n\nFritz Leonhardt und Jörg Schlaich leiteten die Tragwerksplanung. Otto hielt die Randseile und Stützen des ausgeführten Entwurfs für zu schwer im Verhältnis zu seiner Vorstellung vom Leichtbau. Leonhardt und Schlaich setzten ihre Anforderungen an die Tragwerkssicherheit durch.\n\nDie Zeitschrift Häuser wählte den vollendeten Olympiakomplex 2002 zum besten deutschen Bauwerk aller Zeiten.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Olympic_Stadium_Munich_Dachbegehung.JPG/960px-Olympic_Stadium_Munich_Dachbegehung.JPG",
+          "caption": "Besichtigung der Dachkonstruktion des Olympia Stadions München mit Begehung.",
+          "source": "https://commons.wikimedia.org/wiki/File:Olympic_Stadium_Munich_Dachbegehung.JPG",
+          "creator": "Usien",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Munich Olympic Stadium roof"
+        }
       ]
     },
     {
-      "date": "1969",
+      "date": "1975",
       "date_precision": "year",
-      "date_end": "1995",
-      "date_end_precision": "year",
-      "age": 44,
-      "title": "Forschung zu Weitspannern und Naturformen",
-      "description": "Die [[Deutsche Forschungsgemeinschaft|Deutsche Forschungsgemeinschaft]] beruft Otto 1969 zum Leiter des [[Sonderforschungsbereich|Sonderforschungsbereichs]] 64 „Weitgespannte Flächentragwerke“, eines am Stuttgarter Institut angesiedelten Verbundforschungszentrums. Nach Abschluss dieses Programms setzt ein Nachfolgeprojekt, [[Sonderforschungsbereich|SFB]] 230 „Natürliche Konstruktionen – Leichtbau in Architektur und Natur“, die Arbeit am IL bis Ende 1995 fort. Systematisch werden natürliche Formfindungsprozesse untersucht und mithilfe von Modellen, Experimenten und gebauten Prototypen wie Gitterschalen und Seilnetzen auf die Architektur übertragen.",
+      "age": 50,
+      "title": "Multihalle in Mannheim vollendet",
+      "description": "1975 entwickelte Frei Otto gemeinsam mit den Architekten Carlfried Mutschler und Joachim Langner den Tragwerksentwurf für die Mannheimer Multihalle. Dem Projekt ging ihr erfolgreicher Wettbewerbsentwurf für das Gelände im Herzogenriedpark zur [[Bundesgartenschau|Bundesgartenschau]] voraus, der einen überdachten Treffpunkt und ein Café vorsah.",
       "locations": [
         {
-          "name_historic": "Stuttgart",
-          "name_modern": "Stuttgart, Deutschland",
+          "name_historic": "Mannheim",
+          "name_modern": "Mannheim, Deutschland",
           "centroid": [
-            9.1829,
-            48.7758
+            8.466,
+            49.487
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [],
-      "event_type_icon": "mdi-microscope",
-      "chapter": "iconic_lightweight_landmarks",
-      "annotations": {
-        "Deutsche Forschungsgemeinschaft": {
-          "explanation": "Die wichtigste deutsche Forschungsförderorganisation, die Forschungsprojekte und Infrastruktur an Hochschulen und öffentlichen Forschungseinrichtungen unterstützt.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Deutsche_Forschungsgemeinschaft"
-        },
-        "Sonderforschungsbereich": {
-          "explanation": "Ein langfristig angelegtes Förderformat der Deutschen Forschungsgemeinschaft für gemeinschaftliche, interdisziplinäre Forschungsprogramme an Hochschulen.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Deutsche_Forschungsgemeinschaft#Collaborative_Research_Centres_(SFB)"
-        },
-        "SFB": {
-          "explanation": "An abbreviation of the German term \"Sonderforschungsbereich\", denoting a DFG-funded collaborative research centre that brings together multiple institutes and disciplines for long-term projects.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Deutsche_Forschungsgemeinschaft#Collaborative_Research_Centres_(SFB)"
+      "involved_people": [
+        "Carlfried Mutschler",
+        "Joachim Langner"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://de.wikipedia.org/wiki/Multihalle"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/4191/33742408523_53aab9e928.jpg",
+          "caption": "Frei Otto, Mannheimer Multihalle, 1974",
+          "source": "https://www.flickr.com/photos/147316538@N02/33742408523",
+          "creator": "bianca.maggio",
+          "license": "CC PDM 1.0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
         }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "spanning_structures",
+      "annotations": {
+        "Bundesgartenschau": {
+          "explanation": "Die Bundesgartenschau ist eine nationale deutsche Gartenschau, die alle zwei Jahre in einer anderen Stadt stattfindet. Mannheim war 1975 Austragungsort, und für diese Schau wurde die Multihalle errichtet.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Bundesgartenschau"
+        }
+      },
+      "weight": 0.95,
+      "event_class": {
+        "type": "invention",
+        "title": "Holzgitterschale der Multihalle",
+        "description": "Ein frei geformtes Dach besteht aus sich kreuzenden Holzleisten, die zu einer doppelt gekrümmten Gitterschale geformt sind und Lasten vorwiegend durch Druck abtragen.",
+        "impact": "Die vollendete Halle wird zur weltweit größten frei geformten Holzgitterschalenkonstruktion."
       }
     },
     {
       "date": "1976",
       "date_precision": "year",
-      "date_end": "1990",
-      "date_end_precision": "year",
       "age": 51,
-      "title": "Professor in Stuttgart",
-      "description": "1976 wird Otto zum ordentlichen Professor an der Universität Stuttgart berufen und erhält damit auch formell die Rolle, die er als Lehrer und Forschungsleiter schon lange ausübt. Bis zu seiner Emeritierung 1990 unterrichtet er Generationen von Architekten und Ingenieuren. Das [[Institut für Leichtbau|IL]] entwickelt sich unter seiner Leitung zu einem internationalen Anziehungspunkt für Studierende, die sich für experimentelles, modellbasiertes Entwerfen und ökologisches Bauen interessieren. Später geht das Institut im [[Institut für Leichtbau Entwerfen und Konstruieren|Institut für Leichtbau Entwerfen und Konstruieren (ILEK)]] auf.",
+      "title": "Forschung und Lehre in Stuttgart",
+      "description": "1976 wurde Frei Otto ordentlicher Professor an der Universität Stuttgart. Über das Institut für Leichte Flächentragwerke leitete er Forschung und Lehre.",
       "locations": [
         {
           "name_historic": "Stuttgart",
@@ -677,33 +698,19 @@
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Frei_Otto",
-        "https://de.wikipedia.org/wiki/Frei_Otto",
-        "https://de.wikipedia.org/wiki/Werner_Sobek"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
       "event_type_icon": "mdi-school-outline",
-      "chapter": "research_leadership_and_global_projects",
-      "annotations": {
-        "Institut für Leichtbau": {
-          "explanation": "Das Institut für Leichtbau (IL) an der Universität Stuttgart war ein von Frei Otto gegründetes wegweisendes Forschungsinstitut für die experimentelle, modellbasierte Entwicklung leichter Tragwerke und Membrankonstruktionen."
-        },
-        "Institut für Leichtbau Entwerfen und Konstruieren": {
-          "explanation": "Das von Werner Sobek gegründete Institut für Leichtbau Entwerfen und Konstruieren (ILEK) an der Universität Stuttgart ist die Nachfolgeeinrichtung von Freie Ottos IL und verbindet architektonische und ingenieurwissenschaftliche Forschung zu ressourcenschonendem Leichtbau.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Werner_Sobek"
-        }
-      }
+      "chapter": "spanning_structures",
+      "weight": 0.6
     },
     {
-      "date": "1980",
+      "date": "1990",
       "date_precision": "year",
-      "date_end": "1998",
-      "date_end_precision": "year",
-      "date_note": "Die Zusammenarbeit mit Mahmoud Bodo Rasch begann Ende der 1960er-Jahre und dauerte bis zur Gründung von SL Rasch 1998; die hier genannte Zeitspanne fasst Ottos intensive Mitarbeit ab den 1980er-Jahren zusammen",
-      "age": 55,
-      "title": "Leichte Dächer für die islamische Welt",
-      "description": "Von den 1980er-Jahren an arbeitet Otto eng mit seinem früheren Studenten Mahmoud Bodo Rasch und dem zunächst in Stuttgart und Dschidda ansässigen Büro Rasch + Bradatsch, später SL Rasch, zusammen. Gemeinsam entwickeln sie große ausfahrbare Zelte und Verschattungsanlagen für die islamische Welt. Zu ihren Projekten gehören Zeltdächer für Pilgerlager während des Haddsch in Mekka sowie wandelbare Membrandächer für bedeutende Moscheen und königliche Anlagen. Sie erweitern damit Maßstab und klimatische Leistungsfähigkeit der Zugarchitektur und dienen zugleich Millionen Gläubigen und Pilgern.",
+      "age": 65,
+      "title": "Arbeit im Atelier Warmbronn",
+      "description": "1990 wurde Frei Otto an der Universität Stuttgart emeritiert. Er arbeitete weiter in seinem Atelier in Warmbronn bei Leonberg. Seine Frau Ingrid Smolla und seine Tochter, die Architektin Christine Otto-Kanstinger, arbeiteten dort mit ihm.",
       "locations": [
         {
           "name_historic": "Stuttgart",
@@ -715,130 +722,71 @@
           "primary": true
         },
         {
-          "name_historic": "Dschidda",
-          "name_modern": "Dschidda, Saudi-Arabien",
+          "name_historic": "Warmbronn",
+          "name_modern": "Leonberg, Deutschland",
           "centroid": [
-            39.176098,
-            21.485811
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Mekka",
-          "name_modern": "Mekka, Saudi-Arabien",
-          "centroid": [
-            39.8256338,
-            21.3890824
+            9.0150026,
+            48.8012983
           ],
           "primary": false
         }
       ],
       "involved_people": [
-        "Mahmoud Bodo Rasch"
+        "Ingrid Smolla",
+        "Christine Otto-Kanstinger"
       ],
       "sources": [
-        "https://de.wikipedia.org/wiki/Mahmoud_Bodo_Rasch"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
-      "event_type_icon": "mdi-account-multiple",
-      "chapter": "research_leadership_and_global_projects"
-    },
-    {
-      "date": "2000",
-      "date_precision": "year",
-      "age": 75,
-      "title": "Japanischer Pavillon auf der Expo 2000",
-      "description": "Für die Expo 2000 in Hannover entwirft Otto gemeinsam mit dem Architekten Shigeru Ban den Japanischen Pavillon. Grundlage ist eine Gitterschale, die zunächst ausschließlich aus gebogenen Kartonröhren bestehen soll. Auf Drängen der prüfenden Ingenieure wird die Konstruktion später durch Holzleisten verstärkt. Dennoch zeigt sie einen radikalen Leichtbauansatz, der recycelbare Materialien mit einer komplexen doppelt gekrümmten Geometrie verbindet und veranschaulicht, wie sich Ottos Formfindungsmethoden an neue Generationen nachhaltigen Bauens anpassen lassen.",
-      "locations": [
-        {
-          "name_historic": "Hannover",
-          "name_modern": "Hannover, Deutschland",
-          "centroid": [
-            9.73322,
-            52.37052
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Shigeru Ban"
-      ],
-      "sources": [],
-      "event_type_icon": "mdi-drawing",
-      "chapter": "late_experiments_and_lasting_recognition"
-    },
-    {
-      "date": "2010",
-      "date_precision": "year",
-      "age": 85,
-      "title": "Stuttgart 21 und Sicherheitsbedenken",
-      "description": "In seinen späteren Jahren berät Otto das umstrittene Bahnprojekt Stuttgart 21 als Sonderberater für die „[[Lichtaugen|Lichtaugen]]“ – tropfenförmige Oberlichttrichter. Dabei bringt er seine Erfahrung mit frei geformten Betonschalen und der Tageslichtführung ein. Im August 2010 fordert er öffentlich, das Projekt zu stoppen, und warnt vor den erheblichen Gefahren der geologisch schwierigen Bodenverhältnisse. Sein Eingreifen zeigt sowohl sein ingenieurwissenschaftliches Verantwortungsbewusstsein als auch sein lebenslanges Eintreten für ökologisch und sozial verantwortliches Bauen.",
-      "locations": [
-        {
-          "name_historic": "Stuttgart",
-          "name_modern": "Stuttgart, Deutschland",
-          "centroid": [
-            9.1815,
-            48.7775
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
-      "sources": [],
-      "event_type_icon": "mdi-calendar",
-      "chapter": "late_experiments_and_lasting_recognition",
-      "annotations": {
-        "Lichtaugen": {
-          "explanation": "„Lichtaugen“ sind speziell geformte Oberlichtöffnungen oder -trichter, die natürliches Tageslicht tief in unterirdische oder innenliegende Räume führen – häufig bei großen Infrastrukturprojekten wie Bahnhöfen."
-        }
-      }
+      "event_type_icon": "mdi-account-clock",
+      "chapter": "last_workshop",
+      "weight": 0.35
     },
     {
       "date": "2015-03-09",
       "date_precision": "day",
-      "date_note": "Otto wurde kurz vor seinem Tod darüber informiert, dass er den Pritzker-Architekturpreis 2015 erhalten würde; die öffentliche Bekanntgabe erfolgte nach dem 9. März 2015",
       "age": 89,
-      "title": "Pritzker-Preis und Tod in Leonberg",
-      "description": "Anfang 2015 erfährt Otto, dass er für den Pritzker-Architekturpreis ausgewählt wurde. Damit ist er nach Gottfried Böhm erst der zweite deutsche Architekt, der mit der oft als höchster Auszeichnung der Architektur bezeichneten Ehrung ausgezeichnet wird. Trotz eines starken Verlusts seiner Sehkraft arbeitet er weiterhin in seinem Atelier in Warmbronn. Am 9. März 2015 stirbt er im Alter von 89 Jahren in Leonberg und wird später in Warmbronn beigesetzt. Er hinterlässt ein umfangreiches Archiv aus Modellen und Zeichnungen sowie einen tiefgreifenden Einfluss auf die organische und leichte Architektur weltweit.",
+      "title": "Tod nach Jahren in Warmbronn",
+      "description": "Zunehmende Erblindung schränkte Ottos Arbeit in Warmbronn ein. Er blieb dort in seinem Atelier tätig. Am 9. März 2015 starb er in Leonberg.",
       "locations": [
         {
           "name_historic": "Leonberg",
-          "name_modern": "Leonberg, Baden-Württemberg, Deutschland",
+          "name_modern": "Leonberg, Deutschland",
           "centroid": [
-            8.9667,
-            48.8
+            9.011,
+            48.801
           ],
           "primary": true
         },
         {
           "name_historic": "Warmbronn",
-          "name_modern": "Warmbronn, Leonberg, Baden-Württemberg, Deutschland",
+          "name_modern": "Warmbronn, Leonberg, Deutschland",
           "centroid": [
-            8.95,
-            48.8
+            9.021,
+            48.775
           ],
           "primary": false
         }
       ],
-      "involved_people": [
-        "Gottfried Böhm"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Pritzker_Architecture_Prize"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "late_experiments_and_lasting_recognition",
+      "chapter": "last_workshop",
+      "weight": 0.5,
       "event_class": {
         "type": "death",
-        "place_of_rest": "Warmbronn"
-      }
+        "characterization": "nach nachlassender Sehkraft",
+        "place_of_rest": "Friedhof Warmbronn, Leonberg"
+      },
+      "background": "Der Pritzker-Architekturpreis würdigte Otto 2015 noch zu seinen Lebzeiten. Die Verleihung fand nach seinem Tod statt.\n\nOttos umfangreiches Projektarchiv befindet sich im Südwestdeutschen Archiv für Architektur und Ingenieurbau in Karlsruhe. 2016 und 2017 veranstaltete das Archiv gemeinsam mit der Wüstenrot Stiftung und dem ZKM Karlsruhe die größte Ausstellung seines Werks, Frei Otto. Denken in Modellen."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "86c528bf420d8af2",
-    "translated_on": "2026-08-02T12:04:26.192504+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "ad8d630f9582f4bf",
+    "translated_on": "2026-09-19T12:29:54.983058+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

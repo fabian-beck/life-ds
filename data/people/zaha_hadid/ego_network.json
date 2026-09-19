@@ -1,6 +1,6 @@
 {
   "dataset": "Zaha Hadid ego network",
-  "created_on": "2026-09-06",
+  "created_on": "2026-09-19",
   "ego": {
     "name": "Zaha Hadid",
     "birth_year": 1950,
@@ -10,89 +10,100 @@
       "artist",
       "designer"
     ],
-    "summary": "Zaha Hadid was an Iraqi-British architect, artist, and designer who used painting and drawing to develop buildings with fractured planes, flowing lines, and changing spatial sequences. She founded Zaha Hadid Architects in London and completed cultural, civic, and sporting projects around the world.",
+    "summary": "Zaha Hadid was an Iraqi British architect, artist, and designer whose paintings and buildings used fractured and fluid geometry. After early recognition for unbuilt designs, she completed projects internationally and became the first woman to receive the Pritzker Architecture Prize.",
     "wikipedia": "https://en.wikipedia.org/wiki/Zaha_Hadid"
   },
   "connections": [
     {
-      "person_name": "Mohammed Hadid",
-      "relationship_description": "Hadid's father was an Iraqi industrialist, economist, and political figure. She grew up in his upper-class Baghdad household.",
+      "person_name": "Muhammad al-Hajj Husayn Hadid",
+      "relationship_description": "Hadid's father was an Iraqi industrialist, political figure, and former finance minister who raised her in an upper-class Baghdad household.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
         "https://en.wikipedia.org/wiki/Mohammed_Hadid"
       ],
-      "notes": "He was also known as Muhammad al-Hajj Husayn Hadid.",
+      "notes": "He was also known as Mohammed Hadid.",
       "relationship_type": "family/father"
     },
     {
       "person_name": "Wajiha al-Sabunji",
-      "relationship_description": "Hadid's mother was an artist from Mosul. She raised Hadid in Baghdad with Mohammed Hadid.",
+      "relationship_description": "Hadid's mother was an artist from Mosul. She and Muhammad al-Hajj Husayn Hadid raised Hadid in Baghdad.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
-        "https://en.wikipedia.org/wiki/Mohammed_Hadid",
         "https://en.wikipedia.org/wiki/Foulath_Hadid"
       ],
-      "notes": null,
+      "notes": "She is also spelled Wajiha Sabonji.",
       "relationship_type": "family/mother"
     },
     {
       "person_name": "Foulath Hadid",
-      "relationship_description": "Hadid's brother was a writer, accountant, and expert on Arab affairs. He suggested that she design the Middle East Centre building at St Antony's College, Oxford.",
+      "relationship_description": "Hadid's brother was a writer, accountant, and expert on Arab affairs.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
         "https://en.wikipedia.org/wiki/Foulath_Hadid"
       ],
-      "notes": "Foulath suggested that Hadid design the Middle East Centre building.",
+      "notes": null,
       "relationship_type": "family/brother"
     },
     {
       "person_name": "Rem Koolhaas",
-      "relationship_description": "Koolhaas taught Hadid at the Architectural Association School of Architecture. After her graduation, she worked with him at the Office for Metropolitan Architecture and remained a professional peer.",
+      "relationship_description": "Koolhaas taught Hadid at the Architectural Association School of Architecture and then employed her at the Office for Metropolitan Architecture after her 1977 graduation.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
         "https://en.wikipedia.org/wiki/Rem_Koolhaas"
       ],
-      "notes": "Koolhaas described her at graduation as \"a planet in her own orbit.\"",
+      "notes": "Koolhaas described Hadid at graduation as \"a planet in her own orbit.\"",
       "relationship_type": "academic/teacher"
     },
     {
       "person_name": "Elia Zenghelis",
-      "relationship_description": "Zenghelis taught Hadid at the Architectural Association School of Architecture. After 1977, they worked together at the Office for Metropolitan Architecture in Rotterdam.",
+      "relationship_description": "Zenghelis was one of Hadid's teachers at the Architectural Association and later worked with her at the Office for Metropolitan Architecture in Rotterdam.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
         "https://en.wikipedia.org/wiki/Elia_Zenghelis"
       ],
-      "notes": "He called Hadid the most outstanding student he had taught.",
+      "notes": "He called her the most outstanding pupil he had taught.",
       "relationship_type": "academic/teacher"
     },
     {
+      "person_name": "Patrik Schumacher",
+      "relationship_description": "Schumacher began his association with Hadid's practice after encountering The Peak design. He later became a partner and worked with her on major projects.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://de.wikipedia.org/wiki/Patrik_Schumacher"
+      ],
+      "notes": "Hadid described Schumacher as an enormous support and an incredible enrichment to her work.",
+      "relationship_type": "professional/close_colleague"
+    },
+    {
       "person_name": "Rolf Fehlbaum",
-      "relationship_description": "As Vitra's president-director general, Fehlbaum invited Hadid to design the Vitra Fire Station in Weil am Rhein, completed in 1993.",
+      "relationship_description": "As Vitra's president-director general, Fehlbaum commissioned Hadid to design the Vitra Fire Station in Weil am Rhein, completed in 1993.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid"
       ],
-      "notes": "The Fire Station became the launching point of her built architectural career.",
+      "notes": "As Vitra's president-director general, Fehlbaum commissioned the Vitra Fire Station in Weil am Rhein.",
       "relationship_type": "professional/client"
     },
     {
-      "person_name": "Patrik Schumacher",
-      "relationship_description": "Schumacher began working with Hadid in 1988, became a partner at Zaha Hadid Architects in 2002, and collaborated on many of the practice's major projects.",
-      "strength": "strong",
+      "person_name": "Haytham Hadid",
+      "relationship_description": "Hadid was one of three children of Muhammad Hadid and Wajiha al-Sabunji, alongside her brothers Haytham and Foulath.",
+      "strength": "moderate",
       "sources": [
-        "https://de.wikipedia.org/wiki/Patrik_Schumacher"
+        "https://en.wikipedia.org/wiki/Mohammed_Hadid",
+        "https://en.wikipedia.org/wiki/Foulath_Hadid"
       ],
-      "notes": "Hadid described him as an enormous support and an incredible asset.",
-      "relationship_type": "professional/close_colleague"
+      "notes": "The supplied material provides little detail about his relationship with Hadid beyond their shared family.",
+      "relationship_type": "family/brother"
     },
     {
       "person_name": "Bernard Tschumi",
-      "relationship_description": "Tschumi was among Hadid's teachers while she studied architecture at the Architectural Association School of Architecture after moving to London in 1972.",
+      "relationship_description": "Tschumi taught Hadid during her architectural education at the Architectural Association School of Architecture after she moved to London in 1972.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid"
@@ -102,88 +113,93 @@
     },
     {
       "person_name": "Peter Rice",
-      "relationship_description": "The structural engineer met Hadid through her association with Koolhaas and supported and encouraged her during the early stage of her architectural career.",
+      "relationship_description": "The structural engineer supported and encouraged Hadid during the early phase of her architectural career after she joined the Office for Metropolitan Architecture.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Zaha_Hadid",
         "https://en.wikipedia.org/wiki/Peter_Rice_(structural_engineer)"
       ],
-      "notes": null,
-      "relationship_type": "academic/mentor"
-    },
-    {
-      "person_name": "Philip Johnson",
-      "relationship_description": "Johnson co-curated the Museum of Modern Art's 1988 Deconstructivism in Architecture exhibition. Hadid was one of its seven featured architects.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Zaha_Hadid"
-      ],
-      "notes": "The exhibition associated Hadid's work with deconstructivism.",
-      "relationship_type": "professional/curator"
-    },
-    {
-      "person_name": "Mark Wigley",
-      "relationship_description": "Wigley co-curated the Museum of Modern Art's 1988 Deconstructivism in Architecture exhibition. Hadid's drawings and projects were included in the show.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Zaha_Hadid"
-      ],
-      "notes": null,
-      "relationship_type": "professional/curator"
-    },
-    {
-      "person_name": "Brian Clarke",
-      "relationship_description": "Hadid and British architectural artist Brian Clarke developed a proposal for the Spittelau Viaducts Housing Project in Vienna. Clarke planned glass artworks for the project.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Zaha_Hadid"
-      ],
-      "notes": "The completed project did not include Clarke's proposed artwork.",
-      "relationship_type": "professional/collaborator"
-    },
-    {
-      "person_name": "Eli Broad",
-      "relationship_description": "Eli Broad and his wife Edythe funded the Eli and Edythe Broad Art Museum at Michigan State University. Hadid designed the museum, which opened in 2012.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Eli_Broad"
-      ],
-      "notes": null,
-      "relationship_type": "professional/client"
+      "notes": "Rice supported and encouraged Hadid during the early stage of her career.",
+      "relationship_type": "professional/mentor"
     },
     {
       "person_name": "Vladislav Doronin",
-      "relationship_description": "Doronin commissioned Hadid to design Capital Hill Residence in Barvikha near Moscow. Her practice completed the residence in 2018 after her death.",
+      "relationship_description": "The real estate developer commissioned Hadid to design Capital Hill Residence, his private home in Barvikha near Moscow, completed in 2018 after her death.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Vladislav_Doronin"
       ],
-      "notes": "The project was completed posthumously by her practice.",
+      "notes": "The project was designed during Hadid's lifetime and completed posthumously.",
       "relationship_type": "professional/client"
     },
     {
+      "person_name": "Philip Johnson",
+      "relationship_description": "Johnson co-curated the 1988 Museum of Modern Art exhibition Deconstructivism in Architecture, which presented Hadid among seven architects and expanded her international profile.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
+      ],
+      "notes": null,
+      "relationship_type": "artistic/curator"
+    },
+    {
+      "person_name": "Mark Wigley",
+      "relationship_description": "Wigley co-curated the 1988 Museum of Modern Art exhibition Deconstructivism in Architecture, which included Hadid among seven architects.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
+      ],
+      "notes": null,
+      "relationship_type": "artistic/curator"
+    },
+    {
+      "person_name": "Brian Clarke",
+      "relationship_description": "Hadid and the British architectural artist developed an unexecuted proposal for Vienna's Spittelau Viaducts Housing Project that integrated Clarke's glass mosaic and stained-glass artwork.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid"
+      ],
+      "notes": "Clarke developed a new mouth-blown glass type for the project, which he called Zaha-Glas.",
+      "relationship_type": "artistic/collaborator"
+    },
+    {
       "person_name": "Hans Ulrich Obrist",
-      "relationship_description": "Obrist conducted and published an extended interview with Hadid as part of his Conversation Series of interviews with cultural figures.",
-      "strength": "weak",
+      "relationship_description": "Obrist interviewed Hadid for his long-running interview archive and included their conversation in his Conversation Series.",
+      "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Hans_Ulrich_Obrist"
       ],
-      "notes": "Obrist published an extended interview with Hadid in his Conversation Series.",
-      "relationship_type": "professional/correspondent"
+      "notes": "Their documented interview preserved Hadid's architectural ideas within contemporary art and design discourse.",
+      "relationship_type": "artistic/chronicler"
+    },
+    {
+      "person_name": "Thomas Pritzker",
+      "relationship_description": "As head of the Pritzker Prize jury, Pritzker announced Hadid's 2004 award.",
+      "strength": "weak",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Zaha_Hadid",
+        "https://en.wikipedia.org/wiki/Thomas_Pritzker"
+      ],
+      "notes": "Hadid was the first woman to receive the Pritzker Architecture Prize.",
+      "relationship_type": "professional/endorser"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Hadid grew up in an upper-class Baghdad family. Her father combined industry with political work, and her mother was an artist from Mosul. Her brother Foulath later suggested that she design the Middle East Centre at St Antony's College, Oxford."
+      "summary": "Hadid grew up in Baghdad in a family whose members worked in business, public life, art, and writing. Her father, Muhammad al-Hajj Husayn Hadid, was an industrialist and political figure. Her mother, Wajiha al-Sabunji, was an artist from Mosul. Her brothers Foulath and Haytham remained part of her family history."
     },
     {
       "relationship_type": "academic",
-      "summary": "At London's Architectural Association, Hadid studied with Rem Koolhaas, Elia Zenghelis, and Bernard Tschumi. Koolhaas and Zenghelis hired her at the Office for Metropolitan Architecture after graduation. Structural engineer Peter Rice encouraged her during the early years of her career."
+      "summary": "Hadid studied at London's Architectural Association School of Architecture after mathematics studies in Beirut. Rem Koolhaas, Elia Zenghelis, and Bernard Tschumi taught her there. After graduating in 1977, she worked with Koolhaas and Zenghelis at the Office for Metropolitan Architecture in Rotterdam."
     },
     {
       "relationship_type": "professional",
-      "summary": "Professional relationships brought Hadid's work before new audiences and into built commissions. Philip Johnson and Mark Wigley included her work in the 1988 Museum of Modern Art exhibition. Rolf Fehlbaum commissioned the Vitra Fire Station, and later collaborators and clients supported projects by Zaha Hadid Architects."
+      "summary": "Hadid's professional circle links early encouragement, long-term collaboration, commissions, and public recognition. Peter Rice supported her early career. Patrik Schumacher became a long-term colleague and partner. Rolf Fehlbaum commissioned the Vitra Fire Station, and Thomas Pritzker announced her 2004 Pritzker Architecture Prize."
+    },
+    {
+      "relationship_type": "artistic",
+      "summary": "Curators and collaborators connected Hadid's work with experimental architecture and art. Philip Johnson and Mark Wigley included her in the 1988 Museum of Modern Art exhibition Deconstructivism in Architecture. Brian Clarke collaborated with her on an unbuilt Vienna housing proposal, and Hans Ulrich Obrist recorded an interview with her."
     }
   ]
 }

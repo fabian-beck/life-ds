@@ -1,6 +1,6 @@
 {
   "dataset": "Geoffrey Bawa ego network",
-  "created_on": "2026-07-25",
+  "created_on": "2026-09-19",
   "ego": {
     "name": "Geoffrey Bawa",
     "birth_year": 1919,
@@ -9,274 +9,165 @@
       "Architekt",
       "Designer"
     ],
-    "summary": "Geoffrey Bawa war ein sri-lankischer Architekt und eine der prägenden Gestalten der Tropischen Moderne. In seinem Werk verband er moderne architektonische Methoden mit dem Klima und der Landschaft Sri Lankas, mit einheimischen Bautraditionen, lokalen Materialien und überlieferten Handwerkstechniken.",
+    "summary": "Geoffrey Bawa war ein sri-lankischer Architekt und eine führende Persönlichkeit der Tropischen Moderne. In seinen Arbeiten verband er moderne Bauweisen mit den klimatischen Bedingungen Sri Lankas, Landschaften, Innenhöfen, Wasser, regionalen Materialien und kunsthandwerklicher Gestaltung.",
     "wikipedia": "https://en.wikipedia.org/wiki/Geoffrey_Bawa"
   },
   "connections": [
     {
-      "person_name": "Benjamin William Bawa",
-      "relationship_type": "family/father",
-      "relationship_description": "Bawas Vater war ein sri-lankischer Anwalt und gehörte zu jenem familiären Umfeld, aus dem heraus Geoffrey zunächst eine juristische Laufbahn einschlug.",
-      "start_year": 1919,
-      "end_year": 1923,
+      "person_name": "Benjamin Bawa",
+      "relationship_description": "Geoffrey Bawas Vater war ein sri-lankischer Anwalt. Bawa studierte zunächst Rechtswissenschaften, bevor er sich von der Anwaltstätigkeit abwandte und der Architektur zuwandte.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben in Colombo",
-        "Juristisches und berufliches Familienumfeld"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
         "https://en.wikipedia.org/wiki/Benjamin_Bawa"
       ],
-      "notes": "Benjamin Bawa starb, als Geoffrey etwa vier Jahre alt war."
+      "notes": "Benjamin Bawa starb 1923, als Geoffrey noch ein Kind war.",
+      "relationship_type": "family/father"
     },
     {
-      "person_name": "Bertha Marianne Schrader",
-      "relationship_type": "family/mother",
-      "relationship_description": "Bawas Mutter; ihr Tod im Jahr 1946 veranlasste ihn, seine Tätigkeit als Anwalt aufzugeben und ins Ausland zu reisen.",
-      "start_year": 1919,
-      "end_year": 1946,
+      "person_name": "Bertha Marianne Schrader Bawa",
+      "relationship_description": "Geoffrey Bawas Mutter stammte aus einer Familie singhalesischer, deutscher und schottischer Herkunft. Nach ihrem Tod im Jahr 1946 gab er seine Tätigkeit als Anwalt auf und reiste zwei Jahre ins Ausland.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben in Colombo",
-        "Verbindungen zum Familienbesitz"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
-        "https://en.wikipedia.org/wiki/Bevis_Bawa",
         "https://en.wikipedia.org/wiki/Benjamin_Bawa"
       ],
-      "notes": "Ihr Tod ging Bawas zweijähriger Reise und seinem späteren Berufswechsel zur Architektur voraus."
+      "notes": "Sie stammte aus einer Familie singhalesischer, deutscher und schottischer Herkunft.",
+      "relationship_type": "family/mother"
     },
     {
       "person_name": "Bevis Bawa",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Bevis war Geoffreys älterer Bruder, Gutsbesitzer, Gärtner und ein renommierter Landschaftsarchitekt. Ihr gemeinsames Interesse an Gärten, Landschaft, Kunst und einem weit gefassten kreativen Freundeskreis bildete einen wichtigen persönlichen und kulturellen Hintergrund für Geoffreys Arbeit.",
-      "start_year": 1919,
-      "end_year": 1992,
+      "relationship_description": "Bevis Bawa war Geoffrey Bawas älterer Bruder und wurde Landschaftsarchitekt in Sri Lanka.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familienleben",
-        "Landschafts- und Gartenkultur",
-        "Freundschaften mit sri-lankischen und internationalen Künstlern",
-        "Kreative Kreise rund um Brief Garden und Lunuganga"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
         "https://en.wikipedia.org/wiki/Bevis_Bawa"
       ],
-      "notes": "Beide Brüder waren homosexuell und pflegten sich überschneidende Künstlerfreundeskreise."
-    },
-    {
-      "person_name": "Lionel Wendt",
-      "relationship_type": "artistic/friend",
-      "relationship_description": "Wendt, Pianist, Fotograf, Filmemacher, Kritiker und Förderer des Kulturlebens, gehörte zu den homosexuellen Künstlern in Bawas weiterem Freundeskreis.",
-      "start_year": 1938,
-      "end_year": 1944,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Sri-lankische Kunst- und Kulturnetzwerke",
-        "Gemeinsame homosexuelle Künstlergemeinschaft"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
-        "https://de.wikipedia.org/wiki/Lionel_Wendt"
-      ],
-      "notes": "Wendt starb 1944, noch bevor Bawa seine Architektenlaufbahn begann; wie häufig und unter welchen Umständen sie miteinander zu tun hatten, ist nicht näher überliefert."
-    },
-    {
-      "person_name": "Laki Senanayake",
-      "relationship_type": "artistic/collaborator",
-      "relationship_description": "Senanayake begann als Zeichner in Bawas Büro und wurde zu einem engen künstlerischen Mitarbeiter. Er steuerte Skulpturen, Reliefs und dekorative Arbeiten zu zahlreichen Bawa-Projekten bei.",
-      "start_year": 1950,
-      "end_year": 2003,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Architekturzeichnungen in Bawas Büro",
-        "Skulpturale Arbeiten für das Bentota Beach Hotel",
-        "Skulpturaler Kronleuchter für das sri-lankische Parlament",
-        "Kunstwerke für das Kandalama Hotel",
-        "Skulpturale Balustraden für das Lighthouse Hotel"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
-        "https://en.wikipedia.org/wiki/Laki_Senanayake"
-      ],
-      "notes": "Senanayakes von Vögeln inspirierte Skulpturen und seine in die Architektur integrierten Kunstwerke waren ein wiederkehrendes Merkmal von Projekten aus Bawas Umfeld."
-    },
-    {
-      "person_name": "David Paynter",
-      "relationship_type": "artistic/friend",
-      "relationship_description": "Paynter, ein sri-lankischer Maler, der für die Entwicklung einer eigenen lokalen Ausdrucksform innerhalb westlicher Kunstformen bekannt war, gehörte in Sri Lanka zu Bawas Kreis homosexueller Künstlerfreunde.",
-      "start_year": 1950,
-      "end_year": 1975,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Künstlerischer Freundeskreis",
-        "Gemeinsames Engagement für sri-lankische moderne Kunst und lokale Bildtraditionen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
-        "https://en.wikipedia.org/wiki/David_Paynter_(artist)"
-      ],
-      "notes": "Der vorliegende Text belegt eine Freundschaft innerhalb einer größeren homosexuellen Künstlergemeinschaft, nennt jedoch keine gemeinsamen Architekturaufträge."
+      "notes": "Beide Brüder waren schwul und bewegten sich in sich überschneidenden künstlerischen und gesellschaftlichen Kreisen.",
+      "relationship_type": "family/brother"
     },
     {
       "person_name": "H. H. Reid",
-      "relationship_type": "professional/mentor",
-      "relationship_description": "Architektonischer Mentor, bei dem Bawa 1951 im Büro Edwards, Reid and Begg als Praktikant arbeitete; Reids Tod im Jahr 1952 veranlasste Bawa, eine formale Ausbildung in England aufzunehmen.",
-      "start_year": 1951,
-      "end_year": 1952,
+      "relationship_description": "H. H. Reid bildete Geoffrey Bawa 1951 im Architekturbüro Edwards, Reid and Begg in Colombo aus. Nach Reids Tod entschloss sich Bawa zu einem Architekturstudium in England.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Architektonische Lehre",
-        "Arbeit bei Edwards, Reid and Begg",
-        "Entwicklung von Plänen für Lunuganga"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Geoffrey_Bawa"
       ],
-      "notes": "Reids Tod im Jahr 1952 bewog Bawa, zur Ausbildung als Architekt nach England zurückzukehren."
-    },
-    {
-      "person_name": "Donald Friend",
-      "relationship_type": "artistic/friend",
-      "relationship_description": "Der Freund war ein australischer Künstler und Tagebuchautor, der in den späten 1950er- und frühen 1960er-Jahren in Ceylon lebte. Er gehörte zum homosexuellen kreativen Kreis, den Geoffrey und Bevis Bawa mit ihren Künstlerfreunden teilten.",
-      "start_year": 1958,
-      "end_year": 1963,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Künstlerischer Freundeskreis in Sri Lanka",
-        "Gemeinsame Verbindungen zu Bevis Bawa, Laki Senanayake und Barbara Sansoni",
-        "Kulturübergreifender künstlerischer Austausch"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
-        "https://en.wikipedia.org/wiki/Donald_Friend",
-        "https://en.wikipedia.org/wiki/Bevis_Bawa"
-      ],
-      "notes": "Der Freund hielt sich längere Zeit in Ceylon auf und war außerdem ein langjähriger Gast in Bevis Bawas Brief Garden."
+      "notes": "Nach Reids Tod im Jahr 1952 kehrte Bawa für ein Architekturstudium nach England zurück und übernahm später die Reste von Reids Büro.",
+      "relationship_type": "professional/mentor"
     },
     {
       "person_name": "Ulrik Plesner",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Dänischer Architekt und Bawas enger Mitarbeiter in dessen Colomboer Büro von 1959 bis zu Plesners Weggang aus Sri Lanka im Jahr 1967.",
-      "start_year": 1959,
-      "end_year": 1967,
+      "relationship_description": "Der dänische Architekt Ulrik Plesner wurde 1959 Partner in Bawas Büro in Colombo. Gemeinsam entwarfen sie zahlreiche Gebäude, bevor Plesner Sri Lanka 1967 verließ.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Partnerschaft in Bawas Colomboer Büro",
-        "Entwurf des Industriegebiets Ekala",
-        "Entwurf der Good Shepherd Chapel in Bandarawela",
-        "Entwurf von Häusern, Schulen, Fabriken und Hotels"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
         "https://en.wikipedia.org/wiki/Ulrik_Plesner_(architect,_born_1930)"
       ],
-      "notes": "Plesner verließ Sri Lanka 1967."
+      "notes": "Zu ihren gemeinsamen Arbeiten gehörten das Industriegebiet Ekala, die Kapelle des Guten Hirten, das Polontolawa-Haus und die St. Thomas Preparatory School.",
+      "relationship_type": "professional/business_partner"
     },
     {
       "person_name": "Ena de Silva",
-      "relationship_type": "artistic/collaborator",
-      "relationship_description": "De Silva gehörte zu Bawas engem Kreis von Künstlern und Designern und entwickelte mit ihm eine langjährige berufliche Zusammenarbeit. Für mehrere seiner bedeutenden Bauwerke schuf sie Batik-Wandteppiche.",
-      "start_year": 1960,
-      "end_year": 2003,
+      "relationship_description": "Nachdem Bawa 1960 ihr Haus in Colombo entworfen hatte, begann De Silva eine langjährige berufliche Zusammenarbeit mit ihm. Sie schuf Batik-Wandteppiche für Gebäude wie das Bentota Beach Hotel und das sri-lankische Parlamentsgebäude.",
       "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Förderung einheimischer Materialien und Handwerkstechniken",
-        "Batik-Wandteppiche für das Bentota Beach Hotel",
-        "Batikarbeiten für das sri-lankische Parlamentsgebäude",
-        "Revival postkolonialer Kunst und des Kunsthandwerks"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
         "https://en.wikipedia.org/wiki/Ena_de_Silva"
       ],
-      "notes": "Ihre gemeinsame Arbeit trug dazu bei, textile Handwerkskunst und lokale künstlerische Traditionen in Bawas Architektur zu integrieren."
+      "notes": "Ihre Zusammenarbeit verband Bawas Architektur mit der Wiederbelebung sri-lankischer Batik- und Handwerkstraditionen.",
+      "relationship_type": "artistic/collaborator"
     },
     {
       "person_name": "Barbara Sansoni",
-      "relationship_type": "artistic/collaborator",
-      "relationship_description": "Sansoni war eine enge Freundin und Designerin aus Bawas künstlerischem Umfeld. Sie schuf Wandmalereien, Textilien, Polsterarbeiten und Innenraumstoffe für mehrere von Bawa entworfene Hotels und war später Mitautorin einer Publikation über sein Werk.",
-      "start_year": 1960,
-      "end_year": 2003,
+      "relationship_description": "Sansoni war eine enge Freundin und Gestaltungspartnerin Bawas. Sie schuf Wandbilder, Textilien und Einrichtungsgegenstände für mehrere seiner Projekte, darunter das Bentota Beach Hotel, das Kandalama Hotel und das Lighthouse Hotel.",
       "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Einsatz lokaler Textilien und handwerklicher Arbeiten in Innenräumen",
-        "Innenraumgestaltung des Cinnamon Bentota Beach Hotel",
-        "Innenraumgestaltung des Heritance Ahungalla Hotel",
-        "Wandmalereien im Heritance Kandalama Hotel",
-        "Textilien für das Lighthouse Hotel",
-        "Gemeinsame Autorschaft einer Publikation über Geoffrey Bawa"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
         "https://de.wikipedia.org/wiki/Barbara_Sansoni"
       ],
-      "notes": "Sansonis Architekturzeichnungen und Textilarbeiten prägten die visuelle Sprache, die mit Bawas Tropischer Moderne verbunden ist."
+      "notes": "1996 veröffentlichte sie gemeinsam mit Bawa und Brian Brace Taylor ein Buch über ihn.",
+      "relationship_type": "artistic/collaborator"
+    },
+    {
+      "person_name": "Laki Senanayake",
+      "relationship_description": "Senanayake arbeitete zunächst als Zeichner in Bawas Büro. Später steuerte er Auftragsarbeiten in Form von Skulpturen und Dekorarbeiten zu Bawas Projekten bei, darunter zum Bentota Beach Hotel und zum Parlamentsgebäude.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
+        "https://en.wikipedia.org/wiki/Laki_Senanayake"
+      ],
+      "notes": "Seine von Vögeln inspirierten Metallskulpturen und andere Kunstwerke wurden zu festen Bestandteilen mehrerer von Bawas Innenräumen.",
+      "relationship_type": "artistic/collaborator"
     },
     {
       "person_name": "Junius Richard Jayewardene",
-      "relationship_type": "professional/patron",
-      "relationship_description": "Präsident von Sri Lanka, der Bawa 1979 mit dem Entwurf des neuen Parlamentsgebäudes in Kotte beauftragte.",
-      "start_year": 1979,
-      "end_year": 1982,
+      "relationship_description": "Als Präsident Sri Lankas beauftragte Junius Richard Jayewardene Bawa 1979 mit dem Entwurf des neuen sri-lankischen Parlamentsgebäudes in Sri Jayewardenepura Kotte, das 1982 fertiggestellt wurde.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Beauftragung und Umsetzung des sri-lankischen Parlamentsgebäudes",
-        "National bedeutendes öffentliches Architekturprojekt in Kotte"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
         "https://en.wikipedia.org/wiki/J._R._Jayewardene"
       ],
-      "notes": "Das Parlamentsprojekt wurde 1982 mit dem japanischen Bauunternehmen Mitsui fertiggestellt."
+      "notes": "Der Auftrag wurde zu einem von Bawas bekanntesten öffentlichen Projekten.",
+      "relationship_type": "professional/client"
+    },
+    {
+      "person_name": "Donald Friend",
+      "relationship_description": "Friend gehörte zu Bawas weitem Freundeskreis schwuler Künstler, die in Sri Lanka und Ozeanien tätig waren.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
+        "https://en.wikipedia.org/wiki/Donald_Friend"
+      ],
+      "notes": "Friend verbrachte in den späten 1950er und frühen 1960er Jahren längere Zeit auf Ceylon.",
+      "relationship_type": "social/friend"
+    },
+    {
+      "person_name": "David Paynter",
+      "relationship_description": "Paynter gehörte zu Bawas Kreis schwuler Künstlerfreunde in Sri Lanka.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
+        "https://en.wikipedia.org/wiki/David_Paynter_(artist)"
+      ],
+      "notes": "Paynter war ein bedeutender sri-lankischer Maler, der besonders für seine Wandbilder und Porträts bekannt war.",
+      "relationship_type": "social/friend"
+    },
+    {
+      "person_name": "Lionel Wendt",
+      "relationship_description": "Wendt zählte zu den schwulen Künstlern in Bawas weiterem Freundeskreis in Sri Lanka.",
+      "strength": "weak",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Geoffrey_Bawa",
+        "https://de.wikipedia.org/wiki/Lionel_Wendt"
+      ],
+      "notes": "Wendt starb 1944, bevor Bawas Laufbahn als Architekt begann.",
+      "relationship_type": "social/friend"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Zu Bawas engster Familie gehörten sein Vater Benjamin, der als Anwalt tätig war, seine Mutter Bertha Marianne Schrader und sein älterer Bruder Bevis. Bevis’ Arbeit als Landschaftsarchitekt und sein kreativer Freundeskreis bildeten einen wichtigen Hintergrund für Geoffreys lebenslange Beschäftigung mit Gärten und Landschaft."
+      "summary": "Bawas Familie verband ihn mit dem Rechtswesen und der Landschaftsgestaltung. Sein Vater war ein sri-lankischer Anwalt, und Bawa studierte zunächst Rechtswissenschaften in England. Nach dem Tod seiner Mutter im Jahr 1946 gab er seine Tätigkeit als Anwalt auf. Sein älterer Bruder Bevis wurde Landschaftsarchitekt in Sri Lanka."
     },
     {
       "relationship_type": "professional",
-      "summary": "Mentor H. H. Reid, Mitarbeiter Ulrik Plesner und Präsident Junius Richard Jayewardene zeichnen Bawas Weg von der Ausbildung im Architekturbüro bis zum landesweit bedeutenden Auftrag für das Parlamentsgebäude nach."
+      "summary": "Bawa fand durch eine Ausbildung bei H. H. Reid in Colombo zur Architektur. Nach Reids Tod im Jahr 1952 kehrte Bawa für ein reguläres Studium nach England zurück. 1957 ging Bawa wieder nach Sri Lanka und übernahm die Reste von Reids Büro. Seine Partnerschaft mit Ulrik Plesner begann 1959, und Präsident Junius Richard Jayewardene lud ihn 1979 ein, das neue Parlamentsgebäude zu entwerfen."
     },
     {
       "relationship_type": "artistic",
-      "summary": "Ena de Silva, Barbara Sansoni und Laki Senanayake gehörten zu Bawas engem Kreis von Künstlern und Designern. Durch ihre Zusammenarbeit wurden einheimische Materialien, Handwerk und Kunst zu einem wesentlichen Bestandteil seiner architektonischen Sprache."
+      "summary": "Bawa arbeitete mit Künstlern und Gestaltern wie Ena de Silva, Barbara Sansoni und Laki Senanayake zusammen. Durch ihre Zusammenarbeit fanden Textilien, Batik, Skulpturen, Wandbilder und Möbel Eingang in Architekturprojekte in Sri Lanka. Die Arbeiten der Gruppe förderten nach der Unabhängigkeit ein neues Bewusstsein für einheimische Materialien und Handwerkstechniken."
+    },
+    {
+      "relationship_type": "social",
+      "summary": "Bawas Freundschaften mit schwulen Künstlern verbanden ihn mit der modernen Kunstszene Sri Lankas und mit Künstlern in Ozeanien. Zu diesem Kreis gehörten David Paynter, Lionel Wendt und Donald Friend. Die verfügbaren Quellen nennen Freundschaften, keine konkreten gemeinsamen Projekte."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "e429914da0415747",
-    "translated_on": "2026-08-02T12:06:01.695587+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "6590974f949b6ee4",
+    "translated_on": "2026-09-19T12:33:24.406695+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

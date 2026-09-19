@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia-biographical-timelines",
-  "created_on": "2025-12-24",
+  "dataset": "Biographical Timeline",
+  "created_on": "2026-09-19",
   "person": {
     "name": "Frank_Lloyd_Wright",
     "birth_date": "1867-06-08",
@@ -10,8 +10,8 @@
       "designer",
       "writer"
     ],
-    "tagline": "Champion of organic architecture",
-    "summary": "Frank Lloyd Wright was an American architect whose long career reshaped modern architecture through the Prairie School, Usonian housing ideas, and major works such as Fallingwater and the Guggenheim Museum design. He also wrote widely and trained generations of apprentices through the Taliesin Fellowship.",
+    "tagline": "Fallingwater Above Bear Run",
+    "summary": "Frank Lloyd Wright was an American architect who developed buildings around their sites, materials, and daily use. His Prairie houses, Usonian homes, public buildings, and architectural school shaped American design across seven decades.",
     "wikipedia": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
     "portrait": {
       "image": "/portraits/frank_lloyd_wright_thumbnail.webp",
@@ -19,322 +19,277 @@
       "medium": "/portraits/frank_lloyd_wright_medium.webp",
       "full": "/portraits/frank_lloyd_wright_full.webp",
       "source": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
-      "caption": "Stylized portrait based on historical photograph",
+      "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/30/Frank_Lloyd_Wright_portrait.jpg"
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/30/Frank_Lloyd_Wright_portrait.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "wisconsin_origins",
-      "headline": "Wisconsin Beginnings",
+      "id": "formative_years",
+      "headline": "Learning to Draw",
       "date_start": "1867-06-08",
       "date_start_precision": "day",
-      "date_end": "1885",
+      "date_end": "1887",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 18,
+      "age_end": 20,
       "involved_people": [
-        "William Cary Wright",
-        "Anna Lloyd Jones"
-      ],
-      "location": "Wisconsin, United States"
-    },
-    {
-      "id": "chicago_apprentice_years",
-      "headline": "Forged in Chicago",
-      "date_start": "1886",
-      "date_start_precision": "year",
-      "date_end": "1893-05",
-      "date_end_precision": "month",
-      "age_start": 19,
-      "age_end": 26,
-      "involved_people": [
+        "Allan D. Conover",
         "Joseph Lyman Silsbee",
         "Louis Sullivan",
-        "Dankmar Adler",
-        "Catherine Lee \"Kitty\" Tobin"
+        "Dankmar Adler"
       ],
-      "location": "Midwestern United States"
+      "location": "Midwestern United States",
+      "illustration": {
+        "image": "/chapter_art/frank_lloyd_wright/formative_years_medium.webp",
+        "medium": "/chapter_art/frank_lloyd_wright/formative_years_medium.webp",
+        "full": "/chapter_art/frank_lloyd_wright/formative_years_full.webp",
+        "concept": "A single graphite-like filament rises from a dark plane, bending into precise angular planes before dissolving into soft prairie-colored mist; faint amber light gathers where the line first touches the ground.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "prairie_defiance_taliesin_tragedy",
-      "headline": "Taliesin Reckoning",
-      "date_start": "1893-06",
-      "date_start_precision": "month",
-      "date_end": "1914-08-15",
-      "date_end_precision": "day",
+      "id": "prairie_breakthrough",
+      "headline": "Prairie Takes Root",
+      "date_start": "1893",
+      "date_start_precision": "year",
+      "date_end": "1908",
+      "date_end_precision": "year",
       "age_start": 26,
-      "age_end": 47,
+      "age_end": 38,
       "involved_people": [
         "Louis Sullivan",
-        "Dankmar Adler",
-        "Mamah Borthwick Cheney",
-        "Catherine Lee \"Kitty\" Tobin Wright",
+        "Dankmar Adler"
+      ],
+      "location": "Midwestern United States",
+      "illustration": {
+        "image": "/chapter_art/frank_lloyd_wright/prairie_breakthrough_medium.webp",
+        "medium": "/chapter_art/frank_lloyd_wright/prairie_breakthrough_medium.webp",
+        "full": "/chapter_art/frank_lloyd_wright/prairie_breakthrough_full.webp",
+        "concept": "A low, expanding stack of warm ochre planes hovers over darkness, each layer extending farther outward like a slow horizon; narrow seams glow with green-gold light, suggesting growth rooted close to earth.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
+    },
+    {
+      "id": "taliesin_in_crisis",
+      "headline": "Taliesin Burns",
+      "date_start": "1910",
+      "date_start_precision": "year",
+      "date_end": "1914-08-15",
+      "date_end_precision": "day",
+      "age_start": 43,
+      "age_end": 47,
+      "involved_people": [
+        "Ernst Wasmuth",
+        "Mamah Borthwick",
+        "Anna Lloyd Jones",
         "Julian Carlton",
-        "John Borthwick Cheney",
+        "John Cheney",
         "Martha Cheney",
         "David Lindblom",
-        "Ernest Weston",
+        "Emil Brodelle",
         "Thomas Brunker",
-        "Herbert Fritz",
-        "William Weston"
+        "Ernest Weston",
+        "William Weston",
+        "Thomas Fritz"
       ],
-      "location": "United States"
+      "location": "Midwestern United States",
+      "illustration": {
+        "image": "/chapter_art/frank_lloyd_wright/taliesin_in_crisis_medium.webp",
+        "medium": "/chapter_art/frank_lloyd_wright/taliesin_in_crisis_medium.webp",
+        "full": "/chapter_art/frank_lloyd_wright/taliesin_in_crisis_full.webp",
+        "concept": "A delicate ivory lattice floats in blackness, one side abruptly charred and collapsing into ember-red fragments; beyond it, a few intact lines catch cold blue light, suspended amid drifting ash.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "tokyo_monumental_gamble",
-      "headline": "Tokyo Monumental Gamble",
+      "id": "return_to_prominence",
+      "headline": "Building a New Order",
       "date_start": "1915",
       "date_start_precision": "year",
-      "date_end": "1923",
+      "date_end": "1935",
       "date_end_precision": "year",
       "age_start": 48,
-      "age_end": 56,
+      "age_end": 68,
       "involved_people": [
-        "Aisaku Hayashi"
-      ],
-      "location": "Japan"
-    },
-    {
-      "id": "taliesin_fellowship_renaissance",
-      "headline": "Desert Studio Revival",
-      "date_start": "1928-08-25",
-      "date_start_precision": "day",
-      "date_end": "1937",
-      "date_end_precision": "year",
-      "age_start": 61,
-      "age_end": 70,
-      "involved_people": [
+        "John Lloyd Wright",
         "Olgivanna Lazović",
-        "Olgivanna Lloyd Wright"
+        "Olgivanna Wright",
+        "Edgar J. Kaufmann",
+        "Liliane Kaufmann"
       ],
-      "location": "United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/frank_lloyd_wright/return_to_prominence_medium.webp",
+        "medium": "/chapter_art/frank_lloyd_wright/return_to_prominence_medium.webp",
+        "full": "/chapter_art/frank_lloyd_wright/return_to_prominence_full.webp",
+        "concept": "Interlocking stone-colored blocks form a balanced spiral around a bright central well, while translucent ribbons of water curve beneath them; the composition feels resilient, ordered, and newly gathering strength.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "late_icon_last_work",
-      "headline": "Curves Against Time",
-      "date_start": "1943",
+      "id": "final_commissions",
+      "headline": "The Last Designs",
+      "date_start": "1936",
       "date_start_precision": "year",
       "date_end": "1959-04-09",
       "date_end_precision": "day",
-      "age_start": 76,
+      "age_start": 69,
       "age_end": 91,
       "involved_people": [
-        "Solomon R. Guggenheim",
-        "Hilla von Rebay",
-        "Olgivanna Lloyd Wright"
+        "Herbert Fisk Johnson",
+        "Solomon R. Guggenheim"
       ],
-      "location": "United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/frank_lloyd_wright/final_commissions_medium.webp",
+        "medium": "/chapter_art/frank_lloyd_wright/final_commissions_medium.webp",
+        "full": "/chapter_art/frank_lloyd_wright/final_commissions_full.webp",
+        "concept": "A luminous ivory coil unfurls upward through deep midnight, its smooth continuous band widening toward the viewer; small pools of amber light rest along the curve, while the outer edge fades into a pale dawn glow.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     }
   ],
-  "conclusion": "Frank Lloyd Wright turned private conviction into public space, repeatedly remaking himself when scandal, loss, or fashion tried to end him. His buildings—and the Taliesin Fellowship behind them—left architecture more daring, more human, and permanently less obedient.",
+  "conclusion": "In 2019, eight Wright buildings, including Fallingwater, Unity Temple, and the Guggenheim Museum, were inscribed as The 20th-Century Architecture of Frank Lloyd Wright, a UNESCO World Heritage Site. Museums and preservation organizations maintain many of his buildings across the United States.",
   "events": [
     {
       "date": "1867-06-08",
       "date_precision": "day",
-      "date_note": "Wright sometimes claimed a birth year of 1869, but official records support 1867",
       "age": 0,
-      "title": "Born in Richland Center, Wisconsin",
-      "description": "Frank Lloyd Wright was born in Richland Center, Wisconsin, to William Cary Wright, a musician and occasional preacher, and Anna Lloyd Jones, a teacher from the close-knit Lloyd Jones family. In later years Wright liked to frame his childhood as a kind of early prophecy: a mother who nurtured ambition, a household that moved and strained, and a boy already collecting shapes and ideas that would become buildings.",
+      "title": "Born into a Wisconsin Unitarian Family",
+      "description": "Frank Lloyd Wright was born in Richland Center, Wisconsin, to William Cary Wright and Anna Lloyd Jones Wright. William was a musician, speaker, and occasional preacher. Anna was a schoolteacher from the Welsh American Lloyd Jones family. The household included William's Baptist ministry and Anna's Unitarian relatives.",
       "locations": [
         {
-          "name_historic": "Richland Center, Wisconsin",
-          "name_modern": "Richland Center, Wisconsin, United States",
+          "name_historic": "Richland Center",
+          "name_modern": "Richland Center, Wisconsin, USA",
           "centroid": [
-            -90.3854141,
-            43.3355298
+            -90.3868,
+            43.3542
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Wisconsin",
-          "name_modern": "Wisconsin, United States",
-          "centroid": [
-            -89.6884637,
-            44.4308975
-          ],
-          "primary": false
         }
-      ],
-      "involved_people": [
-        "William Cary Wright",
-        "Anna Lloyd Jones"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "wisconsin_origins",
+      "chapter": "formative_years",
+      "weight": 0.3,
       "event_class": {
         "type": "birth",
-        "mother": "Anna Lloyd Jones",
-        "father": "William Cary Wright"
-      }
-    },
-    {
-      "date": "1876",
-      "date_precision": "year",
-      "age": 9,
-      "title": "Learns Froebel design blocks",
-      "description": "As a child, Wright spent extensive time with [[Froebel gifts|Froebel kindergarten blocks]] purchased by his mother, Anna Lloyd Jones. He later credited these geometric exercises with shaping his lifelong sense of form, pattern, and spatial composition—the kind of quiet training that made structure feel like play, and play feel like destiny.",
-      "locations": [
-        {
-          "name_historic": "Richland Center, Wisconsin",
-          "name_modern": "Richland Center, Wisconsin, USA",
-          "centroid": [
-            -90.3854141,
-            43.3355298
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Madison, Wisconsin",
-          "name_modern": "Madison, Wisconsin, USA",
-          "centroid": [
-            -89.3841663,
-            43.07469
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Anna Lloyd Jones"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
-        "https://en.wikipedia.org/wiki/Friedrich_Froebel"
-      ],
-      "event_type_icon": "mdi-cube",
-      "chapter": "wisconsin_origins",
-      "annotations": {
-        "Froebel gifts": {
-          "explanation": "A set of early-childhood educational toys devised by Friedrich Fröbel—geometric blocks and other materials used in kindergarten to teach form, pattern, and spatial relationships.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Froebel_gifts"
-        }
-      }
-    },
-    {
-      "date": "1881",
-      "date_precision": "year",
-      "date_end": "1885",
-      "date_end_precision": "year",
-      "age": 14,
-      "title": "Family separation and divorce",
-      "description": "Wright’s parents separated as his adolescence began, amid financial strain and an unstable home life. The divorce was finalized in 1885, after which his father, William Cary Wright, left Wisconsin; Wright later said he never saw him again. The break became a private fault line—one he would revisit in his own restless patterns of attachment and escape.",
-      "locations": [
-        {
-          "name_historic": "Wisconsin",
-          "name_modern": "Wisconsin, United States",
-          "centroid": [
-            -89.6884637,
-            44.4308975
-          ],
-          "primary": true
-        }
-      ],
+        "father": "William Cary Wright",
+        "mother": "Anna Lloyd Jones Wright",
+        "characterization": "Unitarian household"
+      },
       "involved_people": [
         "William Cary Wright",
-        "Anna Lloyd Jones"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "event_type_icon": "mdi-heart-broken",
-      "chapter": "wisconsin_origins"
+        "Anna Lloyd Jones Wright"
+      ]
     },
     {
       "date": "1886",
       "date_precision": "year",
-      "date_end": "1887",
-      "date_end_precision": "year",
       "age": 19,
-      "title": "Studies civil engineering",
-      "description": "Wright enrolled at the [[University of Wisconsin–Madison|University of Wisconsin–Madison]] in 1886 as a special student to study civil engineering, but left without earning a degree. The decision was less a failure than a pivot: he chose the speed and severity of office work over the patience of classrooms, aiming straight for architectural practice through apprenticeship.",
+      "title": "Studies Civil Engineering in Madison",
+      "description": "In 1886, Frank Lloyd Wright entered the University of Wisconsin in Madison as a special student. He studied civil engineering under professor Allan D. Conover before leaving the university without taking a degree.",
       "locations": [
         {
           "name_historic": "Madison",
           "name_modern": "Madison, Wisconsin, United States",
           "centroid": [
-            -89.3841663,
-            43.07469
+            -89.4012,
+            43.0731
           ],
           "primary": true
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
-        "https://en.wikipedia.org/wiki/University_of_Wisconsin%E2%80%93Madison"
-      ],
-      "event_type_icon": "mdi-school",
-      "chapter": "chicago_apprentice_years",
-      "annotations": {
-        "University of Wisconsin–Madison": {
-          "explanation": "The main campus of the University of Wisconsin system in Madison, a major U.S. public research university founded in 1848.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Wisconsin%E2%80%93Madison"
-        }
-      },
       "involved_people": [
         "Allan D. Conover"
-      ]
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "formative_years",
+      "weight": 0.35
     },
     {
       "date": "1887",
       "date_precision": "year",
       "age": 20,
-      "title": "Moves to Chicago as a draftsman",
-      "description": "In 1887, seeking opportunity in the booming building market, Wright moved to Chicago and looked for work in architectural offices. He was hired as a draftsman by Joseph Lyman Silsbee, where he gained early office experience on church and residential commissions and further refined his drafting and presentation skills.",
+      "title": "Begins Apprenticeship at Adler and Sullivan",
+      "description": "In 1887, Frank Lloyd Wright left Joseph Lyman Silsbee's Chicago office. He joined Adler & Sullivan as a draftsman and apprentice. Louis Sullivan assigned him interior drawings for the [[Auditorium Building|Auditorium Building]]. Dankmar Adler was the firm's senior partner.",
       "locations": [
         {
           "name_historic": "Chicago",
-          "name_modern": "Chicago, Illinois, United States",
+          "name_modern": "Chicago, Illinois, USA",
           "centroid": [
-            -87.6244212,
-            41.8755616
+            -87.6298,
+            41.8781
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Madison",
-          "name_modern": "Madison, Wisconsin, United States",
-          "centroid": [
-            -89.3841663,
-            43.07469
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Joseph Lyman Silsbee"
+        "Joseph Lyman Silsbee",
+        "Louis Sullivan",
+        "Dankmar Adler"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Joseph_Lyman_Silsbee",
         "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
       ],
-      "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "chicago_apprentice_years",
-      "event_class": {
-        "type": "migration",
-        "from_location": "Wisconsin",
-        "to_location": "Chicago, Illinois",
-        "characterization": "career opportunity"
-      }
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Auditorium_Building%2C_Chicago_%283678137097%29.jpg/960px-Auditorium_Building%2C_Chicago_%283678137097%29.jpg",
+          "caption": "Auditorium Building, designed by Adler and Sullivan",
+          "source": "https://commons.wikimedia.org/wiki/File:Auditorium_Building,_Chicago_(3678137097).jpg",
+          "creator": "Cornell University Library",
+          "license": "No restrictions",
+          "licenseUrl": "https://www.flickr.com/commons/usage/"
+        }
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "formative_years",
+      "annotations": {
+        "Auditorium Building": {
+          "explanation": "The Auditorium Building was a Chicago complex with a theater, hotel, offices, and a tower. Adler & Sullivan designed it while Wright worked in the firm.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Auditorium_Building_(Chicago)"
+        }
+      },
+      "weight": 0.7,
+      "background": "The opening was tied to a large interior-design job. Wright could translate Sullivan’s ornament into finished drawings, and that skill secured his place after two brief interviews. The office was difficult from the start. Wright recalled violent clashes with other draftsmen during his early years there. He also said Sullivan treated employees with little respect.\n\nSullivan nevertheless gave Wright increasing responsibility. Wright developed a close working relationship with the foreman Paul Mueller, who later worked on several of Wright’s public and commercial buildings. By 1890, Wright was head draftsman for the firm’s houses. He shared an office beside Sullivan’s with George Elmslie, a draftsman Wright had recommended for the staff.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/AUDITORIUM_INTERIOR%2C_BALCONY._Copy_photograph_of_photogrammetric_plate_LC-HABS-GS05-2656-304L_-_Auditorium_Building%2C_430_South_Michigan_Avenue%2C_Chicago%2C_Cook_County%2C_IL_HABS_ILL%2C16-CHIG%2C39-111.tif/lossy-page1-960px-thumbnail.tif.jpg",
+          "caption": "AUDITORIUM INTERIOR, BALCONY. Copy photograph of photogrammetric plate LC-HABS-GS05-2656-304L - Auditorium Building, 430 South Michigan Avenue, Chicago, Cook…",
+          "source": "https://commons.wikimedia.org/wiki/File:AUDITORIUM_INTERIOR,_BALCONY._Copy_photograph_of_photogrammetric_plate_LC-HABS-GS05-2656-304L_-_Auditorium_Building,_430_South_Michigan_Avenue,_Chicago,_Cook_County,_IL_HABS_ILL,16-CHIG,39-111.tif",
+          "creator": "Related names: Roosevelt College (University); Auditorium Theater Council; Chicago Musical College; Taylor, Crombie and Associates; Skidmore, Owings and Merrill; Weese, Harry M; Snead and Company; Homestead Works; Reed, David; Minnesota Granite Company; Young and Farrel Diamond Stone Saw Co.; Hollaway, Charles; Fleury, Albert; Roosevelt, Frank; Harrison, Benjamin; Illinois Terra Cotta Lumber Co.; Adams, Milward; Illinois HIstoric Preservation Agency, sponsor; Illinois Department of Commerce and Community Affairs, sponsor; McClier, contractor; Auditorium Theatre Council, sponsor; Kasprzyk, Mark, delineator; Schwartz, Leslie, photographer",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Auditorium Theatre interior Chicago"
+        }
+      ]
     },
     {
-      "date": "1888",
+      "date": "1893",
       "date_precision": "year",
-      "date_end": "1893",
-      "date_end_precision": "year",
-      "age": 21,
-      "title": "Trains under Louis Sullivan",
-      "description": "In 1888, Wright joined [[Adler & Sullivan|Adler & Sullivan]], working under Louis Sullivan and absorbing the firm’s modern approach to form and ornament. He rose to become head draftsman for residential work, gaining confidence and responsibility—while also taking on unauthorized side commissions that foreshadowed his eventual independence.",
+      "age": 26,
+      "title": "Launches an Independent Chicago Practice",
+      "description": "In 1893, Louis Sullivan discovered that Frank Lloyd Wright had accepted independent residential commissions against his contract. Wright left Adler & Sullivan. He opened his practice on the top floor of Chicago's Schiller Building, which Sullivan had designed.",
       "locations": [
         {
           "name_historic": "Chicago",
           "name_modern": "Chicago, Illinois, United States",
           "centroid": [
-            -87.6244212,
-            41.8755616
+            -87.6298,
+            41.8781
           ],
           "primary": true
         }
@@ -344,257 +299,256 @@
         "Dankmar Adler"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Louis_Sullivan",
-        "https://en.wikipedia.org/wiki/Dankmar_Adler"
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "chicago_apprentice_years",
-      "annotations": {
-        "Adler & Sullivan": {
-          "explanation": "A Chicago architectural partnership (Dankmar Adler and Louis Sullivan) known for influential late-19th-century commercial buildings and for mentoring Frank Lloyd Wright early in his career.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Dankmar_Adler"
-        }
-      }
+      "chapter": "prairie_breakthrough",
+      "weight": 0.75
     },
     {
-      "date": "1889",
+      "date": "1898",
       "date_precision": "year",
-      "age": 22,
-      "title": "Marries Catherine Tobin",
-      "description": "In 1889, Wright married [[Catherine Tobin|Catherine Lee “Kitty” Tobin]], beginning a family life that ran alongside his rapid ascent in the Chicago area. The marriage would later become a public point of tension when he left home in 1909, and the private became inseparable from the professional.",
+      "age": 31,
+      "title": "Moves Practice into Oak Park Studio",
+      "description": "In 1898, Frank Lloyd Wright moved his practice into a studio addition beside his Oak Park home. Its two-story drafting room had a hanging balcony. The larger space let him employ several draftsmen on new residential designs.",
       "locations": [
         {
-          "name_historic": "Chicago",
-          "name_modern": "Chicago, Illinois, United States",
+          "name_historic": "Oak Park",
+          "name_modern": "Oak Park, Illinois, United States",
           "centroid": [
-            -87.6244212,
-            41.8755616
+            -87.7845,
+            41.885
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "Catherine Lee \"Kitty\" Tobin"
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Frank_Lloyd_Wright_-_Oak_Park%2C_IL_-_Home_and_Studio_%285%29.jpg/960px-Frank_Lloyd_Wright_-_Oak_Park%2C_IL_-_Home_and_Studio_%285%29.jpg",
+          "caption": "Frank Lloyd Wright Home and Studio, Oak Park",
+          "source": "https://commons.wikimedia.org/wiki/File:Frank_Lloyd_Wright_-_Oak_Park,_IL_-_Home_and_Studio_(5).jpg",
+          "creator": "Bmzuckerman",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "prairie_breakthrough",
+      "weight": 0.8
+    },
+    {
+      "date": "1905",
+      "date_precision": "year",
+      "date_end": "1909",
+      "date_end_precision": "year",
+      "age": 38,
+      "title": "Designs Oak Park's Unity Temple",
+      "description": "A fire destroyed the Oak Park Unitarian congregation's church. The congregation asked Frank Lloyd Wright to design Unity Temple. He worked on it from 1905 to 1909. He used [[reinforced concrete|concrete strengthened with internal steel]] for a compact worship space and connected community rooms.",
+      "locations": [
+        {
+          "name_historic": "Oak Park, Illinois",
+          "name_modern": "Oak Park, Illinois, United States",
+          "centroid": [
+            -87.7845,
+            41.885
+          ],
+          "primary": true
+        }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Lloyd_Wright"
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
       ],
-      "event_type_icon": "mdi-ring",
-      "chapter": "chicago_apprentice_years",
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Historic_American_Buildings_Survey_Philip_Turner%2C_Photographer_June_1967_EXTERIOR-_LOOKING_NORTHEAST_-_Unity_Temple%2C_875_Lake_Street%2C_Oak_Park%2C_Cook_County%2C_IL_HABS_ILL%2C16-OAKPA%2C3-3.tif/lossy-page1-960px-thumbnail.tif.jpg",
+          "caption": "Unity Temple exterior, Oak Park, Illinois",
+          "source": "https://commons.wikimedia.org/wiki/File:Historic_American_Buildings_Survey_Philip_Turner,_Photographer_June_1967_EXTERIOR-_LOOKING_NORTHEAST_-_Unity_Temple,_875_Lake_Street,_Oak_Park,_Cook_County,_IL_HABS_ILL,16-OAKPA,3-3.tif",
+          "creator": null,
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-church",
+      "chapter": "prairie_breakthrough",
       "annotations": {
-        "Catherine Tobin": {
-          "explanation": "Wright’s first wife, commonly called “Kitty”; their marriage and six children formed the domestic backdrop to his early career.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+        "reinforced concrete": {
+          "explanation": "Reinforced concrete combines concrete with internal steel reinforcement, allowing a structure to carry loads with thinner walls and broader open spaces.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Reinforced_concrete"
         }
       },
-      "event_class": {
-        "type": "marriage_partnership",
-        "subtype": "marriage",
-        "partner": "Catherine Lee \"Kitty\" Tobin",
-        "duration": "until divorce (formalized later)",
-        "children": 6,
-        "characterization": "early family life"
-      }
-    },
-    {
-      "date": "1893",
-      "date_precision": "year",
-      "date_end": "1898",
-      "date_end_precision": "year",
-      "age": 26,
-      "title": "Establishes independent practice",
-      "description": "After a rupture with [[Adler & Sullivan|Adler & Sullivan]] over his private commissions, Wright launched his own Chicago-area practice. He soon created a home-and-work base in Oak Park; by 1898, his studio there became a center for early innovations as he developed the language later associated with the [[Prairie School]] movement.",
-      "locations": [
+      "weight": 0.84,
+      "background": "Wright belonged to the Unity Temple congregation throughout his life. He offered to design its replacement after the earlier church burned. He later described Unity Temple as the building where he became “an architect of space.”",
+      "background_images": [
         {
-          "name_historic": "Chicago",
-          "name_modern": "Chicago, Illinois, United States",
-          "centroid": [
-            -87.6244212,
-            41.8755616
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Oak Park",
-          "name_modern": "Oak Park, Illinois, United States",
-          "centroid": [
-            -87.7887615,
-            41.8878145
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Dankmar Adler",
-        "Louis Sullivan"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Dankmar_Adler",
-        "https://en.wikipedia.org/wiki/Louis_Sullivan"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Frank_Lloyd_Wright_Home_and_Studio_%28west_side_zoom%29_cropped.jpg/960px-Frank_Lloyd_Wright_Home_and_Studio_%28west_side_zoom%29_cropped.jpg",
-          "caption": "Frank Lloyd Wright Home and Studio, Oak Park, Illinois",
-          "source": "https://commons.wikimedia.org/wiki/File:Frank_Lloyd_Wright_Home_and_Studio_(west_side_zoom)_cropped.jpg",
-          "creator": "John Delano",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "chicago_apprentice_years",
-      "annotations": {
-        "Adler & Sullivan": {
-          "explanation": "The Chicago architectural partnership of Dankmar Adler and Louis Sullivan (active 1881–1895), where Wright worked before starting his own practice.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Dankmar_Adler"
-        },
-        "Prairie School": {
-          "explanation": "A Midwestern architectural movement known for horizontal lines, open plans, and designs meant to harmonize with the landscape.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Prairie_School"
-        }
-      }
-    },
-    {
-      "date": "1909",
-      "date_precision": "year",
-      "date_end": "1910",
-      "date_end_precision": "year",
-      "age": 42,
-      "title": "Leaves with Mamah Cheney",
-      "description": "In 1909, Wright left his wife and children in Oak Park and traveled to Europe with Mamah Borthwick Cheney, a decision that triggered a major public scandal and damaged his standing in the United States. While abroad, he shaped a publication-ready record of his work—later known as the [[Wasmuth Portfolio]]—that helped carry his designs to European audiences and future modernists.",
-      "locations": [
-        {
-          "name_historic": "Oak Park",
-          "name_modern": "Oak Park, Illinois, United States",
-          "centroid": [
-            -87.7887615,
-            41.8878145
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Europe",
-          "name_modern": null,
-          "centroid": [
-            10.0,
-            51.0
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Mamah Borthwick Cheney",
-        "Catherine Lee \"Kitty\" Tobin"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Mamah_Borthwick"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Frederick_C._Robie_House%2C_Woodlawn_Avenue_and_58th_Street%2C_Hyde_Park%2C_Chicago%2C_IL_-_54214023795.jpg/960px-Frederick_C._Robie_House%2C_Woodlawn_Avenue_and_58th_Street%2C_Hyde_Park%2C_Chicago%2C_IL_-_54214023795.jpg",
-          "caption": "Frederick C. Robie House, Chicago, Illinois",
-          "source": "https://commons.wikimedia.org/wiki/File:Frederick_C._Robie_House,_Woodlawn_Avenue_and_58th_Street,_Hyde_Park,_Chicago,_IL_-_54214023795.jpg",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Unity_House%2C_Unity_Temple%2C_Lake_Street_and_Kenilworth_Avenue%2C_Oak_Park%2C_IL_-_54480113378.jpg/960px-Unity_House%2C_Unity_Temple%2C_Lake_Street_and_Kenilworth_Avenue%2C_Oak_Park%2C_IL_-_54480113378.jpg",
+          "caption": "Built in 1905-1908, this Prairie-style building was designed by Frank Lloyd Wright for the congregation of the Unity Church of Oak Park, founded in 1871, and re.",
+          "source": "https://commons.wikimedia.org/wiki/File:Unity_House,_Unity_Temple,_Lake_Street_and_Kenilworth_Avenue,_Oak_Park,_IL_-_54480113378.jpg",
           "creator": "w_lemay",
           "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+          "query": "Unity Temple Oak Park"
+        }
+      ]
+    },
+    {
+      "date": "1910",
+      "date_precision": "year",
+      "age": 43,
+      "title": "Publishes the Wasmuth Portfolio in Berlin",
+      "description": "In Berlin, publisher Ernst Wasmuth issued the Wasmuth Portfolio, Wright's first publication. The two-volume portfolio collected plans and line drawings for buildings Wright designed between 1893 and 1909.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
         }
       ],
-      "event_type_icon": "mdi-heart",
-      "chapter": "prairie_defiance_taliesin_tragedy",
-      "annotations": {
-        "Oak Park": {
-          "explanation": "A suburb immediately west of Chicago where Wright lived and maintained his home and studio at the time he left for Europe in 1909.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Oak_Park,_Illinois"
-        },
-        "Wasmuth Portfolio": {
-          "explanation": "An influential early publication of Wright’s designs that helped introduce his work to architects in Europe.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Wasmuth_Portfolio"
+      "involved_people": [
+        "Ernst Wasmuth"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Ernst_Wasmuth_Verlag"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Historic_American_Buildings_Survey_Photocopy_of_Plate_-114%2C_Frank_Lloyd_Wright%2C_Ausgefuhrte_Baute%2C_Berlin-_Ernst_Wasmuth_A.-G.%2C_1911._-_Frederick_C._Robie_House%2C_5757_Woodlawn_HABS_ILL%2C16-CHIG%2C33-6.tif/lossy-page1-960px-thumbnail.tif.jpg",
+          "caption": "Robie House plate from the Wasmuth Portfolio",
+          "source": "https://commons.wikimedia.org/wiki/File:Historic_American_Buildings_Survey_Photocopy_of_Plate_-114,_Frank_Lloyd_Wright,_Ausgefuhrte_Baute,_Berlin-_Ernst_Wasmuth_A.-G.,_1911._-_Frederick_C._Robie_House,_5757_Woodlawn_HABS_ILL,16-CHIG,33-6.tif",
+          "creator": null,
+          "license": "Public domain",
+          "licenseUrl": null
         }
-      },
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "taliesin_in_crisis",
+      "weight": 0.9,
       "event_class": {
-        "type": "marriage_partnership",
-        "subtype": "partnership",
-        "partner": "Mamah Borthwick Cheney",
-        "duration": "until her death",
-        "characterization": "scandalous union"
+        "type": "publication",
+        "title": "Ausgeführte Bauten und Entwürfe von Frank Lloyd Wright",
+        "publication_type": "book",
+        "publisher": "Ernst Wasmuth Verlag",
+        "significance": "international introduction",
+        "impact": "The portfolio brought Wright's designs to architects in Germany and the Netherlands and informed European debates about modern architecture."
       }
     },
     {
       "date": "1911",
       "date_precision": "year",
       "age": 44,
-      "title": "Builds Taliesin in Wisconsin",
-      "description": "In 1911, Wright began building Taliesin near Spring Green, Wisconsin, as a personal refuge and working estate shaped by his relationship with Mamah Cheney. The compound became both a declaration of defiance and a laboratory: architecture tied to a specific landscape, daily life arranged as an extension of design, and a place he would return to—even after disaster—to begin again.",
+      "title": "Builds Taliesin in Spring Green",
+      "description": "In 1911, Frank Lloyd Wright left Chicago for Spring Green, Wisconsin. He began building Taliesin on land his mother, Anna Lloyd Jones Wright, had bought in the Lloyd Jones family valley. Mamah Borthwick returned to the United States in June. She joined Wright at Taliesin in August while construction continued.",
       "locations": [
         {
-          "name_historic": "Spring Green, Wisconsin",
-          "name_modern": "Spring Green, Wisconsin, United States",
+          "name_historic": "Chicago",
+          "name_modern": "Chicago, Illinois, USA",
           "centroid": [
-            -90.0680478,
-            43.1769367
+            -87.6298,
+            41.8781
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Spring Green",
+          "name_modern": "Spring Green, Wisconsin, USA",
+          "centroid": [
+            -90.0671,
+            43.1778
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Mamah Borthwick Cheney"
+        "Mamah Borthwick",
+        "Anna Lloyd Jones"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
         "https://en.wikipedia.org/wiki/Mamah_Borthwick"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Taliesin_-_exterior.jpg/960px-Taliesin_-_exterior.jpg",
-          "caption": "View of Taliesin from below",
-          "source": "https://commons.wikimedia.org/wiki/File:Taliesin_-_exterior.jpg",
-          "creator": "P. Hughes",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Taliesin%2C_Spring_Green_%282%29.jpg/960px-Taliesin%2C_Spring_Green_%282%29.jpg",
+          "caption": "Taliesin, Spring Green, Wisconsin",
+          "source": "https://commons.wikimedia.org/wiki/File:Taliesin,_Spring_Green_(2).jpg",
+          "creator": "Bahrsoap",
           "license": "CC BY-SA 4.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
-      "event_type_icon": "mdi-office-building",
-      "chapter": "prairie_defiance_taliesin_tragedy"
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "taliesin_in_crisis",
+      "weight": 0.78,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Chicago, Illinois",
+        "to_location": "Spring Green, Wisconsin",
+        "characterization": "personal retreat"
+      }
     },
     {
       "date": "1914-08-15",
       "date_precision": "day",
       "age": 47,
-      "title": "Taliesin murders and fire",
-      "description": "While Wright was away in Chicago on a project, a Taliesin staff member, [[Julian Carlton|a Barbadian-born servant employed at Taliesin]], set fire to the residence and murdered Mamah Borthwick Cheney, her two visiting children, and several others at the estate near Spring Green, Wisconsin. The catastrophe became one of the most notorious episodes of Wright’s life—a moment of brutal rupture that left him devastated, yet determined to rebuild.",
+      "title": "Fire and Murders at Taliesin",
+      "description": "On August 15, 1914, Frank Lloyd Wright was in Chicago overseeing work on Midway Gardens, an entertainment complex he designed. At Taliesin near Spring Green, Julian Carlton set fire to the living quarters. Carlton killed Mamah Borthwick, John and Martha Cheney, David Lindblom, Emil Brodelle, Thomas Brunker, and Ernest Weston. William Weston and Thomas Fritz survived, and Carlton was jailed after attempting suicide.",
       "locations": [
         {
           "name_historic": "Spring Green",
           "name_modern": "Spring Green, Wisconsin, United States",
           "centroid": [
-            -90.0680478,
-            43.1769367
+            -90.0676,
+            43.1767
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Chicago",
+          "name_modern": "Chicago, Illinois, United States",
+          "centroid": [
+            -87.6298,
+            41.8781
+          ],
+          "primary": false
         }
       ],
       "involved_people": [
-        "Mamah Borthwick Cheney",
         "Julian Carlton",
-        "John Borthwick Cheney",
+        "Mamah Borthwick",
+        "John Cheney",
         "Martha Cheney",
         "David Lindblom",
-        "Ernest Weston",
+        "Emil Brodelle",
         "Thomas Brunker",
-        "Herbert Fritz",
-        "William Weston"
+        "Ernest Weston",
+        "William Weston",
+        "Thomas Fritz"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
         "https://en.wikipedia.org/wiki/Mamah_Borthwick"
       ],
-      "event_type_icon": "mdi-fire",
-      "chapter": "prairie_defiance_taliesin_tragedy",
-      "annotations": {
-        "Julian Carlton": {
-          "explanation": "A Barbadian-born servant employed at Wright’s Taliesin who carried out the arson-and-axe attack on August 15, 1914; he later died after ingesting acid.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Mamah_Borthwick"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/The_terrible_fate_of_Mamah_Borthwick_in_her_bungalow_of_love_-_illustration.jpg/960px-The_terrible_fate_of_Mamah_Borthwick_in_her_bungalow_of_love_-_illustration.jpg",
+          "caption": "Illustration depicting the 1914 Taliesin massacre",
+          "source": "https://commons.wikimedia.org/wiki/File:The_terrible_fate_of_Mamah_Borthwick_in_her_bungalow_of_love_-_illustration.jpg",
+          "creator": "Unknown artistUnknown artist",
+          "license": "Public domain",
+          "licenseUrl": null
         }
-      }
+      ],
+      "event_type_icon": "mdi-fire",
+      "chapter": "taliesin_in_crisis",
+      "weight": 0.93,
+      "background": "Taliesin had drawn hostile attention since Wright and Borthwick began living there in 1911. The Spring Green Weekly Home News condemned Wright. Chicago newspapers suggested that he might be arrested for immorality. The local sheriff said he could prove no wrongdoing. The controversy affected Wright's work for several years. Midway Gardens became his next major commission in 1913.\n\nCarlton had been hired as a Taliesin servant several months before the attack. He used a roofing hatchet or a similar shingling tool against people fleeing the burning residence. Thomas Fritz survived. William Weston was injured. He helped put out the fire, which nearly destroyed the residential wing.\n\nCarlton hid after the attack and swallowed hydrochloric acid in an attempt to kill himself. People who found him nearly lynched him. He was taken to the Dodgeville jail. He died of starvation seven weeks later despite medical attention. Borthwick was buried at Unity Chapel near Taliesin."
     },
     {
       "date": "1915",
@@ -602,30 +556,30 @@
       "date_end": "1923",
       "date_end_precision": "year",
       "age": 48,
-      "title": "Designs Imperial Hotel Tokyo",
-      "description": "Wright undertook the ambitious [[Imperial Hotel, Tokyo|Imperial Hotel project]] in Tokyo, one of his most important international commissions. The long, complex effort expanded his reach beyond the United States and demonstrated his ability to integrate structure, ornament, and planning at monumental scale—culminating in a building that opened in 1923.",
+      "title": "Designs the Imperial Hotel in Tokyo",
+      "description": "In 1915, Frank Lloyd Wright began designing Tokyo's Imperial Hotel. His son, John Lloyd Wright, accompanied him and helped oversee the project. The design used interlocking beams intended to improve the building's safety during earthquakes.",
       "locations": [
         {
           "name_historic": "Tokyo",
           "name_modern": "Tokyo, Japan",
           "centroid": [
-            139.7638947,
-            35.6768601
+            139.6917,
+            35.6895
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Aisaku Hayashi"
+        "John Lloyd Wright"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Imperial_Hotel,_Tokyo",
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/John_Lloyd_Wright"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Imperial_Hotel_Tokyo.JPG/960px-Imperial_Hotel_Tokyo.JPG",
-          "caption": "Imperial Hotel Tokyo",
+          "caption": "Imperial Hotel, Tokyo",
           "source": "https://commons.wikimedia.org/wiki/File:Imperial_Hotel_Tokyo.JPG",
           "creator": "Kakidai",
           "license": "CC BY-SA 3.0",
@@ -633,188 +587,243 @@
         }
       ],
       "event_type_icon": "mdi-drawing",
-      "chapter": "tokyo_monumental_gamble",
-      "annotations": {
-        "Imperial Hotel, Tokyo": {
-          "explanation": "A major luxury hotel in Tokyo whose second main building (designed by Wright, commissioned in the 1910s and opened in 1923) became famous for its bold design and for surviving the 1923 Great Kantō earthquake.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Imperial_Hotel,_Tokyo"
-        }
-      }
+      "chapter": "return_to_prominence",
+      "weight": 0.82
     },
     {
       "date": "1928-08-25",
       "date_precision": "day",
       "age": 61,
-      "title": "Marries Olgivanna Lazović",
-      "description": "Wright met Olgivanna Lazović in November 1924, and after a turbulent interlude in his personal life, married her in 1928. The couple went on to live and work together primarily at Taliesin in Wisconsin, where she became a central organizer of his domestic life and helped support the apprenticeship community that grew up around his studio.",
+      "title": "Marries Olgivanna Lazović in California",
+      "description": "On August 25, 1928, Frank Lloyd Wright married Olgivanna Lazović in Rancho Santa Fe, California. They had met in Chicago in November 1924. Wright invited her to tea after they met at a dance performance.",
       "locations": [
         {
-          "name_historic": "Wisconsin",
-          "name_modern": "Wisconsin, United States",
+          "name_historic": "Rancho Santa Fe",
+          "name_modern": "Rancho Santa Fe, California, United States",
           "centroid": [
-            -89.6884637,
-            44.4308975
+            -117.2028,
+            32.9909
           ],
-          "primary": false
+          "primary": true
         }
       ],
       "involved_people": [
         "Olgivanna Lazović"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
         "https://en.wikipedia.org/wiki/Olgivanna_Lloyd_Wright"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "taliesin_fellowship_renaissance",
+      "chapter": "return_to_prominence",
+      "weight": 0.62,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
         "partner": "Olgivanna Lazović",
         "duration": "until death",
-        "characterization": "stabilizing marriage"
+        "children": 1,
+        "characterization": "devoted partnership"
       }
     },
     {
       "date": "1932",
       "date_precision": "year",
-      "date_end": "1937",
-      "date_end_precision": "year",
       "age": 65,
-      "title": "Launches the Taliesin Fellowship",
-      "description": "In 1932, Wright and Olgivanna established the Taliesin Fellowship, formalizing a community of apprentices who learned through work, living, and study under Wright’s direction at Taliesin in [[Spring Green|Spring Green, Wisconsin]]. Over the following years he regained national prominence through major commissions—including [[Fallingwater]]—and expanded the Fellowship’s year-round rhythm by creating a winter base at Taliesin West near [[Scottsdale|Scottsdale, Arizona]].",
+      "title": "Creates the Taliesin Fellowship Community",
+      "description": "In 1932, Frank Lloyd Wright and Olgivanna Wright established the Taliesin Fellowship at Taliesin in Spring Green, Wisconsin. It was a residential apprenticeship community for architecture. Fellows lived and worked with Wright, studied architecture and spiritual development, and helped operate the estate.",
       "locations": [
         {
-          "name_historic": "Spring Green",
-          "name_modern": "Spring Green, Wisconsin, USA",
+          "name_historic": "Spring Green, Wisconsin",
+          "name_modern": "Spring Green, Wisconsin, United States",
           "centroid": [
-            -90.0680478,
-            43.1769367
+            -90.0676,
+            43.1789
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Scottsdale",
-          "name_modern": "Scottsdale, Arizona, USA",
-          "centroid": [
-            -111.926018,
-            33.4942189
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Olgivanna Lazović",
-        "Edgar J. Kaufmann"
+        "Olgivanna Wright"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Olgivanna_Lloyd_Wright",
-        "https://en.wikipedia.org/wiki/Taliesin_Fellowship",
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Olgivanna_Lloyd_Wright"
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "return_to_prominence",
+      "weight": 0.9
+    },
+    {
+      "date": "1935",
+      "date_precision": "year",
+      "age": 68,
+      "title": "Designs Fallingwater for the Kaufmanns",
+      "description": "In 1935, Edgar J. Kaufmann commissioned Frank Lloyd Wright to design Fallingwater, a weekend house for the Kaufmann family at Bear Run in rural Pennsylvania. Wright placed the house directly above the waterfall and arranged concrete terraces over the stream.",
+      "locations": [
+        {
+          "name_historic": "Bear Run",
+          "name_modern": "Mill Run, Pennsylvania, United States",
+          "centroid": [
+            -79.454481,
+            39.9511859
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Edgar J. Kaufmann",
+        "Liliane Kaufmann"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Edgar_J._Kaufmann"
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "return_to_prominence",
+      "weight": 1.0,
+      "background": "Kaufmann's work with Wright in 1935 also included executive offices on the top floor of his Pittsburgh department store. Loja Saarinen designed the office's carpet and textiles. Edgar Kaufmann Jr. later gave the Kaufmann Office to the Victoria and Albert Museum in London.\n\nThe design and construction of Fallingwater involved a complex process. Wright and Kaufmann developed a distinctive relationship as architect and patron during it. The house's success revived Wright's career after the Great Depression.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Kaufmann_Office_by_Frank_Lloyd_Wright_03.jpg/960px-Kaufmann_Office_by_Frank_Lloyd_Wright_03.jpg",
+          "caption": "Office, complete with furnature, decorative panels and carpet, designed by Frank Lloyd Wright in 1935-37 for Edgar J Kaufmann's department store in Pittsburgh...",
+          "source": "https://commons.wikimedia.org/wiki/File:Kaufmann_Office_by_Frank_Lloyd_Wright_03.jpg",
+          "creator": "14GTR",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+          "query": "Kaufmann Office Victoria and Albert Museum"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Fallingwater%2C_the_classic_view.jpg/960px-Fallingwater%2C_the_classic_view.jpg",
+          "caption": "Fallingwater, the classic view.",
+          "source": "https://commons.wikimedia.org/wiki/File:Fallingwater,_the_classic_view.jpg",
+          "creator": "AaronBarlow",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Fallingwater Bear Run"
+        }
+      ]
+    },
+    {
+      "date": "1936",
+      "date_precision": "year",
+      "date_end": "1939",
+      "date_end_precision": "year",
+      "age": 69,
+      "title": "Designs S. C. Johnson Headquarters",
+      "description": "In 1936, Herbert Fisk Johnson hired Frank Lloyd Wright to design headquarters for the S. C. Johnson company in Racine, Wisconsin. Wright planned a brick office building around a great workroom. Slender concrete columns widened at the top to support the room.",
+      "locations": [
+        {
+          "name_historic": "Racine",
+          "name_modern": "Racine, Wisconsin, United States",
+          "centroid": [
+            -87.7829,
+            42.7261
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Herbert Fisk Johnson"
+      ],
+      "sources": [
         "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Scottsdale-Taliesin_West-1931-3.JPG/960px-Scottsdale-Taliesin_West-1931-3.JPG",
-          "caption": "Taliesin West, Scottsdale, Arizona (built 1931)",
-          "source": "https://commons.wikimedia.org/wiki/File:Scottsdale-Taliesin_West-1931-3.JPG",
-          "creator": "Marine 69-71",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Frank_Lloyd_Wright_-_Racine%2C_WI_-_Johnson_Wax_Headquarters_%28A%29.jpg/960px-Frank_Lloyd_Wright_-_Racine%2C_WI_-_Johnson_Wax_Headquarters_%28A%29.jpg",
+          "caption": "Johnson Wax Headquarters, designed by Frank Lloyd Wright",
+          "source": "https://commons.wikimedia.org/wiki/File:Frank_Lloyd_Wright_-_Racine,_WI_-_Johnson_Wax_Headquarters_(A).jpg",
+          "creator": "Bmzuckerman",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
         }
       ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "taliesin_fellowship_renaissance",
-      "annotations": {
-        "Spring Green": {
-          "explanation": "Village in Wisconsin where Wright’s Taliesin estate served as the original headquarters of the Taliesin Fellowship and its apprenticeship program.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Spring_Green,_Wisconsin"
-        },
-        "Scottsdale": {
-          "explanation": "Arizona city near the site of Taliesin West, established as the Fellowship’s winter headquarters in the desert outside Phoenix.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Scottsdale,_Arizona"
-        },
-        "Fallingwater": {
-          "explanation": "Wright’s 1935 house design built over a waterfall in Pennsylvania, often cited as a defining example of his organic architecture.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Fallingwater"
-        }
-      }
+      "event_type_icon": "mdi-office-building",
+      "chapter": "final_commissions",
+      "weight": 0.91
     },
     {
       "date": "1943",
       "date_precision": "year",
       "age": 76,
-      "title": "Receives Guggenheim commission",
-      "description": "Wright was commissioned in 1943 to design the [[Solomon R. Guggenheim Museum|Solomon R. Guggenheim Museum]] in New York, a project that occupied him through years of iterative design and controversy. It became a defining late-career platform for his ideas about movement through space and the choreography of a public interior.",
+      "title": "Accepts Guggenheim Museum Design Commission",
+      "description": "In 1943, Solomon R. Guggenheim hired Frank Lloyd Wright to design a New York City museum for his collection of [[nonobjective art|nonobjective art]]. Wright developed a circular gallery. Visitors would follow a continuous interior ramp through the building.",
       "locations": [
         {
           "name_historic": "New York City",
           "name_modern": "New York City, New York, United States",
           "centroid": [
-            -74.0060152,
-            40.7127281
+            -74.006,
+            40.7128
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Solomon R. Guggenheim",
-        "Hilla von Rebay"
+        "Solomon R. Guggenheim"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Solomon_R._Guggenheim_Museum",
-        "https://en.wikipedia.org/wiki/Hilla_von_Rebay"
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Solomon_R._Guggenheim_Museum_skylight.jpg/960px-Solomon_R._Guggenheim_Museum_skylight.jpg",
-          "caption": "Solomon R. Guggenheim Museum skylight, Manhattan",
-          "source": "https://commons.wikimedia.org/wiki/File:Solomon_R._Guggenheim_Museum_skylight.jpg",
-          "creator": "T meltzer",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Solomon_R._Guggenheim_Museum_%2848059131351%29.jpg/960px-Solomon_R._Guggenheim_Museum_%2848059131351%29.jpg",
+          "caption": "Solomon R. Guggenheim Museum, New York City",
+          "source": "https://commons.wikimedia.org/wiki/File:Solomon_R._Guggenheim_Museum_(48059131351).jpg",
+          "creator": "Ajay Suresh from New York, NY, USA",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
       "event_type_icon": "mdi-drawing",
-      "chapter": "late_icon_last_work",
+      "chapter": "final_commissions",
       "annotations": {
-        "Solomon R. Guggenheim Museum": {
-          "explanation": "A modern art museum conceived as the home for Solomon R. Guggenheim’s non-objective art collection, developed under the direction of Hilla von Rebay; Wright’s design ultimately opened in 1959.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Solomon_R._Guggenheim_Museum"
+        "nonobjective art": {
+          "explanation": "Nonobjective art does not depict recognizable people, places, or objects. Guggenheim collected this form of abstraction.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Non-objective_art"
         }
-      }
+      },
+      "weight": 0.94,
+      "background": "The design process lasted 16 years. Wright produced 700 sketches and six sets of working drawings before the museum opened in 1959.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Solomon_R._Guggenheim_Museum_01.JPG/960px-Solomon_R._Guggenheim_Museum_01.JPG",
+          "caption": "Solomon R. Guggenheim Museum",
+          "source": "https://commons.wikimedia.org/wiki/File:Solomon_R._Guggenheim_Museum_01.JPG",
+          "creator": "Ad Meskens",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Solomon R. Guggenheim Museum exterior"
+        }
+      ]
     },
     {
       "date": "1959-04-09",
       "date_precision": "day",
       "age": 91,
-      "title": "Dies at age 91",
-      "description": "Wright died on April 9, 1959, after a seven-decade career that ranged from early Prairie School experimentation to large-scale late projects. At the end he remained engaged with design work and the [[Taliesin Fellowship|apprentice community]] he had built around his practice.",
+      "title": "Dies After Surgery in Phoenix",
+      "description": "Frank Lloyd Wright was hospitalized in Phoenix after abdominal surgery. He died there on April 9, 1959, at age 91.",
       "locations": [
         {
-          "name_historic": "Phoenix",
+          "name_historic": "Phoenix, Arizona",
           "name_modern": "Phoenix, Arizona, United States",
           "centroid": [
-            -112.074141,
-            33.4484367
+            -112.074,
+            33.4484
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "Olgivanna Lloyd Wright"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Olgivanna_Lloyd_Wright"
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "late_icon_last_work",
-      "annotations": {
-        "Taliesin Fellowship": {
-          "explanation": "Wright’s apprenticeship program and communal living/working group centered at Taliesin and Taliesin West.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Taliesin_Fellowship"
-        }
-      },
+      "chapter": "final_commissions",
+      "weight": 0.55,
       "event_class": {
-        "type": "death"
+        "type": "death",
+        "characterization": "after surgery"
       }
     }
   ]

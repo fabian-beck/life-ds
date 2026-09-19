@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia_ego_network",
-  "created_on": "2025-12-24",
+  "dataset": "Wikipedia ego network: Frank Lloyd Wright",
+  "created_on": "2026-09-19",
   "ego": {
     "name": "Frank Lloyd Wright",
     "birth_year": 1867,
@@ -9,503 +9,221 @@
       "Architekt",
       "Designer",
       "Schriftsteller",
-      "Pädagoge"
+      "Lehrer"
     ],
-    "summary": "Frank Lloyd Wright war ein US-amerikanischer Architekt, Designer, Schriftsteller und Pädagoge und eine der prägenden Gestalten der Architektur des 20. Jahrhunderts. Er war ein Wegbereiter der Prairie-School-Architektur, entwickelte die Ideen der organischen Architektur und des usonischen Wohnens weiter, schuf bedeutende Bauwerke wie Fallingwater und bildete über die Taliesin Fellowship Generationen von Schülern aus.",
+    "summary": "Frank Lloyd Wright war ein US-amerikanischer Architekt, Designer, Schriftsteller und Lehrer. Er entwickelte Bauten der Prairie School und Usonia-Häuser, prägte die organische Architektur, entwarf Werke wie Fallingwater und das Imperial Hotel und bildete über die Taliesin Fellowship Lehrlinge aus.",
     "wikipedia": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
   },
   "connections": [
     {
-      "person_name": "Anna Lloyd Jones",
-      "relationship_type": "family/mother",
-      "relationship_description": "Wrights Mutter, eine Lehrerin aus der Familie Lloyd Jones; sie ermutigte seine Ambitionen und kaufte die Froebel-Gaben, denen er später eine prägende Wirkung zuschrieb.",
-      "start_year": 1867,
-      "end_year": 1923,
+      "person_name": "Anna Lloyd Jones Wright",
+      "relationship_description": "Wrights Mutter war Lehrerin und stammte aus der Familie Lloyd Jones. Schon in seiner Kindheit bestärkte sie seinen Wunsch, Architekt zu werden, und kaufte das Grundstück bei Spring Green, auf dem er Taliesin errichtete.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Erziehung und Ermutigung in der Kindheit",
-        "Froebel-Gaben und frühes Gestalten im Spiel",
-        "Unterstützung durch die Familie Lloyd Jones in Wisconsin"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Auf der Seite wird erwähnt, dass sie später Land nahe Spring Green erwarb und damit den Beginn von Taliesin ermöglichte (über den Artikel zu Mamah Borthwick)."
-    },
-    {
-      "person_name": "William Cary Wright",
-      "relationship_type": "family/father",
-      "relationship_description": "Wrights Vater, ein begabter Musiker und gelegentlicher Prediger; nach der Scheidung von 1885 sagte Wright später, er habe ihn nie wieder gesehen.",
-      "start_year": 1867,
-      "end_year": 1904,
-      "strength": "moderate",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben in Wisconsin und anderen Bundesstaaten",
-        "Gemeinsame musikalische Prägung (Wright erwähnte später die Liebe seines Vaters zur Musik)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Wright sagte, er habe seinen Vater nach der Scheidung von 1885 nie wieder gesehen, was auf einen späteren Bruch hindeutet."
-    },
-    {
-      "person_name": "Jane Wright",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Wrights Schwester, die während seiner Kindheit und Jugend in Wisconsin zu seiner unmittelbaren Familie gehörte.",
-      "start_year": 1869,
-      "end_year": 1953,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familienleben in Wisconsin"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Der Wikipedia-Auszug führt sie unter Wrights Geschwistern auf, enthält jedoch nur wenige weitere Angaben."
-    },
-    {
-      "person_name": "Maginel Wright Enright",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Wrights jüngere Schwester; eine erfolgreiche Illustratorin von Kinderbüchern und Mutter der Schriftstellerin und Illustratorin Elizabeth Enright.",
-      "start_year": 1880,
-      "end_year": 1966,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familienbeziehungen und Zusammenkünfte",
-        "Gemeinsame Kindheit in Wisconsin"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Der bereitgestellte Artikel zu Walter Burley Griffin erwähnt, dass er Maginel einen Heiratsantrag machte, während er in Wrights Büro arbeitete, was ihre Nähe zu Wrights beruflichem Umfeld erkennen lässt."
-    },
-    {
-      "person_name": "Jenkin Lloyd Jones",
-      "relationship_type": "family/uncle",
-      "relationship_description": "Wrights Onkel mütterlicherseits; er beauftragte Joseph Lyman Silsbee mit wichtigen Projekten der Unitarier und trug durch Aufträge innerhalb der Familie indirekt dazu bei, Wrights frühe architektonische Laufbahn in Gang zu bringen (Unity Chapel und verwandte Projekte).",
-      "start_year": 1885,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Aufträge für All Souls Church (Chicago) und Unity Chapel (Wyoming, Wisconsin) mit Silsbee",
-        "Frühe Entwurfs- und Zeichenarbeiten im Zusammenhang mit Wrights erstem bekannten Werk (Unity Chapel)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Jones wird als bedeutender Förderer des Unitarismus im Mittleren Westen beschrieben."
-    },
-    {
-      "person_name": "Allan D. Conover",
-      "relationship_type": "professional/teacher",
-      "relationship_description": "Professor an der University of Wisconsin–Madison, bei dem Wright als Sonderstudent Bauingenieurwesen studierte, bevor er die Universität ohne Abschluss verließ.",
-      "start_year": 1886,
-      "end_year": 1887,
-      "strength": "weak",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Studium des Bauingenieurwesens an der University of Wisconsin–Madison"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Wright erhielt später von der Universität die Ehrendoktorwürde (1955)."
-    },
-    {
-      "person_name": "Joseph Lyman Silsbee",
-      "relationship_type": "professional/mentor",
-      "relationship_description": "Früher Arbeitgeber und Mentor in Chicago (1887–1888), bei dem Wright als Zeichner arbeitete und praktische Erfahrungen im Büro sammelte; zugleich war er über Familienprojekte mit Wrights frühestem bekannten Werk verbunden.",
-      "start_year": 1887,
-      "end_year": 1888,
-      "strength": "moderate",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Bauzeichnen und Ausbildung im Architekturbüro in Chicago",
-        "Arbeiten im Zusammenhang mit All Souls Church und Unity Chapel"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
-        "https://en.wikipedia.org/wiki/Joseph_Lyman_Silsbee"
-      ],
-      "notes": "Wright lobte Silsbees zeichnerisches Können später in seiner Autobiografie (wie in Silsbees Biografie zitiert)."
-    },
-    {
-      "person_name": "Cecil S. Corwin",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Architekt in Silsbees Büro, der sich mit Wright anfreundete, ihn „unter seine Fittiche nahm“ und später, nachdem Wright Adler & Sullivan verlassen hatte, unabhängig von ihm Büroräume mit Wright teilte.",
-      "start_year": 1887,
-      "end_year": 1900,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Arbeit in Silsbees Büro",
-        "Frühe Freundschaft und berufliche Weggemeinschaft",
-        "Gemeinsame Büroräume nach 1893 im Schiller Building"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Wright erzählte seinen Schülern, Corwin habe einige „schwarz ausgeführte“ Aufträge übernommen, was darauf schließen lässt, dass ihm Vertragsverstöße bewusst waren."
-    },
-    {
-      "person_name": "Louis Sullivan",
-      "relationship_type": "professional/mentor",
-      "relationship_description": "Wrights wichtigster früher Mentor bei Adler & Sullivan; Wright wurde Leiter der Abteilung für Wohnbauten und geriet später in einen schweren Bruch mit Sullivan, nachdem er nicht genehmigte Nebenaufträge angenommen hatte. Dennoch bezeichnete Wright Sullivan weiterhin als „lieber Meister“.",
-      "start_year": 1888,
-      "end_year": 1893,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Lehrzeit bei Adler & Sullivan",
-        "Entwurf und Detailplanung von Wohnbauten nach Sullivans Skizzen",
-        "Bedeutende Aufträge und Bürokultur in Chicago"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
-        "https://en.wikipedia.org/wiki/Louis_Sullivan"
-      ],
-      "notes": "Auf der Wright-Seite wird eine langjährige Entfremdung nach der Trennung von 1893 beschrieben."
-    },
-    {
-      "person_name": "Dankmar Adler",
-      "relationship_type": "professional/supervisor",
-      "relationship_description": "Partner bei Adler & Sullivan während Wrights Lehrzeit; er zeigte sich während des Bruchs von 1893 verständnisvoller gegenüber Wright und schickte ihm später die Eigentumsurkunde für dessen Haus in Oak Park.",
-      "start_year": 1888,
-      "end_year": 1893,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Arbeit bei Adler & Sullivan",
-        "Unterstützung während Wrights Ausscheiden aus dem Büro"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
-        "https://en.wikipedia.org/wiki/Dankmar_Adler"
-      ],
-      "notes": "In Adlers Biografie wird Wright mit großem Lob für ihn als Ingenieur zitiert („Big Chief“)."
-    },
-    {
-      "person_name": "Paul Mueller",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Bauleiter bei Adler & Sullivan, mit dem Wright eine enge Verbindung entwickelte; später beauftragte Wright Mueller mit der Ausführung mehrerer öffentlicher und gewerblicher Gebäude (1903–1923).",
-      "start_year": 1888,
-      "end_year": 1923,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Abstimmung zwischen Entwurf und Bauleitung",
-        "Beteiligung am Bau von Wrights öffentlichen und gewerblichen Gebäuden"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Der Wright-Auszug nennt Muellers spätere Beteiligung über einen Zeitraum von zwei Jahrzehnten."
-    },
-    {
-      "person_name": "Catherine Lee \"Kitty\" Tobin",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Wrights erste Ehefrau (verheiratet seit 1889); sie hatten sechs Kinder, und die Ehe zerbrach im Skandal um Wrights Fortgang im Jahr 1909.",
-      "start_year": 1889,
-      "end_year": 1927,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Ehe und Erziehung von sechs Kindern",
-        "Leben im Haus und Atelier in Oak Park während Wrights frühem beruflichem Aufstieg"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
-        "https://en.wikipedia.org/wiki/Lloyd_Wright",
-        "https://en.wikipedia.org/wiki/John_Lloyd_Wright"
-      ],
-      "notes": "Der Artikel zu Frank Lloyd Wright hebt die öffentliche Aufmerksamkeit hervor, die sein Fortgang mit Mamah Cheney 1909 erregte."
-    },
-    {
-      "person_name": "Lloyd Wright",
-      "relationship_type": "family/child",
-      "relationship_description": "Wrights ältester Sohn (Frank Lloyd Wright Jr.), der als Architekt in Südkalifornien tätig wurde; seine frühen Jahre verbrachte er im Haus und Atelier in Oak Park.",
-      "start_year": 1890,
-      "end_year": 1978,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben in Oak Park",
-        "Architektonische Tradition und gemeinsame berufliche Identität"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lloyd_Wright",
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Im Artikel zu Lloyd Wright wird erwähnt, dass Frank ihm und anderen später Aufgaben übertrug, etwa die Bauaufsicht beim Hollyhock House."
-    },
-    {
-      "person_name": "George Grant Elmslie",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Zeichner und Vertreter der Prairie School; er teilte sich mit Wright ein Büro neben Sullivan und gehörte später zur Gruppe im Steinway Hall, die mit der frühen Entwicklung der Prairie School verbunden war.",
-      "start_year": 1890,
-      "end_year": 1900,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Gemeinsames Büro neben Louis Sullivan",
-        "Umfeld der Prairie School in Chicago und im Steinway Hall"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Auf Wrights Wunsch wurde Elmslie bei Adler & Sullivan eingestellt."
-    },
-    {
-      "person_name": "John Lloyd Wright",
-      "relationship_type": "family/child",
-      "relationship_description": "Wrights Sohn, der Architekt und Erfinder des Spielzeugs Lincoln Logs wurde und zeitweise eine Entfremdung von seinem Vater erlebte, mit ihm später jedoch wieder zusammenfand.",
-      "start_year": 1892,
-      "end_year": 1972,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familienleben in Oak Park",
-        "Architektonische Ausbildung und Lehrzeit bei Frank Lloyd Wright",
-        "Arbeiten im Zusammenhang mit Midway Gardens und der Zeit des Imperial Hotel (wie in der Biografie des Sohnes beschrieben)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_Lloyd_Wright",
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Die Biografie von John Lloyd Wright betont die Entfremdung nach 1909 und die spätere berufliche Zusammenarbeit."
-    },
-    {
-      "person_name": "Marion Mahony Griffin",
-      "relationship_type": "professional/employee",
-      "relationship_description": "Bedeutende Architektin der Prairie School und Mitarbeiterin Wrights (seit 1895 in sein Team gewechselt); sie schuf einflussreiche Präsentationszeichnungen und Darstellungen, die Wrights öffentliche Wahrnehmung und sein Werkverzeichnis mitprägten.",
-      "start_year": 1895,
-      "end_year": 1909,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Zeichnen im Atelier in Oak Park und Chicago sowie Aquarelle für Präsentationen",
-        "Anfertigung von Architekturzeichnungen und Gestaltungselementen (Möbel, Glas, Einbauten)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
-        "https://en.wikipedia.org/wiki/Marion_Mahony_Griffin"
-      ],
-      "notes": "Mahony werden die mit dem Wasmuth Portfolio verbundenen Darstellungen weithin zugeschrieben (laut ihrer Biografie)."
-    },
-    {
-      "person_name": "Richard Bock",
-      "relationship_type": "artistic/collaborator",
-      "relationship_description": "Bildhauer und enger Mitarbeiter, der architektonische Skulpturen für Wrights Gebäude schuf (insbesondere 1903–1913) und mit ihm an zahlreichen Projekten arbeitete; Wright entwarf ein Ateliergebäude für ihn.",
-      "start_year": 1896,
-      "end_year": 1916,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Architekturplastik und dekorative Programme (etwa der Fries am Heller House, Unity Temple, Larkin Administration Building und Midway Gardens)",
-        "Entwurf von Bocks Atelier „The Gnomes“ (Wright als Architekt)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Richard_Bock",
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Bocks Biografie beschreibt eine Freundschaft, in deren Rahmen ihre Familien viel Zeit miteinander verbrachten."
-    },
-    {
-      "person_name": "Walter Burley Griffin",
-      "relationship_type": "professional/employee",
-      "relationship_description": "Architekt der Prairie School, der seit 1901 in Wrights Atelier in Oak Park arbeitete und die Bauausführung bedeutender Wright-Projekte überwachte; später zerstritt er sich mit Wright, und ihre Beziehung kühlte dauerhaft ab.",
-      "start_year": 1901,
-      "end_year": 1906,
-      "strength": "moderate",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Arbeit im Atelier in Oak Park",
-        "Bauaufsicht bei Wrights Häusern und Projekten (etwa Willits House und Larkin Administration Building, laut Griffins Biografie)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Walter_Burley_Griffin",
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Griffins Biografie beschreibt den Bruch nach Wrights Japanreise 1905 und die anschließende Entfremdung."
-    },
-    {
-      "person_name": "Edwin Henry Cheney",
-      "relationship_type": "professional/client",
-      "relationship_description": "Auftraggeber, der Wright mit dem Entwurf des Cheney House in Oak Park betraute; seine Ehe mit Mamah Borthwick Cheney und Wrights anschließende Beziehung zu ihr lösten einen großen Skandal aus und beeinflussten Wrights Laufbahn.",
-      "start_year": 1903,
-      "end_year": 1911,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Wohnhausauftrag: Edwin H. Cheney House (Oak Park)",
-        "Gesellschaftliche Nähe, aus der Wrights Beziehung zu Mamah hervorging"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Edwin_Cheney",
-        "https://en.wikipedia.org/wiki/Mamah_Borthwick",
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Borthwick und Cheney ließen sich 1911 scheiden (laut den Biografien von Borthwick und Cheney)."
-    },
-    {
-      "person_name": "Mamah Borthwick Cheney",
-      "relationship_type": "family/partner",
-      "relationship_description": "Wrights Lebensgefährtin von 1909 bis zu ihrer Ermordung 1914; ihre Beziehung löste einen großen öffentlichen Skandal aus und stand im Zentrum der Entstehung von Taliesin in Wisconsin.",
-      "start_year": 1909,
-      "end_year": 1914,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Reise nach Europa (1909–1910)",
-        "Leben in Taliesin (seit 1911)",
-        "Verbreitung und Übersetzungsarbeit im Zusammenhang mit Ellen Keys Ideen (über Borthwick)"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
         "https://en.wikipedia.org/wiki/Mamah_Borthwick"
       ],
-      "notes": "Borthwick wurde 1914 in Taliesin von einem Angestellten ermordet; Wright war zu dieser Zeit mit Arbeiten an Midway Gardens abwesend."
+      "notes": "Sie schmückte sein Kinderzimmer mit Kathedralenstichen und machte ihn mit den Fröbel-Gaben bekannt.",
+      "relationship_type": "family/mother"
     },
     {
-      "person_name": "Hermann V. von Holst",
-      "relationship_type": "professional/manager",
-      "relationship_description": "Architekt, der Wrights Aufträge in den Vereinigten Staaten betreute, als Wright 1909 nach Europa ging; gemeinsam mit den verbliebenen Mitarbeitern führte er aufgegebene Projekte zu Ende.",
-      "start_year": 1909,
-      "end_year": 1911,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Verwaltung und Fortführung von Wrights Aufträgen während seiner Abwesenheit",
-        "Koordination mit Wrights ehemaligen Mitarbeitern (wie in verwandten Darstellungen der Prairie School beschrieben)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Marion_Mahony_Griffin",
-        "https://en.wikipedia.org/wiki/Isabel_Roberts",
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Die Beziehung besteht vor allem in der Verwaltung von Wrights unvollendeten Arbeiten während dessen Auslandsaufenthalts."
-    },
-    {
-      "person_name": "Julian Carlton",
-      "relationship_type": "professional/employee",
-      "relationship_description": "Mitarbeiter und Diener in Taliesin, der 1914 die Wohnräume in Brand setzte und Mamah Borthwick, ihre Kinder sowie weitere Menschen ermordete; dieses Ereignis wurde zu einer der prägenden Tragödien in Wrights Leben.",
-      "start_year": 1914,
-      "end_year": 1914,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Arbeit im Haushalt von Taliesin",
-        "Brand und Morde in Taliesin 1914"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Mamah_Borthwick",
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Wright war zum Zeitpunkt des Angriffs in Chicago und beaufsichtigte dort Midway Gardens."
-    },
-    {
-      "person_name": "Miriam Noel",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Wrights zweite Ehefrau; ihre Ehe (1923–1927) wird in Wrights Biografie als stürmisch beschrieben.",
-      "start_year": 1923,
-      "end_year": 1927,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Ehe"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
-      ],
-      "notes": "Der bereitgestellte Wright-Auszug erwähnt diese Ehe, enthält jedoch nur wenige Einzelheiten."
-    },
-    {
-      "person_name": "Olgivanna Lazović",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Wrights dritte und letzte Ehefrau (verheiratet seit 1928); sie gründete gemeinsam mit Wright die Taliesin Fellowship und die Frank Lloyd Wright Foundation und leitete die Fellowship nach seinem Tod.",
-      "start_year": 1924,
-      "end_year": 1959,
+      "person_name": "Catherine Lee Tobin Wright",
+      "relationship_description": "Wrights erste Frau, Kitty genannt, war die Mutter seiner Kinder. Ihre Ehe zerbrach, nachdem Wright sie 1909 für Martha Borthwick verlassen hatte. Die Scheidung wurde 1922 rechtskräftig.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Taliesin Fellowship (gegründet 1932)",
-        "Organisation und saisonaler Betrieb von Taliesin und Taliesin West",
-        "Gründung und Leitung der Frank Lloyd Wright Foundation"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Olgivanna_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Mamah_Borthwick"
+      ],
+      "notes": "Dass sie einer frühen Scheidung nicht zustimmte, trug zum öffentlichen Skandal um Wright und Borthwick bei.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Martha Borthwick",
+      "relationship_description": "Borthwick war von 1909 bis zu ihrer Ermordung 1914 Wrights Partnerin. Sie reisten durch Europa, lebten nach der Trennung von ihren Ehepartnern zusammen in Taliesin und machten die feministischen Schriften Ellen Keys in den Vereinigten Staaten bekannt.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Mamah_Borthwick"
+      ],
+      "notes": "Wright errichtete Taliesin auch als Zuhause und Zufluchtsort für ihre Beziehung.",
+      "relationship_type": "family/romantic_partner"
+    },
+    {
+      "person_name": "Olgivanna Lloyd Wright",
+      "relationship_description": "Olgivanna lernte Wright im November 1924 in Chicago kennen, wurde kurz darauf seine Partnerin und heiratete ihn 1928. Gemeinsam gründeten sie 1932 die Taliesin Fellowship und blieben bis zu seinem Tod verheiratet.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Olgivanna_Lloyd_Wright"
+      ],
+      "notes": "Nach Wrights Tod wurde sie Präsidentin der Frank Lloyd Wright Foundation und leitete die Taliesin Fellowship weiter.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Louis Sullivan",
+      "relationship_description": "Sullivan beschäftigte Wright von 1887 bis 1893 bei Adler & Sullivan und übertrug ihm weitreichende Entwurfsaufgaben. Er war Wrights prägender Mentor in dessen beruflichen Anfängen.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Louis_Sullivan"
+      ],
+      "notes": "Ihre Beziehung zerbrach, als Sullivan von Wrights unerlaubten eigenständigen Aufträgen für Wohnhäuser erfuhr. Später nahmen sie wieder Kontakt auf.",
+      "relationship_type": "professional/mentor"
+    },
+    {
+      "person_name": "Cecil S. Corwin",
+      "relationship_description": "Corwin war Wrights älterer Kollege in Silsbees Büro, nahm den jungen Zeichner unter seine Fittiche und wurde ein enger Freund. Nachdem Wright in Chicago ein eigenes Büro eröffnet hatte, teilten sie sich später Büroräume.",
+      "strength": "strong",
+      "sources": [
         "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
       ],
-      "notes": "Sie lernten sich Ende 1924 kennen; beide waren zu diesem Zeitpunkt verheiratet. In ihrer Biografie werden auch rechtliche Probleme erwähnt (Verhaftung nach dem Mann Act)."
+      "notes": "Corwin unterzeichnete mehrere von Wrights nicht genehmigten frühen Aufträge für Wohnhäuser.",
+      "relationship_type": "professional/friend"
+    },
+    {
+      "person_name": "Marion Mahony Griffin",
+      "relationship_description": "Mahony trat 1895 Wrights Zeichenteam bei und fertigte Präsentationszeichnungen sowie Aquarellansichten für seine Projekte an. Dazu gehörte ein großer Teil der Zeichnungen für das Wasmuth Portfolio.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Marion_Mahony_Griffin"
+      ],
+      "notes": "Sie entwarf auch Möbel, Bleiglasfenster und Leuchten für Wrights Häuser. Ihre Beiträge wurden oft nicht angemessen gewürdigt.",
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Richard Bock",
+      "relationship_description": "Der Bildhauer Richard Bock lernte Wright über das Büro von Louis Sullivan kennen und arbeitete mehr als zwei Jahrzehnte mit ihm an bauplastischen Arbeiten. Den Anfang bildete 1896 der Fries des Heller House.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Richard_Bock",
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "notes": "Ihre Familien pflegten gesellschaftlichen Umgang. Wright entwarf Bocks Bildhaueratelier The Gnomes in River Forest.",
+      "relationship_type": "professional/collaborator"
     },
     {
       "person_name": "Edgar J. Kaufmann",
-      "relationship_type": "professional/client",
-      "relationship_description": "Mäzen, der Fallingwater in Auftrag gab (1935) und damit dazu beitrug, Wrights Laufbahn während der Weltwirtschaftskrise wiederzubeleben.",
-      "start_year": 1935,
-      "end_year": 1939,
+      "relationship_description": "Kaufmann beauftragte Wright 1935, für das Anwesen seiner Familie in Bear Run, Pennsylvania, Fallingwater zu entwerfen. Außerdem gab er die Modernisierung der Direktionsbüros seines Kaufhauses in Pittsburgh in Auftrag.",
       "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Entwurf und Bau von Fallingwater",
-        "Verhandlungen zwischen Auftraggeber und Architekt sowie Projektaufsicht"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Edgar_J._Kaufmann",
         "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
       ],
-      "notes": "Kaufmann gab auch andere Bauten der modernen Architektur in Auftrag (das Kaufmann Desert House von Richard Neutra), was seine Rolle als Förderer der Moderne unterstreicht."
+      "notes": "Kaufmann beauftragte Wright außerdem mit der Modernisierung der Direktionsbüros seines Kaufhauses in Pittsburgh.",
+      "relationship_type": "professional/client"
+    },
+    {
+      "person_name": "William Cary Wright",
+      "relationship_description": "Wrights Vater war Musiker, Redner und gelegentlich Prediger der Baptisten und Unitarier. Seine Eltern ließen sich 1885 scheiden. Wright sagte später, er habe seinen Vater danach nie wieder gesehen.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "notes": "William teilte seine Liebe zur Musik mit seinen Kindern, obwohl er als distanzierter Vater beschrieben wurde.",
+      "relationship_type": "family/father"
+    },
+    {
+      "person_name": "Miriam Noel",
+      "relationship_description": "Noel war Wrights zweite Ehefrau. Ihre stürmische Ehe dauerte von 1923 bis 1927.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "notes": "Dass sie sich zunächst nicht von Wright scheiden lassen wollte, erschwerte seine spätere Beziehung zu Olgivanna Lazović.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "John Lloyd Wright",
+      "relationship_description": "Wrights Sohn wurde Architekt und unterstützte seinen Vater nach einer Zeit der Entfremdung beim Projekt des Imperial Hotel in Japan. Er beaufsichtigte Arbeiten in Chicago und Präfektur Tokio.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/John_Lloyd_Wright"
+      ],
+      "notes": "Ihre Beziehung war wiederholt belastet, auch durch Auseinandersetzungen über das Imperial Hotel und Johns Anstellung.",
+      "relationship_type": "family/son"
+    },
+    {
+      "person_name": "Joseph Lyman Silsbee",
+      "relationship_description": "Silsbee stellte Wright 1887 in Chicago als Zeichner ein, nachdem dieser Zeichnungen beigesteuert und die Bauaufsicht für die Unity Chapel der Familie Lloyd Jones übernommen hatte.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Joseph_Lyman_Silsbee"
+      ],
+      "notes": "Silsbee verschaffte Wright seine erste länger dauernde Erfahrung in einem Architekturbüro.",
+      "relationship_type": "professional/employer"
+    },
+    {
+      "person_name": "Dankmar Adler",
+      "relationship_description": "Als leitender Partner von Adler & Sullivan arbeitete Adler während Wrights Lehrzeit mit ihm zusammen und schickte ihm nach dessen Zerwürfnis mit Sullivan die Eigentumsurkunde für sein Haus in Oak Park.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Dankmar_Adler"
+      ],
+      "notes": "Wright pries Adler als den „amerikanischen Ingenieur“ und seinen „großen Häuptling“.",
+      "relationship_type": "professional/supervisor"
+    },
+    {
+      "person_name": "George Grant Elmslie",
+      "relationship_description": "Elmslie kam auf Wrights Wunsch zu Adler & Sullivan, teilte sich bis 1890 ein Büro mit ihm und gehörte weiterhin zu dem Kreis in Chicago, aus dem die Prairie School hervorging.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+        "https://en.wikipedia.org/wiki/Joseph_Lyman_Silsbee"
+      ],
+      "notes": "Ihre berufliche Verbindung verknüpfte Wrights frühe Büroarbeit mit dem weiteren Netzwerk der Prairie School.",
+      "relationship_type": "professional/colleague"
+    },
+    {
+      "person_name": "Paul Mueller",
+      "relationship_description": "Mueller war Vorarbeiter im Büro von Adler & Sullivan, mit dem Wright eine enge Verbindung entwickelte. Später zog Wright ihn zwischen 1903 und 1923 für den Bau öffentlicher und gewerblicher Projekte hinzu.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "notes": null,
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Walter Burley Griffin",
+      "relationship_description": "Griffin arbeitete von 1901 bis 1906 in Wrights Atelier in Oak Park, leitete den Bau bedeutender Wohnhäuser und lieferte Landschaftspläne, bevor er sich mit einem eigenen Büro selbstständig machte.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Walter_Burley_Griffin",
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "notes": "Nach Wrights Reise nach Japan im Jahr 1905 zerstritten sich beide und fanden nie wieder zu einer engen Beziehung zurück.",
+      "relationship_type": "professional/employee"
+    },
+    {
+      "person_name": "Allan D. Conover",
+      "relationship_description": "Conover unterrichtete Wright im Bauingenieurwesen, als dieser 1886 als außerordentlicher Student die University of Wisconsin besuchte.",
+      "strength": "weak",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+      ],
+      "notes": "Wright verließ die Universität ohne Abschluss.",
+      "relationship_type": "professional/teacher"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Wrights familiäres Umfeld wurde zunächst stark vom prägenden Einfluss seiner Mutter Anna Lloyd Jones bestimmt, während die Beziehung zu seinem Vater William Cary Wright später zerbrach. Sein Erwachsenenleben war von öffentlich beachteten Partnerschaften geprägt (Catherine „Kitty“ Tobin, Mamah Borthwick Cheney, Miriam Noel, Olgivanna Lazović); sein architektonisches Vermächtnis wurde durch Kinder wie Lloyd Wright und John Lloyd Wright fortgeführt."
+      "summary": "Anna Lloyd Jones Wright bestärkte Wright in seinem Wunsch, Architekt zu werden, und kaufte das Grundstück bei Spring Green, auf dem er Taliesin errichtete. Seine Eltern ließen sich 1885 scheiden. Später sagte er, er habe seinen Vater danach nie wieder gesehen. Seine Beziehung zu Martha Borthwick endete mit ihrer Ermordung 1914 in Taliesin. Seine spätere Ehe mit Olgivanna unterstützte die Taliesin Fellowship, während sein Sohn John bei dem Projekt des Imperial Hotel mit ihm zusammenarbeitete."
     },
     {
       "relationship_type": "professional",
-      "summary": "Wrights berufliche Verbindungen begannen mit Ausbildung und Mentorschaft in Chicago (Joseph Lyman Silsbee; Louis Sullivan und Dankmar Adler bei Adler & Sullivan) und weiteten sich zu einem Netzwerk von Kollegen der Prairie School aus (Cecil Corwin, George Elmslie, Marion Mahony Griffin, Walter Burley Griffin). Später kamen Projektverwaltung und Koordination (Paul Mueller, Hermann V. von Holst), einflussreiche Mäzene (Edgar J. Kaufmann) sowie mit Taliesin verbundene Personen hinzu, deren Handlungen sein Leben tiefgreifend beeinflussten (Julian Carlton)."
-    },
-    {
-      "relationship_type": "artistic",
-      "summary": "Wright bezog die freien und dekorativen Künste häufig in seine Architektur ein, besonders sichtbar in der langjährigen Zusammenarbeit mit dem Bildhauer Richard Bock an Ornamenten und plastischen Programmen für bedeutende Gebäude. Diese Partnerschaften unterstützten Wrights ganzheitlichen Gestaltungsansatz, der Tragwerk, Innenraumelemente und künstlerische Details miteinander verband."
+      "summary": "Wrights Ausbildung in den Architekturbüros von Joseph Lyman Silsbee, Louis Sullivan und Dankmar Adler in Chicago verschaffte ihm Erfahrung im Zeichnen, Verantwortung für Entwürfe und Kenntnisse des Bauingenieurwesens. Mitarbeiter wie Marion Mahony Griffin, Richard Bock und Paul Mueller verwirklichten seine Entwürfe als Zeichnungen, Ornament und Gebäude. Der Auftrag von Edgar J. Kaufmann für Fallingwater im Jahr 1935 gab Wright die bedeutende Gelegenheit, für die Familie Kaufmann in Bear Run zu bauen."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "29931cdff50ab473",
-    "translated_on": "2026-08-02T12:02:58.952630+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "cc84dab5cd93ce27",
+    "translated_on": "2026-09-19T12:25:38.229608+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

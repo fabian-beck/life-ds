@@ -1,92 +1,127 @@
 {
-  "dataset": "wikipedia-timeline-outline",
-  "created_on": "2025-12-14",
+  "dataset": "Biographical timeline of Friedensreich Hundertwasser",
+  "created_on": "2026-09-19",
   "person": {
     "name": "Friedensreich_Hundertwasser",
     "birth_date": "1928-12-15",
     "death_date": "2000-02-19",
     "primary_roles": [
-      "Künstler",
+      "Maler",
       "Architekt",
       "Umweltschützer"
     ],
-    "tagline": "Rebell der naturverbundenen Architektur",
-    "summary": "Friedensreich Hundertwasser (geboren als Friedrich Stowasser) war ein österreichischer Künstler, der vor allem für seine farbintensiven Gemälde, grafischen Arbeiten und eigenwilligen Architekturentwürfe bekannt ist, in denen er gerade Linien und Standardisierung ablehnte. Geprägt von seinem Überleben im Krieg und jahrzehntelangen Reisen, entwickelte er ein künstlerisches Weltbild, das sich um organische Formen und die Rechte der Natur drehte. Seit den 1970er-Jahren trat er zunehmend als engagierte Stimme für den Umweltschutz hervor und entwarf einflussreiche Gebäude, in denen sich Vegetation mit unregelmäßigen, am Menschen orientierten Formen verband.",
+    "tagline": "Bäume in bemalten Häusern",
+    "summary": "Friedensreich Hundertwasser war ein österreichischer Maler, Architekt und Umweltschützer, der gerade Linien und standardisiertes Bauen ablehnte. Seine farbenfrohen Werke verbanden unregelmäßige Formen mit Vegetation, und er setzte sich für Bäume, Dachgärten und individuellen Ausdruck in den Städten ein.",
     "wikipedia": "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
     "portrait": {
       "image": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
-      "source": "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-      "caption": "Stylized portrait based on historical photograph",
-      "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Hundertwasser_nz_1998_hg.jpg",
       "thumbnail": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
       "medium": "/portraits/friedensreich_hundertwasser_medium.webp",
-      "full": "/portraits/friedensreich_hundertwasser_full.webp"
+      "full": "/portraits/friedensreich_hundertwasser_full.webp",
+      "source": "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
+      "caption": "Stylized portrait based on a historical source image",
+      "creator": "AI generated artwork",
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Hundertwasser_nz_1998_hg.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "vienna_under_shadow",
-      "headline": "Wien im Schatten",
+      "id": "surviving_vienna",
+      "headline": "Wien überleben",
       "date_start": "1928-12-15",
       "date_start_precision": "day",
       "date_end": "1945",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 16,
+      "age_end": 9,
       "involved_people": [
         "Ernst Stowasser",
         "Elsa Stowasser"
       ],
-      "location": "Österreich"
+      "location": "Österreich",
+      "illustration": {
+        "image": "/chapter_art/friedensreich_hundertwasser/surviving_vienna_medium.webp",
+        "medium": "/chapter_art/friedensreich_hundertwasser/surviving_vienna_medium.webp",
+        "full": "/chapter_art/friedensreich_hundertwasser/surviving_vienna_full.webp",
+        "concept": "A small warm ember enclosed within layers of dark, uneven translucent stone, with hairline fractures admitting faint blue light. The centered form suggests endurance under pressure, floating in a vast black field.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "self_made_artist_on_the_road",
-      "headline": "Autodidakt auf freien Wegen",
+      "id": "finding_his_language",
+      "headline": "Die eigene Sprache",
       "date_start": "1948",
       "date_start_precision": "year",
-      "date_end": "1951",
+      "date_end": "1950",
       "date_end_precision": "year",
       "age_start": 19,
-      "age_end": 22,
+      "age_end": 21,
       "involved_people": [
-        "René Brô"
-      ],
-      "location": "Westeuropa"
-    },
-    {
-      "id": "paris_breakthrough_public_dissenter",
-      "headline": "Durchbruch in Paris, öffentlicher Dissident",
-      "date_start": "1952",
-      "date_start_precision": "year",
-      "date_end": "1960",
-      "date_end_precision": "year",
-      "age_start": 23,
-      "age_end": 31,
-      "involved_people": [
+        "René Brô",
         "Michel Tapié",
-        "Herta Leitner"
+        "Yves Klein",
+        "Pierre Restany",
+        "Julien Alvard"
       ],
-      "location": "Westeuropa"
+      "location": "Westeuropa",
+      "illustration": {
+        "image": "/chapter_art/friedensreich_hundertwasser/finding_his_language_medium.webp",
+        "medium": "/chapter_art/friedensreich_hundertwasser/finding_his_language_medium.webp",
+        "full": "/chapter_art/friedensreich_hundertwasser/finding_his_language_full.webp",
+        "concept": "A loose coil of wet pigment unfurling into luminous, irregular ribbons, each edge feathering into a different saturated hue. The spiral hovers alone in darkness, visibly discovering its own direction as it expands.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "global_fame_new_identities",
-      "headline": "Weltruhm, neue Identitäten",
-      "date_start": "1961",
-      "date_start_precision": "year",
-      "date_end": "1975",
+      "id": "international_arrival",
+      "headline": "Internationaler Durchbruch",
+      "date_start": "1959-12",
+      "date_start_precision": "month",
+      "date_end": "1962",
       "date_end_precision": "year",
-      "age_start": 32,
-      "age_end": 46,
+      "age_start": 30,
+      "age_end": 33,
       "involved_people": [
-        "Yuko Ikewada",
+        "Bazon Brock",
+        "Herbert Schuldt",
         "Vinzenz Oberhammer"
       ],
-      "location": "Europa"
+      "location": "Europa und Japan",
+      "illustration": {
+        "image": "/chapter_art/friedensreich_hundertwasser/international_arrival_medium.webp",
+        "medium": "/chapter_art/friedensreich_hundertwasser/international_arrival_medium.webp",
+        "full": "/chapter_art/friedensreich_hundertwasser/international_arrival_full.webp",
+        "concept": "One continuous glowing filament loops through open space, widening from a tight knot into broad, buoyant arcs. Its shifting colors ripple along the curve, while scattered pinpricks of light recede around it like an attentive cosmos.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "building_utopias_green_militancy",
-      "headline": "Utopien bauen, grün kämpfen",
+      "id": "nature_as_home",
+      "headline": "Natur als Heimat",
+      "date_start": "1966",
+      "date_start_precision": "year",
+      "date_end": "2000-02-19",
+      "date_end_precision": "day",
+      "age_start": 37,
+      "age_end": 44,
+      "involved_people": null,
+      "location": "Österreich und Neuseeland",
+      "illustration": {
+        "image": "/chapter_art/friedensreich_hundertwasser/nature_as_home_medium.webp",
+        "medium": "/chapter_art/friedensreich_hundertwasser/nature_as_home_medium.webp",
+        "full": "/chapter_art/friedensreich_hundertwasser/nature_as_home_full.webp",
+        "concept": "A moss-covered oval shell split gently down the middle, revealing a miniature luminous wetland of reeds, pooled water, and emerging green shoots. Dew-bright droplets orbit the floating form against deep indigo darkness.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
+    },
+    {
+      "id": "building_against_straightness",
+      "headline": "Bauen gegen die Gerade",
       "date_start": "1982",
       "date_start_precision": "year",
       "date_end": "2000-02-19",
@@ -94,69 +129,76 @@
       "age_start": 53,
       "age_end": 71,
       "involved_people": [
-        "Josef Krawina"
+        "Josef Krawina",
+        "Peter Pelikan"
       ],
-      "location": "Österreich"
+      "location": "Österreich",
+      "illustration": {
+        "image": "/chapter_art/friedensreich_hundertwasser/building_against_straightness_medium.webp",
+        "medium": "/chapter_art/friedensreich_hundertwasser/building_against_straightness_medium.webp",
+        "full": "/chapter_art/friedensreich_hundertwasser/building_against_straightness_full.webp",
+        "concept": "A rigid pale grid bends and buckles around a rising burst of roots and jewel-toned tiles, breaking its own symmetry without shattering. The centered collision glows vividly against charcoal black, as if organic force has remade order.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     }
   ],
-  "conclusion": "Hundertwasser verwandelte das Überleben in ein Weltbild und dieses Weltbild in Form. Er bestand darauf, dass Schönheit, Ökologie und Menschenwürde in denselben Rahmen gehören. Sein Vermächtnis lebt überall dort fort, wo ein Gebäude den Mut hat, zum Lebensraum zu werden – die gerade Linie zugunsten einer menschlicheren, lebendigen Ordnung ablehnend.",
+  "conclusion": "Friedensreich Hundertwassers Gemälde, Druckgrafiken und grafische Entwürfe befinden sich weiterhin in Museumssammlungen und Ausstellungen auf der ganzen Welt. Das Hundertwasserhaus wird in Wien weiterhin als Wohnhaus genutzt. Seine architektonischen Entwürfe wurden in Österreich, Deutschland, Japan, Neuseeland und den Vereinigten Staaten verwirklicht.",
   "events": [
     {
       "date": "1928-12-15",
       "date_precision": "day",
       "age": 0,
       "title": "Geburt in Wien",
-      "description": "Friedrich Stowasser wurde in Wien als einziges Kind des Ingenieurs Ernst Stowasser und Elsa Stowasser, geborene Scheuer, jüdischer Herkunft, geboren. Seine Familie hatte Wurzeln in Böhmen und Mähren – ein Hintergrund, der später sowohl seine Identität als auch seine Kriegserfahrungen prägte.",
+      "description": "Friedrich Stowasser wurde in Wien als einziges Kind des Ingenieurs Ernst Stowasser und dessen Ehefrau Elsa Stowasser, geborene Scheuer, geboren. Die Familien seiner Eltern stammten aus Böhmen beziehungsweise Mähren.",
       "locations": [
         {
           "name_historic": "Wien",
           "name_modern": "Wien, Österreich",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [],
+      "event_type_icon": "mdi-candle",
+      "chapter": "surviving_vienna",
+      "weight": 0.25,
+      "event_class": {
+        "type": "birth",
+        "father": "Ernst Stowasser",
+        "mother": "Elsa Stowasser, born Scheuer",
+        "birth_name": "Friedrich Stowasser",
+        "characterization": "Ingenieurhaushalt"
+      }
+    },
+    {
+      "date": "1929",
+      "date_precision": "year",
+      "age": 0,
+      "title": "Verlust des Vaters",
+      "description": "1929 starb Ernst Stowasser kurz nach Friedrichs erstem Geburtstag in Wien an einer Blinddarmentzündung. Elsa Stowasser zog Friedrich als ihr einziges Kind groß.",
+      "locations": [
+        {
+          "name_historic": "Wien",
+          "name_modern": "Wien, Österreich",
+          "centroid": [
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
       ],
       "involved_people": [
         "Ernst Stowasser",
-        "Elsa Stowasser (née Scheuer)"
+        "Elsa Stowasser"
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
-      ],
-      "event_type_icon": "mdi-candle",
-      "chapter": "vienna_under_shadow",
-      "event_class": {
-        "type": "birth",
-        "mother": "Elsa Hundertwasser (geb. Scheuer)",
-        "father": "Ernst Stowasser"
-      }
-    },
-    {
-      "date": "1929",
-      "date_precision": "year",
-      "date_end": "1935",
-      "date_end_precision": "year",
-      "date_note": "Sein Vater starb kurz nach seinem ersten Geburtstag; für Taufe und frühe Schulzeit sind keine genauen Daten überliefert",
-      "age": 1,
-      "title": "Vater stirbt, frühe Prägung",
-      "description": "Kurz nach seinem ersten Geburtstag starb Hundertwassers Vater an einer Blinddarmentzündung, und seine Mutter musste ihn allein großziehen. Er besuchte eine Montessori-Schule in Wien; seine Lehrer bemerkten sein außergewöhnliches Gespür für Formen und Farben. 1935 wurde er katholisch getauft – eine Entscheidung, die in das zunehmend gefährliche Klima für Familien jüdischer Herkunft fiel.",
-      "locations": [
-        {
-          "name_historic": "Wien",
-          "name_modern": "Wien, Österreich",
-          "centroid": [
-            16.3725042,
-            48.2083537
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
       "sources": [],
       "event_type_icon": "mdi-cross",
-      "chapter": "vienna_under_shadow"
+      "chapter": "surviving_vienna",
+      "weight": 0.3
     },
     {
       "date": "1938",
@@ -164,15 +206,15 @@
       "date_end": "1945",
       "date_end_precision": "year",
       "age": 9,
-      "title": "Überlebt die NS-Verfolgung",
-      "description": "Nach dem [[Anschluss|Anschluss]] wurde er in die Hitlerjugend aufgenommen und wechselte von einer Privatschule auf eine staatliche Schule, um nicht aufzufallen. Er und seine Mutter wurden von den nationalsozialistischen Behörden innerhalb Wiens zwangsweise umgesiedelt, während zahlreiche Verwandte im Holocaust ermordet wurden. Ihr Überleben inmitten der systematischen Verfolgung wurde zu einer prägenden biografischen Tatsache und zu einem dauerhaften moralischen Hintergrund für seine späteren öffentlichen Stellungnahmen.",
+      "title": "Überlebt die NS-Herrschaft",
+      "description": "Nach dem Anschluss Österreichs an das nationalsozialistische Deutschland im Jahr 1938 nahm Elsa Stowasser Friedrich von einer Privatschule und schickte ihn auf eine staatliche Schule in Wien. Schüler von Privatschulen fielen auf. NS-Behörden wiesen Elsa und Friedrich eine Wohnung in der Wiener Leopoldstadt zu. Sie überlebten die nationalsozialistische Verfolgung. Friedrichs Großmutter mütterlicherseits und rund 70 weitere Verwandte wurden ermordet.",
       "locations": [
         {
           "name_historic": "Wien",
           "name_modern": "Wien, Österreich",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
@@ -181,76 +223,96 @@
         "Elsa Stowasser"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "https://en.wikipedia.org/wiki/Anschluss"
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Austrian_Nazi_ephemera_Propaganda_postcards_pins_pamphlets_Anschluss_%C3%96sterreichs_an_das_deutsche_Reich_March_1938_Heeresgeschichtliches_Museum%2C_Vienna%2C_Austria%2C_2013.jpg/960px-thumbnail.jpg",
+          "caption": "Österreichische NS-Propaganda zum Anschluss von 1938",
+          "source": "https://commons.wikimedia.org/wiki/File:Austrian_Nazi_ephemera_Propaganda_postcards_pins_pamphlets_Anschluss_Österreichs_an_das_deutsche_Reich_March_1938_Heeresgeschichtliches_Museum,_Vienna,_Austria,_2013.jpg",
+          "creator": "Thomas Quine",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+        }
       ],
       "event_type_icon": "mdi-shield",
-      "chapter": "vienna_under_shadow",
-      "annotations": {
-        "Anschluss": {
-          "explanation": "Die Annexion Österreichs an das nationalsozialistische Deutschland im Jahr 1938, nach der die nationalsozialistischen Rassengesetze und Institutionen in Österreich eingeführt wurden.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Anschluss"
+      "chapter": "surviving_vienna",
+      "weight": 0.75,
+      "background": "Elsa Stowassers jüdische Herkunft brachte den Haushalt unter der NS-Herrschaft in Gefahr. Der Artikel bringt Friedrichs Erfahrung der Verfolgung mit seiner schon früh vertretenen antitotalitären Haltung in Verbindung.\n\nSpäter verband er geometrische Ordnung mit politischem Zwang. Der Artikel führt aus, dass die Angst vor Bataillonen, die zwischen 1938 und 1945 in quadratischen Formationen marschierten, zu seiner Ablehnung der geometrischen Ordnung von Menschen und Gebäuden beigetragen haben könnte. In einem Brief von 1954 beschrieb er Rechtecke als Marschkolonnen, die in geometrische Formationen gezwängt seien.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Austrian_Nazis_and_local_residents_watch_as_Jews_are_forced_to_scrub_the_pavement_after_Nazi_annexation.jpg/960px-Austrian_Nazis_and_local_residents_watch_as_Jews_are_forced_to_scrub_the_pavement_after_Nazi_annexation.jpg",
+          "caption": "Österreichische Nationalsozialisten und Anwohner sehen zu, wie Juden gezwungen werden, auf Händen und Knien den Gehsteig zu schrubben.",
+          "source": "https://commons.wikimedia.org/wiki/File:Austrian_Nazis_and_local_residents_watch_as_Jews_are_forced_to_scrub_the_pavement_after_Nazi_annexation.jpg",
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Nazi march Vienna 1938"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Vienna-jews-emigration-line.jpg/960px-Vienna-jews-emigration-line.jpg",
+          "caption": "Juden warten vor dem polnischen Konsulat in Wien auf Visa zur Auswanderung.",
+          "source": "https://commons.wikimedia.org/wiki/File:Vienna-jews-emigration-line.jpg",
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Vienna Anschluss 1938"
         }
-      }
+      ]
     },
     {
       "date": "1948",
       "date_precision": "year",
       "date_end": "1949",
       "date_end_precision": "year",
-      "date_note": "Im Winter 1948/49 besuchte er die Akademie der bildenden Künste Wien nur etwa drei Monate",
       "age": 19,
-      "title": "Schulabschluss und Künstlername",
-      "description": "Nach seiner [[Matura|Matura]] im Jahr 1948 schrieb er sich kurzzeitig an der Akademie der bildenden Künste Wien ein, verließ sie jedoch nach kurzer Zeit wieder. In dieser Übergangsphase begann er, seine Werke mit dem Künstlernamen „Hundertwasser“ zu signieren, der sich aus einer Verdeutschung des slawischen „sto“ („hundert“) in seinem Familiennamen ableitete. Der Bruch mit der formalen Ausbildung bestärkte sein Selbstbild als unabhängiger, akademiekritischer Künstler.",
+      "title": "Verlässt die Wiener Kunstakademie",
+      "description": "Friedrich Stowasser legte 1948 am Bundesgymnasium Horn die Matura ab. Zum Wintersemester 1948/49 schrieb er sich an der Akademie der bildenden Künste Wien ein. Nach drei Monaten verließ er die Akademie und begann, seine Werke mit Hundertwasser zu signieren.",
       "locations": [
         {
           "name_historic": "Wien",
           "name_modern": "Wien, Österreich",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
-      ],
+      "sources": [],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Akademie_der_bildenden_Kuenste_DSC_2400w.jpg",
-          "caption": "Akademie der bildenden Künste Wien, Hauptgebäude",
-          "source": "https://commons.wikimedia.org/wiki/File:Akademie_der_bildenden_Kuenste_DSC_2400w.jpg",
-          "creator": "P e z i",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Akademie_der_bildenden_K%C3%BCnste_Wien.jpg/960px-Akademie_der_bildenden_K%C3%BCnste_Wien.jpg",
+          "caption": "Akademie der bildenden Künste Wien",
+          "source": "https://commons.wikimedia.org/wiki/File:Akademie_der_bildenden_Künste_Wien.jpg",
+          "creator": "Armineaghayan",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
-      "event_type_icon": "mdi-school",
-      "chapter": "self_made_artist_on_the_road",
+      "event_type_icon": "mdi-exit-to-app",
+      "chapter": "finding_his_language",
       "annotations": {
         "Matura": {
-          "explanation": "Die österreichische Reifeprüfung am Ende der Sekundarschule (auch in einigen Nachbarländern), die zum Hochschulstudium berechtigt.",
+          "explanation": "Die Matura ist die österreichische Abschlussprüfung an weiterführenden Schulen, die zum Hochschulstudium berechtigt.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Matura"
         }
-      }
+      },
+      "weight": 0.5
     },
     {
       "date": "1949-04",
       "date_precision": "month",
-      "date_end": "1951",
-      "date_end_precision": "year",
       "age": 20,
-      "title": "Lehrjahre auf Reisen",
-      "description": "Mit einer ersten Reise nach Italien begann für Hundertwasser eine intensive Zeit des Reisens, die ihn durch Italien, gemeinsam mit dem französischen Künstler René Brô nach Paris und weiter nach Nordafrika und an das Mittelmeer führte. Diese Reisen beeinflussten seine Farbpalette und seine Motive nachhaltig und vertieften seine Beschäftigung mit Bäumen, Vegetation und einer von ihm als „beseelt“ verstandenen Natur. Begegnungen mit modernen Künstlern und verehrten Vorbildern wie Egon Schiele und Paul Klee halfen ihm, eine expressive Bildsprache jenseits der vorherrschenden Abstraktion zu entwickeln.",
+      "title": "Trifft René Brô in Italien",
+      "description": "Im April 1949 unternahm Hundertwasser seine erste Reise nach Italien und lernte den französischen Künstler René Brô kennen. Er führte auf der Reise einen kleinen Malkasten mit sich. 1950 reisten die beiden Künstler gemeinsam in Richtung Paris.",
       "locations": [
         {
           "name_historic": "Italien",
           "name_modern": "Italien",
           "centroid": [
-            12.674297,
-            42.6384261
+            12.5674,
+            41.8719
           ],
           "primary": true
         },
@@ -258,17 +320,8 @@
           "name_historic": "Paris",
           "name_modern": "Paris, Frankreich",
           "centroid": [
-            2.3483915,
-            48.8534951
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Nordafrika",
-          "name_modern": "Nordafrika",
-          "centroid": [
-            2.159665,
-            41.362599
+            2.3522,
+            48.8566
           ],
           "primary": false
         }
@@ -276,111 +329,101 @@
       "involved_people": [
         "René Brô"
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
-      ],
+      "sources": [],
       "event_type_icon": "mdi-map-marker",
-      "chapter": "self_made_artist_on_the_road"
+      "chapter": "finding_his_language",
+      "weight": 0.45,
+      "date_end": "1950",
+      "date_end_precision": "year"
     },
     {
-      "date": "1952",
+      "date": "1950",
       "date_precision": "year",
-      "date_end": "1956",
-      "date_end_precision": "year",
-      "age": 23,
-      "title": "Europäischer Ausstellungserfolg",
-      "description": "Anfang der 1950er-Jahre begann Hundertwasser, öffentlich auszustellen, zunächst in Wien, später auch in Paris und Mailand. Da er überwiegend in Paris lebte, beteiligte er sich an den Debatten über die Nachkriegsabstraktion und entwickelte als Reaktion auf gestische, zufallsbasierte Malerei das Konzept des „[[Transautomatism|Transautomatismus]]“. Kontakte zu Kritikern und Künstlern im Pariser Milieu trugen dazu bei, ihn als eigenständige Stimme zu etablieren, die dekorative Intensität mit ideologischem Widerstand gegen Standardisierung verband.",
+      "age": 21,
+      "title": "Entwickelt den Transautomatismus",
+      "description": "In Paris beteiligte sich Hundertwasser an Debatten von Künstlern und Kritikern über geometrische und expressive Abstraktion. Er begegnete dem [[Informel]], einer europäischen Strömung abstrakter Kunst der Nachkriegszeit, und dem [[Tachism|Tachismus]], einem Stil spontaner, vom Zufall geleiteter Malerei. Er formulierte den [[Transautomatism|Transautomatismus]], der Betrachter dazu auffordert, bei der Wahrnehmung und Gestaltung eines Kunstwerks aktiv und verantwortungsvoll mitzuwirken. Zu seinen Pariser Kontakten gehörten Michel Tapié, Yves Klein, Pierre Restany und Julien Alvard.",
       "locations": [
         {
           "name_historic": "Paris",
           "name_modern": "Paris, Frankreich",
           "centroid": [
-            2.3483915,
-            48.8534951
+            2.3522,
+            48.8566
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Wien",
-          "name_modern": "Wien, Österreich",
-          "centroid": [
-            16.3725042,
-            48.2083537
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Mailand",
-          "name_modern": "Mailand, Italien",
-          "centroid": [
-            9.1896346,
-            45.4641943
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Michel Tapié"
+        "Michel Tapié",
+        "Yves Klein",
+        "Pierre Restany",
+        "Julien Alvard"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Michel_Tapi%C3%A9",
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
       ],
       "event_type_icon": "mdi-palette",
-      "chapter": "paris_breakthrough_public_dissenter",
+      "chapter": "finding_his_language",
       "annotations": {
         "Transautomatism": {
-          "explanation": "Hundertwassers Begriff aus den frühen 1950er-Jahren für eine Malweise, die den reinen Zufall und die bloße Geste der Nachkriegsabstraktion ablehnte und stattdessen bewusste, organische Formen sowie eine persönliche Bildordnung betonte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+          "explanation": "Hundertwasser verwendete diese Bezeichnung für seine eigene Antwort auf die abstrakte Malerei der Nachkriegszeit. Sie übertrug dem Betrachter einen Teil der Verantwortung für die Vollendung der künstlerischen Erfahrung.",
+          "wikipedia_url": null
+        },
+        "Tachism": {
+          "explanation": "Die Bezeichnung geht auf das französische Wort tache für Fleck zurück. Kritiker verwendeten sie für eine Richtung des Art Informel, die mit spontanen Setzungen verbunden war.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Tachisme"
+        },
+        "Informel": {
+          "explanation": "Diese europäische Nachkriegsbewegung, oft auch Art Informel genannt, bevorzugte ungeplante, gestische Formen gegenüber geometrischer Ordnung.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Art_Informel"
         }
-      }
+      },
+      "weight": 0.75
     },
     {
-      "date": "1957",
-      "date_precision": "year",
-      "date_end": "1960",
-      "date_end_precision": "year",
-      "age": 28,
-      "title": "Hof in der Normandie, Bruch mit Hamburg",
-      "description": "1957 kaufte er einen Bauernhof in der Nähe der Normandie und schuf damit einen ländlichen Rückzugsort, der seinem Bekenntnis zur Natur und zu einem selbstgenügsamen Leben entsprach. 1958 heiratete er Herta Leitner; zwei Jahre später wurde die Ehe geschieden. 1959 wurde er zum Gastdozenten in Hamburg berufen. Dort unterbrach die Hochschulleitung seine gemeinschaftliche Unterrichtsaktion „Unendliche Linie“ gewaltsam, woraufhin er zurücktrat – ein Vorfall, der seine öffentliche Rolle als künstlerischer Dissident noch verstärkte.",
+      "date": "1959-12",
+      "date_precision": "month",
+      "age": 30,
+      "title": "Zieht eine ununterbrochene Klassenraumlinie",
+      "description": "Im Dezember 1959 schloss sich der Gastdozent Friedensreich Hundertwasser an der Hochschule für bildende Künste Hamburg Bazon Brock, Herbert Schuldt und Studierenden an. Sie zeichneten die Unendliche Linie durch einen Klassenraum. Der Schuldirektor beendete die Aktion, und Hundertwasser gab seine Lehrtätigkeit auf.",
       "locations": [
-        {
-          "name_historic": "Normandie",
-          "name_modern": "Normandie, Frankreich",
-          "centroid": [
-            0.3138532,
-            49.0677708
-          ],
-          "primary": true
-        },
         {
           "name_historic": "Hamburg",
           "name_modern": "Hamburg, Deutschland",
           "centroid": [
-            10.000654,
-            53.550341
+            9.9937,
+            53.5511
           ],
-          "primary": false
+          "primary": true
         }
       ],
       "involved_people": [
-        "Herta Leitner"
+        "Bazon Brock",
+        "Herbert Schuldt"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/HFBK_%28Hamburg-Uhlenhorst%29.S%C3%BCdfl%C3%BCgel.21686.ajb.jpg/960px-HFBK_%28Hamburg-Uhlenhorst%29.S%C3%BCdfl%C3%BCgel.21686.ajb.jpg",
+          "caption": "Gebäude der Hochschule für bildende Künste Hamburg",
+          "source": "https://commons.wikimedia.org/wiki/File:HFBK_(Hamburg-Uhlenhorst).Südflügel.21686.ajb.jpg",
+          "creator": "Ajepbah",
+          "license": "CC BY-SA 3.0 de",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
+        }
       ],
       "event_type_icon": "mdi-exit-to-app",
-      "chapter": "paris_breakthrough_public_dissenter"
+      "chapter": "international_arrival",
+      "weight": 0.65
     },
     {
       "date": "1961",
       "date_precision": "year",
-      "date_end": "1968",
-      "date_end_precision": "year",
-      "date_note": "Das genaue Jahr, in dem er begann, die Namensformen „Friedereich/Friedenreich/Friedensreich“ zu verwenden, entwickelte sich im Lauf der 1960er-Jahre",
       "age": 32,
-      "title": "Anerkennung in Japan, neue Namen",
-      "description": "Auf einer Reise nach Japan erhielt Hundertwasser bei der 6. Internationalen Kunstausstellung in Präfektur Tokio den [[Mainichi Prize|Mainichi-Preis]] – ein bedeutender Moment internationaler Anerkennung. 1962 heiratete er die japanische Künstlerin Yuko Ikewada. In den Jahren rund um seinen Aufenthalt in Japan formte er auch seine öffentliche Identität neu, indem er seinen Vornamen in verschiedene Formen verwandelte, die schließlich in „Friedensreich“ mündeten. Die Ehe wurde 1966 geschieden, doch Japan blieb ein zentraler Ort sowohl beruflicher Bestätigung als auch persönlicher Neuerfindung.",
+      "title": "Erhält den Mainichi-Preis in Tokio",
+      "description": "1961 reiste Hundertwasser zur Sechsten Internationalen Kunstausstellung nach Tokio und erhielt den Mainichi-Preis. In Japan schrieb er seinen Vornamen mit japanischen Schriftzeichen für Frieden und Reichtum, als er den Künstlernamen Friedensreich entwickelte.",
       "locations": [
         {
           "name_historic": "Präfektur Tokio",
@@ -392,33 +435,24 @@
           "primary": true
         }
       ],
-      "involved_people": [
-        "Yuko Ikewada"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
-      ],
+      "sources": [],
       "event_type_icon": "mdi-trophy",
-      "chapter": "global_fame_new_identities",
-      "annotations": {
-        "Mainichi Prize": {
-          "explanation": "Eine Reihe japanischer Kulturpreise, die von The Mainichi Newspapers vergeben werden, darunter bedeutende Kunstpreise im Zusammenhang mit renommierten Ausstellungen in Tokio."
-        }
-      }
+      "chapter": "international_arrival",
+      "weight": 0.65
     },
     {
       "date": "1962",
       "date_precision": "year",
       "age": 33,
-      "title": "Erfolg bei der Biennale in Venedig",
-      "description": "Hundertwasser gelang der große Durchbruch mit einer außerordentlich erfolgreichen Präsentation im österreichischen Pavillon bei der [[Venice Biennale|Biennale di Venezia]], die als Retrospektive konzipiert und von Vinzenz Oberhammer eingerichtet wurde. Die Ausstellung festigte seine Stellung als führender österreichischer Künstler mit einem unverwechselbaren visuellen und ideologischen Programm. Zugleich bereitete sie den Weg für weitere groß angelegte Retrospektiven und eine breitere institutionelle Aufmerksamkeit.",
+      "title": "Ausstellung auf der Biennale von Venedig",
+      "description": "1962 zeigte der österreichische Pavillon auf der Biennale von Venedig in Venedig eine Retrospektive von Friedensreich Hundertwassers Werk. Die Biennale von Venedig ist eine internationale Ausstellung zeitgenössischer Kunst. Vinzenz Oberhammer organisierte die Retrospektive.",
       "locations": [
         {
           "name_historic": "Venedig",
           "name_modern": "Venedig, Italien",
           "centroid": [
-            12.3345898,
-            45.4371908
+            12.3155,
+            45.4408
           ],
           "primary": true
         }
@@ -427,82 +461,43 @@
         "Vinzenz Oberhammer"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Venice_Biennale"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Biennale_Pavillon_%C3%96sterreich_1.jpg",
-          "caption": "Österreichischer Pavillon bei der Biennale di Venezia",
-          "source": "https://commons.wikimedia.org/wiki/File:Biennale_Pavillon_Österreich_1.jpg",
-          "creator": "Wolfgang Sauber",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
       ],
       "event_type_icon": "mdi-palette",
-      "chapter": "global_fame_new_identities",
-      "annotations": {
-        "Venice Biennale": {
-          "explanation": "Eine bedeutende internationale Ausstellung zeitgenössischer Kunst, die seit 1895 in Venedig stattfindet; die teilnehmenden Länder zeigen ihre kuratierten Ausstellungen üblicherweise in nationalen Pavillons.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Venice_Biennale"
-        }
-      }
+      "chapter": "international_arrival",
+      "weight": 0.8
     },
     {
       "date": "1966",
       "date_precision": "year",
       "age": 37,
-      "title": "Rückzugsort im Waldviertel",
-      "description": "Er erwarb die stillgelegte „Hahnsäge“ im österreichischen [[Waldviertel|Waldviertel]] und machte sie zu einem abgeschiedenen Wohn- und Arbeitsort. Der Platz verkörperte seine Vorliebe für ein naturnahes Leben fern urbaner Standardisierung. Er wurde zu einem von mehreren Wohnsitzen, die den für sein Arbeitsleben zentralen Rhythmus aus Reisen und Rückzug ermöglichten.",
+      "title": "Findet ein Zuhause im Waldviertel",
+      "description": "1966 kaufte Hundertwasser die stillgelegte Sägemühle Hahnsäge im niederösterreichischen Waldviertel. Er baute das Anwesen zu einem Wohnsitz um und lebte dort inmitten des umliegenden Waldes.",
       "locations": [
         {
           "name_historic": "Waldviertel",
           "name_modern": "Waldviertel, Niederösterreich, Österreich",
           "centroid": [
-            15.2644358,
-            48.5959058
+            15.1,
+            48.6
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
-      ],
+      "sources": [],
       "event_type_icon": "mdi-home-switch-outline",
-      "chapter": "global_fame_new_identities",
-      "annotations": {
-        "Waldviertel": {
-          "explanation": "Eine ländliche Hochlandregion im Nordwesten Niederösterreichs, die für ihre Wälder und geringe Bevölkerungsdichte bekannt ist und Hundertwassers Wunsch nach einem abgeschiedenen Leben entgegenkam.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Waldviertel"
-        }
-      }
+      "chapter": "nature_as_home",
+      "weight": 0.5
     },
     {
       "date": "1973",
       "date_precision": "year",
+      "date_end": "2000-02-19",
+      "date_end_precision": "day",
       "age": 44,
-      "title": "Öko-Projekt in Neuseeland",
-      "description": "Nach Ausstellungen in Neuseeland und Australien reiste Hundertwasser nach Neuseeland und kaufte ausgedehnte Ländereien in der Bay of Islands, zu denen auch das Kaurinui-Tal gehörte. Er verfolgte ein ehrgeiziges Programm zur ökologischen Wiederherstellung, pflanzte große Mengen einheimischer Bäume und erprobte schonende Infrastrukturen wie Teiche, Kanäle und eine pflanzenbasierte Abwasserreinigung. So setzte er seine Umweltphilosophie als gelebte Praxis um, statt sie lediglich zum künstlerischen Thema zu machen.",
+      "title": "Renaturiert das Kaurinui Valley",
+      "description": "Nach einer Wanderausstellung in Neuseeland und Australien erwarb Hundertwasser mehrere Grundstücke im Kaurinui Valley in der Bay of Islands. Dort pflanzte er mehr als 100.000 einheimische Bäume. Auf dem Land legte er Teiche und Kanäle an und errichtete natürliche Abwassersysteme.",
       "locations": [
-        {
-          "name_historic": "Bay of Islands",
-          "name_modern": "Bay of Islands, Northland, Neuseeland",
-          "centroid": [
-            174.1626731,
-            -35.2550085
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Neuseeland",
-          "name_modern": "Neuseeland",
-          "centroid": [
-            172.8344077,
-            -41.5000831
-          ],
-          "primary": false
-        },
         {
           "name_historic": "Australien",
           "name_modern": "Australien",
@@ -511,116 +506,117 @@
             -24.7761086
           ],
           "primary": false
-        }
-      ],
-      "involved_people": null,
-      "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
-      ],
-      "images": [
+        },
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/9/91/00_0866_Island_of_the_Bay_of_Islands.jpg",
-          "caption": "Bay of Islands, Neuseeland",
-          "source": "https://commons.wikimedia.org/wiki/File:00_0866_Island_of_the_Bay_of_Islands.jpg",
-          "creator": "W. Bulach",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "name_historic": "Kaurinui Valley, Bay of Islands",
+          "name_modern": "Bay of Islands, Neuseeland",
+          "centroid": [
+            174.1626731,
+            -35.2550085
+          ],
+          "primary": true
         }
       ],
-      "event_type_icon": "mdi-leaf",
-      "chapter": "global_fame_new_identities"
+      "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "nature_as_home",
+      "weight": 0.9,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Europa",
+        "to_location": "Neuseeland",
+        "characterization": "ökologischer Wohnsitz"
+      },
+      "background": "Die Ländereien umfassten etwa 372 Hektar und erstreckten sich über das gesamte Kaurinui Valley. Hundertwasser verstand das Land als ein Projekt, das Gebiet der Natur zurückzugeben und ihr ihre Rechte zu gewähren.\n\nSonnenkollektoren und ein Wasserrad lieferten auf dem Anwesen Energie. Dort verwendete er eine Komposttoilette. Ein altes Bauernhaus bot Wohn- und Arbeitsraum. Auch sein entworfenes Bottlehouse, der Pigsty und die Mountain Hut dienten ihm dafür."
     },
     {
       "date": "1975",
       "date_precision": "year",
       "age": 46,
-      "title": "Aktionen als „Baummieter“",
-      "description": "Bei der [[Triennale di Milano|Triennale di Milano]] in [[Milan|Mailand]] inszenierte er eine „Baummieter“-Aktion, bei der Bäume durch Fenster nach außen wuchsen, und veröffentlichte das Manifest „Inquilino Albero“. Diese Interventionen forderten ein Recht der Natur, Gebäude zu bewohnen, und verstanden die Bewohner als Hüter lebender Fassaden. Später weitete er die Aktionen auf andere Städte aus und trug damit dazu bei, ihn als Pionier der Fassadenbegrünung und vertikaler Gartenkonzepte zu etablieren.",
+      "title": "Veröffentlicht das Baummieter-Manifest",
+      "description": "Auf der Mailänder Triennale, einer internationalen Designausstellung, ließ Hundertwasser etwa 15 Bäume durch Fenster entlang der Via Manzoni wachsen. Er veröffentlichte Inquilino Albero, einen Essay, der Bäume als Mieter der Gebäude bezeichnete, in denen sie stehen.",
       "locations": [
         {
           "name_historic": "Mailand",
           "name_modern": "Mailand, Italien",
           "centroid": [
-            9.1896346,
-            45.4641943
+            9.19,
+            45.4642
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
+      "involved_people": [],
       "sources": [
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser"
       ],
-      "event_type_icon": "mdi-microphone",
-      "chapter": "global_fame_new_identities",
-      "annotations": {
-        "Triennale di Milano": {
-          "explanation": "Eine bedeutende italienische Institution für Design und zeitgenössische visuelle Kultur, die einflussreiche Ausstellungen und Veranstaltungen organisiert und traditionell in Mailand ansässig ist.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Triennale_di_Milano"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Milano_-_edificio_via_Manzoni_9.jpg/960px-Milano_-_edificio_via_Manzoni_9.jpg",
+          "caption": "Gebäude an der Via Manzoni in Mailand",
+          "source": "https://commons.wikimedia.org/wiki/File:Milano_-_edificio_via_Manzoni_9.jpg",
+          "creator": "LucaChp",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
         }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "nature_as_home",
+      "weight": 0.9,
+      "event_class": {
+        "type": "publication",
+        "title": "Inquilino Albero",
+        "publication_type": "essay",
+        "significance": "Baummieter-Manifest"
       }
     },
     {
       "date": "1982",
       "date_precision": "year",
-      "date_end": "1986-02-17",
-      "date_end_precision": "day",
-      "date_note": "Der Wiener Wohnkomplex wurde am 17.02.1986 an die Mieter übergeben; die zugehörigen Entwurfsarbeiten erstreckten sich über mehrere Jahre",
       "age": 53,
-      "title": "Architektur und Hundertwasserhaus",
-      "description": "Anfang der 1980er-Jahre wandte sich Hundertwasser entschlossen dem architektonischen Entwurf zu, darunter viel beachteten Fassadenarbeiten wie der Rosenthal-Fabrik in Selb. Er entwickelte das Konzept für das Hundertwasserhaus in Wien, ein kommunales Wohnprojekt, das in Zusammenarbeit mit professionellen Architekten verwirklicht wurde und sich durch unregelmäßige Formen, kräftige Farben und integrierte Vegetation auszeichnete. Die Übergabe des Gebäudes an die Mieter im Jahr 1986 machte seinen Einfluss auf die öffentliche Architektur greifbar und brachte seine Philosophie gegen die gerade Linie in den urbanen Alltag.",
+      "title": "Entwirft Rosenthals Fabrikfassade in Selb",
+      "description": "1982 entwarf Friedensreich Hundertwasser die Fassade der Rosenthal-Porzellanfabrik in Selb in Westdeutschland. Er gestaltete das Industriegebäude mit unregelmäßigen Formen und leuchtenden Farben.",
       "locations": [
         {
-          "name_historic": "Wien",
-          "name_modern": "Wien, Österreich",
+          "name_historic": "Selb, Westdeutschland",
+          "name_modern": "Selb, Deutschland",
           "centroid": [
-            16.3725042,
-            48.2083537
+            12.1289,
+            50.1703
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Selb",
-          "name_modern": "Selb, Bayern, Deutschland",
-          "centroid": [
-            12.1297769,
-            50.169121
-          ],
-          "primary": false
         }
       ],
-      "involved_people": [
-        "Josef Krawina"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/Josef_Krawina"
-      ],
+      "sources": [],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Wien%2C_Hundertwasserhaus_--_2018_--_3166.jpg",
-          "caption": "Hundertwasserhaus, Wien, Österreich",
-          "source": "https://commons.wikimedia.org/wiki/File:Wien,_Hundertwasserhaus_--_2018_--_3166.jpg",
-          "creator": "Dietmar Rabich",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Selb_Rosenthal-Fabrik.JPG/960px-Selb_Rosenthal-Fabrik.JPG",
+          "caption": "Rosenthal-Porzellanfabrik in Selb",
+          "source": "https://commons.wikimedia.org/wiki/File:Selb_Rosenthal-Fabrik.JPG",
+          "creator": "Corradox",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
         }
       ],
       "event_type_icon": "mdi-drawing",
-      "chapter": "building_utopias_green_militancy"
+      "chapter": "building_against_straightness",
+      "weight": 0.7
     },
     {
-      "date": "1984-12",
-      "date_precision": "month",
+      "date": "1984",
+      "date_precision": "year",
       "age": 55,
-      "title": "Umweltprotest in der Hainburger Au",
-      "description": "Hundertwasser beteiligte sich aktiv an den Protesten gegen das geplante Wasserkraftwerk in der [[Hainburger Au|Hainburger Au]] und schloss sich den Aktivisten bei harten winterlichen Bedingungen an. Bei einer Pressekonferenz zerriss er in einer viel beachteten öffentlichen Geste den [[Grand Austrian State Prize|Großen Österreichischen Staatspreis]], der ihm verliehen worden war, und erklärte dies zum Protest gegen die Prioritäten des Staates. Der Vorfall machte ihn zu einer der sichtbarsten Kulturpersönlichkeiten an der Seite der aufkommenden österreichischen Umweltbewegung.",
+      "title": "Verteidigt die Hainburger Au",
+      "description": "1984 schloss sich Friedensreich Hundertwasser Aktivisten an, die die Hainburger Au bei Hainburg besetzten, um ein geplantes Donaukraftwerk zu verhindern. Auf einer Pressekonferenz in Wien zerriss er den Großen Österreichischen Staatspreis, eine staatliche Kulturauszeichnung, die er erhalten hatte.",
       "locations": [
         {
-          "name_historic": "Hainburg an der Donau",
-          "name_modern": "Hainburg an der Donau, Niederösterreich, Österreich",
+          "name_historic": "Hainburg",
+          "name_modern": "Hainburg an der Donau, Österreich",
           "centroid": [
-            16.9422459,
-            48.1466103
+            16.94,
+            48.15
           ],
           "primary": true
         },
@@ -628,105 +624,117 @@
           "name_historic": "Wien",
           "name_modern": "Wien, Österreich",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.37,
+            48.21
           ],
           "primary": false
         }
       ],
-      "involved_people": null,
       "sources": [
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
         "https://de.wikipedia.org/wiki/Besetzung_der_Hainburger_Au"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/9/95/Nationalpark_Donauauen%2C_Stopfenreuther_%28Hainburger%29_Au.jpg",
-          "caption": "Nationalpark Donauauen, Stopfenreuther (Hainburger) Au",
-          "source": "https://commons.wikimedia.org/w/index.php?curid=48651491"
-        }
-      ],
       "event_type_icon": "mdi-flag-triangle",
-      "chapter": "building_utopias_green_militancy",
-      "annotations": {
-        "Hainburger Au": {
-          "explanation": "Eine geschützte Auenlandschaft an der Donau nahe Hainburg an der Donau; sie wurde zum Brennpunkt der österreichischen Proteste gegen den Kraftwerksbau von 1984 und gehört seit 1996 zum Nationalpark Donau-Auen.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Besetzung_der_Hainburger_Au"
-        },
-        "Grand Austrian State Prize": {
-          "explanation": "Österreichs höchste staatliche Auszeichnung für Leistungen in Kunst und Wissenschaft (Großer Österreichischer Staatspreis), die Hundertwasser während der Proteste in der Hainburger Au öffentlich zurückwies, indem er die Urkunde zerriss.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Besetzung_der_Hainburger_Au"
-        }
-      }
+      "chapter": "building_against_straightness",
+      "weight": 0.85
     },
     {
-      "date": "1991-04-09",
+      "date": "1986-02-17",
       "date_precision": "day",
-      "age": 62,
-      "title": "KunstHausWien eröffnet",
-      "description": "Das KunstHausWien (Museum Hundertwasser) wurde als eigener Ort für seine Arbeiten und für internationale Wechselausstellungen eröffnet. Für Hundertwasser machte das Museum die ganze Breite seines Schaffens institutionell sichtbar – von Malerei und Grafik über angewandte Kunst bis zum architektonischen Denken. Seine Eröffnung bekräftigte zudem Wiens Rolle als zentralen Ausgangspunkt in einem ansonsten von Reisen und mehreren Wohnsitzen geprägten Leben.",
+      "age": 57,
+      "title": "Hundertwasserhaus eröffnet in Wien",
+      "description": "Am 17. Februar 1986 übergab die Stadt Wien das Hundertwasserhaus seinen Mietern. Friedensreich Hundertwasser entwickelte das künstlerische Konzept des Gebäudes. Josef Krawina erarbeitete die erste Planung, und Peter Pelikan führte die architektonische Arbeit fort. Das Gebäude hat unebene Böden, begrünte Terrassen, eine leuchtend bunte Fassade und Bäume.",
       "locations": [
         {
           "name_historic": "Wien",
           "name_modern": "Wien, Österreich",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
+      "involved_people": [
+        "Josef Krawina",
+        "Peter Pelikan"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/KunstHausWien",
-        "https://en.wikipedia.org/wiki/Friedensreich_Hundertwasser"
+        "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
+        "https://de.wikipedia.org/wiki/Josef_Krawina",
+        "https://de.wikipedia.org/wiki/Peter_Pelikan"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/5/51/KunstHausWien.jpg",
-          "caption": "KunstHausWien (Museum Hundertwasser), Wien",
-          "source": "https://commons.wikimedia.org/wiki/File:KunstHausWien.jpg",
-          "creator": "Feldkurat Katz",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Hundertwasser_house%2C_Vienna.jpg/960px-Hundertwasser_house%2C_Vienna.jpg",
+          "caption": "Hundertwasserhaus in Wien",
+          "source": "https://commons.wikimedia.org/wiki/File:Hundertwasser_house,_Vienna.jpg",
+          "creator": "Rob Glover",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
         }
       ],
-      "event_type_icon": "mdi-calendar",
-      "chapter": "building_utopias_green_militancy"
+      "event_type_icon": "mdi-office-building",
+      "chapter": "building_against_straightness",
+      "weight": 1.0,
+      "background": "Das Haus entstand zwischen 1983 und 1985, nachdem die Stadt Wien Josef Krawina Ende der 1970er Jahre damit beauftragt hatte, kommunalen Wohnbau nach Hundertwassers Ideen zu planen. Peter Pelikan wirkte ab 1981 an der Planung mit. Das Projekt war nach Jahren architektonischer Manifeste und Modellentwürfe Hundertwassers erste bauliche Arbeit.\n\nDas fertige Gebäude wurde sofort zu einer Touristenattraktion. Die breite Öffentlichkeit nahm Hundertwassers Architekturprojekte überwiegend positiv auf. Architekten und Fachkritiker lehnten sie häufig entschieden ab.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Wien%2C_Hundertwasserhaus_--_2018_--_3178.jpg/960px-Wien%2C_Hundertwasserhaus_--_2018_--_3178.jpg",
+          "caption": "Hundertwasserhaus, Wien, Österreich",
+          "source": "https://commons.wikimedia.org/wiki/File:Wien,_Hundertwasserhaus_--_2018_--_3178.jpg",
+          "creator": "Dietmar Rabich",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "Hundertwasserhaus Vienna exterior"
+        }
+      ]
     },
     {
       "date": "2000-02-19",
       "date_precision": "day",
       "age": 71,
-      "title": "Tod an Bord eines Ozeandampfers",
-      "description": "Hundertwasser starb an Bord der [[Queen Elizabeth 2|Queen Elizabeth 2]] auf der Rückreise von Neuseeland nach Europa an Herzversagen. Mit seinem Tod endete eine unstete Laufbahn, in der sich Atelierkunst, architektonische Interventionen und sein entschlossenes Engagement für den Umweltschutz verbanden. Bis in seine letzten Jahre blieb er an Projekten in mehreren Ländern beteiligt – ganz im Einklang mit dem transnationalen Charakter seines Schaffens.",
-      "locations": [],
-      "involved_people": null,
+      "title": "Tod auf See",
+      "description": "Am 19. Februar 2000 befand sich Hundertwasser an Bord des Passagierschiffs Queen Elizabeth 2 auf der Rückreise von Neuseeland nach Europa. Vor Brisbane in Australien starb er auf See an Herzversagen.",
+      "locations": [
+        {
+          "name_historic": "Brisbane",
+          "name_modern": "Brisbane, Australien",
+          "centroid": [
+            153.026,
+            -27.47
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [],
       "sources": [],
       "images": [
         {
-          "url": "https://live.staticflickr.com/3238/2885183796_3d1a0130c3_b.jpg",
-          "caption": "RMS Queen Elizabeth 2",
-          "source": "https://www.flickr.com/photos/30671219@N06/2885183796"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/RMS_%27Queen_Elizabeth_2%27_at_Belfast_-_geograph.org.uk_-_992558.jpg",
+          "caption": "Die RMS Queen Elizabeth 2 vor Belfast",
+          "source": "https://commons.wikimedia.org/wiki/File:RMS_'Queen_Elizabeth_2'_at_Belfast_-_geograph.org.uk_-_992558.jpg",
+          "creator": "Ross",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
         }
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "building_utopias_green_militancy",
-      "annotations": {
-        "Queen Elizabeth 2": {
-          "explanation": "Ein britischer Ozeandampfer, oft „QE2“ genannt, der von der Cunard Line von 1969 bis 2008 für Transatlantik- und Weltreisen eingesetzt wurde.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Queen_Elizabeth_2"
-        }
-      },
+      "chapter": "building_against_straightness",
+      "weight": 0.4,
       "event_class": {
         "type": "death",
-        "cause": "Herzversagen"
+        "cause": "Herzversagen",
+        "characterization": "Rückreise aus Neuseeland",
+        "place_of_rest": "Kaurinui Valley, Neuseeland"
       }
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "8f17cf57077d5077",
-    "translated_on": "2026-08-02T12:05:17.680024+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "0eed69209444423c",
+    "translated_on": "2026-09-19T12:30:47.612813+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia_ego_network",
-  "created_on": "2026-01-09",
+  "dataset": "Lina Bo Bardi ego network",
+  "created_on": "2026-09-19",
   "ego": {
     "name": "Lina Bo Bardi",
     "birth_year": 1914,
@@ -10,431 +10,164 @@
       "Designerin",
       "Redakteurin"
     ],
-    "summary": "In Italien geborene brasilianische Architektin und Designerin der Moderne, die in Brasilien eine einflussreiche Tätigkeit in den Bereichen Architektur, Ausstellungsdesign, Verlagswesen und Lehre entfaltete; bekannt dafür, die Moderne mit volkstümlicher Kultur und dem öffentlichen Leben zu verbinden (etwa im MASP und im SESC Pompéia).",
+    "summary": "Lina Bo Bardi war eine in Italien geborene brasilianische Architektin der Moderne, Designerin und Redakteurin. In ihrem Werk verband sie modernes Bauen mit brasilianischer Alltagskultur und dem öffentlichen Leben. Zu ihren wichtigsten Projekten zählen das Kunstmuseum von São Paulo, das Glashaus, Solar do Unhão und SESC Pompéia.",
     "wikipedia": "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
   },
   "connections": [
     {
-      "person_name": "Enrico Bo",
-      "relationship_type": "family/father",
-      "relationship_description": "Vater; ihre frühe Entscheidung, Architektin zu werden, fand bei ihm nur begrenzte Unterstützung, doch sein abenteuerliches, anarchistisches Leben gilt als Einfluss auf ihren grafischen Darstellungsstil.",
-      "start_year": 1914,
-      "end_year": null,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben in Rom",
-        "Frühe Begegnung mit Kunst und zeichnerischen Einflüssen"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
-      ],
-      "notes": "Der Artikel merkt an, dass ihr Vater ihre architektonischen Ambitionen nicht uneingeschränkt unterstützte; zugleich führt er Aspekte ihres Zeichenstils auf die Inspiration durch den Vater zurück."
-    },
-    {
       "person_name": "Giovanna Bo",
-      "relationship_type": "family/mother",
-      "relationship_description": "Mutter; Teil ihres familiären Hintergrunds in Rom (Eltern von Achillina Bo, der späteren Lina Bo Bardi).",
-      "start_year": 1914,
-      "end_year": null,
+      "relationship_description": "Mutter von Bo Bardi. Giovanna und Enrico Bo zogen Lina in Rom groß, bevor ihre jüngere Tochter Graziella zur Welt kam.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familienleben in Rom"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
       ],
-      "notes": "Im Artikel weniger ausführlich behandelt als ihr Vater, aber ausdrücklich als ihre Mutter genannt."
-    },
-    {
-      "person_name": "Graziella Bo",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Jüngere Schwester; als zweite Tochter von Enrico und Giovanna Bo erwähnt.",
-      "start_year": 1914,
-      "end_year": null,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familiäres Leben in der Kindheit"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
-      ],
-      "notes": "Der Wikipedia-Text enthält über diese Identifizierung hinaus kaum weitere Angaben."
-    },
-    {
-      "person_name": "Carlo Pagani",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Früher Mitarbeiter in Mailand; sie arbeitete mit ihm im Studio Bo e Pagani und reiste später für Aufträge der Domus mit ihm durch das Italien der Nachkriegszeit. Gemeinsam mit ihm und Bruno Zevi gründete sie außerdem eine wöchentliche Zeitschrift für Architektur und Kultur.",
-      "start_year": 1939,
-      "end_year": 1946,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Arbeit im Studio Bo e Pagani (Mailand)",
-        "Von Domus beauftragte Reise durch das Italien der Nachkriegszeit (1945)",
-        "Gründung der Wochenzeitschrift A – Attualità, Architettura, Abitazione, Arte"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
-      ],
-      "notes": "Eine ihrer am besten dokumentierten frühen beruflichen Beziehungen."
-    },
-    {
-      "person_name": "Gio Ponti",
-      "relationship_type": "professional/mentor",
-      "relationship_description": "Architekt, Designer und Redakteur; sie arbeitete mit ihm an der Zeitschrift Lo Stile (bis 1943) und war später stellvertretende Direktorin der von ihm gegründeten Zeitschrift Domus.",
-      "start_year": 1940,
-      "end_year": 1943,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Mitarbeit an der Zeitschrift Lo Stile",
-        "Berufliches Netzwerk des italienischen Designverlagswesens"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/Gio_Ponti"
-      ],
-      "notes": "Die Beziehung war vor allem beruflicher und verlegerischer Natur und vermutlich in einer frühen Phase ihrer Laufbahn prägend."
-    },
-    {
-      "person_name": "Bruno Zevi",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Italienischer Architekt und Kritiker; gründete in Mailand gemeinsam mit Bo Bardi und Carlo Pagani die Wochenzeitschrift A – Attualità, Architettura, Abitazione, Arte (A Cultura della Vita).",
-      "start_year": 1945,
-      "end_year": 1946,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Gründung und Redaktion der Wochenzeitschrift A – Attualità, Architettura, Abitazione, Arte"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/Bruno_Zevi"
-      ],
-      "notes": "Diese Verbindung stellt Bo Bardi in den größeren architektonischen und verlegerischen Diskurs der Nachkriegszeit."
-    },
-    {
-      "person_name": "Federico Patellani",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Fotograf, der 1945 gemeinsam mit Bo Bardi und Carlo Pagani im Auftrag von Domus durch Italien reiste, um Kriegsschäden und Lebensbedingungen zu dokumentieren.",
-      "start_year": 1945,
-      "end_year": 1945,
-      "strength": "weak",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Dokumentationsreise für Domus durch das Italien der Nachkriegszeit"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
-      ],
-      "notes": "Eine kurze, klar umrissene Zusammenarbeit im Rahmen eines konkreten Reportageprojekts."
-    },
-    {
-      "person_name": "Elio Vittorini",
-      "relationship_type": "professional/editor",
-      "relationship_description": "Schriftsteller und Redakteur, der die Zeitung Milano Sera leitete, bei der Bo Bardi in der unmittelbaren Nachkriegszeit als Autorin mitarbeitete.",
-      "start_year": 1945,
-      "end_year": 1946,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Journalistische Zusammenarbeit bei Milano Sera"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/Elio_Vittorini"
-      ],
-      "notes": "Vor allem eine redaktionelle und berufliche Beziehung über die gemeinsame Publikationstätigkeit."
+      "notes": null,
+      "relationship_type": "family/mother"
     },
     {
       "person_name": "Pietro Maria Bardi",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Ehemann und lebenslanger, bedeutender Mitarbeiter; er gründete gemeinsam mit ihr die Zeitschrift Habitat und arbeitete eng mit ihr an der frühen Organisation des MASP und an dessen Ausstellungskonzepten.",
-      "start_year": 1946,
-      "end_year": 1992,
+      "relationship_description": "Ihr Ehemann und kultureller Partner von ihrer Heirat 1946 bis zu Bo Bardis Tod. In Brasilien arbeiteten sie am MASP, gründeten Habitat und lebten in der Casa de Vidro.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Eheschließung und Übersiedlung nach Brasilien (1946)",
-        "Mitgründung der Zeitschrift Habitat",
-        "Gründung und Aufbau des MASP (Kunstmuseum São Paulo)",
-        "Ausstellungs- und Raumkonzepte im Museum (offener Ausstellungsraum / innovative Präsentation)"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
         "https://en.wikipedia.org/wiki/Pietro_Maria_Bardi"
       ],
-      "notes": "Ihre Partnerschaft wird sowohl als persönliche als auch als institutionelle Verbindung dargestellt – im Museum ebenso wie im Verlagswesen."
+      "notes": "Ihre Ehe war zugleich eine dauerhafte kulturelle und berufliche Partnerschaft, die bis zu Bo Bardis Tod bestand.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Carlo Pagani",
+      "relationship_description": "Nach ihrem Abschluss 1939 arbeitete Bo Bardi mit Pagani im Studio Bo e Pagani in Mailand. 1945 dokumentierten beide für Domus das vom Krieg zerstörte Italien und wirkten an der Gründung von A – Attualità, Architettura, Abitazione, Arte mit.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": "Ihre Verbindung umfasste die Architekturpraxis, die Dokumentation der Nachkriegszeit und redaktionelle Arbeit.",
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Giancarlo Palanti",
+      "relationship_description": "Der aus Italien eingewanderte Palanti arbeitete mit Bo Bardi im Studio d’Arte Palma und gestaltete mit ihr 1950 die Galerien des MASP im Gebäude der Diários Associados neu.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": "Die Neugestaltung der Galerien brach mit den Ausstellungskonventionen der Beaux-Arts und folgte einer avantgardistischen Ausstellungssprache.",
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Enrico Bo",
+      "relationship_description": "Vater von Bo Bardi. Er unterstützte ihre Entscheidung, Architektin zu werden, nur eingeschränkt. Sein abenteuerlicher, anarchistischer Charakter prägte ihr frühes Gespür für grafische Gestaltung.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": "Der Artikel nennt ihn als Linas Vater und bringt seinen Charakter mit ihrem Darstellungsstil in Verbindung.",
+      "relationship_type": "family/father"
+    },
+    {
+      "person_name": "Graziella Bo",
+      "relationship_description": "Bo Bardis jüngere Schwester. Sie waren die beiden Töchter von Enrico und Giovanna Bo.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": null,
+      "relationship_type": "family/sister"
+    },
+    {
+      "person_name": "Giò Ponti",
+      "relationship_description": "Bo Bardi arbeitete bis 1943 als Architektin und Designerin mit Ponti für die Zeitschrift Lo Stile – nella casa e nell’arredamento.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Gio_Ponti"
+      ],
+      "notes": "Diese redaktionelle Arbeit in Mailand verortete sie in der einflussreichen italienischen Architektur- und Designpresse.",
+      "relationship_type": "professional/colleague"
+    },
+    {
+      "person_name": "Federico Patellani",
+      "relationship_description": "Der Fotograf Patellani reiste mit Bo Bardi und Carlo Pagani für einen Auftrag von Domus durch das Italien der Nachkriegszeit. 1945 dokumentierten und bewerteten sie die Zerstörungen im ganzen Land.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": null,
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Bruno Zevi",
+      "relationship_description": "Bo Bardi, Zevi und Carlo Pagani gründeten nach dem Zweiten Weltkrieg die Mailänder Wochenzeitschrift A – Attualità, Architettura, Abitazione, Arte, auch bekannt als A Cultura della Vita.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+        "https://en.wikipedia.org/wiki/Bruno_Zevi"
+      ],
+      "notes": "Die Zeitschrift verband die Architekturdebatte mit der umfassenderen Aufgabe des materiellen und moralischen Wiederaufbaus Italiens.",
+      "relationship_type": "professional/co_founder"
     },
     {
       "person_name": "Assis Chateaubriand",
-      "relationship_type": "professional/patron",
-      "relationship_description": "Brasilianischer Medienmagnat und Förderer der Künste; er lud Pietro Maria Bardi ein, das MASP aufzubauen, und wurde damit zu einem wichtigen institutionellen Mäzen, der Bo Bardis Museumsarbeit in São Paulo ermöglichte.",
-      "start_year": 1947,
-      "end_year": null,
+      "relationship_description": "Durch Chateaubriands Gründung des MASP gemeinsam mit Pietro Maria Bardi konnte Bo Bardi 1947 die ersten Galerien des Museums gestalten und später den prägnanten Neubau an der Avenida Paulista entwerfen.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Unterstützung bei der Gründung des MASP",
-        "Institutionelle Förderung durch Diários Associados"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
         "https://en.wikipedia.org/wiki/Assis_Chateaubriand"
       ],
-      "notes": "Eher eine fördernde Mäzenatenbeziehung als eine Zusammenarbeit im Tagesgeschäft."
-    },
-    {
-      "person_name": "Philip L. Goodwin",
-      "relationship_type": "professional/influence",
-      "relationship_description": "Amerikanischer Architekt; Bo Bardis frühe MASP-Skizzen bezogen sich auf die Fassade des 1939 von Goodwin (mit Edward Durell Stone) entworfenen MoMA-Gebäudes – ein Hinweis auf dessen Einfluss auf Erschließung und Museumskonzeption.",
-      "start_year": 1947,
-      "end_year": 1947,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Konzeptioneller Bezugspunkt für frühe MASP-Skizzen (MoMA-Gebäude von 1939)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/Philip_L._Goodwin"
-      ],
-      "notes": "Eine auf Einfluss beruhende Verbindung; ein direkter persönlicher Kontakt wird nicht erwähnt."
-    },
-    {
-      "person_name": "Edward Durell Stone",
-      "relationship_type": "professional/influence",
-      "relationship_description": "Amerikanischer Architekt; gemeinsam mit Philip L. Goodwin entwarf er das MoMA-Gebäude von 1939, das in Bo Bardis frühen MASP-Skizzen indirekt als Referenz genannt wird.",
-      "start_year": 1947,
-      "end_year": 1947,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Konzeptioneller Bezugspunkt für Ideen zu Museumsfassade und Erschließung (MoMA-Gebäude von 1939)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/Edward_Durell_Stone"
-      ],
-      "notes": "Als Teil einer ausdrücklich dokumentierten Referenz in der Gründungsgeschichte des MASP aufgenommen."
-    },
-    {
-      "person_name": "Giancarlo Palanti",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Architekt italienischer Herkunft; arbeitete mit Bo Bardi an der Neugestaltung der MASP-Ausstellungsräume im Gebäude der Diários Associados (1950) und war bis 1951 mit ihr im Studio d’Arte Palma tätig.",
-      "start_year": 1948,
-      "end_year": 1951,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Studio d’Arte Palma (São Paulo)",
-        "Neugestaltung der MASP-Innenräume und Ausstellungsflächen (1950)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
-      ],
-      "notes": "Ein zentraler Mitarbeiter ihrer frühen brasilianischen Museums- und Innenraumprojekte."
-    },
-    {
-      "person_name": "Valeria Piacentini Cirell",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Mitglied des Teams des Studio d’Arte Palma; verantwortlich für die Antiquitätenabteilung innerhalb des Kollektivs, dem Bo Bardi, Pietro Maria Bardi und Giancarlo Palanti angehörten.",
-      "start_year": 1948,
-      "end_year": null,
-      "strength": "weak",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Studio d’Arte Palma (gemeinsames Studio und programmatische Arbeitsteilung)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
-      ],
-      "notes": "Aufgenommen, um das interne berufliche Netzwerk des Studios und, soweit dokumentiert, auch die Geschlechterverteilung abzubilden."
-    },
-    {
-      "person_name": "Lucjan Korngold",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Polnischer Architekt, dessen Gebäude das Studio d’Arte Palma im 18. Stock beherbergte; Bo Bardis Atelierkollektiv befand sich in einem von ihm entworfenen Gebäude.",
-      "start_year": 1948,
-      "end_year": 1951,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Gemeinsamer räumlicher und institutioneller Kontext: Das Studio d’Arte Palma befand sich in einem von Korngold entworfenen Gebäude"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
-      ],
-      "notes": "Die Verbindung ist vor allem räumlicher und institutioneller Natur – der Architekt des Gebäudes –, nicht das Ergebnis einer dokumentierten engen Zusammenarbeit."
-    },
-    {
-      "person_name": "El Lissitzky",
-      "relationship_type": "artistic/influence",
-      "relationship_description": "Avantgardekünstler und -designer; Bo Bardis Neugestaltung der MASP-Ausstellung wird als von avantgardistischen Praktiken der Zwischenkriegszeit beeinflusst beschrieben, darunter auch von Lissitzkys Arbeiten.",
-      "start_year": 1950,
-      "end_year": 1950,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Referenz für Ausstellungsgestaltung (avantgardistische Präsentationsstrategien der Zwischenkriegszeit)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/El_Lissitzky"
-      ],
-      "notes": "Aufgenommen, weil der Wikipedia-Text diese Einflüsse im Zusammenhang mit ihrer veränderten Ausstellungsgestaltung ausdrücklich nennt."
-    },
-    {
-      "person_name": "Franco Albini",
-      "relationship_type": "artistic/influence",
-      "relationship_description": "Italienischer Architekt und Designer; als Einfluss auf Bo Bardis Ausstellungskonzept für das MASP von 1950 genannt, innerhalb einer Entwicklungslinie avantgardistischer und moderner Präsentationsformen der Zwischenkriegszeit.",
-      "start_year": 1950,
-      "end_year": 1950,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Referenz für Museums- und Ausstellungsgestaltung (moderne Präsentationsstrategien)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/Franco_Albini"
-      ],
-      "notes": "Der Einfluss wird über ihre Neubestimmung der Ausstellungsgestaltung beschrieben, nicht als Ergebnis eines direkten persönlichen Kontakts."
-    },
-    {
-      "person_name": "Ludwig Mies van der Rohe",
-      "relationship_type": "professional/influence",
-      "relationship_description": "Architekt der Moderne; ihr Glashaus soll sich unter anderem an Mies’ Farnsworth House orientieren, was auf einen starken formalen und konzeptionellen Einfluss hindeutet.",
-      "start_year": 1951,
-      "end_year": 1951,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Architektonische Referenz für das Glashaus (Farnsworth House als Vorbild)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/Ludwig_Mies_van_der_Rohe"
-      ],
-      "notes": "Die Verbindung beruht auf dem ausdrücklichen Verweis auf ein konkretes Werk."
-    },
-    {
-      "person_name": "Charles Eames",
-      "relationship_type": "professional/influence",
-      "relationship_description": "Designer und Architekt; ihr Glashaus soll sich an amerikanischen Bauten der Moderne orientieren, darunter das Case Study House No. 8, das mit Charles Eames verbunden ist.",
-      "start_year": 1951,
-      "end_year": 1951,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Architektonisches Vorbild für die Wohnhausmoderne (Verweis auf Case Study House No. 8)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/Charles_and_Ray_Eames"
-      ],
-      "notes": "Eine Einflussbeziehung; der Wikipedia-Text bezeichnet diese Bauten als weithin publizierte Referenzen."
-    },
-    {
-      "person_name": "Ray Eames",
-      "relationship_type": "professional/influence",
-      "relationship_description": "Designer und Architekt; neben Charles Eames über das Case Study House No. 8 als amerikanisches Vorbild der Moderne genannt, auf das in der Diskussion über Bo Bardis Glashaus Bezug genommen wird.",
-      "start_year": 1951,
-      "end_year": 1951,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Architektonisches Vorbild für die Wohnhausmoderne (Verweis auf Case Study House No. 8)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/Charles_and_Ray_Eames"
-      ],
-      "notes": "Gesondert von Charles Eames aufgenommen, um die schöpferische Partnerschaft abzubilden und zugleich jede Person im Netzwerk einzeln zu führen."
-    },
-    {
-      "person_name": "Bernard Rudofsky",
-      "relationship_type": "professional/influence",
-      "relationship_description": "Architekt und Schriftsteller; ihr Glashaus soll möglicherweise von Rudofskys Innenhofhäusern beeinflusst sein, die in der Ausstellung „Brazil Builds“ (1940–1942) gezeigt wurden.",
-      "start_year": 1951,
-      "end_year": 1951,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Konzeptioneller Einfluss durch ein veröffentlichtes Ausstellungsvorbild (Brazil Builds / Innenhofhäuser)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "https://en.wikipedia.org/wiki/Bernard_Rudofsky"
-      ],
-      "notes": "Der Einfluss wird als möglich beziehungsweise zugeschrieben dargestellt, nicht als direkte Zusammenarbeit."
+      "notes": "Ihre Verbindung konzentrierte sich auf das MASP, das zunächst im Hauptsitz seines Medienkonzerns untergebracht war.",
+      "relationship_type": "professional/patron"
     },
     {
       "person_name": "Martim Gonçalves",
-      "relationship_type": "artistic/collaborator",
-      "relationship_description": "Theaterregisseur; arbeitete mit Bo Bardi an der Ausstellung „Bahia in Ibirapuera“ von 1959 im Umfeld der V. São-Paulo-Biennale. Die Ausstellung verband Objekte, Musik, Bilder und Kunsthandwerk aus Bahia.",
-      "start_year": 1959,
-      "end_year": 1959,
+      "relationship_description": "Bo Bardi arbeitete mit dem Theaterregisseur Gonçalves an der Bahia-Ausstellung von 1959 im Ibirapuera zusammen. Für die V. Biennale von São Paulo brachten sie Kunst, Kunsthandwerk, Musik und Bilder aus Bahia zusammen.",
       "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Gestaltung und Umsetzung der Ausstellung „Bahia“ in Ibirapuera",
-        "Biennale-Ausstellungen und kulturelle Programmgestaltung"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
       ],
-      "notes": "Der Artikel bezeichnet dies als entscheidenden Übergang in der Entwicklung ihres Ausstellungskonzepts."
+      "notes": "Die Ausstellung leitete den Übergang zu ihren späteren experimentellen Methoden der Museumspräsentation ein.",
+      "relationship_type": "artistic/collaborator"
+    },
+    {
+      "person_name": "Elio Vittorini",
+      "relationship_description": "Bo Bardi arbeitete an Milano Sera mit, als Vittorini die Zeitung leitete.",
+      "strength": "weak",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": null,
+      "relationship_type": "professional/colleague"
+    },
+    {
+      "person_name": "Valeria Piacentini Cirell",
+      "relationship_description": "Piacentini Cirell arbeitete neben Bo Bardi im Studio d’Arte Palma, wo sie für die antiquarische Abteilung zuständig war.",
+      "strength": "weak",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lina_Bo_Bardi"
+      ],
+      "notes": null,
+      "relationship_type": "professional/colleague"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Bo Bardis engste persönlichen Beziehungen galten ihren Eltern Enrico und Giovanna Bo, ihrer Schwester Graziella und vor allem ihrem Ehemann Pietro Maria Bardi, mit dem sie zugleich eine dauerhafte kreative Partnerschaft verband, die ihre brasilianische Laufbahn prägte."
+      "summary": "Bo Bardis Familie hat ihren Ursprung in Rom mit Enrico, Giovanna und ihrer jüngeren Schwester Graziella. Durch ihre Heirat mit Pietro Maria Bardi im Jahr 1946 verband sich ihr Privatleben mit einer gemeinsamen kulturellen Arbeit in Brasilien. Gemeinsam verlassen sie Italien, leben in der Casa de Vidro und widmen sich der Museumsarbeit und dem Verlagswesen."
     },
     {
       "relationship_type": "professional",
-      "summary": "Ihr berufliches Netzwerk reicht vom italienischen Verlagswesen und der Architekturpraxis während und nach dem Krieg (Carlo Pagani, Gio Ponti, Bruno Zevi, Federico Patellani, Elio Vittorini) bis zum institutionellen Aufbau in Brasilien (Assis Chateaubriand, Giancarlo Palanti). Weitere Verbindungen beruhen auf Einflüssen: Bestimmte kanonische Architekten prägten wesentliche Entwurfsentscheidungen, etwa das MoMA-Gebäude von 1939, das Farnsworth House oder das Case Study House."
+      "summary": "Bo Bardis berufliches Umfeld entwickelt sich von Architektur und Verlagswesen in Mailand zu den brasilianischen Institutionen für Museen und Design. Carlo Pagani, Giò Ponti, Federico Patellani, Bruno Zevi und Elio Vittorini verbinden sie mit der redaktionellen Arbeit im Italien der Kriegs- und Nachkriegszeit. In São Paulo bieten ihr MASP, Studio d’Arte Palma und Habitat Räume, Ausstellungen zu gestalten, zu publizieren und mit Kunst im öffentlichen Leben zu arbeiten."
     },
     {
       "relationship_type": "artistic",
-      "summary": "Zu Bo Bardis künstlerischen und kuratorischen Beziehungen gehören die direkte Zusammenarbeit mit dem Theaterregisseur Martim Gonçalves sowie mehrere ausdrücklich genannte avantgardistische Bezugspersonen (El Lissitzky, Franco Albini), die ihre Sprache der Ausstellungsgestaltung prägten."
-    },
-    {
-      "relationship_type": "academic",
-      "summary": "Der vorliegende Wikipedia-Text dokumentiert ihre Tätigkeit als Dozentin an der Universität São Paulo und ihre Bemühungen um eine feste Stelle. Konkrete Studierende, Mentoren oder Kollegen am Fachbereich werden jedoch nicht genannt; daher werden akademische Beziehungen hier nicht zu persönlichen Verbindungen ausgebaut."
+      "summary": "1959 bringen Bo Bardi und Martim Gonçalves die Bahia-Ausstellung zur Biennale von São Paulo. Ihre Arbeit verbindet Ausstellungsgestaltung mit Kunstwerken, Kunsthandwerk, Musik und Fotografien aus Bahia. Sie erweitert ihre architektonische Arbeit um Theater und visuelle Kultur."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "6a650ea6baa217b6",
-    "translated_on": "2026-08-02T12:18:56.753830+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "8dc7e7c2a3dd26d3",
+    "translated_on": "2026-09-19T12:41:31.819301+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

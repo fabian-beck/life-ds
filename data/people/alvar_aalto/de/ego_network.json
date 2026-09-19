@@ -1,6 +1,6 @@
 {
   "dataset": "Alvar Aalto ego network",
-  "created_on": "2026-09-05",
+  "created_on": "2026-09-19",
   "ego": {
     "name": "Alvar Aalto",
     "birth_year": 1898,
@@ -9,55 +9,55 @@
       "Architekt",
       "Designer"
     ],
-    "summary": "Alvar Aalto war ein finnischer Architekt und Designer. Zu seinem Werk gehören Gebäude, Innenräume, Möbel, Textilien, Glaswaren, Skulpturen und Gemälde. Gemeinsam mit Aino Aalto entwarf er häufig Gebäude samt Innenräumen, Möbeln, Lampen und Glaswaren.",
+    "summary": "Alvar Aalto war ein finnischer Architekt und Designer. Er entwarf Gebäude, Innenräume, Möbel, Glaswaren, Textilien, Skulpturen und Gemälde. Er arbeitete eng mit Aino Aalto und später mit Elissa Aalto zusammen. Seine Experimente mit gebogenem Holz prägten die moderne Möbelgestaltung.",
     "wikipedia": "https://en.wikipedia.org/wiki/Alvar_Aalto"
   },
   "connections": [
     {
       "person_name": "Johan Henrik Aalto",
-      "relationship_description": "Aaltos finnischsprachiger Vater war Landvermesser. Als Student entwarf Aalto in Alajärvi ein Haus für seine Eltern.",
+      "relationship_description": "Aaltos finnischsprachiger Vater war Landvermesser. Während Aaltos Kindheit zog die Familie von Kuortane nach Alajärvi und später nach Jyväskylä.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alvar_Aalto"
       ],
-      "notes": "Die Familie zog während Aaltos Kindheit von Kuortane nach Alajärvi und anschließend nach Jyväskylä.",
+      "notes": "Noch während seines Studiums entwarf Aalto für seine Eltern ein Haus in Alajärvi.",
       "relationship_type": "family/father"
     },
     {
       "person_name": "Selma Matilda Hackstedt",
-      "relationship_description": "Aaltos schwedischsprachige Mutter war Postmeisterin. Er wuchs in einem zweisprachigen Haushalt auf.",
+      "relationship_description": "Aaltos schwedischsprachige Mutter war Postmeisterin und zog während seiner frühen Kindheit mit der Familie an verschiedene Orte in Finnland.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alvar_Aalto"
       ],
-      "notes": "Über ihre Familie erhielt Aaltos Büro in Jyväskylä auch erste Aufträge für Wohnhäuser.",
+      "notes": null,
       "relationship_type": "family/mother"
     },
     {
       "person_name": "Aino Aalto",
-      "relationship_description": "Die Architektin und Designerin Aino Aalto war von 1924 bis zu ihrem Tod 1949 Aaltos erste Ehefrau. Sie arbeitete mit ihm an Architektur, Innenräumen, Möbeln und Glaswaren.",
+      "relationship_description": "Die Architektin Aino Marsio-Aalto war Aaltos erste Frau und wichtigste kreative Partnerin. Bis zu ihrem Tod im Jahr 1949 arbeiteten sie in Architektur, Innenraumgestaltung, Möbeldesign und bei Artek zusammen.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alvar_Aalto",
         "https://en.wikipedia.org/wiki/Aino_Aalto"
       ],
-      "notes": "Gemeinsam bearbeiteten sie Projekte wie das Sanatorium Paimio, die Villa Mairea und die frühen Arbeiten von Artek.",
+      "notes": "Sie arbeiteten unter anderem am Sanatorium Paimio, an der Villa Mairea, an ihrem Haus mit Büro in Helsinki und an der Gründung von Artek zusammen.",
       "relationship_type": "family/spouse"
     },
     {
       "person_name": "Elissa Aalto",
-      "relationship_description": "Die Architektin Elissa Aalto trat 1949 in Aaltos Büro ein und heiratete ihn 1952. Nach seinem Tod leitete sie das Büro weiter.",
+      "relationship_description": "Die Architektin Elissa Mäkiniemi trat 1949 in Aaltos Büro ein und heiratete ihn 1952. Sie arbeitete an Projekten mit und führte das Büro nach seinem Tod weiter.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alvar_Aalto",
         "https://en.wikipedia.org/wiki/Elissa_Aalto"
       ],
-      "notes": "Das Ehepaar entwarf gemeinsam das Experimentelle Haus Muuratsalo.",
+      "notes": "Als Sommerresidenz entwarfen sie das Experimentalhaus Muuratsalo.",
       "relationship_type": "family/spouse"
     },
     {
       "person_name": "Johanna Alanen",
-      "relationship_description": "Johanna, genannt Hanni, war die 1925 geborene Tochter von Alvar und Aino Aalto.",
+      "relationship_description": "Johanna, genannt Hanni, war die 1925 geborene Tochter von Aalto und Aino Aalto.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alvar_Aalto"
@@ -67,7 +67,7 @@
     },
     {
       "person_name": "Hamilkar Aalto",
-      "relationship_description": "Hamilkar Aalto war der 1928 geborene Sohn von Alvar und Aino Aalto.",
+      "relationship_description": "Hamilkar war der 1928 geborene Sohn von Aalto und Aino Aalto.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alvar_Aalto"
@@ -77,167 +77,166 @@
     },
     {
       "person_name": "Erik Bryggman",
-      "relationship_description": "Aalto und Bryggman arbeiteten zusammen, nachdem die Aaltos nach Turku gezogen waren. Zu ihren gemeinsamen Arbeiten gehörte die Turkuer Messe von 1928–1929.",
+      "relationship_description": "Nach dem Umzug der Aaltos nach Turku im Jahr 1927 arbeitete Bryggman mit Aalto zusammen, besonders bei der Messe von Turku 1928–1929.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alvar_Aalto",
         "https://en.wikipedia.org/wiki/Erik_Bryggman"
       ],
-      "notes": "Aaltos Biograf bezeichnete Bryggman als den einzigen Architekten, mit dem Aalto auf Augenhöhe zusammenarbeitete.",
+      "notes": "Aaltos Biograf Göran Schildt beschrieb Bryggman als den einzigen Architekten, mit dem Aalto auf Augenhöhe zusammenarbeitete.",
       "relationship_type": "professional/collaborator"
     },
     {
       "person_name": "Maire Gullichsen",
-      "relationship_description": "Gullichsen gründete 1935 gemeinsam mit Aalto Artek. Zusammen mit Harry Gullichsen gab sie die Villa Mairea in Auftrag und arbeitete mit den Aaltos an ihrer Gestaltung und ihren Innenräumen.",
+      "relationship_description": "Maire Gullichsen gründete 1935 gemeinsam mit Alvar und Aino Aalto sowie Nils-Gustav Hahl Artek. Zusammen mit Harry Gullichsen gab sie die Villa Mairea in Auftrag.",
       "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alvar_Aalto",
         "https://en.wikipedia.org/wiki/Maire_Gullichsen",
         "https://en.wikipedia.org/wiki/Artek_(company)"
       ],
-      "notes": "Zu ihrer Unterstützung gehörten die Partnerschaft bei Artek und der Auftrag für die Villa Mairea.",
+      "notes": "Auch bei der Villa Mairea war sie als Bauherrin eng eingebunden.",
       "relationship_type": "business/co_founder"
     },
     {
-      "person_name": "Sven Markelius",
-      "relationship_description": "Der schwedische Architekt Sven Markelius half Aalto 1929 beim Beitritt zu den Congrès Internationaux d’Architecture Moderne. Durch die Organisation kam Aalto mit internationalen Vertretern der Moderne in Kontakt.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alvar_Aalto",
-        "https://en.wikipedia.org/wiki/Sven_Markelius"
-      ],
-      "notes": "Markelius machte Aalto 1929 mit der internationalen Organisation der Moderne bekannt.",
-      "relationship_type": "professional/connector"
-    },
-    {
-      "person_name": "László Moholy-Nagy",
-      "relationship_description": "Über die CIAM-Kongresse entwickelte Aalto Anfang der 1930er Jahre eine enge Freundschaft mit Moholy-Nagy.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alvar_Aalto"
-      ],
-      "notes": "Durch diese Beziehung kam Aalto unmittelbar mit den modernistischen Kreisen des Bauhaus-Umfelds in Kontakt.",
-      "relationship_type": "professional/friend"
-    },
-    {
-      "person_name": "Sigfried Giedion",
-      "relationship_description": "Über die CIAM schloss Aalto eine enge Freundschaft mit dem Architekturhistoriker Sigfried Giedion. Giedion widmete Aalto später in Raum, Zeit und Architektur große Aufmerksamkeit.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alvar_Aalto"
-      ],
-      "notes": "Giedions Buch von 1949 war für Aaltos internationales Ansehen als Architekt von Bedeutung.",
-      "relationship_type": "professional/friend"
-    },
-    {
-      "person_name": "Philip Morton Shand",
-      "relationship_description": "Über die CIAM knüpfte Aalto Anfang der 1930er Jahre eine enge Freundschaft mit dem Architekturpublizisten Philip Morton Shand.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alvar_Aalto"
-      ],
-      "notes": null,
-      "relationship_type": "professional/friend"
-    },
-    {
-      "person_name": "Le Corbusier",
-      "relationship_description": "Aalto verfolgte Le Corbusiers Arbeit aufmerksam und besuchte in den ersten Jahren seiner Entwicklung zur modernen Architektur mehrmals dessen Pariser Büro.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alvar_Aalto"
-      ],
-      "notes": "Aalto verfolgte Le Corbusiers Arbeit und besuchte während seiner frühen Entwicklung zur modernen Architektur dessen Pariser Büro.",
-      "relationship_type": "professional/acquaintance"
-    },
-    {
       "person_name": "Nils-Gustav Hahl",
-      "relationship_description": "Der Kunsthistoriker Nils-Gustav Hahl gründete 1935 gemeinsam mit Alvar und Aino Aalto sowie Maire Gullichsen Artek.",
+      "relationship_description": "Der Kunsthistoriker Hahl gründete 1935 gemeinsam mit Aalto Artek und wurde dessen erster Geschäftsführer. Er leitete die geschäftlichen Tätigkeiten und das Kunstprogramm.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Artek_(company)",
         "https://de.wikipedia.org/wiki/Nils-Gustav_Hahl"
       ],
-      "notes": "Seine Rolle in der Leitung von Artek und bei dessen Kunstprogramm muss durch eine für die App verfügbare Quelle belegt werden, bevor sie angezeigt wird.",
+      "notes": null,
       "relationship_type": "business/co_founder"
     },
     {
       "person_name": "Harry Gullichsen",
-      "relationship_description": "Der Industrielle Harry Gullichsen und seine Frau Maire beauftragten Aalto und Aino Aalto, von 1937 bis 1939 die Villa Mairea in Noormarkku zu entwerfen.",
+      "relationship_description": "Der Industrielle Harry Gullichsen und Maire Gullichsen beauftragten Alvar und Aino Aalto mit der Villa Mairea. Das Haus wurde 1939 in Noormarkku fertiggestellt.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Alvar_Aalto",
         "https://en.wikipedia.org/wiki/Maire_Gullichsen"
       ],
-      "notes": "Der Auftrag ermöglichte ein bedeutendes Experiment mit Aaltos reifem organischem Modernismus.",
-      "relationship_type": "professional/client"
+      "notes": "Die Villa Mairea vereinte die Architektur- und Innenraumgestaltung der Aaltos in einem privaten Auftrag.",
+      "relationship_type": "business/client"
     },
     {
       "person_name": "Louis Carré",
-      "relationship_description": "Der französische Kunsthändler Louis Carré beauftragte Aalto mit dem Entwurf der Maison Louis Carré in Frankreich.",
+      "relationship_description": "Der französische Kunsthändler Louis Carré gab Maison Louis Carré in Frankreich in Auftrag. Elissa Aalto beaufsichtigte die Fertigstellung des Projekts.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Louis_Carr%C3%A9_(art_dealer)",
         "https://en.wikipedia.org/wiki/Elissa_Aalto"
       ],
-      "notes": "Elissa Aalto war als betreuende Architektin für das Projekt zuständig.",
-      "relationship_type": "professional/client"
-    },
-    {
-      "person_name": "Jonas Heiska",
-      "relationship_description": "Der örtliche Künstler Jonas Heiska gab Aalto Zeichenunterricht, als dieser vor Beginn seines Architekturstudiums das Jyväskylä Lyceum besuchte.",
-      "strength": "moderate",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alvar_Aalto"
-      ],
-      "notes": "Dieser Unterricht war Teil von Aaltos früher Ausbildung im bildnerischen Sehen.",
-      "relationship_type": "academic/teacher"
+      "notes": "Maison Louis Carré ist Aaltos einziges erhaltenes Bauwerk in Frankreich.",
+      "relationship_type": "business/client"
     },
     {
       "person_name": "Armas Lindgren",
-      "relationship_description": "Armas Lindgren war Professor für Architektur an der Technischen Hochschule Helsinki. Während seines Architekturstudiums unterrichtete und beeinflusste er Aalto.",
+      "relationship_description": "Lindgren unterrichtete Aalto als Professor für Architektur an der Technischen Hochschule Helsinki, nachdem er 1919 die Stelle übernommen hatte.",
       "strength": "moderate",
       "sources": [
-        "https://en.wikipedia.org/wiki/Armas_Lindgren",
-        "https://en.wikipedia.org/wiki/Alvar_Aalto"
+        "https://en.wikipedia.org/wiki/Armas_Lindgren"
       ],
       "notes": null,
       "relationship_type": "academic/teacher"
     },
     {
       "person_name": "Usko Nyström",
-      "relationship_description": "Nyström war ein einflussreicher Architekturprofessor an der Technischen Hochschule Helsinki und einer von Aaltos Lehrern.",
+      "relationship_description": "Nyström war ein einflussreicher Architekturprofessor an der Technischen Hochschule Helsinki und gehörte zu Aaltos Lehrern.",
       "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Usko_Nystr%C3%B6m",
         "https://en.wikipedia.org/wiki/Alvar_Aalto"
       ],
-      "notes": "Später entwarf Aalto nach dem Tod seines früheren Lehrers Nyströms Grabstein.",
+      "notes": "Nachdem Aalto 1928 den Wettbewerb des Finnischen Architektenverbands gewonnen hatte, entwarf er Nyströms Grabstein.",
       "relationship_type": "academic/teacher"
+    },
+    {
+      "person_name": "Sven Markelius",
+      "relationship_description": "Der schwedische Architekt Sven Markelius führte Aalto in CIAM ein, einen internationalen Verband moderner Architekten. Aalto nahm an dessen Kongressen in Frankfurt und Athen teil.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alvar_Aalto",
+        "https://en.wikipedia.org/wiki/Sven_Markelius"
+      ],
+      "notes": "Dadurch wurde Aalto Teil des transnationalen Netzwerks moderner Architektur.",
+      "relationship_type": "academic/connector"
+    },
+    {
+      "person_name": "László Moholy-Nagy",
+      "relationship_description": "Über CIAM, einen internationalen Verband moderner Architekten, schloss Aalto Anfang der 1930er Jahre eine enge Freundschaft mit dem Künstler und Designer László Moholy-Nagy.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alvar_Aalto"
+      ],
+      "notes": null,
+      "relationship_type": "academic/friend"
+    },
+    {
+      "person_name": "Sigfried Giedion",
+      "relationship_description": "Über CIAM, einen internationalen Verband moderner Architekten, schloss Aalto Anfang der 1930er Jahre eine enge Freundschaft mit dem Architekturhistoriker Sigfried Giedion.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alvar_Aalto"
+      ],
+      "notes": "Giedion räumte Aalto später in Space, Time and Architecture einen außergewöhnlich hohen Stellenwert ein.",
+      "relationship_type": "academic/friend"
+    },
+    {
+      "person_name": "Philip Morton Shand",
+      "relationship_description": "Über CIAM, einen internationalen Verband moderner Architekten, schloss Aalto Anfang der 1930er Jahre eine enge Freundschaft mit dem britischen Architekturpublizisten Philip Morton Shand.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alvar_Aalto"
+      ],
+      "notes": null,
+      "relationship_type": "academic/friend"
+    },
+    {
+      "person_name": "Le Corbusier",
+      "relationship_description": "Aalto verfolgte die Arbeit von Le Corbusier aufmerksam und besuchte ihn in den 1930er Jahren mehrmals in dessen Pariser Büro.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alvar_Aalto"
+      ],
+      "notes": "Der unmittelbare Austausch fand statt, während Aalto die orthodoxe Moderne des Internationalen Stils übernahm und kritisch hinterfragte.",
+      "relationship_type": "academic/peer"
+    },
+    {
+      "person_name": "Arvid Bjerke",
+      "relationship_description": "Auf seiner ersten Auslandsreise arbeitete Aalto 1920 kurz im Büro des schwedischen Architekten Arvid Bjerke in Göteborg.",
+      "strength": "weak",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alvar_Aalto"
+      ],
+      "notes": null,
+      "relationship_type": "professional/employer"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Aalto wuchs in einem finnisch- und schwedischsprachigen Haushalt auf. Seine Eltern erhielten in Alajärvi Aaltos ersten Bauauftrag als Studenten. In der Zwischenkriegszeit arbeitete Aino Aalto mit ihm an Architektur, Innenräumen, Möbeln und Glaswaren. Nach Ainos Tod 1949 trat Elissa Aalto in das Büro ein und leitete es später nach Aaltos Tod."
+      "summary": "Aaltos Eltern vermittelten ihm eine zweisprachige Herkunft aus der finnischen Provinz. Seine Ehe mit Aino Aalto begründete eine langjährige architektonische Partnerschaft, die seine Arbeit vom Sanatorium Paimio bis zu Artek prägte. Nach Ainos Tod wurde Elissa Aalto seine Frau und eine wichtige Mitarbeiterin im Büro. Nach seinem Tod führte sie das Büro weiter."
     },
     {
       "relationship_type": "professional",
-      "summary": "Aaltos Umzug nach Turku führte zur Zusammenarbeit mit Erik Bryggman, unter anderem bei der Turkuer Messe von 1928–1929. Sven Markelius machte ihn 1929 mit der CIAM bekannt. Über die CIAM knüpfte Aalto Kontakte zu europäischen Architekten, Künstlern und Kritikern, darunter Moholy-Nagy, Giedion, Shand und Le Corbusier."
+      "summary": "Aaltos frühes berufliches Umfeld verband sein finnisches Büro mit der nordischen Moderne. Noch als Student arbeitete er kurz in Göteborg. In Turku führte die Zusammenarbeit mit Erik Bryggman zu Projekten wie der Messe von Turku und zu einer engen Arbeitsbeziehung mit einem weiteren finnischen Architekten."
     },
     {
       "relationship_type": "business",
-      "summary": "Artek entstand im Dezember 1935 in Helsinki mit Alvar und Aino Aalto, Maire Gullichsen und Nils-Gustav Hahl. Das Unternehmen verkaufte von den Aaltos entworfene Möbel und Glaswaren. So erhielten ihre Entwürfe einen kommerziellen Vertriebsweg über einzelne Architekturaufträge hinaus."
+      "summary": "Geschäftspartner und Auftraggeber halfen Aalto, architektonische Ideen in die Produktion zu überführen. Artek stellte Einrichtungsgegenstände her und vermarktete sie im Zusammenhang mit der Arbeit der Aaltos. Maire und Harry Gullichsen gaben die Villa Mairea in Noormarkku in Auftrag. Louis Carré beauftragte später ein Haus in Frankreich."
     },
     {
       "relationship_type": "academic",
-      "summary": "Jonas Heiska unterrichtete Aalto am Jyväskylä Lyceum im Zeichnen, bevor Aalto 1916 an die Technische Hochschule Helsinki wechselte. In Helsinki lehrten ihn Armas Lindgren und Usko Nyström Architektur. Später entwarf Aalto Nyströms Grabstein."
+      "summary": "Aaltos Lehrer an der Technischen Hochschule Helsinki prägten seine Architekturausbildung. Sven Markelius führte ihn in CIAM ein, einen internationalen Verband moderner Architekten. Über dieses Netzwerk schloss Aalto Freundschaften mit Künstlern, Kritikern und Architekten in ganz Europa, darunter László Moholy-Nagy, Sigfried Giedion, Philip Morton Shand und Le Corbusier."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "54f48af1fccf3e7e",
-    "translated_on": "2026-09-05T08:05:43.431009+02:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "a7e6d41074e38814",
+    "translated_on": "2026-09-19T12:20:07.945361+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

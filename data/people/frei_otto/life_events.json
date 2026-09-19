@@ -1,17 +1,17 @@
 {
-  "dataset": "historical-biography",
-  "created_on": "2025-12-06",
+  "dataset": "Frei Otto biographical timeline",
+  "created_on": "2026-09-19",
   "person": {
     "name": "Frei_Otto",
     "birth_date": "1925-05-31",
     "death_date": "2015-03-09",
     "primary_roles": [
       "architect",
-      "engineer",
-      "academic"
+      "theorist",
+      "educator"
     ],
-    "tagline": "Pioneer of lightweight tensile architecture",
-    "summary": "Frei Otto was a German architect, structural innovator and professor whose experimental work with cable nets, gridshells and other tensile structures transformed 20th‑century architecture. Starting from gliding and prisoner‑of‑war camp construction, he developed a lifelong quest for building with minimal material, energy and environmental impact, founding the Institute for Lightweight Structures in Stuttgart and shaping icons such as the Munich Olympic roofs and the German pavilion at Expo 67. A leading voice of organic and ecological design, he received the Pritzker Architecture Prize in 2015, shortly before his death.",
+    "tagline": "Cable Nets for Lightweight Buildings",
+    "summary": "Frei Otto was a German architect and teacher who developed lightweight structures based on cable nets, membranes, and grids. His work joined experimental models with major public buildings, including the roofs for the Munich Olympic Park and Mannheim's Multihalle.",
     "wikipedia": "https://de.wikipedia.org/wiki/Frei_Otto",
     "portrait": {
       "image": "/portraits/frei_otto_thumbnail.webp",
@@ -19,16 +19,16 @@
       "medium": "/portraits/frei_otto_medium.webp",
       "full": "/portraits/frei_otto_full.webp",
       "source": "https://openverse.org/image/f970d4cf-d3f7-4478-92d8-9e794d71b9ec?q=frei+otto&p=5",
-      "caption": "Stylized portrait based on historical photograph",
+      "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
       "originalImage": "https://live.staticflickr.com/8706/16812037915_48d48dc18b_b.jpg",
-      "originalCaption": "Stylized portrait based on historical photograph"
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "artistic_origins_and_wartime_formative_years",
-      "headline": "Artistic Origins, Wartime Trials",
+      "id": "origins_learning",
+      "headline": "Learning From Flight",
       "date_start": "1925-05-31",
       "date_start_precision": "day",
       "date_end": "1950",
@@ -36,9 +36,6 @@
       "age_start": 0,
       "age_end": 25,
       "involved_people": [
-        "Frei Otto's father",
-        "Frei Otto's mother",
-        "Frei Otto's paternal grandfather",
         "Erich Mendelsohn",
         "Ludwig Mies van der Rohe",
         "Richard Neutra",
@@ -46,122 +43,153 @@
         "Eero Saarinen",
         "Fred Severud"
       ],
-      "location": "Germany"
+      "location": "Germany and France",
+      "illustration": {
+        "image": "/chapter_art/frei_otto/origins_learning_medium.webp",
+        "medium": "/chapter_art/frei_otto/origins_learning_medium.webp",
+        "full": "/chapter_art/frei_otto/origins_learning_full.webp",
+        "concept": "A single translucent wing-like plane of pale fabric arcs upward from a dark field, its edge dissolving into fine airborne filaments. Cool dawn light catches the tension between lift and fragility.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "independent_practice_and_early_innovations",
-      "headline": "Independent Practice, Early Innovations",
+      "id": "practice_method",
+      "headline": "The Hanging Roof",
       "date_start": "1952",
       "date_start_precision": "year",
-      "date_end": "1964",
+      "date_end": "1954",
       "date_end_precision": "year",
       "age_start": 27,
-      "age_end": 39,
+      "age_end": 29,
       "involved_people": [
-        "Ingrid Otto (née Smolla)",
-        "Johann-Gerhard Helmcke"
+        "Ingrid Smolla",
+        "Fred Severud",
+        "Peter Stromeyer"
       ],
-      "location": "Germany"
+      "location": "Germany",
+      "illustration": {
+        "image": "/chapter_art/frei_otto/practice_method_medium.webp",
+        "medium": "/chapter_art/frei_otto/practice_method_medium.webp",
+        "full": "/chapter_art/frei_otto/practice_method_full.webp",
+        "concept": "At center, a shallow basin of luminous threads hangs between four unseen points, dipping gracefully under its own pull. The surrounding darkness makes each taut line and soft curve feel newly discovered.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "iconic_lightweight_landmarks",
-      "headline": "Iconic Lightweight Landmarks",
-      "date_start": "1967",
+      "id": "research_network",
+      "headline": "Building Lightness",
+      "date_start": "1957",
       "date_start_precision": "year",
-      "date_end": "1975",
+      "date_end": "1967",
       "date_end_precision": "year",
-      "age_start": 42,
-      "age_end": 50,
+      "age_start": 32,
+      "age_end": 42,
       "involved_people": [
-        "Peter Stromeyer",
+        "Rolf Gutbrod",
+        "Peter Stromeyer"
+      ],
+      "location": "West Germany and Canada",
+      "illustration": {
+        "image": "/chapter_art/frei_otto/research_network_medium.webp",
+        "medium": "/chapter_art/frei_otto/research_network_medium.webp",
+        "full": "/chapter_art/frei_otto/research_network_full.webp",
+        "concept": "A suspended web of dewdrop-thin strands expands from a compact knot into an intricate luminous mesh, with tiny beads of light traveling along its crossings. The form suggests knowledge spreading through experiment.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
+    },
+    {
+      "id": "spanning_structures",
+      "headline": "Roofs Without Weight",
+      "date_start": "1968",
+      "date_start_precision": "year",
+      "date_end": "1976",
+      "date_end_precision": "year",
+      "age_start": 43,
+      "age_end": 51,
+      "involved_people": [
         "Günter Behnisch",
-        "Fritz Leonhardt",
-        "Jörg Schlaich"
+        "Carlfried Mutschler",
+        "Joachim Langner"
       ],
-      "location": "Germany"
+      "location": "West Germany",
+      "illustration": {
+        "image": "/chapter_art/frei_otto/spanning_structures_medium.webp",
+        "medium": "/chapter_art/frei_otto/spanning_structures_medium.webp",
+        "full": "/chapter_art/frei_otto/spanning_structures_full.webp",
+        "concept": "A vast, weightless canopy of interlocking silver arcs floats over blackness, rising and falling like a frozen wave. Light pools across its transparent surface, emphasizing breadth achieved through almost nothing.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "research_leadership_and_global_projects",
-      "headline": "Research Leadership, Global Projects",
-      "date_start": "1976",
-      "date_start_precision": "year",
-      "date_end": "1998",
-      "date_end_precision": "year",
-      "age_start": 51,
-      "age_end": 73,
-      "involved_people": [
-        "Mahmoud Bodo Rasch"
-      ],
-      "location": "Germany"
-    },
-    {
-      "id": "late_experiments_and_lasting_recognition",
-      "headline": "Late Experiments, Lasting Recognition",
-      "date_start": "2000",
+      "id": "last_workshop",
+      "headline": "The Warmbronn Studio",
+      "date_start": "1990",
       "date_start_precision": "year",
       "date_end": "2015-03-09",
       "date_end_precision": "day",
-      "age_start": 75,
+      "age_start": 65,
       "age_end": 89,
       "involved_people": [
-        "Shigeru Ban",
-        "Gottfried Böhm"
+        "Ingrid Smolla",
+        "Christine Otto-Kanstinger"
       ],
-      "location": "Germany"
+      "location": "Southwest Germany",
+      "illustration": {
+        "image": "/chapter_art/frei_otto/last_workshop_medium.webp",
+        "medium": "/chapter_art/frei_otto/last_workshop_medium.webp",
+        "full": "/chapter_art/frei_otto/last_workshop_full.webp",
+        "concept": "A delicate circular membrane, softly illuminated from within, rests in darkness with one outer edge fading into mist. Its remaining taut lines hold a quiet, persistent glow, suggesting work continued at the threshold of disappearance.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     }
   ],
+  "conclusion": "Frei Otto developed cable nets, membranes, and grid shells for buildings that used little material, surface, and energy. The Munich Olympic roofs and Mannheim Multihalle remain prominent examples of this work. His Institute for Lightweight Structures at the University of Stuttgart continues as ILEK.",
   "events": [
     {
       "date": "1925-05-31",
       "date_precision": "day",
       "age": 0,
       "title": "Birth in Siegmar",
-      "description": "Frei Paul Otto is born in Siegmar, today part of Chemnitz, into a family steeped in the arts; both his father and grandfather are sculptors, and his parents are active in the [[Deutscher Werkbund|Deutscher Werkbund]] reform movement. His mother chooses the unusual given name \"Frei\" (free) as an expression of her life motto, foreshadowing his later pursuit of open, flexible architecture.",
+      "description": "Frei Paul Otto was born in Siegmar, Germany, to parents who belonged to the [[German Werkbund|German association of artists, architects, and designers]]. His first name, Frei, came from his mother, whose motto was “free.”",
       "locations": [
         {
-          "name_historic": "Siegmar (near Chemnitz)",
+          "name_historic": "Siegmar",
           "name_modern": "Chemnitz, Germany",
           "centroid": [
-            12.8525,
-            50.8208
+            12.85,
+            50.83
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "Frei Otto's father",
-        "Frei Otto's mother",
-        "Frei Otto's paternal grandfather"
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
-      "sources": [],
       "event_type_icon": "mdi-candle",
-      "chapter": "artistic_origins_and_wartime_formative_years",
+      "chapter": "origins_learning",
       "annotations": {
-        "Deutscher Werkbund": {
-          "explanation": "A German association of artists, architects, designers, and industrialists founded in 1907 to promote high-quality design and the integration of art, industry, and craftsmanship in everyday objects and architecture.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Deutscher_Werkbund"
+        "German Werkbund": {
+          "explanation": "Founded in 1907, the German Werkbund linked designers, architects, artists, and manufacturers to improve the quality of industrial products and buildings.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/German_Workers%27_Association"
         }
       },
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Bahnhof_Chemnitz-Siegmar%2C_Empfangsgeb%C3%A4ude_%281%29.jpg/960px-Bahnhof_Chemnitz-Siegmar%2C_Empfangsgeb%C3%A4ude_%281%29.jpg",
-          "caption": "Bahnhof Chemnitz-Siegmar, Empfangsgebäude (2021)",
-          "source": "https://commons.wikimedia.org/wiki/File:Bahnhof_Chemnitz-Siegmar,_Empfangsgebäude_(1).jpg",
-          "creator": "Aagnverglaser",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
+      "weight": 0.25,
       "event_class": {
-        "type": "birth"
+        "type": "birth",
+        "characterization": "Werkbund household"
       }
     },
     {
       "date": "1943",
       "date_precision": "year",
       "age": 18,
-      "title": "Starts studies and war service",
-      "description": "Otto begins studying architecture at the Technische Hochschule Berlin, but his education is quickly interrupted by conscription during the Second World War. Trained and deployed as a fighter pilot, he experiences the technical world of aviation while carrying with him schoolboy experiences of gliding and model‑building, where he first explored lightweight construction and frame‑stretched membranes.",
+      "title": "Studies Architecture During War",
+      "description": "In 1943, Frei Otto began studying architecture at the Technical University of Berlin. His studies were interrupted when he was trained and deployed as a fighter pilot during World War II.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -173,37 +201,26 @@
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/World_War_II"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "artistic_origins_and_wartime_formative_years",
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Berlin-Charlottenburg_Technische_Universit%C3%A4t_Berlin_498.jp.jpg/960px-Berlin-Charlottenburg_Technische_Universit%C3%A4t_Berlin_498.jp.jpg",
-          "caption": "Technische Universität Berlin, Kraft- und Fernheizwerk",
-          "source": "https://commons.wikimedia.org/wiki/File:Berlin-Charlottenburg_Technische_Universität_Berlin_498.jp.jpg",
-          "creator": "GFreihalter",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ]
+      "chapter": "origins_learning",
+      "weight": 0.45
     },
     {
       "date": "1945",
       "date_precision": "year",
-      "date_note": "Approximate year of his captivity and work in Chartres; exact dates are not specified in the source text",
       "age": 20,
-      "title": "POW design work in Chartres",
-      "description": "Captured near [[Nuremberg|Nuremberg]] in 1945, Otto becomes a French prisoner of war and is transferred to a camp near Chartres. There he is entrusted with helping to plan several camp buildings in extremely economical lightweight construction, inspired daily by the stone \"lightweight\" structure of Chartres Cathedral. The experience convinces him that minimal material and intelligent form‑finding can produce both efficient and beautiful architecture.",
+      "title": "Captivity in Chartres",
+      "description": "Otto was held in a French prisoner-of-war camp in Chartres after his capture near Nuremberg. He helped design several low-cost buildings for the camp using lightweight construction. The stone structure of [[Chartres Cathedral]] provided a daily example of structural lightness.",
       "locations": [
         {
           "name_historic": "Nuremberg",
           "name_modern": "Nuremberg, Germany",
           "centroid": [
-            11.07675,
-            49.45203
+            11.0775,
+            49.4539
           ],
           "primary": false
         },
@@ -212,32 +229,40 @@
           "name_modern": "Chartres, France",
           "centroid": [
             1.489,
-            48.446
+            48.4469
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/World_War_II"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Kriegsgefangenenlager_-_POW_camp_-_Chartres_Winter_1946-47.jpg/960px-Kriegsgefangenenlager_-_POW_camp_-_Chartres_Winter_1946-47.jpg",
+          "caption": "French prisoner-of-war camp near Chartres",
+          "source": "https://commons.wikimedia.org/wiki/File:Kriegsgefangenenlager_-_POW_camp_-_Chartres_Winter_1946-47.jpg",
+          "creator": "Gerhard Meyer-Hentschel",
+          "license": "CC BY 2.5",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.5"
+        }
       ],
       "event_type_icon": "mdi-lock",
-      "chapter": "artistic_origins_and_wartime_formative_years",
+      "chapter": "origins_learning",
       "annotations": {
-        "Nuremberg": {
-          "explanation": "A city in the German state of Bavaria that was a major military and industrial center during World War II and later the site of postwar Allied war-crimes trials.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Nuremberg"
+        "Chartres Cathedral": {
+          "explanation": "Chartres Cathedral is a major Gothic cathedral in northern France, known for its high stone vaults, flying buttresses, and stained glass.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Chartres_Cathedral"
         }
-      }
+      },
+      "weight": 0.65
     },
     {
       "date": "1948",
       "date_precision": "year",
-      "date_end": "1950",
-      "date_end_precision": "year",
       "age": 23,
-      "title": "Resumes Berlin studies and US scholarship",
-      "description": "After his repatriation, Otto resumes his interrupted architecture studies at the Technische Hochschule Berlin, supported by a scholarship from the [[Studienstiftung des deutschen Volkes|Studienstiftung des deutschen Volkes]]. In 1950 his faculty selects him as a stipendary for half a year of study and travel in the United States, where he visits Erich Mendelsohn, Ludwig Mies van der Rohe, Richard Neutra, Frank Lloyd Wright, Eero Saarinen and engineer Fred Severud, forming a lasting friendship with Mies and absorbing first‑hand the leading modernist works of the time.",
+      "title": "Returns to Berlin Studies",
+      "description": "In 1948, Frei Otto resumed architecture studies at the Technical University of Berlin after his release from French captivity. The [[Studienstiftung des deutschen Volkes|Studienstiftung]] supported his studies as a German scholarship foundation.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -247,49 +272,52 @@
             52.52
           ],
           "primary": true
-        },
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "origins_learning",
+      "weight": 0.4,
+      "annotations": {
+        "Studienstiftung des deutschen Volkes": {
+          "explanation": "The Studienstiftung des deutschen Volkes is Germany’s largest scholarship foundation for academically talented students.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Studienstiftung_des_deutschen_Volkes"
+        }
+      }
+    },
+    {
+      "date": "1950",
+      "date_precision": "year",
+      "age": 25,
+      "title": "Studies Architecture in America",
+      "description": "In 1950, Frei Otto receives a faculty scholarship for six months of architectural study in the United States. He visits the work of Erich Mendelsohn, Ludwig Mies van der Rohe, Richard Neutra, Frank Lloyd Wright, Eero Saarinen, and engineer Fred Severud. In Severud’s New York office, he sees a model of the suspended roof for the Dorton Arena in Raleigh, North Carolina.",
+      "locations": [
         {
-          "name_historic": "Chicago",
-          "name_modern": "Chicago, Illinois, USA",
+          "name_historic": "United States",
+          "name_modern": "United States",
           "centroid": [
-            -87.6298,
-            41.8781
+            -100.445882,
+            39.7837304
           ],
-          "primary": false
+          "primary": true
         },
         {
-          "name_historic": "Los Angeles",
-          "name_modern": "Los Angeles, California, USA",
-          "centroid": [
-            -118.2437,
-            34.0522
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Spring Green",
-          "name_modern": "Spring Green, Wisconsin, USA",
-          "centroid": [
-            -90.0671,
-            43.1767
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Bloomfield Hills",
-          "name_modern": "Bloomfield Hills, Michigan, USA",
-          "centroid": [
-            -83.2805,
-            42.5836
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "New York City",
-          "name_modern": "New York City, New York, USA",
+          "name_historic": "New York",
+          "name_modern": "New York City, United States",
           "centroid": [
             -74.006,
             40.7128
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Raleigh",
+          "name_modern": "Raleigh, North Carolina, United States",
+          "centroid": [
+            -78.6382,
+            35.7796
           ],
           "primary": false
         }
@@ -303,25 +331,77 @@
         "Fred Severud"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frei_Otto",
-        "https://en.wikipedia.org/wiki/Ludwig_Mies_van_der_Rohe",
-        "https://en.wikipedia.org/wiki/Richard_Neutra"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
-      "event_type_icon": "mdi-trophy",
-      "chapter": "artistic_origins_and_wartime_formative_years",
-      "annotations": {
-        "Studienstiftung des deutschen Volkes": {
-          "explanation": "The German National Academic Foundation, a highly selective scholarship organization that supports academically outstanding students in Germany.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Studienstiftung"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Mies_van_der_Rohe_%281558321986%29.jpg/960px-Mies_van_der_Rohe_%281558321986%29.jpg",
+          "caption": "Ludwig Mies van der Rohe-designed subdivision",
+          "source": "https://commons.wikimedia.org/wiki/File:Mies_van_der_Rohe_(1558321986).jpg",
+          "creator": "Greg",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
         }
+      ],
+      "event_type_icon": "mdi-school",
+      "chapter": "origins_learning",
+      "weight": 0.55
+    },
+    {
+      "date": "1952",
+      "date_precision": "year",
+      "age": 27,
+      "title": "Begins Marriage With Ingrid Smolla",
+      "description": "Frei Otto marries Ingrid Smolla in 1952. Their marriage lasts until Otto’s death.",
+      "locations": [],
+      "involved_people": [
+        "Ingrid Smolla"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "practice_method",
+      "weight": 0.45,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Ingrid Smolla",
+        "duration": "until death",
+        "children": 5,
+        "characterization": "lasting marriage"
       }
     },
     {
       "date": "1952",
       "date_precision": "year",
       "age": 27,
-      "title": "Opens Berlin office and marries",
-      "description": "Otto opens his own architectural office in [[Berlin-Zehlendorf|Berlin‑Zehlendorf]], establishing himself as an independent designer focused on experimental forms and structures. In the same year he marries Ingrid Smolla; together they will raise five children and later collaborate in his Warmbronn studio near Leonberg, making the practice a family enterprise.",
+      "title": "Opens Berlin Studio",
+      "description": "In 1952, Frei Otto opened his own architectural office in Berlin-Zehlendorf. He used the practice to develop proposals for lightweight construction.",
+      "locations": [
+        {
+          "name_historic": "Berlin",
+          "name_modern": "Berlin, Germany",
+          "centroid": [
+            13.405,
+            52.52
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "practice_method",
+      "weight": 0.55
+    },
+    {
+      "date": "1954",
+      "date_precision": "year",
+      "age": 29,
+      "title": "Publishes Das hängende Dach Study",
+      "description": "In 1954, Frei Otto publishes Das hängende Dach, a study of tension structures that carry loads through cables, nets, or membranes. The Dorton Arena model he saw in Fred Severud’s New York office directs his attention to this form of roof. Otto meets tent manufacturer Peter Stromeyer while preparing the study.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -333,146 +413,61 @@
           "primary": true
         },
         {
-          "name_historic": "Leonberg",
-          "name_modern": "Leonberg, Germany",
+          "name_historic": "New York",
+          "name_modern": "New York City, United States",
           "centroid": [
-            8.995,
-            48.8
+            -74.006,
+            40.7128
           ],
           "primary": false
         }
       ],
       "involved_people": [
-        "Ingrid Otto (née Smolla)"
+        "Fred Severud",
+        "Peter Stromeyer"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Frei_Otto"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
-      "event_type_icon": "mdi-ring",
-      "chapter": "independent_practice_and_early_innovations",
-      "annotations": {
-        "Berlin-Zehlendorf": {
-          "explanation": "Berlin-Zehlendorf is a southwestern borough of Berlin that, in the postwar period, developed into an affluent residential and educational district, making it an attractive base for professional practices such as architectural offices.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Steglitz-Zehlendorf"
-        }
-      }
-    },
-    {
-      "date": "1954",
-      "date_precision": "year",
-      "date_end": "1962",
-      "date_end_precision": "year",
-      "date_note": "The dissertation was written in 1952–53, published in 1954 and led to a series of US guest professorships through 1962",
-      "age": 29,
-      "title": "Publishes \"Das hängende Dach\" and teaches abroad",
-      "description": "Building on impressions from [[cable-net structures|Fred Severud's model of the cable‑net Dorton Arena]], Otto completes a pioneering dissertation on the \"hanging roof\" (Das hängende Dach), published in 1954 as the first comprehensive study of tensioned surface structures. The book brings him international recognition and invitations as visiting professor to Washington University in St. Louis (1958), Yale University (1960), and in 1962 to the University of California, Berkeley, MIT and Harvard, where he disseminates his research methods to American students and engineers.",
-      "locations": [
+      "images": [
         {
-          "name_historic": "Stuttgart",
-          "name_modern": "Stuttgart, Germany",
-          "centroid": [
-            9.1815,
-            48.7775
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "St. Louis",
-          "name_modern": "St. Louis, Missouri, USA",
-          "centroid": [
-            -90.1994,
-            38.627
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "New Haven",
-          "name_modern": "New Haven, Connecticut, USA",
-          "centroid": [
-            -72.9246,
-            41.3107
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Berkeley",
-          "name_modern": "Berkeley, California, USA",
-          "centroid": [
-            -122.2727,
-            37.8715
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Cambridge",
-          "name_modern": "Cambridge, Massachusetts, USA",
-          "centroid": [
-            -71.1097,
-            42.3736
-          ],
-          "primary": false
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Dorton_Arena_%2835997447053%29.jpg/960px-Dorton_Arena_%2835997447053%29.jpg",
+          "caption": "J.S. Dorton Arena in Raleigh",
+          "source": "https://commons.wikimedia.org/wiki/File:Dorton_Arena_(35997447053).jpg",
+          "creator": "Billie Grace Ward from New York, USA",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
-      "involved_people": null,
-      "sources": [],
-      "event_type_icon": "mdi-book",
-      "chapter": "independent_practice_and_early_innovations",
-      "annotations": {
-        "cable-net structures": {
-          "explanation": "A type of lightweight structural system in which a grid of pre-tensioned cables carries loads primarily in tension, often used to create large-span roofs with minimal material.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Tensile_structure"
+      "event_type_icon": "mdi-book-open-variant",
+      "chapter": "practice_method",
+      "weight": 0.8,
+      "event_class": {
+        "type": "publication",
+        "title": "Das hängende Dach",
+        "publication_type": "thesis",
+        "significance": "technical foundation",
+        "impact": "The study brings Otto invitations for visiting professorships at American universities."
+      },
+      "background": "Matthew Nowicki’s Dorton Arena used a saddle-shaped cable-net roof. Two opposing semicircular edge cables carried the net. They crossed at the roof edge. Horizontal steel members anchored in the ground stabilized the cables against one another.\n\nOtto’s research treated cable nets, membranes, and other surfaces that carry force in tension. It was the first comprehensive account of such tensioned surface structures. His connection with Peter Stromeyer during the work gave the research a route into fabrication. Stromeyer’s Konstanz company later made Otto’s tent structures, including the German Pavilion for Expo 67 in Montreal.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Expo_67%2C_pavillon_de_la_R%C3%A9publique_f%C3%A9d%C3%A9rale_d%27Allemagne.jpg/960px-Expo_67%2C_pavillon_de_la_R%C3%A9publique_f%C3%A9d%C3%A9rale_d%27Allemagne.jpg",
+          "caption": "Pavilion of German Federal Republic, on Notre-Dame Island. Montréal, Québec, Canada.",
+          "source": "https://commons.wikimedia.org/wiki/File:Expo_67,_pavillon_de_la_République_fédérale_d'Allemagne.jpg",
+          "creator": "Laurent Bélanger",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "German Pavilion Expo 67 Montreal"
         }
-      }
+      ]
     },
     {
       "date": "1957",
       "date_precision": "year",
       "age": 32,
-      "title": "Founds lightweight lab and builds Sternwellenzelt",
-      "description": "Back in Germany Otto founds a private [[Entwicklungsstätte für den Leichtbau|Entwicklungsstätte für den Leichtbau]] (development centre for lightweight construction), creating a workshop setting for full‑scale experiments. In the same year he realizes one of his first notable tent roofs, the \"Sternwellenzelt\" over the Tanzbrunnen at the [[Bundesgartenschau|Bundesgartenschau]] in Cologne, whose star‑shaped waves of fabric and cables attract wide public attention and demonstrate the architectural potential of temporary tensile structures.",
-      "locations": [
-        {
-          "name_historic": "Cologne",
-          "name_modern": "Cologne, Germany",
-          "centroid": [
-            6.9568,
-            50.9383
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
-      "sources": [],
-      "event_type_icon": "mdi-hammer",
-      "chapter": "independent_practice_and_early_innovations",
-      "annotations": {
-        "Entwicklungsstätte für den Leichtbau": {
-          "explanation": "German for \"development centre for lightweight construction\", referring to Frei Otto’s private experimental laboratory for structural lightweight design and full‑scale tests."
-        },
-        "Bundesgartenschau": {
-          "explanation": "A periodic federal horticultural show in Germany that also serves as a showcase for experimental landscape and architectural designs.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Bundesgartenschau"
-        }
-      },
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg/960px-Tanzbrunnen_K%C3%B6ln_%280343-51%29.jpg",
-          "caption": "Tanzbrunnen Köln Sternwellenzelt by Frei Otto (1957)",
-          "source": "https://commons.wikimedia.org/wiki/File:Tanzbrunnen_Köln_(0343-51).jpg",
-          "creator": "Raimond Spekking",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ]
-    },
-    {
-      "date": "1961",
-      "date_precision": "year",
-      "date_end": "1964",
-      "date_end_precision": "year",
-      "age": 36,
-      "title": "Launches biology and lightweight institutes",
-      "description": "At the Technische Hochschule Berlin Otto co‑founds the Forschungsgruppe [[Biologie und Bauen|Biologie und Bauen]] with biologist Johann‑Gerhard Helmcke, bringing physicians, palaeontologists and architects together to study natural structures and pneumatic and biological principles for construction. In 1963 he designs the freestanding bell tower of a Protestant church in Berlin‑Schönow after the skeleton of a diatom, and in 1964 he establishes the [[Institut für Leichte Flächentragwerke|Institut für Leichte Flächentragwerke (IL)]] at the Technische Hochschule Stuttgart, which becomes a model research centre for experimental lightweight roofs and later informs the design of the German pavilion at [[Expo 67|Expo 67]].",
+      "title": "Founds Lightweight Construction Center",
+      "description": "In 1957, Frei Otto founds a development center for [[lightweight construction|lightweight construction]] in Berlin. The approach uses structural forms and materials efficiently. The center supports his models and experiments for roofs that use minimal material.",
       "locations": [
         {
           "name_historic": "Berlin",
@@ -482,7 +477,28 @@
             52.52
           ],
           "primary": true
-        },
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "research_network",
+      "annotations": {
+        "lightweight construction": {
+          "explanation": "The field seeks structures that do more with less material and energy. Otto pursued it through cable nets, membranes, grids, and physical models.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Lightweight_structure"
+        }
+      },
+      "weight": 0.7
+    },
+    {
+      "date": "1964",
+      "date_precision": "year",
+      "age": 39,
+      "title": "Founds Stuttgart Lightweight Structures Institute",
+      "description": "In 1964, Frei Otto founds the Institute for Lightweight Structures at the Technical University of Stuttgart. Researchers there investigate lightweight construction and natural forms.",
+      "locations": [
         {
           "name_historic": "Stuttgart",
           "name_modern": "Stuttgart, Germany",
@@ -490,8 +506,33 @@
             9.1829,
             48.7758
           ],
-          "primary": false
-        },
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/7720/17093696771_96ca8ee688_b.jpg",
+          "caption": "Frei Otto Institute for Lightweight Structures",
+          "source": "https://www.flickr.com/photos/44343967@N00/17093696771",
+          "creator": "準建築人手札網站 Forgemind ArchiMedia",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+        }
+      ],
+      "event_type_icon": "mdi-microscope",
+      "chapter": "research_network",
+      "weight": 0.85
+    },
+    {
+      "date": "1967",
+      "date_precision": "year",
+      "age": 42,
+      "title": "Builds German Pavilion at Expo 67",
+      "description": "In 1967, Frei Otto helps design the German Pavilion for Expo 67 in Montreal with architect Rolf Gutbrod and other collaborators. Peter Stromeyer’s tent-building company fabricates its roof from a network of tensioned cables.",
+      "locations": [
         {
           "name_historic": "Montreal",
           "name_modern": "Montreal, Canada",
@@ -499,78 +540,41 @@
             -73.5673,
             45.5017
           ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Johann-Gerhard Helmcke"
-      ],
-      "sources": [],
-      "event_type_icon": "mdi-microscope",
-      "chapter": "independent_practice_and_early_innovations",
-      "annotations": {
-        "Biologie und Bauen": {
-          "explanation": "An interdisciplinary research group at the Technische Hochschule Berlin founded to investigate how biological forms and processes can inform building design and construction methods."
-        },
-        "Institut für Leichte Flächentragwerke": {
-          "explanation": "A pioneering lightweight-structures institute founded by Frei Otto in Stuttgart, dedicated to experimental research on cable-net, membrane, and shell roofs."
-        },
-        "Expo 67": {
-          "explanation": "The 1967 International and Universal Exposition held in Montreal, a world fair whose pavilions showcased cutting-edge architecture and engineering.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Expo_67"
-        }
-      },
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/0134-Stuttgart-Otto.jpg/960px-0134-Stuttgart-Otto.jpg",
-          "caption": "Institute for Lightweight Structures, University of Stuttgart-Vaihingen",
-          "source": "https://commons.wikimedia.org/wiki/File:0134-Stuttgart-Otto.jpg",
-          "creator": "Kamahele",
-          "license": "CC BY-SA 3.0 de",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
-        }
-      ]
-    },
-    {
-      "date": "1967",
-      "date_precision": "year",
-      "age": 42,
-      "title": "German Pavilion at Expo 67, Montreal",
-      "description": "For the 1967 World Exposition in Montreal Otto designs the much‑admired German Pavilion, working with tent‑builder Peter Stromeyer, who fabricates the large membrane roofs in Konstanz. The pavilion's filigree cable nets and textile surfaces embody his ideal of \"light, flexible buildings\" that use minimal material while creating generous, open public space, and they present German post‑war architecture as technologically experimental and socially forward‑looking.",
-      "locations": [
-        {
-          "name_historic": "Montreal",
-          "name_modern": "Montreal, Canada",
-          "centroid": [
-            -73.5698065,
-            45.5031824
-          ],
           "primary": true
-        },
-        {
-          "name_historic": "Konstanz",
-          "name_modern": "Konstanz, Germany",
-          "centroid": [
-            9.1750718,
-            47.659216
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
+        "Rolf Gutbrod",
         "Peter Stromeyer"
       ],
-      "sources": [],
-      "event_type_icon": "mdi-drawing",
-      "chapter": "iconic_lightweight_landmarks",
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://de.wikipedia.org/wiki/Rolf_Gutbrod",
+        "https://de.wikipedia.org/wiki/Multihalle"
+      ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/c/c5/1967_July_Expo_67_Montreal_%2810%29.jpg",
-          "caption": "1967 July Expo 67 Montreal",
-          "source": "https://commons.wikimedia.org/wiki/File:1967_July_Expo_67_Montreal_(10).jpg",
-          "creator": "ArtLink2Fun",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://live.staticflickr.com/4178/34552599895_06d0246cec_b.jpg",
+          "caption": "Frei Otto German Pavilion at Expo 67",
+          "source": "https://www.flickr.com/photos/147316538@N02/34552599895",
+          "creator": "bianca.maggio",
+          "license": "CC PDM 1.0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
+        }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "research_network",
+      "weight": 0.9,
+      "background": "The pavilion included a double-curved roof made as a wooden grid shell. It covered a lecture hall and foyer within the structure. The grid-shell approach was later developed further in the roof design for Munich’s Olympic Park.\n\nOtto’s article dates the Union Internationale des Architectes’ Auguste Perret Prize for the pavilion to 1967. Gutbrod’s article dates that award to 1968.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Expo_67%2C_pavillon_de_la_R%C3%A9publique_f%C3%A9d%C3%A9rale_d%27Allemagne.jpg/960px-Expo_67%2C_pavillon_de_la_R%C3%A9publique_f%C3%A9d%C3%A9rale_d%27Allemagne.jpg",
+          "caption": "Pavilion of German Federal Republic, on Notre-Dame Island. Montréal, Québec, Canada.",
+          "source": "https://commons.wikimedia.org/wiki/File:Expo_67,_pavillon_de_la_République_fédérale_d'Allemagne.jpg",
+          "creator": "Laurent Bélanger",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "German Pavilion Expo 67 Montreal"
         }
       ]
     },
@@ -580,92 +584,109 @@
       "date_end": "1972",
       "date_end_precision": "year",
       "age": 43,
-      "title": "Spans Munich Olympic site with tensile roofs",
-      "description": "Together with Günter Behnisch and his office, Otto develops and realizes the sweeping [[cable-net structure|cable‑net roofs]] over the main sports facilities of the 1972 Munich Olympic grounds. Asked in 1968 to solve unexpected span and form problems, he uses hanging‑net and soap‑film models to generate the final geometry, while engineers Fritz Leonhardt and Jörg Schlaich adapt the concept to satisfy safety codes. Although Otto finds the edge cables and masts heavier than his ideal, the ensemble becomes a landmark of post‑war German architecture and a global icon of lightweight design.",
+      "title": "Designs Olympic Canopy",
+      "description": "In 1968, Frei Otto worked with Günter Behnisch and the Behnisch & Partner architectural team in Munich on the cable-net roof for the Olympic Park’s main sports venues. The design covered the Olympic Stadium and neighboring facilities with a continuous, transparent canopy supported by suspended steel cables.",
       "locations": [
         {
           "name_historic": "Munich",
           "name_modern": "Munich, Germany",
           "centroid": [
-            11.576124,
-            48.137154
+            11.582,
+            48.1351
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Günter Behnisch",
-        "Fritz Leonhardt",
-        "Jörg Schlaich"
+        "Günter Behnisch"
       ],
       "sources": [
-        "https://de.wikipedia.org/wiki/Günter_Behnisch"
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://de.wikipedia.org/wiki/G%C3%BCnter_Behnisch"
       ],
-      "event_type_icon": "mdi-drawing",
-      "chapter": "iconic_lightweight_landmarks",
-      "annotations": {
-        "cable-net structure": {
-          "explanation": "A lightweight structural system in which a network of pre‑tensioned cables supports a thin roof or membrane, allowing large column‑free spans with minimal material.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Tensile_structure"
-        }
-      },
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg/960px-Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
-          "caption": "Frei Otto tensile structures for Munich 72 Olympics",
+          "caption": "Frei Otto tensile structures at Munich Olympics",
           "source": "https://commons.wikimedia.org/wiki/File:Munich_-_Frei_Otto_Tensed_structures_-_5293.jpg",
           "creator": "Jorge Royan",
           "license": "CC BY-SA 3.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
         }
+      ],
+      "event_type_icon": "mdi-drawing",
+      "chapter": "spanning_structures",
+      "weight": 1.0,
+      "background": "The proposed roof faced unexpected problems because it had to span such large areas. Günter Behnisch brought Frei Otto into the work after those difficulties emerged. The team developed a version of the floating roof Otto had previously conceived for the German Pavilion at Expo 67 in Montreal.\n\nFritz Leonhardt and Jörg Schlaich led the structural engineering. Otto thought the finished design's edge cables and supporting columns were too heavy for his idea of lightweight construction. Leonhardt and Schlaich prevailed with their requirements for structural safety.\n\nHäuser magazine selected the completed Olympic complex as the best German building of all time in 2002.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Olympic_Stadium_Munich_Dachbegehung.JPG/960px-Olympic_Stadium_Munich_Dachbegehung.JPG",
+          "caption": "Besichtigung der Dachkonstruktion des Olympia Stadions München mit Begehung.",
+          "source": "https://commons.wikimedia.org/wiki/File:Olympic_Stadium_Munich_Dachbegehung.JPG",
+          "creator": "Usien",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Munich Olympic Stadium roof"
+        }
       ]
     },
     {
-      "date": "1969",
+      "date": "1975",
       "date_precision": "year",
-      "date_end": "1995",
-      "date_end_precision": "year",
-      "age": 44,
-      "title": "Leads major research on wide‑span and natural structures",
-      "description": "The [[Deutsche Forschungsgemeinschaft|Deutsche Forschungsgemeinschaft]] appoints Otto in 1969 to head [[Sonderforschungsbereich|Sonderforschungsbereich]] 64 \"Weitgespannte Flächentragwerke\", a collaborative research centre on wide‑span surface structures based at the Stuttgart institute. After this programme, a successor project, [[Sonderforschungsbereich|SFB]] 230 \"Natürliche Konstruktionen – Leichtbau in Architektur und Natur\", continues at the IL until the end of 1995, systematically investigating natural form‑finding processes and transferring them to architecture through models, experiments and built prototypes such as gridshells and cable nets.",
+      "age": 50,
+      "title": "Completes Mannheim’s Multihalle Grid Shell",
+      "description": "In 1975, Frei Otto developed the structural design for the Multihalle in Mannheim with architects Carlfried Mutschler and Joachim Langner. The project followed their successful competition proposal for the Herzogenriedpark site of the [[Bundesgartenschau|federal garden show]], which called for a covered meeting place and café.",
       "locations": [
         {
-          "name_historic": "Stuttgart",
-          "name_modern": "Stuttgart, Germany",
+          "name_historic": "Mannheim",
+          "name_modern": "Mannheim, Germany",
           "centroid": [
-            9.1829,
-            48.7758
+            8.466,
+            49.487
           ],
           "primary": true
         }
       ],
-      "involved_people": null,
-      "sources": [],
-      "event_type_icon": "mdi-microscope",
-      "chapter": "iconic_lightweight_landmarks",
-      "annotations": {
-        "Deutsche Forschungsgemeinschaft": {
-          "explanation": "The main German research funding organization, which supports research projects and infrastructure at universities and public research institutions.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Deutsche_Forschungsgemeinschaft"
-        },
-        "Sonderforschungsbereich": {
-          "explanation": "A long-term, collaborative research centre funding scheme of the Deutsche Forschungsgemeinschaft that supports large, interdisciplinary research programmes at universities.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Deutsche_Forschungsgemeinschaft#Collaborative_Research_Centres_(SFB)"
-        },
-        "SFB": {
-          "explanation": "An abbreviation of the German term \"Sonderforschungsbereich\", denoting a DFG-funded collaborative research centre that brings together multiple institutes and disciplines for long-term projects.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Deutsche_Forschungsgemeinschaft#Collaborative_Research_Centres_(SFB)"
+      "involved_people": [
+        "Carlfried Mutschler",
+        "Joachim Langner"
+      ],
+      "sources": [
+        "https://de.wikipedia.org/wiki/Frei_Otto",
+        "https://de.wikipedia.org/wiki/Multihalle"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/4191/33742408523_53aab9e928.jpg",
+          "caption": "Frei Otto Mannheim Multihalle, 1974",
+          "source": "https://www.flickr.com/photos/147316538@N02/33742408523",
+          "creator": "bianca.maggio",
+          "license": "CC PDM 1.0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
         }
+      ],
+      "event_type_icon": "mdi-office-building",
+      "chapter": "spanning_structures",
+      "annotations": {
+        "Bundesgartenschau": {
+          "explanation": "The Bundesgartenschau is a national German garden show held in a different city every two years. Mannheim hosted the 1975 edition, for which the Multihalle was built.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Bundesgartenschau"
+        }
+      },
+      "weight": 0.95,
+      "event_class": {
+        "type": "invention",
+        "title": "Multihalle timber grid shell",
+        "description": "A free-form roof uses intersecting timber laths shaped into a double-curved grid shell that carries loads mainly through compression.",
+        "impact": "The completed hall becomes the world's largest free-form timber grid-shell structure."
       }
     },
     {
       "date": "1976",
       "date_precision": "year",
-      "date_end": "1990",
-      "date_end_precision": "year",
       "age": 51,
-      "title": "Professor at University of Stuttgart",
-      "description": "Otto is appointed Ordentlicher Professor (full professor) at the University of Stuttgart in 1976, formalizing his long‑standing role as a teacher and research leader. He teaches generations of architects and engineers until his emeritation in 1990, turning the [[Institut für Leichtbau|IL]] into an international magnet for students interested in experimental model‑based design and ecological construction; the institute later evolves into the [[Institut für Leichtbau Entwerfen und Konstruieren|Institut für Leichtbau Entwerfen und Konstruieren (ILEK)]].",
+      "title": "Leads Stuttgart Research and Teaching",
+      "description": "In 1976, Frei Otto becomes a full professor at the University of Stuttgart. He leads research and teaching through the Institute for Lightweight Structures.",
       "locations": [
         {
           "name_historic": "Stuttgart",
@@ -677,33 +698,19 @@
           "primary": true
         }
       ],
-      "involved_people": null,
       "sources": [
-        "https://en.wikipedia.org/wiki/Frei_Otto",
-        "https://de.wikipedia.org/wiki/Frei_Otto",
-        "https://de.wikipedia.org/wiki/Werner_Sobek"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
       "event_type_icon": "mdi-school-outline",
-      "chapter": "research_leadership_and_global_projects",
-      "annotations": {
-        "Institut für Leichtbau": {
-          "explanation": "The Institut für Leichtbau (Institute for Lightweight Structures, often abbreviated IL) at the University of Stuttgart was a pioneering research institute founded by Frei Otto that focused on experimental, model‑based development of lightweight and membrane structures."
-        },
-        "Institut für Leichtbau Entwerfen und Konstruieren": {
-          "explanation": "The Institut für Leichtbau Entwerfen und Konstruieren (ILEK) at the University of Stuttgart is the successor institute to Frei Otto’s IL, founded by Werner Sobek, and combines architecture and structural engineering research in lightweight, resource‑efficient construction.",
-          "wikipedia_url": "https://de.wikipedia.org/wiki/Werner_Sobek"
-        }
-      }
+      "chapter": "spanning_structures",
+      "weight": 0.6
     },
     {
-      "date": "1980",
+      "date": "1990",
       "date_precision": "year",
-      "date_end": "1998",
-      "date_end_precision": "year",
-      "date_note": "The collaboration with Mahmoud Bodo Rasch began in the late 1960s and continued through the founding of SL Rasch in 1998; the date range here summarizes his intensive involvement from the 1980s onward",
-      "age": 55,
-      "title": "Islamic lightweight roofs with Mahmoud Bodo Rasch",
-      "description": "From the 1980s onward Otto collaborates closely with his former student Mahmoud Bodo Rasch and the Stuttgart‑ and Jeddah‑based office Rasch + Bradatsch, later SL Rasch, on large retractable tents and shading structures in the Islamic world. Their projects include tent roofs for pilgrimage camps at the Hajj in Mecca and convertible membrane roofs for prominent mosques and royal facilities, pushing the scale and climatic performance of tensile architecture while serving millions of worshippers and pilgrims.",
+      "age": 65,
+      "title": "Continues Work From Warmbronn Studio",
+      "description": "In 1990, Frei Otto becomes emeritus from his professorship at the University of Stuttgart. He continues working from his studio in Warmbronn near Leonberg. His wife Ingrid Smolla and their daughter, architect Christine Otto-Kanstinger, work with him there.",
       "locations": [
         {
           "name_historic": "Stuttgart",
@@ -715,123 +722,64 @@
           "primary": true
         },
         {
-          "name_historic": "Jeddah",
-          "name_modern": "Jeddah, Saudi Arabia",
+          "name_historic": "Warmbronn",
+          "name_modern": "Leonberg, Germany",
           "centroid": [
-            39.176098,
-            21.485811
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Mecca",
-          "name_modern": "Mecca, Saudi Arabia",
-          "centroid": [
-            39.8256338,
-            21.3890824
+            9.0150026,
+            48.8012983
           ],
           "primary": false
         }
       ],
       "involved_people": [
-        "Mahmoud Bodo Rasch"
+        "Ingrid Smolla",
+        "Christine Otto-Kanstinger"
       ],
       "sources": [
-        "https://de.wikipedia.org/wiki/Mahmoud_Bodo_Rasch"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
-      "event_type_icon": "mdi-account-multiple",
-      "chapter": "research_leadership_and_global_projects"
-    },
-    {
-      "date": "2000",
-      "date_precision": "year",
-      "age": 75,
-      "title": "Japanese Pavilion at Expo 2000, Hannover",
-      "description": "For Expo 2000 in Hannover Otto co‑designs the Japanese Pavilion with architect Shigeru Ban, using a gridshell initially intended to consist solely of bent cardboard tubes. At the insistence of checking engineers, the structure is later reinforced with timber laths, but it still showcases an extreme lightweight approach that combines recyclable materials with complex doubly curved geometry, illustrating how his form‑finding methods can be adapted to new generations of sustainable construction.",
-      "locations": [
-        {
-          "name_historic": "Hanover",
-          "name_modern": "Hanover, Germany",
-          "centroid": [
-            9.73322,
-            52.37052
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Shigeru Ban"
-      ],
-      "sources": [],
-      "event_type_icon": "mdi-drawing",
-      "chapter": "late_experiments_and_lasting_recognition"
-    },
-    {
-      "date": "2010",
-      "date_precision": "year",
-      "age": 85,
-      "title": "Advises on Stuttgart 21 and criticizes risks",
-      "description": "In his later years Otto serves as a special adviser for the \"[[Lichtaugen|Lichtaugen]]\"—drop‑shaped skylight funnels—of the controversial Stuttgart 21 railway project, lending his expertise in free‑formed concrete shells and daylighting. In August 2010 he publicly calls for the project to be halted, warning that the geologically difficult ground conditions pose serious dangers, an intervention that reflects both his engineering conscience and his long‑standing commitment to environmentally and socially responsible building.",
-      "locations": [
-        {
-          "name_historic": "Stuttgart",
-          "name_modern": "Stuttgart, Germany",
-          "centroid": [
-            9.1815,
-            48.7775
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": null,
-      "sources": [],
-      "event_type_icon": "mdi-calendar",
-      "chapter": "late_experiments_and_lasting_recognition",
-      "annotations": {
-        "Lichtaugen": {
-          "explanation": "\"Lichtaugen\" (German for \"light eyes\") are specially shaped skylight openings or funnels designed to bring natural daylight deep into underground or interior spaces, often used in large infrastructure projects like railway stations."
-        }
-      }
+      "event_type_icon": "mdi-account-clock",
+      "chapter": "last_workshop",
+      "weight": 0.35
     },
     {
       "date": "2015-03-09",
       "date_precision": "day",
-      "date_note": "Otto was informed shortly before his death that he would receive the 2015 Pritzker Architecture Prize; the public announcement followed after 9 March 2015",
       "age": 89,
-      "title": "Pritzker recognition and death in Leonberg",
-      "description": "In early 2015 Otto learns that he has been selected as the recipient of the Pritzker Architecture Prize, becoming only the second German architect after Gottfried Böhm to be honoured with what is often called architecture's highest award. While still working in his studio in Warmbronn despite severe loss of eyesight, he dies on 9 March 2015 in Leonberg at the age of 89 and is later buried in Warmbronn, leaving behind a vast archive of models and drawings and a profound influence on organic and lightweight architecture worldwide.",
+      "title": "Dies After Years in Warmbronn",
+      "description": "Increasing blindness restricts Otto’s work in Warmbronn. He remains active in his studio there. He dies in Leonberg on March 9, 2015.",
       "locations": [
         {
           "name_historic": "Leonberg",
-          "name_modern": "Leonberg, Baden-Württemberg, Germany",
+          "name_modern": "Leonberg, Germany",
           "centroid": [
-            8.9667,
-            48.8
+            9.011,
+            48.801
           ],
           "primary": true
         },
         {
           "name_historic": "Warmbronn",
-          "name_modern": "Warmbronn, Leonberg, Baden-Württemberg, Germany",
+          "name_modern": "Warmbronn, Leonberg, Germany",
           "centroid": [
-            8.95,
-            48.8
+            9.021,
+            48.775
           ],
           "primary": false
         }
       ],
-      "involved_people": [
-        "Gottfried Böhm"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Pritzker_Architecture_Prize"
+        "https://de.wikipedia.org/wiki/Frei_Otto"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "late_experiments_and_lasting_recognition",
+      "chapter": "last_workshop",
+      "weight": 0.5,
       "event_class": {
         "type": "death",
-        "place_of_rest": "Warmbronn"
-      }
+        "characterization": "after declining sight",
+        "place_of_rest": "Warmbronn Cemetery, Leonberg"
+      },
+      "background": "The Pritzker Architecture Prize recognized Otto during his lifetime in 2015. Its presentation took place after his death.\n\nOtto’s extensive project archive is held by the Southwest German Archive for Architecture and Civil Engineering in Karlsruhe. In 2016 and 2017, the archive joined Wüstenrot Foundation and ZKM Karlsruhe for the largest exhibition of his work, Frei Otto. Thinking in Models."
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
-  "dataset": "Wikipedia-based biographical timeline",
-  "created_on": "2026-01-10",
+  "dataset": "Charles Rennie Mackintosh Biographical Timeline",
+  "created_on": "2026-09-19",
   "person": {
     "name": "Charles_Rennie_Mackintosh",
     "birth_date": "1868-06-07",
@@ -8,10 +8,10 @@
     "primary_roles": [
       "Architekt",
       "Designer",
-      "Künstler"
+      "Maler"
     ],
-    "tagline": "Meister der Form im Glasgow Style",
-    "summary": "Charles Rennie Mackintosh war ein schottischer Architekt, Designer und Künstler, der dem Glasgow Style und der übergreifenden europäischen Moderne zugerechnet wird. Seine Ausbildung erhielt er im Rahmen einer Lehre und an der Glasgow School of Art. Er schuf ein kleines, aber unverwechselbares Œuvre, in dem Architektur, Innenräume und Mobiliar ineinandergreifen – häufig in Zusammenarbeit mit seiner Frau Margaret MacDonald Mackintosh. In seinen späteren Jahren wandte er sich weitgehend der Aquarellmalerei zu. Er lebte zunächst in England und dann in Südfrankreich, bevor er in London starb.",
+    "tagline": "Die Glasgow School in Stein",
+    "summary": "Charles Rennie Mackintosh war ein schottischer Architekt und Designer, dessen Gebäude, Innenräume, Möbel und dekorative Arbeiten den Glasgow Style prägten. In Glasgow entwarf er die Glasgow School of Art und die Willow Tearooms. Seine letzten Jahre verbrachte er in Frankreich, wo er Aquarelle malte.",
     "wikipedia": "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
     "portrait": {
       "image": "/portraits/charles_rennie_mackintosh_thumbnail.webp",
@@ -19,82 +19,96 @@
       "medium": "/portraits/charles_rennie_mackintosh_medium.webp",
       "full": "/portraits/charles_rennie_mackintosh_full.webp",
       "source": "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
-      "caption": "Stylized portrait based on historical photograph",
+      "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Charles-Rennie-Mackintosh.jpg"
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Charles-Rennie-Mackintosh.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "glasgow_foundations",
-      "headline": "In Glasgow geformt",
+      "id": "glasgow_formative",
+      "headline": "Ein Künstler aus Glasgow",
       "date_start": "1868-06-07",
       "date_start_precision": "day",
-      "date_end": "1888",
+      "date_end": "1894",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 20,
+      "age_end": null,
       "involved_people": [
-        "William McIntosh",
-        "Margaret McIntosh (née Rennie)",
-        "John Hutchinson"
-      ],
-      "location": "Schottland"
-    },
-    {
-      "id": "the_four_take_shape",
-      "headline": "Eine neue Formensprache",
-      "date_start": "1889",
-      "date_start_precision": "year",
-      "date_end": "1896",
-      "date_end_precision": "year",
-      "age_start": 21,
-      "age_end": 28,
-      "involved_people": [
+        "John Hutchinson",
         "John Honeyman",
         "John Keppie",
-        "Margaret MacDonald Mackintosh",
+        "Margaret Macdonald",
+        "Frances Macdonald",
         "James Herbert McNair",
-        "Frances MacDonald McNair"
+        "Francis Henry Newbery"
       ],
-      "location": "Schottland"
+      "location": "Schottland",
+      "illustration": {
+        "image": "/chapter_art/charles_rennie_mackintosh/glasgow_formative_medium.webp",
+        "medium": "/chapter_art/charles_rennie_mackintosh/glasgow_formative_medium.webp",
+        "full": "/chapter_art/charles_rennie_mackintosh/glasgow_formative_full.webp",
+        "concept": "A single pale geometric bud rises from a dense charcoal grid, its slender planes opening into a cool rose-colored glow. Fine graphite-like lines radiate outward, suggesting disciplined study becoming an individual visual language.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "total_work_mastery",
-      "headline": "Das Gesamtkunstwerk",
-      "date_start": "1897",
+      "id": "glasgow_designs",
+      "headline": "Den Glasgow Style gestalten",
+      "date_start": "1896",
       "date_start_precision": "year",
-      "date_end": "1909",
+      "date_end": "1903",
       "date_end_precision": "year",
-      "age_start": 29,
-      "age_end": 41,
+      "age_start": 28,
+      "age_end": 34,
       "involved_people": [
-        "John Keppie",
         "John Honeyman",
-        "Margaret MacDonald Mackintosh",
+        "John Keppie",
+        "Francis Henry Newbery",
+        "Margaret Macdonald",
+        "Fritz Waerndorfer",
+        "Maurice Maeterlinck",
         "Catherine Cranston"
       ],
-      "location": "Schottland"
+      "location": "Schottland",
+      "illustration": {
+        "image": "/chapter_art/charles_rennie_mackintosh/glasgow_designs_medium.webp",
+        "medium": "/chapter_art/charles_rennie_mackintosh/glasgow_designs_medium.webp",
+        "full": "/chapter_art/charles_rennie_mackintosh/glasgow_designs_full.webp",
+        "concept": "A severe upright slab of smoky stone floats in darkness, pierced by narrow vertical wells of silver light. Around it, delicate ivory latticework and restrained violet petals orbit in precise, ornamental balance.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "drift_from_architecture",
-      "headline": "Aus dem Takt",
+      "id": "architecture_unravels",
+      "headline": "Abschied vom Zeichenbrett",
       "date_start": "1913",
       "date_start_precision": "year",
-      "date_end": "1922",
+      "date_end": "1915",
       "date_end_precision": "year",
       "age_start": 45,
-      "age_end": 54,
+      "age_end": 47,
       "involved_people": [
-        "John Honeyman",
         "John Keppie",
+        "John Honeyman",
         "Margaret MacDonald Mackintosh"
       ],
-      "location": "Vereinigtes Königreich"
+      "location": "Vereinigtes Königreich",
+      "illustration": {
+        "image": "/chapter_art/charles_rennie_mackintosh/architecture_unravels_medium.webp",
+        "medium": "/chapter_art/charles_rennie_mackintosh/architecture_unravels_medium.webp",
+        "full": "/chapter_art/charles_rennie_mackintosh/architecture_unravels_full.webp",
+        "concept": "A meticulous white drafting lattice loosens at one edge into windblown threads, while a pool of diluted blue pigment spreads beneath it. The centered structure remains briefly intact before dissolving into fluid, uncertain motion.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "watercolour_exile",
-      "headline": "Letztes Licht in Port-Vendres",
+      "id": "painting_in_france",
+      "headline": "Aquarelle am Meer",
       "date_start": "1923",
       "date_start_precision": "year",
       "date_end": "1928-12-10",
@@ -102,43 +116,54 @@
       "age_start": 55,
       "age_end": 60,
       "involved_people": [
-        "Margaret MacDonald Mackintosh"
+        "Margaret MacDonald Mackintosh",
+        "Jessie Newbery",
+        "Randolph Schwabe",
+        "Birdie Schwabe",
+        "Margaret Morris",
+        "Desmond Chapman-Huston"
       ],
-      "location": "Südfrankreich"
+      "location": "Westeuropa",
+      "illustration": {
+        "image": "/chapter_art/charles_rennie_mackintosh/painting_in_france_medium.webp",
+        "medium": "/chapter_art/charles_rennie_mackintosh/painting_in_france_medium.webp",
+        "full": "/chapter_art/charles_rennie_mackintosh/painting_in_france_full.webp",
+        "concept": "A luminous wash of Mediterranean cobalt and ochre gathers inside a fractured circular frame, like water held in a broken shell. Granular pigment blooms toward a distant band of amber light, quiet and expansive.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     }
   ],
-  "conclusion": "Charles Rennie Mackintosh verfolgte eine kompromisslos einheitliche Vision: Architektur, Innenräume und Ornament verschmolzen im Glasgow Style zu einer einzigen modernen Stimme. Selbst als die Welt sich weiterbewegte, blieb seine Vorstellungskraft nicht zurück – und hinterließ ein Vermächtnis, das seine Aufträge überdauerte und die Formensprache des Designs neu prägte.",
+  "conclusion": "Die Glasgow School of Art wird weiterhin von Architekten und Designern untersucht. Die Willow Tearooms und erhaltene Innenräume bewahren Mackintoshs Entwürfe für Räume, Möbel, Beleuchtung und Dekoration. Museen wie das Hunterian in Glasgow besitzen und zeigen seine Aquarelle von Port-Vendres und dem Roussillon.",
   "events": [
     {
       "date": "1868-06-07",
       "date_precision": "day",
       "age": 0,
-      "title": "In eine große Glasgower Familie geboren",
-      "description": "Charles Rennie Mackintosh wurde am 7. Juni 1868 in Glasgow, in der Parson Street 70 in Townhead, geboren. Er war das vierte von elf Kindern und der zweite Sohn von William McIntosh, einem Superintendenten und leitenden Sekretär der Polizei von Glasgow, und Margaret McIntosh, geborene Rennie.",
+      "title": "In Glasgower Polizeifamilie geboren",
+      "description": "William McIntosh war Superintendent und Chefsekretär der Polizei der Stadt Glasgow in Townhead, Glasgow. Charles Rennie Mackintosh war das vierte von elf Kindern von William und Margaret Mackintosh sowie ihr zweiter Sohn.",
       "locations": [
         {
           "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
+          "name_modern": "Glasgow, Vereinigtes Königreich",
           "centroid": [
-            -4.2501687,
-            55.861155
+            -4.2518,
+            55.8642
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "William McIntosh",
-        "Margaret McIntosh (née Rennie)"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
       ],
-      "event_type_icon": "mdi-baby",
-      "chapter": "glasgow_foundations",
+      "event_type_icon": "mdi-baby-face",
+      "chapter": "glasgow_formative",
+      "weight": 0.25,
       "event_class": {
         "type": "birth",
         "father": "William McIntosh",
-        "mother": "Margaret McIntosh"
+        "mother": "Margaret Mackintosh née Rennie",
+        "characterization": "Haushalt eines Polizeibeamten"
       }
     },
     {
@@ -147,45 +172,38 @@
       "date_end": "1883",
       "date_end_precision": "year",
       "age": 12,
-      "title": "Schulzeit in Glasgow",
-      "description": "In Glasgow wechselte er von der Reid's Public School an die [[Allan Glen's Institution|Allan Glen's Institution]], wo die weiterführende Ausbildung den Schwerpunkt auf eine praktische und technische Schulung legte, die auf die industriellen und baulichen Berufe der Stadt zugeschnitten war.",
+      "title": "Besuch von Allan Glen’s",
+      "description": "1880 begann Charles Rennie Mackintosh, die Reid’s Public School und die Allan Glen’s Institution in Glasgow zu besuchen. Bis 1883 blieb er an diesen Schulen.",
       "locations": [
         {
           "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
+          "name_modern": "Glasgow, Vereinigtes Königreich",
           "centroid": [
-            -4.2501687,
-            55.861155
+            -4.2518,
+            55.8617
           ],
           "primary": true
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
-        "https://en.wikipedia.org/wiki/Allan_Glen%27s_School"
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "glasgow_foundations",
-      "annotations": {
-        "Allan Glen's Institution": {
-          "explanation": "Eine in Glasgow gegründete Schule, die als Allan Glen's Institution bekannt war und über einen ausgeprägt praktischen und technischen Lehrplan verfügte, der Schülerinnen und Schüler auf industrielle und kaufmännische Berufe vorbereitete.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Allan_Glen%27s_School"
-        }
-      }
+      "chapter": "glasgow_formative",
+      "weight": 0.2
     },
     {
       "date": "1884",
       "date_precision": "year",
-      "age": 16,
-      "title": "Lehre und Abendkurse beginnen",
-      "description": "1884 begann Mackintosh in Glasgow unter dem Architekten John Hutchinson eine Ausbildung zum Architekten. Abends besuchte er Kurse an der Glasgow School of Art, die damals in der Sauchiehall Street untergebracht war, schulte sein zeichnerisches Können und wurde bald ein preisgekrönter Schüler.",
+      "title": "Beginnt Architektenlehre",
+      "description": "1884 begann Charles Rennie Mackintosh in Glasgow eine Architektenlehre bei John Hutchinson. Daneben besuchte er Abendkurse an der Glasgow School of Art. Seine theoretische Ausbildung ergänzte die praktische Arbeit im Büro.",
       "locations": [
         {
           "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
+          "name_modern": "Glasgow, Vereinigtes Königreich",
           "centroid": [
-            -4.2501687,
-            55.861155
+            -4.2518,
+            55.8642
           ],
           "primary": true
         }
@@ -196,28 +214,23 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
       ],
-      "event_type_icon": "mdi-pencil-ruler",
-      "chapter": "glasgow_foundations",
-      "annotations": {
-        "Glasgow School of Art": {
-          "explanation": "Glasgow’s major art school and a hub for the city’s late-19th-century design community that helped shape the Glasgow Style.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Glasgow_School_of_Art"
-        }
-      }
+      "event_type_icon": "mdi-school",
+      "chapter": "glasgow_formative",
+      "weight": 0.55
     },
     {
-      "date": "1889",
-      "date_precision": "year",
-      "age": 21,
+      "date": "1889-04",
+      "date_precision": "month",
+      "age": 20,
       "title": "Eintritt bei Honeyman und Keppie",
-      "description": "1889 trat Mackintosh als Zeichner und Designer in das Glasgower Architekturbüro Honeyman and Keppie ein. Er wechselte in ein größeres Büro mit regelmäßigen Aufträgen und neuen Möglichkeiten, detaillierte Zeichnungen und Innenraumkonzepte zu entwickeln.",
+      "description": "1889 trat Charles Rennie Mackintosh als Zeichner und Designer in das Glasgower Architekturbüro Honeyman and Keppie ein. Das Büro gehörte zu den bedeutenden Architekturbüros der Stadt.",
       "locations": [
         {
           "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
+          "name_modern": "Glasgow, Vereinigtes Königreich",
           "centroid": [
-            -4.2501687,
-            55.861155
+            -4.2518,
+            55.8611
           ],
           "primary": true
         }
@@ -227,139 +240,172 @@
         "John Keppie"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
         "https://en.wikipedia.org/wiki/Honeyman_and_Keppie",
         "https://en.wikipedia.org/wiki/John_Keppie"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "the_four_take_shape"
+      "chapter": "glasgow_formative",
+      "weight": 0.65
     },
     {
       "date": "1892",
       "date_precision": "year",
-      "age": 24,
-      "title": "Newbery bringt die späteren „Four“ zusammen",
-      "description": "Um 1892 lernte Mackintosh während seines Studiums an der Glasgow School of Art die Künstlerin Margaret MacDonald Mackintosh kennen. Der Direktor der Schule, Francis Henry Newbery, stellte Mackintosh und James Herbert McNair Margaret und ihrer Schwester Frances MacDonald McNair vor, nachdem ihm Ähnlichkeiten in ihren Arbeiten aufgefallen waren.\n\nDurch die enge Zusammenarbeit bei Ausstellungen und gemeinsamen Projekten wurde die Gruppe als The Four bekannt und prägte maßgeblich den aufkommenden Glasgow Style.",
+      "date_end": "1894",
+      "date_end_precision": "year",
+      "date_note": "Die Gruppe bildete sich um 1892 und stellte ab 1894 gemeinsam aus",
+      "title": "Gründet The Four",
+      "description": "Um 1892 lernte Charles Rennie Mackintosh an der Glasgow School of Art Margaret Macdonald, Frances Macdonald und James Herbert McNair kennen. Francis Henry Newbery brachte die Künstler zusammen, nachdem er Ähnlichkeiten in ihren Arbeiten erkannt hatte. Sie begannen als The Four zusammenzuarbeiten.",
       "locations": [
         {
           "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
+          "name_modern": "Glasgow, Vereinigtes Königreich",
           "centroid": [
-            -4.2501687,
-            55.861155
+            -4.2518,
+            55.8611
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Margaret MacDonald Mackintosh",
+        "Margaret Macdonald",
+        "Frances Macdonald",
         "James Herbert McNair",
-        "Frances MacDonald McNair",
         "Francis Henry Newbery"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Herbert_MacNair",
-        "https://en.wikipedia.org/wiki/Frances_MacDonald",
-        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh",
+        "https://en.wikipedia.org/wiki/Frances_MacDonald"
       ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "the_four_take_shape",
-      "annotations": {
-        "The Four": {
-          "explanation": "A collaborative Glasgow group—Mackintosh, Margaret Macdonald, Frances MacDonald, and Herbert MacNair—whose work became closely associated with the Glasgow Style.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
-        },
-        "Glasgow Style": {
-          "explanation": "A distinctive late-19th-century art and design movement centered in Glasgow, overlapping with Britain’s Modern Style (Art Nouveau).",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Glasgow_Style"
-        }
-      }
-    },
-    {
-      "date": "1893",
-      "date_precision": "year",
-      "date_note": "Um diese Zeit begann er, die Schreibweise „Mackintosh“ statt „McIntosh“ zu verwenden",
-      "age": 25,
-      "title": "Signierte Innenräume belegen wachsenden Einfluss",
-      "description": "Bis 1893 zeigte sich seine wachsende Autorität als leitender Designer bei Honeyman & Keppie in signierten Innenraumkonzepten – etwa bei der Arbeit für Craigie Hall in Dumbreck und für den neuen Salon und die Galerie des Glasgow Art Club in der Bath Street 185. Etwa zur selben Zeit begann er, seine Zeichnungen mit der Schreibweise „Mackintosh“ statt „McIntosh“ zu signieren.",
-      "locations": [
+      "images": [
         {
-          "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
-          "centroid": [
-            -4.2501687,
-            55.861155
-          ],
-          "primary": true
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/79/The_Immortals%21.jpg",
+          "caption": "The Immortals, Glasgower Künstlergruppe mit The Four",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Immortals!.jpg",
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Honeyman_and_Keppie",
-        "https://en.wikipedia.org/wiki/Herbert_MacNair"
-      ],
-      "event_type_icon": "mdi-drawing",
-      "chapter": "the_four_take_shape",
-      "annotations": {
-        "Glasgow": {
-          "explanation": "Scotland’s largest city and the center of the late-19th-century ‘Glasgow Style’ network of artists, architects, and patrons in which Mackintosh worked.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Glasgow"
+      "event_type_icon": "mdi-account-multiple",
+      "chapter": "glasgow_formative",
+      "weight": 0.7,
+      "background": "Margaret und Frances Macdonald kamen als Tagesstudentinnen an die Glasgow School of Art. Mackintosh und McNair besuchten während ihrer Architektenausbildung Abendkurse. Bis 1894 stellten die vier gemeinsam Arbeiten in Studentenausstellungen aus. Einige der gezeigten Stücke entstanden in Zusammenarbeit.\n\nIhre frühen Arbeiten stießen auf geteilte Reaktionen. Die Macdonald-Schwestern verwendeten hagere, lineare Figuren, die den Einfluss von Aubrey Beardsley erkennen ließen. Kritiker bezeichneten die Bildwelt als „makaber“. Der örtliche Beiname „The Spook School“ haftete der Gruppe an, bevor „The Four“ ihr geläufiger Name wurde.\n\nEin großer Teil der gemeinsamen Arbeit der Gruppe konzentrierte sich in den 1890er Jahren auf die beiden Schwestern. Ihr 1896 eröffnetes Atelier in der Hope Street schuf Illustrationen, Stickereien, Gessopaneele, Bleiglas und getriebene Metallarbeiten. Die verwandten Ansätze der vier Künstler trugen zum Glasgow Style bei.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Aubrey_Beardsley_-_The_Climax.jpg",
+          "caption": "Der Höhepunkt",
+          "source": "https://commons.wikimedia.org/wiki/File:Aubrey_Beardsley_-_The_Climax.jpg",
+          "creator": "Aubrey Beardsley",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Aubrey Beardsley illustration"
         }
-      }
+      ]
     },
     {
       "date": "1896",
       "date_precision": "year",
       "age": 28,
-      "title": "Entwurf für die Queen's Cross Church",
-      "description": "1896 entwarf Mackintosh die [[Queen's Cross Church|Queen's Cross Church]] in Glasgow. Dabei entwickelte er ein Gesamtkonzept, in dem Architektur, Innenausstattung und Dekoration eng aufeinander abgestimmt waren – eine seltene Gelegenheit, einen vollständigen kirchlichen Auftrag bis ins Detail auszuführen.",
+      "title": "Auftrag für die Kunstschule",
+      "description": "1896 gewann Honeyman and Keppie den Wettbewerb für einen Neubau der Glasgow School of Art. Charles Rennie Mackintosh war Projektarchitekt. Er entwarf das Gebäude, seine Innenräume, die Möbel und die Eisenarbeiten.",
       "locations": [
         {
           "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
+          "name_modern": "Glasgow, Vereinigtes Königreich",
           "centroid": [
-            -4.2501687,
-            55.861155
+            -4.2518,
+            55.8642
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "John Honeyman",
+        "John Keppie",
+        "Francis Henry Newbery"
+      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
-        "https://en.wikipedia.org/wiki/Honeyman_and_Keppie"
+        "https://en.wikipedia.org/wiki/John_Keppie",
+        "https://de.wikipedia.org/wiki/Francis_Henry_Newbery"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Queen%27s_Cross_Church_on_Maryhill_Road_-_geograph.org.uk_-_20468.jpg",
-          "caption": "Queen's Cross Church an der Maryhill Road in Glasgow",
-          "source": "https://commons.wikimedia.org/wiki/File:Queen's_Cross_Church_on_Maryhill_Road_-_geograph.org.uk_-_20468.jpg",
-          "creator": "Gordon McKinlay",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Mackintosh_School_of_Art_Glasgow_2.JPG/960px-Mackintosh_School_of_Art_Glasgow_2.JPG",
+          "caption": "Glasgow School of Art, Ostfassade des Mackintosh Building",
+          "source": "https://commons.wikimedia.org/wiki/File:Mackintosh_School_of_Art_Glasgow_2.JPG",
+          "creator": "Ad Meskens",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
         }
       ],
-      "event_type_icon": "mdi-drawing",
-      "chapter": "the_four_take_shape",
-      "annotations": {
-        "Queen's Cross Church": {
-          "explanation": "Eine Glasgower Kirche, die 1897–1899 für die Free Church of Scotland errichtet wurde und als Charles Rennie Mackintoshs erster bedeutender eigenständiger Architekturauftrag gilt.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Queen%27s_Cross_Church"
+      "event_type_icon": "mdi-office-building",
+      "chapter": "glasgow_designs",
+      "weight": 1.0,
+      "background": "Francis Henry Newbery erarbeitete die Ausschreibung auf Grundlage seiner Erfahrung als Leiter der Schule und der Vorgaben des Department of Science and Art. Bei den Schulverantwortlichen und Regierungsberatern setzte er sich für Mackintoshs Entwurf ein. Mackintosh war seit 1892 leitender Entwerfer des Büros. In den 1890er Jahren überließ Keppie ihm einen großen Teil der Entwurfsarbeit des Büros.\n\nDer Bau der Schule in der Renfrew Street 167 dauerte von 1897 bis 1909. Der vollendete Bau verschaffte Mackintosh internationales Ansehen.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/%27Glasgow_School_of_Art%27_JBU_002.jpg/960px-%27Glasgow_School_of_Art%27_JBU_002.jpg",
+          "caption": "Glasgow School of Art, das Mackintosh Building, 1897–1909 von Charles Rennie Mackintosh (1868–1928) erbaut.",
+          "source": "https://commons.wikimedia.org/wiki/File:'Glasgow_School_of_Art'_JBU_002.jpg",
+          "creator": "Jörg Bittner Unna",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+          "query": "Glasgow School of Art Renfrew Street"
         }
-      }
+      ]
     },
     {
-      "date": "1897",
-      "date_precision": "year",
-      "date_end": "1909",
-      "date_end_precision": "year",
-      "age": 29,
-      "title": "Die Glasgow School of Art wächst an der Renfrew Street",
-      "description": "1897 begannen in Glasgow die Arbeiten am Gebäude der Glasgow School of Art. Mackintosh fungierte als verantwortlicher Architekt und prägte nicht nur die Gesamtform, sondern auch zahlreiche Details im Inneren. Sein Ziel war eine einheitliche Wirkung, bei der Tragwerk, Ausstattung und Oberflächen wie aus einem Guss erschienen.",
+      "date": "1900-08-22",
+      "date_precision": "day",
+      "age": 32,
+      "title": "Heirat mit Margaret Macdonald",
+      "description": "Am 22. August 1900 heiratete Charles Rennie Mackintosh die Künstlerin und Designerin Margaret Macdonald in Glasgow. Sie bezogen ihre erste gemeinsame Wohnung in Glasgow und arbeiteten bei Dekorations- und Innenraumgestaltungen zusammen.",
       "locations": [
         {
           "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
+          "name_modern": "Glasgow, Vereinigtes Königreich",
           "centroid": [
-            -4.2501687,
-            55.861155
+            -4.2518,
+            55.8642
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Margaret Macdonald"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "glasgow_designs",
+      "weight": 0.8,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Margaret Macdonald",
+        "duration": "bis zu seinem Tod",
+        "children": 0,
+        "characterization": "kreative Ehe"
+      }
+    },
+    {
+      "date": "1901",
+      "date_precision": "year",
+      "age": 32,
+      "title": "Wird Teilhaber",
+      "description": "1901 wurde Charles Rennie Mackintosh Teilhaber von Honeyman, Keppie and Mackintosh. Nachdem er als Zeichner und Designer in das Büro eingetreten war, wurde er dessen leitender Entwerfer.",
+      "locations": [
+        {
+          "name_historic": "Glasgow",
+          "name_modern": "Glasgow, Vereinigtes Königreich",
+          "centroid": [
+            -4.2518,
+            55.8642
           ],
           "primary": true
         }
@@ -369,223 +415,98 @@
         "John Honeyman"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Honeyman_and_Keppie",
-        "https://en.wikipedia.org/wiki/John_Keppie"
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/John_Keppie",
+        "https://en.wikipedia.org/wiki/John_Honeyman_(architect)"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Mackintosh_School_of_Art_Glasgow_2.JPG/960px-Mackintosh_School_of_Art_Glasgow_2.JPG",
-          "caption": "Ostfassade der Glasgow School of Art, Renfrew Street",
-          "source": "https://commons.wikimedia.org/wiki/File:Mackintosh_School_of_Art_Glasgow_2.JPG",
-          "creator": "Ad Meskens",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
-        }
-      ],
-      "event_type_icon": "mdi-office-building",
-      "chapter": "total_work_mastery",
-      "annotations": {
-        "Glasgow School of Art": {
-          "explanation": "A leading art and design school in Glasgow; its new building (designed by Mackintosh) became one of the defining works of early modern architecture in Britain.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Glasgow_School_of_Art"
-        }
-      }
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "glasgow_designs",
+      "weight": 0.65
     },
     {
-      "date": "1900-08-22",
-      "date_precision": "day",
-      "age": 32,
-      "title": "Die Ehe wird zur kreativen Partnerschaft",
-      "description": "Am 22. August 1900 heiratete Mackintosh in Glasgow die Künstlerin Margaret MacDonald Mackintosh. Sie gründeten dort ihren gemeinsamen Haushalt und arbeiteten weiterhin an Innenräumen und Dekorationskonzepten – Arbeiten, die die Grenzen zwischen Architektur, Mobiliar und Ornament häufig verwischten.",
-      "locations": [
-        {
-          "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
-          "centroid": [
-            -4.2501687,
-            55.861155
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Margaret MacDonald Mackintosh"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh",
-        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Margaret_Macdonald_Mackintosh_Summer_1904.jpg/960px-Margaret_Macdonald_Mackintosh_Summer_1904.jpg",
-          "caption": "Margaret MacDonald Mackintosh, „Summer“ (1904)",
-          "source": "https://commons.wikimedia.org/wiki/File:Margaret_Macdonald_Mackintosh_Summer_1904.jpg",
-          "creator": "Margaret Macdonald Mackintosh (1864 – 1933)",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-ring",
-      "chapter": "total_work_mastery",
-      "annotations": {
-        "Glasgow": {
-          "explanation": "Scotland’s largest city, where both artists were based and where much of their collaborative design work developed within the Glasgow Style milieu.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Glasgow"
-        }
-      },
-      "event_class": {
-        "type": "marriage_partnership",
-        "subtype": "marriage",
-        "partner": "Margaret MacDonald Mackintosh",
-        "duration": "bis zu seinem Tod",
-        "children": 0,
-        "characterization": "kreative Partnerschaft"
-      }
-    },
-    {
-      "date": "1900",
+      "date": "1902",
       "date_precision": "year",
-      "age": 32,
-      "title": "Glasgower Arbeiten treffen auf Wiens Avantgarde",
-      "description": "1900 wurden Arbeiten von Charles Rennie Mackintosh und Margaret MacDonald Mackintosh auf der achten [[Vienna Secession|Vienna Secession Exhibition]] gezeigt. Die Ausstellung brachte ihre in Glasgow entstandenen Entwürfe im internationalen Rahmen unmittelbar mit der Wiener Kunst- und Designszene in Kontakt.",
+      "age": 33,
+      "title": "Entwirft Wiener Musikzimmer",
+      "description": "1902 beauftragte Fritz Waerndorfer Charles Rennie Mackintosh, den Musiksalon seiner Villa in Wien auszustatten. Margaret MacDonald Mackintosh entwarf die Wandpaneele, darunter The Seven Princesses, ein Werk nach Maurice Maeterlincks gleichnamigem Stück.",
       "locations": [
         {
           "name_historic": "Wien",
           "name_modern": "Wien, Österreich",
           "centroid": [
-            16.3725042,
-            48.2083537
+            16.3738,
+            48.2082
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
-          "centroid": [
-            -4.2501687,
-            55.861155
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Margaret MacDonald Mackintosh"
+        "Fritz Waerndorfer",
+        "Margaret MacDonald Mackintosh",
+        "Maurice Maeterlinck"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/Fritz_Waerndorfer",
         "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/%22The_Wassail%22_de_Charles_Rennie_Mackintosh_%28Glasgow%29_%283802874247%29.jpg/960px-%22The_Wassail%22_de_Charles_Rennie_Mackintosh_%28Glasgow%29_%283802874247%29.jpg",
-          "caption": "„The Wassail“ (Ladies' Luncheon Room), 1900",
-          "source": "https://commons.wikimedia.org/wiki/File:\"The_Wassail\"_de_Charles_Rennie_Mackintosh_(Glasgow)_(3802874247).jpg",
-          "creator": "Jean-Pierre Dalbéra from Paris, France",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/MAK_MAL-348_1_Mackintosh-Fries.jpg/960px-MAK_MAL-348_1_Mackintosh-Fries.jpg",
+          "caption": "Der Fries The Seven Princesses für den Warndorfer-Musiksalon",
+          "source": "https://commons.wikimedia.org/wiki/File:MAK_MAL-348_1_Mackintosh-Fries.jpg",
+          "creator": "Margaret MacDonald",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
-      "event_type_icon": "mdi-palette",
-      "chapter": "total_work_mastery",
-      "annotations": {
-        "Vienna Secession": {
-          "explanation": "Eine 1897 gegründete österreichische Kunstbewegung und Ausstellungsgemeinschaft, die in Wien einflussreiche Ausstellungen moderner Kunst organisierte, darunter eine nummerierte Reihe von Secessionsausstellungen.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Vienna_Secession"
-        }
-      }
+      "event_type_icon": "mdi-drawing",
+      "chapter": "glasgow_designs",
+      "weight": 0.65
     },
     {
-      "date": "1901",
+      "date": "1903",
       "date_precision": "year",
-      "age": 33,
-      "title": "Wurde Teilhaber des Büros",
-      "description": "1901 wurde Mackintosh Teilhaber des nun als [[Honeyman, Keppie & Mackintosh|Honeyman, Keppie & Mackintosh]] bekannten Glasgower Architekturbüros. Damit wurde seine Stellung im Büro formalisiert, und seine Verantwortung für die Leitung des Unternehmens nahm zu.",
-      "locations": [
-        {
-          "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
-          "centroid": [
-            -4.2501687,
-            55.861155
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "John Honeyman",
-        "John Keppie"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Honeyman_and_Keppie",
-        "https://en.wikipedia.org/wiki/John_Honeyman_(architect)",
-        "https://en.wikipedia.org/wiki/John_Keppie"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Mackintosh%2C_House_for_an_Art_Lover%2C_competition_entry.jpg/960px-Mackintosh%2C_House_for_an_Art_Lover%2C_competition_entry.jpg",
-          "caption": "Mackintoshs Wettbewerbsbeitrag „House for an Art Lover“",
-          "source": "https://commons.wikimedia.org/wiki/File:Mackintosh,_House_for_an_Art_Lover,_competition_entry.jpg",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-arrow-up-bold",
-      "chapter": "total_work_mastery",
-      "annotations": {
-        "Honeyman, Keppie & Mackintosh": {
-          "explanation": "Die Bezeichnung, die John Honeyman und John Keppie annahmen, als sie Mackintosh zum Teilhaber machten; sie spiegelte seinen formalen Aufstieg in dem Glasgower Architekturbüro wider.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Honeyman_and_Keppie"
-        }
-      }
-    },
-    {
-      "date": "1902",
-      "date_precision": "year",
-      "date_end": "1904",
-      "date_end_precision": "year",
       "age": 34,
-      "title": "Höhepunkt mit Hill House und Willow Tearooms",
-      "description": "Um 1902 verwirklichte Mackintosh bedeutende schottische Aufträge als einheitliche Entwürfe, in denen Architektur, Innenräume und eigens angefertigtes Mobiliar zusammenwirkten. Zu den wichtigsten Arbeiten dieser Zeit gehörten Hill House in Helensburgh und die Willow Tearooms in Glasgow für Catherine Cranston – Projekte, bei denen die Zusammenarbeit mit Margaret MacDonald McNair für die dekorative Gesamtwirkung besonders entscheidend war.",
+      "title": "Willow Tearooms fertiggestellt",
+      "description": "1903 vollendete Charles Rennie Mackintosh für Catherine Cranston die Willow Tearooms in Glasgow. Er entwarf ihre Fassade, Räume und Ausstattung, darunter den [[Room de Luxe]]. Margaret Macdonald steuerte dekorative Arbeiten zu den Innenräumen bei.",
       "locations": [
         {
           "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
+          "name_modern": "Glasgow, Vereinigtes Königreich",
           "centroid": [
-            -4.2501687,
-            55.861155
+            -4.2518,
+            55.8642
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Helensburgh",
-          "name_modern": "Helensburgh, Schottland, Vereinigtes Königreich",
-          "centroid": [
-            -4.7342935,
-            56.0033464
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
         "Catherine Cranston",
-        "Margaret MacDonald Mackintosh"
+        "Margaret Macdonald"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Catherine_Cranston"
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
+        "https://en.wikipedia.org/wiki/Catherine_Cranston",
+        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/d/d2/The_Hill_House%2C_Helensburgh_-_geograph.org.uk_-_1570955.jpg",
-          "caption": "The Hill House, Helensburgh (Auftrag 1902)",
-          "source": "https://commons.wikimedia.org/wiki/File:The_Hill_House,_Helensburgh_-_geograph.org.uk_-_1570955.jpg",
-          "creator": "Anthony O'Neil",
-          "license": "CC BY-SA 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Willow_Tearooms_JC_Annan.jpg/960px-Willow_Tearooms_JC_Annan.jpg",
+          "caption": "Miss Cranstons Willow Tearooms, von Mackintosh entworfen",
+          "source": "https://commons.wikimedia.org/wiki/File:Willow_Tearooms_JC_Annan.jpg",
+          "creator": "photographer J.C. Annan",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-drawing",
-      "chapter": "total_work_mastery",
+      "chapter": "glasgow_designs",
+      "weight": 0.95,
       "annotations": {
-        "Catherine Cranston": {
-          "explanation": "Glasgow entrepreneur and prominent tea-room proprietor who patronized Mackintosh, commissioning him to design interiors for her tea rooms including the Willow Tea Rooms.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Catherine_Cranston"
+        "Room de Luxe": {
+          "explanation": "Der aufwendigste Raum der Willow Tearooms, als besonders vornehmer Innenraum für weibliche Gäste gestaltet.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Willow_Tearooms"
         }
       }
     },
@@ -593,58 +514,93 @@
       "date": "1913",
       "date_precision": "year",
       "age": 45,
-      "title": "Austritt aus der Partnerschaft",
-      "description": "1913, als die Aufträge zurückgingen und das Büro weniger rentabel wurde, schied Mackintosh in Glasgow aus [[Honeyman, Keppie & Mackintosh|Honeyman, Keppie & Mackintosh]] aus und versuchte, eine eigene Praxis aufzubauen. Dadurch geriet er beruflich und finanziell in eine deutlich unsicherere Lage.",
+      "title": "Verlässt die Partnerschaft",
+      "description": "1913 schied Charles Rennie Mackintosh aus Honeyman, Keppie and Mackintosh aus, als die Erträge des Glasgower Architekturbüros zurückgingen. Er versuchte, in Glasgow ein eigenes Architekturbüro aufzubauen.",
       "locations": [
         {
           "name_historic": "Glasgow",
-          "name_modern": "Glasgow, Schottland, Vereinigtes Königreich",
+          "name_modern": "Glasgow, Vereinigtes Königreich",
           "centroid": [
-            -4.2501687,
-            55.861155
+            -4.2518,
+            55.8611
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "John Honeyman",
-        "John Keppie"
+        "John Keppie",
+        "John Honeyman"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Honeyman_and_Keppie",
-        "https://en.wikipedia.org/wiki/John_Honeyman_(architect)",
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
         "https://en.wikipedia.org/wiki/John_Keppie"
       ],
       "event_type_icon": "mdi-exit-to-app",
-      "chapter": "drift_from_architecture",
-      "annotations": {
-        "Honeyman, Keppie & Mackintosh": {
-          "explanation": "Die Glasgower Architekturgemeinschaft, Nachfolgerin von Honeyman & Keppie, in der Mackintosh Teilhaber geworden war; er verließ das Büro 1913, als dessen Auftragslage zurückging.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Honeyman_and_Keppie"
-        }
-      }
+      "chapter": "architecture_unravels",
+      "weight": 0.7
     },
     {
       "date": "1914",
       "date_precision": "year",
-      "date_end": "1915",
-      "date_end_precision": "year",
       "age": 46,
-      "title": "Rückzug nach Walberswick und Verdacht im Krieg",
-      "description": "1914 verließen Mackintosh und Margaret Schottland und ließen sich im Suffolk-Dorf Walberswick nieder, um Abstand vom Arbeitsrhythmus seiner Glasgower Praxis zu gewinnen. 1915 wurde er im von Kriegsverdacht geprägten Großbritannien kurzzeitig verhaftet, weil man ihn der Spionage verdächtigte.",
+      "title": "Umzug nach Walberswick",
+      "description": "1914 verließen Charles Rennie Mackintosh und Margaret MacDonald Mackintosh Glasgow und zogen nach Walberswick, einem Dorf in Suffolk. Dort malte Mackintosh Aquarelllandschaften und Blumenstudien.",
       "locations": [
         {
-          "name_historic": "Schottland",
-          "name_modern": "Schottland, Vereinigtes Königreich",
+          "name_historic": "Glasgow",
+          "name_modern": "Glasgow, Vereinigtes Königreich",
           "centroid": [
-            -4.1140518,
-            56.7861112
+            -4.2518,
+            55.8642
           ],
           "primary": false
         },
         {
           "name_historic": "Walberswick",
-          "name_modern": "Walberswick, Suffolk, England, Vereinigtes Königreich",
+          "name_modern": "Walberswick, Vereinigtes Königreich",
+          "centroid": [
+            1.634,
+            52.325
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Margaret MacDonald Mackintosh"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Main_Street%2C_Walberswick%2C_Suffolk_-_geograph.org.uk_-_7185371.jpg/960px-Main_Street%2C_Walberswick%2C_Suffolk_-_geograph.org.uk_-_7185371.jpg",
+          "caption": "Main Street, Walberswick, Suffolk",
+          "source": "https://commons.wikimedia.org/wiki/File:Main_Street,_Walberswick,_Suffolk_-_geograph.org.uk_-_7185371.jpg",
+          "creator": "Peter Evans",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "architecture_unravels",
+      "weight": 0.55,
+      "event_class": {
+        "type": "migration",
+        "from_location": "Glasgow, Schottland",
+        "to_location": "Walberswick, England",
+        "characterization": "künstlerischer Rückzugsort"
+      }
+    },
+    {
+      "date": "1915",
+      "date_precision": "year",
+      "age": 47,
+      "title": "Als Spionageverdächtiger festgenommen",
+      "description": "Während des Ersten Weltkriegs geriet Charles Rennie Mackintosh in den Verdacht, ein deutscher Spion zu sein, und wurde in Walberswick kurzzeitig festgenommen. Er und Margaret MacDonald Mackintosh lebten damals in dem Dorf in Suffolk.",
+      "locations": [
+        {
+          "name_historic": "Walberswick",
+          "name_modern": "Walberswick, England",
           "centroid": [
             1.6616522,
             52.3139687
@@ -656,40 +612,34 @@
         "Margaret MacDonald Mackintosh"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
-        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
       ],
-      "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "drift_from_architecture",
-      "event_class": {
-        "type": "migration",
-        "from_location": "Schottland",
-        "to_location": "Walberswick, Suffolk, England",
-        "characterization": "Übersiedlung im Krieg"
-      }
+      "event_type_icon": "mdi-handcuffs",
+      "chapter": "architecture_unravels",
+      "weight": 0.3
     },
     {
       "date": "1923",
       "date_precision": "year",
       "age": 55,
       "title": "Niederlassung in Port-Vendres",
-      "description": "1923 ließen sich Charles Rennie Mackintosh und seine Frau Margaret MacDonald Mackintosh im südfranzösischen Port-Vendres nieder. Sie hofften, ein wärmeres Klima und niedrigere Lebenshaltungskosten würden ihre Lage verbessern. Dort gab er die Architektur weitgehend auf und widmete sich Aquarellstudien des Hafens und der Landschaft in der Umgebung.",
+      "description": "1923 verließen Charles und Margaret Mackintosh Walberswick und ließen sich in Port-Vendres an der Mittelmeerküste Südfrankreichs nieder. Sie suchten ein wärmeres Klima und niedrigere Lebenshaltungskosten. Charles malte den Hafen und die Landschaft des Roussillon in Aquarellen.",
       "locations": [
         {
-          "name_historic": "London",
-          "name_modern": "London, Vereinigtes Königreich",
+          "name_historic": "Walberswick",
+          "name_modern": "Walberswick, Vereinigtes Königreich",
           "centroid": [
-            -0.1277653,
-            51.5074456
+            1.65,
+            52.28
           ],
           "primary": false
         },
         {
           "name_historic": "Port-Vendres",
-          "name_modern": "Port-Vendres, Pyrénées-Orientales, Frankreich",
+          "name_modern": "Port-Vendres, Frankreich",
           "centroid": [
-            3.1056167,
-            42.5204146
+            3.11,
+            42.52
           ],
           "primary": true
         }
@@ -698,58 +648,73 @@
         "Margaret MacDonald Mackintosh"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
+      ],
+      "images": [
+        {
+          "url": "https://live.staticflickr.com/65535/50228291318_0b5cc3968f_b.jpg",
+          "caption": "Port-Vendres, Frankreich, Aquarell von Charles Rennie Mackintosh",
+          "source": "https://www.flickr.com/photos/58415659@N00/50228291318",
+          "creator": "kitmasterbloke",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+        }
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "watercolour_exile",
+      "chapter": "painting_in_france",
+      "weight": 0.75,
       "event_class": {
         "type": "migration",
         "from_location": "England",
-        "to_location": "Port-Vendres, Südfrankreich",
-        "characterization": "Gesundheit und Lebenshaltung"
-      }
+        "to_location": "Port-Vendres, Frankreich",
+        "characterization": "Rückzugsort zum Malen"
+      },
+      "background": "Bis 1923 hatte Mackintosh Architektur und Design vollständig aufgegeben. Seine Aquarelle beschäftigten sich mit dem Verhältnis von Bauwerken und Naturlandschaft. Daraus entstand ein umfangreiches Konvolut architektonischer Ansichten und Landschaftsbilder.\n\nDie Mackintoshs blieben zwei Jahre in Frankreich. Eine Erkrankung zwang sie schließlich zur Rückkehr nach London."
     },
     {
       "date": "1928-12-10",
       "date_precision": "day",
       "age": 60,
       "title": "Tod in London",
-      "description": "Charles Rennie Mackintosh starb am 10. Dezember 1928 im Alter von 60 Jahren nach einer Erkrankung in London; zeitgenössische und spätere Berichte nennen als Ursache häufig [[tongue cancer|Zungenkrebs]].",
+      "description": "Wegen eines Knotens an der Zunge kam Charles Rennie Mackintosh 1927 zur Behandlung von Port-Vendres nach London. Jessie Newbery organisierte eine Operation im Westminster Hospital, und Randolph und Birdie Schwabe nahmen ihn während seiner Genesung in Hampstead bei sich auf. Margaret Morris versuchte, seine geschwächte Stimme zu kräftigen und ihm Gebärdensprache beizubringen. Nach einem Rückfall nahmen Desmond Chapman-Huston die Mackintoshs in Bayswater bei sich auf. Mackintosh starb am 10. Dezember 1928 in einem Londoner Pflegeheim.",
       "locations": [
         {
           "name_historic": "London",
           "name_modern": "London, Vereinigtes Königreich",
           "centroid": [
-            -0.1277653,
-            51.5074456
+            -0.1276,
+            51.5072
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "Margaret MacDonald Mackintosh",
+        "Jessie Newbery",
+        "Randolph Schwabe",
+        "Birdie Schwabe",
+        "Margaret Morris",
+        "Desmond Chapman-Huston"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
-        "https://en.wikipedia.org/wiki/Margaret_Macdonald_Mackintosh"
+        "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "watercolour_exile",
-      "annotations": {
-        "tongue cancer": {
-          "explanation": "Ein bösartiger Tumor der Zunge, also Mundhöhlenkrebs; Mackintosh starb Berichten zufolge nach seiner Erkrankung im Jahr 1928 an diesem Leiden.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Oral_cancer"
-        }
-      },
+      "chapter": "painting_in_france",
+      "weight": 0.5,
       "event_class": {
         "type": "death",
         "cause": "Zungenkrebs",
-        "characterization": "nach einer Erkrankung"
+        "characterization": "nach langer Krankheit",
+        "place_of_rest": "Golders Green Crematorium, London"
       }
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "bc97d685ebe04404",
-    "translated_on": "2026-08-02T11:53:34.696093+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "2da46682952807f9",
+    "translated_on": "2026-09-19T12:20:11.084532+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

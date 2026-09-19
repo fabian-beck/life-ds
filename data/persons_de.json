@@ -169,8 +169,8 @@
     {
       "id": "alvar_aalto",
       "name": "Alvar_Aalto",
-      "summary": "Alvar Aalto war ein finnischer Architekt und Designer, der Gebäude, Möbel, Glaswaren und Innenräume entwarf. Er entwickelte eine moderne Architektur mit natürlichen Materialien, geschwungenen Formen und sorgfältig gestalteten Möbeln. Seine Projekte reichten von öffentlichen Bauten in Finnland bis zu Aufträgen in Europa und den Vereinigten Staaten.",
-      "tagline": "Möbel aus gebogenem Birkenholz und die Finlandia-Halle",
+      "summary": "Alvar Aalto war ein finnischer Architekt und Designer, dessen Bauten, Möbel, Glaswaren und Innenräume moderne Konstruktionen mit natürlichen Materialien und menschlichem Komfort verbanden. Gemeinsam mit Aino Aalto und später Elissa Aalto entwarf er Projekte, die von Tuberkulose-Sanatorien und Bibliotheken bis zu Bürgerzentren und Privathäusern reichten.",
+      "tagline": "Gebogenes Holz für modernes Wohnen",
       "portrait": {
         "image": "/portraits/alvar_aalto_thumbnail.webp",
         "thumbnail": "/portraits/alvar_aalto_thumbnail.webp",
@@ -189,29 +189,30 @@
         "Designer"
       ],
       "created": "2026-07-25T09:53:47.178356+02:00",
-      "lastUpdated": "2026-09-05T08:05:45.622884+02:00",
+      "lastUpdated": "2026-09-19T12:20:10.602529+02:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "f6c3ee500aa7708d",
-        "translated_on": "2026-09-05T08:05:45.623940+02:00",
-        "translator": "openai:gpt-5.6-luna"
+        "source_fingerprint": "3d4ffc24ec2dae32",
+        "translated_on": "2026-09-19T12:20:10.602529+02:00",
+        "translator": "openai:gpt-5.6-terra"
       }
     },
     {
       "id": "antoni_gaud",
       "name": "Antoni_Gaudí",
-      "summary": "Antoni Gaudí i Cornet war ein katalanischer Architekt und Designer und die führende Figur des katalanischen Modernisme. Überwiegend in Barcelona tätig, entwickelte er einen höchst persönlichen Stil, der in Naturformen, Handwerkstraditionen und einer zunehmend intensiven katholischen Spiritualität wurzelte. Am bekanntesten ist er dafür, die Sagrada Família zu seinem Lebensprojekt gemacht zu haben.",
-      "tagline": "Architekt einer naturinspirierten Moderne",
+      "summary": "Antoni Gaudí war ein katalanischer Architekt, dessen Bauten konstruktive Experimente, Kunsthandwerk, religiöse Bildwelten und Formen aus der Natur vereinten. Er wirkte vor allem in Barcelona und entwarf die Sagrada Família, den Park Güell, die Casa Batlló, die Casa Milà und weitere prägende Werke des katalanischen Modernisme.",
+      "tagline": "Die lebendige Geometrie der Sagrada Família",
       "portrait": {
         "image": "/portraits/antoni_gaud_thumbnail.webp",
-        "source": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
-        "caption": "Stylized portrait based on historical photograph",
-        "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/7/72/Antoni_Gaudi_1878.jpg",
         "thumbnail": "/portraits/antoni_gaud_thumbnail.webp",
         "medium": "/portraits/antoni_gaud_medium.webp",
-        "full": "/portraits/antoni_gaud_full.webp"
+        "full": "/portraits/antoni_gaud_full.webp",
+        "source": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/7/72/Antoni_Gaudi_1878.jpg",
+        "referenceUsed": true
       },
       "birthDate": "1852-06-25",
       "deathDate": "1926-06-10",
@@ -220,13 +221,13 @@
         "Designer"
       ],
       "created": "2025-12-20T21:14:19.142816+01:00",
-      "lastUpdated": "2026-07-18T14:37:51.190030+00:00",
+      "lastUpdated": "2026-09-19T12:26:06.388690+02:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "6dd8d1bd8b76cbb5",
-        "translated_on": "2026-07-18T14:37:51.190050+00:00",
-        "translator": "manual"
+        "source_fingerprint": "1f30ce7fd6a1c017",
+        "translated_on": "2026-09-19T12:26:06.388690+02:00",
+        "translator": "openai:gpt-5.6-terra"
       }
     },
     {
@@ -299,33 +300,34 @@
     {
       "id": "charles_rennie_mackintosh",
       "name": "Charles_Rennie_Mackintosh",
-      "summary": "Charles Rennie Mackintosh war ein schottischer Architekt, Designer und Künstler, der mit dem Glasgow Style und dem breiteren europäischen Modern Style verbunden ist. Ausgebildet in der Lehre und an der Glasgow School of Art, schuf er ein kleines, aber unverwechselbares Werk, das Architektur, Innenräume und Mobiliar vereinte, oft in Zusammenarbeit mit seiner Frau Margaret Macdonald. In späteren Jahren wandte er sich weitgehend der Aquarellmalerei zu und lebte in England und dann in Südfrankreich, bevor er in London starb.",
-      "tagline": "Meister der Form des Glasgow Style",
+      "summary": "Charles Rennie Mackintosh war ein schottischer Architekt und Designer, dessen Bauten, Innenräume, Möbel und kunsthandwerkliche Arbeiten den Glasgow Style prägten. In Glasgow entwarf er die Glasgow School of Art und die Willow Tearooms. Seine letzten Jahre verbrachte er in Frankreich, wo er Aquarelle malte.",
+      "tagline": "Glasgow School aus Stein",
       "portrait": {
         "image": "/portraits/charles_rennie_mackintosh_thumbnail.webp",
         "thumbnail": "/portraits/charles_rennie_mackintosh_thumbnail.webp",
         "medium": "/portraits/charles_rennie_mackintosh_medium.webp",
         "full": "/portraits/charles_rennie_mackintosh_full.webp",
         "source": "https://en.wikipedia.org/wiki/Charles_Rennie_Mackintosh",
-        "caption": "Stylized portrait based on historical photograph",
+        "caption": "Stylized portrait based on a historical source image",
         "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Charles-Rennie-Mackintosh.jpg"
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Charles-Rennie-Mackintosh.jpg",
+        "referenceUsed": true
       },
       "birthDate": "1868-06-07",
       "deathDate": "1928-12-10",
       "primaryRoles": [
         "Architekt",
         "Designer",
-        "Künstler"
+        "Maler"
       ],
       "created": "2026-01-10T08:04:24.013112+01:00",
-      "lastUpdated": "2026-07-18T14:37:51.190179+00:00",
+      "lastUpdated": "2026-09-19T12:20:42.170689+02:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "7fb34a3f7ff385f6",
-        "translated_on": "2026-07-18T14:37:51.190220+00:00",
-        "translator": "manual"
+        "source_fingerprint": "54a08406a64181e0",
+        "translated_on": "2026-09-19T12:20:42.170689+02:00",
+        "translator": "openai:gpt-5.6-terra"
       }
     },
     {
@@ -661,17 +663,18 @@
     {
       "id": "frank_lloyd_wright",
       "name": "Frank_Lloyd_Wright",
-      "summary": "Frank Lloyd Wright war ein amerikanischer Architekt, dessen lange Karriere die moderne Architektur durch die Prairie School, die Usonian-Wohnideen und Hauptwerke wie Fallingwater und den Entwurf des Guggenheim-Museums umgestaltete. Er schrieb außerdem viel und bildete über die Taliesin Fellowship Generationen von Schülern aus.",
-      "tagline": "Vorkämpfer der organischen Architektur",
+      "summary": "Frank Lloyd Wright war ein US-amerikanischer Architekt, der seine Bauten auf ihren Ort, die verwendeten Materialien und den täglichen Gebrauch ausrichtete. Seine Prairie-Häuser, Usonia-Wohnhäuser, öffentlichen Gebäude und seine Architekturschule prägten das amerikanische Design über sieben Jahrzehnte hinweg.",
+      "tagline": "Fallingwater über dem Bear Run",
       "portrait": {
         "image": "/portraits/frank_lloyd_wright_thumbnail.webp",
         "thumbnail": "/portraits/frank_lloyd_wright_thumbnail.webp",
         "medium": "/portraits/frank_lloyd_wright_medium.webp",
         "full": "/portraits/frank_lloyd_wright_full.webp",
         "source": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
-        "caption": "Stylized portrait based on historical photograph",
+        "caption": "Stylized portrait based on a historical source image",
         "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/30/Frank_Lloyd_Wright_portrait.jpg"
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/30/Frank_Lloyd_Wright_portrait.jpg",
+        "referenceUsed": true
       },
       "birthDate": "1867-06-08",
       "deathDate": "1959-04-09",
@@ -681,13 +684,13 @@
         "Schriftsteller"
       ],
       "created": "2025-12-24T11:36:06.166396+01:00",
-      "lastUpdated": "2026-07-18T14:37:51.190615+00:00",
+      "lastUpdated": "2026-09-19T12:25:40.596346+02:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "de11595bf8e81c5c",
-        "translated_on": "2026-07-18T14:37:51.190625+00:00",
-        "translator": "manual"
+        "source_fingerprint": "ddccbf890adcb56f",
+        "translated_on": "2026-09-19T12:25:40.596346+02:00",
+        "translator": "openai:gpt-5.6-terra"
       }
     },
     {
@@ -727,73 +730,74 @@
     {
       "id": "frei_otto",
       "name": "Frei_Otto",
-      "tagline": "Pionier leichter Zugarchitektur",
-      "summary": "Frei Otto war ein deutscher Architekt, Konstruktionspionier und Professor, dessen experimentelle Arbeit mit Seilnetzen, Gitterschalen und anderen Zugkonstruktionen die Architektur des 20. Jahrhunderts veränderte. Ausgehend vom Segelfliegen und vom Bauen in Kriegsgefangenschaft entwickelte er eine lebenslange Suche nach dem Bauen mit minimalem Material-, Energie- und Umweltaufwand, gründete das Institut für leichte Flächentragwerke in Stuttgart und prägte Ikonen wie die Dächer des Münchner Olympiastadions und den deutschen Pavillon auf der Expo 67. Als führende Stimme organischen und ökologischen Entwerfens erhielt er 2015, kurz vor seinem Tod, den Pritzker-Preis für Architektur.",
+      "tagline": "Seilnetze für leichte Bauten",
+      "summary": "Frei Otto war ein deutscher Architekt und Hochschullehrer, der Leichtbaukonstruktionen auf Grundlage von Seilnetzen, Membranen und Gitterschalen entwickelte. Seine Arbeit verband experimentelle Modelle mit großen öffentlichen Bauten, darunter die Dächer des Olympiaparks München und der Multihalle in Mannheim.",
       "birthDate": "1925-05-31",
       "deathDate": "2015-03-09",
       "primaryRoles": [
         "Architekt",
-        "Ingenieur",
+        "Theoretiker",
         "Hochschullehrer"
       ],
       "created": "2025-12-06T20:25:22.205354+01:00",
-      "lastUpdated": "2026-07-18T14:37:51.190666+00:00",
+      "lastUpdated": "2026-09-19T12:30:19.761216+02:00",
       "portrait": {
         "image": "/portraits/frei_otto_thumbnail.webp",
         "thumbnail": "/portraits/frei_otto_thumbnail.webp",
         "medium": "/portraits/frei_otto_medium.webp",
         "full": "/portraits/frei_otto_full.webp",
         "source": "https://openverse.org/image/f970d4cf-d3f7-4478-92d8-9e794d71b9ec?q=frei+otto&p=5",
-        "caption": "Stylized portrait based on historical photograph",
+        "caption": "Stylized portrait based on a historical source image",
         "creator": "AI generated artwork",
         "originalImage": "https://live.staticflickr.com/8706/16812037915_48d48dc18b_b.jpg",
-        "originalCaption": "Stylized portrait based on historical photograph"
+        "referenceUsed": true
       },
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "7a3c845b4c0290c7",
-        "translated_on": "2026-07-18T14:37:51.190680+00:00",
-        "translator": "manual"
+        "source_fingerprint": "3d69c4930b7d5141",
+        "translated_on": "2026-09-19T12:30:19.761216+02:00",
+        "translator": "openai:gpt-5.6-terra"
       }
     },
     {
       "id": "friedensreich_hundertwasser",
       "name": "Friedensreich_Hundertwasser",
-      "tagline": "Rebell einer naturerfüllten Architektur",
-      "summary": "Friedensreich Hundertwasser (geboren als Friedrich Stowasser) war ein österreichischer Künstler, der vor allem für leuchtend farbige Gemälde, Grafiken und eigenwillige Architekturentwürfe bekannt ist, die gerade Linien und Standardisierung ablehnten. Geprägt vom Überleben im Krieg und Jahrzehnten des Reisens entwickelte er ein künstlerisches Weltbild, in dessen Zentrum organische Form und die Rechte der Natur standen. Ab den 1970er-Jahren wurde er zu einer prominenten Stimme der Umweltbewegung und entwarf einflussreiche Gebäude, die Vegetation und unregelmäßige, menschenzentrierte Formen einbezogen.",
+      "tagline": "Bäume in gemalten Häusern",
+      "summary": "Friedensreich Hundertwasser war ein österreichischer Maler, Architekt und Umweltschützer, der gerade Linien und standardisiertes Bauen ablehnte. In seinen farbenfrohen Werken verband er unregelmäßige Formen mit Pflanzen und setzte sich für Bäume, Dachgärten und individuellen Ausdruck in Städten ein.",
       "portrait": {
         "image": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
-        "source": "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
-        "caption": "Stylized portrait based on historical photograph",
-        "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Hundertwasser_nz_1998_hg.jpg",
         "thumbnail": "/portraits/friedensreich_hundertwasser_thumbnail.webp",
         "medium": "/portraits/friedensreich_hundertwasser_medium.webp",
-        "full": "/portraits/friedensreich_hundertwasser_full.webp"
+        "full": "/portraits/friedensreich_hundertwasser_full.webp",
+        "source": "https://de.wikipedia.org/wiki/Friedensreich_Hundertwasser",
+        "caption": "Stylized portrait based on a historical source image",
+        "creator": "AI generated artwork",
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Hundertwasser_nz_1998_hg.jpg",
+        "referenceUsed": true
       },
       "primaryRoles": [
-        "Künstler",
+        "Maler",
         "Architekt",
         "Umweltschützer"
       ],
       "created": "2025-11-09T10:47:25+01:00",
-      "lastUpdated": "2026-07-18T14:37:51.190698+00:00",
+      "lastUpdated": "2026-09-19T12:31:19.042338+02:00",
       "birthDate": "1928-12-15",
       "deathDate": "2000-02-19",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "50d29804e034b614",
-        "translated_on": "2026-07-18T14:37:51.190709+00:00",
-        "translator": "manual"
+        "source_fingerprint": "cab9ac20112c7425",
+        "translated_on": "2026-09-19T12:31:19.042338+02:00",
+        "translator": "openai:gpt-5.6-terra"
       }
     },
     {
       "id": "geoffrey_bawa",
       "name": "Geoffrey_Bawa",
-      "summary": "Geoffrey Bawa war ein sri-lankischer Architekt, dessen Bauten modernistisches Design mit tropischen Landschaften, regionalen Materialien und traditionellen Bauformen verbanden. Sein Werk reichte von Privathäusern und Hotels bis zum Parlamentskomplex Sri Lankas; er prägte die Architektur des Landes in der Zeit nach der Unabhängigkeit maßgeblich.",
-      "tagline": "Wegbereiter der tropischen Moderne",
+      "summary": "Geoffrey Bawa war ein sri-lankischer Architekt, dessen Bauten moderne Konstruktionen mit Innenhöfen, Wasserflächen, Gärten und regionalen Materialien verbanden. Sein Werk reichte von Privathäusern und Hotels bis zum Parlamentsgebäude Sri Lankas in Sri Jayewardenepura Kotte.",
+      "tagline": "Tropische Moderne in Sri Lanka",
       "birthDate": "1919-07-23",
       "deathDate": "2003-05-27",
       "primaryRoles": [
@@ -801,14 +805,7 @@
         "Designer"
       ],
       "created": "2026-07-25T10:07:32.989831+02:00",
-      "lastUpdated": "2026-07-25T10:09:58.657484+02:00",
-      "translation": {
-        "source_lang": "en",
-        "target_lang": "de",
-        "source_fingerprint": "3fbf4b6702373ea7",
-        "translated_on": "2026-07-25T10:09:58.657484+02:00",
-        "translator": "openai:gpt-5.6-terra"
-      },
+      "lastUpdated": "2026-09-19T12:33:26.850799+02:00",
       "portrait": {
         "image": "/portraits/geoffrey_bawa_thumbnail.webp",
         "thumbnail": "/portraits/geoffrey_bawa_thumbnail.webp",
@@ -818,9 +815,14 @@
         "caption": "Stylized portrait based on a historical source image",
         "creator": "AI generated artwork",
         "originalImage": "https://api.architectuul.org/media/58c6f65a-f8bc-408a-9fda-7ecf6d7b5e1b/1312x.jpg",
-        "referenceUsed": true,
-        "sourceLicense": "CC BY-SA 3.0",
-        "sourceCreator": "Designtroo"
+        "referenceUsed": true
+      },
+      "translation": {
+        "source_lang": "en",
+        "target_lang": "de",
+        "source_fingerprint": "87e70e8439290aef",
+        "translated_on": "2026-09-19T12:33:26.850799+02:00",
+        "translator": "openai:gpt-5.6-terra"
       }
     },
     {
@@ -1353,33 +1355,34 @@
     {
       "id": "lina_bo_bardi",
       "name": "Lina_Bo_Bardi",
-      "summary": "Die in Italien geborene Architektin und Designerin Lina Bo Bardi baute in Brasilien eine Karriere auf, die moderne Form mit dem alltäglichen sozialen und kulturellen Leben verband – durch Gebäude, Ausstellungen und Objekte. Ihr Werk erweiterte die moderne brasilianische Architektur, indem es Volkskultur, Handwerk und öffentliche Institutionen als zentrale Materialien des Entwerfens begriff.",
-      "tagline": "Moderne, verwurzelt in Brasilien",
+      "summary": "Lina Bo Bardi war eine brasilianische Architektin und Designerin italienischer Herkunft, deren Bauten Kultur, Kunst, Arbeit und Erholung zum Teil des öffentlichen Lebens machten. In ihrem Werk verband sie modernes Bauen mit brasilianischen Materialien, volkstümlichen Formen und Räumen für den Alltag.",
+      "tagline": "MASP und SESC Pompéia",
       "portrait": {
         "image": "/portraits/lina_bo_bardi_thumbnail.webp",
         "thumbnail": "/portraits/lina_bo_bardi_thumbnail.webp",
         "medium": "/portraits/lina_bo_bardi_medium.webp",
         "full": "/portraits/lina_bo_bardi_full.webp",
         "source": "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
-        "caption": "Stylized portrait based on historical photograph",
+        "caption": "Stylized portrait based on a historical source image",
         "creator": "AI generated artwork",
-        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Lina_Bo_Bardi.jpg"
+        "originalImage": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Lina_Bo_Bardi.jpg",
+        "referenceUsed": true
       },
       "birthDate": "1914-12-05",
       "deathDate": "1992-03-20",
       "primaryRoles": [
         "Architektin",
         "Designerin",
-        "Herausgeberin"
+        "Redakteurin"
       ],
       "created": "2026-01-09T05:57:00.389189+01:00",
-      "lastUpdated": "2026-07-18T14:37:51.191346+00:00",
+      "lastUpdated": "2026-09-19T12:41:35.520728+02:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "fc2cb369d8b86674",
-        "translated_on": "2026-07-18T14:37:51.191356+00:00",
-        "translator": "manual"
+        "source_fingerprint": "b2870fbd3487906f",
+        "translated_on": "2026-09-19T12:41:35.520728+02:00",
+        "translator": "openai:gpt-5.6-terra"
       }
     },
     {
@@ -1748,8 +1751,8 @@
     {
       "id": "zaha_hadid",
       "name": "Zaha_Hadid",
-      "tagline": "Architektur in Bewegung malen",
-      "summary": "Zaha Hadid war eine irakisch-britische Architektin, deren Gemälde, Zeichnungen und Bauwerke mit gebrochenen Flächen, fließenden Linien und dramatischen Raumfolgen arbeiteten. Nach Jahren einflussreicher, nicht verwirklichter Entwürfe führte sie Zaha Hadid Architects zu bedeutenden Aufträgen für Kultur, öffentliche Einrichtungen und Sportbauten auf der ganzen Welt.",
+      "tagline": "Fließende Geometrie für öffentliche Bauten",
+      "summary": "Zaha Hadid war eine irakisch-britische Architektin, deren Gemälde und Bauten mit gebrochener, fließender Geometrie Museen, Kulturstätten und öffentliche Bauvorhaben neu gestalteten. Nach Jahren mit nicht realisierten Wettbewerbsentwürfen vollendete sie bedeutende Werke in Europa, Asien und den Vereinigten Staaten und erhielt als erste Frau den Pritzker-Architekturpreis.",
       "portrait": {
         "image": "/portraits/zaha_hadid_thumbnail.webp",
         "thumbnail": "/portraits/zaha_hadid_thumbnail.webp",
@@ -1769,13 +1772,13 @@
         "Designerin"
       ],
       "created": "2025-12-06T20:16:18.296912+01:00",
-      "lastUpdated": "2026-09-06T08:48:41.176627+02:00",
+      "lastUpdated": "2026-09-19T12:42:38.407925+02:00",
       "translation": {
         "source_lang": "en",
         "target_lang": "de",
-        "source_fingerprint": "35e06c436a70f036",
-        "translated_on": "2026-09-06T08:48:41.176627+02:00",
-        "translator": "openai:gpt-5.6-luna"
+        "source_fingerprint": "2dfbd1468597e13b",
+        "translated_on": "2026-09-19T12:42:38.407925+02:00",
+        "translator": "openai:gpt-5.6-terra"
       }
     }
   ]

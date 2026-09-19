@@ -1,6 +1,6 @@
 {
-  "dataset": "wikipedia_ego_network",
-  "created_on": "2025-12-20",
+  "dataset": "Antoni Gaudí ego network",
+  "created_on": "2026-09-19",
   "ego": {
     "name": "Antoni Gaudí",
     "birth_year": 1852,
@@ -9,394 +9,241 @@
       "Architect",
       "Designer"
     ],
-    "summary": "Antoni Gaudí i Cornet was a Catalan architect and designer and the leading figure of Catalan Modernisme. Working largely in Barcelona, he developed an idiosyncratic, nature-inspired style rooted in craft traditions and an increasingly intense Catholic spirituality. He is best known for transforming the Sagrada Família into his lifelong project.",
+    "summary": "Antoni Gaudí was a Catalan architect and designer whose highly individual work united structural experimentation, artisanal craft, natural forms, and Catholic imagery. Based mainly in Barcelona, he created works including the Sagrada Família, Park Güell, Casa Batlló, and Casa Milà, becoming the leading figure of Catalan Modernisme.",
     "wikipedia": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
   },
   "connections": [
     {
       "person_name": "Francesc Gaudí i Serra",
-      "relationship_type": "family/father",
-      "relationship_description": "Gaudí’s father, a coppersmith whose craft background is often linked to Gaudí’s feel for materials; they shared a household in Gaudí’s later years.",
-      "start_year": 1852,
-      "end_year": 1906,
+      "relationship_description": "Gaudí’s father was a coppersmith. Gaudí lived with him at Park Güell until Francesc died in 1906.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Family life in Baix Camp (Reus/Riudoms area)",
-        "Shared household in Park Güell house (from 1906)"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
       ],
-      "notes": "Gaudí's upbringing in a craftsman family is often linked to his sensitivity to materials and artisan techniques."
+      "notes": "Gaudí was the youngest of Francesc Gaudí i Serra's five children.",
+      "relationship_type": "family/father"
     },
     {
       "person_name": "Antònia Cornet i Bertran",
-      "relationship_type": "family/mother",
-      "relationship_description": "Gaudí’s mother; her death in 1876 was one of the major losses during his student years.",
-      "start_year": 1852,
-      "end_year": 1876,
+      "relationship_description": "Gaudí's mother raised him in the family coppersmith household in Baix Camp and died in 1876 while he was studying architecture in Barcelona.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Family life and education support during Gaudí's youth"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
       ],
-      "notes": "Wikipedia notes her death as a major family loss during Gaudí's student years."
+      "notes": null,
+      "relationship_type": "family/mother"
     },
     {
-      "person_name": "Rosa Gaudí",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Gaudí's sister; one of the few siblings who survived to adulthood.",
-      "start_year": 1852,
-      "end_year": 1879,
-      "strength": "moderate",
-      "interaction_frequency": "yearly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Family relationships in Baix Camp and later Barcelona contacts"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
-      ],
-      "notes": "Died in 1879."
-    },
-    {
-      "person_name": "Francesc Gaudí (physician)",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Gaudí's brother, a newly graduated physician who died in 1876.",
-      "start_year": 1852,
-      "end_year": 1876,
-      "strength": "moderate",
-      "interaction_frequency": "yearly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Family ties during Gaudí's schooling and early Barcelona years"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
-      ],
-      "notes": "His death is mentioned alongside their mother's as part of a difficult period for Gaudí."
-    },
-    {
-      "person_name": "Eduard Toda i Güell",
-      "relationship_type": "social/friend",
-      "relationship_description": "Fellow student and early friend; with Toda and Josep Ribera, Gaudí imagined turning Poblet Monastery into a utopian phalanstère.",
-      "start_year": 1868,
-      "end_year": 1875,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Student friendship in Barcelona",
-        "Utopian socialist planning project (Poblet Monastery concept)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
-      ],
-      "notes": "Represents Gaudí's early ideological/student circle before his later intensification of Catholic devotion."
-    },
-    {
-      "person_name": "Josep Ribera i Sans",
-      "relationship_type": "social/friend",
-      "relationship_description": "Member of Gaudí’s student circle; collaborated with Gaudí and Eduard Toda on the unrealized Poblet Monastery phalanstère idea.",
-      "start_year": 1868,
-      "end_year": 1875,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Student circle in Barcelona",
-        "Utopian planning around Poblet Monastery"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
-      ],
-      "notes": "Less documented than Toda in the provided extract, but explicitly named as part of the plan."
-    },
-    {
-      "person_name": "Francesc Berenguer (assistant)",
-      "relationship_type": "professional/assistant",
-      "relationship_description": "One of Gaudí’s main assistants; closely linked to the Park Güell house that later became the Gaudí House Museum.",
-      "start_year": 1870,
-      "end_year": 1914,
+      "person_name": "Rosa Egea Gaudí",
+      "relationship_description": "Gaudí lived with his niece Rosa Egea Gaudí in his house at Park Güell from 1906 until her death in 1912.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Architectural assistance across multiple projects",
-        "Construction of Gaudí's Park Güell house (later Gaudí Museum)"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
       ],
-      "notes": "Wikipedia highlights Berenguer as a main assistant and lists his death (1914) as a major blow to Gaudí."
+      "notes": "Her death was one of several losses that preceded Gaudí's final concentration on the Sagrada Família.",
+      "relationship_type": "family/niece"
     },
     {
-      "person_name": "Elies Rogent",
-      "relationship_type": "professional/teacher",
-      "relationship_description": "Director of the Barcelona School of Architecture who delivered the famous remark that Gaudí's degree was awarded to either a fool or a genius.",
-      "start_year": 1875,
-      "end_year": 1878,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Architectural education at Barcelona Higher School of Architecture",
-        "Degree conferral (1878)"
-      ],
+      "person_name": "Francesc Berenguer i Mestres",
+      "relationship_description": "Berenguer, the son of Gaudí's nursery-school teacher, became one of Gaudí's principal assistants and built the Park Güell house where Gaudí lived from 1906.",
+      "strength": "strong",
       "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
-        "https://de.wikipedia.org/wiki/Elies_Rogent"
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
       ],
-      "notes": "Rogent is explicitly named in Gaudí's biography as the school director at graduation."
+      "notes": "Berenguer's death in 1914 was a major personal and professional loss for Gaudí.",
+      "relationship_type": "professional/assistant"
     },
     {
       "person_name": "Joan Martorell i Montells",
-      "relationship_type": "professional/mentor",
-      "relationship_description": "Architect for whom Gaudí worked as a draughtsman and a key figure in the professional chain around the Sagrada Família succession.",
-      "start_year": 1875,
-      "end_year": 1883,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Drafting/work experience in Martorell's professional network",
-        "Sagrada Família advisory and succession context (1883)"
-      ],
+      "relationship_description": "Gaudí worked in Martorell's office as a student, and Martorell later recommended him to lead the Sagrada Família project after declining the post himself in 1883.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
         "https://de.wikipedia.org/wiki/Joan_Martorell"
       ],
-      "notes": "Wikipedia indicates Gaudí worked for Martorell and that Martorell was involved in advising/promoting the Sagrada Família project."
-    },
-    {
-      "person_name": "Francisco de Paula del Villar y Lozano",
-      "relationship_type": "professional/predecessor",
-      "relationship_description": "Original architect of the Sagrada Família; resigned in 1883, after which Gaudí was appointed and radically reconceived the project.",
-      "start_year": 1875,
-      "end_year": 1883,
-      "strength": "weak",
-      "interaction_frequency": "rare",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Architectural work relationship (Gaudí worked as draughtsman for Villar)",
-        "Sagrada Família succession after Villar's resignation"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
-        "https://en.wikipedia.org/wiki/Francisco_de_Paula_del_Villar_y_Lozano",
-        "https://en.wikipedia.org/wiki/Sagrada_Fam%C3%ADlia"
-      ],
-      "notes": "Their connection includes both earlier professional work and later project succession."
-    },
-    {
-      "person_name": "Eusebi Güell",
-      "relationship_type": "professional/patron",
-      "relationship_description": "Gaudí’s most important long-term patron, commissioning major works such as Palau Güell and Park Güell and backing his experiments for decades.",
-      "start_year": 1878,
-      "end_year": 1918,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Patronage and commissions (Palau Güell, Park Güell, Colònia Güell crypt, etc.)",
-        "Shared devout Catholic interests",
-        "Long-term planning and experimentation in architecture/design"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
-        "https://en.wikipedia.org/wiki/Eusebi_G%C3%BCell"
-      ],
-      "notes": "Gaudí later remarked after multiple deaths and loss of clients that he could devote himself entirely to the Sagrada Família; Güell's death (1918) is included among those losses."
-    },
-    {
-      "person_name": "Llorenç Matamala i Piñol",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Sculptor who was Gaudí's friend and collaborator; collaborated on decoration of the Sagrada Família and Casa Botines.",
-      "start_year": 1878,
-      "end_year": 1925,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Sagrada Família sculptural decoration",
-        "Casa Botines decoration"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
-        "https://en.wikipedia.org/wiki/Lloren%C3%A7_Matamala_i_Pi%C3%B1ol"
-      ],
-      "notes": "Also the confidant to whom Gaudí reportedly made a joke upon receiving his architecture degree."
-    },
-    {
-      "person_name": "Antonio López y López, 1st Marquess of Comillas",
-      "relationship_type": "social/friend",
-      "relationship_description": "Elite friend and client in Güell’s circle; Gaudí designed El Capricho for him in Comillas.",
-      "start_year": 1880,
-      "end_year": 1883,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Architect-client friendship",
-        "Commission for 'El Capricho' in Comillas"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
-        "https://en.wikipedia.org/wiki/Antonio_L%C3%B3pez,_1st_Marquess_of_Comillas"
-      ],
-      "notes": "Treated as a social tie in Gaudí's biography (explicitly called a friend) with professional overlap via the commission."
-    },
-    {
-      "person_name": "Manuel Vicens i Montaner",
-      "relationship_type": "professional/client",
-      "relationship_description": "Commissioned Casa Vicens, widely treated as Gaudí's first major private house commission (1883–1885).",
-      "start_year": 1883,
-      "end_year": 1885,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Design and construction of Casa Vicens"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
-        "https://en.wikipedia.org/wiki/Casa_Vicens"
-      ],
-      "notes": "Casa Vicens is emphasized in Wikipedia as an early breakthrough work."
-    },
-    {
-      "person_name": "Joan Rubió i Bellver",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Architect and disciple who collaborated with Gaudí in the early 1900s on several major projects, including work connected to the Sagrada Família and Park Güell.",
-      "start_year": 1894,
-      "end_year": 1905,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Design and construction collaboration (multiple works)",
-        "Restoration planning (Cathedral of Palma de Mallorca)"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
-        "https://en.wikipedia.org/wiki/Joan_Rubi%C3%B3"
-      ],
-      "notes": "Rubió’s article directly frames him as a Gaudí collaborator across many key works."
-    },
-    {
-      "person_name": "Josep Torras i Bages",
-      "relationship_type": "religious/influence",
-      "relationship_description": "Bishop and Catholic Catalan thinker in Gaudí’s religious milieu, reflecting the spiritual direction of his later life.",
-      "start_year": 1899,
-      "end_year": 1916,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Catholic artistic/social circles in Barcelona",
-        "Shared conservative Catholic-Catalan cultural environment"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
-        "https://en.wikipedia.org/wiki/Josep_Torras_i_Bages",
-        "https://en.wikipedia.org/wiki/Cercle_Art%C3%ADstic_de_Sant_Lluc"
-      ],
-      "notes": "Gaudí joined the Cercle in 1899; the extract explicitly calls Torras a friend and notes his death in 1916."
+      "notes": "Martorell also connected Gaudí with important future patrons, including the Marquess of Comillas.",
+      "relationship_type": "professional/mentor"
     },
     {
       "person_name": "Josep Maria Jujol",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Architect-collaborator who worked with Gaudí on multiple famous works (including Casa Batlló, Casa Milà, and Park Güell).",
-      "start_year": 1904,
-      "end_year": 1926,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Collaboration on major Barcelona projects (Casa Batlló, Casa Milà, Park Güell)"
-      ],
+      "relationship_description": "Jujol worked closely with Gaudí on Casa Batlló, Casa Milà, and Park Güell, contributing decoration, color, ceramics, and related design work.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
         "https://en.wikipedia.org/wiki/Josep_Maria_Jujol"
       ],
-      "notes": "Jujol is listed among the architects in Gaudí's team who later became prominent."
+      "notes": "Their first project together was Casa Batlló.",
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Joan Rubió i Bellver",
+      "relationship_description": "Rubió was a devoted disciple of Gaudí and collaborated with him until 1905 on the Sagrada Família, Park Güell, Casa Batlló, Casa Calvet, Bellesguard, and other projects.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://en.wikipedia.org/wiki/Joan_Rubi%C3%B3"
+      ],
+      "notes": null,
+      "relationship_type": "professional/protégé"
     },
     {
       "person_name": "Domènec Sugrañes i Gras",
-      "relationship_type": "professional/successor",
-      "relationship_description": "Close collaborator who continued directing work at the Sagrada Família after Gaudí’s death.",
-      "start_year": 1905,
-      "end_year": 1926,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Sagrada Família construction collaboration",
-        "Posthumous continuation of Gaudí's temple work"
-      ],
+      "relationship_description": "Sugrañes became a trusted collaborator after meeting Gaudí in 1905, worked intensively on later projects, and directed construction at the Sagrada Família after Gaudí's death.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
         "https://de.wikipedia.org/wiki/Dom%C3%A8nec_Sugra%C3%B1es_i_Gras"
       ],
-      "notes": "The related article emphasizes a mentor-like relationship and Sugrañes’s post-1926 leadership."
+      "notes": "Gaudí named Sugrañes as executor of his will.",
+      "relationship_type": "professional/protégé"
     },
     {
-      "person_name": "Rosa Egea Gaudí",
-      "relationship_type": "family/niece",
-      "relationship_description": "Gaudí's niece who lived with him (and his father) at the Park Güell house; she died in 1912.",
-      "start_year": 1906,
-      "end_year": 1912,
+      "person_name": "Eusebi Güell",
+      "relationship_description": "Güell met Gaudí after seeing his work at the 1878 Paris World’s Fair and became his friend and patron. He commissioned Palau Güell, Park Güell, Colònia Güell, and other projects.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Shared household at Gaudí's house in Park Güell"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://en.wikipedia.org/wiki/Eusebi_G%C3%BCell"
       ],
-      "notes": "Her death is listed among the personal losses in Gaudí's hard decade (1910s)."
+      "notes": "Their shared Catholic commitments reinforced a relationship that shaped Gaudí's career from its beginning.",
+      "relationship_type": "business/patron"
     },
     {
-      "person_name": "Gregori M. Sunyol",
-      "relationship_type": "religious/teacher",
-      "relationship_description": "Benedictine monk whose Gregorian chant course Gaudí attended in 1916 as his religious devotion intensified.",
-      "start_year": 1916,
-      "end_year": 1916,
-      "strength": "weak",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Gregorian chant course attendance (Palau de la Música Catalana)"
-      ],
+      "person_name": "Rosa Gaudí i Cornet",
+      "relationship_description": "Rosa was one of Gaudí's two siblings who survived into adulthood; her death in 1879 was among the early losses in his close family.",
+      "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
       ],
-      "notes": "Included to reflect Gaudí's documented religious practices and communities, not only his architectural network."
+      "notes": null,
+      "relationship_type": "family/sister"
+    },
+    {
+      "person_name": "Francesc Gaudí i Cornet",
+      "relationship_description": "Gaudí's brother Francesc became a physician and died in 1876, shortly after graduating, during Gaudí's architectural studies.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "notes": null,
+      "relationship_type": "family/brother"
+    },
+    {
+      "person_name": "Francisco de Paula del Villar y Lozano",
+      "relationship_description": "Gaudí drew plans for Villar and worked under him on the Montserrat basilica apse. In 1883, Gaudí succeeded Villar on the Sagrada Família after Villar left the project.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://en.wikipedia.org/wiki/Francisco_de_Paula_del_Villar_y_Lozano"
+      ],
+      "notes": "Villar's original Sagrada Família scheme was Neo-Gothic, whereas Gaudí radically remade the design.",
+      "relationship_type": "professional/supervisor"
+    },
+    {
+      "person_name": "Llorenç Matamala i Piñol",
+      "relationship_description": "Matamala was Gaudí's friend and sculptural collaborator on the Sagrada Família and Casa de los Botines; Gaudí also shared the news of his architectural qualification with him in 1878.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://en.wikipedia.org/wiki/Lloren%C3%A7_Matamala_i_Pi%C3%B1ol"
+      ],
+      "notes": null,
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Antonio López y López",
+      "relationship_description": "Gaudí became a friend of Güell's father-in-law, Antonio López, and designed El Capricho for him in Comillas.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://en.wikipedia.org/wiki/Antonio_L%C3%B3pez,_1st_Marquess_of_Comillas"
+      ],
+      "notes": "Martorell helped Gaudí establish contacts with the Comillas circle.",
+      "relationship_type": "business/client"
+    },
+    {
+      "person_name": "Manuel Vicens i Montaner",
+      "relationship_description": "Vicens commissioned Gaudí's first major residential work, Casa Vicens, in Barcelona's Gràcia district in 1878.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "notes": "Casa Vicens helped establish Gaudí's reputation beyond his earliest small projects.",
+      "relationship_type": "business/client"
+    },
+    {
+      "person_name": "Pere Màrtir Calvet",
+      "relationship_description": "The textile manufacturer Calvet commissioned Casa Calvet, designed by Gaudí in 1898 and recognized by Barcelona as its best building of 1900.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "notes": null,
+      "relationship_type": "business/client"
+    },
+    {
+      "person_name": "Josep Batlló",
+      "relationship_description": "Batlló hired Gaudí to remodel his Barcelona residence, Casa Batlló, from 1904 to 1906.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "notes": "Gaudí and Josep Maria Jujol worked together on the transformation.",
+      "relationship_type": "business/client"
+    },
+    {
+      "person_name": "Elies Rogent",
+      "relationship_description": "As director of the Barcelona Higher School of Architecture, Rogent approved Gaudí’s qualification in 1878. He remarked that the school had graduated either a fool or a genius.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://de.wikipedia.org/wiki/Elies_Rogent"
+      ],
+      "notes": null,
+      "relationship_type": "academic/teacher"
+    },
+    {
+      "person_name": "Josep Torras i Bages",
+      "relationship_description": "Torras i Bages was Gaudí’s friend and a leading figure in Catalan Catholic thought. He died in 1916 while Gaudí was working on the Sagrada Família.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+        "https://en.wikipedia.org/wiki/Josep_Torras_i_Bages"
+      ],
+      "notes": "Gaudí belonged to Catholic artistic and Catalan religious organizations whose outlook aligned with Torras's thought.",
+      "relationship_type": "religious/friend"
+    },
+    {
+      "person_name": "Gregori Maria Sunyol",
+      "relationship_description": "The Benedictine monk taught a Gregorian chant course at Barcelona's Palau de la Música Catalana in 1916, which Gaudí attended during his final years.",
+      "strength": "weak",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+      ],
+      "notes": "This contact reflects Gaudí's late-life concentration on Catholic practice and the Sagrada Família.",
+      "relationship_type": "religious/teacher"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Gaudí’s closest personal ties were to his immediate family: his father Francesc and mother Antònia, and the few siblings who survived into his youth. In later life he formed a small household at his Park Güell home with his elderly father and his niece Rosa Egea Gaudí, reinforcing a tight domestic circle amid growing professional and spiritual austerity."
+      "summary": "Gaudí grew up in his father’s coppersmith household in Baix Camp and retained close ties to his family. His mother and brother died in 1876, followed by his sister in 1879. He later lived with his father and niece at Park Güell until their deaths, then moved into the Sagrada Família workshop in 1925."
     },
     {
       "relationship_type": "professional",
-      "summary": "Gaudí’s career hinged on patronage and a workshop ecosystem: Güell provided decades of commissions, while collaborators and assistants (e.g., Berenguer, Jujol, Rubió, Sugrañes) helped execute increasingly complex work—especially around the Sagrada Família."
+      "summary": "Gaudí gained practical experience while drawing for established Barcelona architects, including Joan Martorell and Francisco de Paula del Villar. His studio later brought assistants and younger architects into projects such as Park Güell, Casa Batlló, Casa Milà, and the Sagrada Família. Collaborators preserved knowledge of the Sagrada Família’s construction after his death."
     },
     {
-      "relationship_type": "social",
-      "summary": "Beyond work, Gaudí maintained a smaller set of documented friendships and student-circle relationships, including early peers tied to utopian socialist interests and later elite acquaintances such as Antonio López, 1st Marquess of Comillas. These social ties often overlapped with commissions and cultural life in Barcelona."
+      "relationship_type": "business",
+      "summary": "Private patrons gave Gaudí opportunities to build ambitious work in Barcelona and beyond. Eusebi Güell supported projects that ranged from residences and pavilions to Park Güell and the unfinished Colònia Güell church. Other clients commissioned Casa Vicens, Casa Calvet, Casa Batlló, and Casa Milà."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Architectural study in Barcelona gave Gaudí the qualification needed to practice. In 1878, school director Elies Rogent approved his qualification despite uneven grades and remarked on the uncertainty of Gaudí’s talent."
     },
     {
       "relationship_type": "religious",
-      "summary": "As his Catholic devotion deepened, Gaudí’s relationships increasingly ran through religious circles and practices, aligning his daily life with faith communities as much as with architecture."
+      "summary": "Catholic relationships formed part of Gaudí’s later life. His friendship with Josep Torras i Bages connected him with Catalan Catholic thought, and he attended Gregori Maria Sunyol’s Gregorian chant course in 1916. From 1915, Gaudí devoted his work to the Sagrada Família."
     }
   ]
 }
