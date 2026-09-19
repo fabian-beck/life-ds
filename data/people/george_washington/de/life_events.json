@@ -1,83 +1,85 @@
 {
-  "dataset": "Biographical Timeline",
-  "created_on": "2026-07-16",
+  "dataset": "George Washington biographical timeline",
+  "created_on": "2026-09-19",
   "person": {
     "name": "George_Washington",
     "birth_date": "1732-02-22",
     "death_date": "1799-12-14",
     "primary_roles": [
-      "Soldat",
-      "Politiker",
+      "Militäroffizier",
+      "Pflanzer",
       "Präsident"
     ],
-    "tagline": "Erster Präsident der Vereinigten Staaten",
-    "summary": "George Washington war Plantagenbesitzer in Virginia, Oberbefehlshaber der Kontinentalarmee im Amerikanischen Unabhängigkeitskrieg und der erste Präsident der Vereinigten Staaten. Er trug entscheidend zur Sicherung der amerikanischen Unabhängigkeit bei, führte den Vorsitz über die Verfassungskonvention und begründete wichtige Präzedenzfälle für das neue Amt des föderalen Präsidenten.",
-    "wikipedia": "https://de.wikipedia.org/wiki/George_Washington",
+    "tagline": "Sieg bei Yorktown, erste Präsidentschaft",
+    "summary": "George Washington war ein Pflanzer aus Virginia, der während der Amerikanischen Revolution Oberbefehlshaber der Kontinentalarmee wurde. Er führte amerikanische und französische Truppen zum Sieg bei Yorktown, leitete den Verfassungskonvent und amtierte als erster Präsident der Vereinigten Staaten.",
+    "wikipedia": "https://en.wikipedia.org/wiki/George_Washington",
     "portrait": {
       "image": "/portraits/george_washington_thumbnail.webp",
       "thumbnail": "/portraits/george_washington_thumbnail.webp",
       "medium": "/portraits/george_washington_medium.webp",
       "full": "/portraits/george_washington_full.webp",
       "source": "https://de.wikipedia.org/wiki/George_Washington",
-      "caption": "Stylized portrait based on historical photograph",
+      "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg"
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "frontier_lessons",
-      "headline": "Lektionen an der Grenze",
+      "id": "virginia_beginnings",
+      "headline": "Land und Ehrgeiz",
       "date_start": "1732-02-22",
       "date_start_precision": "day",
-      "date_end": "1752-05",
+      "date_end": "1752-07",
       "date_end_precision": "month",
       "age_start": 0,
       "age_end": 20,
       "involved_people": [
-        "Augustine Washington",
-        "Mary Ball Washington",
+        "Lawrence Washington",
+        "Augustine Washington Jr.",
+        "Jane Washington",
         "George William Fairfax"
       ],
-      "location": "Virginia"
+      "location": "Virginia",
+      "illustration": {
+        "image": "/chapter_art/george_washington/virginia_beginnings_medium.webp",
+        "medium": "/chapter_art/george_washington/virginia_beginnings_medium.webp",
+        "full": "/chapter_art/george_washington/virginia_beginnings_full.webp",
+        "concept": "A dark field holds a suspended grid of earthen parcels, each made of layered ochre sediment; one narrow silver line sweeps diagonally through the grid, measuring and dividing it before fading into shadow.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "forged_under_fire",
-      "headline": "Im Feuer geschmiedet",
-      "date_start": "1752-06",
-      "date_start_precision": "month",
-      "date_end": "1758-12",
-      "date_end_precision": "month",
-      "age_start": 20,
+      "id": "frontier_command",
+      "headline": "Bewährung an der Grenze",
+      "date_start": "1753-10-31",
+      "date_start_precision": "day",
+      "date_end": "1759-01-06",
+      "date_end_precision": "day",
+      "age_start": 21,
       "age_end": 26,
       "involved_people": [
-        "Lawrence Washington",
         "Robert Dinwiddie",
-        "Jacques Legardeur de Saint-Pierre",
-        "Louis Coulon de Villiers",
         "Tanaghrisson",
-        "James Mackay",
-        "Edward Braddock"
+        "Edward Braddock",
+        "Martha Dandridge Custis",
+        "Daniel Parke Custis"
       ],
-      "location": "Virginia und die westliche Grenze"
+      "location": "Grenzgebiet von Virginia",
+      "illustration": {
+        "image": "/chapter_art/george_washington/frontier_command_medium.webp",
+        "medium": "/chapter_art/george_washington/frontier_command_medium.webp",
+        "full": "/chapter_art/george_washington/frontier_command_full.webp",
+        "concept": "At center, a rough circle of rain-darkened stone is broken by a rushing wedge of pale water. Around it, bent reeds radiate outward, conveying pressure, retreat, and a hard-won resilience in deep forest-green darkness.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "mount_vernon_years",
-      "headline": "Die Jahre auf Mount Vernon",
-      "date_start": "1759-01-06",
-      "date_start_precision": "day",
-      "date_end": "1775-06-14",
-      "date_end_precision": "day",
-      "age_start": 26,
-      "age_end": 43,
-      "involved_people": [
-        "Martha Dandridge Custis"
-      ],
-      "location": "Virginia"
-    },
-    {
-      "id": "revolutionary_command",
-      "headline": "Revolutionäres Kommando",
+      "id": "revolutionary_war",
+      "headline": "Unabhängigkeitskrieg",
       "date_start": "1775-06-15",
       "date_start_precision": "day",
       "date_end": "1783-12-23",
@@ -85,138 +87,126 @@
       "age_start": 43,
       "age_end": 51,
       "involved_people": [
-        "John Hancock",
-        "Johann Rall",
+        "John Adams",
+        "Thomas Johnson",
+        "Mitglieder des Kontinentalkongresses",
         "Charles Cornwallis",
-        "Nathanael Greene",
-        "John Sullivan",
-        "Hugh Mercer",
-        "Marie-Joseph Motier, Marquis de La Fayette",
         "Jean-Baptiste-Donatien de Vimeur, comte de Rochambeau"
       ],
-      "location": "Vereinigte Staaten"
+      "location": "Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/george_washington/revolutionary_war_medium.webp",
+        "medium": "/chapter_art/george_washington/revolutionary_war_medium.webp",
+        "full": "/chapter_art/george_washington/revolutionary_war_full.webp",
+        "concept": "A single luminous arc of ice-blue light spans a black void, fractured along its underside yet unbroken. Beneath it, scattered amber sparks gather into a tightening orbit, suggesting endurance resolving into decisive force.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "designing_the_republic",
-      "headline": "Die Republik gestalten",
+      "id": "building_the_republic",
+      "headline": "Eine Republik formen",
       "date_start": "1787-05-25",
       "date_start_precision": "day",
-      "date_end": "1787-09-17",
+      "date_end": "1789-04-30",
       "date_end_precision": "day",
       "age_start": 55,
-      "age_end": 55,
+      "age_end": 57,
       "involved_people": [
         "James Madison",
-        "Alexander Hamilton"
+        "Alexander Hamilton",
+        "Robert Livingston"
       ],
-      "location": "Vereinigte Staaten"
+      "location": "Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/george_washington/building_the_republic_medium.webp",
+        "medium": "/chapter_art/george_washington/building_the_republic_medium.webp",
+        "full": "/chapter_art/george_washington/building_the_republic_full.webp",
+        "concept": "Translucent geometric planes rise from separate positions in darkness and slowly interlock around a quiet central void, forming a balanced crystalline structure lit by warm, dawn-colored edges.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "the_presidential_standard",
-      "headline": "Der Maßstab des Präsidenten",
-      "date_start": "1789-04-30",
-      "date_start_precision": "day",
+      "id": "last_public_duties",
+      "headline": "Die letzten Jahre",
+      "date_start": "1794-10",
+      "date_start_precision": "month",
       "date_end": "1799-12-14",
       "date_end_precision": "day",
-      "age_start": 57,
+      "age_start": 62,
       "age_end": 67,
       "involved_people": [
-        "Robert Livingston",
-        "Henry Lee III",
         "Alexander Hamilton",
+        "Henry Lee",
         "James Madison",
         "Martha Washington",
         "James Craik",
-        "Elisha C. Dick",
-        "Gustavus Richard Brown"
+        "Tobias Lear",
+        "Gustavus Richard Brown",
+        "Elisha C. Dick"
       ],
-      "location": "Vereinigte Staaten"
+      "location": "Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/george_washington/last_public_duties_medium.webp",
+        "medium": "/chapter_art/george_washington/last_public_duties_medium.webp",
+        "full": "/chapter_art/george_washington/last_public_duties_full.webp",
+        "concept": "A tall bronze-toned spiral unfurls from a compact coil, then thins into drifting dust at its outer edge. A small steady pool of gold light remains at the center, calm against the surrounding charcoal darkness.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     }
   ],
-  "conclusion": "George Washington verwandelte die Disziplin des Grenzlandes in nationale Führungsstärke: Er errang die Unabhängigkeit und bestimmte anschließend die Grenzen republikanischer Macht. Sein bedeutendstes Vermächtnis war der Verzicht auf seine Macht – zunächst als General, dann als Präsident – zugunsten der Nation, an deren Gründung er mitgewirkt hatte.",
+  "conclusion": "Washingtons Führung bei Yorktown sicherte den militärischen Sieg, der die amerikanische Unabhängigkeit brachte. Er leitete den Verfassungskonvent und wurde der erste Präsident nach der Verfassung. Sein Rückzug nach zwei Amtszeiten begründete einen Präzedenzfall, dem spätere Präsidenten mehr als ein Jahrhundert lang folgten.",
   "events": [
     {
       "date": "1732-02-22",
       "date_precision": "day",
-      "date_note": "11. Februar 1731/32 nach dem damals in Großbritannien und seinen Kolonien geltenden Old-Style-Kalender",
       "age": 0,
-      "title": "Geburt auf Wakefield",
-      "description": "George Washington wurde auf Wakefield geboren, einer Plantage im Westmoreland County, Virginia, als Sohn von Augustine Washington und Mary Ball Washington. Er war das erste Kind ihrer Ehe; die Familie gehörte zu den wohlhabenden Sklavenhaltern und Plantagenbesitzern.",
+      "title": "Geburt in Wakefield",
+      "description": "George Washington wurde in Wakefield im Westmoreland County in Virginia geboren, das auch Pope’s Plantation genannt wurde. Er kam in den Haushalt von Augustine Washington, einem Pflanzer und Kaufmann, dessen Vermögen vor allem auf Landbesitz, Plantagen und der Arbeit versklavter Menschen beruhte, und Mary Ball Washington, die einer Land besitzenden Familie aus Virginia angehörte. Seine älteren Halbgeschwister Lawrence, Augustine Jr. und Jane stammten aus Augustines erster Ehe.",
       "locations": [
         {
-          "name_historic": "Westmoreland County, Virginia",
+          "name_historic": "Westmoreland County",
           "name_modern": "Westmoreland County, Virginia, Vereinigte Staaten",
           "centroid": [
-            -76.775,
-            38.123
+            -76.85,
+            38.1
           ],
           "primary": true
         }
       ],
       "involved_people": [
         "Augustine Washington",
-        "Mary Ball Washington"
+        "Mary Ball Washington",
+        "Lawrence Washington",
+        "Augustine Washington Jr.",
+        "Jane Washington"
       ],
       "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington",
         "https://en.wikipedia.org/wiki/Augustine_Washington",
         "https://en.wikipedia.org/wiki/Mary_Ball_Washington"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/George_Washington_Birthplace%2C_Westmoreland_County%2C_Virginia.jpg/960px-George_Washington_Birthplace%2C_Westmoreland_County%2C_Virginia.jpg",
-          "caption": "George-Washington-Geburtsstätte, Westmoreland County, Virginia",
-          "source": "https://commons.wikimedia.org/wiki/File:George_Washington_Birthplace,_Westmoreland_County,_Virginia.jpg",
-          "creator": "HughTalman",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/A_Most_%E2%80%9CPleasantly_Situated%E2%80%9D_Estate_%28153949_-_washingtondc_oli_20240825_lrg%29.jpg/960px-A_Most_%E2%80%9CPleasantly_Situated%E2%80%9D_Estate_%28153949_-_washingtondc_oli_20240825_lrg%29.jpg",
+          "caption": "Plantage der Familie Washington am Popes Creek in Virginia",
+          "source": "https://commons.wikimedia.org/wiki/File:A_Most_“Pleasantly_Situated”_Estate_(153949_-_washingtondc_oli_20240825_lrg).jpg",
+          "creator": "NASA Earth Observatory images by Michala Garrison, using Landsat data from the U.S. Geological Survey. Map of Washington’s farm courtesy of the Library of Congress. Story by Adam Voiland.",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-candle",
-      "chapter": "frontier_lessons",
+      "event_type_icon": "mdi-baby-face-outline",
+      "chapter": "virginia_beginnings",
+      "weight": 0.2,
       "event_class": {
         "type": "birth",
         "father": "Augustine Washington",
-        "mother": "Mary Ball Washington"
+        "mother": "Mary Ball Washington",
+        "characterization": "Plantagenfamilie aus Virginia"
       }
-    },
-    {
-      "date": "1743-04",
-      "date_precision": "month",
-      "date_end": "1748",
-      "date_end_precision": "year",
-      "age": 11,
-      "title": "Der Vater stirbt, das Lernen geht weiter",
-      "description": "Augustine Washington starb im April 1743, als George elf Jahre alt war, und hinterließ Mary Ball Washington die Führung des Haushalts und die Verwaltung des Besitzes. George erhielt in Virginia nur eine begrenzte formale Schulbildung und eignete sich Mathematik sowie andere praktische Fächer im Selbststudium an.",
-      "locations": [
-        {
-          "name_historic": "Ferry Farm, Virginia",
-          "name_modern": "Fredericksburg, Virginia, Vereinigte Staaten",
-          "centroid": [
-            -77.4608,
-            38.3026
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Virginia",
-          "name_modern": "Virginia, Vereinigte Staaten",
-          "centroid": [
-            -78.6569,
-            37.4316
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Augustine Washington",
-        "Mary Ball Washington"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Augustine_Washington",
-        "https://en.wikipedia.org/wiki/Mary_Ball_Washington"
-      ],
-      "event_type_icon": "mdi-cross",
-      "chapter": "frontier_lessons"
     },
     {
       "date": "1748",
@@ -224,83 +214,91 @@
       "date_end": "1751",
       "date_end_precision": "year",
       "age": 16,
-      "title": "Vermisst die Shenandoah-Grenze",
-      "description": "1748 schloss sich Washington George William Fairfax bei einer Vermessungsexpedition durch das Shenandoahtal an. Danach vermass er Fairfax’ Ländereien an Virginias westlicher Grenze und erwarb nahe dem Bullskin Creek seinen ersten eigenen Landbesitz.",
+      "title": "Vermisst das Shenandoahtal",
+      "description": "Mit sechzehn Jahren schloss sich George Washington George William Fairfax auf einer [[land surveying|Landvermessungsexpedition]] durch Virginias Shenandoahtal an. In den folgenden drei Jahren vermass er Land im Grenzgebiet, verdiente damit seinen Lebensunterhalt und lernte Gelände und Grundstücksgrenzen der Region kennen.",
       "locations": [
         {
-          "name_historic": "Shenandoahtal, Virginia",
-          "name_modern": "Shenandoah Valley, Virginia, Vereinigte Staaten",
+          "name_historic": "Shenandoahtal, Kolonie Virginia",
+          "name_modern": "Shenandoahtal, Virginia, Vereinigte Staaten",
           "centroid": [
             -78.5,
-            38.5
+            38.8
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Bullskin Creek, Virginia",
-          "name_modern": "Jefferson County, West Virginia, Vereinigte Staaten",
-          "centroid": [
-            -77.95,
-            39.28
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
         "George William Fairfax"
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/George_Washington"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/9/91/George_Washington%2C_surveyor_by_Henry_Hintermeister.png",
-          "caption": "George Washington als Landvermesser",
-          "source": "https://commons.wikimedia.org/wiki/File:George_Washington,_surveyor_by_Henry_Hintermeister.png",
-          "creator": "Henry Hintermeister",
-          "license": "Public domain"
-        }
-      ],
+      "sources": [],
       "event_type_icon": "mdi-compass",
-      "chapter": "frontier_lessons"
+      "chapter": "virginia_beginnings",
+      "annotations": {
+        "land surveying": {
+          "explanation": "Bei der Landvermessung werden Grundstücksgrenzen und Gelände vermessen und kartiert. Im kolonialen Virginia half diese Arbeit, Landansprüche zu begründen, und vermittelte Washington praktische Kenntnisse der Region.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Surveying"
+        }
+      },
+      "weight": 0.35
     },
     {
-      "date": "1752-06",
+      "date": "1752-07",
       "date_precision": "month",
       "age": 20,
-      "title": "Verwaltet Mount Vernon",
-      "description": "Nach dem Tod seines Halbbruders Lawrence Washington begann George Washington, den Landsitz Mount Vernon am Potomac zu verwalten. Noch im selben Monat bemühte er sich erfolgreich um die Ernennung zum Adjutanten der Miliz von Virginia und schlug damit seine offizielle militärische Laufbahn ein.",
+      "title": "Übernimmt Mount Vernon",
+      "description": "Nach dem Tod von Lawrence Washington im Jahr 1752 begann George Washington, Landsitz Mount Vernon am Potomac zu verwalten. Außerdem erhielt er eine Ernennung zum Adjutanten der Miliz von Virginia und begann damit seinen öffentlichen Militärdienst.",
       "locations": [
         {
-          "name_historic": "Mount Vernon, Virginia",
+          "name_historic": "Mount Vernon",
           "name_modern": "Mount Vernon, Virginia, Vereinigte Staaten",
           "centroid": [
-            -77.086,
-            38.707
+            -77.0847,
+            38.7077
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Lawrence Washington",
-        "Robert Dinwiddie"
+        "Lawrence Washington"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/George_Washington",
-        "https://en.wikipedia.org/wiki/Lawrence_Washington_(1718%E2%80%931752)"
+        "https://de.wikipedia.org/wiki/George_Washington",
+        "https://en.wikipedia.org/wiki/Augustine_Washington"
       ],
       "images": [
         {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Mount_Vernon_Estate.jpg/960px-Mount_Vernon_Estate.jpg",
+          "caption": "Anwesen Mount Vernon, Fairfax County, Virginia",
+          "source": "https://commons.wikimedia.org/wiki/File:Mount_Vernon_Estate.jpg",
+          "creator": "ALobato",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-home",
+      "chapter": "virginia_beginnings",
+      "weight": 0.5,
+      "background": "Landsitz Mount Vernon war früher die Plantage Little Hunting Creek. Lawrence Washington hatte sie nach Admiral Edward Vernon umbenannt. Das Anwesen lag am Potomac River und umfasste 2.126 Acres.\n\nWashington erlangte die Kontrolle über das Anwesen schrittweise. Lawrences Tochter Sarah lebte bis 1754. Lawrences Witwe Anne behielt ein lebenslanges Nutzungsrecht an der Plantage. Nach ihrer Wiederverheiratung verpachtete sie Mount Vernon an Washington. Als Anne 1761 starb, erbte Washington das Anwesen uneingeschränkt.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AERIAL_VIEW_OF_MT._VERNON_AND_THE_POTOMAC_RIVER_-_NARA_-_547248.jpg/960px-AERIAL_VIEW_OF_MT._VERNON_AND_THE_POTOMAC_RIVER_-_NARA_-_547248.jpg",
+          "caption": "LUFTAUFNAHME VON MOUNT VERNON UND DEM POTOMAC RIVER",
+          "source": "https://commons.wikimedia.org/wiki/File:AERIAL_VIEW_OF_MT._VERNON_AND_THE_POTOMAC_RIVER_-_NARA_-_547248.jpg",
+          "creator": "Neubauer, John, Photographer (NARA record: 8464460)",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Potomac River Mount Vernon"
+        },
+        {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Mount_Vernon_Estate_Mansion_1.JPG/960px-Mount_Vernon_Estate_Mansion_1.JPG",
-          "caption": "Herrenhaus des Landsitzes Mount Vernon, Ostfassade",
+          "caption": "Anwesen Mount Vernon, Herrenhaus, Ostfassade",
           "source": "https://commons.wikimedia.org/wiki/File:Mount_Vernon_Estate_Mansion_1.JPG",
           "creator": "Martin Falbisoner",
           "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Mount Vernon estate"
         }
-      ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "forged_under_fire"
+      ]
     },
     {
       "date": "1753-10-31",
@@ -308,234 +306,207 @@
       "date_end": "1754",
       "date_end_precision": "year",
       "age": 21,
-      "title": "Überbringt das Ohio-Ultimatum",
-      "description": "Ende 1753 schickte Vizegouverneur Robert Dinwiddie Washington von Williamsburg durch das Ohio Valley mit der Aufforderung, die französischen Truppen sollten das von Virginia beanspruchte Gebiet verlassen. In Fort Le Boeuf lehnte der französische Kommandant Jacques Legardeur de Saint-Pierre ab; Washingtons Bericht über die Mission wurde anschließend in kolonialen und britischen Zeitungen veröffentlicht.",
+      "title": "Überbringt Dinwiddies Forderung",
+      "description": "George Washington brach im Auftrag von Robert Dinwiddie von Williamsburg auf, um von französischen Befehlshabern den Rückzug aus den Forts im Ohiotal zu verlangen. Die Mission scheiterte. Washington veröffentlichte The Journal of Major Washington, einen Bericht über die Reise und die Verhandlungen. Kolonialzeitungen druckten ihn ab, und Zeitungen in England und Schottland veröffentlichten Nachdrucke.",
       "locations": [
         {
-          "name_historic": "Williamsburg",
+          "name_historic": "Williamsburg, Kolonie Virginia",
           "name_modern": "Williamsburg, Virginia, Vereinigte Staaten",
           "centroid": [
-            -76.7075,
+            -76.7074,
             37.2707
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Fort Le Boeuf",
-          "name_modern": "Waterford, Pennsylvania, Vereinigte Staaten",
-          "centroid": [
-            -80.2656,
-            41.9428
           ],
           "primary": true
         },
         {
-          "name_historic": "Ohio Country",
-          "name_modern": "Ohio Valley, Vereinigte Staaten",
+          "name_historic": "Ohiotal",
+          "name_modern": "Ohiotal, Vereinigte Staaten",
           "centroid": [
-            -80.5,
-            40.5
+            -80.0,
+            39.0
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Gebiet um Fort Le Bœuf",
+          "name_modern": "Waterford, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -79.9917,
+            41.9417
           ],
           "primary": false
         }
       ],
       "involved_people": [
         "Robert Dinwiddie",
-        "Jacques Legardeur de Saint-Pierre"
+        "Tanaghrisson"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/George_Washington",
-        "https://en.wikipedia.org/wiki/Fort_Le_Boeuf"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Gwstatue_waterford.jpg/960px-Gwstatue_waterford.jpg",
-          "caption": "George-Washington-Statue in Fort Le Boeuf",
-          "source": "https://commons.wikimedia.org/wiki/File:Gwstatue_waterford.jpg",
-          "creator": "Statue: C.S. Kilpatrick and De Reid Gallantin Kilpratick (b. 1884) [1] Photo: en:User:Pnoble805",
-          "license": "Public domain"
-        }
+        "https://de.wikipedia.org/wiki/George_Washington"
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "forged_under_fire",
+      "chapter": "frontier_command",
+      "weight": 0.5,
       "event_class": {
         "type": "publication",
-        "title": "Das Journal des Majors Washington",
+        "title": "The Journal of Major Washington",
         "publication_type": "article",
-        "significance": "erste öffentliche Bekanntheit",
-        "impact": "Der veröffentlichte Bericht verschaffte Washington öffentliche Aufmerksamkeit in Virginia, Großbritannien und den amerikanischen Kolonien."
+        "significance": "erste öffentliche Aufmerksamkeit",
+        "impact": "Das Journal verschaffte Washington öffentliche Bekanntheit in Virginia, England und Schottland."
       }
     },
     {
       "date": "1754-07-03",
       "date_precision": "day",
-      "date_end": "1754-07-04",
-      "date_end_precision": "day",
       "age": 22,
-      "title": "Gibt Fort Necessity auf",
-      "description": "Nach dem Gefecht am [[Jumonville Glen|Jumonville Glen]] errichtete Washington im Westen Pennsylvanias Fort Necessity. Am 3. Juli 1754 griff eine zahlenmäßig überlegene französische und indigene Streitmacht an; Washington ergab sich und zog am folgenden Tag mit den überlebenden Milizionären ab.",
+      "title": "Kapitulation in Fort Necessity",
+      "description": "Französische Truppen umzingelten George Washingtons Miliz aus Virginia bei [[Fort Necessity|Fort Necessity]] im Ohiogebiet, das sowohl Großbritannien als auch Frankreich beanspruchten. Seine Männer erlitten im Kampf bei Regen schwere Verluste. Washington unterzeichnete Kapitulationsbedingungen, die den überlebenden Truppen den Rückzug nach Virginia erlaubten.",
       "locations": [
         {
-          "name_historic": "Great Meadows, Pennsylvania",
+          "name_historic": "Fort Necessity, Ohiogebiet",
           "name_modern": "Farmington, Pennsylvania, Vereinigte Staaten",
           "centroid": [
-            -79.466,
-            39.81
+            -79.593,
+            39.812
           ],
           "primary": true
         }
       ],
-      "involved_people": [
-        "Louis Coulon de Villiers",
-        "Tanaghrisson",
-        "James Mackay"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Battle_of_Fort_Necessity",
-        "https://en.wikipedia.org/wiki/Fort_Necessity",
-        "https://en.wikipedia.org/wiki/Louis_Coulon_de_Villiers"
+        "https://de.wikipedia.org/wiki/George_Washington"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Acte_de_capitulation_du_Fort_Necessity_signe_par_George_Washington.jpg",
-          "caption": "Die von George Washington unterzeichnete Kapitulation von Fort Necessity",
-          "source": "https://commons.wikimedia.org/wiki/File:Acte_de_capitulation_du_Fort_Necessity_signe_par_George_Washington.jpg",
-          "creator": "BAnQ Vieux-Montréal, fonds Juridiction royale de Montréal (TL4, S1, D6128).",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Fort_Necessity_101114.jpg/960px-Fort_Necessity_101114.jpg",
+          "caption": "Rekonstruiertes Fort Necessity im Süden Pennsylvanias",
+          "source": "https://commons.wikimedia.org/wiki/File:Fort_Necessity_101114.jpg",
+          "creator": "Wilson44691",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
         }
       ],
       "event_type_icon": "mdi-sword-cross",
-      "chapter": "forged_under_fire",
+      "chapter": "frontier_command",
       "annotations": {
-        "Jumonville Glen": {
-          "explanation": "Ort des Gefechts vom Mai 1754, bei dem der französische Offizier Joseph Coulon de Jumonville getötet wurde; das trug dazu bei, die Schlacht um Fort Necessity auszulösen.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Battle_of_Jumonville_Glen"
+        "Fort Necessity": {
+          "explanation": "Fort Necessity war eine hastig errichtete britische Palisadenbefestigung im heutigen Südwesten Pennsylvanias. Washingtons Truppe nutzte sie während des ersten Feldzugs des Franzosen- und Indianerkriegs als Verteidigungsstellung.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Fort_Necessity"
         }
-      }
+      },
+      "weight": 0.5
     },
     {
       "date": "1755",
       "date_precision": "year",
-      "date_end": "1758-12",
-      "date_end_precision": "month",
+      "date_end": "1758",
+      "date_end_precision": "year",
       "age": 23,
-      "title": "Führt das Virginia-Regiment",
-      "description": "1755 diente Washington General Edward Braddock als Adjutant während dessen katastrophalem Feldzug gegen [[Fort Duquesne|Fort Duquesne]] und half, die Truppen beim Rückzug zu sammeln. Später im selben Jahr zum Oberst des Virginia-Regiments ernannt, leitete er von Winchester aus die Verteidigung der Grenze – unter Mangel an Nachschub, Krankheiten und immer wieder aufflammenden Kämpfen –, bevor er 1758 sein Kommando niederlegte.",
+      "title": "Kommandiert das Virginia Regiment",
+      "description": "George Washington diente als Hauptmann und Adjutant von General Edward Braddock beim britischen Vormarsch auf Fort Duquesne. Braddock wurde in der Schlacht am Monongahela tödlich verwundet. Washington half bei der Organisation des Rückzugs und wurde später Oberst des Virginia Regiment, das die Grenzverteidigung Virginias übernahm.",
       "locations": [
         {
-          "name_historic": "Fort Duquesne",
-          "name_modern": "Pittsburgh, Pennsylvania, Vereinigte Staaten",
+          "name_historic": "Kolonie Virginia",
+          "name_modern": "Virginia, Vereinigte Staaten",
           "centroid": [
-            -80.007,
-            40.4417
+            -78.6569,
+            37.4316
           ],
           "primary": true
         },
         {
-          "name_historic": "Winchester",
-          "name_modern": "Winchester, Virginia, Vereinigte Staaten",
+          "name_historic": "Monongahela",
+          "name_modern": "Bei Pittsburgh, Pennsylvania, Vereinigte Staaten",
           "centroid": [
-            -78.1633,
-            39.1857
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Virginia frontier",
-          "name_modern": "Westliches Virginia, Vereinigte Staaten",
-          "centroid": [
-            -79.5,
-            38.7
+            -79.95,
+            40.43
           ],
           "primary": false
         }
       ],
       "involved_people": [
-        "Edward Braddock"
+        "Edward Braddock",
+        "Robert Dinwiddie"
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/George_Washington",
-        "https://en.wikipedia.org/wiki/Braddock_Expedition",
-        "https://en.wikipedia.org/wiki/Virginia_Regiment"
-      ],
+      "sources": [],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Plan_of_the_Battle_of_Braddock%27s_Defeat_at_the_beginning_of_action_July_9%2C_1755.jpg/960px-Plan_of_the_Battle_of_Braddock%27s_Defeat_at_the_beginning_of_action_July_9%2C_1755.jpg",
           "caption": "Plan von Braddocks Niederlage, 9. Juli 1755",
           "source": "https://commons.wikimedia.org/wiki/File:Plan_of_the_Battle_of_Braddock's_Defeat_at_the_beginning_of_action_July_9,_1755.jpg",
           "creator": "George W. Boynton (Engraving)",
-          "license": "Public domain"
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-shield",
-      "chapter": "forged_under_fire",
-      "annotations": {
-        "Fort Duquesne": {
-          "explanation": "Eine französische Festung an der Gabelung des Ohio River; ihre Eroberung war das Ziel von Braddocks gescheitertem Feldzug von 1755.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Fort_Duquesne"
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "frontier_command",
+      "weight": 0.65,
+      "background": "Braddocks Armee führte eine zehn Kilometer lange Versorgungskolonne über 160 Kilometer schwieriges Wildnisgelände. Eine 950 Mann starke Truppe aus Fort Duquesne umzingelte am 9. Juli ihre Vorhut. Etwa zwei Drittel dieser Truppe waren indigene Kämpfer. Die Truppen aus Virginia gerieten zwischen das Feuer britischer Soldaten und indigener Kämpfer. Drei Pferde wurden unter Washington erschossen. Die Expedition verlor 900 ihrer 1.300 Mann.\n\nWashington zog praktische Schlüsse aus der Niederlage. Er war überzeugt, dass eine große Truppe mit Artillerie und langem Versorgungstross im Ohiogebiet nicht wirksam gegen Waldkämpfer vorgehen konnte. Sein neues Regiment wurde Virginias erste reguläre Einheit und zählte zeitweise mehr als 1.000 Mann. Wegen seiner blauen Uniformen erhielt es den Namen the Blues. Washington setzte strenge Disziplin durch, schrieb detaillierte Befehle und bildete viele Neuankömmlinge aus England, Irland und Schottland im beweglichen Kampf im Wald aus.\n\nNach der britischen Niederlage überfielen Shawnee- und Delaware-Kämpfer englische Siedlungen westlich der Blue Ridge. Washington konnte sie nicht zu einer Entscheidungsschlacht zwingen. Er suchte Verbündete unter den Catawba und Cherokee aus den Carolinas, da er indigene Kundschafter im Kampf gegen indigene Truppen für unverzichtbar hielt. Die meisten Gruppen in der Region blieben mit Frankreich verbündet. Washington unterhielt deshalb ein Verteidigungssystem aus Forts entlang der Westseite der Blue Ridge.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Defeat_and_death_of_Gen._Braddock_LCCN2016647547.jpg/960px-Defeat_and_death_of_Gen._Braddock_LCCN2016647547.jpg",
+          "caption": "Titel: Niederlage und Tod von General Braddock. Zusammenfassung/Medium: 1 Druck: Radierung.",
+          "source": "https://commons.wikimedia.org/wiki/File:Defeat_and_death_of_Gen._Braddock_LCCN2016647547.jpg",
+          "creator": "Miscellaneous Items in High Demand, PPOC, Library of Congress",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Braddock Expedition Monongahela"
         }
-      }
+      ]
     },
     {
       "date": "1759-01-06",
       "date_precision": "day",
       "age": 26,
-      "title": "Heiratet Martha Custis",
-      "description": "Am 6. Januar 1759 heiratete Washington die verwitwete Martha Dandridge Custis auf deren Besitz im New Kent County, Virginia. Durch die Ehe wurde er Teil einer der wohlhabendsten Familien der Kolonie; bald darauf machten die Eheleute Mount Vernon zu ihrem Zuhause.",
+      "title": "Heirat mit Martha Custis",
+      "description": "George Washington heiratete Martha Dandridge Custis auf der Plantage White House in Virginia. Martha war die Witwe des Pflanzers Daniel Parke Custis. Ihr ererbtes Vermögen und ihre geschäftlichen Interessen wurden Teil des Haushalts von Mount Vernon.",
       "locations": [
         {
-          "name_historic": "New Kent County, Virginia",
-          "name_modern": "New Kent County, Virginia, Vereinigte Staaten",
+          "name_historic": "Plantage White House, Kolonie Virginia",
+          "name_modern": "White House, Virginia, Vereinigte Staaten",
+          "primary": true,
           "centroid": [
-            -77.058,
-            37.517
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Mount Vernon, Virginia",
-          "name_modern": "Mount Vernon, Virginia, Vereinigte Staaten",
-          "centroid": [
-            -77.086,
-            38.708
-          ],
-          "primary": false
+            -78.5327884,
+            38.6467861
+          ]
         }
       ],
       "involved_people": [
-        "Martha Washington"
+        "Martha Dandridge Custis",
+        "Daniel Parke Custis"
       ],
       "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington",
         "https://en.wikipedia.org/wiki/Martha_Washington"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Gilbert_Stuart_-_Martha_Washington_%28The_Athenaeum_Portrait%29_-_Google_Art_Project.jpg/960px-Gilbert_Stuart_-_Martha_Washington_%28The_Athenaeum_Portrait%29_-_Google_Art_Project.jpg",
-          "caption": "Porträt von Martha Washington von Gilbert Stuart",
-          "source": "https://commons.wikimedia.org/wiki/File:Gilbert_Stuart_-_Martha_Washington_(The_Athenaeum_Portrait)_-_Google_Art_Project.jpg",
-          "creator": "Gilbert Stuart",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Benson_Lossing_-_White_House_Plantation.jpg/960px-Benson_Lossing_-_White_House_Plantation.jpg",
+          "caption": "Plantage White House am Pamunkey River",
+          "source": "https://commons.wikimedia.org/wiki/File:Benson_Lossing_-_White_House_Plantation.jpg",
+          "creator": "Benson John Lossing",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "mount_vernon_years",
+      "chapter": "frontier_command",
+      "weight": 0.6,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
         "partner": "Martha Dandridge Custis",
-        "duration": "bis zu ihrem Tod",
+        "duration": "bis zum Tod",
         "children": 0,
-        "characterization": "dauerhafte Ehe"
+        "characterization": "hingebungsvolle Ehe"
       }
     },
     {
       "date": "1775-06-15",
       "date_precision": "day",
-      "date_end": "1783",
-      "date_end_precision": "year",
       "age": 43,
-      "title": "Führt die Kontinentalarmee",
-      "description": "Am 15. Juni 1775 ernannte der [[Second Continental Congress|Zweite Kontinentalkongress]] Washington zum Oberbefehlshaber der Kontinentalarmee, nachdem der bewaffnete Konflikt mit Großbritannien begonnen hatte. Anschließend reiste er nach Cambridge in Massachusetts, um das Kommando über die Truppen zu übernehmen, die das von den Briten gehaltene Boston belagerten.",
+      "title": "Kommandiert die Kontinentalarmee",
+      "description": "Am 15. Juni 1775 ernannte der in Philadelphia tagende [[Second Continental Congress|Zweite Kontinentalkongress]] George Washington zum Oberbefehlshaber der [[Continental Army|Kontinentalarmee]]. Washington übernahm das Kommando über die amerikanischen Truppen, die die britische Armee in Boston belagerten, nachdem John Adams ihn vorgeschlagen und Thomas Johnson ihn formell nominiert hatte.",
       "locations": [
         {
           "name_historic": "Philadelphia",
@@ -545,15 +516,6 @@
             39.9526
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Cambridge",
-          "name_modern": "Cambridge, Massachusetts, Vereinigte Staaten",
-          "centroid": [
-            -71.1097,
-            42.3736
-          ],
-          "primary": false
         },
         {
           "name_historic": "Boston",
@@ -566,39 +528,42 @@
         }
       ],
       "involved_people": [
-        "John Hancock"
+        "John Adams",
+        "Thomas Johnson"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/George_Washington",
-        "https://en.wikipedia.org/wiki/Continental_Army",
-        "https://en.wikipedia.org/wiki/Second_Continental_Congress"
+        "https://de.wikipedia.org/wiki/George_Washington"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Washington_taking_command_of_the_American_Army_at_Cambridge%2C_1775_-_NARA_-_532874.jpg/960px-Washington_taking_command_of_the_American_Army_at_Cambridge%2C_1775_-_NARA_-_532874.jpg",
-          "caption": "Washington übernimmt 1775 in Cambridge das Kommando",
-          "source": "https://commons.wikimedia.org/wiki/File:Washington_taking_command_of_the_American_Army_at_Cambridge,_1775_-_NARA_-_532874.jpg",
-          "creator": "Unknown author Unknown author or not provided",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Independence_Hall%2C_Philadelphia_20240528.jpg/960px-Independence_Hall%2C_Philadelphia_20240528.jpg",
+          "caption": "Independence Hall, Philadelphia",
+          "source": "https://commons.wikimedia.org/wiki/File:Independence_Hall,_Philadelphia_20240528.jpg",
+          "creator": "颐园居",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "revolutionary_command",
+      "event_type_icon": "mdi-shield",
+      "chapter": "revolutionary_war",
       "annotations": {
         "Second Continental Congress": {
-          "explanation": "Die Versammlung von Delegierten der Dreizehn Kolonien, die den revolutionären Krieg leitete und während des Konflikts als nationale Regierung der Kolonien fungierte.",
+          "explanation": "Das koloniale Gesetzgebungsorgan koordinierte den amerikanischen Widerstand gegen Großbritannien und leitete den Unabhängigkeitskrieg. Es tagte in Philadelphia, als es Washington zum Oberbefehlshaber ernannte.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Second_Continental_Congress"
+        },
+        "Continental Army": {
+          "explanation": "Die Kontinentalarmee wurde 1775 vom Kontinentalkongress gegründet, um im Amerikanischen Unabhängigkeitskrieg gegen britische Truppen zu kämpfen. Washington wurde ihr ranghöchster Befehlshaber.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Continental_Army"
         }
-      }
+      },
+      "weight": 0.95
     },
     {
       "date": "1776-12-26",
       "date_precision": "day",
-      "date_end": "1777-01-03",
-      "date_end_precision": "day",
       "age": 44,
-      "title": "Siegt bei Trenton und Princeton",
-      "description": "Nach einem schwierigen Rückzug durch New Jersey führte Washington die Kontinentaltruppen über den Delaware River und besiegte bei Trenton [[Hessians|hessische Hilfstruppen im Dienst der britischen Armee]]. An diesen Sieg schloss sich ein erfolgreicher Angriff auf Princeton an; anschließend zog Washington seine Armee in die Winterquartiere im Norden New Jerseys zurück.",
+      "title": "Schlag bei Trenton",
+      "description": "George Washington führte Soldaten der Kontinentalarmee über den eisbedeckten Delaware River nach New Jersey und griff die [[Hessian troops|im britischen Heer dienenden deutschen Truppen]] in Trenton an. Die Amerikaner nahmen die Garnison gefangen. Der Sieg festigte ihre Stellung in New Jersey.",
       "locations": [
         {
           "name_historic": "Trenton",
@@ -610,63 +575,79 @@
           "primary": true
         },
         {
-          "name_historic": "Princeton",
-          "name_modern": "Princeton, New Jersey, Vereinigte Staaten",
+          "name_historic": "Delaware River",
+          "name_modern": "Delaware River, Vereinigte Staaten",
           "centroid": [
-            -74.6514,
-            40.3431
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "New Jersey",
-          "name_modern": "New Jersey, Vereinigte Staaten",
-          "centroid": [
-            -74.4057,
-            40.0583
+            -75.0,
+            40.1
           ],
           "primary": false
         }
       ],
-      "involved_people": [
-        "Johann Rall",
-        "Charles Cornwallis",
-        "Nathanael Greene",
-        "John Sullivan",
-        "Hugh Mercer"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Battle_of_Trenton",
-        "https://en.wikipedia.org/wiki/Battle_of_Princeton",
-        "https://en.wikipedia.org/wiki/George_Washington%27s_crossing_of_the_Delaware_River"
-      ],
+      "sources": [],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Washington_Crossing_the_Delaware_MET_DP215410.jpg/960px-Washington_Crossing_the_Delaware_MET_DP215410.jpg",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Washington_Crossing_the_Delaware_by_Emanuel_Leutze%2C_MMA-NYC%2C_1851.jpg/960px-Washington_Crossing_the_Delaware_by_Emanuel_Leutze%2C_MMA-NYC%2C_1851.jpg",
           "caption": "Washington überquert den Delaware",
-          "source": "https://commons.wikimedia.org/wiki/File:Washington_Crossing_the_Delaware_MET_DP215410.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Washington_Crossing_the_Delaware_by_Emanuel_Leutze,_MMA-NYC,_1851.jpg",
           "creator": "Emanuel Leutze",
-          "license": "CC0",
-          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-sword-cross",
-      "chapter": "revolutionary_command",
+      "chapter": "revolutionary_war",
       "annotations": {
-        "Hessians": {
-          "explanation": "Deutsche Hilfssoldaten, vor allem aus Hessen-Kassel, die Großbritannien für den Einsatz im Amerikanischen Unabhängigkeitskrieg angeworben hatte.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Hessian_soldier"
+        "Hessian troops": {
+          "explanation": "Hessische Truppen waren Soldaten aus deutschen Staaten, besonders aus Hessen-Kassel, die Großbritannien für den Amerikanischen Unabhängigkeitskrieg anwarb. Während des Angriffs besetzte eine hessische Garnison Trenton.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Hessian_(soldiers)"
         }
-      }
+      },
+      "weight": 0.82
     },
     {
-      "date": "1781-09-28",
+      "date": "1777-12-19",
       "date_precision": "day",
-      "date_end": "1783-12-23",
+      "date_end": "1778-06-19",
       "date_end_precision": "day",
+      "age": 45,
+      "title": "Hält in Valley Forge durch",
+      "description": "Am 19. Dezember 1777 führte George Washington die amerikanische Revolutionsarmee in ihr Winterquartier bei Valley Forge in Pennsylvania. Die Soldaten litten unter Mangel an Nahrung, Kleidung, Unterkünften und Brennstoff, während Washington beim Kongress auf die Versorgungsgüter und die Truppenstärke drängte, die zum Erhalt der Armee nötig waren.",
+      "locations": [
+        {
+          "name_historic": "Valley Forge, Pennsylvania",
+          "name_modern": "Valley Forge, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.5758,
+            40.1016
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Mitglieder des Kontinentalkongresses"
+      ],
+      "sources": [],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/General_George_Washington_and_a_Committee_of_Congress_at_Valley_Forge._Winter_1777-78._Copy_of_engraving_after_W._H._Pow_-_NARA_-_532876.tif/lossy-page1-960px-General_George_Washington_and_a_Committee_of_Congress_at_Valley_Forge._Winter_1777-78._Copy_of_engraving_after_W._H._Pow_-_NARA_-_532876.tif.jpg",
+          "caption": "Washington empfängt den Ausschuss des Kongresses in Valley Forge",
+          "source": "https://commons.wikimedia.org/wiki/File:General_George_Washington_and_a_Committee_of_Congress_at_Valley_Forge._Winter_1777-78._Copy_of_engraving_after_W._H._Pow_-_NARA_-_532876.tif",
+          "creator": "William Henry Powell",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "revolutionary_war",
+      "weight": 0.6
+    },
+    {
+      "date": "1781-10-19",
+      "date_precision": "day",
       "age": 49,
-      "title": "Siegt bei Yorktown, legt Kommando nieder",
-      "description": "Washington führte amerikanische und französische Truppen während der Belagerung von Yorktown in Virginia, wo sich die britische Armee unter Lord Cornwallis am 19. Oktober 1781 ergab. Nach dem Friedensschluss legte Washington am 23. Dezember 1783 vor dem [[Confederation Congress|Konföderationskongress]] in Annapolis sein militärisches Kommando nieder und kehrte nach Mount Vernon zurück.",
+      "title": "Sieg bei Yorktown",
+      "description": "Amerikanische und französische Truppen unter George Washington und [[Jean-Baptiste Donatien de Vimeur, comte de Rochambeau|dem Comte de Rochambeau]] umzingelten die britische Armee bei Yorktown. Französische Kriegsschiffe unter [[François Joseph Paul de Grasse|dem Comte de Grasse]] versperrten den Fluchtweg durch die Chesapeake Bay. Charles Cornwallis schickte General Charles O’Hara, um die Armee am 19. Oktober 1781 zu übergeben.",
       "locations": [
         {
           "name_historic": "Yorktown",
@@ -678,51 +659,116 @@
           "primary": true
         },
         {
+          "name_historic": "Chesapeake Bay",
+          "name_modern": "Chesapeake Bay, Vereinigte Staaten",
+          "centroid": [
+            -76.0,
+            37.0
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Charles Cornwallis",
+        "Jean-Baptiste-Donatien de Vimeur, comte de Rochambeau",
+        "Marie-Joseph Motier, Marquis de La Fayette",
+        "François Joseph Paul de Grasse",
+        "Charles O’Hara"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Cornwallis,_1st_Marquess_Cornwallis",
+        "https://en.wikipedia.org/wiki/Marquis_de_Lafayette"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Surrender_of_Cornwallis_at_Yorktown%2C_Virginia%2C_October_19%2C_1781%2C_by_which_over_7%2C000_British_and_Hessians_became_prisone_-_NARA_-_532883.tif/lossy-page1-960px-Surrender_of_Cornwallis_at_Yorktown%2C_Virginia%2C_October_19%2C_1781%2C_by_which_over_7%2C000_British_and_Hessians_became_prisone_-_NARA_-_532883.tif.jpg",
+          "caption": "Kapitulation von Cornwallis bei Yorktown, 1781",
+          "source": "https://commons.wikimedia.org/wiki/File:Surrender_of_Cornwallis_at_Yorktown,_Virginia,_October_19,_1781,_by_which_over_7,000_British_and_Hessians_became_prisone_-_NARA_-_532883.tif",
+          "creator": "Unknown authorUnknown author or not provided",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "revolutionary_war",
+      "weight": 1.0,
+      "annotations": {
+        "Jean-Baptiste Donatien de Vimeur, comte de Rochambeau": {
+          "explanation": "Rochambeau befehligte das französische Expeditionskorps, das sich Washingtons Armee im Yorktown-Feldzug anschloss.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Jean-Baptiste_Donatien_de_Vimeur,_comte_de_Rochambeau"
+        },
+        "François Joseph Paul de Grasse": {
+          "explanation": "De Grasse befehligte die französische Flotte, deren Sieg in der Chesapeake Bay eine britische Evakuierung oder Verstärkung bei Yorktown verhinderte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Fran%C3%A7ois_Joseph_Paul_de_Grasse"
+        }
+      },
+      "background": "Yorktown folgte auf Cornwallis’ langen Feldzug durch die südlichen Kolonien. Seine Beziehungen zu Sir Henry Clinton waren durch Meinungsverschiedenheiten über den Feldzug belastet. In Virginia hielten La Fayettes Truppen den Druck auf Cornwallis aufrecht, während die verbündete Armee ihre Stellung bezog.\n\nDie Kapitulation beendete die bedeutenden Kämpfe in Nordamerika. Der Artikel über La Fayette bezeichnet Yorktown als die letzte große Schlacht des Unabhängigkeitskriegs und schreibt, ihr Ausgang habe die amerikanische Unabhängigkeit gesichert.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Surrender_of_lord_cornwall-Yorktown_John-Trumbull-Wikipedia.jpg/960px-Surrender_of_lord_cornwall-Yorktown_John-Trumbull-Wikipedia.jpg",
+          "caption": "Kapitulation von Cornwallis bei Yorktown/Die Kapitulation von Lord Cornwallis bei Yorktown",
+          "source": "https://commons.wikimedia.org/wiki/File:Surrender_of_lord_cornwall-Yorktown_John-Trumbull-Wikipedia.jpg",
+          "creator": "File:Yorktown80.JPG",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+          "query": "Yorktown surrender painting"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/VIEW_OF_REDOUBT_ON_YORKTOWN_BATTLEFIELD._-_Yorktown_Battlefield_Tour_Roads%2C_Yorktown%2C_York_County%2C_VA_HAER_VA%2C100-YORK.V%2C2-5.tif/lossy-page1-960px-VIEW_OF_REDOUBT_ON_YORKTOWN_BATTLEFIELD._-_Yorktown_Battlefield_Tour_Roads%2C_Yorktown%2C_York_County%2C_VA_HAER_VA%2C100-YORK.V%2C2-5.tif.jpg",
+          "caption": "Bureau of Public Roads; Virginia Department of Highways; Peterson, Charles E; Emergency Conservation Works; Civilian Conservation Corps; Gissey, Eugene A; Blevi.",
+          "source": "https://commons.wikimedia.org/wiki/File:VIEW_OF_REDOUBT_ON_YORKTOWN_BATTLEFIELD._-_Yorktown_Battlefield_Tour_Roads,_Yorktown,_York_County,_VA_HAER_VA,100-YORK.V,2-5.tif",
+          "creator": null,
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Yorktown battlefield"
+        }
+      ]
+    },
+    {
+      "date": "1783-12-23",
+      "date_precision": "day",
+      "age": 51,
+      "title": "Legt sein Kommando nieder",
+      "description": "George Washington trat vor dem Kontinentalkongress in Annapolis in Maryland und legte sein Amt als Oberbefehlshaber der Kontinentalarmee nieder. Er übergab die militärische Gewalt an zivile Vertreter der Staaten. Anschließend kehrte er nach Mount Vernon zurück, um wieder ein Privatleben zu führen.",
+      "locations": [
+        {
           "name_historic": "Annapolis",
           "name_modern": "Annapolis, Maryland, Vereinigte Staaten",
           "centroid": [
             -76.4922,
             38.9784
           ],
-          "primary": false
+          "primary": true
         },
         {
           "name_historic": "Mount Vernon",
           "name_modern": "Mount Vernon, Virginia, Vereinigte Staaten",
           "centroid": [
             -77.0861,
-            38.7073
+            38.7076
           ],
           "primary": false
         }
       ],
-      "involved_people": [
-        "Charles Cornwallis, 1. Marquess Cornwallis",
-        "Marie-Joseph Motier, Marquis de La Fayette",
-        "Jean-Baptiste-Donatien de Vimeur, comte de Rochambeau"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Siege_of_Yorktown",
-        "https://en.wikipedia.org/wiki/George_Washington%27s_resignation_as_commander-in-chief",
-        "https://en.wikipedia.org/wiki/Charles_Cornwallis,_1st_Marquess_Cornwallis"
+        "https://de.wikipedia.org/wiki/George_Washington"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/General_George_Washington_Resigning_his_Commission.jpg/960px-General_George_Washington_Resigning_his_Commission.jpg",
-          "caption": "General George Washington legt sein Kommando nieder",
-          "source": "https://commons.wikimedia.org/wiki/File:General_George_Washington_Resigning_his_Commission.jpg",
-          "creator": "John Trumbull",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Annapolis_-_Maryland_State_House.jpg/960px-Annapolis_-_Maryland_State_House.jpg",
+          "caption": "Maryland State House, Annapolis",
+          "source": "https://commons.wikimedia.org/wiki/File:Annapolis_-_Maryland_State_House.jpg",
+          "creator": "P. Hughes",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
       ],
-      "event_type_icon": "mdi-sword-cross",
-      "chapter": "revolutionary_command",
-      "annotations": {
-        "Confederation Congress": {
-          "explanation": "Das Regierungsorgan der Vereinigten Staaten unter den Articles of Confederation; ihm folgte die durch die Verfassung geschaffene Bundesregierung.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Congress_of_the_Confederation"
-        }
-      }
+      "event_type_icon": "mdi-exit-to-app",
+      "chapter": "revolutionary_war",
+      "weight": 0.72,
+      "involved_people": [
+        "Mitglieder des Kontinentalkongresses"
+      ]
     },
     {
       "date": "1787-05-25",
@@ -730,8 +776,8 @@
       "date_end": "1787-09-17",
       "date_end_precision": "day",
       "age": 55,
-      "title": "Führt den Verfassungskonvent",
-      "description": "Am 25. Mai 1787 wurde Washington einstimmig zum Vorsitzenden der Philadelphia Convention gewählt, die zur Überarbeitung der [[Articles of Confederation|Articles of Confederation]] einberufen worden war. Er leitete die Beratungen, während die Delegierten einen Verfassungsentwurf für die Vereinigten Staaten ausarbeiteten und unterzeichneten.",
+      "title": "Leitet den Konvent in Philadelphia",
+      "description": "Die Delegierten des [[Constitutional Convention|Verfassungskonvents]] wählten George Washington aus Virginia zu ihrem Vorsitzenden in Philadelphia. Sie waren zusammengekommen, um die [[Articles of Confederation|Konföderationsartikel]] zu überarbeiten, die bestehende Staatsordnung des Landes. James Madison und Alexander Hamilton befürworteten eine neue Bundesregierung.",
       "locations": [
         {
           "name_historic": "Philadelphia",
@@ -752,30 +798,34 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/29/Washington_Constitutional_Convention_1787.jpg",
-          "caption": "Washington beim Verfassungskonvent, 1787",
-          "source": "https://commons.wikimedia.org/wiki/File:Washington_Constitutional_Convention_1787.jpg",
-          "creator": "Junius Brutus Stearns",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/A_detail_of_the_actual_chair_Washington_sat_in_while_presiding_over_the_Constitutional_Convention_in_1787._At_the_signing_%28b7091913-155d-451f-67f1-1acd355ae526%29.jpg/960px-thumbnail.jpg",
+          "caption": "Washingtons Stuhl vom Verfassungskonvent",
+          "source": "https://commons.wikimedia.org/wiki/File:A_detail_of_the_actual_chair_Washington_sat_in_while_presiding_over_the_Constitutional_Convention_in_1787._At_the_signing_(b7091913-155d-451f-67f1-1acd355ae526).jpg",
+          "creator": "NPS Photo",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-account-group",
-      "chapter": "designing_the_republic",
+      "chapter": "building_the_republic",
       "annotations": {
+        "Constitutional Convention": {
+          "explanation": "Der Verfassungskonvent war die bundesweite Versammlung von 1787 in Philadelphia, die über den Aufbau der Regierung der Vereinigten Staaten beriet und den Verfassungsentwurf hervorbrachte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+        },
         "Articles of Confederation": {
-          "explanation": "Die erste nationale Regierungsurkunde der Vereinigten Staaten, die von 1781 bis zu ihrer Ablösung durch die Verfassung in Kraft war.",
+          "explanation": "Die Konföderationsartikel waren die erste gesamtstaatliche Ordnung der Vereinigten Staaten. Ihre begrenzten Befugnisse auf Bundesebene veranlassten die Delegierten 1787, ein neues Verfassungssystem anzustreben.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Articles_of_Confederation"
         }
-      }
+      },
+      "weight": 0.8
     },
     {
       "date": "1789-04-30",
       "date_precision": "day",
-      "date_end": "1797-03-04",
-      "date_end_precision": "day",
       "age": 57,
-      "title": "Wird erster Präsident",
-      "description": "Washington legte am 30. April 1789 in New York City den Amtseid als erster Präsident der Vereinigten Staaten ab. [[Robert Livingston|Robert Livingston, Kanzler von New York]], nahm ihm den Eid ab und leitete damit formell die Arbeit der föderalen Exekutive im Rahmen der Verfassung ein.",
+      "title": "Leistet den Amtseid",
+      "description": "George Washington leistete den Amtseid des Präsidenten auf dem Balkon der Federal Hall in New York City. Kanzler Robert Livingston nahm ihm den Eid vor einer großen Menschenmenge ab. Anschließend hielt Washington im Senatssaal seine erste Antrittsrede.",
       "locations": [
         {
           "name_historic": "New York City",
@@ -795,72 +845,80 @@
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/The_inauguration_of_Washington-_as_first_President_of_the_United_States%2C_April_30th_1789%3B_at_the_old_city_hall%2C_New_York_LCCN2002699702.jpg/960px-The_inauguration_of_Washington-_as_first_President_of_the_United_States%2C_April_30th_1789%3B_at_the_old_city_hall%2C_New_York_LCCN2002699702.jpg",
-          "caption": "Washingtons Amtseinführung als erster Präsident, April 1789",
-          "source": "https://commons.wikimedia.org/wiki/File:The_inauguration_of_Washington-_as_first_President_of_the_United_States,_April_30th_1789;_at_the_old_city_hall,_New_York_LCCN2002699702.jpg",
-          "creator": "Popular Graphic Arts",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Federal_Hall_%2848126566178%29.jpg/960px-Federal_Hall_%2848126566178%29.jpg",
+          "caption": "Federal Hall in New York City",
+          "source": "https://commons.wikimedia.org/wiki/File:Federal_Hall_(48126566178).jpg",
+          "creator": "Ajay Suresh from New York, NY, USA",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
-      "event_type_icon": "mdi-crown",
-      "chapter": "the_presidential_standard"
+      "event_type_icon": "mdi-seal",
+      "chapter": "building_the_republic",
+      "weight": 0.98,
+      "background": "Die Bundesregierung sollte ihre Arbeit am 4. März aufnehmen. An diesem Tag war in beiden Häusern des Kongresses kein Quorum erreicht, sodass sie die Wahlmännerstimmen nicht auszählen konnten. Das Repräsentantenhaus war am 1. April in ausreichender Zahl versammelt. Der Senat erreichte dies am 6. April. An diesem Tag bestätigten die beiden Kammern Washingtons Wahl. Charles Thomson überbrachte die offizielle Nachricht am 14. April nach Mount Vernon.\n\nZwei Tage später brach Washington mit Thomson und David Humphreys auf. Öffentliche Empfänge begleiteten ihn durch Alexandria, Baltimore, Philadelphia und Trenton. Von Elizabethtown aus fuhr er in einem kleinen, von 13 Lotsen geruderten Boot in den Hafen von New York ein. Von nahe gelegenen Schiffen und Küstenbatterien erklangen Artilleriesalven. Gouverneur George Clinton empfing ihn am Murray’s Wharf, und man brachte ihn in die offizielle Residenz in der Cherry Street 3.\n\nBei der Zeremonie verwendete man eine Bibel der St. John’s Lodge No. 1. Ihr Meister Jacob Morton fungierte als Zeremonienmeister. Sie war bei Genesis 49,13 aufgeschlagen. Auf die Zeremonie folgten Jubelrufe und ein Salut aus 13 Kanonenschüssen. Die Verfassung stellte eine Antrittsrede frei. Washington hielt es für seine Pflicht, eine zu halten. Laut Senator William Maclay, der schrieb, Washington habe gezittert und zeitweise Mühe gehabt, vom Papier abzulesen, war er durch seine 1.419 Wörter lange Rede sichtlich verunsichert."
     },
     {
-      "date": "1794-08",
+      "date": "1794-10",
       "date_precision": "month",
       "date_end": "1794-11",
       "date_end_precision": "month",
       "age": 62,
-      "title": "Schlägt die Whiskey-Rebellion nieder",
-      "description": "Als der bewaffnete Widerstand gegen die Bundesverbrauchsteuer auf destillierte Spirituosen im Westen Pennsylvanias eskalierte, berief sich Washington auf die föderale Autorität und mobilisierte die Milizen der Bundesstaaten. Er zog mit den Truppen in Richtung Pennsylvania, bevor er weitere Operationen Gouverneur Henry Lee überließ; der Widerstand zerstreute sich ohne größere Schlacht.",
+      "title": "Zieht gegen den Aufstand",
+      "description": "George Washington führte persönlich in den Bundesdienst überführte Miliztruppen nach West-Pennsylvania, um den Widerstand gegen die Whiskeysteuer niederzuschlagen. Nachdem bewaffnete Gegner Bundesbeamte bedroht hatten, rief er nach dem [[Militia Act of 1792|Milizgesetz des Bundes von 1792]] Milizen aus mehreren Staaten ein. Der Widerstand löste sich auf, bevor die Armee Pittsburgh erreichte. Alexander Hamilton und Henry Lee begleiteten Washington.",
       "locations": [
         {
-          "name_historic": "Western Pennsylvania",
-          "name_modern": "Westliches Pennsylvania, Vereinigte Staaten",
+          "name_historic": "West-Pennsylvania",
+          "name_modern": "West-Pennsylvania, Vereinigte Staaten",
           "centroid": [
-            -80.0,
+            -79.9,
             40.4
           ],
           "primary": true
         },
         {
-          "name_historic": "Carlisle",
-          "name_modern": "Carlisle, Pennsylvania, Vereinigte Staaten",
+          "name_historic": "Pittsburgh",
+          "name_modern": "Pittsburgh, Pennsylvania, Vereinigte Staaten",
           "centroid": [
-            -77.1881,
-            40.2015
+            -80.0,
+            40.44
           ],
           "primary": false
         }
       ],
       "involved_people": [
-        "Henry Lee III",
-        "Alexander Hamilton"
+        "Alexander Hamilton",
+        "Henry Lee"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Whiskey_Rebellion",
-        "https://en.wikipedia.org/wiki/George_Washington"
+        "https://de.wikipedia.org/wiki/Whiskey-Rebellion"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Washington_Reviewing_the_Western_Army_at_Fort_Cumberland%2C_Maryland_-_MET_63.201.2.jpg/960px-Washington_Reviewing_the_Western_Army_at_Fort_Cumberland%2C_Maryland_-_MET_63.201.2.jpg",
-          "caption": "Washington besichtigt die Western Army in Fort Cumberland",
-          "source": "https://commons.wikimedia.org/wiki/File:Washington_Reviewing_the_Western_Army_at_Fort_Cumberland,_Maryland_-_MET_63.201.2.jpg",
-          "creator": "Frederick Kemmelmeyer",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/WhiskeyRebellion.jpg/960px-WhiskeyRebellion.jpg",
+          "caption": "Darstellung der Whiskey-Rebellion von 1795",
+          "source": "https://commons.wikimedia.org/wiki/File:WhiskeyRebellion.jpg",
+          "creator": "Attributed to Frederick Kemmelmeyer",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-flag-triangle",
-      "chapter": "the_presidential_standard"
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "last_public_duties",
+      "annotations": {
+        "Militia Act of 1792": {
+          "explanation": "Das Milizgesetz von 1792 ermächtigte den Präsidenten, Milizeinheiten der Bundesstaaten in den Bundesdienst zu rufen, wenn Gesetze gewaltsam bekämpft wurden oder sich mit den üblichen Mitteln nicht durchsetzen ließen. Washington nutzte diese Befugnis, um die nach West-Pennsylvania entsandte Truppe aufzustellen.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Militia_Acts_of_1792"
+        }
+      },
+      "weight": 0.67
     },
     {
       "date": "1796-09-19",
       "date_precision": "day",
-      "date_end": "1797-03-04",
-      "date_end_precision": "day",
       "age": 64,
-      "title": "Veröffentlicht seine Abschiedsrede",
-      "description": "Am 19. September 1796 ließ Washington seinen Abschiedsbrief in Philadelphia veröffentlichen. Darin erklärte er, keine dritte Amtszeit anzustreben, und rief zur nationalen Einheit auf. Alexander Hamilton half bei der Ausarbeitung der Ansprache, die umgehend in Zeitungen überall in den Vereinigten Staaten nachgedruckt wurde.",
+      "title": "Veröffentlicht die Abschiedsrede",
+      "description": "George Washington veröffentlichte seine [[Farewell Address|Abschiedsrede]] in Philadelphia gegen Ende seiner zweiten Amtszeit als Präsident. Mit Unterstützung von Alexander Hamilton überarbeitete er einen 1792 von James Madison verfassten Entwurf. Die Rede kündigte an, dass er keine dritte Amtszeit anstreben werde. Zeitungen im ganzen Land druckten sie fast umgehend nach, und später erschienen Broschürenausgaben.",
       "locations": [
         {
           "name_historic": "Philadelphia",
@@ -873,43 +931,65 @@
         }
       ],
       "involved_people": [
+        "James Madison",
         "Alexander Hamilton"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/George_Washington%27s_Farewell_Address"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Washington%27s_Farewell_Address.jpg",
+          "caption": "Flugblatt mit Washingtons Abschiedsrede, 1796",
+          "source": "https://commons.wikimedia.org/wiki/File:Washington's_Farewell_Address.jpg",
+          "creator": "George Washington",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
       "event_type_icon": "mdi-book",
-      "chapter": "the_presidential_standard",
+      "chapter": "last_public_duties",
+      "weight": 0.7,
       "event_class": {
         "type": "publication",
-        "title": "George Washingtons Abschiedsrede",
+        "title": "George Washington's Farewell Address",
         "publication_type": "essay",
         "publisher": "Claypoole's American Daily Advertiser",
-        "significance": "Präsidentenabschied",
-        "impact": "Die Ansprache mahnte die Amerikaner, die Union zu bewahren, zerstörerischen Parteienzwist zu meiden und bei außenpolitischen Bindungen Vorsicht walten zu lassen.",
-        "source_link": {
-          "url": "https://en.wikipedia.org/wiki/George_Washington's_Farewell_Address",
-          "kind": "wikipedia",
-          "site": "Wikipedia",
-          "entity": "Q5545908",
-          "resolved_by": "wikipedia",
-          "resolved_on": "2026-08-02"
+        "significance": "Abschiedsrede eines Präsidenten",
+        "impact": "Zeitungen in den Vereinigten Staaten druckten die Rede fast umgehend nach, und später erschien sie in Broschürenausgaben."
+      },
+      "annotations": {
+        "Farewell Address": {
+          "explanation": "Washingtons öffentliches Schreiben von 1796 kündigte seinen Rückzug nach der zweiten Amtszeit an. Als er sein Amt verließ, wurde es weithin als Darlegung seiner Ansichten verbreitet.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/George_Washington%27s_Farewell_Address"
         }
-      }
+      },
+      "background": "Die Rede ging aus einer früheren Entscheidung hervor, die Washington aufgeschoben hatte. 1792 hatte James Madison einen Entwurf für ein Rücktrittsschreiben verfasst, als Washington erwartete, nach einer Amtszeit auszuscheiden. Streitigkeiten zwischen Alexander Hamilton und Thomas Jefferson, wachsende Spannungen in der Außenpolitik und die Bildung föderalistischer und demokratisch-republikanischer Lager bewogen ihn zum Bleiben. Vier Jahre später reagierte das überarbeitete Schreiben auch auf den öffentlichen Unmut über den Jay-Vertrag, der Teile des Landes seiner Regierung entfremdet hatte.\n\nWashington nutzte das Schreiben, um darzulegen, dass Unabhängigkeit, Frieden, Sicherheit, Wohlstand und Freiheit der Staaten von ihrem Zusammenschluss abhingen. Er bat seine Leser, eine amerikanische Identität über Bindungen an Bundesstaaten und Regionen zu stellen. Er warnte, dass Gegner im Inland und Ausland versuchen würden, den verfassungsmäßigen Bund zu schwächen. Er argumentierte außerdem, der Zusammenschluss könne dem Land Kriege zwischen Nachbarstaaten ersparen und den Druck zur Aufstellung eines großen stehenden Heeres verringern.\n\nSeine Ratschläge erstreckten sich auf das neue Verfassungssystem. Er mahnte zur Befolgung der Verfassung, sofern sie nicht auf verfassungsmäßigem Weg geändert werde. Er warnte, politische Parteien könnten Despotismus, Korruption und ausländischem Einfluss den Weg bereiten. Moral, Religion und Bildung betrachtete er als Stützen einer vom Volk getragenen Regierung. In der Außenpolitik trat er für Treu und Glauben sowie Gerechtigkeit gegenüber jeder Nation ein. Für außergewöhnliche Notlagen empfahl er zeitlich begrenzte Bündnisse und warnte vor dauerhaften Bündnissen.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/The_Library_of_Congress_-_Washington%27s_farewell_adress%2C_17-09-1796.png/960px-The_Library_of_Congress_-_Washington%27s_farewell_adress%2C_17-09-1796.png",
+          "caption": "Die Library of Congress. Washingtons Abschiedsrede an das Volk der Vereinigten Staaten, 17.09.1796. A Century of Lawmaking for a New Nation: U.S.",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Library_of_Congress_-_Washington's_farewell_adress,_17-09-1796.png",
+          "creator": "George Wadhington",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "query": "George Washington Farewell Address 1796"
+        }
+      ]
     },
     {
       "date": "1799-12-14",
       "date_precision": "day",
       "age": 67,
-      "title": "Stirbt auf Mount Vernon",
-      "description": "Washington starb am 14. Dezember 1799 im Alter von 67 Jahren auf Mount Vernon in Virginia. Nachdem er sich durch die Kälte eine schwere Halskrankheit zugezogen hatte, verschlechterte sich sein Zustand trotz ärztlicher Behandlung rapide.",
+      "title": "Tod in Mount Vernon",
+      "description": "Nachdem George Washington am 12. Dezember bei kaltem, nassem Wetter in der Nähe von Mount Vernon geritten war, bekam er starke Halsschmerzen. Sein Zustand verschlechterte sich trotz der Behandlung durch die Ärzte James Craik, Gustavus Richard Brown und Elisha C. Dick. Am 14. Dezember starb er in Mount Vernon, während Martha Washington und Tobias Lear bei ihm waren.",
       "locations": [
         {
-          "name_historic": "Mount Vernon, Virginia",
+          "name_historic": "Mount Vernon",
           "name_modern": "Mount Vernon, Virginia, Vereinigte Staaten",
           "centroid": [
-            -77.0861,
-            38.7073
+            -77.0869,
+            38.7071
           ],
           "primary": true
         }
@@ -917,37 +997,36 @@
       "involved_people": [
         "Martha Washington",
         "James Craik",
-        "Elisha C. Dick",
-        "Gustavus Richard Brown"
+        "Tobias Lear",
+        "Gustavus Richard Brown",
+        "Elisha C. Dick"
       ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/George_Washington",
-        "https://en.wikipedia.org/wiki/Martha_Washington"
-      ],
+      "sources": [],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Washington%27s_Tomb_at_Mount_Vernon_-_Mt._Vernon%2C_Virginia_-_Sarah_Stierch.jpg/960px-Washington%27s_Tomb_at_Mount_Vernon_-_Mt._Vernon%2C_Virginia_-_Sarah_Stierch.jpg",
-          "caption": "Washingtons Grab auf Mount Vernon",
-          "source": "https://commons.wikimedia.org/wiki/File:Washington's_Tomb_at_Mount_Vernon_-_Mt._Vernon,_Virginia_-_Sarah_Stierch.jpg",
-          "creator": "Missvain",
-          "license": "CC0",
-          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Mount_Vernon%2C_Virginia.jpg/960px-Mount_Vernon%2C_Virginia.jpg",
+          "caption": "Mount Vernon, Virginia",
+          "source": "https://commons.wikimedia.org/wiki/File:Mount_Vernon,_Virginia.jpg",
+          "creator": "David Samuel, User:Hellodavey1902",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
         }
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "the_presidential_standard",
+      "chapter": "last_public_duties",
+      "weight": 0.4,
       "event_class": {
         "type": "death",
-        "cause": "schwere Halskrankheit",
-        "characterization": "rasche Verschlechterung"
+        "characterization": "nach plötzlicher Krankheit",
+        "place_of_rest": "Mount Vernon, Virginia"
       }
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "6d154171442b4292",
-    "translated_on": "2026-08-02T12:07:28.034286+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "97bdbc328662c978",
+    "translated_on": "2026-09-19T06:09:24.455148+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

@@ -1,0 +1,266 @@
+{
+  "dataset": "Thomas Jefferson ego network",
+  "created_on": "2026-09-19",
+  "ego": {
+    "name": "Thomas Jefferson",
+    "birth_year": 1743,
+    "death_year": 1826,
+    "primary_roles": [
+      "politician",
+      "writer",
+      "diplomat",
+      "lawyer",
+      "planter"
+    ],
+    "summary": "Thomas Jefferson was a Virginia lawyer, planter, political writer, diplomat, and the third president of the United States. He drafted the Declaration of Independence, led the Louisiana Purchase, commissioned the Corps of Discovery, and founded the University of Virginia, while also enslaving more than 600 people during his lifetime.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+  },
+  "connections": [
+    {
+      "person_name": "Peter Jefferson",
+      "relationship_description": "Jefferson’s father was a planter and surveyor. When Peter Jefferson died in 1757, Thomas inherited land that included the future site of Monticello.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Peter Jefferson's death made John Harvie Sr. Jefferson's guardian.",
+      "relationship_type": "family/father"
+    },
+    {
+      "person_name": "Martha Wayles Skelton Jefferson",
+      "relationship_description": "Jefferson married Martha Wayles Skelton in 1772. They shared interests in music and literature, raised six children, and made their home at Monticello until her death in 1782.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/Martha_Jefferson"
+      ],
+      "notes": "Her death profoundly affected Jefferson, who never remarried.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Martha Jefferson Randolph",
+      "relationship_description": "Jefferson’s eldest surviving daughter accompanied him to France and later served as an informal White House hostess. She helped care for him at Monticello in his final years.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/Martha_Jefferson_Randolph"
+      ],
+      "notes": "Known as Patsy, she became Jefferson's only child with Martha Wayles Skelton Jefferson to survive beyond age 25.",
+      "relationship_type": "family/daughter"
+    },
+    {
+      "person_name": "Sally Hemings",
+      "relationship_description": "Sally Hemings was enslaved by Jefferson at Monticello and accompanied his daughter Mary to Paris in 1787. Historians broadly agree that Jefferson fathered her children; the relationship existed within the extreme power imbalance of chattel slavery.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Sally_Hemings",
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Hemings was the half-sister of Jefferson's wife through their shared father, John Wayles. Jefferson's daughter Martha Randolph later gave Hemings informal freedom after his death.",
+      "relationship_type": "enslaver/subordinate"
+    },
+    {
+      "person_name": "William Small",
+      "relationship_description": "Small taught Jefferson mathematics and philosophy at the College of William & Mary in 1761. He introduced Jefferson to Enlightenment thought and to the Williamsburg circle of Wythe and Fauquier.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Jefferson later credited the conversations in this circle as among the most valuable intellectual experiences of his life.",
+      "relationship_type": "academic/teacher"
+    },
+    {
+      "person_name": "George Wythe",
+      "relationship_description": "Wythe mentored Jefferson in Williamsburg and supervised his legal reading. He helped prepare Jefferson for admission to the Virginia legal profession in 1767.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/George_Wythe"
+      ],
+      "notes": "Wythe later bequeathed his library to Jefferson, reflecting their enduring intellectual connection.",
+      "relationship_type": "academic/mentor"
+    },
+    {
+      "person_name": "John Adams",
+      "relationship_description": "Adams supported Jefferson’s selection to draft the Declaration of Independence in the Continental Congress. They later became presidential opponents in 1796 and 1800 before renewing their friendship through correspondence.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/John_Adams",
+        "https://en.wikipedia.org/wiki/1800_United_States_presidential_election"
+      ],
+      "notes": "They renewed their friendship through a celebrated correspondence late in life and died on the same day, July 4, 1826.",
+      "relationship_type": "political/political_rival"
+    },
+    {
+      "person_name": "James Madison",
+      "relationship_description": "Madison and Jefferson organized the Democratic-Republican Party in 1792 to oppose Federalist policies. Jefferson later appointed Madison secretary of state.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Their alliance linked Jefferson's presidency to Madison's subsequent administration and to the party's long national dominance.",
+      "relationship_type": "political/ally"
+    },
+    {
+      "person_name": "Alexander Hamilton",
+      "relationship_description": "Hamilton served as Washington’s treasury secretary while Jefferson was secretary of state. They disagreed over public debt, national finance, and the reach of federal power.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Their conflict helped establish the Federalist and Democratic-Republican party alignment.",
+      "relationship_type": "political/political_rival"
+    },
+    {
+      "person_name": "Meriwether Lewis",
+      "relationship_description": "Jefferson employed Lewis as his presidential secretary in 1801 and chose him to lead the Corps of Discovery. He later appointed Lewis governor of Upper Louisiana.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Meriwether_Lewis",
+        "https://en.wikipedia.org/wiki/Lewis_and_Clark_Expedition"
+      ],
+      "notes": "Jefferson selected Lewis for the expedition because of his frontier abilities, scientific preparation, and character.",
+      "relationship_type": "political/subordinate"
+    },
+    {
+      "person_name": "Aaron Burr",
+      "relationship_description": "Burr served as Jefferson’s vice president from 1801 to 1805 after their electoral tie was resolved in Jefferson’s favor. Jefferson’s administration later prosecuted Burr for alleged treason in the Burr conspiracy, and Burr was acquitted.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://de.wikipedia.org/wiki/Aaron_Burr",
+        "https://en.wikipedia.org/wiki/Burr_conspiracy"
+      ],
+      "notes": "Burr was acquitted of treason, but the prosecution reflected Jefferson's deep mistrust of his former vice president.",
+      "relationship_type": "political/adversary"
+    },
+    {
+      "person_name": "Jane Randolph",
+      "relationship_description": "Jefferson's mother came from the prominent Randolph family and lived with him at Shadwell after he began his legal career.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "The surviving text documents the relationship but provides comparatively little about their personal bond.",
+      "relationship_type": "family/mother"
+    },
+    {
+      "person_name": "John Wayles",
+      "relationship_description": "John Wayles was Jefferson’s father-in-law. After Wayles died in 1773, Jefferson and Martha inherited land, debt, and 135 enslaved people, including members of the Hemings family.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Martha_Jefferson",
+        "https://en.wikipedia.org/wiki/Sally_Hemings"
+      ],
+      "notes": "The inherited debts contributed substantially to Jefferson's long-term financial difficulties.",
+      "relationship_type": "family/father_in_law"
+    },
+    {
+      "person_name": "Mary Jefferson Eppes",
+      "relationship_description": "Jefferson’s younger surviving daughter joined him in Paris in 1787 with Sally Hemings. She was educated there alongside her sister Martha.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/Martha_Jefferson_Randolph",
+        "https://en.wikipedia.org/wiki/Sally_Hemings"
+      ],
+      "notes": "She was commonly called Polly or Maria and died in 1804.",
+      "relationship_type": "family/daughter"
+    },
+    {
+      "person_name": "James Hemings",
+      "relationship_description": "James Hemings was an enslaved man Jefferson took to Paris in 1784 for training as a French chef. Jefferson freed him after he trained his brother Peter as a chef.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Sally_Hemings",
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "James Hemings was Sally Hemings's older brother and was among the people inherited through the Wayles estate.",
+      "relationship_type": "enslaver/subordinate"
+    },
+    {
+      "person_name": "James Maury",
+      "relationship_description": "The Reverend James Maury taught Jefferson history, science, and the classics while Jefferson boarded with Maury's family from 1758 to 1760.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "This instruction was a major part of Jefferson's education before William & Mary.",
+      "relationship_type": "academic/teacher"
+    },
+    {
+      "person_name": "George Washington",
+      "relationship_description": "Washington appointed Jefferson the first United States secretary of state in 1789. Jefferson served in his cabinet until 1793 while disagreeing with its Federalist direction.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://de.wikipedia.org/wiki/George_Washington"
+      ],
+      "notes": "Their working relationship was shaped by Jefferson's conflict with Treasury Secretary Alexander Hamilton.",
+      "relationship_type": "political/superior"
+    },
+    {
+      "person_name": "Benjamin Franklin",
+      "relationship_description": "Franklin served with Jefferson on the Committee of Five in 1776. He made editorial changes to Jefferson’s draft before Congress considered the Declaration of Independence.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://de.wikipedia.org/wiki/Unabh%C3%A4ngigkeitserkl%C3%A4rung_der_Vereinigten_Staaten"
+      ],
+      "notes": "Franklin made editorial changes to Jefferson's draft before the document went to Congress.",
+      "relationship_type": "political/collaborator"
+    },
+    {
+      "person_name": "Robert R. Livingston",
+      "relationship_description": "Livingston served with Jefferson on the Committee of Five in 1776. As American minister to France, he later negotiated the Louisiana Purchase with James Monroe.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/Louisiana_Purchase"
+      ],
+      "notes": "His relationship with Jefferson joined the Declaration's drafting process to the major territorial acquisition of Jefferson's presidency.",
+      "relationship_type": "political/collaborator"
+    },
+    {
+      "person_name": "Roger Sherman",
+      "relationship_description": "Sherman served with Jefferson on the Committee of Five in 1776. The committee prepared Jefferson’s draft of the Declaration of Independence for Congress.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://de.wikipedia.org/wiki/Unabh%C3%A4ngigkeitserkl%C3%A4rung_der_Vereinigten_Staaten"
+      ],
+      "notes": "The committee's work culminated in the Declaration's submission to Congress.",
+      "relationship_type": "political/collaborator"
+    },
+    {
+      "person_name": "William Clark",
+      "relationship_description": "Clark co-led the Corps of Discovery that Jefferson commissioned after the Louisiana Purchase. The expedition explored the western territory and sought a route to the Pacific coast.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/William_Clark",
+        "https://en.wikipedia.org/wiki/Lewis_and_Clark_Expedition"
+      ],
+      "notes": "Jefferson appointed Clark brigadier general of the Louisiana Territory militia and an Indian agent after the expedition.",
+      "relationship_type": "political/subordinate"
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Jefferson’s family life began in the Virginia planter household of Peter Jefferson and Jane Randolph. He later built a household at Monticello with Martha Wayles Skelton Jefferson. After Martha’s death in 1782, their surviving daughters, especially Martha Randolph, became his closest family companions and helped maintain his household. John Wayles’s estate also brought land, debt, and enslaved people into Jefferson’s family economy."
+    },
+    {
+      "relationship_type": "enslaver",
+      "summary": "Enslaved labor sustained Jefferson’s Monticello household and plantations. The Hemings family came to Monticello through the Wayles inheritance. James Hemings’s training as a French chef shows Jefferson’s use of skilled enslaved labor. Sally Hemings and her children show the intimate power Jefferson held as her enslaver."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Jefferson’s teachers prepared him for law and political writing. James Maury taught him history, science, and the classics before college. William Small introduced him to Enlightenment thought in Williamsburg. George Wythe turned Jefferson’s scholarly interests toward legal apprenticeship."
+    },
+    {
+      "relationship_type": "political",
+      "summary": "Jefferson’s political circle grew from revolutionary collaboration into the conflicts of the early republic. Adams, Franklin, Livingston, and Sherman worked with him on the Declaration of Independence. Washington appointed him secretary of state, while Madison became his chief political ally and Hamilton his leading cabinet opponent. As president, Jefferson relied on Livingston, Monroe, Lewis, and Clark in the Louisiana Purchase and the western expedition."
+    }
+  ]
+}

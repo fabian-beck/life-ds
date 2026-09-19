@@ -1,17 +1,17 @@
 {
-  "dataset": "Biographical Timeline",
-  "created_on": "2026-07-19",
+  "dataset": "Abigail Adams biographical timeline",
+  "created_on": "2026-09-19",
   "person": {
     "name": "Abigail_Adams",
     "birth_date": "1744-11-22",
     "death_date": "1818-10-28",
     "primary_roles": [
-      "Schriftstellerin",
       "politische Beraterin",
+      "Schriftstellerin",
       "First Lady"
     ],
-    "tagline": "Stimme der revolutionären Heimatfront",
-    "summary": "Abigail Adams war Schriftstellerin, Haushaltsmanagerin und politische Vertraute. Ihr umfangreicher Briefwechsel mit John Adams dokumentiert das Familienleben und die öffentlichen Angelegenheiten während der Amerikanischen Revolution und in der frühen Republik. Als Ehefrau des ersten US-Vizepräsidenten und zweiten Präsidenten zog sie sechs Kinder groß, lebte während diplomatischer Einsätze in Europa und führte später den Haushalt der Familie Adams in Quincy.",
+    "tagline": "Briefe von der Heimatfront der Revolution",
+    "summary": "Abigail Adams war eine amerikanische politische Beraterin und Briefschreiberin. Ihr Briefwechsel mit John Adams dokumentiert die Zeit der Revolution und die frühen Vereinigten Staaten. Während langer Trennungen führte sie den Haushalt und verwaltete die Finanzen ihrer Familie, setzte sich für eine stärkere rechtliche Berücksichtigung von Frauen ein und war die Ehefrau des zweiten Präsidenten der Vereinigten Staaten.",
     "wikipedia": "https://en.wikipedia.org/wiki/Abigail_Adams",
     "portrait": {
       "image": "/portraits/abigail_adams_thumbnail.webp",
@@ -21,133 +21,158 @@
       "source": "https://en.wikipedia.org/wiki/Abigail_Adams",
       "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Abigail_Adams_by_Gilbert_Stuart.jpg"
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Abigail_Adams_by_Gilbert_Stuart.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "a_voice_self_made",
-      "headline": "Eine Stimme entsteht",
+      "id": "weymouth_beginnings",
+      "headline": "Bücher statt Schule",
       "date_start": "1744-11-22",
       "date_start_precision": "day",
-      "date_end": "1764-10-25",
-      "date_end_precision": "day",
+      "date_end": "1759",
+      "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 19,
+      "age_end": 14,
       "involved_people": [
-        "William Smith",
-        "Elizabeth Quincy Smith",
-        "John Quincy",
-        "Norton Quincy",
+        "Mary Smith",
+        "Elizabeth Smith",
         "John Adams",
-        "Richard Cranch",
-        "Mary Smith Cranch"
+        "Richard Cranch"
       ],
-      "location": "Massachusetts, Vereinigte Staaten"
+      "location": "Massachusetts",
+      "illustration": {
+        "image": "/chapter_art/abigail_adams/weymouth_beginnings_medium.webp",
+        "medium": "/chapter_art/abigail_adams/weymouth_beginnings_medium.webp",
+        "full": "/chapter_art/abigail_adams/weymouth_beginnings_full.webp",
+        "concept": "A small constellation of pale paper-like leaves rises from a dark pool, each leaf edged in warm gold and drifting toward an opening in the blackness. Fine filaments link them into an expanding, luminous web.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "stewardship_at_braintree",
-      "headline": "Verantwortung in Braintree",
-      "date_start": "1765-07",
-      "date_start_precision": "month",
-      "date_end": "1774",
+      "id": "revolutionary_partnership",
+      "headline": "Eine Nation im Krieg",
+      "date_start": "1764-10-25",
+      "date_start_precision": "day",
+      "date_end": "1780",
       "date_end_precision": "year",
-      "age_start": 20,
-      "age_end": 29,
+      "age_start": 19,
+      "age_end": 32,
       "involved_people": [
         "John Adams",
+        "William Smith",
         "Abigail Adams Smith",
         "John Quincy Adams",
         "Susanna Adams",
         "Charles Adams",
-        "Thomas Boylston Adams",
-        "Elizabeth Adams"
+        "Thomas Adams",
+        "Cotton Tufts"
       ],
-      "location": "Massachusetts, Vereinigte Staaten"
+      "location": "Neuengland",
+      "illustration": {
+        "image": "/chapter_art/abigail_adams/revolutionary_partnership_medium.webp",
+        "medium": "/chapter_art/abigail_adams/revolutionary_partnership_medium.webp",
+        "full": "/chapter_art/abigail_adams/revolutionary_partnership_full.webp",
+        "concept": "At the center of darkness, a taut copper thread stretches between two distant glowing stones while amber sparks whirl around it like a gathering storm. One bright strand bends outward, refusing the pattern of the others.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "revolutionary_conscience",
-      "headline": "Revolutionäres Gewissen",
-      "date_start": "1775",
+      "id": "atlantic_diplomacy",
+      "headline": "Über den Atlantik",
+      "date_start": "1784",
       "date_start_precision": "year",
-      "date_end": "1783",
-      "date_end_precision": "year",
-      "age_start": 30,
-      "age_end": 38,
-      "involved_people": [
-        "John Adams"
-      ],
-      "location": "Vereinigte Staaten"
-    },
-    {
-      "id": "across_the_atlantic",
-      "headline": "Jenseits des Atlantiks",
-      "date_start": "1784-06",
-      "date_start_precision": "month",
       "date_end": "1788",
       "date_end_precision": "year",
       "age_start": 39,
       "age_end": 43,
       "involved_people": [
-        "John Adams",
         "Abigail Adams Smith",
-        "John Quincy Adams",
-        "Charles Adams",
-        "Thomas Boylston Adams",
-        "Mary Jefferson",
-        "Thomas Jefferson"
-      ],
-      "location": "Westeuropa"
-    },
-    {
-      "id": "the_president_s_partner",
-      "headline": "An der Seite des Präsidenten",
-      "date_start": "1797-03-04",
-      "date_start_precision": "day",
-      "date_end": "1801-03-04",
-      "date_end_precision": "day",
-      "age_start": 52,
-      "age_end": 56,
-      "involved_people": [
-        "John Adams"
-      ],
-      "location": "Vereinigte Staaten"
-    },
-    {
-      "id": "peacefield_after_power",
-      "headline": "Peacefield nach der Macht",
-      "date_start": "1801",
-      "date_start_precision": "year",
-      "date_end": "1818-10-28",
-      "date_end_precision": "day",
-      "age_start": 56,
-      "age_end": 73,
-      "involved_people": [
         "John Adams",
         "John Quincy Adams",
         "Thomas Jefferson",
-        "Maria Jefferson Eppes",
-        "Abigail Adams Smith"
+        "Mary Jefferson Eppes"
       ],
-      "location": "Massachusetts, Vereinigte Staaten"
+      "location": "Westeuropa",
+      "illustration": {
+        "image": "/chapter_art/abigail_adams/atlantic_diplomacy_medium.webp",
+        "medium": "/chapter_art/abigail_adams/atlantic_diplomacy_medium.webp",
+        "full": "/chapter_art/abigail_adams/atlantic_diplomacy_full.webp",
+        "concept": "A deep indigo wave arches into a suspended glassy bridge, carrying scattered points of moonlight from one side of the void to the other. Beneath it, currents of blue and silver fold into unfamiliar shapes.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
+    },
+    {
+      "id": "presidential_years",
+      "headline": "Im Präsidentenhaus",
+      "date_start": "1797-03-04",
+      "date_start_precision": "day",
+      "date_end": "1800",
+      "date_end_precision": "year",
+      "age_start": 52,
+      "age_end": 55,
+      "involved_people": [
+        "John Adams",
+        "Susanna Adams",
+        "Charles Adams",
+        "William Smith",
+        "John Shaw"
+      ],
+      "location": "Vereinigte Staaten",
+      "illustration": {
+        "image": "/chapter_art/abigail_adams/presidential_years_medium.webp",
+        "medium": "/chapter_art/abigail_adams/presidential_years_medium.webp",
+        "full": "/chapter_art/abigail_adams/presidential_years_full.webp",
+        "concept": "A vast unfinished cube of pale light floats in darkness, its open planes exposed to wind-like ribbons of white fabric. At its center, a single steady ember glows, warming the cold geometric space.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
+    },
+    {
+      "id": "peacefield_last_years",
+      "headline": "Leid in Peacefield",
+      "date_start": "1812",
+      "date_start_precision": "year",
+      "date_end": "1818-10-28",
+      "date_end_precision": "day",
+      "age_start": 67,
+      "age_end": 73,
+      "involved_people": [
+        "John Adams",
+        "Thomas Jefferson",
+        "Abigail Adams Smith",
+        "William Stephens Smith"
+      ],
+      "location": "Massachusetts",
+      "illustration": {
+        "image": "/chapter_art/abigail_adams/peacefield_last_years_medium.webp",
+        "medium": "/chapter_art/abigail_adams/peacefield_last_years_medium.webp",
+        "full": "/chapter_art/abigail_adams/peacefield_last_years_full.webp",
+        "concept": "A translucent shell rests in a black field, veined with muted rose and ash-gray light. A hairline fracture releases a slow ribbon of gold that curves outward, then dissolves into a quiet, starless blue.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     }
   ],
-  "conclusion": "Abigail Adams verwandelte die Verantwortung für den Haushalt in bürgerschaftliche Autorität und wurde zu einer unentbehrlichen politischen Briefpartnerin und einer der klarsten moralischen Stimmen der Revolution. Ihre Forderung, „Remember the Ladies“, verleiht ihrem Leben bis heute seine anhaltende, herausfordernde Kraft.",
+  "conclusion": "Der Briefwechsel zwischen Abigail und John Adams gehört bis heute zu den bedeutenden Quellen über politische Debatten, Familienleben und die Erfahrungen der Zivilbevölkerung während der Amerikanischen Revolution und der frühen Republik. Ihre Aufforderung an die Gesetzgeber, die Frauen nicht zu vergessen, wird in Untersuchungen zur Rechts- und Politikgeschichte der Frauen weiterhin häufig zitiert. Herausgeber, Historiker und Leser nutzen die Korrespondenz der Familie Adams weiterhin für Forschungen zur Gründungszeit.",
   "events": [
     {
       "date": "1744-11-22",
       "date_precision": "day",
-      "date_note": "11. November 1744 nach dem alten Kalender",
       "age": 0,
       "title": "Geburt in Weymouth",
-      "description": "Abigail Smith wurde in Weymouth, Massachusetts, als Tochter des kongregationalistischen Geistlichen William Smith und Elizabeth Quincy Smith geboren. Sie war das zweite von vier Kindern einer Familie, die mütterlicherseits mit der angesehenen Familie Quincy verbunden war.",
+      "description": "Abigail Smith wurde in Weymouth, Massachusetts, als Tochter von William Smith und Elizabeth Quincy Smith geboren. William Smith war ein liberaler [[Congregational minister|Geistlicher einer kongregationalistischen Gemeinde]] in der North Parish. Die Smiths hatten drei Töchter und einen Sohn, und Abigail war ihr zweites Kind.",
       "locations": [
         {
           "name_historic": "Weymouth",
           "name_modern": "Weymouth, Massachusetts, Vereinigte Staaten",
           "centroid": [
-            -70.9556,
-            42.2181
+            -70.94,
+            42.22
           ],
           "primary": true
         }
@@ -162,7 +187,7 @@
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Abigail_Adams_birthplace%2C_Weymouth_MA.jpg/960px-Abigail_Adams_birthplace%2C_Weymouth_MA.jpg",
-          "caption": "Geburtshaus von Abigail Adams, Weymouth, Massachusetts",
+          "caption": "Geburtshaus von Abigail Adams in Weymouth, Massachusetts",
           "source": "https://commons.wikimedia.org/wiki/File:Abigail_Adams_birthplace,_Weymouth_MA.jpg",
           "creator": "John Phelan",
           "license": "CC BY 3.0",
@@ -170,57 +195,63 @@
         }
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "a_voice_self_made",
+      "chapter": "weymouth_beginnings",
+      "annotations": {
+        "Congregational minister": {
+          "explanation": "Ein Geistlicher einer kongregationalistischen Gemeinde leitete eine protestantische Kirche, die von ihrer örtlichen Gemeinde geführt wurde. William Smith gehörte einer liberalen religiösen Tradition Neuenglands an, die neben dem Glauben Vernunft und Moral betonte.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Congregationalism"
+        }
+      },
+      "weight": 0.3,
       "event_class": {
         "type": "birth",
         "father": "William Smith",
-        "mother": "Elizabeth Quincy Smith"
+        "mother": "Elizabeth Quincy Smith",
+        "birth_name": "Abigail Smith",
+        "characterization": "geistlicher Haushalt"
       }
     },
     {
       "date": "1750",
       "date_precision": "year",
-      "date_end": "1759",
-      "date_end_precision": "year",
-      "date_note": "Ungefährer Zeitraum ihrer schulischen Bildung",
-      "title": "Bildet sich selbst weiter",
-      "description": "Da Abigail als Kind häufig krank war und keine formale Schule besuchen durfte, brachte ihre Mutter Elizabeth Quincy Smith ihr Lesen, Schreiben und Rechnen bei. Im Familienhaus in Braintree nutzte sie die Bibliotheken ihres Vaters, Großvaters und Onkels, um englische und französische Literatur zu lesen, und setzte ihre Studien mit Freunden fort.",
+      "age": 6,
+      "title": "Bildet sich zu Hause",
+      "description": "Wegen häufiger Krankheiten in ihrer Kindheit konnte Abigail Smith keine reguläre Schule in Weymouth, Massachusetts, besuchen. Ihre Mutter Elizabeth Smith brachte ihr und ihren Schwestern Lesen, Schreiben und Rechnen bei, und die Bibliotheken der Familie erschlossen Abigail die englische und französische Literatur.",
       "locations": [
         {
-          "name_historic": "Braintree",
-          "name_modern": "Quincy, Massachusetts, Vereinigte Staaten",
+          "name_historic": "Weymouth",
+          "name_modern": "Weymouth, Massachusetts, Vereinigte Staaten",
           "centroid": [
-            -71.0023,
-            42.2529
+            -70.939,
+            42.22
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Elizabeth Quincy Smith",
-        "William Smith",
-        "John Quincy",
-        "Norton Quincy"
+        "Elizabeth Quincy Smith"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "a_voice_self_made"
+      "chapter": "weymouth_beginnings",
+      "weight": 0.45,
+      "background": "Der Haushalt der Smiths verschaffte Abigail Zugang zu den umfangreichen Bibliotheken ihres Vaters, ihres Onkels und ihres Großvaters. Auch ihre Großmutter Elizabeth Quincy trug zu ihrer Bildung bei. Als sie älter wurde, las sie mit Freunden weiter, um sich fortzubilden.\n\nSpäter im Leben empfand Abigail ihre Bildung als unzureichend, weil Mädchen nur selten formale Bildungsmöglichkeiten erhielten. Sie galt als eine der gelehrtesten Frauen, die als First Lady dienten."
     },
     {
       "date": "1759",
       "date_precision": "year",
-      "age": 15,
-      "title": "Begegnet John Adams",
-      "description": "1759 lernte Abigail Smith den jungen Anwalt John Adams kennen, als dieser Richard Cranch in das Haus der Familie Smith in Braintree begleitete. Cranch warb um Abigails ältere Schwester Mary, und zwischen Abigail und John entwickelte sich allmählich eine Zuneigung, obwohl beide Familien zunächst Vorbehalte hatten.",
+      "age": 14,
+      "title": "Begegnung mit John Adams",
+      "description": "1759 lernte die fünfzehnjährige Abigail Smith John Adams kennen, als er mit seinem Freund Richard Cranch den Haushalt ihrer Familie in Weymouth, Massachusetts, besuchte. Cranch warb um Abigails ältere Schwester Mary Smith, sodass John und Abigail im selben gesellschaftlichen Kreis verkehrten.",
       "locations": [
         {
-          "name_historic": "Braintree",
-          "name_modern": "Braintree, Massachusetts, Vereinigte Staaten",
+          "name_historic": "Weymouth",
+          "name_modern": "Weymouth, Massachusetts, Vereinigte Staaten",
           "centroid": [
-            -71.0059,
-            42.2076
+            -70.94,
+            42.22
           ],
           "primary": true
         }
@@ -231,24 +262,25 @@
         "Mary Smith Cranch"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams"
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
       "event_type_icon": "mdi-account-group",
-      "chapter": "a_voice_self_made"
+      "chapter": "weymouth_beginnings",
+      "weight": 0.35
     },
     {
       "date": "1764-10-25",
       "date_precision": "day",
       "age": 19,
-      "title": "Heiratet John Adams",
-      "description": "Am 25. Oktober 1764 heiratete Abigail Smith John Adams im Haus ihrer Familie in Weymouth, Massachusetts; ihr Vater William Smith vollzog die Trauung. Anschließend begannen die beiden ihr Eheleben auf dem Bauernhof und in dem Salzschachtelhaus in Braintree, Massachusetts, das John geerbt hatte.",
+      "title": "Heirat mit John Adams",
+      "description": "Am 25. Oktober 1764 heiratete Abigail Smith John Adams im Haus ihrer Eltern in Weymouth, Massachusetts. Ihr Vater William Smith vollzog die Trauung. Anschließend ritt das Paar zu John Adams’ geerbtem Hof in Braintree, Massachusetts, um dort seinen Haushalt zu begründen.",
       "locations": [
         {
           "name_historic": "Weymouth",
           "name_modern": "Weymouth, Massachusetts, Vereinigte Staaten",
           "centroid": [
-            -70.944,
-            42.22
+            -70.939,
+            42.213
           ],
           "primary": true
         },
@@ -267,130 +299,49 @@
         "William Smith"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
         "https://en.wikipedia.org/wiki/John_Adams"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Abigail_Adams_at_age_21.png/960px-Abigail_Adams_at_age_21.png",
-          "caption": "Abigail Adams im Alter von einundzwanzig Jahren",
-          "source": "https://commons.wikimedia.org/wiki/File:Abigail_Adams_at_age_21.png",
-          "creator": "Charles Francis Adams",
-          "license": "Public domain"
-        }
-      ],
       "event_type_icon": "mdi-ring",
-      "chapter": "a_voice_self_made",
+      "chapter": "revolutionary_partnership",
+      "weight": 0.75,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
         "partner": "John Adams",
         "duration": "bis zu ihrem Tod",
         "children": 6,
-        "characterization": "geistige Partnerschaft"
+        "characterization": "intellektuelle Partnerschaft"
       }
     },
     {
-      "date": "1765-07",
-      "date_precision": "month",
-      "date_end": "1777-01",
-      "date_end_precision": "month",
-      "date_note": "Das letzte Kind, Elizabeth, wurde 1777 tot geboren",
-      "age": 20,
-      "title": "Zieht sechs Kinder groß",
-      "description": "Abigail brachte sechs Kinder zur Welt: Nabby, John Quincy, Susanna, Charles, Thomas und Elizabeth, die 1777 tot geboren wurde. Sie musste den Tod von Susanna im Säuglingsalter und Elizabeths Tod bei der Geburt verkraften, während sie die moralische und praktische Erziehung ihrer Kinder leitete.",
+      "date": "1774",
+      "date_precision": "year",
+      "age": 29,
+      "title": "Rückkehr zum Hof in Braintree",
+      "description": "1774 kehrte Abigail Adams mit ihren Kindern aus Boston auf den Familienhof in Braintree, Massachusetts, zurück, weil die wachsenden politischen Unruhen Boston zunehmend unsicher machten. John Adams reiste zum Kontinentalkongress nach Philadelphia und überließ Abigail die Verantwortung für Haushalt, Hof und Kinder.",
       "locations": [
         {
           "name_historic": "Braintree",
-          "name_modern": "Quincy, Massachusetts, Vereinigte Staaten",
+          "name_modern": "Quincy, Massachusetts",
           "centroid": [
-            -71.0023,
-            42.2529
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Abigail Adams Smith",
-        "John Quincy Adams",
-        "Susanna Adams",
-        "Charles Adams",
-        "Thomas Boylston Adams",
-        "Elizabeth Adams",
-        "John Adams"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Abigail_Adams_Smith",
-        "https://en.wikipedia.org/wiki/John_Quincy_Adams",
-        "https://en.wikipedia.org/wiki/John_Adams"
-      ],
-      "event_type_icon": "mdi-account-multiple",
-      "chapter": "stewardship_at_braintree"
-    },
-    {
-      "date": "1771",
-      "date_precision": "year",
-      "date_end": "1774",
-      "date_end_precision": "year",
-      "age": 26,
-      "title": "Führt Haushalt und Farm",
-      "description": "In [[Braintree|Braintree, Massachusetts]] führte Abigail Adams den Haushalt, den Bauernhof und die Familienfinanzen, während John Adams’ juristische und politische Arbeit ihn fernhielt. Ihre Briefe während dieser Trennungen verbanden Zuneigung mit Gesprächen über familiäre Pflichten und öffentliche Angelegenheiten.",
-      "locations": [
-        {
-          "name_historic": "Braintree",
-          "name_modern": "Quincy, Massachusetts, Vereinigte Staaten",
-          "centroid": [
-            -71.0023,
-            42.2529
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "John Adams"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Kitchen_in_John_and_Abigail_Adams_Cottage%2C_Quincy%2C_Mass_%2871931%29.jpg/960px-Kitchen_in_John_and_Abigail_Adams_Cottage%2C_Quincy%2C_Mass_%2871931%29.jpg",
-          "caption": "Küche im Cottage von John und Abigail Adams, Quincy",
-          "source": "https://commons.wikimedia.org/wiki/File:Kitchen_in_John_and_Abigail_Adams_Cottage,_Quincy,_Mass_(71931).jpg",
-          "creator": "Tichnor Bros. Inc., Boston, Mass.",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-email",
-      "chapter": "stewardship_at_braintree",
-      "annotations": {
-        "Braintree": {
-          "explanation": "Braintree war der Ort in Massachusetts, in dem die Familie Adams lebte; 1792 wurde sein nördlicher Bezirk zur eigenständigen Gemeinde Quincy.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Braintree,_Massachusetts"
-        }
-      }
-    },
-    {
-      "date": "1775",
-      "date_precision": "year",
-      "date_end": "1783",
-      "date_end_precision": "year",
-      "date_note": "Zeitraum des Amerikanischen Unabhängigkeitskriegs",
-      "age": 30,
-      "title": "Hält den revolutionären Haushalt aufrecht",
-      "description": "Während John Adams im [[Continental Congress|Kontinentalkongress]] tätig war, hielt Abigail in Braintree den Familienhaushalt und den Bauernhof aufrecht – inmitten kriegsbedingter Engpässe und Unsicherheit. Ihre Briefe schilderten die Auswirkungen des Krieges auf das Leben der Zivilbevölkerung und boten John unverblümte Beobachtungen zu Politik, Unabhängigkeit und Regierung.",
-      "locations": [
-        {
-          "name_historic": "Braintree, Massachusetts",
-          "name_modern": "Quincy, Massachusetts, Vereinigte Staaten",
-          "centroid": [
-            -71.0023,
+            -71.0134,
             42.2529
           ],
           "primary": true
         },
         {
+          "name_historic": "Boston",
+          "name_modern": "Boston, Massachusetts",
+          "centroid": [
+            -71.0589,
+            42.3601
+          ],
+          "primary": false
+        },
+        {
           "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "name_modern": "Philadelphia, Pennsylvania",
           "centroid": [
             -75.1652,
             39.9526
@@ -399,33 +350,43 @@
         }
       ],
       "involved_people": [
-        "John Adams"
+        "John Adams",
+        "Abigail Adams Smith",
+        "John Quincy Adams",
+        "Susanna Adams",
+        "Charles Adams",
+        "Thomas Adams"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams"
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
-      "event_type_icon": "mdi-email",
-      "chapter": "revolutionary_conscience",
-      "annotations": {
-        "Continental Congress": {
-          "explanation": "Das Regierungsorgan der Dreizehn Kolonien während der Amerikanischen Revolution, das die Kriegsführung leitete und auf die Unabhängigkeit hinarbeitete.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Continental_Congress"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/John_Adams_Homestead_-_B%26W_photo.jpg/960px-John_Adams_Homestead_-_B%26W_photo.jpg",
+          "caption": "Anwesen von John Adams in Braintree, Massachusetts",
+          "source": "https://commons.wikimedia.org/wiki/File:John_Adams_Homestead_-_B&W_photo.jpg",
+          "creator": "Unknown authorUnknown author",
+          "license": "Public domain",
+          "licenseUrl": null
         }
-      }
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "revolutionary_partnership",
+      "weight": 0.65
     },
     {
       "date": "1776-03-31",
       "date_precision": "day",
       "age": 31,
-      "title": "Fordert Anerkennung der Frauen",
-      "description": "Während John Adams an den Debatten über die amerikanische Unabhängigkeit teilnahm, schrieb Abigail aus Braintree und bat ihn, beim Entwurf neuer Gesetze an die Frauen zu denken: „Remember the Ladies“. Sie warnte davor, Ehemännern uneingeschränkte Macht zu übertragen, und erklärte, Frauen würden Gesetze nicht hinnehmen, die ohne ihre Vertretung beschlossen wurden.",
+      "title": "Fordert Rechte für Frauen",
+      "description": "Am 31. März 1776 schrieb Abigail Adams aus Braintree, Massachusetts, an John Adams, einen Abgeordneten des [[Continental Congress|Kontinentalkongresses]] in Philadelphia. Sie forderte ihn auf, bei der Ausarbeitung neuer Gesetze an die Frauen zu denken, und warnte davor, Ehemännern unbegrenzte rechtliche Macht zu geben.",
       "locations": [
         {
           "name_historic": "Braintree",
-          "name_modern": "Quincy, Massachusetts, Vereinigte Staaten",
+          "name_modern": "Braintree, Massachusetts, Vereinigte Staaten",
           "centroid": [
-            -71.0023,
-            42.2529
+            -71.0078,
+            42.2223
           ],
           "primary": true
         },
@@ -443,25 +404,81 @@
         "John Adams"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams"
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Abigail_Adams_Letter.jpg",
+          "caption": "Brief von Abigail Adams über Frauenrechte",
+          "source": "https://commons.wikimedia.org/wiki/File:Abigail_Adams_Letter.jpg",
+          "creator": "Skloewer",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+        }
       ],
       "event_type_icon": "mdi-email",
-      "chapter": "revolutionary_conscience"
+      "chapter": "revolutionary_partnership",
+      "annotations": {
+        "Continental Congress": {
+          "explanation": "Der Kontinentalkongress war das revolutionäre Regierungsgremium, in dem Abgesandte der amerikanischen Kolonien den Widerstand gegen die britische Herrschaft koordinierten und über die Gesetze und Regierung der neuen Nation berieten.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Continental_Congress"
+        }
+      },
+      "weight": 0.95,
+      "background": "Adams’ Forderung war Teil ihres anhaltenden Eintretens dafür, dass Frauen Männern ebenbürtig seien und Bildung erhalten sollten. Sie war überzeugt, Frauen könnten ihre geistigen Fähigkeiten nutzen, um ihre Kinder und Ehemänner anzuleiten. Ihre Warnung enthielt die Drohung, Frauen würden „eine Rebellion anzetteln“ gegen Gesetze, an denen sie weder mitwirken noch durch Vertreter beteiligt seien.\n\nJohn Adams nannte ihren Vorschlag einen „außergewöhnlichen Gesetzeskodex“. Er schrieb, Männer hätten nur „den Namen von Herren“. Er scherzte, der Verzicht auf diesen Titel würde Männer der „Despotie des Unterrocks“ unterwerfen."
     },
     {
-      "date": "1784-06",
-      "date_precision": "month",
-      "date_note": "Der Monat der Abreise ist im vorliegenden Artikel nicht angegeben; das Datum bezeichnet ihre Reise im Jahr 1784",
-      "age": 39,
-      "title": "Schließt sich der Familie in Paris an",
-      "description": "Abigail überquerte mit ihrer Tochter Nabby den Atlantik, um zu John Adams und John Quincy Adams zu stoßen. Zunächst überforderte sie die Aufgabe, einen großen Haushalt mit Dienstboten zu führen; doch sie schloss Freundschaften und nahm am Pariser Kulturleben teil.",
+      "date": "1777",
+      "date_precision": "year",
+      "date_end": "1780",
+      "date_end_precision": "year",
+      "age": 32,
+      "title": "Investiert Kriegserträge",
+      "description": "1777 investierte Abigail Adams über ihren Onkel Cotton Tufts Geld in Schuldverschreibungen, die zur Finanzierung des Unabhängigkeitskriegs ausgegeben worden waren. Sie verwaltete diese Anlagen und leitete zugleich den Hof und Haushalt der Adams in Braintree, Massachusetts.",
       "locations": [
         {
-          "name_historic": "Boston",
-          "name_modern": "Boston, Massachusetts, Vereinigte Staaten",
+          "name_historic": "Braintree",
+          "name_modern": "Quincy, Massachusetts",
           "centroid": [
-            -71.0589,
-            42.3601
+            -71.0023,
+            42.2529
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Cotton Tufts"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Continental_Congress_Broadside%2C_1777_-_%28Resolve_of_February_15%2C_endorsing_New_England_Conference_Report%29_LCCN2003690363.tif/lossy-page1-960px-Continental_Congress_Broadside%2C_1777_-_%28Resolve_of_February_15%2C_endorsing_New_England_Conference_Report%29_LCCN2003690363.tif.jpg",
+          "caption": "1777 herausgegebener Anschlag des Kontinentalkongresses",
+          "source": "https://commons.wikimedia.org/wiki/File:Continental_Congress_Broadside,_1777_-_(Resolve_of_February_15,_endorsing_New_England_Conference_Report)_LCCN2003690363.tif",
+          "creator": "Miscellaneous Items in High Demand, PPOC, Library of Congress",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-chart-line",
+      "chapter": "revolutionary_partnership",
+      "weight": 0.5
+    },
+    {
+      "date": "1784",
+      "date_precision": "year",
+      "age": 39,
+      "title": "Zur Familie nach Paris",
+      "description": "1784 verließ Abigail Adams Braintree, Massachusetts, und überquerte mit ihrer Tochter Abigail Adams Smith, die Nabby genannt wurde, per Schiff den Atlantik. Sie reisten nach Paris zu John Adams, der dort einen amerikanischen Diplomatenposten innehatte, und zu John Quincy Adams. Nach ihrer Ankunft übernahm Abigail die Leitung eines großen Haushalts mit Bediensteten.",
+      "locations": [
+        {
+          "name_historic": "Braintree",
+          "name_modern": "Quincy, Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.0136,
+            42.2529
           ],
           "primary": false
         },
@@ -481,35 +498,36 @@
         "John Quincy Adams"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams",
-        "https://en.wikipedia.org/wiki/Abigail_Adams_Smith",
-        "https://en.wikipedia.org/wiki/John_Quincy_Adams"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Plaque_Adams%2C_h%C3%B4tel_de_Verri%C3%A8res%2C_45-47_rue_d%27Auteuil%2C_Paris_16e_2-1.jpg/960px-Plaque_Adams%2C_h%C3%B4tel_de_Verri%C3%A8res%2C_45-47_rue_d%27Auteuil%2C_Paris_16e_2-1.jpg",
-          "caption": "Gedenktafel für die Familie Adams am Hôtel de Verrières, Paris",
-          "source": "https://commons.wikimedia.org/wiki/File:Plaque_Adams,_hôtel_de_Verrières,_45-47_rue_d'Auteuil,_Paris_16e_2-1.jpg",
-          "creator": "Polymagou",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "across_the_atlantic",
+      "chapter": "atlantic_diplomacy",
+      "weight": 0.65,
       "event_class": {
         "type": "migration",
         "from_location": "Massachusetts, Vereinigte Staaten",
         "to_location": "Paris, Frankreich",
-        "characterization": "diplomatischer Einsatz"
-      }
+        "characterization": "diplomatischer Posten"
+      },
+      "background": "Vor der Abreise hatte sie die lange Überfahrt gefürchtet, doch die Reise fand sie interessant. In Paris wartete zunächst eine andere Schwierigkeit auf sie. Einen großen Haushalt mit zahlreichen Bediensteten zu führen, war ihr ungewohnt, und sie fühlte sich davon überfordert.\n\nIn den folgenden Monaten schloss sie viele Freundschaften und fand Gefallen an Theater und Oper. Die Mode der Pariserinnen faszinierte sie. Sie schrieb auch mit Bedauern, selbst werde sie nie modisch gekleidet sein.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Promenade_de_la_Gallerie_du_Palais_Royal_%28BM_1861%2C1012.172%29.jpg/960px-Promenade_de_la_Gallerie_du_Palais_Royal_%28BM_1861%2C1012.172%29.jpg",
+          "caption": "Satire auf die modische Pariser Menge beim Einkaufen und Flanieren unter den Arkaden des Palais Royal. Farbaquatinta von 1787",
+          "source": "https://commons.wikimedia.org/wiki/File:Promenade_de_la_Gallerie_du_Palais_Royal_(BM_1861,1012.172).jpg",
+          "creator": null,
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Parisian women fashion 1780s"
+        }
+      ]
     },
     {
       "date": "1785",
       "date_precision": "year",
       "age": 40,
-      "title": "Zieht nach London",
-      "description": "Nachdem John Adams der erste Gesandte der Vereinigten Staaten am Hof von St James’s geworden war, zog Abigail mit ihrer Familie nach. Die britische Gesellschaft empfand sie als weniger gastfreundlich als die Pariser, doch vorübergehend kümmerte sie sich um Mary Jefferson, die junge Tochter von Thomas Jefferson.",
+      "title": "Umzug nach London",
+      "description": "Der Kongress ernannte John Adams zum ersten Gesandten der Vereinigten Staaten am [[Court of St James's|britischen Königshof]]. 1785 reiste Abigail mit John Adams und ihrer Tochter Nabby von Paris nach London. Dort kümmerte sie sich zeitweise um Mary, die von der Familie Polly genannte Tochter von Thomas Jefferson.",
       "locations": [
         {
           "name_historic": "Paris",
@@ -525,49 +543,52 @@
           "name_modern": "London, Vereinigtes Königreich",
           "centroid": [
             -0.1276,
-            51.5074
+            51.5072
           ],
           "primary": true
         }
       ],
       "involved_people": [
         "John Adams",
-        "John Quincy Adams",
-        "Charles Adams",
-        "Thomas Boylston Adams",
-        "Mary Jefferson Eppes",
-        "Thomas Jefferson"
+        "Abigail Adams Smith",
+        "Thomas Jefferson",
+        "Mary Jefferson Eppes"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams",
-        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
-        "https://en.wikipedia.org/wiki/John_Quincy_Adams"
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/John_Adams_-_9_Grosvenor_Square_Mayfair_London_W1K_5AE.jpg/960px-John_Adams_-_9_Grosvenor_Square_Mayfair_London_W1K_5AE.jpg",
-          "caption": "Wohnsitz von John Adams, 9 Grosvenor Square, London",
-          "source": "https://commons.wikimedia.org/wiki/File:John_Adams_-_9_Grosvenor_Square_Mayfair_London_W1K_5AE.jpg",
-          "creator": "Spudgun67",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/London_-_St_James%27s_Palace_-_geograph.org.uk_-_7485488.jpg/960px-London_-_St_James%27s_Palace_-_geograph.org.uk_-_7485488.jpg",
+          "caption": "St James’s Palace in London",
+          "source": "https://commons.wikimedia.org/wiki/File:London_-_St_James's_Palace_-_geograph.org.uk_-_7485488.jpg",
+          "creator": "Colin Smith",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
         }
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "across_the_atlantic",
+      "chapter": "atlantic_diplomacy",
+      "annotations": {
+        "Court of St James's": {
+          "explanation": "Der Court of St James’s ist die offizielle Bezeichnung für den britischen Königshof und die diplomatische Bezeichnung für ausländische Vertretungen in Großbritannien.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Court_of_St_James%27s"
+        }
+      },
+      "weight": 0.55,
       "event_class": {
         "type": "migration",
-        "from_location": "Paris, Frankreich",
-        "to_location": "London, Großbritannien",
-        "characterization": "diplomatischer Einsatz"
+        "from_location": "Frankreich",
+        "to_location": "England",
+        "characterization": "diplomatischer Posten"
       }
     },
     {
       "date": "1788",
       "date_precision": "year",
       "age": 43,
-      "title": "Kehrt nach Peacefield zurück",
-      "description": "Nachdem John Adams’ diplomatischer Dienst in Großbritannien beendet war, kehrten Abigail und John nach Massachusetts zurück und nahmen ihr Familienleben wieder auf. Abigail vergrößerte und modernisierte ihr Haus mit großem Tatendrang.",
+      "title": "Rückkehr nach Peacefield",
+      "description": "1788 reisten Abigail und John Adams nach Abschluss ihrer diplomatischen Aufgaben in Europa auf dem Seeweg von London nach Quincy, Massachusetts. Sie kehrten nach Peacefield, dem Familiensitz der Adams, zurück. Dort leitete Abigail den Ausbau und Umbau des Hauses, während die Familie ihr Leben in Massachusetts wieder aufnahm.",
       "locations": [
         {
           "name_historic": "London",
@@ -582,20 +603,17 @@
           "name_historic": "Quincy",
           "name_modern": "Quincy, Massachusetts, Vereinigte Staaten",
           "centroid": [
-            -71.0023,
+            -71.0132,
             42.2529
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "John Adams",
-        "John Quincy Adams",
-        "Charles Adams",
-        "Thomas Boylston Adams"
+        "John Adams"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams"
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
       "images": [
         {
@@ -608,23 +626,64 @@
         }
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "across_the_atlantic",
+      "chapter": "atlantic_diplomacy",
+      "annotations": {
+        "Peacefield": {
+          "explanation": "Peacefield, auch Old House genannt, war das Haus der Familie Adams in Quincy. Abigail und John kehrten 1788 dorthin zurück, und das Haus gehört weiterhin zum Adams National Historical Park.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Adams_National_Historical_Park"
+        }
+      },
+      "weight": 0.55,
       "event_class": {
         "type": "migration",
-        "from_location": "Großbritannien",
-        "to_location": "Quincy, Massachusetts, Vereinigte Staaten",
-        "characterization": "Rückkehr in die Heimat"
+        "from_location": "England",
+        "to_location": "Massachusetts, Vereinigte Staaten",
+        "characterization": "Heimkehr"
       }
     },
     {
       "date": "1797-03-04",
       "date_precision": "day",
-      "date_end": "1801-03-04",
-      "date_end_precision": "day",
-      "date_note": "Bei der Amtseinführung war Abigail abwesend, weil sie John Adams’ im Sterben liegende Mutter pflegte",
       "age": 52,
-      "title": "An der Seite des Präsidenten",
-      "description": "Als John Adams Präsident wurde, übernahm Abigail in Philadelphia die Verantwortung für die offiziellen Empfänge und blieb zugleich seine engste politische Vertraute. Sie verfolgte die Angelegenheiten der Regierung aufmerksam, korrespondierte mit ihm über politische Entscheidungen und wurde von ihren Gegnern als „Mrs. President“ verspottet.",
+      "title": "Pflegt Susanna in Massachusetts",
+      "description": "John Adams wurde am 4. März 1797 in Philadelphia zum zweiten Präsidenten der Vereinigten Staaten. Abigail blieb in Massachusetts, um sich um Susanna Boylston Adams, Johns sterbende Mutter, zu kümmern. Sie nahm nicht an der Amtseinführung teil.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Massachusetts",
+          "name_modern": "Massachusetts, Vereinigte Staaten",
+          "centroid": [
+            -71.3824,
+            42.4072
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "John Adams",
+        "Susanna Adams"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
+      ],
+      "event_type_icon": "mdi-crown",
+      "chapter": "presidential_years",
+      "weight": 0.8
+    },
+    {
+      "date": "1800",
+      "date_precision": "year",
+      "age": 55,
+      "title": "Nimmt ihre Enkelin auf",
+      "description": "1800 brachte Abigail Adams ihre dreijährige Enkelin Susanna, die Tochter von Charles Adams, in das Präsidentenhaus in Philadelphia. Charles starb kurz darauf. Abigail nahm auch die Kinder ihres Bruders William Smith und ihres Schwagers John Shaw bei sich auf, die mit Alkoholabhängigkeit kämpften.",
       "locations": [
         {
           "name_historic": "Philadelphia",
@@ -637,38 +696,41 @@
         }
       ],
       "involved_people": [
-        "John Adams"
+        "Susanna Adams",
+        "Charles Adams",
+        "William Smith",
+        "John Shaw"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams",
-        "https://en.wikipedia.org/wiki/Inauguration_of_John_Adams"
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/Charles_Adams_(1770%E2%80%931800)"
       ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "the_president_s_partner"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Philadelphia_Presidents_house.jpg/960px-Philadelphia_Presidents_house.jpg",
+          "caption": "Präsidentenhaus in Philadelphia",
+          "source": "https://commons.wikimedia.org/wiki/File:Philadelphia_Presidents_house.jpg",
+          "creator": "William L. Breton, artist and lithographer.",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "presidential_years",
+      "weight": 0.4
     },
     {
       "date": "1800-11",
       "date_precision": "month",
-      "date_end": "1801-03",
-      "date_end_precision": "month",
       "age": 55,
-      "title": "Zieht ins Weiße Haus",
-      "description": "In den letzten Monaten von John Adams’ Präsidentschaft zog Abigail in das noch nicht fertiggestellte Präsidentenhaus ein. Sie bewunderte die Lage, beklagte jedoch die Abgeschiedenheit, die unfertigen Räume und die Schwierigkeiten, Brennholz zu beschaffen; im East Room trocknete sie Wäsche.",
+      "title": "Einzug ins Weiße Haus",
+      "description": "Im November 1800 zog Abigail Adams mit ihrem Ehemann, Präsident John Adams, in das noch unfertige Präsidentenhaus in Washington, D.C. Sie fand die Umgebung schön, hatte aber Mühe, das abgelegene Herrenhaus zu unterhalten, und nutzte den East Room zum Trocknen der Familienwäsche.",
       "locations": [
         {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, Vereinigte Staaten",
-          "centroid": [
-            -75.1652,
-            39.9526
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Washington",
+          "name_historic": "Washington, D.C.",
           "name_modern": "Washington, D.C., Vereinigte Staaten",
           "centroid": [
-            -77.0369,
+            -77.0365,
             38.9072
           ],
           "primary": true
@@ -678,129 +740,62 @@
         "John Adams"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams"
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Adamsinvite1801.jpg/960px-Adamsinvite1801.jpg",
-          "caption": "Frühe Einladung ins Weiße Haus, von Abigail Adams ausgefüllt",
-          "source": "https://commons.wikimedia.org/wiki/File:Adamsinvite1801.jpg",
-          "creator": "Abigail Adams",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/The_White_House%2C_Northside%2C_Washington_DC_%288595853330%29.jpg/960px-The_White_House%2C_Northside%2C_Washington_DC_%288595853330%29.jpg",
+          "caption": "Das Weiße Haus in Washington, D.C.",
+          "source": "https://commons.wikimedia.org/wiki/File:The_White_House,_Northside,_Washington_DC_(8595853330).jpg",
+          "creator": "www.GlynLowe.com from Hamburg, Germany",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
-      "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "the_president_s_partner",
-      "event_class": {
-        "type": "migration",
-        "from_location": "Philadelphia, Pennsylvania, Vereinigte Staaten",
-        "to_location": "Washington, D.C., Vereinigte Staaten",
-        "characterization": "Amtssitz des Präsidenten"
-      }
-    },
-    {
-      "date": "1801",
-      "date_precision": "year",
-      "age": 56,
-      "title": "Zieht sich nach Quincy zurück",
-      "description": "Nach John Adams’ Wahlniederlage kehrte Abigail mit ihm nach Peacefield in Quincy zurück, wo sie den gemeinsamen Haushalt führte. In späteren Jahren half sie außerdem bei der Betreuung ihrer Enkel, während John Quincy Adams als Diplomat im Ausland tätig war.",
-      "locations": [
-        {
-          "name_historic": "Washington",
-          "name_modern": "Washington, D.C., Vereinigte Staaten",
-          "centroid": [
-            -77.0369,
-            38.9072
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Quincy",
-          "name_modern": "Quincy, Massachusetts, Vereinigte Staaten",
-          "centroid": [
-            -71.0023,
-            42.2529
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "John Adams",
-        "John Quincy Adams"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams",
-        "https://en.wikipedia.org/wiki/John_Quincy_Adams"
-      ],
-      "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "the_president_s_partner",
-      "event_class": {
-        "type": "migration",
-        "from_location": "Washington, D.C., Vereinigte Staaten",
-        "to_location": "Quincy, Massachusetts, Vereinigte Staaten",
-        "characterization": "Ruhestand nach der Präsidentschaft"
-      }
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "presidential_years",
+      "weight": 0.75
     },
     {
       "date": "1812",
       "date_precision": "year",
-      "date_note": "Der erneuerte Briefwechsel begann am Neujahrstag",
       "age": 67,
-      "title": "Unterstützt die Versöhnung mit Jefferson",
-      "description": "1812 nahmen John Adams und Thomas Jefferson nach Jahren politischer Entfremdung ihre Korrespondenz wieder auf. Abigails früherer Beileidsbrief nach dem Tod von Jeffersons Tochter Maria, um die sie sich in London gekümmert hatte, bewahrte eine persönliche Verbindung zwischen den beiden Familien.",
+      "title": "Nimmt Briefwechsel mit Jefferson wieder auf",
+      "description": "1812 unterstützte Abigail Adams John Adams dabei, nach Jahren politischer Entfremdung seinen Briefwechsel mit Thomas Jefferson wieder aufzunehmen. John Adams eröffnete den Austausch mit einem Neujahrsbrief, und der Briefwechsel setzte sich fort, während Abigail in Peacefield in Quincy, Massachusetts, blieb.",
       "locations": [
         {
           "name_historic": "Quincy",
           "name_modern": "Quincy, Massachusetts, Vereinigte Staaten",
           "centroid": [
-            -71.0023,
+            -71.0134,
             42.2529
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Monticello",
-          "name_modern": "Charlottesville, Virginia, Vereinigte Staaten",
-          "centroid": [
-            -78.503,
-            38.031
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
         "John Adams",
-        "Thomas Jefferson",
-        "Maria Jefferson Eppes"
+        "Thomas Jefferson"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams",
-        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Thomas_Jefferson_Abigail_Adams_letter_1817.jpg/960px-Thomas_Jefferson_Abigail_Adams_letter_1817.jpg",
-          "caption": "Brief von Thomas Jefferson an Abigail Adams, 1817",
-          "source": "https://commons.wikimedia.org/wiki/File:Thomas_Jefferson_Abigail_Adams_letter_1817.jpg",
-          "creator": "Thomas Jefferson",
-          "license": "Public domain"
-        }
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
       "event_type_icon": "mdi-email",
-      "chapter": "peacefield_after_power"
+      "chapter": "peacefield_last_years",
+      "weight": 0.5
     },
     {
       "date": "1813-08-15",
       "date_precision": "day",
       "age": 68,
-      "title": "Verliert Tochter Nabby",
-      "description": "Abigails älteste Tochter, Abigail Adams Smith, genannt Nabby, starb im Alter von achtundvierzig Jahren nach jahrelangen schweren Schmerzen an Brustkrebs. Während ihrer letzten Krankheit war Nabby in das Haus ihrer Eltern in Quincy zurückgekehrt.",
+      "title": "Verlust von Tochter Nabby",
+      "description": "Am 15. August 1813 starb Abigail Adams’ Tochter Abigail Adams Smith, die Nabby genannt wurde, nach drei Jahren starker Schmerzen durch Brustkrebs im Familienhaus in Quincy, Massachusetts. Nabby war von ihrem Hof in New York zurückgekehrt, um im Haus ihrer Eltern zu sterben, wo Abigail sie pflegte.",
       "locations": [
         {
           "name_historic": "Quincy",
           "name_modern": "Quincy, Massachusetts, Vereinigte Staaten",
           "centroid": [
-            -71.0023,
+            -70.9973,
             42.2529
           ],
           "primary": true
@@ -808,57 +803,61 @@
       ],
       "involved_people": [
         "Abigail Adams Smith",
-        "John Adams"
+        "William Stephens Smith"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
         "https://en.wikipedia.org/wiki/Abigail_Adams_Smith"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Abigail_Adams_Smith_by_Mather_Brown%2C_1785.jpg/960px-Abigail_Adams_Smith_by_Mather_Brown%2C_1785.jpg",
-          "caption": "Abigail Adams Smith, von Mather Brown, 1785",
-          "source": "https://commons.wikimedia.org/wiki/File:Abigail_Adams_Smith_by_Mather_Brown,_1785.jpg",
-          "creator": "Mather Brown",
-          "license": "Public domain"
-        }
-      ],
       "event_type_icon": "mdi-cross",
-      "chapter": "peacefield_after_power"
+      "chapter": "peacefield_last_years",
+      "weight": 0.65
     },
     {
       "date": "1818-10-28",
       "date_precision": "day",
       "age": 73,
-      "title": "Stirbt in Quincy",
-      "description": "Abigail Adams starb am 28. Oktober 1818 im Alter von dreiundsiebzig Jahren in ihrem Haus in Quincy, Massachusetts, an Typhus. Sie wurde in der Familiengruft der Familie Adams in Quincy beigesetzt.",
+      "title": "Tod in Peacefield",
+      "description": "Abigail Adams verbrachte ihre letzten Jahre krank in Peacefield, ihrem Haus in Quincy. Dort starb sie am 28. Oktober 1818 an [[typhoid fever|Typhus]]. John Adams war bei ihr, als sie ihm sagte, sie sei bereit zu gehen.",
       "locations": [
         {
-          "name_historic": "Quincy, Massachusetts",
+          "name_historic": "Quincy",
           "name_modern": "Quincy, Massachusetts, Vereinigte Staaten",
           "centroid": [
-            -71.0023,
+            -71.0139,
             42.2529
           ],
           "primary": true
         }
       ],
+      "involved_people": [
+        "John Adams"
+      ],
       "sources": [
-        "https://www.deutsche-biographie.de/pnd118646923.html"
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "peacefield_after_power",
+      "chapter": "peacefield_last_years",
+      "annotations": {
+        "typhoid fever": {
+          "explanation": "Typhus ist eine bakterielle Infektion, die lang anhaltendes Fieber und schwere Erkrankungen verursachen kann. Im 19. Jahrhundert verbreitete sie sich häufig durch verunreinigte Lebensmittel oder Wasser, und moderne Antibiotika standen noch nicht zur Behandlung zur Verfügung.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Typhoid_fever"
+        }
+      },
+      "weight": 0.7,
       "event_class": {
         "type": "death",
         "cause": "Typhus",
-        "place_of_rest": "Familiengruft der Familie Adams in Quincy"
+        "characterization": "nach langer Krankheit",
+        "place_of_rest": "United First Parish Church, Quincy, Massachusetts"
       }
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "4a29204ac0ce6576",
-    "translated_on": "2026-08-02T11:46:52.430432+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "f44dc9c4d60dce95",
+    "translated_on": "2026-09-19T06:40:29.032792+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

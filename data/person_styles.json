@@ -372,40 +372,44 @@
       "body_font": "Inter"
     },
     "george_washington": {
-      "primary": "#F2D28B",
-      "secondary": "#67C5E8",
-      "background": "#101722",
-      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M0 0H160M0 80H160M0 160H160M0 0V160M80 0V160M160 0V160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M40 0V160M120 0V160M0 40H160M0 120H160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M0 0L160 160M160 0L0 160M0 80H48M112 80H160M80 0V48M80 112V160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M80 42L118 80L80 118L42 80Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><path d=\"M80 58L102 80L80 102L58 80Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"80\" cy=\"80\" r=\"10\" fill=\"#FFFFFF\" /><path d=\"M20 20H60M100 20H140M20 140H60M100 140H140\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /></svg>",
-      "separator_glyph_svg": "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"7\" y=\"7\" width=\"18\" height=\"18\" transform=\"rotate(45 16 16)\" fill=\"none\" stroke=\"#F2D28B\" stroke-width=\"3\" /><circle cx=\"16\" cy=\"16\" r=\"4\" fill=\"#F2D28B\" /></svg>",
-      "heading_font": "DM Serif Display",
+      "primary": "#B94A3A",
+      "secondary": "#D8C79B",
+      "background": "#101A18",
+      "palette_rationale": "The brick red comes from Mount Vernon's masonry and the parchment beige from Washington's 1796 Farewell Address broadside and eighteenth-century military documents.",
+      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M-40 40L40 -40M0 160L160 0M120 200L200 120\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><path d=\"M-20 120L40 60M100 220L180 140M-20 20L20 60M140 100L180 140\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"0\" cy=\"0\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"160\" cy=\"0\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"0\" cy=\"160\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"160\" cy=\"160\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M52 52H108V108H52Z M68 68H92V92H68Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M80 52V108M52 80H108\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /></svg>",
+      "separator_glyph_svg": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"16\" cy=\"16\" r=\"7\" fill=\"none\" stroke=\"#B94A3A\" stroke-width=\"3\" /><path d=\"M3 16H9M23 16H29\" fill=\"none\" stroke=\"#B94A3A\" stroke-width=\"3\" /></svg>",
+      "heading_font": "Zilla Slab",
       "body_font": "Source Serif 4"
     },
     "benjamin_franklin": {
-      "primary": "#F4C95D",
-      "secondary": "#5EEAD4",
-      "background": "#101724",
-      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M0 32H24V8H56V32H80V56H104V32H136V8H160M0 128H24V152H56V128H80V104H104V128H136V152H160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><path d=\"M0 80H32L48 64H72L88 80H112L128 96H160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M0 48H16M0 112H16M144 48H160M144 112H160M40 0V16M120 0V16M40 144V160M120 144V160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M64 48L88 48L104 64L104 88L88 104L64 104L48 88L48 64Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M76 56L64 80H80L72 104L96 72H80L88 56Z\" fill=\"#FFFFFF\" /></svg>",
-      "separator_glyph_svg": "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"16\" cy=\"16\" r=\"11\" fill=\"none\" stroke=\"#F4C95D\" stroke-width=\"3\" /><rect x=\"11\" y=\"11\" width=\"10\" height=\"10\" fill=\"none\" stroke=\"#F4C95D\" stroke-width=\"3\" transform=\"rotate(45 16 16)\" /></svg>",
-      "heading_font": "DM Serif Display",
+      "primary": "#F2D6A2",
+      "secondary": "#D47A32",
+      "background": "#101416",
+      "palette_rationale": "The parchment primary and copper-orange secondary are taken from the rag paper and warm inked metal of Franklin's colonial printing press, Pennsylvania Gazette, and Poor Richard's Almanack.",
+      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M0 24H160M0 80H160M0 136H160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M24 0V160M80 0V160M136 0V160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M0 48L20 28L40 48L60 28L80 48L100 28L120 48L140 28L160 48M0 112L20 92L40 112L60 92L80 112L100 92L120 112L140 92L160 112\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"0\" cy=\"0\" r=\"18\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"160\" cy=\"0\" r=\"18\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"0\" cy=\"160\" r=\"18\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"160\" cy=\"160\" r=\"18\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M48 0V18M48 142V160M112 0V18M112 142V160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /></svg>",
+      "separator_glyph_svg": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"16\" cy=\"16\" r=\"9\" fill=\"none\" stroke=\"#F2D6A2\" stroke-width=\"3\" /><line x1=\"16\" y1=\"4\" x2=\"16\" y2=\"28\" stroke=\"#F2D6A2\" stroke-width=\"3\" /></svg>",
+      "heading_font": "Zilla Slab",
       "body_font": "Source Serif 4"
     },
     "abigail_adams": {
-      "primary": "#F4C86A",
-      "secondary": "#8FC7E8",
-      "background": "#101827",
-      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M0 32H24V0M136 0V24H160M0 128H24V160M136 160V136H160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M0 80L40 40L80 80L120 40L160 80M0 80L40 120L80 80L120 120L160 80\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"40\" cy=\"40\" r=\"14\" fill=\"#000000\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><circle cx=\"120\" cy=\"120\" r=\"14\" fill=\"#000000\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><path d=\"M0 0L16 16M144 144L160 160M144 16L160 0M0 160L16 144\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1\" /></svg>",
-      "separator_glyph_svg": "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"16\" cy=\"16\" r=\"10\" fill=\"none\" stroke=\"#F4C86A\" stroke-width=\"3\" /><path d=\"M10 16H22M16 10V22\" fill=\"none\" stroke=\"#F4C86A\" stroke-width=\"3\" /></svg>",
-      "heading_font": "DM Serif Display",
+      "primary": "#E2C79A",
+      "secondary": "#C65A45",
+      "background": "#171412",
+      "palette_rationale": "the parchment and iron-red sealing-wax accents of Abigail Adams's surviving letters and Revolutionary-era correspondence",
+      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M0 32H160M0 80H160M0 128H160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M32 0V160M128 0V160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M0 0L40 40L0 80M160 0L120 40L160 80M0 80L40 120L0 160M160 80L120 120L160 160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"0\" cy=\"0\" r=\"24\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"160\" cy=\"0\" r=\"24\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"0\" cy=\"160\" r=\"24\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"160\" cy=\"160\" r=\"24\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M56 0V24H104V0M56 160V136H104V160M0 56H24V104H0M160 56H136V104H160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /></svg>",
+      "separator_glyph_svg": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"16\" cy=\"16\" r=\"9\" fill=\"none\" stroke=\"#E2C79A\" stroke-width=\"3\" /><circle cx=\"16\" cy=\"16\" r=\"3\" fill=\"#E2C79A\" /></svg>",
+      "heading_font": "Libre Baskerville",
       "body_font": "Source Serif 4"
     },
     "alexander_hamilton": {
-      "primary": "#D9A441",
-      "secondary": "#70B7E8",
-      "background": "#0C1724",
-      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><g fill=\"none\" stroke=\"#FFFFFF\"><path stroke-width=\"8\" d=\"M-40 0L0 40L40 0L80 40L120 0L160 40L200 0M-40 80L0 120L40 80L80 120L120 80L160 120L200 80M-40 160L0 200L40 160L80 200L120 160L160 200L200 160M-40 40L0 0L40 40L80 0L120 40L160 0L200 40M-40 120L0 80L40 120L80 80L120 120L160 80L200 120M-40 200L0 160L40 200L80 160L120 200L160 160L200 200\" /><path stroke-width=\"4\" d=\"M0 0H160M0 80H160M0 160H160M0 0V160M80 0V160M160 0V160\" /><path stroke-width=\"2\" d=\"M-20 20L20 60L60 20L100 60L140 20L180 60M-20 100L20 140L60 100L100 140L140 100L180 140M-20 60L20 20L60 60L100 20L140 60L180 20M-20 140L20 100L60 140L100 100L140 140L180 100\" /><circle cx=\"0\" cy=\"0\" r=\"12\" stroke-width=\"4\" /><circle cx=\"80\" cy=\"0\" r=\"12\" stroke-width=\"4\" /><circle cx=\"160\" cy=\"0\" r=\"12\" stroke-width=\"4\" /><circle cx=\"0\" cy=\"80\" r=\"12\" stroke-width=\"4\" /><circle cx=\"80\" cy=\"80\" r=\"12\" stroke-width=\"4\" /><circle cx=\"160\" cy=\"80\" r=\"12\" stroke-width=\"4\" /><circle cx=\"0\" cy=\"160\" r=\"12\" stroke-width=\"4\" /><circle cx=\"80\" cy=\"160\" r=\"12\" stroke-width=\"4\" /><circle cx=\"160\" cy=\"160\" r=\"12\" stroke-width=\"4\" /><path stroke-width=\"1\" d=\"M40 0V160M120 0V160M0 40H160M0 120H160\" /></g></svg>",
-      "separator_glyph_svg": "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"16\" cy=\"16\" r=\"12\" fill=\"none\" stroke=\"#D9A441\" stroke-width=\"3\" /><circle cx=\"16\" cy=\"16\" r=\"5\" fill=\"none\" stroke=\"#D9A441\" stroke-width=\"3\" /><path d=\"M4 16H28M16 4V28\" fill=\"none\" stroke=\"#D9A441\" stroke-width=\"2\" /></svg>",
-      "heading_font": "DM Serif Display",
-      "body_font": "Lora"
+      "primary": "#E7D3A8",
+      "secondary": "#D65A45",
+      "background": "#101820",
+      "palette_rationale": "The parchment primary and brick-red secondary come from the rag-paper pamphlets and redoubt earth central to Hamilton's Federalist writing and Yorktown command.",
+      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M0 32H160M0 128H160M32 0V160M128 0V160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M0 120L160 40M-160 120L0 40M160 120L320 40\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M40 40H120V120H40Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><path d=\"M56 56H104V104H56Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M0 0A28 28 0 0 1 28 28M160 0A28 28 0 0 0 132 28M0 160A28 28 0 0 0 28 132M160 160A28 28 0 0 1 132 132\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M72 0V16M88 144V160M0 72H16M144 88H160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /></svg>",
+      "separator_glyph_svg": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"16\" cy=\"16\" r=\"11\" fill=\"none\" stroke=\"#E7D3A8\" stroke-width=\"3\" /><rect x=\"11\" y=\"11\" width=\"10\" height=\"10\" fill=\"#E7D3A8\" transform=\"rotate(45 16 16)\" /></svg>",
+      "heading_font": "EB Garamond",
+      "body_font": "Source Serif 4"
     },
     "phillis_wheatley": {
       "primary": "#D6A84F",
@@ -417,12 +421,13 @@
       "body_font": "Source Serif 4"
     },
     "joseph_brant": {
-      "primary": "#E9C46A",
-      "secondary": "#5CC8FF",
-      "background": "#101822",
-      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M-40 40H40V-40M40 120H120V40M120 200H200V120M-40 120H40V200M40 40H120V-40M120 120H200V200\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><path d=\"M0 80H56V24H104V80H160M0 80H56V136H104V80H160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M-40 0H0V40H40M120 0H160V40H200M-40 160H0V120H40M120 160H160V120H200\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><rect x=\"72\" y=\"72\" width=\"16\" height=\"16\" fill=\"#FFFFFF\" /></svg>",
-      "separator_glyph_svg": "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"10\" cy=\"16\" r=\"6\" fill=\"none\" stroke=\"#E9C46A\" stroke-width=\"3\" /><circle cx=\"22\" cy=\"16\" r=\"6\" fill=\"none\" stroke=\"#E9C46A\" stroke-width=\"3\" /><rect x=\"14\" y=\"14\" width=\"4\" height=\"4\" fill=\"#E9C46A\" /></svg>",
-      "heading_font": "DM Serif Display",
+      "primary": "#BFC7C9",
+      "secondary": "#4FA3B8",
+      "background": "#101418",
+      "palette_rationale": "The silver and river blue are drawn from Brant's British service medal and the Mohawk River at Canajoharie, the landscapes and material symbols that frame his diplomacy and military leadership.",
+      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M-40 40L40 -40M0 80L80 0M40 120L120 40M80 160L160 80M120 200L200 120\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><path d=\"M-20 140L20 100L60 140L100 100L140 140L180 100M-20 20L20 60L60 20L100 60L140 20L180 60\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"0\" cy=\"0\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"160\" cy=\"0\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"0\" cy=\"160\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"160\" cy=\"160\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M80 18V54M80 106V142M18 80H54M106 80H142\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /></svg>",
+      "separator_glyph_svg": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"16\" cy=\"16\" r=\"10\" fill=\"none\" stroke=\"#BFC7C9\" stroke-width=\"3\" /><rect x=\"12\" y=\"12\" width=\"8\" height=\"8\" fill=\"#BFC7C9\" /></svg>",
+      "heading_font": "Libre Baskerville",
       "body_font": "Source Serif 4"
     },
     "alvar_aalto": {
@@ -469,6 +474,26 @@
       "separator_glyph_svg": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"5\" y=\"5\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><rect x=\"12\" y=\"12\" width=\"8\" height=\"8\" fill=\"#FFFFFF\" /></svg>",
       "heading_font": "Space Grotesk",
       "body_font": "Inter"
+    },
+    "mercy_otis_warren": {
+      "primary": "#D8C7A1",
+      "secondary": "#A94F45",
+      "background": "#171513",
+      "palette_rationale": "the warm rag-paper ground and iron-gall ink with restrained red-brown bookbinding tones found in Warren's printed pamphlets, constitutional printing, and Revolutionary history",
+      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M-20 40H180M40 -20V180\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M-20 140L20 100M140 180L180 140M-20 20L20 -20M140 20L180 -20\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"0\" cy=\"0\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"160\" cy=\"0\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"0\" cy=\"160\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><circle cx=\"160\" cy=\"160\" r=\"28\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><rect x=\"58\" y=\"58\" width=\"44\" height=\"44\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><rect x=\"70\" y=\"70\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M20 80H58M102 80H140M80 20V58M80 102V140\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /></svg>",
+      "separator_glyph_svg": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"7\" y=\"7\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"#D8C7A1\" stroke-width=\"3\" /><rect x=\"12\" y=\"12\" width=\"8\" height=\"8\" fill=\"#D8C7A1\" /></svg>",
+      "heading_font": "EB Garamond",
+      "body_font": "Source Serif 4"
+    },
+    "thomas_jefferson": {
+      "primary": "#D8C49A",
+      "secondary": "#B85A42",
+      "background": "#171311",
+      "palette_rationale": "The parchment primary and red-clay secondary come from the rag paper and ink of the engrossed Declaration of Independence alongside Monticello's brick and sandstone surfaces.",
+      "background_pattern_svg": "<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"160\" height=\"160\" fill=\"#000000\" /><path d=\"M0 32H160M0 128H160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M32 0V160M128 0V160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M0 80H48M112 80H160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><path d=\"M80 0V48M80 112V160\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" /><circle cx=\"0\" cy=\"0\" r=\"38\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"160\" cy=\"0\" r=\"38\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"0\" cy=\"160\" r=\"38\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><circle cx=\"160\" cy=\"160\" r=\"38\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M48 48H112V112H48Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /><path d=\"M60 60H100V100H60Z\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2\" /><path d=\"M48 48L32 32M112 48L128 32M48 112L32 128M112 112L128 128\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" /></svg>",
+      "separator_glyph_svg": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"16\" cy=\"16\" r=\"9\" fill=\"none\" stroke=\"#D8C49A\" stroke-width=\"3\" /><rect x=\"13\" y=\"13\" width=\"6\" height=\"6\" fill=\"#D8C49A\" /></svg>",
+      "heading_font": "Libre Baskerville",
+      "body_font": "Source Serif 4"
     }
   }
 }

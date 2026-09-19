@@ -1,298 +1,406 @@
 {
   "dataset": "meta_story",
-  "created_on": "2026-07-28T05:01:36.885181+00:00",
+  "created_on": "2026-09-19T08:35:37.297023+02:00",
   "meta_story": {
     "id": "american_revolutionaries",
-    "title": "Freiheit und ihre Grenzen",
-    "tagline": "Sechs Leben inmitten einer umkämpften Revolution",
-    "description": "American revolutionaries fought an empire with armies, pamphlets, diplomatic missions, household labor, political argument, and financial improvisation. George Washington and Alexander Hamilton helped turn resistance into military victory and then into a functioning national government; Benjamin Franklin secured essential French support and helped frame the constitutional settlement. Their achievements depended as well on voices often kept beyond formal power, including Abigail Adams and Phillis Wheatley, who made the Revolution’s claims answerable to women, enslaved people, families, and public opinion.",
+    "title": "Die umstrittene Republik",
+    "tagline": "Wer Freiheit beanspruchte und wer Macht ausübte",
+    "description": "American independence emerged from more than battlefield victories. It was fought through military campaigns and frontier alliances, carried across the Atlantic by diplomats, argued in pamphlets and private letters, and tested by the difficult work of designing a government capable of surviving peace. The struggle joined people with sharply different commitments and experiences, including Patriot leaders, an enslaved poet asserting authorship and liberty, and a Mohawk leader defending his people’s political future through a British alliance.\n\nFrom resistance to imperial rule through the presidencies of the new republic, public action took many forms. Washington commanded an army; Franklin secured indispensable French support; Jefferson gave independence its most famous language; Hamilton built federal finance; and Adams, Warren, and Wheatley made political life visible in correspondence, satire, and verse. Brant’s campaigns and diplomacy reveal that the Revolution was also a devastating contest over Indigenous homelands, sovereignty, and the boundaries of the expanding United States.",
     "person_ids": [
       "abigail_adams",
       "alexander_hamilton",
       "benjamin_franklin",
       "george_washington",
       "joseph_brant",
-      "phillis_wheatley"
+      "mercy_otis_warren",
+      "phillis_wheatley",
+      "thomas_jefferson"
     ],
-    "date_range_start": "1773",
-    "date_range_end": "1796",
-    "lastUpdated": "2026-09-05T16:22:40.424236+02:00"
+    "date_range_start": "1729",
+    "date_range_end": "1805",
+    "lastUpdated": "2026-09-19T08:40:06.919912+02:00"
   },
   "generation_metadata": {
     "hints": {
       "hint": "Focus on the struggle for independence and the contested work of building the early United States; balance military command, diplomacy, political advocacy, correspondence, constitutional design, and public finance."
     },
     "model": "gpt-5.6-terra",
-    "generated_at": "2026-07-28T05:01:36.885181+00:00"
+    "generated_at": "2026-09-19T08:35:37.297023+02:00"
   },
   "subtopics": [
     {
-      "id": "military_paths_to_independence",
-      "title": "Militärische Wege zur Unabhängigkeit",
+      "id": "arms_and_allegiance",
+      "title": "Waffen und Loyalitäten",
       "person_ids": [
         "george_washington",
-        "alexander_hamilton"
-      ]
-    },
-    {
-      "id": "negotiating_nations_and_constitutions",
-      "title": "Nationen und Verfassungen im Ringen um Verständigung",
-      "person_ids": [
-        "benjamin_franklin",
         "joseph_brant"
       ]
     },
     {
-      "id": "revolutionary_voices_and_claims",
-      "title": "Revolutionäre Stimmen und Ansprüche",
+      "id": "words_that_mobilized",
+      "title": "Worte, die mobilisierten",
+      "person_ids": [
+        "mercy_otis_warren",
+        "phillis_wheatley"
+      ]
+    },
+    {
+      "id": "independence_across_the_atlantic",
+      "title": "Unabhängigkeit über den Atlantik hinweg",
+      "person_ids": [
+        "benjamin_franklin",
+        "thomas_jefferson"
+      ]
+    },
+    {
+      "id": "republic_under_construction",
+      "title": "Eine Republik im Aufbau",
       "person_ids": [
         "abigail_adams",
-        "phillis_wheatley"
+        "alexander_hamilton"
       ]
     }
   ],
   "chapters": [
     {
       "id": "imperial_crisis",
-      "title": "Krise in Wort und Tat (1773-1775)",
-      "date_start": "1773",
+      "title": "Argumente gegen das Empire (1729-1775)",
+      "date_start": "1729",
       "date_start_precision": "year",
       "date_end": "1775",
       "date_end_precision": "year",
       "person_events": [
+        {
+          "person_id": "benjamin_franklin",
+          "event_date": "1729",
+          "event_date_precision": "year",
+          "event_title": "Erwirbt The Pennsylvania Gazette",
+          "event_index": 4,
+          "theme_connection": "Benjamin Franklin und Hugh Meredith kauften die Pennsylvania Gazette dem Drucker Samuel Keimer ab. Franklin nutzte die Zeitung aus Philadelphia für Nachrichten, Satire, Essays und Forderungen nach lokalen Reformen."
+        },
+        {
+          "person_id": "benjamin_franklin",
+          "event_date": "1766",
+          "event_date_precision": "year",
+          "event_title": "Sagt gegen den Stamp Act aus",
+          "event_index": 10,
+          "theme_connection": "Franklin erklärte dem Unterhaus, dass die Kolonien das Stempelgesetz ablehnten, das Rechtsdokumente, Zeitungen und andere Druckerzeugnisse besteuerte. Das Parlament hob das Gesetz am 18. März 1766 auf."
+        },
+        {
+          "person_id": "phillis_wheatley",
+          "event_date": "1767-12-21",
+          "event_date_precision": "day",
+          "event_title": "Ihr erstes Gedicht erscheint im Druck",
+          "event_index": 3,
+          "theme_connection": "Mit etwa vierzehn Jahren erlebte Phillis Wheatley, wie ihre Elegie auf zwei auf See ums Leben gekommene Männer in Newport gedruckt wurde. Die Veröffentlichung machte koloniale Leser mit einem versklavten schwarzen Mädchen als Dichterin bekannt."
+        },
+        {
+          "person_id": "mercy_otis_warren",
+          "event_date": "1773",
+          "event_date_precision": "year",
+          "event_title": "The Adulateur erscheint",
+          "event_index": 4,
+          "theme_connection": "Mercy Otis Warren veröffentlichte anonym The Adulateur, ein satirisches Theaterstück gegen den Gouverneur von Massachusetts, Thomas Hutchinson. Die Figur Brutus stand für ihren Bruder James Otis Jr. und die Sache der Patrioten."
+        },
         {
           "person_id": "phillis_wheatley",
           "event_date": "1773-09-01",
           "event_date_precision": "day",
           "event_title": "Veröffentlicht Gedichte in London",
           "event_index": 6,
-          "theme_connection": "Poems on Various Subjects, Religious and Moral war Wheatleys wegweisende Veröffentlichung. Der Band machte die geistige Autorität einer versklavten schwarzen Frau auf beiden Seiten des Atlantiks sichtbar. Sein nachhaltiger literarischer und öffentlicher Einspruch zwang die Ideale der Revolutionszeit von Freiheit und Gleichheit, auch gegenüber Schwarzen, die von formaler politischer Macht ausgeschlossen waren, Rechenschaft abzulegen."
+          "theme_connection": "Nachdem Verleger in Boston ihr Manuskript abgelehnt hatten, veröffentlichte Wheatley mit Unterstützung der Countess of Huntingdon in London Poems on Various Subjects, Religious and Moral. Der Band enthielt eine Bestätigung führender Persönlichkeiten aus Boston, dass Wheatley die Gedichte verfasst habe."
         },
         {
-          "person_id": "george_washington",
-          "event_date": "1775-06-15",
-          "event_date_precision": "day",
-          "event_title": "Führt die Kontinentalarmee",
-          "event_index": 8,
-          "theme_connection": "Washingtons Ernennung und Amtsantritt schufen die einheitliche Führung der Kontinentalarmee, die nötig war, um den kolonialen Widerstand in einen organisierten Unabhängigkeitskrieg zu verwandeln. Sein Kommando wurde zur zentralen militärischen Institution der Revolution."
+          "person_id": "alexander_hamilton",
+          "event_date": "1774",
+          "event_date_precision": "year",
+          "event_title": "Verteidigt die Sache der Patrioten",
+          "event_index": 3,
+          "theme_connection": "Während seines Studiums am King’s College veröffentlichte Alexander Hamilton anonym A Full Vindication of the Measures of Congress und The Farmer Refuted. Die Pamphlete antworteten dem loyalistischen Geistlichen Samuel Seabury und verteidigten den Widerstand gegen die britische Herrschaft."
         },
         {
-          "person_id": "phillis_wheatley",
+          "person_id": "joseph_brant",
+          "event_date": "1775-11",
+          "event_date_precision": "month",
+          "event_title": "Fürsprache in London",
+          "event_index": 6,
+          "theme_connection": "Als sich der Krieg in New York ausbreitete, reiste Joseph Brant mit dem britischen Beamten Guy Johnson von Montreal nach London. Brant traf König George III. und den Kolonialminister George Germain und suchte britische Unterstützung für die Interessen der Mohawk."
+        },
+        {
+          "person_id": "mercy_otis_warren",
           "event_date": "1775",
           "event_date_precision": "year",
-          "event_title": "Schickt Washington ein Gedicht",
-          "event_index": 9,
-          "theme_connection": "Wheatleys Gedicht „To His Excellency, George Washington“, das anschließend im Druck verbreitet wurde, verlieh der Sache der Patrioten die eindringliche literarische Stimme einer schwarzen Frau. Die Anrede an den Oberbefehlshaber machte revolutionäre Ideale und öffentlichen Patriotismus gegenüber einer in Afrika geborenen, versklavten Dichterin rechenschaftspflichtig."
+          "event_title": "The Group erscheint",
+          "event_index": 5,
+          "theme_connection": "Als die Kämpfe begannen, veröffentlichte Warren anonym The Group. Die Satire entwarf einen König, der die Verfassung von Massachusetts außer Kraft setzte, und griff Beamte an, die die königliche Autorität stützten."
         }
       ],
       "historical_context": [
         {
-          "id": "intolerable_acts",
-          "title": "Die Intolerable Acts",
-          "description": "Die Strafmaßnahmen des Parlaments gegen Massachusetts führten dazu, dass sich George Washington als Delegierter Virginias im Ersten Kontinentalkongress dem kolonienübergreifenden Widerstand anschloss.",
-          "date_start": "1774-03",
-          "date_start_precision": "month",
-          "date_end": "1774-06",
-          "date_end_precision": "month",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Intolerable_Acts",
-          "priority": 2
+          "id": "coercive_acts",
+          "title": "Die Zwangsgesetze",
+          "description": "Das britische Parlament verabschiedete 1774 Strafgesetze, die nach der Boston Tea Party den Hafen von Boston schlossen und die Selbstverwaltung von Massachusetts einschränkten. Die Maßnahmen führten Washington in den Ersten Kontinentalkongress und verschärften den Widerstand in Massachusetts, für den Mercy Otis Warren publizistisch eintrat.",
+          "date_start": "1774-03-31",
+          "date_start_precision": "day",
+          "date_end": "1774-06-22",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Coercive_Acts",
+          "priority": 3
         }
       ],
-      "lead_in": "Als der Widerstand in einen Krieg überging, verschaffte sich Wheatley mit ihrer Dichtung öffentliche Geltung, während Washington das Kommando über eine Kontinentalarmee übernahm. Das revolutionäre Handeln begann zugleich in der Sprache und mit Waffengewalt."
+      "lead_in": "Drucker, Dichter, Dramatiker und Pamphletisten trugen den Widerstand ins öffentliche Leben. Ihre Appelle legten zugleich die widerstreitenden Vorstellungen von Freiheit im Britischen Empire offen."
     },
     {
       "id": "war_for_independence",
-      "title": "Krieg und revolutionäre Ansprüche (1776-1781)",
+      "title": "Unabhängigkeit im Krieg (1776-1783)",
       "date_start": "1776",
       "date_start_precision": "year",
-      "date_end": "1781",
+      "date_end": "1783",
       "date_end_precision": "year",
       "person_events": [
         {
           "person_id": "abigail_adams",
           "event_date": "1776-03-31",
           "event_date_precision": "day",
-          "event_title": "Fordert Anerkennung der Frauen",
-          "event_index": 7,
-          "theme_connection": "In ihrem Brief „Remember the Ladies“ machte Adams den politischen Status der Frauen zu einer ausdrücklichen Herausforderung an die Gesetzgebung der neuen Republik. Dieser nachhaltige Vorstoß ist eine wegweisende Formulierung der Kluft zwischen revolutionärer Freiheit und dem Ausschluss der Frauen von formaler Macht."
+          "event_title": "Fordert Rechte für Frauen",
+          "event_index": 5,
+          "theme_connection": "Abigail Adams schrieb von Braintree an John Adams in Philadelphia und forderte die Gesetzgeber auf, bei neuen Gesetzen „an die Frauen zu denken“. Sie warnte davor, Ehemännern unbegrenzte rechtliche Macht zu geben."
         },
         {
           "person_id": "benjamin_franklin",
-          "event_date": "1776-10",
-          "event_date_precision": "month",
-          "event_title": "Gewinnt Frankreichs Hilfe für die Unabhängigkeit",
-          "event_index": 12,
-          "theme_connection": "Franklins Diplomatie trug dazu bei, die materielle Unterstützung Frankreichs und das Bündnis von 1778 zu sichern – ohne beides wäre die amerikanische Unabhängigkeit weit weniger erreichbar gewesen. Außerdem half er, den Frieden von 1783 auszuhandeln. Diese Vereinbarungen waren dauerhafte diplomatische Instrumente: Sie machten aus dem Krieg einen internationalen Konflikt und sicherten die Unabhängigkeit der Vereinigten Staaten."
+          "event_date": "1776-07-04",
+          "event_date_precision": "day",
+          "event_title": "Hilft bei der Unabhängigkeitserklärung",
+          "event_index": 11,
+          "theme_connection": "Franklin gehörte mit Thomas Jefferson, John Adams, Roger Sherman und Robert Livingston dem Ausschuss an, der die Unabhängigkeitserklärung vorbereitete. Der Kontinentalkongress überarbeitete den Text des Ausschusses vor seiner Annahme."
         },
         {
           "person_id": "george_washington",
           "event_date": "1776-12-26",
           "event_date_precision": "day",
-          "event_title": "Siegt bei Trenton und Princeton",
-          "event_index": 9,
-          "theme_connection": "Washingtons Siege bei Trenton und Princeton belebten die Sache der Kontinentalarmee nach ihrem Rückzug durch New Jersey neu und bewahrten Moral, Einberufungen und Vertrauen in die Armee. Sie waren entscheidende Erfolge auf dem Schlachtfeld auf dem Weg zur Unabhängigkeit."
+          "event_title": "Schlag bei Trenton",
+          "event_index": 8,
+          "theme_connection": "George Washington führte Kontinentalsoldaten über den eisbedeckten Delaware River und griff die hessische Garnison in Trenton an. Die Amerikaner nahmen die Garnison gefangen und festigten ihre Stellung in New Jersey."
         },
         {
-          "person_id": "alexander_hamilton",
-          "event_date": "1781-10-14",
+          "person_id": "thomas_jefferson",
+          "event_date": "1776-07-04",
           "event_date_precision": "day",
-          "event_title": "Sturm auf Redoute bei Yorktown",
+          "event_title": "Entwurf der Unabhängigkeitserklärung",
+          "event_index": 4,
+          "theme_connection": "Thomas Jefferson verfasste die Unabhängigkeitserklärung in Philadelphia für den fünfköpfigen Ausschuss. Der Kontinentalkongress überarbeitete seinen Text und nahm ihn am 4. Juli 1776 an."
+        },
+        {
+          "person_id": "joseph_brant",
+          "event_date": "1777-08-06",
+          "event_date_precision": "day",
+          "event_title": "Kampf bei Oriskany",
           "event_index": 7,
-          "theme_connection": "Hamiltons Führung beim Angriff auf Schanze Nr. 10 war eine entscheidende Operation während der Belagerung von Yorktown. Sie trug dazu bei, die Einkreisung zu schließen, die Cornwallis zur Kapitulation zwang. Sie ist ein herausragendes Beispiel für den militärischen Weg, auf dem die Unabhängigkeit errungen wurde."
+          "theme_connection": "Joseph Brant führte rund 400 Mohawk und andere indigene Verbündete gemeinsam mit britischen Rangern bei einem Hinterhalt nahe Oriska, New York. Sie griffen Milizionäre der Patrioten und Oneida-Krieger an, die Fort Stanwix entsetzen wollten."
+        },
+        {
+          "person_id": "benjamin_franklin",
+          "event_date": "1778-02-06",
+          "event_date_precision": "day",
+          "event_title": "Unterzeichnet die französischen Bündnisverträge",
+          "event_index": 12,
+          "theme_connection": "Franklin, Arthur Lee und Silas Deane unterzeichneten in Paris zwei Verträge mit Frankreich. Einer regelte den Handel, der andere verpflichtete Frankreich zur militärischen Zusammenarbeit gegen Großbritannien."
         },
         {
           "person_id": "george_washington",
-          "event_date": "1781-09-28",
+          "event_date": "1781-10-19",
           "event_date_precision": "day",
-          "event_title": "Siegt bei Yorktown, legt Kommando nieder",
+          "event_title": "Sieg bei Yorktown",
           "event_index": 10,
-          "theme_connection": "Washingtons Führung bei Yorktown brachte den entscheidenden Sieg des Krieges über Cornwallis. Sein späterer Rücktritt vom Kommando begründete zugleich ein machtvolles republikanisches Vorbild für den Vorrang der Zivilgewalt vor dem Militär. Zusammengenommen markieren diese Handlungen sowohl den errungenen Sieg als auch den Charakter der neuen Republik, der umkämpft und bestimmt wurde."
+          "theme_connection": "Amerikanische und französische Truppen unter Washington und dem Comte de Rochambeau schlossen die britische Armee bei Yorktown ein. Französische Kriegsschiffe unter dem Comte de Grasse versperrten den Briten den Fluchtweg durch die Chesapeake Bay."
+        },
+        {
+          "person_id": "benjamin_franklin",
+          "event_date": "1783-09-03",
+          "event_date_precision": "day",
+          "event_title": "Unterzeichnet den Vertrag von Paris",
+          "event_index": 13,
+          "theme_connection": "Franklin unterzeichnete mit John Adams und John Jay den Pariser Frieden. Großbritannien erkannte die Unabhängigkeit der Vereinigten Staaten an und beendete den Unabhängigkeitskrieg formell."
+        },
+        {
+          "person_id": "george_washington",
+          "event_date": "1783-12-23",
+          "event_date_precision": "day",
+          "event_title": "Legt sein Kommando nieder",
+          "event_index": 11,
+          "theme_connection": "Washington legte vor dem Kontinentalkongress in Annapolis sein Amt als Oberbefehlshaber nieder. Er gab die militärische Gewalt an zivile Vertreter zurück und kehrte nach Mount Vernon heim."
         }
       ],
       "historical_context": [
         {
-          "id": "declaration_of_independence",
-          "title": "Unabhängigkeitserklärung",
-          "description": "Die Erklärung machte Franklin zum Unterzeichner der Unabhängigkeit, gab Washingtons Armee eine nationale Sache und schärfte die revolutionären Argumente in Abigail Adams’ Briefwechsel und Wheatleys Dichtung.",
-          "date_start": "1776-07-04",
+          "id": "valley_forge",
+          "title": "Valley Forge",
+          "description": "Washingtons Kontinentalarmee bezog den Winter 1777/78 in Valley Forge, Pennsylvania, ihr Lager. Während sie ausgebildet wurde, litt sie unter schwerem Mangel, Krankheiten und Kälte. Washington befehligte dort die kämpfende Armee, und Hamilton diente ihm als Adjutant, der wichtige militärische Korrespondenz und Verwaltungsaufgaben übernahm.",
+          "date_start": "1777-12-19",
           "date_start_precision": "day",
-          "date_end": null,
-          "date_end_precision": null,
-          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence",
+          "date_end": "1778-06-19",
+          "date_end_precision": "day",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Valley_Forge",
           "priority": 3
+        },
+        {
+          "id": "sullivan_expedition",
+          "title": "Sullivan-Expedition",
+          "description": "1779 drangen Kontinentaltruppen unter John Sullivan in das Gebiet der Haudenosaunee ein und verbrannten Dörfer und Lebensmittelvorräte. Damit wollten sie indigene Nationen vernichten, die mit Großbritannien verbündet waren. Der Feldzug vertrieb irokesische Gemeinschaften und verschärfte den Grenzkrieg, in dem Joseph Brant Mohawk und weitere mit Großbritannien verbündete Kräfte befehligte.",
+          "date_start": "1779-05",
+          "date_start_precision": "month",
+          "date_end": "1779-10",
+          "date_end_precision": "month",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sullivan_Expedition",
+          "priority": 2
         }
       ],
-      "lead_in": "Diplomatie und Siege auf dem Schlachtfeld hielten die Unabhängigkeit in Reichweite, während Adams die politischen Ausschlüsse anprangerte, die in die revolutionäre Gesetzgebung eingeschrieben waren. Yorktown brachte den militärischen Erfolg und bereitete Washingtons republikanisch geprägten Rücktritt vom Kommando vor."
+      "lead_in": "Erklärungen und Briefe bestimmten die Sache, während Armeen um ihr Überleben kämpften. Bündnisse mit indigenen Nationen und das Eingreifen europäischer Mächte weiteten den Konflikt über einen Krieg zwischen Großbritannien und seinen Kolonien hinaus aus."
     },
     {
       "id": "peace_and_constitution",
-      "title": "Eine Verfassung gewinnt Gestalt (1784-1789)",
+      "title": "Grundlagen der Republik (1784-1790)",
       "date_start": "1784",
       "date_start_precision": "year",
-      "date_end": "1789",
+      "date_end": "1790",
       "date_end_precision": "year",
       "person_events": [
         {
           "person_id": "joseph_brant",
           "event_date": "1784-10-25",
           "event_date_precision": "day",
-          "event_title": "Ansiedlung am Grand River",
-          "event_index": 10,
-          "theme_connection": "Brants Führung bei der Gründung der Gemeinschaft der Six Nations am Grand River schuf nach der Vertreibung infolge der Revolution eine dauerhafte politische Heimat der Haudenosaunee. Sie veranschaulicht konkret indigene Nationsbildung und den Streit um Souveränität und Land, der die neue Republik begleitete."
+          "event_title": "Umsiedlung an den Grand River",
+          "event_index": 11,
+          "theme_connection": "Eine Proklamation des Gouverneurs Frederick Haldimand gewährte Mohawk und anderen verbündeten Haudenosaunee Land am Grand River im heutigen Ontario. Brant führte Familien aus früheren Siedlungen in New York dorthin."
+        },
+        {
+          "person_id": "joseph_brant",
+          "event_date": "1785",
+          "event_date_precision": "year",
+          "event_title": "Rückkehr nach London",
+          "event_index": 12,
+          "theme_connection": "Brant kehrte im Namen der Haudenosaunee-Gemeinschaften am Grand River nach London zurück. Er drängte britische Minister, ihren Landbesitz rechtlich abzusichern und ihre Kriegsverluste zu entschädigen."
         },
         {
           "person_id": "alexander_hamilton",
-          "event_date": "1786-09-11",
-          "event_date_precision": "day",
-          "event_title": "Fordert Verfassungskonvent",
-          "event_index": 9,
-          "theme_connection": "Hamilton verfasste den Bericht des Annapolis-Konvents, der zu einem umfassenderen Konvent aufrief – der entscheidende Verfahrensschritt, der 1787 nach Philadelphia führte. Dieser konkrete politische Vorstoß machte die Ablösung der scheiternden Struktur der Konföderation möglich."
-        },
-        {
-          "person_id": "alexander_hamilton",
-          "event_date": "1787-05",
+          "event_date": "1787-10",
           "event_date_precision": "month",
-          "event_title": "Plädiert für die Verfassung",
-          "event_index": 10,
-          "theme_connection": "Hamiltons Argumente für eine tatkräftige nationale Regierung und seine maßgebliche Autorschaft der Federalist-Essays lieferten eine dauerhafte intellektuelle Verteidigung der Verfassung. Die Essays sind bis heute ein grundlegendes Zeugnis der Ratifizierung und Verfassungsauslegung der Republik."
-        },
-        {
-          "person_id": "benjamin_franklin",
-          "event_date": "1787-09-17",
-          "event_date_precision": "day",
-          "event_title": "Unterzeichnet die neue Verfassung der Vereinigten Staaten",
-          "event_index": 14,
-          "theme_connection": "Franklins Unterstützung für den Kompromiss und seine Unterschrift trugen in einem kritischen Augenblick dazu bei, die fertige Verfassung zu legitimieren. Sein Eingreifen verkörperte die Suche nach einem Ausgleich, die nötig war, um revolutionäre Unabhängigkeit in eine funktionsfähige Verfassungsrepublik zu überführen."
+          "event_title": "Schreibt The Federalist",
+          "event_index": 9,
+          "theme_connection": "Hamilton begann gemeinsam mit James Madison und John Jay unter dem gemeinsamen Namen Publius The Federalist zu schreiben. Ihre Essays entgegneten während des Ratifizierungswahlkampfs den Einwänden gegen die vorgeschlagene Verfassung."
         },
         {
           "person_id": "george_washington",
           "event_date": "1787-05-25",
           "event_date_precision": "day",
-          "event_title": "Führt den Verfassungskonvent",
-          "event_index": 11,
-          "theme_connection": "Als einstimmig gewählter Vorsitzender verlieh Washington dem Verfassungskonvent unverzichtbare Autorität und Ordnung, während dieser die vorgeschlagene Verfassung ausarbeitete. Seine Führung war entscheidend, um das gescheiterte System der Articles of Confederation in eine neue nationale Regierungsordnung zu verwandeln."
+          "event_title": "Leitet den Konvent in Philadelphia",
+          "event_index": 12,
+          "theme_connection": "Die Delegierten wählten Washington zum Vorsitzenden des Verfassungskonvents in Philadelphia. Sie waren zusammengekommen, um die Konföderationsartikel zu überarbeiten, und erarbeiteten eine neue Verfassung."
+        },
+        {
+          "person_id": "mercy_otis_warren",
+          "event_date": "1788",
+          "event_date_precision": "year",
+          "event_title": "Gegen die Ratifizierung",
+          "event_index": 7,
+          "theme_connection": "Warren veröffentlichte Observations on the New Constitution unter dem Namen A Columbian Patriot. Sie wandte sich gegen die Ratifizierung und forderte eine Bill of Rights zum Schutz individueller Freiheiten."
         },
         {
           "person_id": "alexander_hamilton",
-          "event_date": "1789-09-11",
-          "event_date_precision": "day",
-          "event_title": "Leitet das Finanzministerium",
+          "event_date": "1790-01",
+          "event_date_precision": "month",
+          "event_title": "Finanziert die Staatsschulden",
           "event_index": 11,
-          "theme_connection": "Als erster Finanzminister organisierte Hamilton eine nationale Finanzverwaltung und setzte sich für die Übernahme der Schulden durch den Bund sowie für zollbasierte Einnahmen ein. Dieses grundlegende institutionelle System machte die neue Verfassungsregierung finanziell tragfähig und politisch wirksam."
-        },
-        {
-          "person_id": "george_washington",
-          "event_date": "1789-04-30",
-          "event_date_precision": "day",
-          "event_title": "Wird erster Präsident",
-          "event_index": 12,
-          "theme_connection": "Washingtons Amtsantritt als erster Präsident setzte den neuen Exekutivzweig der Verfassung in Gang. Die Einrichtung dieses Amtes unter einem Führer, der sein militärisches Kommando niedergelegt hatte, war ein unersetzlicher Meilenstein bei der Schaffung der Republik."
+          "theme_connection": "Als Finanzminister legte Hamilton dem Kongress den Report on Public Credit vor. Er schlug vor, dass der Bund die Staatsschulden zurückzahlt und die Kriegsschulden der Einzelstaaten übernimmt. James Madison und Thomas Jefferson widersprachen ihm."
         }
       ],
       "historical_context": [
         {
+          "id": "fort_stanwix_treaty",
+          "title": "Vertrag von Fort Stanwix",
+          "description": "Beauftragte der Vereinigten Staaten setzten 1784 mehrere irokesische Vertreter unter Druck, einen Vertrag mit weitreichenden Landabtretungen nach dem Krieg zu schließen. Joseph Brant wies dessen Umgang mit der Souveränität der Haudenosaunee zurück. Der Verlust anerkannten Landes verstärkte seine Bemühungen, den Mohawk am Grand River und in London Land und politische Unterstützung zu sichern.",
+          "date_start": "1784-10-22",
+          "date_start_precision": "day",
+          "date_end": null,
+          "date_end_precision": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Treaty_of_Fort_Stanwix_(1784)",
+          "priority": 2
+        },
+        {
           "id": "shays_rebellion",
           "title": "Shays’ Rebellion",
-          "description": "Der Aufstand alarmierte Washington und Hamilton und wurde zu einem gewichtigen Argument für das stärkere föderale System, das sie auf dem Verfassungskonvent anstrebten.",
+          "description": "Verschuldete Farmer aus Massachusetts unter Daniel Shays schlossen gewaltsam Gerichte und versuchten, ein Bundesarsenal einzunehmen, bevor Miliztruppen des Bundesstaates sie zerstreuten. Der Aufstand beunruhigte Washington und Hamilton und lieferte ihnen ein starkes praktisches Argument für das stärkere Bundessystem, das sie anstrebten.",
           "date_start": "1786-08",
           "date_start_precision": "month",
-          "date_end": "1787-06",
+          "date_end": "1787-02",
           "date_end_precision": "month",
           "wikipedia_url": "https://en.wikipedia.org/wiki/Shays%27_Rebellion",
           "priority": 3
         }
       ],
-      "lead_in": "Der Frieden eröffnete konkurrierende Projekte des politischen Wiederaufbaus: Brant half, eine Haudenosaunee-Heimat zu begründen, während Hamilton, Franklin und Washington die Konföderation durch eine stärkere Bundesregierung ersetzten. Nun musste die Verfassung zu einem handlungsfähigen Staat werden."
+      "lead_in": "Der Frieden hinterließ Schulden, vertriebene Gemeinschaften und eine schwache nationale Regierung. In der Verfassungsdebatte wurden einstige Verbündete zu Gegnern, als es um die Verteilung politischer Macht ging."
     },
     {
-      "id": "testing_the_republic",
-      "title": "Die föderale Macht auf dem Prüfstand (1794-1796)",
-      "date_start": "1794",
+      "id": "governing_the_new_union",
+      "title": "Macht in der Praxis (1796-1805)",
+      "date_start": "1796",
       "date_start_precision": "year",
-      "date_end": "1796",
+      "date_end": "1805",
       "date_end_precision": "year",
       "person_events": [
         {
           "person_id": "george_washington",
-          "event_date": "1794-08",
-          "event_date_precision": "month",
-          "event_title": "Schlägt die Whiskey-Rebellion nieder",
-          "event_index": 13,
-          "theme_connection": "Washingtons Mobilisierung gegen die Whiskey-Rebellion stellte klar, dass die Bundesregierung demokratisch beschlossene Gesetze auch gegen bewaffneten inneren Widerstand durchsetzen konnte. Sie war eine prägende frühe Prüfung der praktischen Autorität der Verfassung und der Grenzen republikanischen Widerspruchs."
-        },
-        {
-          "person_id": "george_washington",
           "event_date": "1796-09-19",
           "event_date_precision": "day",
-          "event_title": "Veröffentlicht seine Abschiedsrede",
-          "event_index": 14,
-          "theme_connection": "Washingtons weithin verbreitete Abschiedsrede formulierte dauerhaft gültige republikanische Grundsätze: Sie rief zur nationalen Einheit auf und warnte vor Parteienstreit und dauerhaften Verwicklungen in auswärtige Konflikte. Sein freiwilliger Verzicht auf eine dritte Amtszeit begründete zudem ein grundlegendes republikanisches Vorbild für die friedliche Begrenzung exekutiver Macht."
+          "event_title": "Veröffentlicht die Abschiedsrede",
+          "event_index": 15,
+          "theme_connection": "Gegen Ende seiner zweiten Amtszeit veröffentlichte Washington in Philadelphia seine Abschiedsrede und erklärte, dass er keine dritte Amtszeit anstreben werde. Mit Hamiltons Hilfe überarbeitete er einen früheren Entwurf von James Madison."
+        },
+        {
+          "person_id": "alexander_hamilton",
+          "event_date": "1797-08-25",
+          "event_date_precision": "day",
+          "event_title": "Veröffentlicht die Reynolds Pamphlet",
+          "event_index": 13,
+          "theme_connection": "Hamilton veröffentlichte nach Vorwürfen, seine Zahlungen an den Ehemann von Maria Reynolds hätten mit öffentlicher Korruption zu tun, einen ausführlichen Bericht über seine Affäre mit ihr. Das Reynolds-Pamphlet machte sein Privatleben zum Gegenstand einer landesweiten politischen Öffentlichkeit."
+        },
+        {
+          "person_id": "thomas_jefferson",
+          "event_date": "1803-04-30",
+          "event_date_precision": "day",
+          "event_title": "Louisiana Purchase mit Frankreich",
+          "event_index": 11,
+          "theme_connection": "Die amerikanischen Gesandten Robert Livingston und James Monroe unterzeichneten in Paris mit Frankreich den Vertrag über den Louisiana-Kauf. Auf Jeffersons Weisung hin erwarben sie New Orleans und das Louisiana-Territorium für 15 Millionen Dollar."
+        },
+        {
+          "person_id": "mercy_otis_warren",
+          "event_date": "1805",
+          "event_date_precision": "year",
+          "event_title": "Revolutionsgeschichte erscheint",
+          "event_index": 10,
+          "theme_connection": "Warren veröffentlichte ihre dreibändige History of the Rise, Progress, and Termination of the American Revolution. Krankheit, Zeiten der Erblindung und der Tod dreier Söhne hatten die Arbeit verzögert. Jefferson bestellte Exemplare für sich und sein Kabinett."
         }
       ],
       "historical_context": [
         {
-          "id": "jay_treaty",
-          "title": "Jay-Vertrag",
-          "description": "Washingtons umstrittene Vereinbarung mit Großbritannien stützte sich auf Hamiltons privaten Rat und seine öffentliche Verteidigung und verschärfte damit die politischen Gegensätze, denen sich die neue Regierung gegenübersah.",
-          "date_start": "1794-11-19",
+          "id": "haitian_revolution",
+          "title": "Haitianische Revolution",
+          "description": "Versklavte Menschen in der französischen Kolonie Saint-Domingue begannen 1791 eine Revolution, besiegten französische Truppen und schufen 1804 das unabhängige Haiti. Frankreichs gescheiterter Versuch, seine Karibikkolonie zurückzugewinnen, bewog Napoleon mit dazu, Louisiana zu verkaufen. Das ermöglichte Jeffersons Kauf und veränderte die Größe der Republik, die er regierte.",
+          "date_start": "1791-08-22",
           "date_start_precision": "day",
-          "date_end": "1795-06-24",
+          "date_end": "1804-01-01",
           "date_end_precision": "day",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Jay_Treaty",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Haitian_Revolution",
           "priority": 2
         }
       ],
-      "lead_in": "Die neue Regierung behauptete ihre Autorität gegen bewaffneten Widerstand, während sich die politischen Gegensätze in Fragen der Bundes- und Außenpolitik vertieften. Washingtons Abschiedsrede verband Warnungen vor den Parteien mit dem freiwilligen Verzicht auf Macht."
+      "lead_in": "Nationale Autorität wirkte bald durch öffentliche Finanzen, parteipolitische Presse, Diplomatie und territoriale Expansion. Politische Führungspersönlichkeiten begannen auch, ihre eigenen Darstellungen der Republik und ihrer Ursprünge zu schreiben."
     }
   ],
   "conclusion": [
     {
       "type": "paragraph",
-      "text": "Bis 1796 war die Unabhängigkeit gesichert, und die Regierung der Verfassung verfügte über Führungspersönlichkeiten, Finanzen und die Fähigkeit, ihre Gesetze durchzusetzen. Washingtons Rückzug bekräftigte eine friedliche Begrenzung exekutiver Macht, selbst während seine Warnung vor Parteien die Gegensätze widerspiegelte, die im Streit zwischen Hamilton und seinen Gegnern bereits sichtbar waren."
-    },
-    {
-      "type": "paragraph",
-      "text": "Doch der institutionelle Erfolg der Nation löste die tiefsten Ansprüche der Revolution nicht ein. Wheatleys Autorschaft, Adams’ politisches Argument und Brants Arbeit an der Errichtung einer Haudenosaunee-Heimat markierten allesamt Grenzen, die die formale Republik nicht beseitigt hatte. Die Unabhängigkeit schuf eine Regierung; sie machte die Freiheit weder gleich noch unumstritten."
+      "text": "John Adams wies Abigail Adams’ Vorschlag eines „außerordentlichen Gesetzbuchs“ zurück. Die Republik wuchs weit über die Kolonien hinaus und verlagerte größere Autorität auf eine Bundesregierung. Frauen blieben von formaler politischer Macht ausgeschlossen, die Sklaverei bestand fort, und Gemeinschaften der Haudenosaunee waren Vertreibung ausgesetzt. Die Bitte aus Braintree blieb durch die politische Ordnung, die diese miteinander verbundenen Leben gestalteten und umkämpften, unbeantwortet."
     }
   ],
   "social_network": {
@@ -303,8 +411,8 @@
         "type": "main",
         "portrait": "/portraits/abigail_adams_thumbnail.webp",
         "roles": [
-          "writer",
-          "political advisor"
+          "political advisor",
+          "writer"
         ],
         "birth_year": 1744
       },
@@ -325,7 +433,7 @@
         "type": "main",
         "portrait": "/portraits/benjamin_franklin_thumbnail.webp",
         "roles": [
-          "statesman",
+          "writer",
           "inventor"
         ],
         "birth_year": 1706
@@ -336,8 +444,8 @@
         "type": "main",
         "portrait": "/portraits/george_washington_thumbnail.webp",
         "roles": [
-          "soldier",
-          "politician"
+          "military officer",
+          "planter"
         ],
         "birth_year": 1732
       },
@@ -348,9 +456,20 @@
         "portrait": "/portraits/joseph_brant_thumbnail.webp",
         "roles": [
           "military leader",
-          "politician"
+          "diplomat"
         ],
         "birth_year": 1743
+      },
+      {
+        "id": "mercy_otis_warren",
+        "name": "Mercy Otis Warren",
+        "type": "main",
+        "portrait": "/portraits/mercy_otis_warren_thumbnail.webp",
+        "roles": [
+          "writer",
+          "playwright"
+        ],
+        "birth_year": 1728
       },
       {
         "id": "phillis_wheatley",
@@ -364,12 +483,15 @@
         "birth_year": 1753
       },
       {
-        "id": "sec:thomas_jefferson",
+        "id": "thomas_jefferson",
         "name": "Thomas Jefferson",
-        "type": "secondary",
-        "portrait": null,
-        "roles": [],
-        "birth_year": null
+        "type": "main",
+        "portrait": "/portraits/thomas_jefferson_thumbnail.webp",
+        "roles": [
+          "politician",
+          "writer"
+        ],
+        "birth_year": 1743
       },
       {
         "id": "sec:john_adams",
@@ -380,16 +502,24 @@
         "birth_year": null
       },
       {
-        "id": "sec:marquis_de_lafayette",
-        "name": "Marquis de Lafayette",
+        "id": "sec:james_madison",
+        "name": "James Madison",
         "type": "secondary",
         "portrait": null,
         "roles": [],
         "birth_year": null
       },
       {
-        "id": "sec:william_smith",
-        "name": "William Smith",
+        "id": "sec:aaron_burr",
+        "name": "Aaron Burr",
+        "type": "secondary",
+        "portrait": null,
+        "roles": [],
+        "birth_year": null
+      },
+      {
+        "id": "sec:mary_jefferson_eppes",
+        "name": "Mary Jefferson Eppes",
         "type": "secondary",
         "portrait": null,
         "roles": [],
@@ -398,14 +528,6 @@
       {
         "id": "sec:john_jay",
         "name": "John Jay",
-        "type": "secondary",
-        "portrait": null,
-        "roles": [],
-        "birth_year": null
-      },
-      {
-        "id": "sec:james_madison",
-        "name": "James Madison",
         "type": "secondary",
         "portrait": null,
         "roles": [],
@@ -422,118 +544,198 @@
     ],
     "links": [
       {
-        "source": "alexander_hamilton",
-        "target": "george_washington",
+        "source": "abigail_adams",
+        "target": "mercy_otis_warren",
         "kind": "main",
-        "relationship_type": "professional/commander",
-        "relationship_description": "Continental Army commander-in-chief who selected Hamilton as an aide-de-camp in 1777 and later appointed him secretary of the treasury. Their relationship combined close professional trust, intermittent tension, and lasting political influence.",
+        "relationship_type": "social/friend",
+        "relationship_description": "Warren and Abigail Adams were close friends and regular correspondents. Abigail encouraged Warren to continue her political satire when Warren questioned whether such writing suited a woman.",
         "strength": "strong",
         "endpoints": {
-          "alexander_hamilton": {
-            "relationship_type": "professional/commander",
-            "relationship_description": "Continental Army commander-in-chief who selected Hamilton as an aide-de-camp in 1777 and later appointed him secretary of the treasury. Their relationship combined close professional trust, intermittent tension, and lasting political influence.",
-            "strength": "strong"
-          },
-          "george_washington": {
-            "relationship_type": "professional/advisor",
-            "relationship_description": "Hamilton served as Washington's aide-de-camp during the Revolutionary War and became his first secretary of the treasury. He was a key architect of Washington administration policy and helped draft the 1796 Farewell Address.",
-            "strength": "strong"
-          }
-        }
-      },
-      {
-        "source": "benjamin_franklin",
-        "target": "george_washington",
-        "kind": "main",
-        "relationship_type": "professional/collaborator",
-        "relationship_description": "Franklin proposed reforms that Washington adopted for the Continental Army and nominated Washington to preside over the Constitutional Convention, which Washington chaired.",
-        "strength": "moderate",
-        "endpoints": {
-          "benjamin_franklin": {
-            "relationship_type": "professional/collaborator",
-            "relationship_description": "Franklin proposed reforms that Washington adopted for the Continental Army and nominated Washington to preside over the Constitutional Convention, which Washington chaired.",
+          "abigail_adams": {
+            "relationship_type": "social/correspondent",
+            "relationship_description": "Abigail Adams and Mercy Otis Warren belonged to a circle of Revolutionary-era women who corresponded about politics, writing, and public affairs.",
             "strength": "moderate"
           },
-          "george_washington": {
-            "relationship_type": "professional/collaborator",
-            "relationship_description": "Franklin proposed reforms that Washington adopted for the Continental Army and nominated Washington to preside over the Constitutional Convention, which Washington chaired.",
-            "strength": "moderate"
-          }
-        },
-        "origin": "reviewed"
-      },
-      {
-        "source": "george_washington",
-        "target": "phillis_wheatley",
-        "kind": "main",
-        "relationship_type": "artistic/correspondent",
-        "relationship_description": "Continental Army commander to whom Wheatley sent her 1775 poem To His Excellency, George Washington; he praised her poetic talent and invited her to visit his Cambridge headquarters.",
-        "strength": "moderate",
-        "endpoints": {
-          "phillis_wheatley": {
-            "relationship_type": "artistic/correspondent",
-            "relationship_description": "Continental Army commander to whom Wheatley sent her 1775 poem To His Excellency, George Washington; he praised her poetic talent and invited her to visit his Cambridge headquarters.",
-            "strength": "moderate"
+          "mercy_otis_warren": {
+            "relationship_type": "social/friend",
+            "relationship_description": "Warren and Abigail Adams were close friends and regular correspondents. Abigail encouraged Warren to continue her political satire when Warren questioned whether such writing suited a woman.",
+            "strength": "strong"
           }
         }
       },
       {
         "source": "abigail_adams",
-        "target": "sec:thomas_jefferson",
-        "kind": "secondary",
-        "relationship_type": "professional/correspondent",
-        "relationship_description": "A major political contemporary whose relationship with Abigail was shaped by family losses and the later reconciliation between John Adams and Jefferson.",
+        "target": "thomas_jefferson",
+        "kind": "main",
+        "relationship_type": "social/correspondent",
+        "relationship_description": "Abigail Adams temporarily cared for Jefferson's daughter Mary in London in 1785 and later renewed correspondence with Jefferson after Mary's death.",
         "strength": "moderate",
         "endpoints": {
           "abigail_adams": {
-            "relationship_type": "professional/correspondent",
-            "relationship_description": "A major political contemporary whose relationship with Abigail was shaped by family losses and the later reconciliation between John Adams and Jefferson.",
+            "relationship_type": "social/correspondent",
+            "relationship_description": "Abigail Adams temporarily cared for Jefferson's daughter Mary in London in 1785 and later renewed correspondence with Jefferson after Mary's death.",
             "strength": "moderate"
-          }
-        }
-      },
-      {
-        "source": "alexander_hamilton",
-        "target": "sec:thomas_jefferson",
-        "kind": "secondary",
-        "relationship_type": "professional/political_rival",
-        "relationship_description": "As Washington's treasury secretary and secretary of state, Hamilton and Jefferson led opposing camps in the administration and fought over federal finance, federal power, and foreign policy.",
-        "strength": "strong",
-        "endpoints": {
-          "alexander_hamilton": {
-            "relationship_type": "professional/political_rival",
-            "relationship_description": "As Washington's treasury secretary and secretary of state, Hamilton and Jefferson led opposing camps in the administration and fought over federal finance, federal power, and foreign policy.",
-            "strength": "strong"
+          },
+          "thomas_jefferson": {
+            "relationship_type": "social/correspondent",
+            "relationship_description": "Abigail Adams temporarily cared for Jefferson's daughter Mary in London in 1785 and later renewed correspondence with Jefferson after Mary's death.",
+            "strength": "moderate"
           }
         },
         "origin": "reviewed"
       },
       {
+        "source": "alexander_hamilton",
+        "target": "george_washington",
+        "kind": "main",
+        "relationship_type": "political/advisor",
+        "relationship_description": "Hamilton served on Washington's wartime staff as an aide-de-camp and became secretary of the treasury in Washington's cabinet from 1789 to 1795. Washington relied on his advice in major constitutional, fiscal, and foreign-policy controversies.",
+        "strength": "strong",
+        "endpoints": {
+          "alexander_hamilton": {
+            "relationship_type": "professional/superior",
+            "relationship_description": "Washington brought Hamilton onto his headquarters staff in 1777 and relied on him for military correspondence and planning. He later chose Hamilton as the first secretary of the Treasury.",
+            "strength": "strong"
+          },
+          "george_washington": {
+            "relationship_type": "political/advisor",
+            "relationship_description": "Hamilton served on Washington's wartime staff as an aide-de-camp and became secretary of the treasury in Washington's cabinet from 1789 to 1795. Washington relied on his advice in major constitutional, fiscal, and foreign-policy controversies.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "alexander_hamilton",
+        "target": "thomas_jefferson",
+        "kind": "main",
+        "relationship_type": "political/opponent",
+        "relationship_description": "Jefferson served with Hamilton in Washington's first cabinet and opposed Hamilton's financial program. Their conflict helped define the Federalist and Democratic-Republican parties.",
+        "strength": "strong",
+        "endpoints": {
+          "alexander_hamilton": {
+            "relationship_type": "political/opponent",
+            "relationship_description": "Jefferson served with Hamilton in Washington's first cabinet and opposed Hamilton's financial program. Their conflict helped define the Federalist and Democratic-Republican parties.",
+            "strength": "strong"
+          },
+          "thomas_jefferson": {
+            "relationship_type": "political/political_rival",
+            "relationship_description": "Hamilton served as Washington’s treasury secretary while Jefferson was secretary of state. They disagreed over public debt, national finance, and the reach of federal power.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
         "source": "benjamin_franklin",
-        "target": "sec:thomas_jefferson",
-        "kind": "secondary",
-        "relationship_type": "professional/founding_colleague",
-        "relationship_description": "Jefferson and Franklin were fellow members of the Committee of Five appointed to draft the Declaration of Independence. Franklin reviewed Jefferson's draft and joined Congress in the broader effort to establish American independence.",
+        "target": "george_washington",
+        "kind": "main",
+        "relationship_type": "political/ally",
+        "relationship_description": "Franklin and Washington were leading figures in the Revolution and early republic. Franklin served as a Pennsylvania delegate at the Constitutional Convention that Washington presided over.",
         "strength": "moderate",
         "endpoints": {
           "benjamin_franklin": {
-            "relationship_type": "professional/founding_colleague",
-            "relationship_description": "Jefferson and Franklin were fellow members of the Committee of Five appointed to draft the Declaration of Independence. Franklin reviewed Jefferson's draft and joined Congress in the broader effort to establish American independence.",
+            "relationship_type": "political/ally",
+            "relationship_description": "Franklin and Washington were leading figures in the Revolution and early republic. Franklin served as a Pennsylvania delegate at the Constitutional Convention that Washington presided over.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "benjamin_franklin",
+        "target": "thomas_jefferson",
+        "kind": "main",
+        "relationship_type": "political/collaborator",
+        "relationship_description": "Franklin and Jefferson served together on the Committee of Five that prepared the Declaration of Independence in 1776 and later shared responsibility for American diplomacy in Europe.",
+        "strength": "moderate",
+        "endpoints": {
+          "benjamin_franklin": {
+            "relationship_type": "political/collaborator",
+            "relationship_description": "Franklin and Jefferson served together on the Committee of Five that prepared the Declaration of Independence in 1776 and later shared responsibility for American diplomacy in Europe.",
+            "strength": "moderate"
+          },
+          "thomas_jefferson": {
+            "relationship_type": "political/collaborator",
+            "relationship_description": "Franklin served with Jefferson on the Committee of Five in 1776. He made editorial changes to Jefferson’s draft before Congress considered the Declaration of Independence.",
             "strength": "moderate"
           }
         }
       },
       {
         "source": "george_washington",
-        "target": "sec:thomas_jefferson",
-        "kind": "secondary",
-        "relationship_type": "professional/colleague",
-        "relationship_description": "Washington appointed Jefferson as the first secretary of state. Their cabinet relationship was strained by Jefferson's conflicts with Treasury Secretary Hamilton and by disagreements over federal power and foreign policy.",
+        "target": "joseph_brant",
+        "kind": "main",
+        "relationship_type": "political/adversary",
+        "relationship_description": "Brant and Washington met, but they stood on opposing sides of the American Revolution; Washington ordered the 1779 Sullivan Expedition against British-allied Haudenosaunee communities that Brant defended.",
         "strength": "moderate",
         "endpoints": {
+          "joseph_brant": {
+            "relationship_type": "political/adversary",
+            "relationship_description": "Brant and Washington met, but they stood on opposing sides of the American Revolution; Washington ordered the 1779 Sullivan Expedition against British-allied Haudenosaunee communities that Brant defended.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "george_washington",
+        "target": "mercy_otis_warren",
+        "kind": "main",
+        "relationship_type": "political/advisor",
+        "relationship_description": "Washington corresponded with Warren and approved her proposed history of the American Revolution in 1790.",
+        "strength": "moderate",
+        "endpoints": {
+          "mercy_otis_warren": {
+            "relationship_type": "political/advisor",
+            "relationship_description": "Washington corresponded with Warren and approved her proposed history of the American Revolution in 1790.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "george_washington",
+        "target": "phillis_wheatley",
+        "kind": "main",
+        "relationship_type": "professional/correspondent",
+        "relationship_description": "Wheatley sent Washington To His Excellency, George Washington in 1775. He praised her work and invited her to his Cambridge headquarters in 1776.",
+        "strength": "moderate",
+        "endpoints": {
+          "phillis_wheatley": {
+            "relationship_type": "professional/correspondent",
+            "relationship_description": "Wheatley sent Washington To His Excellency, George Washington in 1775. He praised her work and invited her to his Cambridge headquarters in 1776.",
+            "strength": "moderate"
+          }
+        }
+      },
+      {
+        "source": "george_washington",
+        "target": "thomas_jefferson",
+        "kind": "main",
+        "relationship_type": "political/superior",
+        "relationship_description": "Washington appointed Jefferson secretary of state, and Jefferson served in Washington's first cabinet from 1790 to 1793 before resigning amid major disagreements over Hamilton's program, federal power, and foreign policy.",
+        "strength": "strong",
+        "endpoints": {
           "george_washington": {
-            "relationship_type": "professional/colleague",
-            "relationship_description": "Washington appointed Jefferson as the first secretary of state. Their cabinet relationship was strained by Jefferson's conflicts with Treasury Secretary Hamilton and by disagreements over federal power and foreign policy.",
+            "relationship_type": "political/superior",
+            "relationship_description": "Washington appointed Jefferson secretary of state, and Jefferson served in Washington's first cabinet from 1790 to 1793 before resigning amid major disagreements over Hamilton's program, federal power, and foreign policy.",
+            "strength": "strong"
+          },
+          "thomas_jefferson": {
+            "relationship_type": "political/superior",
+            "relationship_description": "Washington appointed Jefferson secretary of state, and Jefferson served in Washington's first cabinet from 1790 to 1793 before resigning amid major disagreements over Hamilton's program, federal power, and foreign policy.",
+            "strength": "strong"
+          }
+        },
+        "origin": "reviewed"
+      },
+      {
+        "source": "mercy_otis_warren",
+        "target": "thomas_jefferson",
+        "kind": "main",
+        "relationship_type": "political/ally",
+        "relationship_description": "Jefferson was Warren's friend and helped secure subscriptions for her 1805 history of the American Revolution.",
+        "strength": "moderate",
+        "endpoints": {
+          "mercy_otis_warren": {
+            "relationship_type": "political/ally",
+            "relationship_description": "Jefferson was Warren's friend and helped secure subscriptions for her 1805 history of the American Revolution.",
             "strength": "moderate"
           }
         }
@@ -543,12 +745,12 @@
         "target": "sec:john_adams",
         "kind": "secondary",
         "relationship_type": "family/spouse",
-        "relationship_description": "Abigail’s husband, intellectual partner, and closest political correspondent; their letters joined family life with sustained discussion of government and public affairs.",
+        "relationship_description": "Abigail married John Adams in 1764. Their letters joined family matters to discussions of politics and government while his public work often kept them apart.",
         "strength": "strong",
         "endpoints": {
           "abigail_adams": {
             "relationship_type": "family/spouse",
-            "relationship_description": "Abigail’s husband, intellectual partner, and closest political correspondent; their letters joined family life with sustained discussion of government and public affairs.",
+            "relationship_description": "Abigail married John Adams in 1764. Their letters joined family matters to discussions of politics and government while his public work often kept them apart.",
             "strength": "strong"
           }
         }
@@ -557,13 +759,13 @@
         "source": "alexander_hamilton",
         "target": "sec:john_adams",
         "kind": "secondary",
-        "relationship_type": "professional/political_rival",
-        "relationship_description": "Federalist president whose handling of the Quasi-War Hamilton criticized. Adams appointed Hamilton major general, but Hamilton later opposed Adams's 1800 reelection.",
+        "relationship_type": "political/political_rival",
+        "relationship_description": "Hamilton opposed President John Adams's reelection campaign in 1800, publicly attacking Adams's leadership and contributing to the division of the Federalist Party. Adams's approach to France and the Quasi-War was a central point of contention.",
         "strength": "moderate",
         "endpoints": {
           "alexander_hamilton": {
-            "relationship_type": "professional/political_rival",
-            "relationship_description": "Federalist president whose handling of the Quasi-War Hamilton criticized. Adams appointed Hamilton major general, but Hamilton later opposed Adams's 1800 reelection.",
+            "relationship_type": "political/political_rival",
+            "relationship_description": "Hamilton opposed President John Adams's reelection campaign in 1800, publicly attacking Adams's leadership and contributing to the division of the Federalist Party. Adams's approach to France and the Quasi-War was a central point of contention.",
             "strength": "moderate"
           }
         }
@@ -572,148 +774,210 @@
         "source": "benjamin_franklin",
         "target": "sec:john_adams",
         "kind": "secondary",
-        "relationship_type": "professional/founding_colleague",
-        "relationship_description": "Adams and Franklin worked together in the Continental Congress, including on the Committee of Five that prepared the Declaration of Independence. They later served together in American diplomacy in Europe, though Adams found Franklin's approach to French diplomacy frustrating.",
+        "relationship_type": "political/collaborator",
+        "relationship_description": "Franklin and Adams served together in the Continental Congress, supported American independence, and later joined the American delegation negotiating peace with Britain in 1783.",
         "strength": "moderate",
         "endpoints": {
           "benjamin_franklin": {
-            "relationship_type": "professional/founding_colleague",
-            "relationship_description": "Adams and Franklin worked together in the Continental Congress, including on the Committee of Five that prepared the Declaration of Independence. They later served together in American diplomacy in Europe, though Adams found Franklin's approach to French diplomacy frustrating.",
+            "relationship_type": "political/collaborator",
+            "relationship_description": "Franklin and Adams served together in the Continental Congress, supported American independence, and later joined the American delegation negotiating peace with Britain in 1783.",
             "strength": "moderate"
           }
         }
       },
       {
-        "source": "alexander_hamilton",
-        "target": "sec:marquis_de_lafayette",
+        "source": "george_washington",
+        "target": "sec:john_adams",
         "kind": "secondary",
-        "relationship_type": "professional/colleague",
-        "relationship_description": "French-born Continental Army general and a close Revolutionary War correspondent of Hamilton. They worked within Washington’s command network and during the Yorktown campaign.",
+        "relationship_type": "political/advocate",
+        "relationship_description": "Adams proposed Washington for commander in chief of the Continental Army in the Second Continental Congress in 1775. He later served as Washington's vice president and succeeded him as president in 1797.",
+        "strength": "strong",
+        "endpoints": {
+          "george_washington": {
+            "relationship_type": "political/advocate",
+            "relationship_description": "Adams proposed Washington for commander in chief of the Continental Army in the Second Continental Congress in 1775. He later served as Washington's vice president and succeeded him as president in 1797.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "mercy_otis_warren",
+        "target": "sec:john_adams",
+        "kind": "secondary",
+        "relationship_type": "artistic/mentor",
+        "relationship_description": "John Adams encouraged Warren's early writing, helped publish her anonymous poem in the Boston Gazette, and urged her to write a history of the Revolution; their friendship later broke over her 1805 history before they reconciled.",
+        "strength": "strong",
+        "endpoints": {
+          "mercy_otis_warren": {
+            "relationship_type": "artistic/mentor",
+            "relationship_description": "John Adams encouraged Warren's early writing, helped publish her anonymous poem in the Boston Gazette, and urged her to write a history of the Revolution; their friendship later broke over her 1805 history before they reconciled.",
+            "strength": "strong"
+          }
+        },
+        "origin": "reviewed"
+      },
+      {
+        "source": "thomas_jefferson",
+        "target": "sec:john_adams",
+        "kind": "secondary",
+        "relationship_type": "political/political_rival",
+        "relationship_description": "Adams supported Jefferson’s selection to draft the Declaration of Independence in the Continental Congress. They later became presidential opponents in 1796 and 1800 before renewing their friendship through correspondence.",
+        "strength": "strong",
+        "endpoints": {
+          "thomas_jefferson": {
+            "relationship_type": "political/political_rival",
+            "relationship_description": "Adams supported Jefferson’s selection to draft the Declaration of Independence in the Continental Congress. They later became presidential opponents in 1796 and 1800 before renewing their friendship through correspondence.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "alexander_hamilton",
+        "target": "sec:james_madison",
+        "kind": "secondary",
+        "relationship_type": "professional/collaborator",
+        "relationship_description": "Madison worked with Hamilton on constitutional reform and joined him and John Jay in writing The Federalist Papers. Their alliance broke down over Hamilton's financial program and the opposing parties that emerged in the 1790s.",
         "strength": "strong",
         "endpoints": {
           "alexander_hamilton": {
-            "relationship_type": "professional/colleague",
-            "relationship_description": "French-born Continental Army general and a close Revolutionary War correspondent of Hamilton. They worked within Washington’s command network and during the Yorktown campaign.",
+            "relationship_type": "professional/collaborator",
+            "relationship_description": "Madison worked with Hamilton on constitutional reform and joined him and John Jay in writing The Federalist Papers. Their alliance broke down over Hamilton's financial program and the opposing parties that emerged in the 1790s.",
             "strength": "strong"
           }
         }
       },
       {
         "source": "george_washington",
-        "target": "sec:marquis_de_lafayette",
+        "target": "sec:james_madison",
         "kind": "secondary",
-        "relationship_type": "professional/collaborator",
-        "relationship_description": "Lafayette was a French volunteer major general in the Continental Army who developed a close relationship with Washington. He commanded troops under Washington during the Yorktown campaign and later remained a prominent transatlantic ally and friend.",
+        "relationship_type": "political/advisor",
+        "relationship_description": "Madison worked directly with Washington at the Constitutional Convention, where Washington presided, and served as a key early adviser to the president. Madison prepared the original 1792 draft that later informed Washington's Farewell Address.",
         "strength": "strong",
         "endpoints": {
           "george_washington": {
-            "relationship_type": "professional/collaborator",
-            "relationship_description": "Lafayette was a French volunteer major general in the Continental Army who developed a close relationship with Washington. He commanded troops under Washington during the Yorktown campaign and later remained a prominent transatlantic ally and friend.",
+            "relationship_type": "political/advisor",
+            "relationship_description": "Madison worked directly with Washington at the Constitutional Convention, where Washington presided, and served as a key early adviser to the president. Madison prepared the original 1792 draft that later informed Washington's Farewell Address.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "thomas_jefferson",
+        "target": "sec:james_madison",
+        "kind": "secondary",
+        "relationship_type": "political/ally",
+        "relationship_description": "Madison and Jefferson organized the Democratic-Republican Party in 1792 to oppose Federalist policies. Jefferson later appointed Madison secretary of state.",
+        "strength": "strong",
+        "endpoints": {
+          "thomas_jefferson": {
+            "relationship_type": "political/ally",
+            "relationship_description": "Madison and Jefferson organized the Democratic-Republican Party in 1792 to oppose Federalist policies. Jefferson later appointed Madison secretary of state.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "alexander_hamilton",
+        "target": "sec:aaron_burr",
+        "kind": "secondary",
+        "relationship_type": "political/adversary",
+        "relationship_description": "Burr was Hamilton's New York legal and political adversary. Hamilton opposed Burr in the presidential contest of 1800 and the New York governor's race of 1804. Their conflict ended when Burr challenged Hamilton to a duel.",
+        "strength": "strong",
+        "endpoints": {
+          "alexander_hamilton": {
+            "relationship_type": "political/adversary",
+            "relationship_description": "Burr was Hamilton's New York legal and political adversary. Hamilton opposed Burr in the presidential contest of 1800 and the New York governor's race of 1804. Their conflict ended when Burr challenged Hamilton to a duel.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "thomas_jefferson",
+        "target": "sec:aaron_burr",
+        "kind": "secondary",
+        "relationship_type": "political/adversary",
+        "relationship_description": "Burr served as Jefferson’s vice president from 1801 to 1805 after their electoral tie was resolved in Jefferson’s favor. Jefferson’s administration later prosecuted Burr for alleged treason in the Burr conspiracy, and Burr was acquitted.",
+        "strength": "strong",
+        "endpoints": {
+          "thomas_jefferson": {
+            "relationship_type": "political/adversary",
+            "relationship_description": "Burr served as Jefferson’s vice president from 1801 to 1805 after their electoral tie was resolved in Jefferson’s favor. Jefferson’s administration later prosecuted Burr for alleged treason in the Burr conspiracy, and Burr was acquitted.",
             "strength": "strong"
           }
         }
       },
       {
         "source": "abigail_adams",
-        "target": "sec:william_smith",
+        "target": "sec:mary_jefferson_eppes",
         "kind": "secondary",
-        "relationship_type": "family/father",
-        "relationship_description": "Abigail’s father was a liberal Congregational minister who officiated at her 1764 marriage and whose library helped support her self-education.",
+        "relationship_type": "social/ward",
+        "relationship_description": "Abigail temporarily cared for Thomas Jefferson's daughter Mary, known as Polly, in London in 1785. She retained a lasting affection for her.",
         "strength": "strong",
         "endpoints": {
           "abigail_adams": {
-            "relationship_type": "family/father",
-            "relationship_description": "Abigail’s father was a liberal Congregational minister who officiated at her 1764 marriage and whose library helped support her self-education.",
+            "relationship_type": "social/ward",
+            "relationship_description": "Abigail temporarily cared for Thomas Jefferson's daughter Mary, known as Polly, in London in 1785. She retained a lasting affection for her.",
+            "strength": "strong"
+          }
+        }
+      },
+      {
+        "source": "thomas_jefferson",
+        "target": "sec:mary_jefferson_eppes",
+        "kind": "secondary",
+        "relationship_type": "family/biological_father",
+        "relationship_description": "Mary Jefferson Eppes was Thomas Jefferson's younger surviving daughter and joined him in Paris in 1787.",
+        "strength": "strong",
+        "endpoints": {
+          "thomas_jefferson": {
+            "relationship_type": "family/biological_father",
+            "relationship_description": "Mary Jefferson Eppes was Thomas Jefferson's younger surviving daughter and joined him in Paris in 1787.",
+            "strength": "strong"
+          }
+        },
+        "origin": "reviewed"
+      },
+      {
+        "source": "alexander_hamilton",
+        "target": "sec:john_jay",
+        "kind": "secondary",
+        "relationship_type": "professional/collaborator",
+        "relationship_description": "Hamilton and Jay collaborated as authors of The Federalist Papers during the New York ratification campaign of 1787–1788. Jay also helped Hamilton gain a Revolutionary War artillery commission through his New York political connections.",
+        "strength": "strong",
+        "endpoints": {
+          "alexander_hamilton": {
+            "relationship_type": "professional/collaborator",
+            "relationship_description": "Hamilton and Jay collaborated as authors of The Federalist Papers during the New York ratification campaign of 1787–1788. Jay also helped Hamilton gain a Revolutionary War artillery commission through his New York political connections.",
             "strength": "strong"
           }
         }
       },
       {
         "source": "benjamin_franklin",
-        "target": "sec:william_smith",
+        "target": "sec:john_jay",
         "kind": "secondary",
-        "relationship_type": "academic/colleague",
-        "relationship_description": "Smith was an educator and the first provost of the College of Philadelphia. Franklin helped establish and became first president of the Academy and College of Philadelphia, placing the two men at the center of its early governance and educational mission.",
+        "relationship_type": "political/collaborator",
+        "relationship_description": "Jay and Franklin were fellow American peace commissioners in Paris and collaborated in the negotiations that produced the 1783 Treaty of Paris recognizing American independence.",
         "strength": "moderate",
         "endpoints": {
           "benjamin_franklin": {
-            "relationship_type": "academic/colleague",
-            "relationship_description": "Smith was an educator and the first provost of the College of Philadelphia. Franklin helped establish and became first president of the Academy and College of Philadelphia, placing the two men at the center of its early governance and educational mission.",
+            "relationship_type": "political/collaborator",
+            "relationship_description": "Jay and Franklin were fellow American peace commissioners in Paris and collaborated in the negotiations that produced the 1783 Treaty of Paris recognizing American independence.",
             "strength": "moderate"
           }
         }
       },
       {
-        "source": "alexander_hamilton",
-        "target": "sec:john_jay",
-        "kind": "secondary",
-        "relationship_type": "professional/collaborator",
-        "relationship_description": "New York legal and political associate who worked with Hamilton in the Revolutionary movement, constitutional ratification campaign, and Federalist political network.",
-        "strength": "moderate",
-        "endpoints": {
-          "alexander_hamilton": {
-            "relationship_type": "professional/collaborator",
-            "relationship_description": "New York legal and political associate who worked with Hamilton in the Revolutionary movement, constitutional ratification campaign, and Federalist political network.",
-            "strength": "moderate"
-          }
-        }
-      },
-      {
-        "source": "benjamin_franklin",
-        "target": "sec:john_jay",
-        "kind": "secondary",
-        "relationship_type": "professional/colleague",
-        "relationship_description": "Jay and Franklin were American peace commissioners in Paris who helped negotiate the Treaty of Paris ending the Revolutionary War. Together with John Adams, they participated in the negotiations that secured British recognition of American independence.",
-        "strength": "moderate",
-        "endpoints": {
-          "benjamin_franklin": {
-            "relationship_type": "professional/colleague",
-            "relationship_description": "Jay and Franklin were American peace commissioners in Paris who helped negotiate the Treaty of Paris ending the Revolutionary War. Together with John Adams, they participated in the negotiations that secured British recognition of American independence.",
-            "strength": "moderate"
-          }
-        }
-      },
-      {
-        "source": "alexander_hamilton",
-        "target": "sec:james_madison",
-        "kind": "secondary",
-        "relationship_type": "professional/collaborator",
-        "relationship_description": "Early collaborator in the movement for constitutional reform and co-author of The Federalist Papers, who later became one of Hamilton's principal ideological opponents over finance, federal power, and party politics.",
-        "strength": "moderate",
-        "endpoints": {
-          "alexander_hamilton": {
-            "relationship_type": "professional/collaborator",
-            "relationship_description": "Early collaborator in the movement for constitutional reform and co-author of The Federalist Papers, who later became one of Hamilton's principal ideological opponents over finance, federal power, and party politics.",
-            "strength": "moderate"
-          }
-        }
-      },
-      {
-        "source": "george_washington",
-        "target": "sec:james_madison",
-        "kind": "secondary",
-        "relationship_type": "professional/collaborator",
-        "relationship_description": "Madison worked with Washington during the Constitutional Convention, where Washington presided, and later served in the first Congress. Their collaboration weakened as Madison joined Jefferson in opposition to Hamilton's policies and the Federalist coalition.",
-        "strength": "moderate",
-        "endpoints": {
-          "george_washington": {
-            "relationship_type": "professional/collaborator",
-            "relationship_description": "Madison worked with Washington during the Constitutional Convention, where Washington presided, and later served in the first Congress. Their collaboration weakened as Madison joined Jefferson in opposition to Hamilton's policies and the Federalist coalition.",
-            "strength": "moderate"
-          }
-        }
-      },
-      {
-        "source": "george_washington",
+        "source": "mercy_otis_warren",
         "target": "sec:john_hancock",
         "kind": "secondary",
-        "relationship_type": "professional/colleague",
-        "relationship_description": "Hancock presided over the Second Continental Congress when it appointed Washington commander in chief of the Continental Army in June 1775. Their connection linked congressional civilian authority with Washington's military command.",
+        "relationship_type": "political/acquaintance",
+        "relationship_description": "Warren knew Hancock through the Patriot circles that met at her home and later judged his wavering over independence harshly in her political and historical assessments.",
         "strength": "moderate",
         "endpoints": {
-          "george_washington": {
-            "relationship_type": "professional/colleague",
-            "relationship_description": "Hancock presided over the Second Continental Congress when it appointed Washington commander in chief of the Continental Army in June 1775. Their connection linked congressional civilian authority with Washington's military command.",
+          "mercy_otis_warren": {
+            "relationship_type": "political/acquaintance",
+            "relationship_description": "Warren knew Hancock through the Patriot circles that met at her home and later judged his wavering over independence harshly in her political and historical assessments.",
             "strength": "moderate"
           }
         }
@@ -723,49 +987,54 @@
         "target": "sec:john_hancock",
         "kind": "secondary",
         "relationship_type": "professional/endorser",
-        "relationship_description": "Boston political leader who was among the prominent men attesting in 1772 that they believed Wheatley had written the poems attributed to her, countering racist doubts about her authorship.",
+        "relationship_description": "Boston leader who signed the 1772 attestation that Wheatley wrote her poems.",
         "strength": "weak",
         "endpoints": {
           "phillis_wheatley": {
             "relationship_type": "professional/endorser",
-            "relationship_description": "Boston political leader who was among the prominent men attesting in 1772 that they believed Wheatley had written the poems attributed to her, countering racist doubts about her authorship.",
+            "relationship_description": "Boston leader who signed the 1772 attestation that Wheatley wrote her poems.",
             "strength": "weak"
           }
         }
       },
       {
-        "source": "george_washington",
-        "target": "sec:john_adams",
-        "kind": "secondary",
-        "relationship_type": "professional/colleague",
-        "relationship_description": "John Adams nominated Washington to command the Continental Army in 1775, then served as vice president throughout Washington's two presidential terms.",
-        "strength": "strong",
+        "source": "alexander_hamilton",
+        "target": "mercy_otis_warren",
+        "kind": "main",
+        "relationship_type": "artistic/endorser",
+        "relationship_description": "Hamilton praised Warren's dramatic writing, remarking that in dramatic composition female genius in the United States had outstripped male genius.",
+        "strength": "weak",
         "endpoints": {
-          "george_washington": {
-            "relationship_type": "professional/colleague",
-            "relationship_description": "John Adams nominated Washington to command the Continental Army in 1775, then served as vice president throughout Washington's two presidential terms.",
-            "strength": "strong"
+          "alexander_hamilton": {
+            "relationship_type": "artistic/endorser",
+            "relationship_description": "Hamilton praised Warren's dramatic writing, remarking that in dramatic composition female genius in the United States had outstripped male genius.",
+            "strength": "weak"
+          },
+          "mercy_otis_warren": {
+            "relationship_type": "artistic/endorser",
+            "relationship_description": "Hamilton praised Warren's dramatic writing, remarking that in dramatic composition female genius in the United States had outstripped male genius.",
+            "strength": "weak"
           }
         },
         "origin": "review_added"
       },
       {
-        "source": "george_washington",
-        "target": "joseph_brant",
+        "source": "thomas_jefferson",
+        "target": "phillis_wheatley",
         "kind": "main",
-        "relationship_type": "professional/adversary",
-        "relationship_description": "Washington's Revolutionary War strategy included the Sullivan expedition against Haudenosaunee communities associated with Brant, and Brant later met Washington and his cabinet in Philadelphia in 1792 to discuss Indigenous affairs.",
-        "strength": "moderate",
+        "relationship_type": "artistic/critic",
+        "relationship_description": "In Notes on the State of Virginia, Jefferson dismissed or failed to acknowledge the value of Wheatley's poetry and that of other Black poets.",
+        "strength": "weak",
         "endpoints": {
-          "george_washington": {
-            "relationship_type": "professional/adversary",
-            "relationship_description": "Washington's Revolutionary War strategy included the Sullivan expedition against Haudenosaunee communities associated with Brant, and Brant later met Washington and his cabinet in Philadelphia in 1792 to discuss Indigenous affairs.",
-            "strength": "moderate"
+          "thomas_jefferson": {
+            "relationship_type": "artistic/critic",
+            "relationship_description": "In Notes on the State of Virginia, Jefferson dismissed or failed to acknowledge the value of Wheatley's poetry and that of other Black poets.",
+            "strength": "weak"
           },
-          "joseph_brant": {
-            "relationship_type": "professional/adversary",
-            "relationship_description": "Washington's Revolutionary War strategy included the Sullivan expedition against Haudenosaunee communities associated with Brant, and Brant later met Washington and his cabinet in Philadelphia in 1792 to discuss Indigenous affairs.",
-            "strength": "moderate"
+          "phillis_wheatley": {
+            "relationship_type": "artistic/critic",
+            "relationship_description": "In Notes on the State of Virginia, Jefferson dismissed or failed to acknowledge the value of Wheatley's poetry and that of other Black poets.",
+            "strength": "weak"
           }
         },
         "origin": "review_added"
@@ -774,24 +1043,26 @@
     "narration": {
       "circles": [
         {
-          "key": "benjamin_franklin+abigail_adams",
+          "key": "mercy_otis_warren+abigail_adams",
           "member_ids": [
-            "benjamin_franklin",
+            "mercy_otis_warren",
             "abigail_adams"
           ],
-          "title": "Eine Republik der Briefe",
-          "text": "Franklin und Abigail Adams bewegten sich in sich überschneidenden Welten der Gründungspolitik, Diplomatie, Bildung und Korrespondenz. Franklin arbeitete mit John Adams und Thomas Jefferson an der Unabhängigkeit sowie mit Adams und John Jay in Europa; Abigail machte den Haushalt von John Adams zu einem Ort anhaltender politischer Debatten. Auch ihr Vater William Smith verband ihre geistige Prägung mit den Bildungseinrichtungen, an deren Aufbau Franklin in Philadelphia mitwirkte."
+          "title": "Briefe und Ermutigung",
+          "text": "Abigail Adams und Mercy Otis Warren waren enge Freundinnen und schrieben einander regelmäßig. Als Warren daran zweifelte, ob politische Satire eine Arbeit für eine Frau sei, ermutigte Adams sie zum Weiterschreiben. Ihre Briefe gaben beiden Autorinnen Raum, öffentliche Angelegenheiten jenseits der formalen Institutionen zu erörtern, die sie ausschlossen."
         },
         {
-          "key": "george_washington+joseph_brant+phillis_wheatley+alexander_hamilton",
+          "key": "benjamin_franklin+george_washington+joseph_brant+thomas_jefferson+phillis_wheatley+alexander_hamilton",
           "member_ids": [
+            "benjamin_franklin",
             "george_washington",
             "joseph_brant",
+            "thomas_jefferson",
             "phillis_wheatley",
             "alexander_hamilton"
           ],
-          "title": "Kommando und umkämpfte Freiheit",
-          "text": "Washingtons Kommando verband ihn eng mit Hamilton, zunächst als Adjutant und später als Finanzminister, während Wheatley sich in Versen an den General wandte und sein Lob erhielt. Seine Beziehung zu Brant nahm einen völlig anderen Verlauf: Auf die Zerstörung von Haudenosaunee-Gemeinschaften im Krieg folgte 1792 ein Treffen über indigene Angelegenheiten. Um Washington bündelten sich militärische Partnerschaft, literarische Anerkennung, föderale Macht und umkämpfte Souveränität."
+          "title": "Im Kreis Washingtons",
+          "text": "Franklin gehörte dem Verfassungskonvent an, über den Washington den Vorsitz führte, und hatte zuvor mit Jefferson an der Unabhängigkeitserklärung gearbeitet. Hamilton war während des Krieges Mitglied von Washingtons Stab und trat später gemeinsam mit Jefferson in Washingtons Kabinett ein. Dort wurden die beiden Minister politische Gegner. Wheatley schickte Washington ein Gedicht, erhielt sein Lob und wurde in sein Militärhauptquartier eingeladen. Jefferson sprach Wheatleys Dichtung später jeden Wert ab. Brant traf Washington, nachdem er auf britischer Seite gekämpft und Gemeinschaften der Haudenosaunee verteidigt hatte, die Ziel der von Washington angeordneten Sullivan-Expedition waren."
         }
       ]
     }
@@ -799,8 +1070,189 @@
   "geo_map": {
     "clusters": [
       {
+        "label": "Philadelphia",
+        "score": 17.0,
+        "centroid": [
+          -75.09068,
+          39.99928
+        ],
+        "bbox": [
+          -75.1652,
+          39.9526,
+          -74.7429,
+          40.2171
+        ],
+        "year_start": 1729,
+        "year_end": 1796,
+        "events": [
+          {
+            "person_id": "benjamin_franklin",
+            "person_name": "Benjamin Franklin",
+            "event_index": 4,
+            "event_title": "Acquires The Pennsylvania Gazette",
+            "event_date": "1729",
+            "place": "Philadelphia",
+            "coordinates": [
+              -75.1652,
+              39.9526
+            ],
+            "weight": 2.0
+          },
+          {
+            "person_id": "benjamin_franklin",
+            "person_name": "Benjamin Franklin",
+            "event_index": 11,
+            "event_title": "Helps Draft Independence Declaration",
+            "event_date": "1776-07-04",
+            "place": "Philadelphia",
+            "coordinates": [
+              -75.1652,
+              39.9526
+            ],
+            "weight": 3.0
+          },
+          {
+            "person_id": "thomas_jefferson",
+            "person_name": "Thomas Jefferson",
+            "event_index": 4,
+            "event_title": "Drafts the Declaration of Independence",
+            "event_date": "1776-07-04",
+            "place": "Philadelphia",
+            "coordinates": [
+              -75.1652,
+              39.9526
+            ],
+            "weight": 3.0
+          },
+          {
+            "person_id": "george_washington",
+            "person_name": "George Washington",
+            "event_index": 8,
+            "event_title": "Strikes at Trenton",
+            "event_date": "1776-12-26",
+            "place": "Trenton",
+            "coordinates": [
+              -74.7429,
+              40.2171
+            ],
+            "weight": 3.0
+          },
+          {
+            "person_id": "george_washington",
+            "person_name": "George Washington",
+            "event_index": 12,
+            "event_title": "Presides at Philadelphia",
+            "event_date": "1787-05-25",
+            "place": "Philadelphia",
+            "coordinates": [
+              -75.1652,
+              39.9526
+            ],
+            "weight": 3.0
+          },
+          {
+            "person_id": "alexander_hamilton",
+            "person_name": "Alexander Hamilton",
+            "event_index": 11,
+            "event_title": "Funds the National Debt",
+            "event_date": "1790-01",
+            "place": "Philadelphia",
+            "coordinates": [
+              -75.1652,
+              39.9526
+            ],
+            "weight": 2.0
+          },
+          {
+            "person_id": "george_washington",
+            "person_name": "George Washington",
+            "event_index": 15,
+            "event_title": "Publishes Farewell Address",
+            "event_date": "1796-09-19",
+            "place": "Philadelphia",
+            "coordinates": [
+              -75.1652,
+              39.9526
+            ],
+            "weight": 1.0
+          }
+        ],
+        "key": "philadelphia"
+      },
+      {
+        "label": "London",
+        "score": 7.0,
+        "centroid": [
+          -0.1276,
+          51.5072
+        ],
+        "bbox": [
+          -0.1276,
+          51.5072,
+          -0.1276,
+          51.5072
+        ],
+        "year_start": 1766,
+        "year_end": 1785,
+        "events": [
+          {
+            "person_id": "benjamin_franklin",
+            "person_name": "Benjamin Franklin",
+            "event_index": 10,
+            "event_title": "Testifies Against the Stamp Act",
+            "event_date": "1766",
+            "place": "London",
+            "coordinates": [
+              -0.1276,
+              51.5072
+            ],
+            "weight": 2.0
+          },
+          {
+            "person_id": "phillis_wheatley",
+            "person_name": "Phillis Wheatley",
+            "event_index": 6,
+            "event_title": "Publishes Poems in London",
+            "event_date": "1773-09-01",
+            "place": "London",
+            "coordinates": [
+              -0.1276,
+              51.5072
+            ],
+            "weight": 1.0
+          },
+          {
+            "person_id": "joseph_brant",
+            "person_name": "Joseph Brant",
+            "event_index": 6,
+            "event_title": "Appeals in London",
+            "event_date": "1775-11",
+            "place": "London",
+            "coordinates": [
+              -0.1276,
+              51.5072
+            ],
+            "weight": 2.0
+          },
+          {
+            "person_id": "joseph_brant",
+            "person_name": "Joseph Brant",
+            "event_index": 12,
+            "event_title": "Returns to London",
+            "event_date": "1785",
+            "place": "London",
+            "coordinates": [
+              -0.1276,
+              51.5072
+            ],
+            "weight": 2.0
+          }
+        ],
+        "key": "london"
+      },
+      {
         "label": "Paris",
-        "score": 3.0,
+        "score": 7.0,
         "centroid": [
           2.3522,
           48.8566
@@ -811,28 +1263,54 @@
           2.3522,
           48.8566
         ],
-        "year_start": 1776,
-        "year_end": 1776,
+        "year_start": 1778,
+        "year_end": 1803,
         "events": [
           {
             "person_id": "benjamin_franklin",
             "person_name": "Benjamin Franklin",
             "event_index": 12,
-            "event_title": "Wins French Aid for Independence",
-            "event_date": "1776-10",
+            "event_title": "Signs the French Alliance Treaties",
+            "event_date": "1778-02-06",
             "place": "Paris",
             "coordinates": [
               2.3522,
               48.8566
             ],
             "weight": 3.0
+          },
+          {
+            "person_id": "benjamin_franklin",
+            "person_name": "Benjamin Franklin",
+            "event_index": 13,
+            "event_title": "Signs Treaty of Paris",
+            "event_date": "1783-09-03",
+            "place": "Paris",
+            "coordinates": [
+              2.3522,
+              48.8566
+            ],
+            "weight": 2.0
+          },
+          {
+            "person_id": "thomas_jefferson",
+            "person_name": "Thomas Jefferson",
+            "event_index": 11,
+            "event_title": "Purchases Louisiana from France",
+            "event_date": "1803-04-30",
+            "place": "Paris",
+            "coordinates": [
+              2.3522,
+              48.8566
+            ],
+            "weight": 2.0
           }
         ],
         "key": "paris"
       },
       {
         "label": "Yorktown",
-        "score": 6.0,
+        "score": 3.0,
         "centroid": [
           -76.5097,
           37.2388
@@ -850,21 +1328,8 @@
             "person_id": "george_washington",
             "person_name": "George Washington",
             "event_index": 10,
-            "event_title": "Wins Yorktown, Resigns Command",
-            "event_date": "1781-09-28",
-            "place": "Yorktown",
-            "coordinates": [
-              -76.5097,
-              37.2388
-            ],
-            "weight": 3.0
-          },
-          {
-            "person_id": "alexander_hamilton",
-            "person_name": "Alexander Hamilton",
-            "event_index": 7,
-            "event_title": "Storms Yorktown Redoubt",
-            "event_date": "1781-10-14",
+            "event_title": "Wins at Yorktown",
+            "event_date": "1781-10-19",
             "place": "Yorktown",
             "coordinates": [
               -76.5097,
@@ -876,300 +1341,139 @@
         "key": "yorktown"
       },
       {
-        "label": "Philadelphia",
-        "score": 17.0,
-        "centroid": [
-          -75.09068,
-          39.99928
-        ],
-        "bbox": [
-          -75.1652,
-          39.9526,
-          -74.7429,
-          40.2171
-        ],
-        "year_start": 1775,
-        "year_end": 1796,
-        "events": [
-          {
-            "person_id": "george_washington",
-            "person_name": "George Washington",
-            "event_index": 8,
-            "event_title": "Commands Continental Army",
-            "event_date": "1775-06-15",
-            "place": "Philadelphia",
-            "coordinates": [
-              -75.1652,
-              39.9526
-            ],
-            "weight": 3.0
-          },
-          {
-            "person_id": "george_washington",
-            "person_name": "George Washington",
-            "event_index": 9,
-            "event_title": "Wins Trenton and Princeton",
-            "event_date": "1776-12-26",
-            "place": "Trenton",
-            "coordinates": [
-              -74.7429,
-              40.2171
-            ],
-            "weight": 3.0
-          },
-          {
-            "person_id": "alexander_hamilton",
-            "person_name": "Alexander Hamilton",
-            "event_index": 10,
-            "event_title": "Makes the Case for Constitution",
-            "event_date": "1787-05",
-            "place": "Philadelphia",
-            "coordinates": [
-              -75.1652,
-              39.9526
-            ],
-            "weight": 3.0
-          },
-          {
-            "person_id": "george_washington",
-            "person_name": "George Washington",
-            "event_index": 11,
-            "event_title": "Presides Over Constitutional Convention",
-            "event_date": "1787-05-25",
-            "place": "Philadelphia",
-            "coordinates": [
-              -75.1652,
-              39.9526
-            ],
-            "weight": 3.0
-          },
-          {
-            "person_id": "benjamin_franklin",
-            "person_name": "Benjamin Franklin",
-            "event_index": 14,
-            "event_title": "Signs the New United States Constitution",
-            "event_date": "1787-09-17",
-            "place": "Philadelphia",
-            "coordinates": [
-              -75.1652,
-              39.9526
-            ],
-            "weight": 3.0
-          },
-          {
-            "person_id": "george_washington",
-            "person_name": "George Washington",
-            "event_index": 14,
-            "event_title": "Issues Farewell Address",
-            "event_date": "1796-09-19",
-            "place": "Philadelphia",
-            "coordinates": [
-              -75.1652,
-              39.9526
-            ],
-            "weight": 2.0
-          }
-        ],
-        "key": "philadelphia"
-      },
-      {
-        "label": "New York City",
-        "score": 5.0,
-        "centroid": [
-          -74.006,
-          40.7128
-        ],
-        "bbox": [
-          -74.006,
-          40.7128,
-          -74.006,
-          40.7128
-        ],
-        "year_start": 1789,
-        "year_end": 1789,
-        "events": [
-          {
-            "person_id": "george_washington",
-            "person_name": "George Washington",
-            "event_index": 12,
-            "event_title": "Becomes First President",
-            "event_date": "1789-04-30",
-            "place": "New York City",
-            "coordinates": [
-              -74.006,
-              40.7128
-            ],
-            "weight": 3.0
-          },
-          {
-            "person_id": "alexander_hamilton",
-            "person_name": "Alexander Hamilton",
-            "event_index": 11,
-            "event_title": "Leads the Treasury Department",
-            "event_date": "1789-09-11",
-            "place": "New York City",
-            "coordinates": [
-              -74.006,
-              40.7128
-            ],
-            "weight": 2.0
-          }
-        ],
-        "key": "new_york_city"
-      },
-      {
-        "label": "Western Pennsylvania",
+        "label": "Annapolis",
         "score": 3.0,
         "centroid": [
-          -80.0,
-          40.4
+          -76.4922,
+          38.9784
         ],
         "bbox": [
-          -80.0,
-          40.4,
-          -80.0,
-          40.4
+          -76.4922,
+          38.9784,
+          -76.4922,
+          38.9784
         ],
-        "year_start": 1794,
-        "year_end": 1794,
+        "year_start": 1783,
+        "year_end": 1783,
         "events": [
           {
             "person_id": "george_washington",
             "person_name": "George Washington",
-            "event_index": 13,
-            "event_title": "Suppresses Whiskey Rebellion",
-            "event_date": "1794-08",
-            "place": "Western Pennsylvania",
+            "event_index": 11,
+            "event_title": "Resigns His Commission",
+            "event_date": "1783-12-23",
+            "place": "Annapolis",
             "coordinates": [
-              -80.0,
-              40.4
+              -76.4922,
+              38.9784
             ],
             "weight": 3.0
           }
         ],
-        "key": "western_pennsylvania"
+        "key": "annapolis"
       }
     ],
     "narration": {
       "stops": [
         {
+          "key": "philadelphia",
+          "title": "Eine nationale Regierung entsteht",
+          "text": "Philadelphia verband die Welt des Drucks mit der nationalen Regierung. Franklin erwarb dort die Pennsylvania Gazette, und Franklin und Jefferson arbeiteten dort an der Unabhängigkeitserklärung. Später führte Washington in der Stadt den Vorsitz des Verfassungskonvents, Hamilton legte seinen Plan zur öffentlichen Kreditfinanzierung vor, und Washington veröffentlichte seine Abschiedsrede."
+        },
+        {
+          "key": "london",
+          "title": "Appelle an die Macht des Empire",
+          "text": "London beherbergte Parlament, Königshof und Verleger, die Leser im ganzen Empire erreichen konnten. Franklin sagte dort gegen das Stempelgesetz aus, und Wheatley fand dort einen Verleger für ihre Gedichte. Brant reiste zweimal dorthin, um britische Unterstützung für Landansprüche und politische Forderungen der Mohawk zu erlangen."
+        },
+        {
           "key": "paris",
-          "title": "Ein atlantisches Bündnis",
-          "text": "Franklins Mission nach Paris im Jahr 1776 galt der ausländischen Unterstützung, die der revolutionäre Krieg benötigte. Die französische Hilfe und das spätere Bündnis verwandelten einen kolonialen Aufstand in einen internationalen Konflikt und machten die amerikanische Unabhängigkeit weit erreichbarer."
+          "title": "Diplomatie in Paris",
+          "text": "Paris brachte die Bündnisse und Vereinbarungen hervor, die die Stellung der Republik in der Welt veränderten. Franklin unterzeichnete dort während des Krieges die Bündnisverträge mit Frankreich und danach den Friedensvertrag, der die Unabhängigkeit anerkannte. Amerikanische Gesandte kehrten in die französische Hauptstadt zurück, um unter Jefferson den Louisiana-Kauf abzuschließen."
         },
         {
           "key": "yorktown",
-          "title": "Sieg bei Yorktown",
-          "text": "Washington führte die alliierte Belagerung, die Cornwallis zur Kapitulation zwang. Hamiltons nächtlicher Angriff auf Schanze Nr. 10 zog die Einkreisung enger und verband seinen Ehrgeiz nach einem Kommando auf dem Schlachtfeld mit dem entscheidenden Sieg des Krieges."
+          "title": "Die Falle an der Chesapeake Bay",
+          "text": "Yorktown lag an Wasserwegen, über die die französische Seemacht die Belagerung prägen konnte. Französische Schiffe blockierten die Chesapeake Bay, während amerikanische und französische Truppen die britische Armee einschlossen. Die britische Kapitulation beendete den entscheidenden Feldzug des Krieges."
         },
         {
-          "key": "philadelphia",
-          "title": "Die Republik entwerfen",
-          "text": "Philadelphia verband revolutionäres Kommando mit einer verfassungsmäßigen Regierung. Dort erhielt Washington das Kommando über die Kontinentalarmee und leitete später den Konvent von 1787, während Hamilton für eine stärkere nationale Macht eintrat und Franklin dazu drängte, die fertige Verfassung anzunehmen. 1796 verkündete Washingtons gedruckte Abschiedsrede seinen Rückzug und warnte vor Parteien."
-        },
-        {
-          "key": "new_york_city",
-          "title": "Regierung wird Praxis",
-          "text": "In New York City setzte Washingtons Amtsantritt von 1789 den neuen Exekutivzweig in Gang. Seine Ernennung Hamiltons zum ersten Finanzminister verschaffte der Bundesregierung eine Finanzverwaltung und ein ehrgeiziges Programm für die nationale Finanzpolitik."
-        },
-        {
-          "key": "western_pennsylvania",
-          "title": "Autorität trifft auf Widerstand",
-          "text": "Der Widerstand gegen die föderale Whiskey-Steuer machte das westliche Pennsylvania zu einem frühen Prüfstein der Verfassungsmacht. Washingtons Mobilisierung von Miliztruppen zeigte, dass die neue Regierung Bundesrecht durchsetzen konnte, und zog zugleich Grenzen für bewaffneten republikanischen Widerstand."
+          "key": "annapolis",
+          "title": "Rückgabe der militärischen Gewalt",
+          "text": "Der Kontinentalkongress tagte im Maryland State House in Annapolis, als Washington sein Kommando niederlegte. Nach dem Krieg übergab er die Befehlsgewalt an zivile Vertreter und kehrte nach Mount Vernon zurück."
         }
       ]
     },
     "generation": {
-      "model": "gpt-5.6-terra",
-      "generated_at": "2026-07-28T05:02:25.990004+00:00",
-      "located_events": 17,
-      "rated_events": 17
+      "model": "gpt-5.6-luna",
+      "generated_at": "2026-09-19T08:36:15.997057+02:00",
+      "located_events": 24,
+      "rated_events": 23
     }
   },
+  "section_order": [
+    "timeline",
+    "network",
+    "map"
+  ],
   "opening": [
+    {
+      "type": "paragraph",
+      "text": "Am 31. März 1776 saß Abigail Adams in Braintree, Massachusetts, und schrieb ihrem Mann nach Philadelphia. John Adams gehörte dem Kontinentalkongress an, dessen Delegierte über Unabhängigkeit und neue Regierungsformen berieten. Sie forderte ihn auf, bei neuen Gesetzen „an die Frauen zu denken“. Sie warnte davor, Ehemännern unbegrenzte rechtliche Macht zu geben."
+    },
     {
       "type": "image",
       "image": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/General_George_Washington_Resigning_his_Commission.jpg/960px-General_George_Washington_Resigning_his_Commission.jpg",
-        "caption": "General George Washington legt sein Kommando nieder",
-        "source": "https://commons.wikimedia.org/wiki/File:General_George_Washington_Resigning_his_Commission.jpg",
-        "person_id": "george_washington",
-        "event_index": 10,
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Abigail_Adams_Letter.jpg",
+        "caption": "Brief von Abigail Adams über Frauenrechte",
+        "source": "https://commons.wikimedia.org/wiki/File:Abigail_Adams_Letter.jpg",
+        "person_id": "abigail_adams",
+        "event_index": 5,
         "image_index": 0
       },
       "layout": "full"
-    },
-    {
-      "type": "paragraph",
-      "text": "Zwischen 1773 und 1796 wurde der Widerstand gegen die britische Herrschaft zu einem Krieg, einem Verfassungsexperiment und einer funktionierenden Bundesregierung. George Washington, Benjamin Franklin und Alexander Hamilton trieben diesen Wandel durch militärische Führung, Diplomatie, Verfassungsarbeit und öffentliche Verwaltung voran."
     }
   ],
   "description": [
     {
       "type": "paragraph",
-      "text": "Die Revolution brachte auch Ansprüche hervor, denen ihre Institutionen nicht vollständig gerecht wurden. Phillis Wheatley machte die literarische Autorität einer versklavten schwarzen Frau auf beiden Seiten des Atlantiks sichtbar, und Abigail Adams drängte die Sprache der Freiheit in Richtung einer politischen Stellung der Frauen."
-    },
-    {
-      "type": "image",
-      "image": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Thomas_Ridout_map_of_Grand_River_Indian_Lands%2C_1821.jpg/960px-Thomas_Ridout_map_of_Grand_River_Indian_Lands%2C_1821.jpg",
-        "caption": "Vermessung der Indianergebiete am Grand River, 1821",
-        "source": "https://commons.wikimedia.org/wiki/File:Thomas_Ridout_map_of_Grand_River_Indian_Lands,_1821.jpg",
-        "person_id": "joseph_brant",
-        "event_index": 10,
-        "image_index": 0
-      },
-      "layout": "right"
-    },
-    {
-      "type": "paragraph",
-      "text": "Für Joseph Brant und die Haudenosaunee bedeutete der amerikanische Sieg Vertreibung statt Befreiung. Seine Führung am Grand River stellte indigene Nationsbildung neben das Verfassungsprojekt der Vereinigten Staaten und legte die konkurrierenden Ansprüche auf Land und Souveränität offen, die unter der Gründung der Republik lagen."
-    },
-    {
-      "type": "paragraph",
-      "text": "Diese Leben gehören zusammen, weil die Unabhängigkeit nie bloß ein Ergebnis des Schlachtfelds war. Sie war ein fortwährender Streit darüber, wer für die Freiheit sprechen durfte, wer nationale Macht ausüben konnte und wessen Freiheit die neue Ordnung schützen würde."
+      "text": "Adams’ Warnung rückte die rechtliche Stellung von Frauen in den bevorstehenden Streit um eine republikanische Regierung. Die Amerikanische Revolution begann als kolonialer Widerstand gegen Gesetze, die Großbritannien auferlegt hatte, und entwickelte sich zu einem Unabhängigkeitskrieg. In einer Republik liegt die politische Autorität beim Volk und seinen Vertretern. Politische Rechte waren in den Kolonien nur einem engen Kreis zugänglich, Sklaverei war legal, und indigene Nationen verteidigten ihre eigene Souveränität. Die Unabhängigkeit beendete die Königsherrschaft, ließ jedoch offen, wer zur neuen politischen Ordnung gehörte. Die Verfassung stärkte später die Bundesregierung, während die Auseinandersetzungen über Rechte, Schulden und Repräsentation weitergingen. Bis 1805 hatten die Vereinigten Staaten den Krieg überstanden, gegensätzliche Parteien gebildet und sich durch den Louisiana-Kauf vergrößert. Die Grenzen der verkündeten Freiheit blieben umstritten."
     }
   ],
   "section_bodies": {
     "timeline": [
       {
         "type": "paragraph",
-        "text": "Die Strafmaßnahmen des Parlaments gegen Massachusetts trieben die Kolonien zu gemeinsamem Widerstand. Sobald die Unabhängigkeitserklärung Washingtons Armee eine nationale Sache gegeben hatte, schärften ihre Grundsätze auch die Argumente, die in Adams’ Briefwechsel und Wheatleys Dichtung zum Ausdruck kamen."
-      },
-      {
-        "type": "paragraph",
-        "text": "Der Sieg entschied noch nicht, wie die ehemaligen Kolonien sich selbst regieren würden. Shays’ Rebellion verstärkte die Forderungen nach einem mächtigeren föderalen System, während der spätere Streit um den Jay-Vertrag die politischen Gegensätze offenbarte, die sich innerhalb von Washingtons Regierung entwickelten. In diesen Jahren wurde revolutionäre Mobilisierung zu Verfassungsgewalt – und diese Gewalt musste sich nun selbst bewähren."
+        "text": "Die Zwangsgesetze des Parlaments schlossen den Hafen von Boston und beschränkten die Selbstverwaltung in Massachusetts. Dadurch trieb der koloniale Widerstand auf einen Krieg zu. Gedruckte Argumente gaben diesem Widerstand zunächst eine öffentliche Sprache. Der Krieg machte das militärische Überleben und ausländische Hilfe dringend. Der Friedensschluss hinterließ vertriebene indigene Gemeinschaften, Kriegsschulden und eine nationale Regierung, deren Befugnisse unter den Konföderationsartikeln begrenzt waren. Wirtschaftliche Unruhen verstärkten die Unterstützung für ein stärkeres Bundessystem. Die Entwicklung führt von der Opposition zur Unabhängigkeit und dann von der Verfassungsgestaltung zum alltäglichen Gebrauch nationaler Macht. Jede Phase eröffnete Streitfragen, die die vorhergehende ungelöst gelassen hatte."
       }
     ],
     "network": [
       {
         "type": "paragraph",
-        "text": "Armeen, Haushalte, literarische Mäzene, diplomatische Missionen und politische Rivalitäten verbanden diese Leben mit einer größeren Gründergeneration. Washington bildete deren dichtestes Zentrum, doch die Beziehungen um ihn herum führten nicht zu einem einheitlichen Verständnis von Freiheit: Bewunderung und Zusammenarbeit gingen neben Ausgrenzung, Rivalität und bewaffnetem Konflikt einher."
+        "text": "Die politische Gesellschaft der Revolutionszeit war klein genug, dass Schriftsteller, Offiziere, Diplomaten und Amtsträger einander wiederholt begegneten. Briefe übermittelten privaten Rat und politische Kritik über große Entfernungen. Zeitungen und Pamphlete machten aus persönlichen Auseinandersetzungen öffentliche Konflikte. Kongress, Militärhauptquartiere, diplomatische Missionen und das erste Präsidentenkabinett brachten Mitarbeiter über längere Zeit zusammen. Freundschaft konnte das Schreiben fördern oder Zugang zur Macht sichern. Krieg und Parteikonflikte konnten aus Bekanntschaft Gegnerschaft machen. Die Beziehungen bilden Gruppen um Korrespondenzen und die nationale Führung. Einige wenige Menschen verbanden Kreise, die im Ringen um die Sache sonst unterschiedliche Positionen einnahmen."
       }
     ],
     "map": [
       {
         "type": "paragraph",
-        "text": "Der Kampf bewegte sich zwischen einer diplomatischen Hauptstadt am Atlantik, einem entscheidenden Schlachtfeld in Virginia, den politischen Zentren Philadelphia und New York City sowie Gemeinschaften im westlichen Pennsylvania, die sich der Bundespolitik widersetzten. An jedem dieser Orte wurde ein abstrakter Anspruch konkret: in ausländischer Unterstützung, militärischem Sieg, Verfassungsentwurf, exekutiver Verwaltung oder gewaltsamer Durchsetzung."
+        "text": "Politische Arbeit bündelte sich dort, wo Institutionen Entscheidungen Durchsetzungskraft verleihen konnten. Koloniale Druckereien und der Kontinentalkongress führten Argumente in großen Städten zusammen. Parlament und Königshof machten Großbritannien für Petitionen aus dem gesamten Empire unverzichtbar. Die französische Regierung bot den Vereinigten Staaten Geld, militärische Unterstützung und Vertragsverhandlungen. Schlachtfelder gewannen ihre Bedeutung durch Straßen, Flüsse, Häfen und den Zugang zur See. Staatshäuser boten den Rahmen, in dem militärische Gewalt an zivile Vertreter zurückgegeben werden konnte. Diese Geografie erstreckt sich über den Atlantik. Eine kleine Zahl von Städten bündelte immer wieder das Schreiben, Verhandeln und Regieren."
       }
     ]
   },
   "section_headings": {
-    "timeline": "Vom Aufstand zur Staatsgewalt",
-    "network": "Verbündete, Rivalen, Zeugen",
-    "map": "Die Geografie der Macht",
-    "conclusion": "Eine weiterhin umkämpfte Republik"
+    "timeline": "Von der Revolution zur Regierung",
+    "network": "Die Menschen hinter der Macht",
+    "map": "Schauplätze des Handelns",
+    "conclusion": "Das unerfüllte Versprechen"
   },
   "composition": {
     "model": "gpt-5.6-sol",
-    "composed_at": "2026-07-28T05:03:42.699705+00:00",
-    "throughline": "Six lives reveal the American Revolution as both a struggle for independence and an argument over what liberty would mean. Washington, Franklin, and Hamilton helped win the war and build federal power, while Wheatley, Adams, and Brant exposed exclusions involving race, gender, land, and sovereignty. Their connections show that the republic emerged through words, relationships, institutions, and force."
+    "composed_at": "2026-09-19T08:40:06.919912+02:00",
+    "throughline": "The American Revolution created a republic through print, war, diplomacy, and constitutional argument. The people connected to that work also exposed its disputed boundaries, including women’s legal status, Black authorship, Indigenous sovereignty, federal power, and territorial expansion."
   },
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "cc4929fc14825bc5",
-    "translated_on": "2026-08-02T12:57:06.444687+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "00d9fc96397986bc",
+    "translated_on": "2026-09-19T08:41:12.285965+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

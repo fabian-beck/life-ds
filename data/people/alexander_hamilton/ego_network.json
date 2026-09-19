@@ -1,450 +1,229 @@
 {
   "dataset": "Alexander Hamilton ego network",
-  "created_on": "2026-07-19",
+  "created_on": "2026-09-19",
   "ego": {
     "name": "Alexander Hamilton",
     "birth_year": 1755,
     "death_year": 1804,
     "primary_roles": [
       "statesman",
-      "military officer",
+      "soldier",
       "lawyer",
-      "first U.S. secretary of the treasury"
+      "Secretary of the Treasury"
     ],
-    "summary": "Alexander Hamilton was a Caribbean-born American statesman, Revolutionary War officer, lawyer, and Founding Father. As George Washington's aide-de-camp and later the first U.S. secretary of the treasury, he helped shape the early federal government, financial system, and Federalist Party.",
+    "summary": "Alexander Hamilton rose from an impoverished childhood in the British Caribbean to become a Continental Army officer, constitutional advocate, lawyer, leading Federalist, and the first United States secretary of the treasury. He shaped early American public finance and constitutional politics before Aaron Burr mortally wounded him in a duel in 1804.",
     "wikipedia": "https://en.wikipedia.org/wiki/Alexander_Hamilton"
   },
   "connections": [
     {
       "person_name": "Rachel Faucette",
-      "relationship_type": "family/mother",
-      "relationship_description": "Hamilton’s mother, who raised Alexander and his elder brother in the West Indies after their father left the family. Her death from fever in 1768 orphaned him.",
-      "start_year": 1755,
-      "end_year": 1768,
+      "relationship_description": "Hamilton's mother supported the family in Nevis and Saint Croix after James A. Hamilton left the household. Her death in 1768 left Hamilton and James Jr. orphaned.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Family life in Nevis and Saint Croix",
-        "Early education and household life"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alexander_Hamilton"
       ],
-      "notes": "Her estate was seized after her death, though family books were recovered for Hamilton."
-    },
-    {
-      "person_name": "James Hamilton Jr.",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Hamilton's older brother and childhood companion. The brothers were orphaned together after their mother's death but were subsequently separated.",
-      "start_year": 1755,
-      "end_year": 1769,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Childhood in Nevis and Saint Croix",
-        "Shared private schooling and family library",
-        "Orphanhood after Rachel Faucette's death"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
-      ],
-      "notes": "James Jr. was apprenticed to a carpenter after the brothers were separated."
-    },
-    {
-      "person_name": "James A. Hamilton",
-      "relationship_type": "family/father",
-      "relationship_description": "Hamilton's Scottish-born father, who lived with Rachel Faucette and their two sons in Nevis before abandoning the family during Alexander's childhood.",
-      "start_year": 1755,
-      "end_year": 1766,
-      "strength": "weak",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Early family life in Nevis",
-        "Correspondence, including Hamilton's later account of the 1772 hurricane"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
-      ],
-      "notes": "The exact year of his departure is uncertain; the relationship was substantially disrupted by his abandonment of the household."
-    },
-    {
-      "person_name": "Nicholas Cruger",
-      "relationship_type": "professional/employer",
-      "relationship_description": "Merchant associated with Beekman and Cruger, the Saint Croix import-export firm where teenage Hamilton worked as a clerk and was trusted to manage operations while an owner was absent.",
-      "start_year": 1768,
-      "end_year": 1772,
-      "strength": "moderate",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Import-export business in Saint Croix",
-        "Commercial bookkeeping and management",
-        "Early mercantile training"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
-      ],
-      "notes": "Hamilton's early responsibility in the firm contributed to his later financial and administrative competence."
-    },
-    {
-      "person_name": "Hugh Knox",
-      "relationship_type": "professional/mentor",
-      "relationship_description": "Presbyterian minister, tutor, and early mentor in Saint Croix who submitted Hamilton's vivid 1772 hurricane letter for publication, helping prompt local patrons to fund his education in North America.",
-      "start_year": 1771,
-      "end_year": 1772,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Tutoring and intellectual mentorship",
-        "Publication of Hamilton's hurricane account",
-        "Mobilizing support for Hamilton's educational migration"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
-      ],
-      "notes": "Knox's intervention was pivotal to Hamilton's departure from Saint Croix."
-    },
-    {
-      "person_name": "Hercules Mulligan",
-      "relationship_type": "social/friend",
-      "relationship_description": "Irish-born New York merchant and early host who boarded Hamilton when he first arrived in New York, assisted him with educational finances, and remained a Revolutionary-era associate.",
-      "start_year": 1772,
-      "end_year": 1804,
-      "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Hamilton's lodging in New York",
-        "Selling cargo to fund Hamilton's education",
-        "Hearts of Oak and Sons of Liberty activities"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/Hercules_Mulligan"
-      ],
-      "notes": "Hamilton again boarded with Mulligan while beginning his studies at King's College."
-    },
-    {
-      "person_name": "Robert Troup",
-      "relationship_type": "social/friend",
-      "relationship_description": "Hamilton's King's College roommate, fellow member of an early literary society, and lifelong friend who recalled Hamilton's early public defense of the Patriot cause.",
-      "start_year": 1774,
-      "end_year": 1804,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "King's College studies",
-        "Unnamed literary society preceding the Philolexian Society",
-        "Patriot political discussion and Revolutionary-era friendship"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
-      ],
-      "notes": "Troup's testimony is a key source for Hamilton's early public reputation as a persuasive Patriot speaker."
-    },
-    {
-      "person_name": "Samuel Seabury",
-      "relationship_type": "professional/opponent",
-      "relationship_description": "Loyalist Anglican clergyman and pamphleteer whose writings Hamilton anonymously rebutted in 1774, launching Hamilton's public political-writing career.",
-      "start_year": 1774,
-      "end_year": 1774,
-      "strength": "moderate",
-      "interaction_frequency": "rare",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Public pamphlet controversy over the Patriot and Loyalist causes",
-        "Hamilton's A Full Vindication of the Measures of Congress",
-        "Hamilton's The Farmer Refuted"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/Samuel_Seabury"
-      ],
-      "notes": "Their relationship was an adversarial intellectual exchange rather than a personal association."
-    },
-    {
-      "person_name": "John Jay",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "New York legal and political associate who worked with Hamilton in the Revolutionary movement, constitutional ratification campaign, and Federalist political network.",
-      "start_year": 1775,
-      "end_year": 1804,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "New York Patriot politics",
-        "Federalist Papers authorship",
-        "Federalist Party and national political affairs"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
-      ],
-      "notes": "Hamilton supported the Jay Treaty as part of his broader pro-British commercial and diplomatic policy."
-    },
-    {
-      "person_name": "John Laurens",
-      "relationship_type": "social/friend",
-      "relationship_description": "A fellow Continental Army officer and one of Hamilton's closest Revolutionary War friends. Their surviving correspondence reflects an intense and affectionate friendship, while claims of a sexual relationship remain unsubstantiated.",
-      "start_year": 1777,
-      "end_year": 1782,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Continental Army service",
-        "Washington's military circle",
-        "Correspondence on war, politics, and Laurens's antislavery military proposals"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/John_Laurens"
-      ],
-      "notes": "Hamilton mourned Laurens's 1782 death deeply."
-    },
-    {
-      "person_name": "George Washington",
-      "relationship_type": "professional/commander",
-      "relationship_description": "Continental Army commander-in-chief who selected Hamilton as an aide-de-camp in 1777 and later appointed him secretary of the treasury. Their relationship combined close professional trust, intermittent tension, and lasting political influence.",
-      "start_year": 1777,
-      "end_year": 1799,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Continental Army headquarters staff work",
-        "Revolutionary War strategy, correspondence, intelligence, and diplomacy",
-        "First presidential cabinet",
-        "Federal financial system and national-government building"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/George_Washington"
-      ],
-      "notes": "Hamilton left Washington's staff in 1781 seeking field command, but later fought under him at Yorktown."
-    },
-    {
-      "person_name": "Marquis de Lafayette",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "French-born Continental Army general and a close Revolutionary War correspondent of Hamilton. They worked within Washington’s command network and during the Yorktown campaign.",
-      "start_year": 1777,
-      "end_year": 1804,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Continental Army officer corps",
-        "Revolutionary War correspondence",
-        "Franco-American military cooperation",
-        "Siege of Yorktown"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/Siege_of_Yorktown"
-      ],
-      "notes": "Hamilton's letters to Lafayette have been read differently by historians; the supplied text does not establish a sexual relationship."
+      "notes": "She supported the family through property and a small store in Christiansted.",
+      "relationship_type": "family/mother"
     },
     {
       "person_name": "Elizabeth Schuyler Hamilton",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Hamilton’s wife, with whom he raised eight children. They reconciled after the Reynolds affair, and after his death she preserved his papers and defended his legacy.",
-      "start_year": 1780,
-      "end_year": 1804,
+      "relationship_description": "Elizabeth Schuyler Hamilton was Hamilton's wife and the center of his household through war, public service, and scandal. After his death, she preserved his papers and worked to protect his reputation.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Marriage and parenting",
-        "Revolutionary War correspondence",
-        "Assistance with Hamilton's political and financial writings",
-        "Managing homes in Albany, New York, and Philadelphia"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alexander_Hamilton",
         "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton"
       ],
-      "notes": "Eliza survived Hamilton by 50 years and worked to preserve his papers and public reputation."
+      "notes": "Elizabeth assisted with his political writing, sustained the household through his public career, and preserved his papers and reputation after his death.",
+      "relationship_type": "family/spouse"
     },
     {
       "person_name": "Philip Schuyler",
-      "relationship_type": "family/father_in_law",
-      "relationship_description": "Elizabeth Hamilton's father, Continental Army general, New York political leader, and an important connection to Hamilton's entry into the Schuyler social and political network.",
-      "start_year": 1780,
-      "end_year": 1804,
+      "relationship_description": "Philip Schuyler was Elizabeth Hamilton's father and a Continental Army general. Hamilton's marriage into the Schuyler family connected him to an influential New York military and political circle.",
       "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Hamilton's courtship and marriage to Elizabeth at the Schuyler Mansion",
-        "Federalist and New York political networks",
-        "Family gatherings and shared public life"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alexander_Hamilton",
         "https://en.wikipedia.org/wiki/Philip_Schuyler"
       ],
-      "notes": "Hamilton's political support for Federalism aligned closely with his father-in-law's positions; Aaron Burr defeated Schuyler for a Senate seat in 1791."
-    },
-    {
-      "person_name": "Catherine Van Rensselaer Schuyler",
-      "relationship_type": "family/mother_in_law",
-      "relationship_description": "Elizabeth Hamilton’s mother and matriarch of the Schuyler household, where Hamilton married Eliza and joined a prominent New York family.",
-      "start_year": 1780,
-      "end_year": 1803,
-      "strength": "moderate",
-      "interaction_frequency": "yearly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Marriage at Schuyler Mansion",
-        "Extended Schuyler-Hamilton family life",
-        "Care and support for Elizabeth during wartime and family separations"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton"
-      ],
-      "notes": "She died in 1803, shortly before Hamilton's death."
+      "notes": "Burr's 1791 Senate victory over Schuyler sharpened the political hostility between Burr and Hamilton.",
+      "relationship_type": "family/father_in_law"
     },
     {
       "person_name": "Philip Hamilton",
-      "relationship_type": "family/child",
-      "relationship_description": "Hamilton's eldest child, named for Philip Schuyler. His fatal 1801 duel with George Eacker caused profound grief for Hamilton and the family.",
-      "start_year": 1782,
-      "end_year": 1801,
+      "relationship_description": "Hamilton's eldest child, Philip, was born in 1782 and was killed in a duel with George Eacker in 1801. Hamilton and Elizabeth remained at their son's side as he died.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Family life and education",
-        "Legal studies encouraged by Hamilton",
-        "Advice before Philip's duel with George Eacker"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton",
         "https://en.wikipedia.org/wiki/Philip_Hamilton"
       ],
-      "notes": "Philip's death near Weehawken preceded Hamilton's fatal duel at the same general location by less than three years."
+      "notes": "Philip's death deeply affected Hamilton and preceded Hamilton's own fatal duel by less than three years.",
+      "relationship_type": "family/son"
+    },
+    {
+      "person_name": "George Washington",
+      "relationship_description": "Washington brought Hamilton onto his headquarters staff in 1777 and relied on him for military correspondence and planning. He later chose Hamilton as the first secretary of the Treasury.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://de.wikipedia.org/wiki/George_Washington"
+      ],
+      "notes": "Washington's trust gave Hamilton access to military and national political leadership despite his outsider background.",
+      "relationship_type": "professional/superior"
     },
     {
       "person_name": "James Madison",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Early collaborator in the movement for constitutional reform and co-author of The Federalist Papers, who later became one of Hamilton's principal ideological opponents over finance, federal power, and party politics.",
-      "start_year": 1786,
-      "end_year": 1804,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Annapolis Convention and constitutional reform",
-        "Constitutional Convention",
-        "The Federalist Papers",
-        "Early national political debates"
-      ],
+      "relationship_description": "Madison worked with Hamilton on constitutional reform and joined him and John Jay in writing The Federalist Papers. Their alliance broke down over Hamilton's financial program and the opposing parties that emerged in the 1790s.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)",
+        "https://de.wikipedia.org/wiki/James_Madison",
         "https://en.wikipedia.org/wiki/Annapolis_Convention_(1786)"
       ],
-      "notes": "Their cooperation on the Constitution gave way to rivalry as Madison joined Jefferson in organizing opposition to Hamilton's Federalist program."
+      "notes": "Their constitutional collaboration gave way to major conflict over Hamilton's financial program and the emerging party system.",
+      "relationship_type": "professional/collaborator"
     },
     {
-      "person_name": "John Adams",
-      "relationship_type": "professional/political_rival",
-      "relationship_description": "Federalist president whose handling of the Quasi-War Hamilton criticized. Adams appointed Hamilton major general, but Hamilton later opposed Adams's 1800 reelection.",
-      "start_year": 1789,
-      "end_year": 1804,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Federalist Party politics",
-        "Quasi-War military planning",
-        "Presidential election of 1800"
+      "person_name": "John Jay",
+      "relationship_description": "Hamilton and Jay collaborated as authors of The Federalist Papers during the New York ratification campaign of 1787–1788. Jay also helped Hamilton gain a Revolutionary War artillery commission through his New York political connections.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
       ],
+      "notes": "Their alliance joined constitutional advocacy to the Federalist political network in New York.",
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Hugh Knox",
+      "relationship_description": "The Presbyterian minister tutored and mentored the young Hamilton in Saint Croix. In 1772, Knox submitted Hamilton's hurricane letter for publication in the Royal Danish-American Gazette, helping inspire local support for Hamilton's education in North America.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "notes": "Knox's intervention helped turn Hamilton's writing ability into an opportunity to leave Saint Croix.",
+      "relationship_type": "professional/mentor"
+    },
+    {
+      "person_name": "Hercules Mulligan",
+      "relationship_description": "Hamilton boarded with Mulligan after arriving in New York in 1772 and again while preparing for and entering King's College. Mulligan also assisted him in selling cargo intended to fund his education.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "notes": "Mulligan provided practical support during Hamilton's crucial migration from Saint Croix to New York.",
+      "relationship_type": "social/friend"
+    },
+    {
+      "person_name": "John Laurens",
+      "relationship_description": "Laurens and Hamilton became close friends as fellow officers on George Washington's staff during the Revolutionary War. They corresponded during periods of separation and shared strong commitments to the American cause.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/John_Adams"
+        "https://en.wikipedia.org/wiki/John_Laurens"
       ],
-      "notes": "Hamilton's opposition to Adams contributed to divisions within the Federalist Party."
+      "notes": "Laurens's death in 1782 ended one of Hamilton's most emotionally important wartime friendships.",
+      "relationship_type": "social/friend"
     },
     {
       "person_name": "Thomas Jefferson",
-      "relationship_type": "professional/political_rival",
-      "relationship_description": "Secretary of state in Washington's cabinet and leader of the Democratic-Republicans. Jefferson opposed Hamilton's financial program, but Hamilton nevertheless backed Jefferson over Burr in the disputed presidential election of 1800.",
-      "start_year": 1790,
-      "end_year": 1804,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Washington cabinet",
-        "Debates over finance, federal authority, and foreign policy",
-        "Election of 1800"
-      ],
+      "relationship_description": "Jefferson served with Hamilton in Washington's first cabinet and opposed Hamilton's financial program. Their conflict helped define the Federalist and Democratic-Republican parties.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Alexander_Hamilton",
         "https://en.wikipedia.org/wiki/Thomas_Jefferson"
       ],
-      "notes": "Hamilton regarded Jefferson as a political adversary but considered Burr more dangerous and unprincipled."
+      "notes": "Despite their philosophical conflict, Hamilton supported Jefferson over Burr in the contingent presidential election of 1800.",
+      "relationship_type": "political/opponent"
     },
     {
       "person_name": "Aaron Burr",
-      "relationship_type": "professional/political_rival",
-      "relationship_description": "New York political rival whose conflict with Hamilton culminated in the 1804 duel at Weehawken. Burr fatally wounded Hamilton after years of electoral, legal, and personal antagonism.",
-      "start_year": 1791,
-      "end_year": 1804,
+      "relationship_description": "Burr was Hamilton's New York legal and political adversary. Hamilton opposed Burr in the presidential contest of 1800 and the New York governor's race of 1804. Their conflict ended when Burr challenged Hamilton to a duel.",
       "strength": "strong",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "New York legal and political competition",
-        "Election of 1800",
-        "New York gubernatorial election of 1804",
-        "Burr-Hamilton duel"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alexander_Hamilton",
         "https://en.wikipedia.org/wiki/Burr%E2%80%93Hamilton_duel"
       ],
-      "notes": "Hamilton's opposition to Burr's election in 1800 and candidacy for New York governor in 1804 intensified their long-running rivalry."
+      "notes": "Their long-running political antagonism culminated in one of the most consequential duels in American history.",
+      "relationship_type": "political/adversary"
     },
     {
-      "person_name": "Maria Reynolds",
-      "relationship_type": "social/romantic_partner",
-      "relationship_description": "Hamilton's mistress in Philadelphia during 1791–1792. Her husband, James Reynolds, used the affair to extort payments from Hamilton, leading to a major public scandal when Hamilton published the Reynolds Pamphlet in 1797.",
-      "start_year": 1791,
-      "end_year": 1792,
+      "person_name": "James A. Hamilton",
+      "relationship_description": "Hamilton's father lived with Rachel Faucette and their sons in the Caribbean before abandoning the family during Hamilton's childhood. Hamilton later wrote him a detailed account of the 1772 Saint Croix hurricane.",
       "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Extramarital relationship in Philadelphia",
-        "Correspondence",
-        "Financial extortion by James Reynolds"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Maria_Reynolds",
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "notes": "His departure contributed to the family's poverty and insecurity.",
+      "relationship_type": "family/father"
+    },
+    {
+      "person_name": "James Hamilton Jr.",
+      "relationship_description": "Hamilton's older brother shared his childhood in Nevis and Saint Croix and was orphaned with him after their mother's death in 1768. The brothers were later separated when James apprenticed to a carpenter.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "notes": "Their early lives were shaped by the same precarious household circumstances.",
+      "relationship_type": "family/brother"
+    },
+    {
+      "person_name": "Catherine Van Rensselaer Schuyler",
+      "relationship_description": "Catherine Van Rensselaer Schuyler was Elizabeth Hamilton's mother and part of the Albany household Hamilton joined through marriage. She belonged to the Schuyler family circle that became Hamilton's extended family in New York.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
         "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton"
       ],
-      "notes": "Hamilton's public admission of the affair was meant to rebut allegations of financial misconduct in office."
+      "notes": "Her household formed part of Hamilton's extended family setting during and after the Revolution.",
+      "relationship_type": "family/mother_in_law"
+    },
+    {
+      "person_name": "Richard Harison",
+      "relationship_description": "After the Revolutionary War, Hamilton returned to New York City and began a legal practice in partnership with Richard Harison in 1783.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "notes": "Their practice represented Hamilton's transition from military service into law and New York commercial life.",
+      "relationship_type": "professional/business_partner"
+    },
+    {
+      "person_name": "Angelica Schuyler Church",
+      "relationship_description": "Angelica Schuyler Church was Elizabeth Hamilton's older sister and a member of Hamilton's close family circle. She and Hamilton maintained a substantial surviving correspondence.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Angelica_Schuyler_Church",
+        "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton"
+      ],
+      "notes": "Their surviving letters have prompted speculation about romance, but the documented relationship clearly includes close family friendship and correspondence.",
+      "relationship_type": "social/correspondent"
+    },
+    {
+      "person_name": "John Adams",
+      "relationship_description": "Hamilton opposed President John Adams's reelection campaign in 1800, publicly attacking Adams's leadership and contributing to the division of the Federalist Party. Adams's approach to France and the Quasi-War was a central point of contention.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/John_Adams"
+      ],
+      "notes": "Their conflict damaged Federalist unity and helped clear the path for Jefferson's victory in 1800.",
+      "relationship_type": "political/political_rival"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Hamilton's early family life was marked by his parents' nonmarital relationship, his father's departure, and the death of his mother, which left him orphaned. His later marriage to Elizabeth Schuyler integrated him into the influential Schuyler family and provided a lasting household and intellectual partnership."
+      "summary": "Hamilton's family life began in a precarious Caribbean household. Rachel Faucette's death left him and James Jr. without parents. His 1780 marriage brought him into the Schuyler family of New York, and Elizabeth Hamilton managed their household through his public career and preserved his papers after his death."
     },
     {
       "relationship_type": "professional",
-      "summary": "Hamilton's professional network joined military patronage, constitutional collaboration, financial administration, and sharp party conflict. Washington was the central patron and collaborator, while Madison, Jefferson, Adams, Burr, and others became consequential allies or adversaries in the politics of the early republic."
+      "summary": "Hamilton's professional circle carried him from Saint Croix to national office. Hugh Knox and Hercules Mulligan helped him reach New York, while Washington gave him responsibility at Continental Army headquarters and later the Treasury. Work with Madison and Jay during the ratification campaign joined his legal, military, and constitutional careers."
     },
     {
       "relationship_type": "social",
-      "summary": "Hamilton's personal network included formative hosts and lifelong friends such as Hercules Mulligan, Robert Troup, and John Laurens. It also included consequential intimate relationships, most notably the Reynolds affair, whose public disclosure damaged his reputation and affected his marriage."
+      "summary": "Hamilton's friendships helped him enter New York life and endure the Revolution. Mulligan gave practical support when Hamilton arrived from Saint Croix. John Laurens became a close wartime friend, and correspondence with the Schuyler circle kept family and political life closely connected."
+    },
+    {
+      "relationship_type": "political",
+      "summary": "Hamilton's political opponents shaped the conflicts of the new republic. Disputes with Jefferson and Madison over public finance helped form rival national parties. His break with John Adams divided the Federalists, and his opposition to Burr's 1804 candidacy led to the dispute that ended in their duel."
     }
   ]
 }

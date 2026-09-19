@@ -1,315 +1,219 @@
 {
-  "dataset": "Wikipedia ego network: Abigail Adams",
-  "created_on": "2026-07-19",
+  "dataset": "Abigail Adams ego network",
+  "created_on": "2026-09-19",
   "ego": {
     "name": "Abigail Adams",
     "birth_year": 1744,
     "death_year": 1818,
     "primary_roles": [
-      "Schriftstellerin",
       "politische Beraterin",
-      "First Lady",
-      "Haushaltsleiterin"
+      "Schriftstellerin",
+      "First Lady"
     ],
-    "summary": "Abigail Adams war eine amerikanische Schriftstellerin, Haushaltsleiterin und einflussreiche politische Vertraute ihres Mannes, des Präsidenten John Adams. Ihr umfangreicher Briefwechsel dokumentierte die Auswirkungen der Revolution auf das Leben an der Heimatfront, das Familienleben, die Rechte der Frauen und die politischen Verhältnisse in den frühen Vereinigten Staaten.",
+    "summary": "Abigail Adams war eine amerikanische Schriftstellerin, politische Beraterin und First Lady. Ihr umfangreicher Briefwechsel dokumentiert die Amerikanische Revolution und die frühe Republik. Während der öffentlichen Laufbahn ihres Mannes John Adams führte sie Haushalt und Finanzen der Familie, beriet ihn in politischen Fragen und setzte sich für bessere rechtliche und schulische Möglichkeiten für Frauen ein.",
     "wikipedia": "https://en.wikipedia.org/wiki/Abigail_Adams"
   },
   "connections": [
     {
       "person_name": "William Smith",
-      "relationship_type": "family/father",
-      "relationship_description": "Abigails Vater war ein liberaler kongregationalistischer Geistlicher. Er traute sie 1764 und seine Bibliothek unterstützte ihre weitgehend autodidaktische Bildung.",
-      "start_year": 1744,
-      "end_year": 1784,
+      "relationship_description": "Ihr Vater war ein liberaler kongregationalistischer Geistlicher in Weymouth. Er traute Abigail und John Adams 1764, und die Bibliotheken der Familie förderten ihre Bildung.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Familienleben in Weymouth und Braintree",
-        "Zugang zu den Familienbibliotheken",
-        "ihre Trauung mit John Adams"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
-      "notes": "Er starb 1784, kurz nachdem Abigail nach Europa gereist war."
+      "notes": "Mit Elizabeth Quincy Smith hatte er vier Kinder, darunter Abigail.",
+      "relationship_type": "family/father"
     },
     {
       "person_name": "Elizabeth Quincy Smith",
-      "relationship_type": "family/mother",
-      "relationship_description": "Ihre Mutter brachte Abigail das Lesen, Schreiben und Rechnen bei und legte damit den Grundstein für ihre weitgehend informelle Bildung.",
-      "start_year": 1744,
-      "end_year": 1775,
+      "relationship_description": "Ihre Mutter lehrte Abigail und ihre Schwestern lesen, schreiben und rechnen, nachdem Abigail wegen einer Krankheit keine reguläre Schule besuchen konnte.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Bildung in der Kindheit",
-        "Familienleben in Weymouth und Braintree",
-        "Unterstützung des Smith-Haushalts"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
-      "notes": "Elizabeth Quincy Smith starb im Oktober 1775."
-    },
-    {
-      "person_name": "Mary Smith Cranch",
-      "relationship_type": "family/sibling",
-      "relationship_description": "Mary war Abigails ältere Schwester. Ihre Beziehung zu Richard Cranch und die anschließende Heirat brachten John Adams in den Haushalt der Smiths, wo Abigail und John einander erstmals begegneten.",
-      "start_year": 1744,
-      "end_year": 1811,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Familienleben der Smiths",
-        "das weitverzweigte Familiennetz von Cranch und Adams",
-        "Briefwechsel und Familienangelegenheiten"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Abigail_Adams",
-        "https://en.wikipedia.org/wiki/John_Adams"
-      ],
-      "notes": "Mary und Richard Cranch waren die Eltern des Bundesrichters William Cranch."
+      "notes": "Elizabeth stammte aus der politisch einflussreichen Familie Quincy.",
+      "relationship_type": "family/mother"
     },
     {
       "person_name": "John Adams",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Abigails Ehemann, geistiger Weggefährte und engster politischer Briefpartner: In ihren Briefen verbanden sich Familienleben und anhaltende Erörterungen über Regierung und öffentliche Angelegenheiten.",
-      "start_year": 1759,
-      "end_year": 1818,
+      "relationship_description": "Abigail heiratete John Adams 1764. In ihren Briefen verbanden sie Familienangelegenheiten mit Gesprächen über Politik und Staatsführung, während seine öffentlichen Aufgaben sie oft trennten.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Ehe und die Erziehung von sechs Kindern",
-        "Führung der Haushalte in Braintree und Quincy",
-        "umfangreicher politischer und persönlicher Briefwechsel",
-        "diplomatisches Leben in Paris und London",
-        "öffentliches Leben als Vizepräsident und Präsident"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams",
         "https://en.wikipedia.org/wiki/John_Adams"
       ],
-      "notes": "Sie heirateten am 25. Oktober 1764. Abigails Brief vom März 1776 mit dem Appell „Remember the Ladies“ war an John gerichtet, während er im Kontinentalkongress tätig war."
-    },
-    {
-      "person_name": "Richard Cranch",
-      "relationship_type": "family/brother_in_law",
-      "relationship_description": "Richard Cranch, der Ehemann von Abigails Schwester Mary, machte John Adams 1759 während seiner Werbung um Mary mit dem Haushalt der Smiths bekannt. Danach blieb er Teil von Abigails weitverzweigtem Familiennetz.",
-      "start_year": 1759,
-      "end_year": 1811,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "das Kennenlernen von Abigail Smith und John Adams",
-        "Treffen und Briefwechsel der Großfamilie"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Abigail_Adams",
-        "https://en.wikipedia.org/wiki/John_Adams"
-      ],
-      "notes": "Seine Verbindung zu Abigail war sowohl familiärer Natur als auch für den Beginn der Ehe von Abigail und John Adams von Bedeutung."
+      "notes": "Ihre sechs Kinder und die langen Zeiten der Trennung überließen Abigail wichtige Entscheidungen zu Haushalt, Hof und Finanzen.",
+      "relationship_type": "family/spouse"
     },
     {
       "person_name": "Abigail Adams Smith",
-      "relationship_type": "family/child",
-      "relationship_description": "Abigails ältestes Kind, bekannt als Nabby, begleitete ihre Mutter 1784 nach Europa und blieb ein wichtiger Mittelpunkt ihrer mütterlichen Fürsorge. Abigail stand Nabby während ihrer letzten Krankheit bei, bevor diese an Brustkrebs starb.",
-      "start_year": 1765,
-      "end_year": 1813,
+      "relationship_description": "Ihre älteste Tochter, bekannt als Nabby, reiste 1784 mit Abigail nach Paris. Während ihrer letzten Krankheit 1813 pflegte Abigail sie im Haus der Familie in Quincy.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Kindererziehung und moralische Bildung",
-        "Reise nach Paris und Aufenthalt in London",
-        "Familienleben im Haushalt in Quincy",
-        "Fürsorge während Nabbys Krankheit"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams",
         "https://en.wikipedia.org/wiki/Abigail_Adams_Smith"
       ],
-      "notes": "Nabby wurde nach ihrer Mutter benannt und starb 1813."
+      "notes": "Abigail stand Nabby während ihrer Krankheit bei. Nabby starb 1813.",
+      "relationship_type": "family/daughter"
     },
     {
       "person_name": "John Quincy Adams",
-      "relationship_type": "family/child",
-      "relationship_description": "Abigails ältester Sohn wurde der sechste Präsident der Vereinigten Staaten. Sie überwachte einen großen Teil seiner frühen Erziehung, reiste 1784 gemeinsam mit ihm und John Adams nach Europa, verfolgte seine öffentliche Laufbahn aufmerksam und kümmerte sich während seiner Auslandsaufträge um mehrere seiner Kinder.",
-      "start_year": 1767,
-      "end_year": 1818,
+      "relationship_description": "Ihr ältester Sohn kam 1784 zu seinen Eltern nach Paris, nachdem er zuvor mit John Adams durch Europa gereist war. Später half Abigail bei der Betreuung seiner Kinder, als er als Gesandter in Russland tätig war.",
       "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Bildung und Briefwechsel innerhalb der Familie",
-        "diplomatisches Familienleben in Paris und London",
-        "Erörterung politischer Angelegenheiten",
-        "Betreuung der Kinder von John Quincy Adams während seines Einsatzes in Russland"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams",
         "https://en.wikipedia.org/wiki/John_Quincy_Adams"
       ],
-      "notes": "Abigail prägte ihn in seiner Kindheit maßgeblich, zu einer Zeit, in der John Adams häufig wegen öffentlicher Aufgaben abwesend war."
-    },
-    {
-      "person_name": "Susanna Adams",
-      "relationship_type": "family/child",
-      "relationship_description": "Susanna, genannt Suky, war die zweite Tochter von Abigail und John Adams. Abigail kümmerte sich während ihres kurzen Lebens um sie, bevor das Kind im Säuglingsalter starb.",
-      "start_year": 1768,
-      "end_year": 1770,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "frühes Familienleben in Massachusetts",
-        "mütterliche Fürsorge und Erziehung"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Abigail_Adams"
-      ],
-      "notes": "Susanna starb im Alter von etwa einem Jahr."
+      "notes": "Später betreute Abigail mehrere Kinder von John Quincy Adams, als er als Gesandter in Russland tätig war.",
+      "relationship_type": "family/son"
     },
     {
       "person_name": "Charles Adams",
-      "relationship_type": "family/child",
-      "relationship_description": "Charles war Abigails zweiter Sohn und Teil des frühen Familienlebens der Adams in Massachusetts und Europa.",
-      "start_year": 1770,
-      "end_year": 1800,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Kindererziehung und Bildung",
-        "Briefwechsel innerhalb der Familie",
-        "Fürsorge für Charles’ Tochter Susanna während der Präsidentschaft von John Adams"
-      ],
+      "relationship_description": "Ihr Sohn litt unter Alkoholismus und starb 1800. Kurz vor seinem Tod brachte Abigail seine Tochter Susanna in die Präsidentenresidenz und kümmerte sich weiter um sie.",
+      "strength": "strong",
       "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams",
         "https://en.wikipedia.org/wiki/Charles_Adams_(1770%E2%80%931800)"
       ],
-      "notes": "Charles starb 1800 in New York City."
+      "notes": "Charles starb im November 1800 in New York und hinterließ kleine Töchter, für die Abigail die Verantwortung übernahm.",
+      "relationship_type": "family/son"
     },
     {
-      "person_name": "Mercy Otis Warren",
-      "relationship_type": "social/friend",
-      "relationship_description": "Mercy Otis Warren war eine politisch engagierte Schriftstellerin und eine von Abigail Adams’ engen Briefpartnerinnen in der Revolutionszeit. Ihre Freundschaft verband Abigail mit einem größeren Netzwerk von Frauen, die an der politischen Kultur der Patrioten teilnahmen.",
-      "start_year": 1770,
-      "end_year": 1814,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Briefwechsel",
-        "politische Diskussionen der Patrioten",
-        "literarische und politische Netzwerke von Frauen während der Revolution"
-      ],
+      "person_name": "Susanna Adams",
+      "relationship_description": "Susanna war die Tochter von Charles Adams. Kurz vor Charles’ Tod 1800 brachte Abigail sie in die Präsidentenresidenz und zog sie danach weiter groß.",
+      "strength": "strong",
       "sources": [
-        "https://en.wikipedia.org/wiki/Mercy_Otis_Warren",
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/Charles_Adams_(1770%E2%80%931800)"
+      ],
+      "notes": "Nach dem Tod ihres Vaters kümmerte sich Abigail um Susanna und übernahm damit Verantwortung für die Familie von Charles.",
+      "relationship_type": "family/grandchild"
+    },
+    {
+      "person_name": "Mary Jefferson Eppes",
+      "relationship_description": "1785 betreute Abigail in London vorübergehend Mary, die als Polly bekannte Tochter von Thomas Jefferson. Sie behielt eine tiefe Zuneigung zu ihr.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Marys Tod veranlasste Abigail später, den Briefwechsel mit Thomas Jefferson wieder aufzunehmen.",
+      "relationship_type": "social/ward"
+    },
+    {
+      "person_name": "Mary Smith Cranch",
+      "relationship_description": "Ihre ältere Schwester verlobte sich 1759 mit Richard Cranch. Durch Cranchs Besuch bei John Adams kamen Abigail und John in denselben gesellschaftlichen Kreis.",
+      "strength": "moderate",
+      "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
-      "notes": "Zu Warrens Briefnetzwerk gehörten Abigail Adams, Martha Washington und Hannah Winthrop."
+      "notes": "Während der Präsidentschaft von John Adams schrieb Abigail Mary später politisch fundierte Briefe.",
+      "relationship_type": "family/sister"
     },
     {
-      "person_name": "Thomas Boylston Adams",
-      "relationship_type": "family/child",
-      "relationship_description": "Thomas war Abigails jüngster überlebender Sohn. Er wuchs im Haushalt der Adams auf und erlebte die diplomatischen Jahre der Familie in Europa mit.",
-      "start_year": 1772,
-      "end_year": 1818,
+      "person_name": "Richard Cranch",
+      "relationship_description": "Richard Cranch warb 1759 um Abigail’ Schwester Mary Smith. Er brachte John Adams in das Haus der Smiths, wo John Abigail erstmals begegnete.",
       "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Erziehung in der Kindheit",
-        "Familienaufenthalt in London",
-        "Haushalt der Adams und Briefwechsel innerhalb der Familie"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams",
         "https://en.wikipedia.org/wiki/John_Adams"
       ],
-      "notes": "Seine Schwierigkeiten als Erwachsener, darunter seine Alkoholabhängigkeit, waren eine Quelle der Sorge für die weitverzweigte Familie Adams."
+      "notes": "Seine Werbung um Mary Smith schuf die unmittelbare gesellschaftliche Verbindung, über die Abigail John Adams kennenlernte.",
+      "relationship_type": "family/brother_in_law"
     },
     {
-      "person_name": "Elizabeth Adams",
-      "relationship_type": "family/child",
-      "relationship_description": "Elizabeth war das sechste Kind von Abigail und John Adams und wurde 1777 tot geboren. Ihr Tod gehörte zu den frühen Schicksalsschlägen der Familie.",
-      "start_year": 1777,
-      "end_year": 1777,
-      "strength": "strong",
-      "interaction_frequency": "rare",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Schwangerschaft und Geburt in der Familie Adams"
+      "person_name": "Thomas Boylston Adams",
+      "relationship_description": "Thomas war der jüngste überlebende Sohn von Abigail und John Adams. Während des Unabhängigkeitskriegs und John Adams’ öffentlicher Tätigkeit gehörte er zu den Kindern, für die Abigail Haushalt und Familienleben organisierte.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams",
+        "https://en.wikipedia.org/wiki/John_Adams"
       ],
+      "notes": "Während einiger Jahre ihrer diplomatischen Zeit in Europa reiste er mit der Familie Adams.",
+      "relationship_type": "family/son"
+    },
+    {
+      "person_name": "William Smith Jr.",
+      "relationship_description": "Abigail nahm die Kinder ihres Bruders William Smith Jr. in der Präsidentenresidenz auf, weil ihr Vater unter Alkoholismus litt.",
+      "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
-      "notes": "Sie wurde tot geboren."
+      "notes": "Mit der Betreuung seiner Kinder gingen ihre mütterlichen Aufgaben über den eigenen Haushalt hinaus.",
+      "relationship_type": "family/brother"
     },
     {
-      "person_name": "Mary Jefferson Eppes",
-      "relationship_type": "social/ward",
-      "relationship_description": "Mary Jefferson, bekannt als Polly, war die junge Tochter von Thomas Jefferson. Abigail kümmerte sich in London vorübergehend um sie und entwickelte eine tiefe, dauerhafte Zuneigung zu ihr.",
-      "start_year": 1785,
-      "end_year": 1787,
-      "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "vorübergehende Vormundschaft in London",
-        "Fürsorge im diplomatischen Haushalt der Adams"
+      "person_name": "John Shaw",
+      "relationship_description": "Während der Präsidentschaft von John Adams nahm Abigail die Kinder ihres Schwagers John Shaw in die Präsidentenresidenz auf, weil ihr Vater unter Alkoholismus litt.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
       ],
+      "notes": "Durch die Betreuung seiner Kinder wuchs der Haushalt der Adams während der Präsidentschaft von John Adams.",
+      "relationship_type": "family/brother_in_law"
+    },
+    {
+      "person_name": "George Washington Adams",
+      "relationship_description": "Abigail half bei der Erziehung von George Washington Adams und dessen Geschwistern, während John Quincy Adams als Gesandter der Vereinigten Staaten in Russland tätig war.",
+      "strength": "moderate",
       "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams",
-        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+        "https://en.wikipedia.org/wiki/John_Quincy_Adams"
       ],
-      "notes": "Abigails Zuneigung zu Polly trug später dazu bei, dass sie nach deren Tod den Briefwechsel mit Thomas Jefferson wieder aufnahm."
+      "notes": "Ihr Haushalt blieb auch in ihren späteren Jahren ein Ort der Fürsorge für mehrere Generationen.",
+      "relationship_type": "family/grandchild"
+    },
+    {
+      "person_name": "Cotton Tufts",
+      "relationship_description": "Abigails Onkel Cotton Tufts verwaltete ab 1777 ihre Kriegsinvestitionen in Schuldtiteln der Revolution.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Abigail_Adams"
+      ],
+      "notes": "Er verwaltete die Investitionen, die Abigail tätigte, während sie während des Unabhängigkeitskriegs den Hof und Haushalt der Adams führte.",
+      "relationship_type": "business/advisor"
     },
     {
       "person_name": "Thomas Jefferson",
-      "relationship_type": "professional/correspondent",
-      "relationship_description": "Ein bedeutender politischer Zeitgenosse, dessen Verhältnis zu Abigail durch familiäre Verluste und die spätere Aussöhnung zwischen John Adams und Jefferson geprägt war.",
-      "start_year": 1804,
-      "end_year": 1818,
+      "relationship_description": "Abigail betreute 1785 Jeffersons Tochter Mary in London. Später unterstützte sie 1812 den wieder aufgenommenen Briefwechsel von John Adams mit Jefferson.",
       "strength": "moderate",
-      "interaction_frequency": "yearly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Briefwechsel nach dem Tod von Maria Jefferson Eppes",
-        "gemeinsame politische Welt der Revolution und der frühen Republik",
-        "Austausch über Maria Jefferson Eppes und die Erinnerung an sie"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Abigail_Adams",
         "https://en.wikipedia.org/wiki/Thomas_Jefferson"
       ],
-      "notes": "Ihr erneuter Austausch setzte nach Jahren politischer und persönlicher Distanz zwischen den Familien Adams und Jefferson ein."
+      "notes": "Ihre Beziehung verband die persönliche Zuneigung zu Mary mit Spannungen, die aus Jeffersons Opposition gegen John Adams entstanden.",
+      "relationship_type": "social/friend"
+    },
+    {
+      "person_name": "Mercy Otis Warren",
+      "relationship_description": "Abigail Adams und Mercy Otis Warren gehörten zu einem Kreis von Frauen der Revolutionszeit, die über Politik, Schreiben und öffentliche Angelegenheiten korrespondierten.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Mercy_Otis_Warren"
+      ],
+      "notes": "Ihr Briefwechsel verband zwei bedeutende Schriftstellerinnen in der politischen Welt der Patrioten.",
+      "relationship_type": "social/correspondent"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Die Familie bildete den Mittelpunkt von Abigail Adams’ Leben: Ihre Mutter prägte ihre Bildung, John Adams war ihr geistiger Weggefährte, und sie zog unter den Bedingungen von Trennung, Trauer und öffentlicher Verantwortung sechs Kinder groß."
+      "summary": "Die Familie prägte Abigail Adams’ Bildung, ihr politisches Wirken und ihre täglichen Aufgaben. Im Haushalt ihrer Eltern hatte sie Zugang zu Büchern und Unterricht, während die Abwesenheit von John Adams ihr die Leitung von Hof, Finanzen und Kindererziehung überließ. In ihren späteren Jahren wurde der Haushalt in Quincy auch zu einem Ort der Fürsorge für Kinder und Enkelkinder, nachdem Krankheit, Trauerfälle und Alkoholismus andere Zweige der Familie erschüttert hatten."
     },
     {
-      "relationship_type": "professional",
-      "summary": "Abigails politischer Einfluss entfaltete sich durch Beratung und Briefwechsel, nicht durch ein formelles Amt. Damit war sie in die öffentlichen Debatten und Beziehungen der frühen Republik eingebunden."
+      "relationship_type": "business",
+      "summary": "Während des Unabhängigkeitskriegs führte Abigail Adams die Haushaltsfinanzen und leitete den Hof in Braintree. Ihre Investitionen über Cotton Tufts halfen, das Familienvermögen während John Adams’ öffentlicher Abwesenheiten zu sichern."
     },
     {
       "relationship_type": "social",
-      "summary": "Freundschaften, Briefwechsel und Fürsorge verbanden Abigail mit Schriftstellerinnen und Schutzbefohlenen in diplomatischen Haushalten und erweiterten ihren Einfluss über die Familie hinaus."
+      "summary": "Abigails gesellschaftliche Beziehungen verbanden Fürsorge, Briefwechsel und politische Diskussionen der Revolutionszeit. Ihre Betreuung von Mary Jefferson in London knüpfte eine Verbindung zwischen ihrem Haushalt und der Familie von Thomas Jefferson. Ihr Briefwechsel mit Mercy Otis Warren verband sie mit einer weiteren Frau, die über öffentliche Angelegenheiten schrieb."
     }
   ],
   "translation": {
     "source_lang": "en",
     "target_lang": "de",
-    "source_fingerprint": "a246333d31672d09",
-    "translated_on": "2026-08-02T11:47:03.894680+00:00",
-    "translator": "openai:gpt-5.6-luna"
+    "source_fingerprint": "235883f6828bcfb9",
+    "translated_on": "2026-09-19T06:41:10.681298+02:00",
+    "translator": "openai:gpt-5.6-terra"
   }
 }

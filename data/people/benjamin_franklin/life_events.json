@@ -1,17 +1,17 @@
 {
-  "dataset": "Biographical Timeline",
-  "created_on": "2026-07-17",
+  "dataset": "Benjamin Franklin Biographical Timeline",
+  "created_on": "2026-09-19",
   "person": {
     "name": "Benjamin_Franklin",
     "birth_date": "1706-01-17",
     "death_date": "1790-04-17",
     "primary_roles": [
-      "statesman",
+      "writer",
       "inventor",
-      "printer"
+      "diplomat"
     ],
-    "tagline": "Printer, scientist, and founding diplomat",
-    "summary": "Benjamin Franklin was an American printer, writer, scientist, inventor, civic organizer, and statesman. He helped shape colonial public life, secured French support during the American Revolution, and participated in founding the United States.",
+    "tagline": "Lightning Rods for an Independent America",
+    "summary": "Benjamin Franklin was a Philadelphia printer, writer, inventor, scientist, civic organizer, and public official. His experiments with electricity produced the lightning rod and helped establish his scientific reputation. He became a leading advocate for American independence and secured French support during the Revolutionary War.",
     "wikipedia": "https://en.wikipedia.org/wiki/Benjamin_Franklin",
     "portrait": {
       "image": "/portraits/benjamin_franklin_thumbnail.webp",
@@ -22,13 +22,14 @@
       "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
       "originalImage": "https://upload.wikimedia.org/wikipedia/commons/8/87/Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg",
+      "referenceUsed": true,
       "originalCaption": "Portrait of Benjamin Franklin by Joseph Siffrein Duplessis"
     }
   },
   "chapters": [
     {
-      "id": "ink_finds_its_voice",
-      "headline": "Ink Finds Its Voice",
+      "id": "origins_printing",
+      "headline": "A Printer Takes Flight",
       "date_start": "1706-01-17",
       "date_start_precision": "day",
       "date_end": "1726",
@@ -36,87 +37,112 @@
       "age_start": 0,
       "age_end": 20,
       "involved_people": [
+        "John Franklin",
+        "Peter Franklin",
+        "Mary Franklin",
+        "James Franklin",
+        "Sarah Franklin",
+        "Thomas Franklin",
         "Josiah Franklin",
-        "Abiah Folger",
-        "James Franklin"
+        "William Keith",
+        "Thomas Denham"
       ],
-      "location": "Northeastern United States"
+      "location": "Northeastern United States",
+      "illustration": {
+        "image": "/chapter_art/benjamin_franklin/origins_printing_medium.webp",
+        "medium": "/chapter_art/benjamin_franklin/origins_printing_medium.webp",
+        "full": "/chapter_art/benjamin_franklin/origins_printing_full.webp",
+        "concept": "At the center of deep charcoal darkness, a stack of blank ivory sheets loosens into narrow curling ribbons, rising in a warm updraft. A single cobalt ink droplet hovers beneath the opening, suggesting craft becoming escape.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "philadelphias_civic_engine",
-      "headline": "Philadelphia’s Civic Engine",
-      "date_start": "1727",
+      "id": "philadelphia_press",
+      "headline": "Words for a Growing City",
+      "date_start": "1729",
       "date_start_precision": "year",
-      "date_end": "1753",
+      "date_end": "1752",
       "date_end_precision": "year",
-      "age_start": 21,
-      "age_end": 47,
+      "age_start": 23,
+      "age_end": 46,
       "involved_people": [
+        "Hugh Meredith",
         "Deborah Read",
-        "John Rogers",
-        "Francis Folger Franklin"
+        "John Rogers"
       ],
-      "location": "Philadelphia and the American colonies"
+      "location": "Pennsylvania",
+      "illustration": {
+        "image": "/chapter_art/benjamin_franklin/philadelphia_press_medium.webp",
+        "medium": "/chapter_art/benjamin_franklin/philadelphia_press_medium.webp",
+        "full": "/chapter_art/benjamin_franklin/philadelphia_press_full.webp",
+        "concept": "A bright amber sphere hangs in darkness, wrapped by branching electric filaments that converge without touching it. The surrounding air glows in layered halos, as if restless ideas have found one clear, protective center.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "empires_unquiet_agent",
-      "headline": "Empire’s Unquiet Agent",
-      "date_start": "1757",
+      "id": "empire_and_experiment",
+      "headline": "Lightning Across the Empire",
+      "date_start": "1753",
       "date_start_precision": "year",
-      "date_end": "1775",
+      "date_end": "1766",
       "date_end_precision": "year",
-      "age_start": 51,
-      "age_end": 69,
-      "involved_people": null,
-      "location": "Britain and the American colonies"
-    },
-    {
-      "id": "a_republic_abroad",
-      "headline": "A Republic Abroad",
-      "date_start": "1776",
-      "date_start_precision": "year",
-      "date_end": "1785-09",
-      "date_end_precision": "month",
-      "age_start": 70,
-      "age_end": 79,
+      "age_start": 47,
+      "age_end": 60,
       "involved_people": [
-        "John Adams",
-        "Thomas Jefferson",
-        "Roger Sherman",
-        "Robert R. Livingston",
-        "Silas Deane",
-        "Arthur Lee",
-        "John Jay"
+        "William Hunter"
       ],
-      "location": "France and the United States"
+      "location": "British America and Britain",
+      "illustration": {
+        "image": "/chapter_art/benjamin_franklin/empire_and_experiment_medium.webp",
+        "medium": "/chapter_art/benjamin_franklin/empire_and_experiment_medium.webp",
+        "full": "/chapter_art/benjamin_franklin/empire_and_experiment_full.webp",
+        "concept": "A delicate lattice of silver lines stretches between scattered dark glass beads, then tightens toward a narrow luminous gap. One side shimmers cool blue, the other muted copper, creating pressure, distance, and a fragile channel of exchange.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "constitutional_twilight",
-      "headline": "Constitutional Twilight",
-      "date_start": "1785-10",
-      "date_start_precision": "month",
+      "id": "independence_abroad",
+      "headline": "The Republic's Negotiator",
+      "date_start": "1776-07-04",
+      "date_start_precision": "day",
       "date_end": "1790-04-17",
       "date_end_precision": "day",
-      "age_start": 79,
+      "age_start": 70,
       "age_end": 84,
       "involved_people": [
-        "George Washington",
-        "James Wilson",
-        "Gouverneur Morris",
-        "Deborah Read"
+        "Thomas Jefferson",
+        "John Adams",
+        "Roger Sherman",
+        "Robert Livingston",
+        "Arthur Lee",
+        "Silas Deane",
+        "John Jay",
+        "Sarah Franklin Bache",
+        "Richard Bache"
       ],
-      "location": "United States"
+      "location": "North America and Europe",
+      "illustration": {
+        "image": "/chapter_art/benjamin_franklin/independence_abroad_medium.webp",
+        "medium": "/chapter_art/benjamin_franklin/independence_abroad_medium.webp",
+        "full": "/chapter_art/benjamin_franklin/independence_abroad_full.webp",
+        "concept": "Two broad streams of midnight blue and burnished gold arc inward through black space, meeting in a suspended white-gold knot of light. Beyond it, the currents unfurl as a calm widening horizon, suggesting hard-won accord.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     }
   ],
-  "conclusion": "Benjamin Franklin transformed a printer’s craft into a life of civic invention, scientific curiosity, and revolutionary statecraft. His restless practicality helped imagine—and then help secure—the United States.",
+  "conclusion": "Lightning rods still protect buildings and ships by directing electrical charge safely to the ground. Poor Richard's Almanack remains one of Franklin's best-known publications. The Declaration of Independence remains a central document in United States history. The postal network Franklin organized connected the colonies and later developed into a national system.",
   "events": [
     {
       "date": "1706-01-17",
       "date_precision": "day",
-      "date_note": "New Style date; January 6, 1705 under the Old Style calendar",
+      "date_note": "January 6, 1705, in the Old Style calendar",
       "age": 0,
-      "title": "Born Into a Crowded Boston Household",
-      "description": "Benjamin Franklin was born in Boston in the Province of Massachusetts Bay to Josiah Franklin, a candle and soap maker, and Abiah Folger. He was their eighth child together and the fifteenth of Josiah Franklin's seventeen children.",
+      "title": "Born into a Boston Artisan Household",
+      "description": "Benjamin Franklin was born in Boston to Josiah Franklin, a tallow chandler and soapmaker, and Abiah Folger Franklin. He was their eighth child and Josiah's fifteenth child. The family lived within Boston's Congregational community, and Franklin was baptized at Old South Meeting House.",
       "locations": [
         {
           "name_historic": "Boston",
@@ -129,33 +155,49 @@
         }
       ],
       "involved_people": [
+        "John Franklin",
+        "Peter Franklin",
+        "Mary Franklin",
+        "James Franklin",
+        "Sarah Franklin",
+        "Thomas Franklin",
         "Josiah Franklin",
-        "Abiah Folger"
+        "Abiah Folger Franklin"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Josiah_Franklin",
-        "https://en.wikipedia.org/wiki/Abiah_Folger"
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Josiah_Franklin"
       ],
-      "event_type_icon": "mdi-candle",
-      "chapter": "ink_finds_its_voice",
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Birthplace_of_Benjamin_Franklin_%286234557210%29.jpg/960px-Birthplace_of_Benjamin_Franklin_%286234557210%29.jpg",
+          "caption": "Benjamin Franklin birthplace in Boston",
+          "source": "https://commons.wikimedia.org/wiki/File:Birthplace_of_Benjamin_Franklin_(6234557210).jpg",
+          "creator": "Tony Hisgett from Birmingham, UK",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+        }
+      ],
+      "event_type_icon": "mdi-baby-face-outline",
+      "chapter": "origins_printing",
+      "weight": 0.3,
       "event_class": {
         "type": "birth",
         "father": "Josiah Franklin",
-        "mother": "Abiah Folger"
+        "mother": "Abiah Folger Franklin",
+        "characterization": "artisan household"
       }
     },
     {
       "date": "1718",
       "date_precision": "year",
-      "date_end": "1722",
-      "date_end_precision": "year",
       "age": 12,
-      "title": "Apprenticed to Brother James Franklin",
-      "description": "In Boston, after only two years of formal schooling, Franklin was apprenticed to his elder brother James, a printer. He secretly wrote the popular \"[[Silence Dogood letters|Silence Dogood]]\" letters for James's New-England Courant and briefly managed the paper during James's imprisonment.",
+      "title": "Begins a Printing Apprenticeship",
+      "description": "At 12, Benjamin Franklin left school after two years because his family could not afford further education. In Boston, Josiah Franklin apprenticed him to his older brother James Franklin, a printer. Franklin learned typesetting, printing, and newspaper work in James's shop.",
       "locations": [
         {
           "name_historic": "Boston",
-          "name_modern": "Boston, Massachusetts, United States",
+          "name_modern": "Boston, Massachusetts, USA",
           "centroid": [
             -71.0589,
             42.3601
@@ -164,41 +206,38 @@
         }
       ],
       "involved_people": [
-        "James Franklin"
+        "James Franklin",
+        "Josiah Franklin"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/James_Franklin_(printer)"
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/James_Franklin_(printer)",
+        "https://en.wikipedia.org/wiki/Josiah_Franklin"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Silence_Dogwood_Essay_in_the_New_England_Courant%2C_April_16%2C_1722.jpg",
-          "caption": "Silence Dogood essay in the New-England Courant, 1722",
-          "source": "https://commons.wikimedia.org/wiki/File:Silence_Dogwood_Essay_in_the_New_England_Courant,_April_16,_1722.jpg",
-          "creator": "New England Courant, April 16, 1722",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/0f/James_Franklin%27s_Ramage_Press.jpg",
+          "caption": "James Franklin's Ramage printing press",
+          "source": "https://commons.wikimedia.org/wiki/File:James_Franklin's_Ramage_Press.jpg",
+          "creator": "Justin Winsor, Illustration by unknown artist",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "ink_finds_its_voice",
-      "annotations": {
-        "Silence Dogood letters": {
-          "explanation": "A series of satirical letters, published under a fictional widow's name, that criticized Boston society and authority.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Silence_Dogood"
-        }
-      }
+      "event_type_icon": "mdi-school",
+      "chapter": "origins_printing",
+      "weight": 0.45
     },
     {
-      "date": "1723",
-      "date_precision": "year",
-      "date_end": "1726",
-      "date_end_precision": "year",
+      "date": "1723-10",
+      "date_precision": "month",
       "age": 17,
-      "title": "Leaves Boston for Philadelphia Printing Work",
-      "description": "At seventeen, Franklin secretly left his restrictive apprenticeship to his brother James Franklin and sought work among Philadelphia's printers.",
+      "title": "Runs to Philadelphia",
+      "description": "In October 1723, Benjamin Franklin left Boston after quarreling with his brother James over his restrictive printing apprenticeship. He traveled alone to Philadelphia, where he sought work as a printer and a new start.",
       "locations": [
         {
           "name_historic": "Boston",
-          "name_modern": "Boston, Massachusetts, United States",
+          "name_modern": "Boston, Massachusetts, USA",
           "centroid": [
             -71.0589,
             42.3601
@@ -207,7 +246,7 @@
         },
         {
           "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "name_modern": "Philadelphia, Pennsylvania, USA",
           "centroid": [
             -75.1652,
             39.9526
@@ -219,30 +258,49 @@
         "James Franklin"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
-        "https://en.wikipedia.org/wiki/James_Franklin_(printer)"
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "ink_finds_its_voice",
+      "chapter": "origins_printing",
+      "weight": 0.65,
       "event_class": {
         "type": "migration",
-        "from_location": "Massachusetts Bay",
-        "to_location": "Pennsylvania",
-        "characterization": "printing career"
-      }
+        "from_location": "Boston, Massachusetts Bay",
+        "to_location": "Philadelphia, Pennsylvania",
+        "characterization": "career escape"
+      },
+      "background": "James’s 1722 imprisonment had briefly put Benjamin in charge of the New-England Courant. Benjamin used the paper to continue the Silence Dogood letters that had become a subject of conversation in Boston. James reacted badly after learning that his younger brother had written them.\n\nThe terms of the apprenticeship gave Benjamin no authorized way to leave. His departure made him a fugitive. In Philadelphia, he found employment in several printing shops. The work did not offer prospects he found satisfactory.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/New-England_Courant%2C_July_16-23%2C_1722%2C_p1.jpg/960px-New-England_Courant%2C_July_16-23%2C_1722%2C_p1.jpg",
+          "caption": "Benjamin Franklin editorial in the New-England Courant, July 16-23, 1722 issue",
+          "source": "https://commons.wikimedia.org/wiki/File:New-England_Courant,_July_16-23,_1722,_p1.jpg",
+          "creator": "Benjamin Franklin editorial in the New-England Courant, July 16-23, 1722 issue",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "New-England Courant newspaper"
+        }
+      ]
     },
     {
-      "date": "1727",
+      "date": "1726",
       "date_precision": "year",
-      "date_end": "1731",
-      "date_end_precision": "year",
-      "age": 21,
-      "title": "Organizes the Junto for Civic Improvement",
-      "description": "In 1727, Franklin organized the [[Junto|Junto]], a Philadelphia discussion club of artisans and tradesmen devoted to self-improvement and civic projects. Members shared books and discussed practical questions affecting their community.",
+      "age": 20,
+      "title": "Returns to Philadelphia from London",
+      "description": "Governor William Keith had promised support for a Philadelphia newspaper and failed to provide it. Benjamin Franklin worked as a typesetter in London. In 1726, English merchant Thomas Denham brought Franklin back to Philadelphia and employed him in his business.",
       "locations": [
         {
+          "name_historic": "London",
+          "name_modern": "London, UK",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": false
+        },
+        {
           "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "name_modern": "Philadelphia, Pennsylvania, USA",
           "centroid": [
             -75.1652,
             39.9526
@@ -250,27 +308,29 @@
           "primary": true
         }
       ],
+      "involved_people": [
+        "William Keith",
+        "Thomas Denham"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Junto_(club)",
         "https://en.wikipedia.org/wiki/Benjamin_Franklin"
       ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "philadelphias_civic_engine",
-      "annotations": {
-        "Junto": {
-          "explanation": "A mutual-improvement club founded by Franklin, whose members discussed moral, practical, and civic questions.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Junto_(club)"
-        }
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "origins_printing",
+      "weight": 0.5,
+      "event_class": {
+        "type": "migration",
+        "from_location": "London, England",
+        "to_location": "Philadelphia, Pennsylvania",
+        "characterization": "return to trade"
       }
     },
     {
       "date": "1729",
       "date_precision": "year",
-      "date_end": "1732",
-      "date_end_precision": "year",
       "age": 23,
-      "title": "Builds a Thriving Philadelphia Printing Career",
-      "description": "In Philadelphia, Franklin took over the Pennsylvania Gazette in 1729 and used it to promote civic projects and local improvement. In 1732, writing as Richard Saunders, he began issuing Poor Richard's Almanack.",
+      "title": "Acquires The Pennsylvania Gazette",
+      "description": "In 1729, Benjamin Franklin and Hugh Meredith acquired The Pennsylvania Gazette, a Philadelphia newspaper, from printer Samuel Keimer. The partners had established their printing business the year before. Franklin used the paper for news, essays, satire, and arguments for local reforms.",
       "locations": [
         {
           "name_historic": "Philadelphia",
@@ -282,44 +342,33 @@
           "primary": true
         }
       ],
+      "involved_people": [
+        "Hugh Meredith",
+        "Samuel Keimer"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
-        "https://en.wikipedia.org/wiki/The_Pennsylvania_Gazette",
-        "https://en.wikipedia.org/wiki/Poor_Richard%27s_Almanack"
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Franklin_the_printer.jpg/960px-Franklin_the_printer.jpg",
-          "caption": "Benjamin Franklin at work on a printing press",
-          "source": "https://commons.wikimedia.org/wiki/File:Franklin_the_printer.jpg",
-          "creator": "Charles E. Mills",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/The_Pennsylvania_Gazette_-_1729-9-25_-_Project_Gutenberg_etext_20203.jpg",
+          "caption": "The Pennsylvania Gazette, September 1729",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Pennsylvania_Gazette_-_1729-9-25_-_Project_Gutenberg_etext_20203.jpg",
+          "creator": null,
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "philadelphias_civic_engine",
-      "event_class": {
-        "type": "publication",
-        "title": "Poor Richard's Almanack",
-        "publication_type": "book",
-        "significance": "popular almanac",
-        "impact": "Issued annually, it combined practical information, humor, and aphorisms for a broad colonial readership.",
-        "source_link": {
-          "url": "https://en.wikipedia.org/wiki/Poor_Richard's_Almanack",
-          "kind": "wikipedia",
-          "site": "Wikipedia",
-          "entity": "Q3142253",
-          "resolved_by": "wikipedia",
-          "resolved_on": "2026-08-02"
-        }
-      }
+      "chapter": "philadelphia_press",
+      "weight": 0.75
     },
     {
       "date": "1730-09-01",
       "date_precision": "day",
       "age": 24,
-      "title": "Begins a Common-Law Union With Deborah",
-      "description": "In Philadelphia, Franklin and Deborah Read held a ceremony and began living as husband and wife. Because the fate of her first husband, John Rogers, had never been verified, she could not safely enter a legal remarriage.",
+      "title": "Forms a Household with Deborah Read",
+      "description": "In 1730, Benjamin Franklin and Deborah Read began living publicly as husband and wife in Philadelphia. Read's first husband, John Rogers, had deserted her. Because his death could not be proved, Franklin and Read entered a common-law marriage.",
       "locations": [
         {
           "name_historic": "Philadelphia",
@@ -336,25 +385,130 @@
         "John Rogers"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
         "https://en.wikipedia.org/wiki/Deborah_Read"
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "philadelphias_civic_engine",
+      "chapter": "philadelphia_press",
+      "weight": 0.65,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "partnership",
         "partner": "Deborah Read",
-        "duration": "until her death in 1774",
+        "duration": "until her death",
         "children": 2,
-        "characterization": "common-law union"
+        "characterization": "enduring domestic partnership"
       }
     },
     {
-      "date": "1736",
+      "date": "1732",
       "date_precision": "year",
-      "age": 30,
-      "title": "Mourns the Death of Son Francis",
-      "description": "Franklin's four-year-old son, Francis Folger Franklin, died of [[smallpox]] in Philadelphia. Franklin had arranged for the boy's inoculation, but the illness struck before the procedure could be performed.",
+      "age": 26,
+      "title": "Publishes Poor Richard's Almanack",
+      "description": "In 1732, Benjamin Franklin began publishing Poor Richard's Almanack, an annual almanac, under the pseudonym Richard Saunders. He filled it with calendars, practical information, humor, and sayings for colonial readers. It sold about 10,000 copies a year.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/07/Poor_Richard%27s_Almanac%2C_1733%2C_cover.jpg",
+          "caption": "Poor Richard's Almanac, 1733 cover",
+          "source": "https://commons.wikimedia.org/wiki/File:Poor_Richard's_Almanac,_1733,_cover.jpg",
+          "creator": "Benjamin Franklin",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "philadelphia_press",
+      "weight": 0.8,
+      "event_class": {
+        "type": "publication",
+        "title": "Poor Richard's Almanack",
+        "publication_type": "book",
+        "significance": "popular annual",
+        "impact": "It sold about 10,000 copies a year and became one of colonial America's most widely read publications."
+      }
+    },
+    {
+      "date": "1752",
+      "date_precision": "year",
+      "age": 46,
+      "title": "Tests Lightning's Electrical Nature",
+      "description": "In Philadelphia in 1752, Benjamin Franklin investigated whether lightning carried electrical charge. His experiments established that lightning and electricity were the same force. Franklin developed the lightning rod to protect buildings from lightning strikes.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Franklin%27s_experiment%2C_June_1752-_Demonstrating_the_identity_of_lightning_and_electricty%2C_from_which_he_invented_the_lightning_rod_LCCN2001699199.jpg/960px-Franklin%27s_experiment%2C_June_1752-_Demonstrating_the_identity_of_lightning_and_electricty%2C_from_which_he_invented_the_lightning_rod_LCCN2001699199.jpg",
+          "caption": "Franklin's 1752 lightning experiment",
+          "source": "https://commons.wikimedia.org/wiki/File:Franklin's_experiment,_June_1752-_Demonstrating_the_identity_of_lightning_and_electricty,_from_which_he_invented_the_lightning_rod_LCCN2001699199.jpg",
+          "creator": "Popular Graphic Arts",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-lightning-bolt",
+      "chapter": "philadelphia_press",
+      "weight": 0.9,
+      "event_class": {
+        "type": "invention",
+        "title": "Lightning rod",
+        "description": "A pointed metal rod connects a building to the ground and directs electrical charge away from its structure.",
+        "impact": "Lightning rods became a standard means of protecting buildings and ships from lightning strikes."
+      },
+      "background": "Franklin’s electrical work grew from experiments undertaken with apparatus sent by Peter Collinson, a London merchant and fellow of the Royal Society. Ebenezer Kinnersley joined him in Philadelphia. Franklin described the results in a series of letters to Collinson. Collinson gathered them into Experiments and Observations on Electricity Made at Philadelphia in America in 1751. The book circulated in Europe and was translated into several languages.\n\nA proposal in Franklin’s correspondence called for collecting electrical effects from a storm cloud. Thomas-François Dalibard conducted such an experiment at Marly-la-Ville, France, in May 1752. The Royal Society awarded Franklin the Copley Medal in 1753 for his experiments and observations on electricity.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Experiments_and_observations_on_electricity_-_made_at_Philadelphia_in_America_%281751%29_%2814755681546%29.jpg/960px-Experiments_and_observations_on_electricity_-_made_at_Philadelphia_in_America_%281751%29_%2814755681546%29.jpg",
+          "caption": "Identifier: experimentsobser00fran (find matches) Title: Experiments and observations on electricity : made at Philadelphia in America Year: 1751 (1750s) Author.",
+          "source": "https://commons.wikimedia.org/wiki/File:Experiments_and_observations_on_electricity_-_made_at_Philadelphia_in_America_(1751)_(14755681546).jpg",
+          "creator": "Franklin, Benjamin, 1706-1790; Collinson, Peter, 1694-1768; Jefferys, Thomas, d. 1771, engraver; DeMarsh, Eric E., former owner. DSI; Burndy Library, donor. DSI",
+          "license": "No restrictions",
+          "licenseUrl": "https://www.flickr.com/commons/usage/",
+          "query": "Experiments and Observations on Electricity 1751"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/The_Copley_medal_of_the_Royal_Society%2C_as_presented_to_Benja_Wellcome_V0013857.jpg/960px-The_Copley_medal_of_the_Royal_Society%2C_as_presented_to_Benja_Wellcome_V0013857.jpg",
+          "caption": "The Copley medal of the Royal Society, as presented to Benjamin Franklin: left obverse, right reverse, with a decorative surround. Engraving, later than 1753.",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Copley_medal_of_the_Royal_Society,_as_presented_to_Benja_Wellcome_V0013857.jpg",
+          "creator": null,
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+          "query": "Copley Medal"
+        }
+      ]
+    },
+    {
+      "date": "1753",
+      "date_precision": "year",
+      "age": 47,
+      "title": "Oversees the Colonial Post",
+      "description": "In 1753, Benjamin Franklin and William Hunter became deputy postmasters-general for British North America. They supervised the mail service across the colonies. Franklin improved postal accounting and delivery routes between Philadelphia, New York, and Boston.",
       "locations": [
         {
           "name_historic": "Philadelphia",
@@ -367,102 +521,25 @@
         }
       ],
       "involved_people": [
-        "Francis Folger Franklin",
-        "Deborah Read Franklin"
+        "William Hunter"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
-        "https://en.wikipedia.org/wiki/Smallpox"
-      ],
-      "event_type_icon": "mdi-cross",
-      "chapter": "philadelphias_civic_engine",
-      "annotations": {
-        "smallpox": {
-          "explanation": "Before vaccination, prevention often involved variolation: deliberate exposure to smallpox material in hopes of producing a milder case and later immunity.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Smallpox"
-        }
-      }
-    },
-    {
-      "date": "1751",
-      "date_precision": "year",
-      "date_end": "1753",
-      "date_end_precision": "year",
-      "age": 45,
-      "title": "Expands Philadelphia's Civic and Postal Service",
-      "description": "In Philadelphia, Franklin helped establish the Academy and College of Philadelphia, which opened in 1751, and served as its first president. In 1753, British authorities appointed him deputy postmaster-general for the colonies, entrusting him with improving intercolonial mail routes.",
-      "locations": [
-        {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
-          "centroid": [
-            -75.1652,
-            39.9526
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
-        "https://en.wikipedia.org/wiki/University_of_Pennsylvania",
-        "https://en.wikipedia.org/wiki/United_States_Postal_Service"
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "philadelphias_civic_engine"
-    },
-    {
-      "date": "1752",
-      "date_precision": "year",
-      "date_note": "The exact date of Franklin's kite experiment is uncertain",
-      "age": 46,
-      "title": "Investigates Lightning and Promotes Protection",
-      "description": "In Philadelphia in 1752, Franklin pursued his electrical investigations during a thunderstorm and advocated protecting buildings from lightning strikes.",
-      "locations": [
-        {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
-          "centroid": [
-            -75.1652,
-            39.9526
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
-        "https://en.wikipedia.org/wiki/Kite_experiment",
-        "https://en.wikipedia.org/wiki/Lightning_rod"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Benjamin_Franklin_Lightning_Experiment_1752.jpg/960px-Benjamin_Franklin_Lightning_Experiment_1752.jpg",
-          "caption": "Franklin's lightning and electricity experiment, June 1752",
-          "source": "https://commons.wikimedia.org/wiki/File:Benjamin_Franklin_Lightning_Experiment_1752.jpg",
-          "creator": "Currier & Ives, New York",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-lightning-bolt",
-      "chapter": "philadelphias_civic_engine",
-      "event_class": {
-        "type": "invention",
-        "title": "Lightning rod",
-        "description": "An iron rod mounted above a building and connected to earth conducted electrical charges away from vulnerable structures.",
-        "impact": "It offered a practical method for reducing fire and structural damage caused by lightning."
-      }
+      "chapter": "empire_and_experiment",
+      "weight": 0.75
     },
     {
       "date": "1757",
       "date_precision": "year",
-      "date_end": "1775",
-      "date_end_precision": "year",
       "age": 51,
-      "title": "Represents Colonies in London",
-      "description": "In 1757, Franklin left Philadelphia to serve as Pennsylvania's agent in London, where he pressed colonial grievances before British officials. He later helped organize opposition to the [[Stamp Act|Stamp Act of 1765]], and his parliamentary testimony became part of the campaign for its repeal.",
+      "title": "Becomes Pennsylvania's London Agent",
+      "description": "In 1757, the Pennsylvania Assembly sent Benjamin Franklin to London as its colonial agent. He argued against the political privileges of the [[Penn family proprietors]], who owned Pennsylvania. Franklin presented the assembly's case to British officials.",
       "locations": [
         {
           "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "name_modern": "Philadelphia, Pennsylvania, USA",
           "centroid": [
             -75.1652,
             39.9526
@@ -471,7 +548,7 @@
         },
         {
           "name_historic": "London",
-          "name_modern": "London, United Kingdom",
+          "name_modern": "London, UK",
           "centroid": [
             -0.1276,
             51.5072
@@ -480,79 +557,64 @@
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
-        "https://en.wikipedia.org/wiki/Stamp_Act_1765"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Benjamin_Franklin_House%2C_36_Craven_Street%2C_London.jpg/960px-Benjamin_Franklin_House%2C_36_Craven_Street%2C_London.jpg",
-          "caption": "Benjamin Franklin House, 36 Craven Street, London",
-          "source": "https://commons.wikimedia.org/wiki/File:Benjamin_Franklin_House,_36_Craven_Street,_London.jpg",
-          "creator": "Ridiculopathy",
-          "license": "CC0",
-          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
-        }
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "empires_unquiet_agent",
+      "chapter": "empire_and_experiment",
       "annotations": {
-        "Stamp Act": {
-          "explanation": "A 1765 British law that imposed direct taxes on printed materials in the American colonies, provoking widespread colonial resistance.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Stamp_Act_1765"
+        "Penn family proprietors": {
+          "explanation": "The Penn family held proprietary control of Pennsylvania under a grant from the English Crown. Their political privileges and tax exemptions were a source of conflict with the colony's assembly.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Province_of_Pennsylvania"
         }
       },
+      "weight": 0.7,
       "event_class": {
         "type": "migration",
         "from_location": "Pennsylvania",
-        "to_location": "Great Britain",
+        "to_location": "London, England",
         "characterization": "colonial agency"
       }
     },
     {
-      "date": "1775",
+      "date": "1766",
       "date_precision": "year",
-      "age": 69,
-      "title": "Returns to Revolutionary Philadelphia From Britain",
-      "description": "After more than a decade in Britain, Franklin returned as conflict with Britain escalated. He took his seat in the Second Continental Congress and helped organize the revolutionary cause.",
+      "age": 60,
+      "title": "Testifies Against the Stamp Act",
+      "description": "In February 1766, Benjamin Franklin testified before the House of Commons, the lower house of the British Parliament. The 1765 Stamp Act required stamped paper for legal documents, newspapers, and other printed materials. Franklin told members that the colonies opposed the tax, and Parliament repealed it on March 18.",
       "locations": [
         {
           "name_historic": "London",
-          "name_modern": "London, United Kingdom",
+          "name_modern": "London, UK",
           "centroid": [
             -0.1276,
             51.5072
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
-          "centroid": [
-            -75.1652,
-            39.9526
           ],
           "primary": true
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
-        "https://en.wikipedia.org/wiki/Second_Continental_Congress"
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
       ],
-      "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "empires_unquiet_agent",
-      "event_class": {
-        "type": "migration",
-        "from_location": "Great Britain",
-        "to_location": "Pennsylvania",
-        "characterization": "revolutionary return"
-      }
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/House_of_Commons_Chamber_1.png/960px-House_of_Commons_Chamber_1.png",
+          "caption": "House of Commons chamber in London",
+          "source": "https://commons.wikimedia.org/wiki/File:House_of_Commons_Chamber_1.png",
+          "creator": "UK Parliament",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+        }
+      ],
+      "event_type_icon": "mdi-forum",
+      "chapter": "empire_and_experiment",
+      "weight": 0.8
     },
     {
       "date": "1776-07-04",
       "date_precision": "day",
       "age": 70,
-      "title": "Signs Declaration of Independence",
-      "description": "Franklin served on the Committee of Five that prepared the [[Declaration of Independence|Declaration of Independence]] for the Continental Congress. He supported its adoption on July 4, 1776, and signed the engrossed document in Philadelphia on August 2.",
+      "title": "Helps Draft Independence Declaration",
+      "description": "In Philadelphia, Benjamin Franklin joined Thomas Jefferson, John Adams, Roger Sherman, and Robert Livingston on the five-member committee that drafted the [[Declaration of Independence]]. The committee prepared the text for the [[Continental Congress]], the representative body of the colonies. Franklin helped revise Jefferson's draft before Congress adopted it on July 4, 1776.",
       "locations": [
         {
           "name_historic": "Philadelphia",
@@ -565,51 +627,58 @@
         }
       ],
       "involved_people": [
-        "John Adams",
         "Thomas Jefferson",
+        "John Adams",
         "Roger Sherman",
-        "Robert R. Livingston"
+        "Robert Livingston"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence",
-        "https://en.wikipedia.org/wiki/Committee_of_Five"
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Declaration_of_Independence_%281819%29%2C_by_John_Trumbull.jpg/960px-Declaration_of_Independence_%281819%29%2C_by_John_Trumbull.jpg",
-          "caption": "Trumbull painting of the Declaration drafting committee",
+          "caption": "John Trumbull's Declaration of Independence painting",
           "source": "https://commons.wikimedia.org/wiki/File:Declaration_of_Independence_(1819),_by_John_Trumbull.jpg",
           "creator": "John Trumbull",
-          "license": "Public domain"
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-file-document-edit",
-      "chapter": "a_republic_abroad",
+      "chapter": "independence_abroad",
       "annotations": {
         "Declaration of Independence": {
-          "explanation": "The formal statement by the Thirteen Colonies declaring their separation from Great Britain, adopted by the Continental Congress in 1776.",
+          "explanation": "The document in which the thirteen colonies announced their separation from Great Britain. The Continental Congress adopted it on July 4, 1776.",
           "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence"
+        },
+        "Continental Congress": {
+          "explanation": "The representative body that coordinated resistance to Great Britain and served as the revolutionary government. Its Second Congress adopted the Declaration of Independence.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Continental_Congress"
         }
-      }
+      },
+      "weight": 1.0,
+      "background": "Richard Henry Lee's June 7 resolution for independence prompted Congress to appoint the drafting committee four days later. Jefferson wrote the first draft while staying at Jacob Graff Jr.'s Philadelphia house. He then gave it to Franklin and Adams for their edits before the committee submitted a proposed text on June 28.\n\nFranklin made one of the best-known revisions to Jefferson's wording. He replaced the phrase “sacred and undeniable” with “self-evident” in the assertion about human equality and rights.\n\nCongress considered the committee's text over four days. Its delegates made additional changes, including cutting a passage that blamed the British Crown for the slave trade and for encouraging enslaved people to seek freedom through revolt.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Dunlap_Broadside_%28Declaration_of_Independence%29_-_NARA_-_301682.tif/lossy-page1-960px-Dunlap_Broadside_%28Declaration_of_Independence%29_-_NARA_-_301682.tif.jpg",
+          "caption": "Scope and content: This is the first printed version of the Declaration of Independence.",
+          "source": "https://commons.wikimedia.org/wiki/File:Dunlap_Broadside_(Declaration_of_Independence)_-_NARA_-_301682.tif",
+          "creator": "Unknown authorUnknown author or not provided",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Thomas Jefferson rough draft Declaration"
+        }
+      ]
     },
     {
-      "date": "1776-10",
-      "date_precision": "month",
-      "date_end": "1785",
-      "date_end_precision": "year",
-      "age": 70,
-      "title": "Wins French Aid for Independence",
-      "description": "Franklin departed in October 1776 as one of the American commissioners seeking French support for the Revolutionary War. Working with Silas Deane and Arthur Lee, he helped secure French aid and the 1778 alliance; he later joined the negotiations that produced the Treaty of Paris in 1783.",
+      "date": "1778-02-06",
+      "date_precision": "day",
+      "age": 72,
+      "title": "Signs the French Alliance Treaties",
+      "description": "On February 6, 1778, Benjamin Franklin, Arthur Lee, and Silas Deane signed the Treaty of Amity and Commerce in Paris. The treaty established commercial relations between France and the United States. They also signed the Treaty of Alliance, which committed France to military cooperation against Britain.",
       "locations": [
-        {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
-          "centroid": [
-            -75.1652,
-            39.9526
-          ],
-          "primary": false
-        },
         {
           "name_historic": "Paris",
           "name_modern": "Paris, France",
@@ -621,111 +690,118 @@
         }
       ],
       "involved_people": [
-        "Silas Deane",
         "Arthur Lee",
-        "John Adams",
-        "John Jay"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Silas_Deane",
-        "https://en.wikipedia.org/wiki/Arthur_Lee_(diplomat)",
-        "https://en.wikipedia.org/wiki/John_Jay"
-      ],
-      "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "a_republic_abroad",
-      "event_class": {
-        "type": "migration",
-        "from_location": "United States",
-        "to_location": "France",
-        "characterization": "diplomatic mission"
-      }
-    },
-    {
-      "date": "1785-10",
-      "date_precision": "month",
-      "date_end": "1788",
-      "date_end_precision": "year",
-      "age": 79,
-      "title": "Leads Pennsylvania and the Abolition Society",
-      "description": "After returning from France, Franklin was elected President of Pennsylvania under the state’s republican constitution. In October 1785, he also became president of the [[Pennsylvania Society for Promoting the Abolition of Slavery|Pennsylvania Society for Promoting the Abolition of Slavery]].",
-      "locations": [
-        {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
-          "centroid": [
-            -75.1652,
-            39.9526
-          ],
-          "primary": true
-        }
+        "Silas Deane"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Benjamin_Franklin",
-        "https://en.wikipedia.org/wiki/Pennsylvania_Constitution_of_1776",
-        "https://en.wikipedia.org/wiki/Pennsylvania_Abolition_Society"
+        "https://en.wikipedia.org/wiki/Silas_Deane",
+        "https://en.wikipedia.org/wiki/Arthur_Lee_(diplomat)"
       ],
-      "event_type_icon": "mdi-vote",
-      "chapter": "constitutional_twilight",
-      "annotations": {
-        "Pennsylvania Society for Promoting the Abolition of Slavery": {
-          "explanation": "An early American abolitionist organization, founded in Philadelphia in 1775, that campaigned against slavery and assisted free Black people.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Pennsylvania_Abolition_Society"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Treaty_of_Alliance_%281778%29_Signatures.jpg/960px-Treaty_of_Alliance_%281778%29_Signatures.jpg",
+          "caption": "Treaty of Alliance 1778 signatures",
+          "source": "https://commons.wikimedia.org/wiki/File:Treaty_of_Alliance_(1778)_Signatures.jpg",
+          "creator": "Benjamin Franklin",
+          "license": "Public domain",
+          "licenseUrl": null
         }
-      }
+      ],
+      "event_type_icon": "mdi-handshake",
+      "chapter": "independence_abroad",
+      "weight": 0.95
     },
     {
-      "date": "1787-09-17",
+      "date": "1783-09-03",
       "date_precision": "day",
-      "age": 81,
-      "title": "Signs the New United States Constitution",
-      "description": "Despite frailty and poor health, Franklin attended the [[Constitutional Convention|Constitutional Convention]] in Philadelphia. On September 17, 1787, he urged the delegates to accept the completed Constitution as the best attainable agreement and signed it with the Pennsylvania delegation.",
+      "age": 77,
+      "title": "Signs Treaty of Paris",
+      "description": "Benjamin Franklin signed the [[Treaty of Paris|Treaty of Paris]] in Paris with John Adams and John Jay on September 3, 1783. The agreement recognized the independence of the United States and formally ended the American Revolutionary War.",
       "locations": [
         {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "name_historic": "Paris",
+          "name_modern": "Paris, France",
           "centroid": [
-            -75.1652,
-            39.9526
+            2.3522,
+            48.8566
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "George Washington",
-        "James Wilson",
-        "Gouverneur Morris"
+        "John Adams",
+        "John Jay"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin",
+        "https://en.wikipedia.org/wiki/John_Adams",
+        "https://en.wikipedia.org/wiki/John_Jay"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Scene_at_the_Signing_of_the_Constitution_of_the_United_States.jpg/960px-Scene_at_the_Signing_of_the_Constitution_of_the_United_States.jpg",
-          "caption": "Scene at the Signing of the United States Constitution",
-          "source": "https://commons.wikimedia.org/wiki/File:Scene_at_the_Signing_of_the_Constitution_of_the_United_States.jpg",
-          "creator": "Howard Chandler Christy",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Treaty_of_Paris_1783_-_first_page_%28hi-res%29.jpg/960px-Treaty_of_Paris_1783_-_first_page_%28hi-res%29.jpg",
+          "caption": "First page of the 1783 Treaty of Paris",
+          "source": "https://commons.wikimedia.org/wiki/File:Treaty_of_Paris_1783_-_first_page_(hi-res).jpg",
+          "creator": null,
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-file-document-edit",
-      "chapter": "constitutional_twilight",
+      "event_type_icon": "mdi-handshake",
+      "chapter": "independence_abroad",
       "annotations": {
-        "Constitutional Convention": {
-          "explanation": "The 1787 assembly of delegates that drafted the United States Constitution in Philadelphia.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+        "Treaty of Paris": {
+          "explanation": "The Treaty of Paris was the peace agreement between Great Britain and the United States that concluded the American Revolutionary War. It recognized American independence and established the new nation's boundaries.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Treaty_of_Paris_(1783)"
         }
-      }
+      },
+      "weight": 0.9
+    },
+    {
+      "date": "1785-10-18",
+      "date_precision": "day",
+      "age": 79,
+      "title": "Becomes President of Pennsylvania",
+      "description": "In 1785, Benjamin Franklin returned to Philadelphia and became President of Pennsylvania. The office made him the state's chief executive.",
+      "locations": [
+        {
+          "name_historic": "Philadelphia",
+          "name_modern": "Philadelphia, Pennsylvania",
+          "centroid": [
+            -75.1652,
+            39.9526
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/FRANKLIN%2C_Benjamin_%28signed_check%29.jpg/960px-FRANKLIN%2C_Benjamin_%28signed_check%29.jpg",
+          "caption": "Benjamin Franklin signed check as Pennsylvania president",
+          "source": "https://commons.wikimedia.org/wiki/File:FRANKLIN,_Benjamin_(signed_check).jpg",
+          "creator": "National Museum of American History",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-vote",
+      "chapter": "independence_abroad",
+      "weight": 0.6
     },
     {
       "date": "1790-04-17",
       "date_precision": "day",
       "age": 84,
       "title": "Dies at Home in Philadelphia",
-      "description": "Franklin died in Philadelphia on April 17, 1790, aged 84, after a period of declining health. He was buried beside Deborah Read at Christ Church Burial Ground.",
+      "description": "Benjamin Franklin died at his Philadelphia home after suffering from [[pleurisy]]. In his final years, he lived with his daughter Sarah Franklin Bache, her husband Richard Bache, and their family.",
       "locations": [
         {
           "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "name_modern": "Philadelphia, Pennsylvania, USA",
           "centroid": [
             -75.1652,
             39.9526
@@ -734,27 +810,26 @@
         }
       ],
       "involved_people": [
-        "Deborah Read"
+        "Sarah Franklin Bache",
+        "Richard Bache"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Deborah_Read"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Benjamin_Franklin_grave_%282011%29.JPG/960px-Benjamin_Franklin_grave_%282011%29.JPG",
-          "caption": "Benjamin and Deborah Franklin's grave in Philadelphia",
-          "source": "https://commons.wikimedia.org/wiki/File:Benjamin_Franklin_grave_(2011).JPG",
-          "creator": "Nandaro",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
-        }
+        "https://en.wikipedia.org/wiki/Benjamin_Franklin"
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "constitutional_twilight",
+      "chapter": "independence_abroad",
+      "annotations": {
+        "pleurisy": {
+          "explanation": "Pleurisy is inflammation of the tissues surrounding the lungs, often causing sharp chest pain and difficult breathing.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Pleurisy"
+        }
+      },
+      "weight": 0.5,
       "event_class": {
         "type": "death",
+        "cause": "pleurisy",
         "characterization": "after declining health",
-        "place_of_rest": "Christ Church Burial Ground"
+        "place_of_rest": "Christ Church Burial Ground, Philadelphia"
       }
     }
   ]

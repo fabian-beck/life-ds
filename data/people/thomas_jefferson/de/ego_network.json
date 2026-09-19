@@ -1,0 +1,273 @@
+{
+  "dataset": "Thomas Jefferson ego network",
+  "created_on": "2026-09-19",
+  "ego": {
+    "name": "Thomas Jefferson",
+    "birth_year": 1743,
+    "death_year": 1826,
+    "primary_roles": [
+      "Politiker",
+      "Schriftsteller",
+      "Diplomat",
+      "Jurist",
+      "Plantagenbesitzer"
+    ],
+    "summary": "Thomas Jefferson war Jurist, Plantagenbesitzer, politischer Publizist und Diplomat aus Virginia sowie der dritte Präsident der Vereinigten Staaten. Er verfasste den Entwurf der Unabhängigkeitserklärung, verantwortete den Louisiana Purchase, beauftragte das Corps of Discovery und gründete die University of Virginia. Während seines Lebens hielt er zudem mehr als 600 Menschen in Versklavung.",
+    "wikipedia": "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+  },
+  "connections": [
+    {
+      "person_name": "Peter Jefferson",
+      "relationship_description": "Jeffersons Vater war Plantagenbesitzer und Landvermesser. Als Peter Jefferson 1757 starb, erbte Thomas Land, zu dem auch der spätere Standort von Monticello gehörte.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Nach dem Tod von Peter Jefferson wurde John Harvie Sr. Jeffersons Vormund.",
+      "relationship_type": "family/father"
+    },
+    {
+      "person_name": "Martha Wayles Skelton Jefferson",
+      "relationship_description": "Jefferson heiratete Martha Wayles Skelton im Jahr 1772. Sie teilten ihre Liebe zur Musik und Literatur, zogen sechs Kinder groß und lebten bis zu ihrem Tod 1782 in Monticello.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/Martha_Jefferson"
+      ],
+      "notes": "Ihr Tod traf Jefferson tief. Er heiratete nie wieder.",
+      "relationship_type": "family/spouse"
+    },
+    {
+      "person_name": "Martha Jefferson Randolph",
+      "relationship_description": "Jeffersons älteste überlebende Tochter begleitete ihn nach Frankreich und übernahm später informell die Rolle der Gastgeberin im Weißen Haus. In seinen letzten Jahren half sie ihm in Monticello.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/Martha_Jefferson_Randolph"
+      ],
+      "notes": "Sie war als Patsy bekannt und das einzige Kind von Jefferson und Martha Wayles Skelton Jefferson, das älter als 25 Jahre wurde.",
+      "relationship_type": "family/daughter"
+    },
+    {
+      "person_name": "Sally Hemings",
+      "relationship_description": "Sally Hemings wurde von Jefferson in Monticello versklavt und begleitete 1787 seine Tochter Mary nach Paris. Historiker sind sich weitgehend einig, dass Jefferson der Vater ihrer Kinder war. Die Beziehung bestand unter dem extremen Machtungleichgewicht der Sklaverei.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Sally_Hemings",
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Hemings war über ihren gemeinsamen Vater John Wayles die Halbschwester von Jeffersons Ehefrau. Jeffersons Tochter Martha Randolph gewährte Hemings nach seinem Tod informell die Freiheit.",
+      "relationship_type": "enslaver/subordinate"
+    },
+    {
+      "person_name": "William Small",
+      "relationship_description": "Small unterrichtete Jefferson 1761 am College of William & Mary in Mathematik und Philosophie. Er machte ihn mit dem Gedankengut der Aufklärung und dem Kreis um Wythe und Fauquier in Williamsburg bekannt.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Jefferson zählte die Gespräche in diesem Kreis später zu den wertvollsten geistigen Erfahrungen seines Lebens.",
+      "relationship_type": "academic/teacher"
+    },
+    {
+      "person_name": "George Wythe",
+      "relationship_description": "Wythe war Jeffersons Mentor in Williamsburg und betreute dessen juristische Lektüre. Er bereitete Jefferson auf die Zulassung zum Anwaltsberuf in Virginia im Jahr 1767 vor.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/George_Wythe"
+      ],
+      "notes": "Wythe vermachte Jefferson später seine Bibliothek. Ihre geistige Verbundenheit bestand fort.",
+      "relationship_type": "academic/mentor"
+    },
+    {
+      "person_name": "John Adams",
+      "relationship_description": "Adams unterstützte im Kontinentalkongress die Entscheidung, Jefferson mit dem Entwurf der Unabhängigkeitserklärung zu betrauen. Später standen sie sich bei den Präsidentschaftswahlen von 1796 und 1800 gegenüber. Durch Briefwechsel fanden sie wieder zueinander.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/John_Adams",
+        "https://en.wikipedia.org/wiki/1800_United_States_presidential_election"
+      ],
+      "notes": "Im hohen Alter belebten sie ihre Freundschaft durch einen berühmten Briefwechsel neu. Sie starben am selben Tag, dem 4. Juli 1826.",
+      "relationship_type": "political/political_rival"
+    },
+    {
+      "person_name": "James Madison",
+      "relationship_description": "Madison und Jefferson gründeten 1792 die Demokratisch-Republikanische Partei, um sich der Politik der Föderalisten entgegenzustellen. Jefferson ernannte Madison später zum Außenminister.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Ihr Bündnis verband Jeffersons Präsidentschaft mit Madisons nachfolgender Regierung und der langen landesweiten Vorherrschaft der Partei.",
+      "relationship_type": "political/ally"
+    },
+    {
+      "person_name": "Alexander Hamilton",
+      "relationship_description": "Hamilton war unter Washington Finanzminister, während Jefferson Außenminister war. Sie stritten über die Staatsschulden, die nationale Finanzpolitik und die Reichweite der Bundesgewalt.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Ihr Konflikt trug zur Herausbildung der föderalistischen und demokratisch-republikanischen Parteienordnung bei.",
+      "relationship_type": "political/political_rival"
+    },
+    {
+      "person_name": "Meriwether Lewis",
+      "relationship_description": "Jefferson beschäftigte Lewis 1801 als seinen Präsidialsekretär und wählte ihn zum Leiter des Corps of Discovery. Später ernannte er Lewis zum Gouverneur von Oberlouisiana.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Meriwether_Lewis",
+        "https://en.wikipedia.org/wiki/Lewis_and_Clark_Expedition"
+      ],
+      "notes": "Jefferson wählte Lewis für die Expedition wegen seiner Fähigkeiten an der Grenze, seiner wissenschaftlichen Vorbereitung und seines Charakters aus.",
+      "relationship_type": "political/subordinate"
+    },
+    {
+      "person_name": "Aaron Burr",
+      "relationship_description": "Burr war von 1801 bis 1805 Jeffersons Vizepräsident, nachdem die Wahlgleichheit zu Jeffersons Gunsten entschieden worden war. Jeffersons Regierung klagte Burr später wegen des Vorwurfs des Hochverrats in der Burr-Verschwörung an. Burr wurde freigesprochen.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://de.wikipedia.org/wiki/Aaron_Burr",
+        "https://en.wikipedia.org/wiki/Burr_conspiracy"
+      ],
+      "notes": "Burr wurde vom Vorwurf des Hochverrats freigesprochen. Die Anklage ging aus Jeffersons tiefem Misstrauen gegenüber seinem früheren Vizepräsidenten hervor.",
+      "relationship_type": "political/adversary"
+    },
+    {
+      "person_name": "Jane Randolph",
+      "relationship_description": "Jeffersons Mutter stammte aus der angesehenen Familie Randolph und lebte mit ihm in Shadwell, nachdem er seine juristische Laufbahn begonnen hatte.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Die erhaltenen Quellen belegen die Beziehung, berichten jedoch vergleichsweise wenig über ihre persönliche Bindung.",
+      "relationship_type": "family/mother"
+    },
+    {
+      "person_name": "John Wayles",
+      "relationship_description": "John Wayles war Jeffersons Schwiegervater. Nach Wayles’ Tod 1773 erbten Jefferson und Martha Land, Schulden und 135 versklavte Menschen, darunter Angehörige der Familie Hemings.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Martha_Jefferson",
+        "https://en.wikipedia.org/wiki/Sally_Hemings"
+      ],
+      "notes": "Die geerbten Schulden trugen erheblich zu Jeffersons langfristigen finanziellen Schwierigkeiten bei.",
+      "relationship_type": "family/father_in_law"
+    },
+    {
+      "person_name": "Mary Jefferson Eppes",
+      "relationship_description": "Jeffersons jüngere überlebende Tochter kam 1787 gemeinsam mit Sally Hemings zu ihm nach Paris. Dort erhielt sie zusammen mit ihrer Schwester Martha Unterricht.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/Martha_Jefferson_Randolph",
+        "https://en.wikipedia.org/wiki/Sally_Hemings"
+      ],
+      "notes": "Sie wurde meist Polly oder Maria genannt und starb 1804.",
+      "relationship_type": "family/daughter"
+    },
+    {
+      "person_name": "James Hemings",
+      "relationship_description": "James Hemings war ein versklavter Mann, den Jefferson 1784 zur Ausbildung als französischen Koch nach Paris mitnahm. Jefferson ließ ihn frei, nachdem er seinen Bruder Peter zum Koch ausgebildet hatte.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Sally_Hemings",
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "James Hemings war der ältere Bruder von Sally Hemings und gehörte zu den Menschen, die über den Nachlass von Wayles geerbt wurden.",
+      "relationship_type": "enslaver/subordinate"
+    },
+    {
+      "person_name": "James Maury",
+      "relationship_description": "Reverend James Maury unterrichtete Jefferson in Geschichte, Naturwissenschaften und den klassischen Sprachen, während Jefferson von 1758 bis 1760 bei Maurys Familie wohnte.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
+      ],
+      "notes": "Dieser Unterricht prägte Jeffersons Ausbildung vor dem College of William & Mary wesentlich.",
+      "relationship_type": "academic/teacher"
+    },
+    {
+      "person_name": "George Washington",
+      "relationship_description": "Washington ernannte Jefferson 1789 zum ersten Außenminister der Vereinigten Staaten. Jefferson gehörte seinem Kabinett bis 1793 an und widersprach dessen föderalistischer Ausrichtung.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://de.wikipedia.org/wiki/George_Washington"
+      ],
+      "notes": "Ihre Zusammenarbeit war von Jeffersons Konflikt mit Finanzminister Alexander Hamilton geprägt.",
+      "relationship_type": "political/superior"
+    },
+    {
+      "person_name": "Benjamin Franklin",
+      "relationship_description": "Franklin gehörte 1776 gemeinsam mit Jefferson dem Fünferkomitee an. Er nahm redaktionelle Änderungen an Jeffersons Entwurf vor, bevor der Kongress die Unabhängigkeitserklärung beriet.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://de.wikipedia.org/wiki/Unabh%C3%A4ngigkeitserkl%C3%A4rung_der_Vereinigten_Staaten"
+      ],
+      "notes": "Franklin nahm redaktionelle Änderungen an Jeffersons Entwurf vor, bevor das Dokument dem Kongress vorgelegt wurde.",
+      "relationship_type": "political/collaborator"
+    },
+    {
+      "person_name": "Robert R. Livingston",
+      "relationship_description": "Livingston gehörte 1776 gemeinsam mit Jefferson dem Fünferkomitee an. Als amerikanischer Gesandter in Frankreich verhandelte er später mit James Monroe den Louisiana Purchase.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://en.wikipedia.org/wiki/Louisiana_Purchase"
+      ],
+      "notes": "Seine Verbindung zu Jefferson verknüpfte die Ausarbeitung der Unabhängigkeitserklärung mit dem großen Gebietserwerb während Jeffersons Präsidentschaft.",
+      "relationship_type": "political/collaborator"
+    },
+    {
+      "person_name": "Roger Sherman",
+      "relationship_description": "Sherman gehörte 1776 gemeinsam mit Jefferson dem Fünferkomitee an. Das Komitee bereitete Jeffersons Entwurf der Unabhängigkeitserklärung für den Kongress vor.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://de.wikipedia.org/wiki/Unabh%C3%A4ngigkeitserkl%C3%A4rung_der_Vereinigten_Staaten"
+      ],
+      "notes": "Die Arbeit des Komitees führte zur Vorlage der Unabhängigkeitserklärung im Kongress.",
+      "relationship_type": "political/collaborator"
+    },
+    {
+      "person_name": "William Clark",
+      "relationship_description": "Clark leitete gemeinsam das Corps of Discovery, das Jefferson nach dem Louisiana Purchase beauftragte. Die Expedition erkundete das westliche Gebiet und suchte einen Weg zur Pazifikküste.",
+      "strength": "moderate",
+      "sources": [
+        "https://en.wikipedia.org/wiki/William_Clark",
+        "https://en.wikipedia.org/wiki/Lewis_and_Clark_Expedition"
+      ],
+      "notes": "Nach der Expedition ernannte Jefferson Clark zum Brigadegeneral der Miliz des Louisiana-Territoriums und zum Indianeragenten.",
+      "relationship_type": "political/subordinate"
+    }
+  ],
+  "category_summaries": [
+    {
+      "relationship_type": "family",
+      "summary": "Jeffersons Familienleben begann im Haushalt der Plantagenbesitzer Peter Jefferson und Jane Randolph in Virginia. Später gründete er mit Martha Wayles Skelton Jefferson einen Haushalt in Monticello. Nach Marthas Tod 1782 wurden ihre überlebenden Töchter, besonders Martha Randolph, seine engsten Angehörigen und halfen ihm, seinen Haushalt zu führen. Der Nachlass von John Wayles brachte zudem Land, Schulden und versklavte Menschen in Jeffersons Familienwirtschaft."
+    },
+    {
+      "relationship_type": "enslaver",
+      "summary": "Versklavte Arbeitskräfte trugen Jeffersons Haushalt und seine Plantagen in Monticello. Die Familie Hemings kam durch das Erbe von Wayles nach Monticello. Die Ausbildung von James Hemings zum französischen Koch verdeutlicht Jeffersons Einsatz qualifizierter versklavter Arbeitskräfte. Sally Hemings und ihre Kinder veranschaulichen die intime Macht, die Jefferson als ihr Versklaver über sie ausübte."
+    },
+    {
+      "relationship_type": "academic",
+      "summary": "Jeffersons Lehrer bereiteten ihn auf die juristische Tätigkeit und das politische Schreiben vor. James Maury unterrichtete ihn vor dem College in Geschichte, Naturwissenschaften und den klassischen Sprachen. William Small machte ihn in Williamsburg mit dem Gedankengut der Aufklärung bekannt. George Wythe lenkte Jeffersons wissenschaftliche Interessen auf die juristische Ausbildung."
+    },
+    {
+      "relationship_type": "political",
+      "summary": "Jeffersons politischer Kreis entwickelte sich aus der Zusammenarbeit während der Revolution und geriet später in die Konflikte der frühen Republik. Adams, Franklin, Livingston und Sherman arbeiteten mit ihm an der Unabhängigkeitserklärung. Washington ernannte ihn zum Außenminister, Madison wurde sein wichtigster politischer Verbündeter und Hamilton sein führender Gegner im Kabinett. Als Präsident stützte sich Jefferson beim Louisiana Purchase und der Expedition in den Westen auf Livingston, Monroe, Lewis und Clark."
+    }
+  ],
+  "translation": {
+    "source_lang": "en",
+    "target_lang": "de",
+    "source_fingerprint": "afeb81818f051b35",
+    "translated_on": "2026-09-19T07:42:49.388004+02:00",
+    "translator": "openai:gpt-5.6-terra"
+  }
+}

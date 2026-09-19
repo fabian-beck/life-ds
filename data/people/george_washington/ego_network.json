@@ -1,374 +1,242 @@
 {
-  "dataset": "Wikipedia Ego Network: George Washington",
-  "created_on": "2026-07-16",
+  "dataset": "George Washington ego network",
+  "created_on": "2026-09-19",
   "ego": {
     "name": "George Washington",
     "birth_year": 1732,
     "death_year": 1799,
     "primary_roles": [
-      "Virginia planter",
-      "Continental Army commander in chief",
-      "politician",
-      "first President of the United States"
+      "military officer",
+      "planter",
+      "president"
     ],
-    "summary": "George Washington was a Virginia planter, commander in chief of the Continental Army during the American Revolutionary War, president of the 1787 Constitutional Convention, and the first president of the United States from 1789 to 1797. He helped secure American independence and established lasting precedents for the federal presidency.",
-    "wikipedia": "https://de.wikipedia.org/wiki/George_Washington"
+    "summary": "George Washington was a Virginia planter, commander in chief of the Continental Army during the American Revolution, presiding officer of the Constitutional Convention, and the first president of the United States from 1789 to 1797.",
+    "wikipedia": "https://en.wikipedia.org/wiki/George_Washington"
   },
   "connections": [
     {
       "person_name": "Augustine Washington",
-      "relationship_type": "family/father",
-      "relationship_description": "Washington's father was a Virginia planter and merchant. His death when George was eleven left George under the practical guardianship of his older half-brother Lawrence and made Mary responsible for the household and estate.",
-      "start_year": 1732,
-      "end_year": 1743,
+      "relationship_description": "Washington's father was a Virginia planter and merchant. His death in 1743 left eleven-year-old George under the guardianship of his older half brother Lawrence.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Washington family household",
-        "life on Virginia plantations",
-        "inheritance and estate context"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/George_Washington",
         "https://en.wikipedia.org/wiki/Augustine_Washington"
       ],
-      "notes": "Augustine's death was an important formative event in Washington's childhood."
+      "notes": "Augustine's plantation wealth and enslaved labor placed Washington within Virginia's planter elite.",
+      "relationship_type": "family/father"
     },
     {
       "person_name": "Mary Ball Washington",
-      "relationship_type": "family/mother",
-      "relationship_description": "Washington's mother managed the family and Ferry Farm after Augustine Washington's death. He remained connected to her throughout her life and visited her shortly before she died in 1789.",
-      "start_year": 1732,
-      "end_year": 1789,
+      "relationship_description": "Washington's mother managed Ferry Farm and the family estate after Augustine Washington died. Washington visited her in Fredericksburg shortly after learning of his election as president in 1789.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Washington family household",
-        "Ferry Farm estate management",
-        "family visits in Fredericksburg"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/George_Washington",
         "https://en.wikipedia.org/wiki/Mary_Ball_Washington"
       ],
-      "notes": "Mary never remarried after Augustine's death and was responsible for Washington's property while he was a minor."
+      "notes": "She remained unmarried after becoming a widow and lived long enough to see her son become commander in chief and president.",
+      "relationship_type": "family/mother"
     },
     {
       "person_name": "Lawrence Washington",
-      "relationship_type": "family/half_brother",
-      "relationship_description": "Lawrence was Washington's much older half-brother, guardian after their father's death, and an important early model. George accompanied him on a 1751 journey to Barbados and later assumed management of Mount Vernon after Lawrence's death.",
-      "start_year": 1732,
-      "end_year": 1752,
+      "relationship_description": "Lawrence, fourteen years Washington's senior, became his guardian after their father's death. Washington traveled with the tuberculosis-stricken Lawrence to Barbados in 1751 and later assumed management of Mount Vernon after Lawrence died in 1752.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "family guardianship",
-        "1751 Barbados journey",
-        "Mount Vernon estate succession",
-        "connections with the Fairfax family"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/George_Washington",
         "https://de.wikipedia.org/wiki/Lawrence_Washington_(Soldat)"
       ],
-      "notes": "Lawrence's marriage to Anne Fairfax connected George more closely to the Fairfax family."
-    },
-    {
-      "person_name": "George William Fairfax",
-      "relationship_type": "social/friend",
-      "relationship_description": "Fairfax was a member of the influential neighboring Fairfax family and the husband of Sally Fairfax. He took the young Washington on a 1748 surveying expedition through Fairfax lands in the Shenandoah Valley, beginning a sustained friendship and patronage connection.",
-      "start_year": 1748,
-      "end_year": 1799,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Shenandoah Valley surveying expedition",
-        "surveying Fairfax frontier lands",
-        "Belvoir social and intellectual circle"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/George_Washington"
-      ],
-      "notes": "The Fairfax family continued to treat Washington as a family member after Lawrence Washington's death."
-    },
-    {
-      "person_name": "Sally Fairfax",
-      "relationship_type": "social/friend",
-      "relationship_description": "Sally Fairfax, George William Fairfax's wife, was a close and intellectually influential friend of Washington. At Belvoir she helped broaden his education through books, theater, and discussion; the account also describes Washington as retaining feelings for her beyond ordinary friendship.",
-      "start_year": 1748,
-      "end_year": 1799,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Belvoir literary and intellectual discussions",
-        "reading philosophy and literature",
-        "social correspondence"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/George_Washington"
-      ],
-      "notes": "Their relationship is described as initially platonic and educational, though Washington's lasting attachment is noted in the source."
-    },
-    {
-      "person_name": "Robert Dinwiddie",
-      "relationship_type": "professional/patron",
-      "relationship_description": "As lieutenant governor of Virginia, Dinwiddie appointed Washington an adjutant and sent him on the 1753 diplomatic mission to the Ohio Country. He later entrusted Washington with command of a small Virginia militia force in 1754.",
-      "start_year": 1752,
-      "end_year": 1754,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Virginia militia appointment",
-        "Ohio Country diplomatic mission",
-        "French and Indian War preparations"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/George_Washington"
-      ],
-      "notes": "Washington's published journal of his mission for Dinwiddie brought him his first widespread public attention."
-    },
-    {
-      "person_name": "Edward Braddock",
-      "relationship_type": "professional/commander",
-      "relationship_description": "British General Braddock employed Washington as an aide during the 1755 expedition against Fort Duquesne. After Braddock was mortally wounded in the disastrous Battle of the Monongahela, Washington helped organize the retreat.",
-      "start_year": 1755,
-      "end_year": 1755,
-      "strength": "moderate",
-      "interaction_frequency": "daily",
-      "influence_direction": "alter_to_ego",
-      "shared_activities": [
-        "Braddock expedition",
-        "Battle of the Monongahela",
-        "retreat from British defeat"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/George_Washington",
-        "https://en.wikipedia.org/wiki/Braddock_Expedition"
-      ],
-      "notes": "The campaign gave Washington consequential experience of frontier warfare and British military limitations."
+      "notes": "Lawrence's Fairfax marriage and ownership of Mount Vernon connected George Washington to the influential Fairfax circle.",
+      "relationship_type": "family/half_brother"
     },
     {
       "person_name": "Martha Washington",
-      "relationship_type": "family/spouse",
-      "relationship_description": "Martha Dandridge Custis was Washington's wife from 1759 until his death. They made Mount Vernon their home, jointly raised her surviving children and grandchildren, and she served as the inaugural presidential spouse during his administration.",
-      "start_year": 1759,
-      "end_year": 1799,
+      "relationship_description": "Martha Washington shared Mount Vernon with George Washington and made visits to Continental Army encampments during the war. As president’s wife, she helped establish the public role later associated with the first lady.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Mount Vernon household and plantation life",
-        "raising Custis children and grandchildren",
-        "Continental Army winter encampment visits",
-        "presidential social duties in New York and Philadelphia"
-      ],
       "sources": [
         "https://de.wikipedia.org/wiki/George_Washington",
         "https://en.wikipedia.org/wiki/Martha_Washington"
       ],
-      "notes": "Their marriage was described as enduring; they had no biological children together."
+      "notes": "Her estate and business interests joined the Mount Vernon household, while her role as the first president's wife helped define the future role of first lady.",
+      "relationship_type": "family/spouse"
     },
     {
       "person_name": "John Parke Custis",
-      "relationship_type": "family/stepchild",
-      "relationship_description": "Martha Washington's surviving son became Washington's stepson and was raised at Mount Vernon. He served as a civilian aide to his stepfather during the Yorktown campaign and died from camp illness in 1781.",
-      "start_year": 1759,
-      "end_year": 1781,
+      "relationship_description": "Washington helped raise Martha Washington's surviving son, John Parke Custis, at Mount Vernon. Custis later served as Washington's civilian aide during the Yorktown campaign and died of camp illness in 1781.",
       "strength": "strong",
-      "interaction_frequency": "daily",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Mount Vernon family life",
-        "management of Custis family affairs",
-        "Yorktown campaign"
-      ],
       "sources": [
         "https://en.wikipedia.org/wiki/Martha_Washington"
       ],
-      "notes": "After John Parke Custis's death, George and Martha Washington raised two of his children, Eleanor Parke Custis and George Washington Parke Custis."
+      "notes": "After Custis's death, George and Martha Washington took in two of his children.",
+      "relationship_type": "family/stepchild"
     },
     {
-      "person_name": "Nathanael Greene",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Greene was one of Washington's leading Continental Army generals and participated in the Trenton and Princeton operations. He was a trusted senior collaborator in Washington's Revolutionary War command structure.",
-      "start_year": 1775,
-      "end_year": 1783,
+      "person_name": "Sally Fairfax",
+      "relationship_description": "Sally Fairfax was a close friend of George Washington at Belvoir and helped broaden his informal education. Washington retained strong feelings for her throughout his life.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Continental Army command",
-        "New Jersey campaign",
-        "Battles of Trenton and Princeton",
-        "Revolutionary War strategic coordination"
-      ],
       "sources": [
-        "https://de.wikipedia.org/wiki/George_Washington",
-        "https://en.wikipedia.org/wiki/Nathanael_Greene",
-        "https://en.wikipedia.org/wiki/Battle_of_Trenton"
-      ],
-      "notes": "Greene was among the principal generals associated with Washington's leadership during the war."
-    },
-    {
-      "person_name": "Benedict Arnold",
-      "relationship_type": "professional/subordinate",
-      "relationship_description": "Arnold was a prominent Continental Army general whom Washington trusted and ultimately placed in command of West Point. Arnold's 1780 plan to surrender the post to the British was exposed, after which he escaped to British lines.",
-      "start_year": 1775,
-      "end_year": 1780,
-      "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "ego_to_alter",
-      "shared_activities": [
-        "Continental Army command",
-        "Revolutionary War campaigns",
-        "West Point command and exposed betrayal"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Benedict_Arnold",
         "https://de.wikipedia.org/wiki/George_Washington"
       ],
-      "notes": "Washington's deep trust in Arnold made the betrayal a major personal as well as military rupture."
+      "notes": "The relationship remained constrained by her marriage to George William Fairfax and Washington's later marriage to Martha Washington.",
+      "relationship_type": "social/friend"
     },
     {
-      "person_name": "John Hancock",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Hancock presided over the Second Continental Congress when it appointed Washington commander in chief of the Continental Army in June 1775. Their connection linked congressional civilian authority with Washington's military command.",
-      "start_year": 1775,
-      "end_year": 1783,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Second Continental Congress appointment",
-        "Continental Army war leadership",
-        "wartime correspondence between Congress and army command"
-      ],
+      "person_name": "George William Fairfax",
+      "relationship_description": "George William Fairfax brought Washington into the Fairfax family circle and remained a longtime friend. Their connection linked Washington to the Belvoir household and Virginia’s planter elite.",
+      "strength": "strong",
       "sources": [
-        "https://de.wikipedia.org/wiki/George_Washington",
-        "https://en.wikipedia.org/wiki/Second_Continental_Congress"
+        "https://de.wikipedia.org/wiki/George_Washington"
       ],
-      "notes": "Hancock was president of the Congress that selected Washington to lead the Continental Army."
+      "notes": "The surveying work supplied Washington with income, frontier knowledge, and practical experience in land management and organization.",
+      "relationship_type": "professional/collaborator"
     },
     {
-      "person_name": "Charles Cornwallis",
-      "relationship_type": "professional/adversary",
-      "relationship_description": "Cornwallis was a leading British general against Washington's Continental Army. His surrender to the combined American and French force at Yorktown in 1781 ended the final major land campaign of the Revolutionary War.",
-      "start_year": 1776,
-      "end_year": 1781,
-      "strength": "moderate",
-      "interaction_frequency": "occasional",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "American Revolutionary War campaigns",
-        "Yorktown siege and surrender"
-      ],
+      "person_name": "Robert Dinwiddie",
+      "relationship_description": "As Virginia’s lieutenant governor, Robert Dinwiddie gave Washington early military and diplomatic assignments. His appointments placed Washington at the center of the contest for the Ohio Valley.",
+      "strength": "strong",
       "sources": [
-        "https://en.wikipedia.org/wiki/Charles_Cornwallis,_1st_Marquess_Cornwallis",
-        "https://en.wikipedia.org/wiki/Marquis_de_Lafayette"
+        "https://de.wikipedia.org/wiki/George_Washington"
       ],
-      "notes": "Their relationship was principally adversarial, culminating in Cornwallis's surrender at Yorktown."
+      "notes": "Washington's published report on the mission, The Journal of Major Washington, brought him his first broad public recognition.",
+      "relationship_type": "professional/superior"
     },
     {
       "person_name": "Marquis de Lafayette",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Lafayette was a French volunteer major general in the Continental Army who developed a close relationship with Washington. He commanded troops under Washington during the Yorktown campaign and later remained a prominent transatlantic ally and friend.",
-      "start_year": 1777,
-      "end_year": 1799,
+      "relationship_description": "Lafayette served under Washington in the Continental Army and became one of his important French military partners. In 1781, forces under Lafayette's Virginia command contained Cornwallis before Washington's allied army joined the siege of Yorktown.",
       "strength": "strong",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Continental Army service",
-        "French-American military alliance",
-        "Yorktown campaign",
-        "postwar correspondence and political friendship"
-      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Marquis_de_Lafayette",
+        "https://en.wikipedia.org/wiki/Marquis_de_Lafayette"
+      ],
+      "notes": "Their connection endured after the war; Lafayette visited Washington at Mount Vernon in 1784 and later became a celebrated symbol of the Franco-American alliance.",
+      "relationship_type": "professional/close_colleague"
+    },
+    {
+      "person_name": "Jean-Baptiste Donatien de Vimeur",
+      "relationship_description": "As commander of the French expeditionary force, Rochambeau cooperated with Washington in the 1781 Yorktown campaign. Their combined American and French forces besieged Cornwallis and secured the decisive surrender.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Marquis_de_Lafayette"
+      ],
+      "notes": "This partnership made French land and naval assistance decisive to Washington's most consequential military victory.",
+      "relationship_type": "professional/collaborator"
+    },
+    {
+      "person_name": "Charles Cornwallis",
+      "relationship_description": "Cornwallis commanded British forces against Washington during the Revolutionary War. Washington and his French allies besieged his army at Yorktown, leading Cornwallis to surrender in October 1781.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Charles_Cornwallis,_1st_Marquess_Cornwallis"
+      ],
+      "notes": "The Yorktown surrender ended major military operations in North America.",
+      "relationship_type": "professional/opponent"
+    },
+    {
+      "person_name": "Benedict Arnold",
+      "relationship_description": "Washington had trusted Arnold and gave him command of West Point in 1780, but Arnold secretly negotiated to surrender the post to the British. When the plot was exposed, Arnold escaped to British lines.",
+      "strength": "strong",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Benedict_Arnold"
+      ],
+      "notes": "Arnold's betrayal deeply affected Washington's sense of trust within the Continental Army.",
+      "relationship_type": "professional/adversary"
+    },
+    {
+      "person_name": "Henry Knox",
+      "relationship_description": "Knox served as Washington's artillery chief during the Revolution and as secretary of war in Washington's first presidential administration. He was among the principal military and administrative figures with whom Washington worked closely.",
+      "strength": "strong",
+      "sources": [
+        "https://de.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "notes": "Knox linked Washington's Revolutionary military command to the institutional development of the new federal government.",
+      "relationship_type": "professional/colleague"
+    },
+    {
+      "person_name": "John Adams",
+      "relationship_description": "Adams proposed Washington for commander in chief of the Continental Army in the Second Continental Congress in 1775. He later served as Washington's vice president and succeeded him as president in 1797.",
+      "strength": "strong",
+      "sources": [
+        "https://de.wikipedia.org/wiki/John_Adams",
         "https://de.wikipedia.org/wiki/George_Washington"
       ],
-      "notes": "Lafayette publicly described deep affection for Washington, and their relationship symbolized the Franco-American alliance."
+      "notes": "Their relationship joined revolutionary congressional leadership to the establishment of the presidency under the Constitution.",
+      "relationship_type": "political/advocate"
     },
     {
       "person_name": "Alexander Hamilton",
-      "relationship_type": "professional/advisor",
-      "relationship_description": "Hamilton served as Washington's aide-de-camp during the Revolutionary War and became his first secretary of the treasury. He was a key architect of Washington administration policy and helped draft the 1796 Farewell Address.",
-      "start_year": 1777,
-      "end_year": 1799,
+      "relationship_description": "Hamilton served on Washington's wartime staff as an aide-de-camp and became secretary of the treasury in Washington's cabinet from 1789 to 1795. Washington relied on his advice in major constitutional, fiscal, and foreign-policy controversies.",
       "strength": "strong",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Continental Army headquarters staff",
-        "Washington cabinet",
-        "federal financial policy",
-        "drafting the Farewell Address"
-      ],
       "sources": [
-        "https://de.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/George_Washington%27s_Farewell_Address"
+        "https://de.wikipedia.org/wiki/Alexander_Hamilton"
       ],
-      "notes": "Hamilton's influence was particularly substantial in financial and administrative matters, though Washington ultimately made presidential decisions."
-    },
-    {
-      "person_name": "James Madison",
-      "relationship_type": "professional/collaborator",
-      "relationship_description": "Madison worked with Washington during the Constitutional Convention, where Washington presided, and later served in the first Congress. Their collaboration weakened as Madison joined Jefferson in opposition to Hamilton's policies and the Federalist coalition.",
-      "start_year": 1787,
-      "end_year": 1792,
-      "strength": "moderate",
-      "interaction_frequency": "monthly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Constitutional Convention",
-        "early federal constitutional politics",
-        "first Congress"
-      ],
-      "sources": [
-        "https://de.wikipedia.org/wiki/James_Madison",
-        "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
-      ],
-      "notes": "Madison had earlier helped persuade Washington to attend the Constitutional Convention and served as an important early adviser."
+      "notes": "Hamilton also helped prepare Washington's 1796 Farewell Address after Washington decided not to seek a third term.",
+      "relationship_type": "political/advisor"
     },
     {
       "person_name": "Thomas Jefferson",
-      "relationship_type": "professional/colleague",
-      "relationship_description": "Washington appointed Jefferson as the first secretary of state. Their cabinet relationship was strained by Jefferson's conflicts with Treasury Secretary Hamilton and by disagreements over federal power and foreign policy.",
-      "start_year": 1789,
-      "end_year": 1793,
-      "strength": "moderate",
-      "interaction_frequency": "weekly",
-      "influence_direction": "bidirectional",
-      "shared_activities": [
-        "Washington cabinet",
-        "formulation of early federal foreign policy",
-        "cabinet debates on finance and neutrality"
-      ],
+      "relationship_description": "Washington appointed Jefferson the first secretary of state in 1790. Their administration became divided over Hamilton's financial program, the scope of federal power, and policy toward France and Britain, and Jefferson resigned in 1793.",
+      "strength": "strong",
       "sources": [
-        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
-        "https://de.wikipedia.org/wiki/Alexander_Hamilton"
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson"
       ],
-      "notes": "Jefferson resigned from the cabinet in 1793 and became a leading critic of the Federalist political program."
+      "notes": "Their conflict reflected the emergence of the Federalist and Democratic-Republican alignments in national politics.",
+      "relationship_type": "political/political_rival"
+    },
+    {
+      "person_name": "James Madison",
+      "relationship_description": "Madison worked directly with Washington at the Constitutional Convention, where Washington presided, and served as a key early adviser to the president. Madison prepared the original 1792 draft that later informed Washington's Farewell Address.",
+      "strength": "strong",
+      "sources": [
+        "https://de.wikipedia.org/wiki/James_Madison",
+        "https://en.wikipedia.org/wiki/George_Washington%27s_Farewell_Address"
+      ],
+      "notes": "Their political relationship weakened during the 1790s as Madison joined Jefferson in opposition to Hamilton's Federalist program.",
+      "relationship_type": "political/advisor"
+    },
+    {
+      "person_name": "William Fairfax",
+      "relationship_description": "The wealthy neighboring planter at Belvoir received Washington into his household as a young man, where Washington gained informal exposure to literature, political ideas, and elite Virginia social life.",
+      "strength": "moderate",
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington"
+      ],
+      "notes": "Fairfax's household was an important formative setting after Washington's limited formal schooling.",
+      "relationship_type": "social/mentor"
+    },
+    {
+      "person_name": "Tanaghrisson",
+      "relationship_description": "The Iroquois representative met Washington at Logstown in 1753 and accompanied him and other Indigenous leaders on the diplomatic journey to the French at Fort Le Boeuf.",
+      "strength": "moderate",
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington"
+      ],
+      "notes": "Their direct alliance placed Washington within the contested Indigenous, British, and French politics of the Ohio Valley.",
+      "relationship_type": "professional/ally"
+    },
+    {
+      "person_name": "Edward Braddock",
+      "relationship_description": "Washington served as a captain and aide-de-camp to General Braddock during the 1755 expedition against Fort Duquesne. After Braddock was mortally wounded at the Battle of the Monongahela, Washington organized the retreat.",
+      "strength": "moderate",
+      "sources": [
+        "https://de.wikipedia.org/wiki/George_Washington"
+      ],
+      "notes": "The defeat gave Washington a costly early lesson in frontier warfare and military leadership.",
+      "relationship_type": "professional/superior"
     }
   ],
   "category_summaries": [
     {
       "relationship_type": "family",
-      "summary": "Washington’s closest personal network included his parents, his influential half-brother Lawrence, and Martha Washington, his wife from 1759 until his death. Their Mount Vernon household also included Martha’s son John Parke Custis and, later, two Custis grandchildren."
-    },
-    {
-      "relationship_type": "professional",
-      "summary": "Washington’s professional network ran from Virginia military patrons to Continental Army colleagues, revolutionary allies, cabinet officers, and adversaries. His relationships with Hamilton, Jefferson, and Madison helped define—and expose divisions within—the early federal government."
+      "summary": "Family ties shaped Washington’s household from childhood onward. After Augustine Washington died, Lawrence became George’s guardian and connected him to Mount Vernon. Martha Washington joined her Custis estate and family to the Mount Vernon household. After John Parke Custis died in 1781, George and Martha raised two of his children."
     },
     {
       "relationship_type": "social",
-      "summary": "The Fairfax circle accelerated Washington’s social advancement and informal education. George William Fairfax opened surveying opportunities, while Sally Fairfax provided an influential intellectual friendship."
+      "summary": "The Fairfax family brought Washington into the social world of Virginia’s gentry. At Belvoir, William Fairfax’s household gave him informal education and influential local connections. George William Fairfax became a lasting friend, and Sally Fairfax was an important early companion."
+    },
+    {
+      "relationship_type": "professional",
+      "summary": "Washington’s professional circle carried him from surveying and Virginia militia service into command of a multinational army. Dinwiddie, Tanaghrisson, Braddock, and other frontier figures gave him early experience in diplomacy and war. Rochambeau and Lafayette helped make the Yorktown campaign possible. Knox later connected Washington’s Revolutionary command to the War Department of the new federal government."
+    },
+    {
+      "relationship_type": "political",
+      "summary": "Washington’s political circle helped establish the federal government and his presidency. Adams proposed him for Continental command. Madison worked with him at the Constitutional Convention and drafted the first version of the Farewell Address. Hamilton shaped his treasury program and revised the address, while Jefferson and Madison opposed major parts of that program during the 1790s."
     }
   ]
 }

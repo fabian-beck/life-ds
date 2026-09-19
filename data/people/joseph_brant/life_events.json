@@ -1,17 +1,17 @@
 {
-  "dataset": "biographical_timeline",
-  "created_on": "2026-07-23",
+  "dataset": "Joseph Brant biographical timeline",
+  "created_on": "2026-09-19",
   "person": {
     "name": "Joseph_Brant",
     "birth_date": "1743-03-01",
     "death_date": "1807-11-24",
     "primary_roles": [
       "military leader",
-      "politician",
-      "diplomat"
+      "diplomat",
+      "politician"
     ],
-    "tagline": "Mohawk leader across two worlds",
-    "summary": "Thayendanegea, known as Joseph Brant, was a Mohawk military and political leader who allied with Britain during the American Revolution. He led Mohawk and Loyalist forces in the New York frontier war, then helped establish the Six Nations community on the Grand River in present-day Ontario.",
+    "tagline": "Mohawk Diplomacy Across Empires",
+    "summary": "Joseph Brant, also known as Thayendanegea, was a Mohawk military leader and diplomat during the American Revolution. He led British-allied Mohawk and Loyalist forces in the New York frontier war. After the conflict, he helped establish a Six Nations community along Ontario's Grand River and represented its interests in Britain and the United States.",
     "wikipedia": "https://en.wikipedia.org/wiki/Joseph_Brant",
     "portrait": {
       "image": "/portraits/joseph_brant_thumbnail.webp",
@@ -21,105 +21,133 @@
       "source": "https://en.wikipedia.org/wiki/Joseph_Brant",
       "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/5/51/Joseph_Brant_2.jpg"
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/5/51/Joseph_Brant_2.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "wolf_clan_beginnings",
-      "headline": "Wolf Clan Beginnings",
+      "id": "mohawk_roots",
+      "headline": "Mohawk Roots",
       "date_start": "1743-03",
       "date_start_precision": "month",
-      "date_end": "1765",
+      "date_end": "1760",
       "date_end_precision": "year",
       "age_start": 0,
-      "age_end": 22,
+      "age_end": 15,
       "involved_people": [
-        "Margaret",
-        "Eleazar Wheelock"
+        "Mary Brant (Molly Brant)",
+        "Margaret Owandah",
+        "Brant Kanagaraduncka",
+        "Sir William Johnson",
+        "James Abercrombie"
       ],
-      "location": "Northeastern North America"
+      "location": "Upstate New York",
+      "illustration": {
+        "image": "/chapter_art/joseph_brant/mohawk_roots_medium.webp",
+        "medium": "/chapter_art/joseph_brant/mohawk_roots_medium.webp",
+        "full": "/chapter_art/joseph_brant/mohawk_roots_full.webp",
+        "concept": "At the center of darkness, a smooth river stone rests within concentric rings of amber water, while fine rootlike channels radiate outward beneath the surface. Cold blue reflections flicker across the ripples, suggesting early currents of belonging and change.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "interpreter_to_empire",
-      "headline": "Interpreter to Empire",
-      "date_start": "1766",
+      "id": "between_two_worlds",
+      "headline": "Between Two Worlds",
+      "date_start": "1761",
       "date_start_precision": "year",
-      "date_end": "1776-07",
-      "date_end_precision": "month",
-      "age_start": 23,
-      "age_end": 33,
-      "involved_people": [
-        "Guy Johnson"
-      ],
-      "location": "Northeastern North America"
-    },
-    {
-      "id": "revolutionary_crucible",
-      "headline": "Revolutionary Crucible",
-      "date_start": "1777-08-06",
-      "date_start_precision": "day",
-      "date_end": "1781",
+      "date_end": "1772",
       "date_end_precision": "year",
-      "age_start": 34,
-      "age_end": 38,
+      "age_start": 18,
+      "age_end": 29,
       "involved_people": [
-        "Nicholas Herkimer",
-        "Barry St. Leger",
-        "Sir John Johnson",
-        "Sayenqueraghta",
-        "John Butler",
-        "Walter Butler",
-        "Catharine Croghan"
+        "Eleazar Wheelock",
+        "Samuel Kirkland",
+        "John Stuart"
       ],
-      "location": "Northeastern North America"
+      "location": "Northeastern North America",
+      "illustration": {
+        "image": "/chapter_art/joseph_brant/between_two_worlds_medium.webp",
+        "medium": "/chapter_art/joseph_brant/between_two_worlds_medium.webp",
+        "full": "/chapter_art/joseph_brant/between_two_worlds_full.webp",
+        "concept": "A suspended prism of clear ice divides two contrasting fields of light: warm gold on one side, deep indigo on the other. Inside, thin luminous strands bend, cross, and emerge in newly blended colors without forming any marks.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "a_nation_rebuilt",
-      "headline": "A Nation Rebuilt",
+      "id": "war_on_the_frontier",
+      "headline": "War on the Frontier",
+      "date_start": "1775-11",
+      "date_start_precision": "month",
+      "date_end": "1779",
+      "date_end_precision": "year",
+      "age_start": 32,
+      "age_end": 36,
+      "involved_people": [
+        "Guy Johnson",
+        "George III",
+        "George Germain",
+        "Sir John Johnson",
+        "Nicholas Herkimer",
+        "Sayenqueraghta",
+        "Cornplanter",
+        "Louis Cook",
+        "Han Yerry",
+        "Catharine Croghan",
+        "George Croghan",
+        "John Butler",
+        "John Sullivan"
+      ],
+      "location": "New York",
+      "illustration": {
+        "image": "/chapter_art/joseph_brant/war_on_the_frontier_medium.webp",
+        "medium": "/chapter_art/joseph_brant/war_on_the_frontier_medium.webp",
+        "full": "/chapter_art/joseph_brant/war_on_the_frontier_full.webp",
+        "concept": "A blackened circular field is split by a jagged flash of red-orange light. Ash-gray fragments spiral outward from the rupture, caught in a violent unseen current, while one small unbroken ember glows at the center.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
+    },
+    {
+      "id": "a_new_homeland",
+      "headline": "A New Homeland",
       "date_start": "1784-10-25",
       "date_start_precision": "day",
-      "date_end": "1792",
-      "date_end_precision": "year",
-      "age_start": 41,
-      "age_end": 49,
-      "involved_people": [
-        "Catharine Brant",
-        "Frederick Haldimand",
-        "John Butler",
-        "George III",
-        "George Washington"
-      ],
-      "location": "North Atlantic world"
-    },
-    {
-      "id": "burlington_legacy",
-      "headline": "Burlington Legacy",
-      "date_start": "1802",
-      "date_start_precision": "year",
       "date_end": "1807-11-24",
       "date_end_precision": "day",
-      "age_start": 59,
+      "age_start": 41,
       "age_end": 64,
       "involved_people": [
+        "Frederick Haldimand",
+        "John Butler",
+        "John Deseronto",
         "Catharine Brant"
       ],
-      "location": "Upper Canada"
+      "location": "Upper Canada",
+      "illustration": {
+        "image": "/chapter_art/joseph_brant/a_new_homeland_medium.webp",
+        "medium": "/chapter_art/joseph_brant/a_new_homeland_medium.webp",
+        "full": "/chapter_art/joseph_brant/a_new_homeland_full.webp",
+        "concept": "A broad ribbon of silver water curves through darkness toward a horizon of pale green light. Along its banks, scattered seeds become tiny translucent shoots, and a fractured ring of earth slowly closes into a continuous circle.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     }
   ],
-  "conclusion": "Joseph Brant turned fluency across Mohawk and British worlds into a lifetime of leadership through war, exile, and diplomacy. His defining achievement was helping the Haudenosaunee endure dispossession by building a renewed community at Grand River.",
+  "conclusion": "Joseph Brant helped establish the Six Nations community on the Grand River after the American Revolution and continued to press British and United States officials on Haudenosaunee land interests. The Haldimand Proclamation remains central to Six Nations land claims concerning the Grand River tract.",
   "events": [
     {
       "date": "1743-03",
       "date_precision": "month",
-      "date_note": "Born during the Mohawks' hunting season; no exact day is recorded",
       "age": 0,
-      "title": "Born in the Ohio Country",
-      "description": "Thayendanegea, later known as Joseph Brant, was born in March 1743 along the Cuyahoga River in the Ohio Country, where Mohawk families from the Mohawk Valley hunted seasonally. In Mohawk matrilineal society, he belonged to his mother Margaret's Wolf Clan.",
+      "title": "Birth in Ohio Country",
+      "description": "Joseph Brant was born during the Mohawk hunting season along the Cuyahoga River in the Ohio Country. Mohawk hunters traveled there from Kanienkeh, their homeland in present-day upstate New York. His parents, Peter and Margaret Tehonwaghkwangearahkwa, were Christian Mohawks. Brant belonged to the [[Wolf Clan|Mohawk Wolf Clan]] and received the name Thayendanegea, meaning “He Places Two Bets Together,” in the [[Haudenosaunee Confederacy|Haudenosaunee Confederacy]].",
       "locations": [
         {
           "name_historic": "Ohio Country",
-          "name_modern": "Northeast Ohio, United States",
+          "name_modern": "Ohio, United States",
           "centroid": [
             -81.6,
             41.4
@@ -128,24 +156,90 @@
         }
       ],
       "involved_people": [
-        "Margaret Tehonwaghkwangearahkwa"
+        "Peter Tehonwaghkwangearahkwa",
+        "Margaret Tehonwaghkwangearahkwa",
+        "Mary Brant (Molly Brant)"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Joseph_Brant"
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Molly_Brant"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Collision_Bend_-_Cuyahoga_River_-_Cleveland.jpg/960px-Collision_Bend_-_Cuyahoga_River_-_Cleveland.jpg",
+          "caption": "Cuyahoga River near Cleveland, Ohio",
+          "source": "https://commons.wikimedia.org/wiki/File:Collision_Bend_-_Cuyahoga_River_-_Cleveland.jpg",
+          "creator": "Tim Evanson",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+        }
       ],
       "event_type_icon": "mdi-candle",
-      "chapter": "wolf_clan_beginnings",
+      "chapter": "mohawk_roots",
       "annotations": {
-        "Ohio Country": {
-          "explanation": "An eighteenth-century frontier region west of the Appalachian Mountains, claimed by several colonial powers and Indigenous nations; much of it is now Ohio and nearby U.S. states.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Ohio_Country"
+        "Wolf Clan": {
+          "explanation": "The Wolf Clan was one of the matrilineal clans of the Mohawk people. Clan membership passed through the mother and shaped social identity and belonging.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Mohawk_people"
+        },
+        "Haudenosaunee Confederacy": {
+          "explanation": "The Haudenosaunee Confederacy, also called the Iroquois Confederacy, is an alliance of Indigenous nations that included the Mohawks. Its social and political organization included clans headed by clan mothers and male leaders.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Iroquois"
         }
       },
+      "weight": 0.35,
       "event_class": {
         "type": "birth",
+        "father": "Peter Tehonwaghkwangearahkwa",
         "mother": "Margaret Tehonwaghkwangearahkwa",
-        "father": "Peter Tehonwaghkwangearahkwa"
+        "birth_name": "Thayendanegea",
+        "characterization": "Mohawk hunting family"
       }
+    },
+    {
+      "date": "1753-09-09",
+      "date_precision": "day",
+      "age": 10,
+      "title": "Settles at Canajoharie",
+      "description": "On September 9, 1753, Joseph Brant’s mother Margaret married [[sachem|Mohawk sachem]] Brant Kanagaraduncka at Canajoharie on the Mohawk River. The family lived in a substantial colonial-style frame house. They attended the Church of England and maintained ties with Sir William Johnson, the British Superintendent of Indian Affairs.",
+      "locations": [
+        {
+          "name_historic": "Canajoharie",
+          "name_modern": "Canajoharie, New York, United States",
+          "centroid": [
+            -74.57,
+            42.9
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Margaret Owandah",
+        "Brant Kanagaraduncka",
+        "Sir William Johnson"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Molly_Brant"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/20180523_-_11_-_Canajoharie%2C_NY_-_%22On_the_Sunny_Side_of_the_Street%22.jpg/960px-20180523_-_11_-_Canajoharie%2C_NY_-_%22On_the_Sunny_Side_of_the_Street%22.jpg",
+          "caption": "Mohawk River at Canajoharie, New York",
+          "source": "https://commons.wikimedia.org/wiki/File:20180523_-_11_-_Canajoharie,_NY_-_\"On_the_Sunny_Side_of_the_Street\".jpg",
+          "creator": "Andre Carrotflower",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "event_type_icon": "mdi-home-switch-outline",
+      "chapter": "mohawk_roots",
+      "annotations": {
+        "sachem": {
+          "explanation": "A sachem was a civil leader in a Native American community. Kanagaraduncka was a Mohawk leader of the Turtle clan.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Sachem"
+        }
+      },
+      "weight": 0.25
     },
     {
       "date": "1758",
@@ -153,24 +247,24 @@
       "date_end": "1760",
       "date_end_precision": "year",
       "age": 15,
-      "title": "Served in Seven Years' War",
-      "description": "As a teenage Mohawk ally of Britain, Brant joined campaigns against the French in Canada, including expeditions to Fort Carillon, Fort Niagara, and Montreal. British authorities awarded him a silver medal for his service alongside other Indigenous warriors.",
+      "title": "Serves in Seven Years' War",
+      "description": "Beginning in 1758, Joseph Brant served with Mohawk and other Haudenosaunee allies in British operations against French forces in northern North America. He accompanied James Abercrombie’s expedition to [[Fort Carillon|Fort Carillon]] and witnessed the British defeat there. He later took part in campaigns that captured Fort Niagara and Montreal. The British awarded Brant a silver medal for his service.",
       "locations": [
         {
           "name_historic": "Fort Carillon",
-          "name_modern": "Ticonderoga, New York, United States",
+          "name_modern": "Ticonderoga, New York, USA",
           "centroid": [
-            -73.3915,
+            -73.3862,
             43.8487
           ],
           "primary": true
         },
         {
           "name_historic": "Fort Niagara",
-          "name_modern": "Youngstown, New York, United States",
+          "name_modern": "Youngstown, New York, USA",
           "centroid": [
-            -79.0539,
-            43.2637
+            -79.0497,
+            43.2628
           ],
           "primary": false
         },
@@ -179,18 +273,37 @@
           "name_modern": "Montreal, Quebec, Canada",
           "centroid": [
             -73.5673,
-            45.5017
+            45.5019
           ],
           "primary": false
         }
       ],
+      "involved_people": [
+        "James Abercrombie"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Joseph_Brant",
-        "https://en.wikipedia.org/wiki/Battle_of_Carillon",
-        "https://en.wikipedia.org/wiki/Battle_of_Fort_Niagara"
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Fort_Ticonderoga%2C_Ticonderoga%2C_NY.jpg/960px-Fort_Ticonderoga%2C_Ticonderoga%2C_NY.jpg",
+          "caption": "Fort Ticonderoga from Mount Defiance",
+          "source": "https://commons.wikimedia.org/wiki/File:Fort_Ticonderoga,_Ticonderoga,_NY.jpg",
+          "creator": "Mwanner",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+        }
       ],
       "event_type_icon": "mdi-shield",
-      "chapter": "wolf_clan_beginnings"
+      "chapter": "mohawk_roots",
+      "annotations": {
+        "Fort Carillon": {
+          "explanation": "Fort Carillon was a French fort at the southern end of Lake Champlain, later renamed Fort Ticonderoga. British forces under James Abercrombie suffered a major defeat there in 1758.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Fort_Carillon"
+        }
+      },
+      "weight": 0.55,
+      "background": "At Fort Carillon, the Mohawk contingent watched from a hill as French fire cut down the British infantry sent to storm the fort. Abercrombie had kept the Mohawk in a scouting role. They were thankful to avoid the heavy losses of the assault. The expedition also brought Brant into contact with Guy Johnson, John Butler, and Daniel Claus.\n\nAt Fort Niagara, Brant scouted for the British. He joined British soldiers, New York militiamen, and other Iroquois warriors in the forest ambush at La Belle-Famille. The French relief force was destroyed while marching toward the fort. The article identifies this encounter as possibly Brant's first combat.\n\nAmherst's force left Fort Oswego on August 11, 1760, for Montreal. After Fort Lévis fell, Amherst kept Indigenous allies out of the captured fort because he feared for the French prisoners. Most of the Six Nations warriors departed after being denied a share of its plunder. Brant remained with the expedition through the capture of Montreal in September."
     },
     {
       "date": "1761",
@@ -198,369 +311,90 @@
       "date_end": "1763",
       "date_end_precision": "year",
       "age": 18,
-      "title": "Attended Moor's Charity School",
-      "description": "In 1761, Brant attended [[Moor's Indian Charity School|Moor's Indian Charity School]] in Connecticut, an institution founded by Eleazar Wheelock. He improved his English literacy and encountered Anglican religious instruction while retaining close ties to Mohawk life and British Indian Department networks.",
+      "title": "Studies at Wheelock's School",
+      "description": "In 1761, Joseph Brant began studying at Eleazar Wheelock's Moor's Indian Charity School in Lebanon, Connecticut, with two other Mohawk students. He learned English, arithmetic, farming, classical subjects, and religious subjects under Wheelock's guidance. There he met Samuel Kirkland.",
       "locations": [
         {
-          "name_historic": "Columbia",
-          "name_modern": "Columbia, Connecticut, United States",
+          "name_historic": "Lebanon, Connecticut",
+          "name_modern": null,
+          "primary": true,
           "centroid": [
-            -72.3045,
-            41.6993
-          ],
-          "primary": true
+            -72.2125789,
+            41.6362097
+          ]
         }
       ],
       "involved_people": [
-        "Eleazar Wheelock"
+        "Eleazar Wheelock",
+        "Samuel Kirkland"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Joseph_Brant",
-        "https://en.wikipedia.org/wiki/Moor%27s_Charity_School"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Moors_Charity_School%2C_Columbia_CT.jpg/960px-Moors_Charity_School%2C_Columbia_CT.jpg",
-          "caption": "Moor's Charity School, Columbia, Connecticut",
-          "source": "https://commons.wikimedia.org/wiki/File:Moors_Charity_School,_Columbia_CT.jpg",
-          "creator": "John Phelan",
-          "license": "CC BY 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
-        }
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
       ],
       "event_type_icon": "mdi-school",
-      "chapter": "wolf_clan_beginnings",
-      "annotations": {
-        "Moor's Indian Charity School": {
-          "explanation": "An eighteenth-century Connecticut school founded by Eleazar Wheelock to educate Indigenous students; it was a predecessor institution to Dartmouth College.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Moor%27s_Charity_School"
-        }
-      }
+      "chapter": "between_two_worlds",
+      "weight": 0.5
     },
     {
-      "date": "1765",
+      "date": "1764",
       "date_precision": "year",
-      "age": 22,
-      "title": "Married Margaret",
-      "description": "In 1765, Brant married Margaret, the daughter of a Virginia planter, in the Mohawk Valley. They had two children.",
-      "locations": [
-        {
-          "name_historic": "Mohawk Valley",
-          "name_modern": "Mohawk Valley, New York, United States",
-          "centroid": [
-            -74.9,
-            43.0
-          ],
-          "primary": true
-        }
+      "age": 21,
+      "title": "Works as Interpreter",
+      "description": "The article does not document Joseph Brant working as an interpreter in 1764. It states that he began working as an interpreter for the British Indian Department from 1766 onward, using his knowledge of English and several Haudenosaunee languages.",
+      "locations": [],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
       ],
-      "involved_people": [
-        "Margaret"
-      ],
-      "sources": [],
-      "event_type_icon": "mdi-ring",
-      "chapter": "wolf_clan_beginnings",
-      "event_class": {
-        "type": "marriage_partnership",
-        "subtype": "marriage",
-        "partner": "Margaret",
-        "children": 2
-      }
+      "event_type_icon": "mdi-briefcase",
+      "chapter": "between_two_worlds",
+      "weight": 0.6
     },
     {
       "date": "1772",
       "date_precision": "year",
       "age": 29,
-      "title": "Joined British Indian Department",
-      "description": "In 1772, Brant became secretary and interpreter to Guy Johnson in the British Indian Department and received a captain’s commission. His command of Mohawk and English placed him in negotiations between the Crown and the [[Haudenosaunee Confederacy|Haudenosaunee Confederacy]].",
+      "title": "Translates Christian Texts",
+      "description": "In spring 1772, Joseph Brant moved to Fort Hunter, New York, to stay with the Reverend John Stuart. He served as Stuart’s interpreter and taught him Mohawk. They translated the Anglican catechism and the Gospel of Mark into Mohawk.",
       "locations": [
         {
-          "name_historic": "Mohawk Valley",
-          "name_modern": "Mohawk Valley, New York, United States",
+          "name_historic": "Fort Hunter, Province of New York",
+          "name_modern": "Fort Hunter, New York, United States",
           "centroid": [
-            -74.9,
-            42.95
+            -74.2851327,
+            42.9422962
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Guy Johnson"
+        "John Stuart"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Guy_Johnson"
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
       ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "interpreter_to_empire",
-      "annotations": {
-        "Haudenosaunee Confederacy": {
-          "explanation": "An alliance of six Indigenous nations—Mohawk, Oneida, Onondaga, Cayuga, Seneca, and Tuscarora—also widely known as the Iroquois Confederacy.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Iroquois"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Johnson%2C_Guy_%28NYPL_b11868620-5327595%29.jpg/960px-Johnson%2C_Guy_%28NYPL_b11868620-5327595%29.jpg",
+          "caption": "Portrait of Guy Johnson",
+          "source": "https://commons.wikimedia.org/wiki/File:Johnson,_Guy_(NYPL_b11868620-5327595).jpg",
+          "creator": "Scan by NYPL",
+          "license": "Public domain",
+          "licenseUrl": null
         }
-      }
+      ],
+      "event_type_icon": "mdi-account-multiple",
+      "chapter": "between_two_worlds",
+      "weight": 0.65,
+      "background": "Brant had practiced translation during his schooling at Moor’s Indian Charity School. His interest in Christian texts continued while he was grieving Peggie’s death from tuberculosis in early 1771. The Church of England gave him spiritual comfort, and he remained an Anglican for the rest of his life.\n\nHe also asked Stuart to marry him to Susanna, Peggie’s sister. Stuart refused. Haudenosaunee custom accepted a widower’s marriage to his deceased wife’s sister, who could take the place of the lost wife within the household."
     },
     {
-      "date": "1775-05",
+      "date": "1775-11",
       "date_precision": "month",
       "date_end": "1776-07",
       "date_end_precision": "month",
       "age": 32,
-      "title": "Left for Canada and Britain",
-      "description": "As revolutionary tensions overtook the Mohawk Valley, Brant left with Guy Johnson and Loyalist supporters for British-held Quebec. He later traveled to Britain to seek support for the Mohawk cause, returning to North America in July 1776.",
-      "locations": [
-        {
-          "name_historic": "Mohawk Valley",
-          "name_modern": "Mohawk Valley, New York, United States",
-          "centroid": [
-            -74.75,
-            42.98
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Montreal",
-          "name_modern": "Montreal, Quebec, Canada",
-          "centroid": [
-            -73.5673,
-            45.5017
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Guy Johnson"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Guy_Johnson"
-      ],
-      "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "interpreter_to_empire",
-      "event_class": {
-        "type": "migration",
-        "from_location": "Mohawk Valley, Province of New York",
-        "to_location": "Province of Quebec",
-        "characterization": "Loyalist flight"
-      }
-    },
-    {
-      "date": "1777-08-06",
-      "date_precision": "day",
-      "age": 34,
-      "title": "Fought at Oriskany",
-      "description": "Brant and Mohawk warriors fought in the British-allied force that ambushed a Patriot relief column near Fort Stanwix during the Battle of Oriskany. The battle brought Mohawk, Oneida, Seneca, and other [[Haudenosaunee|Haudenosaunee nations]] into direct conflict with one another.",
-      "locations": [
-        {
-          "name_historic": "Oriskany",
-          "name_modern": "Oriskany, New York, United States",
-          "centroid": [
-            -75.332,
-            43.157
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "Fort Stanwix",
-          "name_modern": "Rome, New York, United States",
-          "centroid": [
-            -75.4557,
-            43.2128
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "Nicholas Herkimer",
-        "Barry St. Leger",
-        "Sir John Johnson",
-        "Sayenqueraghta"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Battle_of_Oriskany"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Fort_Stanwix_National_Monument_FTST3694.jpg/960px-Fort_Stanwix_National_Monument_FTST3694.jpg",
-          "caption": "Fort Stanwix National Monument",
-          "source": "https://commons.wikimedia.org/wiki/File:Fort_Stanwix_National_Monument_FTST3694.jpg",
-          "creator": "National Park Service Digital Image Archives",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-sword-cross",
-      "chapter": "revolutionary_crucible",
-      "annotations": {
-        "Haudenosaunee": {
-          "explanation": "An Indigenous confederacy also known as the Iroquois Confederacy or Six Nations, comprising nations including the Mohawk, Oneida, and Seneca.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Iroquois"
-        }
-      }
-    },
-    {
-      "date": "1778",
-      "date_precision": "year",
-      "date_end": "1781",
-      "date_end_precision": "year",
-      "age": 35,
-      "title": "Led frontier war raids",
-      "description": "In 1778, Joseph Brant commanded Mohawk and Loyalist fighters known as Brant's Volunteers in raids on settlements across the New York frontier. His force took part in the attack on Cherry Valley, amid a brutal conflict in which civilians, soldiers, and Indigenous communities suffered heavily.",
-      "locations": [
-        {
-          "name_historic": "Cherry Valley, Province of New York",
-          "name_modern": "Cherry Valley, New York, United States",
-          "centroid": [
-            -74.7515,
-            42.7998
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "New York frontier",
-          "name_modern": "Upstate New York, United States",
-          "centroid": [
-            -75.0,
-            42.9
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "John Butler",
-        "Walter Butler"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_Butler_(Ranger)"
-      ],
-      "event_type_icon": "mdi-sword-cross",
-      "chapter": "revolutionary_crucible"
-    },
-    {
-      "date": "1780",
-      "date_precision": "year",
-      "age": 37,
-      "title": "Published Mohawk prayer book",
-      "description": "In 1780, at Fort Niagara, Joseph Brant helped prepare and publish an Anglican prayer book in the Mohawk language for Mohawk-speaking Christians displaced by the American Revolutionary War.",
-      "locations": [
-        {
-          "name_historic": "Fort Niagara",
-          "name_modern": "Youngstown, New York, United States",
-          "centroid": [
-            -79.0637,
-            43.2634
-          ],
-          "primary": true
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Catharine_Brant"
-      ],
-      "event_type_icon": "mdi-book",
-      "chapter": "revolutionary_crucible",
-      "event_class": {
-        "type": "publication",
-        "title": "Book of Common Prayer in Mohawk",
-        "publication_type": "book",
-        "significance": "Mohawk-language translation",
-        "impact": "It made Anglican devotional material available in Mohawk during the Revolutionary War."
-      }
-    },
-    {
-      "date": "1780",
-      "date_precision": "year",
-      "date_note": "The marriage occurred during the winter of 1779–1780",
-      "age": 37,
-      "title": "Married Catharine Croghan",
-      "description": "During the winter of 1779–1780, at Niagara, Brant married Catharine Croghan, also known as Ahdohwahgeseon. Their marriage took place among Haudenosaunee refugees gathered around the British post after the destruction of their villages during the American Revolutionary War.",
-      "locations": [
-        {
-          "name_historic": "Niagara",
-          "name_modern": "Niagara-on-the-Lake, Ontario, Canada",
-          "centroid": [
-            -79.071,
-            43.255
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Catharine Brant"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Catharine_Brant"
-      ],
-      "event_type_icon": "mdi-ring",
-      "chapter": "revolutionary_crucible",
-      "event_class": {
-        "type": "marriage_partnership",
-        "subtype": "marriage",
-        "partner": "Catharine Croghan",
-        "duration": "until his death"
-      }
-    },
-    {
-      "date": "1784-10-25",
-      "date_precision": "day",
-      "age": 41,
-      "title": "Settled the Grand River",
-      "description": "After the loss of Mohawk homelands in New York, Brant led many Haudenosaunee families from the Niagara area to land set aside under the [[Haldimand Proclamation|Haldimand Proclamation]]. He helped organize the new Six Nations community on the Grand River.",
-      "locations": [
-        {
-          "name_historic": "Niagara",
-          "name_modern": "Niagara-on-the-Lake, Ontario, Canada",
-          "centroid": [
-            -79.0737,
-            43.2557
-          ],
-          "primary": false
-        },
-        {
-          "name_historic": "Grand River",
-          "name_modern": "Six Nations of the Grand River, Ontario, Canada",
-          "centroid": [
-            -80.145,
-            43.075
-          ],
-          "primary": true
-        }
-      ],
-      "involved_people": [
-        "Catharine Brant",
-        "Frederick Haldimand",
-        "John Butler"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Haldimand_Proclamation",
-        "https://en.wikipedia.org/wiki/Catharine_Brant"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Thomas_Ridout_map_of_Grand_River_Indian_Lands%2C_1821.jpg/960px-Thomas_Ridout_map_of_Grand_River_Indian_Lands%2C_1821.jpg",
-          "caption": "1821 survey of Grand River Indian lands",
-          "source": "https://commons.wikimedia.org/wiki/File:Thomas_Ridout_map_of_Grand_River_Indian_Lands,_1821.jpg",
-          "creator": "Creator:Thomas Ridout",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "a_nation_rebuilt",
-      "annotations": {
-        "Haldimand Proclamation": {
-          "explanation": "A proclamation issued by Governor Frederick Haldimand on 25 October 1784 that set aside Grand River land for Mohawk people and other Six Nations people displaced by the American Revolution.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Haldimand_Proclamation"
-        }
-      },
-      "event_class": {
-        "type": "migration",
-        "from_location": "New York and British refugee settlements",
-        "to_location": "Grand River, Province of Quebec",
-        "characterization": "postwar resettlement"
-      }
-    },
-    {
-      "date": "1785",
-      "date_precision": "year",
-      "age": 42,
-      "title": "Petitioned in London",
-      "description": "In 1785, Joseph Brant traveled to London to petition the Crown for compensation, secure land tenure, and continued support for [[Haudenosaunee|Haudenosaunee]] settlers. He met King George III and other British officials to present Indigenous concerns directly.",
+      "title": "Appeals in London",
+      "description": "In November 1775, Joseph Brant traveled from Montreal to London with Guy Johnson as the American Revolution spread through New York. Brant met King George III and colonial secretary George Germain. He sought British support for the Haudenosaunee Confederacy and protection for its land rights in return for an alliance with the Crown.",
       "locations": [
         {
           "name_historic": "London",
@@ -570,82 +404,388 @@
             51.5072
           ],
           "primary": true
+        },
+        {
+          "name_historic": "Montreal",
+          "name_modern": "Montreal, Quebec, Canada",
+          "centroid": [
+            -73.5673,
+            45.5019
+          ],
+          "primary": false
         }
       ],
       "involved_people": [
-        "George III"
+        "Guy Johnson",
+        "George III",
+        "George Germain"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/George_III"
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Guy_Johnson"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Joseph_Brant_painting_by_George_Romney_1776.jpg/960px-Joseph_Brant_painting_by_George_Romney_1776.jpg",
-          "caption": "Joseph Brant portrait by George Romney, 1776",
-          "source": "https://commons.wikimedia.org/wiki/File:Joseph_Brant_painting_by_George_Romney_1776.jpg",
-          "creator": "George Romney",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/St_James_Palace_%286017571180%29.jpg/960px-St_James_Palace_%286017571180%29.jpg",
+          "caption": "St James's Palace in London",
+          "source": "https://commons.wikimedia.org/wiki/File:St_James_Palace_(6017571180).jpg",
+          "creator": "siegertmarc",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
         }
       ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "a_nation_rebuilt",
-      "annotations": {
-        "Haudenosaunee": {
-          "explanation": "A confederacy of Indigenous nations also widely known as the Iroquois Confederacy; Brant represented its displaced Loyalist communities after the American Revolution.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Iroquois"
-        }
-      }
+      "event_type_icon": "mdi-map-marker",
+      "chapter": "war_on_the_frontier",
+      "weight": 0.75
     },
     {
-      "date": "1792",
-      "date_precision": "year",
-      "age": 49,
-      "title": "Met George Washington",
-      "description": "In 1792, Joseph Brant traveled to Philadelphia and met President George Washington as disputes over Indigenous land and frontier warfare continued. He discussed peace and sought recognition of [[Haudenosaunee|Haudenosaunee]] interests while maintaining diplomatic ties with both British and American authorities.",
+      "date": "1777-08-06",
+      "date_precision": "day",
+      "age": 34,
+      "title": "Fights at Oriskany",
+      "description": "On August 6, 1777, Joseph Brant led about 400 Mohawk and other Indigenous allies with British rangers in an ambush near Oriska, New York. Sir John Johnson commanded the force. They attacked Brigadier General Nicholas Herkimer’s Patriot militia and Oneida warriors as the column advanced to relieve Fort Stanwix. Oneida support for the Patriot column brought divisions within the Haudenosaunee Confederacy into open armed conflict.",
       "locations": [
         {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
+          "name_historic": "Oriska, Province of New York",
+          "name_modern": "Oriskany, New York, USA",
           "centroid": [
-            -75.1652,
-            39.9526
+            -75.3663,
+            43.1595
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Fort Stanwix, Province of New York",
+          "name_modern": "Rome, New York, USA",
+          "centroid": [
+            -75.4557,
+            43.2128
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "Sir John Johnson",
+        "Nicholas Herkimer",
+        "Sayenqueraghta",
+        "Cornplanter",
+        "Louis Cook",
+        "Han Yerry"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Battle_of_Oriskany",
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Battle_of_Oriskany_by_Egbert_Norman_Clark_for_Utica_Mutual_Insurance_Company%2C_1936.jpg/960px-Battle_of_Oriskany_by_Egbert_Norman_Clark_for_Utica_Mutual_Insurance_Company%2C_1936.jpg",
+          "caption": "Painting of the Battle of Oriskany",
+          "source": "https://commons.wikimedia.org/wiki/File:Battle_of_Oriskany_by_Egbert_Norman_Clark_for_Utica_Mutual_Insurance_Company,_1936.jpg",
+          "creator": "Egbert Norman Clark",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "war_on_the_frontier",
+      "weight": 0.95,
+      "background": "British plans placed the siege of Fort Stanwix inside a larger drive on Albany. Barry St. Leger’s expedition was supposed to come down the Mohawk Valley while John Burgoyne advanced toward the Hudson Valley. St. Leger’s force reached the Oneida Carry and began besieging the Continental post on August 2.\n\nHerkimer’s relief column had left Fort Dayton two days earlier. It included about 800 militia members and a company of 60 to 100 Oneida led by Han Yerry. The militia were largely Palatine German farmers with little training. Herkimer sent three couriers ahead with a plan for Colonel Peter Gansevoort to acknowledge them with three cannon shots and send a sortie from the fort. The couriers did not get through until late the next morning.\n\nOn the morning of the fight, Herkimer had heard no signal and wanted to wait. His captains charged that he favored the British because his brother served with St. Leger. The column then entered a marshy ravine where the road descended more than 50 feet to a narrow stream. Seneca leaders Sayenqueraghta and Cornplanter had chosen the ground. The Royal Yorkers waited behind a rise while Haudenosaunee fighters lay concealed.\n\nThe American column lost about 465 men killed, wounded, or captured. Herkimer received a mortal wound. A sortie from Fort Stanwix looted the British-allied camp during the fighting. The loss weakened the morale of St. Leger’s Indigenous allies and contributed to the siege being abandoned two weeks later. Haudenosaunee oral histories call the battlefield “A Place of Great Sadness.”"
+    },
+    {
+      "date": "1778-09",
+      "date_precision": "month",
+      "age": 35,
+      "title": "Raids German Flatts",
+      "description": "In September 1778, Joseph Brant led Mohawk and Loyalist fighters in a raid on the German Flatts settlements in the Mohawk Valley. After local residents took refuge in defended forts, the attackers burned farms and other buildings in an effort to damage a district that supplied Patriot forces.",
+      "locations": [
+        {
+          "name_historic": "German Flatts",
+          "name_modern": "Herkimer County, New York",
+          "centroid": [
+            -74.99,
+            43.02
+          ],
+          "primary": true
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Cherry_Valley_massacre"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/German_Flatts%2C_New_York_%28408064960%29.jpg/960px-German_Flatts%2C_New_York_%28408064960%29.jpg",
+          "caption": "German Flatts, New York",
+          "source": "https://commons.wikimedia.org/wiki/File:German_Flatts,_New_York_(408064960).jpg",
+          "creator": "Jayu from Harrisburg, PA, U.S.A.",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+        }
+      ],
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "war_on_the_frontier",
+      "weight": 0.75
+    },
+    {
+      "date": "1779",
+      "date_precision": "year",
+      "date_note": "The marriage occurred during the winter of 1779-1780",
+      "age": 36,
+      "title": "Marries Catharine Croghan",
+      "description": "During the winter of 1779–1780 at Niagara, Joseph Brant married Catharine Croghan, daughter of British Indian agent George Croghan. Catharine held the office of [[clan mother]] in her Mohawk community. She and other Mohawk families had sought refuge at the British post at Niagara during the American Revolutionary War.",
+      "locations": [
+        {
+          "name_historic": "Niagara",
+          "name_modern": "Niagara-on-the-Lake, Ontario, Canada",
+          "centroid": [
+            -79.0663,
+            43.2565
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "George Washington"
+        "Catharine Croghan",
+        "George Croghan"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/George_Washington"
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Catharine_Brant"
       ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "a_nation_rebuilt",
-      "annotations": {
-        "Haudenosaunee": {
-          "explanation": "The Haudenosaunee, also called the Iroquois Confederacy, is a political alliance of Indigenous nations in northeastern North America.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Iroquois"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/At_Old_Fort_Niagara%2C_fort_walls_and_one_of_the_redoubts_that_were_built_to_protect_the_fort.jpg/960px-At_Old_Fort_Niagara%2C_fort_walls_and_one_of_the_redoubts_that_were_built_to_protect_the_fort.jpg",
+          "caption": "Old Fort Niagara, New York",
+          "source": "https://commons.wikimedia.org/wiki/File:At_Old_Fort_Niagara,_fort_walls_and_one_of_the_redoubts_that_were_built_to_protect_the_fort.jpg",
+          "creator": "Goetsch E",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
+      ],
+      "event_type_icon": "mdi-ring",
+      "chapter": "war_on_the_frontier",
+      "annotations": {
+        "clan mother": {
+          "explanation": "A clan mother was a senior woman in Haudenosaunee society. Clan mothers nominated hereditary male civil leaders and took part in political decisions.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Clan_Mother"
+        }
+      },
+      "weight": 0.4,
+      "event_class": {
+        "type": "marriage_partnership",
+        "subtype": "marriage",
+        "partner": "Catharine Croghan",
+        "duration": "until his death",
+        "children": 7,
+        "characterization": "family alliance"
       }
+    },
+    {
+      "date": "1779-08-29",
+      "date_precision": "day",
+      "age": 36,
+      "title": "Fights at Newtown",
+      "description": "On August 29, 1779, Joseph Brant joined John Butler, Butler’s Rangers, and Haudenosaunee and Delaware warriors at Newtown along the Chemung River near present-day Elmira, New York. Brant and Butler proposed harassing Major General John Sullivan’s advancing American army. Seneca leaders Sayenqueraghta and Cornplanter chose an ambush position. Sullivan’s larger force forced Butler’s Rangers and their Indigenous allies to withdraw.",
+      "locations": [
+        {
+          "name_historic": "Newtown, New York",
+          "name_modern": "Elmira, New York, United States",
+          "centroid": [
+            -76.8325,
+            42.0898
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Chemung River",
+          "name_modern": "Chemung River, New York, United States",
+          "centroid": [
+            -76.85,
+            42.1
+          ],
+          "primary": false
+        }
+      ],
+      "involved_people": [
+        "John Butler",
+        "Sayenqueraghta",
+        "Cornplanter",
+        "John Sullivan"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Battle_of_Newtown"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Newtown_Battlefield_State_Park%2C_Elmira%2C_New_York_%281883908237%29.jpg/960px-Newtown_Battlefield_State_Park%2C_Elmira%2C_New_York_%281883908237%29.jpg",
+          "caption": "Newtown Battlefield State Park",
+          "source": "https://commons.wikimedia.org/wiki/File:Newtown_Battlefield_State_Park,_Elmira,_New_York_(1883908237).jpg",
+          "creator": "Jayu from Harrisburg, PA, U.S.A.",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+        }
+      ],
+      "event_type_icon": "mdi-sword-cross",
+      "chapter": "war_on_the_frontier",
+      "weight": 0.8
+    },
+    {
+      "date": "1784-10-25",
+      "date_precision": "day",
+      "age": 41,
+      "title": "Resettles on Grand River",
+      "description": "On October 25, 1784, Governor Frederick Haldimand issued a proclamation granting Mohawks and other Haudenosaunee allies a tract along the Grand River in present-day southwestern Ontario. Joseph Brant led many families from former settlements in New York to the new community. The American Revolution had displaced them, and the British government had acquired the land from the Mississaugas.",
+      "locations": [
+        {
+          "name_historic": "New York",
+          "name_modern": "New York, United States",
+          "centroid": [
+            -75.0,
+            43.0
+          ],
+          "primary": false
+        },
+        {
+          "name_historic": "Grand River",
+          "name_modern": "Grand River, Ontario, Canada",
+          "centroid": [
+            -80.0,
+            43.0
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "Frederick Haldimand",
+        "John Butler"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/Haldimand_Proclamation"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/The_Mohawk_Village%2C_Grand_River%2C_1793%2C_by_Lieutenant_Pilkington_%28I0006349%29.tif/lossy-page1-960px-The_Mohawk_Village%2C_Grand_River%2C_1793%2C_by_Lieutenant_Pilkington_%28I0006349%29.tif.jpg",
+          "caption": "Mohawk Village on the Grand River, 1793",
+          "source": "https://commons.wikimedia.org/wiki/File:The_Mohawk_Village,_Grand_River,_1793,_by_Lieutenant_Pilkington_(I0006349).tif",
+          "creator": null,
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-map-marker-multiple",
+      "chapter": "a_new_homeland",
+      "weight": 1.0,
+      "event_class": {
+        "type": "migration",
+        "from_location": "New York",
+        "to_location": "Grand River, Upper Canada",
+        "characterization": "postwar resettlement"
+      },
+      "background": "Brant had identified the Grand River valley by early 1783. In May 1784, John Butler negotiated a purchase of about 3,000,000 acres from the Mississaugas of the Credit for £1,180. The proclamation followed three days after the Treaty of Fort Stanwix. Its language treated the new territory as a refuge for people who had lost settlements in the United States or wished to leave them.\n\nThe document described a corridor six miles deep on each side of the river. It ran from Lake Erie toward the river’s headwaters. It promised that the settlers and their descendants would enjoy the land forever. The proclamation was issued at the Castle of St. Louis in Quebec.\n\nIts boundaries and legal meaning became contested. The Crown later said its purchase from the Mississaugas did not reach the Grand River’s headwaters, which lay about 30 miles beyond the boundary it recognized. Officials also limited leasing and sales to transactions with the government. Brant argued that the people living there held freehold tenure and could lease or sell land. A Six Nations-requested survey began in 1791.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Castle_of_St._Lewis%2C_Quebec.png/960px-Castle_of_St._Lewis%2C_Quebec.png",
+          "caption": "Gravure \"Castle of St. Lewis, Quebec\", représentant le château Saint-Louis, à Québec. Gravure \"on Stone by Sproule from an Original by W.S.",
+          "source": "https://commons.wikimedia.org/wiki/File:Castle_of_St._Lewis,_Quebec.png",
+          "creator": "Engaving by Robert Auchmuty Sproule (1799-1845) from an original by W.S. Sewell",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Castle of St. Louis Quebec"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Grand_River_Ontario_2011.jpg/960px-Grand_River_Ontario_2011.jpg",
+          "caption": "The Grand River just north of Paris, Ontario, looking north (upstream). The ruins of an old railway bridge are visible.",
+          "source": "https://commons.wikimedia.org/wiki/File:Grand_River_Ontario_2011.jpg",
+          "creator": "JustSomePics",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "query": "Grand River Ontario"
+        }
+      ]
+    },
+    {
+      "date": "1785",
+      "date_precision": "year",
+      "date_end": "1786",
+      "date_end_precision": "year",
+      "age": 42,
+      "title": "Returns to London",
+      "description": "In 1785, Joseph Brant returned to London as a representative of the Grand River Haudenosaunee communities. He pressed British ministers for secure title to their Grand River lands and compensation for wartime losses, and met religious and political figures interested in Mohawk affairs.",
+      "locations": [
+        {
+          "name_historic": "London",
+          "name_modern": "London, UK",
+          "centroid": [
+            -0.1276,
+            51.5072
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Grand River",
+          "name_modern": "Grand River, Ontario, Canada",
+          "centroid": [
+            -80.3,
+            43.0
+          ],
+          "primary": false
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
+      ],
+      "event_type_icon": "mdi-map-marker",
+      "chapter": "a_new_homeland",
+      "weight": 0.7
+    },
+    {
+      "date": "1797",
+      "date_precision": "year",
+      "age": 54,
+      "title": "Negotiates New York Claims",
+      "description": "In 1797, Joseph Brant traveled to New York with Mohawk leader John Deseronto to negotiate Mohawk land claims in the former colony. They agreed to settle the claims in exchange for payment from New York State. The United States Congress never ratified the agreement.",
+      "locations": [
+        {
+          "name_historic": "New York",
+          "name_modern": "New York, United States",
+          "centroid": [
+            -74.006,
+            40.7128
+          ],
+          "primary": true
+        }
+      ],
+      "involved_people": [
+        "John Deseronto"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
+        "https://en.wikipedia.org/wiki/John_Deseronto"
+      ],
+      "event_type_icon": "mdi-handshake",
+      "chapter": "a_new_homeland",
+      "weight": 0.65
     },
     {
       "date": "1802",
       "date_precision": "year",
       "age": 59,
-      "title": "Moved to Burlington Bay",
-      "description": "Brant relocated with Catharine and their family from the Grand River to his estate near Burlington Bay. The household lived in a substantial residence, where Brant continued to receive visitors and conduct political correspondence.",
+      "title": "Moves to Burlington Bay",
+      "description": "Around 1802, Joseph Brant moved with his family from the Grand River settlement to Burlington Bay. He had received a 700-acre grant at Burlington Beach. The family settled in a mansion on the estate.",
       "locations": [
         {
-          "name_historic": "Grand River",
-          "name_modern": "Six Nations of the Grand River, Ontario, Canada",
+          "name_historic": "Grand River settlement",
+          "name_modern": "Brantford, Ontario, Canada",
           "centroid": [
-            -80.1,
-            43.08
+            -80.25,
+            43.14
           ],
           "primary": false
         },
         {
-          "name_historic": "Burlington",
+          "name_historic": "Burlington Bay",
           "name_modern": "Burlington, Ontario, Canada",
           "centroid": [
             -79.8,
@@ -658,10 +798,22 @@
         "Catharine Brant"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Joseph_Brant",
         "https://en.wikipedia.org/wiki/Catharine_Brant"
       ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Burlington_Bay_%28I0007065%29.tif/lossy-page1-960px-Burlington_Bay_%28I0007065%29.tif.jpg",
+          "caption": "Burlington Bay, 1796",
+          "source": "https://commons.wikimedia.org/wiki/File:Burlington_Bay_(I0007065).tif",
+          "creator": null,
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "burlington_legacy",
+      "chapter": "a_new_homeland",
+      "weight": 0.35,
       "event_class": {
         "type": "migration",
         "from_location": "Grand River, Upper Canada",
@@ -674,46 +826,41 @@
       "date_precision": "day",
       "age": 64,
       "title": "Death at Burlington Bay",
-      "description": "Joseph Brant died at his home near Burlington Bay in Upper Canada on November 24, 1807, aged 64. He was buried at the Mohawk Chapel near Brantford.",
+      "description": "After an illness, Joseph Brant died at his home on Burlington Bay in Upper Canada on November 24, 1807. He was 64 years old.",
       "locations": [
         {
-          "name_historic": "Burlington",
+          "name_historic": "Burlington Bay, Upper Canada",
           "name_modern": "Burlington, Ontario, Canada",
           "centroid": [
-            -79.799,
-            43.325
+            -79.8,
+            43.35
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Brantford",
-          "name_modern": "Brantford, Ontario, Canada",
-          "centroid": [
-            -80.263,
-            43.139
-          ],
-          "primary": false
         }
       ],
+      "involved_people": [
+        "Catharine Brant"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/John_Brant_(Mohawk_leader)",
-        "https://en.wikipedia.org/wiki/Catharine_Brant"
+        "https://en.wikipedia.org/wiki/Joseph_Brant"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Joseph_Brant%27s_tomb%2C_Brantford.jpg/960px-Joseph_Brant%27s_tomb%2C_Brantford.jpg",
-          "caption": "Joseph Brant's tomb at Mohawk Chapel, Brantford",
-          "source": "https://commons.wikimedia.org/wiki/File:Joseph_Brant's_tomb,_Brantford.jpg",
-          "creator": "No machine-readable author provided. NormanEinstein assumed (based on copyright claims).",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Her_Majesty%27s_Royal_Chapel_of_the_Mohawks_%28I0026411%29.jpg/960px-Her_Majesty%27s_Royal_Chapel_of_the_Mohawks_%28I0026411%29.jpg",
+          "caption": "Her Majesty's Royal Chapel of the Mohawks",
+          "source": "https://commons.wikimedia.org/wiki/File:Her_Majesty's_Royal_Chapel_of_the_Mohawks_(I0026411).jpg",
+          "creator": null,
+          "license": "OGL-ON",
+          "licenseUrl": "https://www.ontario.ca/page/open-government-licence-ontario"
         }
       ],
       "event_type_icon": "mdi-cross",
-      "chapter": "burlington_legacy",
+      "chapter": "a_new_homeland",
+      "weight": 0.5,
       "event_class": {
         "type": "death",
-        "place_of_rest": "Mohawk Chapel near Brantford"
+        "characterization": "after an illness",
+        "place_of_rest": "Her Majesty's Royal Chapel of the Mohawks, Brantford"
       }
     }
   ]

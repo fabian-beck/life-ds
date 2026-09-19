@@ -1,6 +1,6 @@
 {
-  "dataset": "Alexander Hamilton Biographical Timeline",
-  "created_on": "2026-07-19",
+  "dataset": "Alexander Hamilton biographical timeline",
+  "created_on": "2026-09-19",
   "person": {
     "name": "Alexander_Hamilton",
     "birth_date": "1755-01-11",
@@ -10,8 +10,8 @@
       "soldier",
       "lawyer"
     ],
-    "tagline": "Architect of American Public Finance",
-    "summary": "Alexander Hamilton was a Caribbean-born American statesman, Revolutionary War officer, lawyer, and Founding Father. As the first U.S. secretary of the treasury, he established major elements of the early federal financial system and became a leading advocate for a strong national government.",
+    "tagline": "Funding the American Republic",
+    "summary": "Alexander Hamilton rose from an impoverished childhood in the British Caribbean to become a Revolutionary War officer, constitutional advocate, and the first United States secretary of the treasury. He built federal financial institutions, helped define the Constitution's meaning, and became a leading Federalist before Aaron Burr mortally wounded him in a duel.",
     "wikipedia": "https://en.wikipedia.org/wiki/Alexander_Hamilton",
     "portrait": {
       "image": "/portraits/alexander_hamilton_thumbnail.webp",
@@ -21,163 +21,195 @@
       "source": "https://en.wikipedia.org/wiki/Alexander_Hamilton",
       "caption": "Stylized portrait based on a historical source image",
       "creator": "AI generated artwork",
-      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/38/Alexander_Hamilton_%28NPG%29.jpg"
+      "originalImage": "https://upload.wikimedia.org/wikipedia/commons/3/38/Alexander_Hamilton_%28NPG%29.jpg",
+      "referenceUsed": true
     }
   },
   "chapters": [
     {
-      "id": "island_crucible",
-      "headline": "Island Crucible",
-      "date_start": "1755-01-11",
-      "date_start_precision": "day",
-      "date_end": "1775",
-      "date_end_precision": "year",
-      "age_start": 0,
-      "age_end": 20,
-      "involved_people": [
-        "Rachel Faucette",
-        "James A. Hamilton",
-        "James Hamilton Jr.",
-        "Nicholas Cruger",
-        "Edward Stevens",
-        "Hercules Mulligan",
-        "Samuel Seabury"
-      ],
-      "location": "Caribbean and Mid-Atlantic United States"
-    },
-    {
-      "id": "guns_under_washington",
-      "headline": "Guns Under Washington",
-      "date_start": "1776-01",
-      "date_start_precision": "month",
-      "date_end": "1781",
-      "date_end_precision": "year",
-      "age_start": 20,
-      "age_end": 26,
-      "involved_people": [
-        "George Washington",
-        "Elizabeth Schuyler Hamilton",
-        "Philip Schuyler",
-        "Catherine Van Rensselaer Schuyler",
-        "Charles Cornwallis",
-        "Marquis de Lafayette",
-        "Jean-Joseph Sourbader de Gimat"
-      ],
-      "location": "Eastern United States"
-    },
-    {
-      "id": "a_nation_held_together",
-      "headline": "A Nation Held Together",
-      "date_start": "1782",
+      "id": "island_beginnings",
+      "headline": "Island Beginnings",
+      "date_start": "1755",
       "date_start_precision": "year",
-      "date_end": "1788",
-      "date_end_precision": "year",
-      "age_start": 27,
-      "age_end": 33,
+      "date_end": "1772-10",
+      "date_end_precision": "month",
+      "age_start": null,
+      "age_end": null,
       "involved_people": [
-        "James Madison",
-        "John Dickinson",
-        "Edmund Jennings Randolph",
-        "John Jay",
-        "George Washington"
+        "James Hamilton Jr.",
+        "Peter Lavien",
+        "Rachel Faucette",
+        "Johann Lavien",
+        "Hugh Knox",
+        "Hercules Mulligan"
       ],
-      "location": "Mid-Atlantic United States"
+      "location": "British Caribbean",
+      "illustration": {
+        "image": "/chapter_art/alexander_hamilton/island_beginnings_medium.webp",
+        "medium": "/chapter_art/alexander_hamilton/island_beginnings_medium.webp",
+        "full": "/chapter_art/alexander_hamilton/island_beginnings_full.webp",
+        "concept": "A single bright seed floats inside a dark field of turbulent indigo water, while a vast curling storm cloud above it opens into a narrow corridor of clear gold light.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "architect_of_american_finance",
-      "headline": "Architect of American Finance",
+      "id": "revolutionary_ranks",
+      "headline": "Revolutionary Ranks",
+      "date_start": "1774",
+      "date_start_precision": "year",
+      "date_end": "1781-10-14",
+      "date_end_precision": "day",
+      "age_start": null,
+      "age_end": null,
+      "involved_people": [
+        "Samuel Seabury",
+        "George Washington",
+        "Elizabeth Schuyler",
+        "Philip Schuyler",
+        "Catherine Van Rensselaer",
+        "Charles Cornwallis",
+        "Vicomte de Deux-Ponts"
+      ],
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/alexander_hamilton/revolutionary_ranks_medium.webp",
+        "medium": "/chapter_art/alexander_hamilton/revolutionary_ranks_medium.webp",
+        "full": "/chapter_art/alexander_hamilton/revolutionary_ranks_full.webp",
+        "concept": "Three diagonal bands of ember-red light surge upward through charcoal darkness, converging at a suspended, faceted prism; sparks scatter outward like pressure released from a tightly drawn bow.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
+    },
+    {
+      "id": "framing_the_union",
+      "headline": "Framing the Union",
+      "date_start": "1783",
+      "date_start_precision": "year",
+      "date_end": "1788-05",
+      "date_end_precision": "month",
+      "age_start": null,
+      "age_end": null,
+      "involved_people": [
+        "Richard Harison",
+        "Egbert Benson",
+        "James Madison",
+        "Edmund Randolph",
+        "John Jay"
+      ],
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/alexander_hamilton/framing_the_union_medium.webp",
+        "medium": "/chapter_art/alexander_hamilton/framing_the_union_medium.webp",
+        "full": "/chapter_art/alexander_hamilton/framing_the_union_full.webp",
+        "concept": "A ring of separate pale stone arcs slowly rotates in darkness, each piece hovering apart before nearly locking into one luminous, balanced circle around an empty center.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
+    },
+    {
+      "id": "treasury_statecraft",
+      "headline": "Building the Treasury",
       "date_start": "1789-09-11",
       "date_start_precision": "day",
-      "date_end": "1795-01-31",
-      "date_end_precision": "day",
-      "age_start": 34,
-      "age_end": 40,
+      "date_end": "1791",
+      "date_end_precision": "year",
+      "age_start": null,
+      "age_end": null,
       "involved_people": [
-        "George Washington"
+        "George Washington",
+        "James Madison",
+        "Thomas Jefferson"
       ],
-      "location": "United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/alexander_hamilton/treasury_statecraft_medium.webp",
+        "medium": "/chapter_art/alexander_hamilton/treasury_statecraft_medium.webp",
+        "full": "/chapter_art/alexander_hamilton/treasury_statecraft_full.webp",
+        "concept": "At the center of black velvet space, fine copper filaments flow from scattered droplets into a precise radial lattice, gathering brightness and weight as every line joins a calm circular reservoir.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     },
     {
-      "id": "fatal_reckoning",
-      "headline": "Fatal Reckoning",
+      "id": "final_political_battle",
+      "headline": "Final Political Battle",
       "date_start": "1797-08-25",
       "date_start_precision": "day",
       "date_end": "1804-07-12",
       "date_end_precision": "day",
-      "age_start": 42,
-      "age_end": 49,
+      "age_start": null,
+      "age_end": null,
       "involved_people": [
         "Maria Reynolds",
         "James Reynolds",
-        "Elizabeth Schuyler Hamilton",
-        "John Adams",
+        "James Monroe",
+        "Frederick Muhlenberg",
+        "Abraham Venable",
         "Aaron Burr",
-        "Thomas Jefferson",
-        "Philip Hamilton",
-        "George Eacker",
         "William Bayard Jr."
       ],
-      "location": "Mid-Atlantic United States"
+      "location": "United States",
+      "illustration": {
+        "image": "/chapter_art/alexander_hamilton/final_political_battle_medium.webp",
+        "medium": "/chapter_art/alexander_hamilton/final_political_battle_medium.webp",
+        "full": "/chapter_art/alexander_hamilton/final_political_battle_full.webp",
+        "concept": "A flawless sheet of midnight glass hangs vertically in darkness, split by one sharp silver fracture; along its edges, a fading amber glow leaks into a wide field of blue-gray mist.",
+        "creator": "AI generated artwork",
+        "generated_on": "2026-09-19"
+      }
     }
   ],
-  "conclusion": "From an orphaned Caribbean clerk to the chief architect of America’s financial system, Hamilton made national power tangible through intellect, urgency, and relentless ambition. His violent death sealed a life of extraordinary creation, leaving institutions that outlived every rivalry.",
+  "conclusion": "The Federalist Papers remain a major source for judges, lawyers, scholars, and citizens interpreting the United States Constitution. Hamilton's public-credit system established federal debt management and regular customs revenue collection as central Treasury functions. The Bank of New York, which he helped found, continues as part of BNY Mellon.",
   "events": [
     {
-      "date": "1755-01-11",
-      "date_precision": "day",
-      "date_note": "Hamilton's birth year is disputed; sources variously give 1755 or 1757",
+      "date": "1755",
+      "date_precision": "year",
+      "date_note": "Hamilton gave January 11 as his birthday. Sources differ on whether the birth year was 1755 or 1757",
       "title": "Birth on Nevis",
-      "description": "Alexander Hamilton was born in Charlestown on the Caribbean island of Nevis to Rachel Faucette and James A. Hamilton. His parents were not married, and he grew up with his elder brother, James Jr., in the British West Indies.",
+      "description": "Alexander Hamilton is born in Charlestown, Nevis, to Rachel Faucette and James A. Hamilton, who are not married. His household includes his older brother, James Jr., and Peter Lavien, his mother's son from an earlier marriage. James A. Hamilton comes from a Scottish family of minor landed gentry.",
       "locations": [
         {
           "name_historic": "Charlestown, Nevis",
           "name_modern": "Charlestown, Saint Kitts and Nevis",
           "centroid": [
-            -62.862,
-            17.133
+            -62.625,
+            17.14
           ],
           "primary": true
         }
       ],
       "involved_people": [
         "Rachel Faucette",
-        "James A. Hamilton"
+        "James A. Hamilton",
+        "James Hamilton Jr.",
+        "Peter Lavien"
       ],
       "sources": [
         "https://en.wikipedia.org/wiki/Alexander_Hamilton"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/The_Museum_of_Nevis_History_-_Alexander_Hamilton_birthplace.jpg/960px-The_Museum_of_Nevis_History_-_Alexander_Hamilton_birthplace.jpg",
-          "caption": "Museum of Nevis History at Hamilton's birthplace",
-          "source": "https://commons.wikimedia.org/wiki/File:The_Museum_of_Nevis_History_-_Alexander_Hamilton_birthplace.jpg",
-          "creator": "Daniel Farrell",
-          "license": "CC BY-SA 3.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
-        }
-      ],
       "event_type_icon": "mdi-candle",
-      "chapter": "island_crucible",
+      "chapter": "island_beginnings",
+      "weight": 0.3,
       "event_class": {
         "type": "birth",
+        "father": "James A. Hamilton",
         "mother": "Rachel Faucette",
-        "father": "James A. Hamilton"
+        "characterization": "trading household"
       }
     },
     {
       "date": "1768-02-19",
       "date_precision": "day",
-      "date_end": "1772",
-      "date_end_precision": "year",
-      "title": "Orphaned and Becomes Clerk",
-      "description": "On 19 February 1768, Hamilton’s mother, Rachel Faucette, died of fever in Saint Croix, then a Danish Caribbean colony, leaving Alexander and his brother James orphaned. The brothers were soon separated; merchants took Hamilton in, and he became a clerk at the import-export firm of Beekman and Cruger, managing its affairs for several months while still a teenager.",
+      "title": "Loses His Mother",
+      "description": "Rachel Faucette dies of [[yellow fever|yellow fever]] in Christiansted, Saint Croix, on February 19, 1768. Her death leaves Alexander Hamilton and his older brother, James Jr., orphaned. Johann Lavien, Rachel's first husband, seizes her estate.",
       "locations": [
         {
           "name_historic": "Christiansted, Saint Croix",
           "name_modern": "Christiansted, U.S. Virgin Islands",
           "centroid": [
             -64.7032,
-            17.7466
+            17.7467
           ],
           "primary": true
         }
@@ -185,51 +217,38 @@
       "involved_people": [
         "Rachel Faucette",
         "James Hamilton Jr.",
-        "Nicholas Cruger",
-        "Edward Stevens"
+        "Johann Lavien"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/Saint_Croix"
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Historical_marker_for_Alexander_Hamilton%2C_Christiansted%2C_St._Croix.jpg/960px-Historical_marker_for_Alexander_Hamilton%2C_Christiansted%2C_St._Croix.jpg",
-          "caption": "Alexander Hamilton historical marker, Christiansted, St. Croix",
-          "source": "https://commons.wikimedia.org/wiki/File:Historical_marker_for_Alexander_Hamilton,_Christiansted,_St._Croix.jpg",
-          "creator": "Pi3.124",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
-        }
-      ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "island_crucible",
+      "event_type_icon": "mdi-cross",
+      "chapter": "island_beginnings",
       "annotations": {
-        "Saint Croix": {
-          "explanation": "The largest of the U.S. Virgin Islands; the United States acquired it from Denmark in 1917.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Saint_Croix"
+        "yellow fever": {
+          "explanation": "Yellow fever is a viral illness spread by infected mosquitoes. Epidemics were a recurring danger in the Caribbean.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Yellow_fever"
         }
-      }
+      },
+      "weight": 0.4
     },
     {
       "date": "1772-10",
       "date_precision": "month",
-      "date_end": "1774-05",
-      "date_end_precision": "month",
-      "title": "Pursues Education in New York",
-      "description": "After local patrons raised funds following publication of his account of a devastating hurricane, Hamilton left Saint Croix for the North American colonies. He attended Elizabethtown Academy in New Jersey, boarded with Hercules Mulligan in New York City, and entered King's College in 1774.",
+      "title": "Leaves Saint Croix",
+      "description": "Hugh Knox submits Hamilton's account of a devastating hurricane to the Royal Danish-American Gazette, a Saint Croix newspaper. Readers and community leaders collect money for Hamilton's education. In October 1772, Hamilton leaves Christiansted by ship for Boston and continues to New York City, where he boards with Hercules Mulligan before college.",
       "locations": [
         {
-          "name_historic": "Christiansted",
+          "name_historic": "Christiansted, Saint Croix",
           "name_modern": "Christiansted, U.S. Virgin Islands",
           "centroid": [
             -64.7032,
-            17.7466
+            17.7467
           ],
           "primary": false
         },
         {
-          "name_historic": "New York",
+          "name_historic": "New York City",
           "name_modern": "New York City, New York, USA",
           "centroid": [
             -74.006,
@@ -239,26 +258,38 @@
         }
       ],
       "involved_people": [
+        "Hugh Knox",
         "Hercules Mulligan"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/Hercules_Mulligan"
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Alexander_Hamilton_hurricane_letter_-_Royal_Danish_American_Gazette_1772-10-03.jpg/960px-Alexander_Hamilton_hurricane_letter_-_Royal_Danish_American_Gazette_1772-10-03.jpg",
+          "caption": "Hamilton’s published hurricane letter, October 1772",
+          "source": "https://commons.wikimedia.org/wiki/File:Alexander_Hamilton_hurricane_letter_-_Royal_Danish_American_Gazette_1772-10-03.jpg",
+          "creator": "Royal Danish American Gazette",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
       ],
       "event_type_icon": "mdi-map-marker-multiple",
-      "chapter": "island_crucible",
+      "chapter": "island_beginnings",
+      "weight": 0.7,
       "event_class": {
         "type": "migration",
         "from_location": "Saint Croix, British West Indies",
-        "to_location": "New York City, New York",
-        "characterization": "educational opportunity"
-      }
+        "to_location": "New York, British America",
+        "characterization": "education opportunity"
+      },
+      "background": "Before this opportunity, Hamilton had acquired unusual responsibility at Beekman and Cruger. The Saint Croix import-export firm had trusted him to run its operations for five months in 1771 while its owner was away at sea. He read widely outside work and had begun to look beyond the island.\n\nThe letter that drew attention had a religious and apocalyptic tone. It treated the hurricane as a divine rebuke to human vanity and pomposity. Ron Chernow wrote that its vigor was remarkable for a self-educated teenage clerk."
     },
     {
       "date": "1774",
       "date_precision": "year",
       "title": "Defends the Patriot Cause",
-      "description": "In New York City, Hamilton anonymously entered a public controversy with Loyalist pamphleteer Samuel Seabury, defending the Continental Congress and colonial resistance to British policy as revolutionary tensions intensified.",
+      "description": "While studying at King's College in New York, Alexander Hamilton enters the public argument over resistance to British rule. He anonymously publishes A Full Vindication of the Measures of Congress and [[The Farmer Refuted]] in response to pamphlets by Samuel Seabury, a [[Loyalist|supporter of British rule]].",
       "locations": [
         {
           "name_historic": "New York City",
@@ -274,45 +305,50 @@
         "Samuel Seabury"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/Samuel_Seabury"
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/A_Full_Vindication_of_the_Measures_of_Congress.webp/960px-A_Full_Vindication_of_the_Measures_of_Congress.webp.png",
-          "caption": "Title page of Hamilton's 1774 Congress pamphlet",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/A_Full_Vindication_of_the_Measures_of_Congress.webp/960px-A_Full_Vindication_of_the_Measures_of_Congress.webp",
+          "caption": "Title page of Hamilton’s 1774 pamphlet",
           "source": "https://commons.wikimedia.org/wiki/File:A_Full_Vindication_of_the_Measures_of_Congress.webp",
           "creator": "Alexander Hamilton",
-          "license": "Public domain"
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-file-document",
-      "chapter": "island_crucible",
+      "event_type_icon": "mdi-book",
+      "chapter": "revolutionary_ranks",
+      "annotations": {
+        "Loyalist": {
+          "explanation": "A Loyalist in the American colonies supported continued political ties to the British Crown during the conflict over independence.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Loyalist_(American_Revolution)"
+        },
+        "The Farmer Refuted": {
+          "explanation": "Hamilton's longer 1775 reply continued his argument against Samuel Seabury's defense of British authority.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Alexander_Hamilton"
+        }
+      },
+      "weight": 0.6,
       "event_class": {
         "type": "publication",
         "title": "A Full Vindication of the Measures of Congress",
         "publication_type": "essay",
-        "significance": "Patriot polemic",
-        "impact": "Hamilton argued publicly for the revolutionary cause while still a King's College student.",
-        "source_link": {
-          "url": "https://en.wikipedia.org/wiki/A_Full_Vindication_of_the_Measures_of_Congress",
-          "kind": "wikipedia",
-          "site": "Wikipedia",
-          "entity": "Q4656884",
-          "resolved_by": "wikipedia",
-          "resolved_on": "2026-08-02"
-        }
+        "significance": "Patriot defense",
+        "impact": "The essays establish Hamilton as a forceful young advocate for the revolutionary cause in New York."
       }
     },
     {
-      "date": "1776-03",
-      "date_precision": "month",
-      "title": "Commands New York Artillery",
-      "description": "In March 1776, New York’s revolutionary government commissioned Hamilton to raise the [[New York Provincial Company of Artillery|New York Provincial Company of Artillery]] and appointed him its captain. He led the unit in the campaign around New York City, including the Continental Army’s retreat from Manhattan.",
+      "date": "1776",
+      "date_precision": "year",
+      "date_end": "1780",
+      "date_end_precision": "year",
+      "title": "Serves Washington's Army",
+      "description": "In 1776, Hamilton raises and commands the New York Provincial Company of Artillery during fighting in New York and New Jersey. In 1777, George Washington appoints him an aide-de-camp on the Continental Army headquarters staff. Hamilton handles military correspondence and planning for Washington's army.",
       "locations": [
         {
-          "name_historic": "New York",
-          "name_modern": "New York City, New York, USA",
+          "name_historic": "New York City",
+          "name_modern": "New York City, United States",
           "centroid": [
             -74.006,
             40.7128
@@ -320,75 +356,44 @@
           "primary": true
         },
         {
-          "name_historic": "Manhattan",
-          "name_modern": "New York City, New York, USA",
+          "name_historic": "New Jersey",
+          "name_modern": "New Jersey, United States",
           "centroid": [
-            -73.9712,
-            40.7831
+            -74.5,
+            40.1
           ],
           "primary": false
-        }
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/New_York_Provincial_Company_of_Artillery",
-        "https://en.wikipedia.org/wiki/New_York_and_New_Jersey_campaign"
-      ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Alexander_Hamilton_in_the_Uniform_of_the_New_York_Artillery_by_Alonzo_Chappel.jpg/960px-Alexander_Hamilton_in_the_Uniform_of_the_New_York_Artillery_by_Alonzo_Chappel.jpg",
-          "caption": "Hamilton in New York Artillery uniform",
-          "source": "https://commons.wikimedia.org/wiki/File:Alexander_Hamilton_in_the_Uniform_of_the_New_York_Artillery_by_Alonzo_Chappel.jpg",
-          "creator": "Alonzo Chappel",
-          "license": "Public domain"
-        }
-      ],
-      "event_type_icon": "mdi-shield",
-      "chapter": "guns_under_washington",
-      "annotations": {
-        "New York Provincial Company of Artillery": {
-          "explanation": "An artillery company operated cannon and related equipment; Hamilton’s New York unit served with the Continental Army in the war’s early campaigns.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/New_York_Provincial_Company_of_Artillery"
-        }
-      }
-    },
-    {
-      "date": "1777-03-01",
-      "date_precision": "day",
-      "date_end": "1781-03",
-      "date_end_precision": "month",
-      "title": "Serves Washington as Aide",
-      "description": "On 1 March 1777, George Washington appointed Hamilton an aide-de-camp with the rank of lieutenant colonel at Continental Army headquarters. Hamilton undertook correspondence, intelligence, and staff duties while continuing to seek an independent field command.",
-      "locations": [
-        {
-          "name_historic": "Morristown",
-          "name_modern": "Morristown, New Jersey, United States",
-          "centroid": [
-            -74.4815,
-            40.7968
-          ],
-          "primary": true
         }
       ],
       "involved_people": [
         "George Washington"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/George_Washington"
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
       ],
-      "event_type_icon": "mdi-briefcase",
-      "chapter": "guns_under_washington"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Alexander_Hamilton_in_the_Uniform_of_the_New_York_Artillery_by_Alonzo_Chappel.jpg/960px-Alexander_Hamilton_in_the_Uniform_of_the_New_York_Artillery_by_Alonzo_Chappel.jpg",
+          "caption": "Alexander Hamilton in New York Artillery uniform",
+          "source": "https://commons.wikimedia.org/wiki/File:Alexander_Hamilton_in_the_Uniform_of_the_New_York_Artillery_by_Alonzo_Chappel.jpg",
+          "creator": "Alonzo Chappel",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-shield",
+      "chapter": "revolutionary_ranks",
+      "weight": 0.8
     },
     {
       "date": "1780-12-14",
       "date_precision": "day",
       "title": "Marries Elizabeth Schuyler",
-      "description": "The wedding took place at the Schuyler family home in Albany, where Hamilton was serving as an aide-de-camp to General George Washington. After a brief honeymoon, he returned to military duty.",
+      "description": "Alexander Hamilton marries Elizabeth Schuyler at the Schuyler family home in Albany, New York, on December 14, 1780. Elizabeth is the daughter of Continental Army general Philip Schuyler and Catherine Van Rensselaer. The couple had met earlier that year in Morristown, New Jersey, while Elizabeth was staying with her aunt.",
       "locations": [
         {
           "name_historic": "Albany",
-          "name_modern": "Albany, New York, United States",
+          "name_modern": "Albany, New York",
           "centroid": [
             -73.7562,
             42.6526
@@ -397,31 +402,33 @@
         }
       ],
       "involved_people": [
-        "Elizabeth Schuyler Hamilton",
+        "Elizabeth Schuyler",
         "Philip Schuyler",
-        "Catherine Van Rensselaer Schuyler"
+        "Catherine Van Rensselaer",
+        "George Washington"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton",
-        "https://en.wikipedia.org/wiki/Philip_Schuyler"
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton"
       ],
       "images": [
         {
           "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Schuyler_Mansion_Panorama_Left.jpg/960px-Schuyler_Mansion_Panorama_Left.jpg",
-          "caption": "Schuyler Mansion, Albany, New York",
+          "caption": "Schuyler Mansion in Albany, New York",
           "source": "https://commons.wikimedia.org/wiki/File:Schuyler_Mansion_Panorama_Left.jpg",
-          "creator": "This image or media was taken or created by Matt H. Wade . To see his entire portfolio, click here . @ thatmattwade This image is protected by copyright ! If you would like to use it, please read this first.",
+          "creator": "This image or media was taken or created by Matt H. Wade. To see his entire portfolio, click here.@thatmattwade This image is protected by copyright! If you would like to use it, please read this first.",
           "license": "CC BY-SA 3.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
         }
       ],
       "event_type_icon": "mdi-ring",
-      "chapter": "guns_under_washington",
+      "chapter": "revolutionary_ranks",
+      "weight": 0.7,
       "event_class": {
         "type": "marriage_partnership",
         "subtype": "marriage",
         "partner": "Elizabeth Schuyler",
-        "duration": "until death",
+        "duration": "until his death",
         "children": 8,
         "characterization": "devoted marriage"
       }
@@ -429,55 +436,70 @@
     {
       "date": "1781-10-14",
       "date_precision": "day",
-      "date_end": "1781-10-19",
-      "date_end_precision": "day",
-      "title": "Storms Yorktown Redoubt",
-      "description": "Commanding a battalion of light infantry, Hamilton led the nighttime assault on [[Redoubt No. 10|Redoubt No. 10]] during the Siege of Yorktown. Its capture helped tighten the Franco-American siege lines around the British army under Charles Cornwallis.",
+      "title": "Takes Redoubt Ten",
+      "description": "On October 14, 1781, Lieutenant Colonel Alexander Hamilton leads a Continental light-infantry column against British Redoubt No. 10 at Yorktown, Virginia. His troops take the fortified position with bayonets. The capture lets the American and French armies complete a second siege trench against Charles Cornwallis's forces.",
       "locations": [
         {
           "name_historic": "Yorktown, Virginia",
           "name_modern": "Yorktown, Virginia, United States",
           "centroid": [
             -76.5097,
-            37.2388
+            37.239
           ],
           "primary": true
         }
       ],
       "involved_people": [
-        "Charles Cornwallis",
         "George Washington",
-        "Marquis de Lafayette",
-        "Jean-Joseph Sourbader de Gimat"
+        "Charles Cornwallis",
+        "Vicomte de Deux-Ponts"
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
         "https://en.wikipedia.org/wiki/Siege_of_Yorktown"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/EL_Lami_-_Storming_of_redoubt_10_during_the_Siege_of_Yorktown_%281840%29.jpg/960px-EL_Lami_-_Storming_of_redoubt_10_during_the_Siege_of_Yorktown_%281840%29.jpg",
-          "caption": "Storming Redoubt 10 during the Siege of Yorktown",
-          "source": "https://commons.wikimedia.org/wiki/File:EL_Lami_-_Storming_of_redoubt_10_during_the_Siege_of_Yorktown_(1840).jpg",
-          "creator": "Eugène Lami",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Redoubt_No._10.jpg/960px-Redoubt_No._10.jpg",
+          "caption": "Yorktown Redoubt No. 10",
+          "source": "https://commons.wikimedia.org/wiki/File:Redoubt_No._10.jpg",
+          "creator": "Yellowute at English Wikipedia",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-sword-cross",
-      "chapter": "guns_under_washington",
-      "annotations": {
-        "Redoubt No. 10": {
-          "explanation": "A redoubt was a small, enclosed fortified outwork, often made of earth and designed to strengthen a defensive line.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Siege_of_Yorktown"
+      "chapter": "revolutionary_ranks",
+      "weight": 0.9,
+      "background": "French naval control of Chesapeake Bay had sealed off Yorktown by sea. The French fleet brought heavy siege guns from the West Indies. Its victory over Sir Thomas Graves's relief fleet prevented British reinforcements from reaching Cornwallis. American and French forces then surrounded the British army and opened fire from their first siege trench.\n\nRedoubts No. 9 and No. 10 were the last major outer defenses blocking a second trench closer to the British lines. Washington assigned Hamilton three battalions to work alongside the French assault force. The infantry were ordered to rely on bayonets so that an accidental shot would not expose the nighttime operation.\n\nThe French capture of Redoubt No. 9 and the American capture of Redoubt No. 10 gave the allies the ground for their second parallel. Allied artillery then moved closer and increased the bombardment. Cornwallis asked for surrender terms three days later. The British surrender ceremony took place on October 19.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/EL_Lami_-_Storming_of_redoubt_10_during_the_Siege_of_Yorktown_%281840%29.jpg/960px-EL_Lami_-_Storming_of_redoubt_10_during_the_Siege_of_Yorktown_%281840%29.jpg",
+          "caption": "American storming of redoubt #10 during the Siege of Yorktown.",
+          "source": "https://commons.wikimedia.org/wiki/File:EL_Lami_-_Storming_of_redoubt_10_during_the_Siege_of_Yorktown_(1840).jpg",
+          "creator": "Eugène Lami",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Redoubt 10 Yorktown"
+        },
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/First_Allied_Siege_Line%2C_Yorktown_Battlefield%2C_Colonial_National_Historical_Park%2C_Yorktown%2C_Virginia_%2814402846426%29.jpg/960px-First_Allied_Siege_Line%2C_Yorktown_Battlefield%2C_Colonial_National_Historical_Park%2C_Yorktown%2C_Virginia_%2814402846426%29.jpg",
+          "caption": "The Siege of Yorktown, Battle of Yorktown or Surrender at Yorktown, the latter taking place on October 19, 1781 at Yorktown, Virginia, was a decisive victory by.",
+          "source": "https://commons.wikimedia.org/wiki/File:First_Allied_Siege_Line,_Yorktown_Battlefield,_Colonial_National_Historical_Park,_Yorktown,_Virginia_(14402846426).jpg",
+          "creator": "Ken Lund from Reno, Nevada, USA",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+          "query": "French siege artillery Yorktown"
         }
-      }
+      ]
     },
     {
-      "date": "1782",
+      "date": "1783",
       "date_precision": "year",
-      "date_end": "1785",
+      "date_end": "1784",
       "date_end_precision": "year",
-      "title": "Builds Postwar Legal Career",
-      "description": "After the war, Hamilton established a successful law practice in New York City, served as a New York delegate to the [[Congress of the Confederation|Congress of the Confederation]], and helped found the Bank of New York to extend commercial credit as the city rebuilt its economy after independence.",
+      "title": "Builds a New Career",
+      "description": "In 1783, Hamilton returned to New York City and began practicing law in partnership with Richard Harison. He defended Tories and British subjects, arguing that New York law should be interpreted consistently with the Treaty of Paris.",
       "locations": [
         {
           "name_historic": "New York City",
@@ -489,27 +511,33 @@
           "primary": true
         }
       ],
+      "involved_people": [
+        "Richard Harison"
+      ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/Bank_of_New_York",
-        "https://en.wikipedia.org/wiki/Congress_of_the_Confederation"
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/1_Wall_Street.jpg/960px-1_Wall_Street.jpg",
+          "caption": "Bank of New York building at 1 Wall Street",
+          "source": "https://commons.wikimedia.org/wiki/File:1_Wall_Street.jpg",
+          "creator": "Jim in Times Square",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+        }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "a_nation_held_together",
-      "annotations": {
-        "Congress of the Confederation": {
-          "explanation": "The national governing body of the United States under the Articles of Confederation, preceding the federal government established by the Constitution.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Congress_of_the_Confederation"
-        }
-      }
+      "chapter": "framing_the_union",
+      "weight": 0.6
     },
     {
-      "date": "1786-09-11",
-      "date_precision": "day",
-      "date_end": "1786-09-14",
-      "date_end_precision": "day",
-      "title": "Calls for Constitutional Convention",
-      "description": "Hamilton represented New York at the [[Annapolis Convention|Annapolis Convention]], where delegates confronted the Confederation government’s inability to regulate interstate commerce. He drafted the convention’s report urging the states to send delegates to a broader meeting in Philadelphia.",
+      "date": "1786-09",
+      "date_precision": "month",
+      "date_end": "1787-09",
+      "date_end_precision": "month",
+      "title": "Calls for a New Charter",
+      "description": "In September 1786, Alexander Hamilton attended the Annapolis Convention in Annapolis, Maryland, with delegates from four other states to address trade barriers and the weakness of the Articles of Confederation. Hamilton wrote the convention’s final report, which urged Congress and the states to authorize a broader constitutional convention in Philadelphia.",
       "locations": [
         {
           "name_historic": "Annapolis",
@@ -522,101 +550,93 @@
         }
       ],
       "involved_people": [
+        "Egbert Benson",
         "James Madison",
-        "John Dickinson",
-        "Edmund Jennings Randolph"
+        "Edmund Randolph"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Annapolis_Convention_(1786)",
-        "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/Annapolis_Convention_(1786)"
       ],
-      "event_type_icon": "mdi-account-group",
-      "chapter": "a_nation_held_together",
-      "annotations": {
-        "Annapolis Convention": {
-          "explanation": "Only five states sent delegates, a limited turnout that underscored the weakness of interstate cooperation under the Articles of Confederation.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Annapolis_Convention_(1786)"
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Annapolis_-_Maryland_State_House.jpg/960px-Annapolis_-_Maryland_State_House.jpg",
+          "caption": "Maryland State House in Annapolis",
+          "source": "https://commons.wikimedia.org/wiki/File:Annapolis_-_Maryland_State_House.jpg",
+          "creator": "P. Hughes",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
         }
-      }
+      ],
+      "event_type_icon": "mdi-forum",
+      "chapter": "framing_the_union",
+      "annotations": {
+        "Articles of Confederation": {
+          "explanation": "The Articles of Confederation were the first governing framework of the United States. They left most authority with the states and gave the national Congress no power to regulate interstate trade.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Articles_of_Confederation"
+        }
+      },
+      "weight": 0.9
     },
     {
-      "date": "1787-05",
+      "date": "1787-10",
       "date_precision": "month",
       "date_end": "1788-05",
       "date_end_precision": "month",
-      "title": "Makes the Case for Constitution",
-      "description": "At the [[Constitutional Convention|Philadelphia Convention]], Hamilton argued for a substantially stronger national government. During the ensuing ratification debates, he collaborated with James Madison and John Jay on essays defending the proposed Constitution.",
+      "title": "Writes The Federalist",
+      "description": "In October 1787, Alexander Hamilton begins writing The Federalist Papers with James Madison and John Jay in New York City. Published under the shared name Publius, the essays argue for ratification of the proposed Constitution. They answer objections to its new [[federal system|federal system]].",
       "locations": [
         {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
-          "centroid": [
-            -75.1652,
-            39.9526
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "New York",
-          "name_modern": "New York City, New York, United States",
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, USA",
           "centroid": [
             -74.006,
             40.7128
           ],
-          "primary": false
+          "primary": true
         }
       ],
       "involved_people": [
         "James Madison",
-        "John Jay",
-        "George Washington"
+        "John Jay"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)",
-        "https://en.wikipedia.org/wiki/The_Federalist_Papers",
         "https://en.wikipedia.org/wiki/Alexander_Hamilton"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/The_Federalist_%281788%29.jpg/960px-The_Federalist_%281788%29.jpg",
-          "caption": "The Federalist, 1788 edition",
-          "source": "https://commons.wikimedia.org/wiki/File:The_Federalist_(1788).jpg",
-          "creator": "Yale Law Library",
-          "license": "CC BY 2.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Federalist-1788.jpg",
+          "caption": "Title page of the first volume of The Federalist",
+          "source": "https://commons.wikimedia.org/wiki/File:Federalist-1788.jpg",
+          "creator": "The original uploader was Anathema at German Wikipedia.",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
-      "event_type_icon": "mdi-file-document",
-      "chapter": "a_nation_held_together",
+      "event_type_icon": "mdi-book",
+      "chapter": "framing_the_union",
       "annotations": {
-        "Constitutional Convention": {
-          "explanation": "Although initially intended to revise the Articles of Confederation, the convention produced an entirely new federal framework.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Constitutional_Convention_(United_States)"
+        "federal system": {
+          "explanation": "A federal system divides governing authority between a national government and constituent states. The essays defended the Constitution's plan to give the national government stronger powers than it had under the Articles of Confederation.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Federalism_in_the_United_States"
         }
       },
+      "weight": 1.0,
       "event_class": {
         "type": "publication",
         "title": "The Federalist Papers",
         "publication_type": "essay",
-        "significance": "ratification defense",
-        "impact": "The essays presented a sustained public argument for adopting the United States Constitution.",
-        "source_link": {
-          "url": "https://en.wikipedia.org/wiki/The_Federalist_Papers",
-          "kind": "wikipedia",
-          "site": "Wikipedia",
-          "entity": "Q858036",
-          "resolved_by": "wikipedia",
-          "resolved_on": "2026-08-02"
-        }
-      }
+        "publisher": "New York newspapers",
+        "significance": "ratification campaign",
+        "impact": "The essays help build support for ratification in New York and become a major guide to the Constitution's original structure."
+      },
+      "background": "New York’s ratification debate faced strong opposition. The first essay appeared in the Independent Journal on October 27, 1787. Subsequent essays ran serially in New York newspapers through May 1788.\n\nJohn Jay became ill after completing five essays. Hamilton supplied 51 of the 85 essays. Madison supplied 29. The essays were collected in two volumes in 1788. New York ratified the Constitution on July 26, 1788, by a vote of 30 to 27."
     },
     {
       "date": "1789-09-11",
       "date_precision": "day",
-      "date_end": "1795-01-31",
-      "date_end_precision": "day",
-      "title": "Leads the Treasury Department",
-      "description": "On September 11, 1789, President George Washington appointed Hamilton the first secretary of the treasury. From the new federal government’s seat in New York City, he began organizing the department and advancing a program of federal assumption of state Revolutionary War debts, customs revenues, a whiskey excise, a national bank, and the [[Revenue Cutter Service|Revenue Cutter Service]].",
+      "title": "Becomes Treasury Secretary",
+      "description": "On September 11, 1789, President George Washington appoints Alexander Hamilton as the first secretary of the Treasury in New York City. Hamilton takes charge of the new department. It collects federal revenue and works to establish the government's credit.",
       "locations": [
         {
           "name_historic": "New York City",
@@ -632,33 +652,29 @@
         "George Washington"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
-        "https://en.wikipedia.org/wiki/United_States_Secretary_of_the_Treasury",
-        "https://en.wikipedia.org/wiki/United_States_Revenue_Cutter_Service"
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Circular_from_Alexander_Hamilton%2C_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_%28page_1%29.jpg/960px-Circular_from_Alexander_Hamilton%2C_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_%28page_1%29.jpg",
-          "caption": "Hamilton Treasury circular to customs collectors",
-          "source": "https://commons.wikimedia.org/wiki/File:Circular_from_Alexander_Hamilton,_Treasury_Department_to_the_Collectors_of_the_Customs_-_NARA_-_16972844_(page_1).jpg",
-          "creator": "Unknown author Unknown author or not provided",
-          "license": "Public domain"
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Circular_from_Treasury_Secretary_Alexander_Hamilton_to_Boston_Customs_Collector_Benjamin_Lincoln_Regarding_the_Appointment_of_Tench_Coxe_as_Superintendent_of_Lighthouses_-_NARA_-_81143029_%28page_1%29.jpg/960px-thumbnail.jpg",
+          "caption": "Hamilton Treasury circular dated 1792",
+          "source": "https://commons.wikimedia.org/wiki/File:Circular_from_Treasury_Secretary_Alexander_Hamilton_to_Boston_Customs_Collector_Benjamin_Lincoln_Regarding_the_Appointment_of_Tench_Coxe_as_Superintendent_of_Lighthouses_-_NARA_-_81143029_(page_1).jpg",
+          "creator": "Unknown authorUnknown author or not provided",
+          "license": "Public domain",
+          "licenseUrl": null
         }
       ],
       "event_type_icon": "mdi-briefcase",
-      "chapter": "architect_of_american_finance",
-      "annotations": {
-        "Revenue Cutter Service": {
-          "explanation": "This customs-enforcement fleet later became a predecessor institution of the United States Coast Guard.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/United_States_Revenue_Cutter_Service"
-        }
-      }
+      "chapter": "treasury_statecraft",
+      "weight": 0.9
     },
     {
-      "date": "1797-08-25",
-      "date_precision": "day",
-      "title": "Publishes Reynolds Pamphlet",
-      "description": "In Philadelphia, facing accusations of financial misconduct, Hamilton publicly acknowledged his adulterous relationship with Maria Reynolds and payments to her husband, James Reynolds. The disclosure caused profound pain for Elizabeth Hamilton, who was staying with her parents in Albany during her pregnancy.",
+      "date": "1790-01",
+      "date_precision": "month",
+      "date_end": "1791",
+      "date_end_precision": "year",
+      "title": "Funds the National Debt",
+      "description": "In Philadelphia, Hamilton submits Report on Public Credit to Congress in January 1790. The report proposes that the federal government repay the national debt and take over the states' Revolutionary War debts. James Madison and Thomas Jefferson oppose the plan during Congress's debate.",
       "locations": [
         {
           "name_historic": "Philadelphia",
@@ -668,151 +684,187 @@
             39.9526
           ],
           "primary": true
-        },
+        }
+      ],
+      "involved_people": [
+        "James Madison",
+        "Thomas Jefferson"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton"
+      ],
+      "images": [
         {
-          "name_historic": "Albany",
-          "name_modern": "Albany, New York, United States",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Report_of_the_Secretary_of_the_Treasury_to_the_House_of_Representatives%2C_relative_to_a_provision_for_the_support_of_the_public_credit_of_the_United_States...printed_in_New_York%2C_1790_LCCN2005683469.tif/lossy-page1-960px-thumbnail.tif.jpg",
+          "caption": "Hamilton’s 1790 Report on Public Credit",
+          "source": "https://commons.wikimedia.org/wiki/File:Report_of_the_Secretary_of_the_Treasury_to_the_House_of_Representatives,_relative_to_a_provision_for_the_support_of_the_public_credit_of_the_United_States...printed_in_New_York,_1790_LCCN2005683469.tif",
+          "creator": "Miscellaneous Items in High Demand, PPOC, Library of Congress",
+          "license": "Public domain",
+          "licenseUrl": null
+        }
+      ],
+      "event_type_icon": "mdi-book",
+      "chapter": "treasury_statecraft",
+      "weight": 1.0,
+      "event_class": {
+        "type": "publication",
+        "title": "Report on Public Credit",
+        "publication_type": "paper",
+        "publisher": "United States Congress",
+        "significance": "fiscal program",
+        "impact": "Congress adopts key parts of Hamilton's program, placing federal finances and public credit at the center of the new government."
+      },
+      "background": "The new government inherited obligations to foreign lenders, domestic creditors, and the states from the Revolutionary War. Hamilton estimated the combined burden at about $79 million. Many federal certificates had changed hands after veterans and other original holders sold them at steep discounts. He urged payment at full face value to the current holders. He believed dependable payment would establish national credit and attach creditors' interests to the federal government.\n\nState obligations formed the sharpest political dispute. The proposed federal assumption covered roughly $25 million in state debts. Representatives from states that had already paid much of their debt objected to sharing the cost. A private dinner arranged by Jefferson helped produce the Compromise of 1790. Madison agreed not to block the funding measures. Hamilton supported a permanent capital on the Potomac River. Congress enacted the funding and assumption measures later that year, placing the Revolutionary War debt under federal management.",
+      "background_images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Act_of_July_16%2C_1790_%28D.C._Residence_Act%29%2C_1_STAT_130%2C_Establishing_the_Temporary_and_Permanent_Seat_of_Government_of_the_United_States_-_DPLA_-_1911adc07c62531e87da10b28ba41eb4.jpg/960px-thumbnail.jpg",
+          "caption": "Act of July 16, 1790 (D.C. Residence Act), 1 STAT 130, Establishing the Temporary and Permanent Seat of Government of the United States - DPLA - 1911adc07c62…",
+          "source": "https://commons.wikimedia.org/wiki/File:Act_of_July_16,_1790_(D.C._Residence_Act),_1_STAT_130,_Establishing_the_Temporary_and_Permanent_Seat_of_Government_of_the_United_States_-_DPLA_-_1911adc07c62531e87da10b28ba41eb4.jpg",
+          "creator": "National Archives and Records Administration. Office of the Federal Register. 4/1/1985",
+          "license": "Public domain",
+          "licenseUrl": null,
+          "query": "Residence Act 1790 Potomac"
+        }
+      ]
+    },
+    {
+      "date": "1791",
+      "date_precision": "year",
+      "title": "Organizes the Federalists",
+      "description": "In 1791, Alexander Hamilton founds the Federalist Party, a national political coalition supporting stronger federal power, public credit, and commercial development. Thomas Jefferson and James Madison organize the Democratic-Republican Party in opposition. The rival organizations form the country's first enduring national party competition.",
+      "locations": [
+        {
+          "name_historic": "United States",
+          "name_modern": null,
+          "primary": true,
           "centroid": [
-            -73.7562,
-            42.6526
+            -100.445882,
+            39.7837304
+          ]
+        }
+      ],
+      "involved_people": [
+        "Thomas Jefferson",
+        "James Madison"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+        "https://de.wikipedia.org/wiki/James_Madison"
+      ],
+      "event_type_icon": "mdi-account-group",
+      "chapter": "treasury_statecraft",
+      "weight": 0.8
+    },
+    {
+      "date": "1797-08-25",
+      "date_precision": "day",
+      "title": "Publishes the Reynolds Pamphlet",
+      "description": "On August 25, 1797, Alexander Hamilton publishes [[Reynolds Pamphlet|the Reynolds Pamphlet]] after renewed accusations that his payments to James Reynolds involved [[Treasury speculation|Treasury speculation]] or public corruption. He admits his affair with Maria Reynolds. He says that James Reynolds had blackmailed him over the affair, and James Monroe, Frederick Muhlenberg, and Abraham Venable had gathered the allegations.",
+      "locations": [
+        {
+          "name_historic": "New York City",
+          "name_modern": "New York City, New York, United States",
+          "centroid": [
+            -74.006,
+            40.7128
           ],
-          "primary": false
+          "primary": true
         }
       ],
       "involved_people": [
         "Maria Reynolds",
         "James Reynolds",
-        "Elizabeth Schuyler Hamilton"
+        "James Monroe",
+        "Frederick Muhlenberg",
+        "Abraham Venable"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Maria_Reynolds",
-        "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton"
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/Maria_Reynolds"
       ],
       "images": [
         {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Observations_on_Certain_Documents_Alexander_Hamilton_1797.jpg/960px-Observations_on_Certain_Documents_Alexander_Hamilton_1797.jpg",
-          "caption": "Observations on Certain Documents, 1797 title page",
-          "source": "https://commons.wikimedia.org/wiki/File:Observations_on_Certain_Documents_Alexander_Hamilton_1797.jpg",
-          "creator": "Alexander Hamilton",
-          "license": "Public domain"
+          "url": "https://live.staticflickr.com/8036/29582541306_85fb185f87_b.jpg",
+          "caption": "Reynolds Pamphlet illustration associated with Hamilton",
+          "source": "https://www.flickr.com/photos/37996580417@N01/29582541306",
+          "creator": "gruntzooki",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/"
         }
       ],
       "event_type_icon": "mdi-book",
-      "chapter": "fatal_reckoning",
+      "chapter": "final_political_battle",
+      "annotations": {
+        "Treasury speculation": {
+          "explanation": "Treasury speculation meant using government financial information or influence for private gain. The accusation alleged that Hamilton had misused his public office.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Reynolds_pamphlet"
+        },
+        "Reynolds Pamphlet": {
+          "explanation": "The pamphlet's formal title was Observations on Certain Documents. Hamilton published it to answer allegations concerning payments to James Reynolds.",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Reynolds_pamphlet"
+        }
+      },
+      "weight": 0.6,
       "event_class": {
         "type": "publication",
-        "title": "Reynolds Pamphlet",
+        "title": "Observations on Certain Documents",
         "publication_type": "essay",
+        "publisher": "John Fenno",
         "significance": "personal scandal",
-        "impact": "Hamilton sought to refute allegations of public corruption by disclosing the affair and its related blackmail."
+        "impact": "The pamphlet publicly confirms Hamilton's adultery while disputing allegations of financial misconduct in office."
       }
     },
     {
-      "date": "1798",
-      "date_precision": "year",
-      "date_end": "1800",
-      "date_end_precision": "year",
-      "title": "Commands Army and Opposes Burr",
-      "description": "During the [[Quasi-War|Quasi-War with France]], President John Adams appointed Hamilton a major general and inspector general of the provisional army, though the force saw no combat. In the presidential election of 1800, Hamilton used his influence against Aaron Burr and supported Thomas Jefferson after Jefferson and Burr tied in the Electoral College.",
+      "date": "1804-04",
+      "date_precision": "month",
+      "date_end": "1804-06",
+      "date_end_precision": "month",
+      "title": "Opposes Burr's Candidacy",
+      "description": "In April 1804, Alexander Hamilton campaigns against Aaron Burr's bid for governor of New York. He shares severe criticisms of Burr's character with Federalist leaders. After a report of the remarks appears in print, Burr demands an explanation from Hamilton.",
       "locations": [
-        {
-          "name_historic": "Philadelphia",
-          "name_modern": "Philadelphia, Pennsylvania, United States",
-          "centroid": [
-            -75.1652,
-            39.9526
-          ],
-          "primary": true
-        },
         {
           "name_historic": "New York",
-          "name_modern": "New York City, New York, United States",
-          "centroid": [
-            -74.006,
-            40.7128
-          ],
-          "primary": false
-        }
-      ],
-      "involved_people": [
-        "John Adams",
-        "Aaron Burr",
-        "Thomas Jefferson"
-      ],
-      "sources": [
-        "https://en.wikipedia.org/wiki/John_Adams",
-        "https://en.wikipedia.org/wiki/Thomas_Jefferson",
-        "https://de.wikipedia.org/wiki/Aaron_Burr"
-      ],
-      "event_type_icon": "mdi-shield",
-      "chapter": "fatal_reckoning",
-      "annotations": {
-        "Quasi-War": {
-          "explanation": "An undeclared naval conflict between the United States and France, fought mainly at sea from 1798 to 1800.",
-          "wikipedia_url": "https://en.wikipedia.org/wiki/Quasi-War"
-        }
-      }
-    },
-    {
-      "date": "1801-11-24",
-      "date_precision": "day",
-      "title": "Mourns Philip's Death",
-      "description": "Hamilton's eldest son, Philip, died in New York City after being shot in a duel with George Eacker in New Jersey. Alexander Hamilton and Elizabeth Schuyler Hamilton remained at Philip's bedside through the night before his death.",
-      "locations": [
-        {
-          "name_historic": "New York City",
-          "name_modern": "New York City, New York, United States",
+          "name_modern": "New York, United States",
           "centroid": [
             -74.006,
             40.7128
           ],
           "primary": true
-        },
-        {
-          "name_historic": "Weehawken",
-          "name_modern": "Weehawken, New Jersey, United States",
-          "centroid": [
-            -74.0254,
-            40.769
-          ],
-          "primary": false
         }
       ],
       "involved_people": [
-        "Philip Hamilton",
-        "Elizabeth Schuyler Hamilton",
-        "George Eacker"
+        "Aaron Burr"
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Philip_Hamilton",
-        "https://en.wikipedia.org/wiki/Elizabeth_Schuyler_Hamilton"
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
+        "https://en.wikipedia.org/wiki/Burr%E2%80%93Hamilton_duel"
       ],
-      "event_type_icon": "mdi-cross",
-      "chapter": "fatal_reckoning"
+      "event_type_icon": "mdi-vote",
+      "chapter": "final_political_battle",
+      "weight": 0.8
     },
     {
-      "date": "1804-07-11",
+      "date": "1804-07-12",
       "date_precision": "day",
-      "date_end": "1804-07-12",
-      "date_end_precision": "day",
-      "title": "Dies Following the Burr Duel",
-      "description": "On July 11, 1804, Hamilton fought Aaron Burr in a pistol duel at Weehawken, New Jersey, and was shot in the abdomen. He was taken across the Hudson River to New York City, where he died the following day from his wound.",
+      "title": "Dies After the Duel",
+      "description": "Aaron Burr shoots Alexander Hamilton in a duel at Weehawken, New Jersey, on July 11, 1804. Hamilton is carried across the Hudson River in a delirious state to the Greenwich Village home of William Bayard Jr. He dies there from his wounds the following day.",
       "locations": [
         {
-          "name_historic": "Weehawken",
-          "name_modern": "Weehawken, New Jersey, United States",
+          "name_historic": "Greenwich Village, New York",
+          "name_modern": "New York City, New York, USA",
           "centroid": [
-            -74.0232,
+            -74.0027,
+            40.7336
+          ],
+          "primary": true
+        },
+        {
+          "name_historic": "Weehawken, New Jersey",
+          "name_modern": "Weehawken, New Jersey, USA",
+          "centroid": [
+            -74.0257,
             40.7695
-          ],
-          "primary": true
-        },
-        {
-          "name_historic": "New York",
-          "name_modern": "New York City, New York, United States",
-          "centroid": [
-            -74.006,
-            40.7128
           ],
           "primary": false
         }
@@ -822,23 +874,19 @@
         "William Bayard Jr."
       ],
       "sources": [
+        "https://en.wikipedia.org/wiki/Alexander_Hamilton",
         "https://en.wikipedia.org/wiki/Burr%E2%80%93Hamilton_duel"
       ],
-      "images": [
-        {
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/18040725_Mourn%2C_Oh_Columbia_-_%28Burr-Hamilton_duel%29_The_Adams_Centinel.jpg/960px-18040725_Mourn%2C_Oh_Columbia_-_%28Burr-Hamilton_duel%29_The_Adams_Centinel.jpg",
-          "caption": "Newspaper report on the Burr-Hamilton duel",
-          "source": "https://commons.wikimedia.org/wiki/File:18040725_Mourn,_Oh_Columbia_-_(Burr-Hamilton_duel)_The_Adams_Centinel.jpg",
-          "creator": "The Adams Centinel (newspaper) or another newspaper of the era from which the Centinel obtained the story",
-          "license": "Public domain"
-        }
-      ],
       "event_type_icon": "mdi-cross",
-      "chapter": "fatal_reckoning",
+      "chapter": "final_political_battle",
+      "weight": 1.0,
       "event_class": {
         "type": "death",
-        "cause": "gunshot wound"
-      }
+        "cause": "gunshot wound from a duel",
+        "characterization": "after Burr duel",
+        "place_of_rest": "Trinity Churchyard, Manhattan"
+      },
+      "background": "David Hosack treated Hamilton at William Bayard Jr.’s house. The bullet had damaged internal organs and lodged near his spine. Eliza Hamilton, their children, and close friends gathered during his final hours. Episcopal Bishop Benjamin Moore spoke with Hamilton about his faith and administered communion.\n\nHamilton’s funeral was held on July 14. Military companies and members of the Society of the Cincinnati joined a large procession. Gouverneur Morris delivered the eulogy at Trinity Church.\n\nThe encounter took place near the ground where Hamilton’s eldest son, Philip, had been fatally wounded in a duel three years earlier. Hamilton’s death weakened the Federalist Party. Burr was widely condemned for the shooting, and his political career ended."
     }
   ]
 }
