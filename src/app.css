@@ -1,5 +1,9 @@
 :root {
-  color-scheme: light dark;
+  /* The application has no light theme: every surface is painted on the
+     dark slate below. Announcing `light dark` let the browser draw its own
+     widgets—the native select popup above all—in light mode whenever the
+     system preferred it, so the language labels appeared in dark text. */
+  color-scheme: dark;
   font-family:
     Inter,
     "Segoe UI",
