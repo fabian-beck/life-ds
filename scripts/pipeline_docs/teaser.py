@@ -342,7 +342,8 @@ LINKS: Tuple[Link, ...] = (
 
 CAPTION = (
     "The system end to end: encyclopedic sources and model inference feed the "
-    "two generation pipelines, whose data the interface reads."
+    "two generation pipelines, whose data the interface reads for presentation in "
+    "its two story representations."
 )
 
 
