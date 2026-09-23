@@ -1041,6 +1041,14 @@ p.cap {
   color: var(--ink-2);
 }
 
+/* The swatch is an empty span colored inline, so it takes its size here, the
+   same square the figures' legends draw. */
+.swatch {
+  width: 11px;
+  height: 11px;
+  flex: none;
+}
+
 /* ------------------------------------------------------------- concepts */
 
 /* One mark, everywhere. The glyph in a sentence, in a legend, in a table cell
