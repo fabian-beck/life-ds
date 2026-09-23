@@ -20,7 +20,7 @@ makes the figures regeneratable: the application changes, the command is re-run,
 and every screenshot in the report is retaken from the same declared positions.
 
 Capture is deliberately not part of an ordinary build. It needs a browser and a
-dev server, while the rest of the build needs neither—`--check` must stay
+production build of the application, while the rest of the build needs neither—`--check` must stay
 runnable anywhere. A build therefore embeds what is on disk and *says* what is
 missing or stale rather than quietly taking a new picture.
 

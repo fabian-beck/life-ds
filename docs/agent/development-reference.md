@@ -400,10 +400,10 @@ Every event of the life at its position, marked with its typed icon.
 npm run report:shots                                     # missing and stale ones
 python scripts/generate_report.py --shots all            # every declared shot
 python scripts/generate_report.py --shots person-story   # one of them
-python scripts/generate_report.py --shots --shots-base-url http://127.0.0.1:5173/life-ds/
+python scripts/generate_report.py --shots --shots-base-url http://127.0.0.1:4173/life-ds/   # a running npm run preview
 ```
 
-Capture starts a dev server of its own on port 4177 unless one already answers there or `--shots-base-url` names another. It is **not** part of an ordinary build: a build embeds what is on disk, so `--check` stays runnable without a browser. `docs/report/screenshots/captures.json` records, per shot, the fingerprint of the declaration the picture was taken from. A declaration that has moved since makes the figure *stale*—a warning naming the command that retakes it—and a declaration with no picture at all is a build error.
+Capture builds the application into a temporary directory and serves it with `vite preview` on port 4177, unless a server already answers there or `--shots-base-url` names another. The pictures show the deployed application, so they are never taken from the dev server: it lists the stories marked hidden in the registries and shows the switch that previews the deployed view, neither of which a reader sees. A server passed with `--shots-base-url` must therefore serve a build as well. It is **not** part of an ordinary build: a build embeds what is on disk, so `--check` stays runnable without a browser. `docs/report/screenshots/captures.json` records, per shot, the fingerprint of the declaration the picture was taken from. A declaration that has moved since makes the figure *stale*—a warning naming the command that retakes it—and a declaration with no picture at all is a build error.
 
 Staleness is a property of the description, not of the application: nothing here can tell that the interface changed under an unchanged declaration. Retake everything with `--shots all` after a visible change to the application, and commit the pictures along with `captures.json`.
 

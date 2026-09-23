@@ -25,18 +25,26 @@
  */
 
 import { spawn } from "node:child_process";
-import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import {
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { chromium } from "playwright";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-/* Mirrors playwright.config.js: the dev server serves the app under the
-   deployment base path, so a route resolves against that rather than the
-   domain root. A port of its own, so a capture run and an interface run—or the
-   dev server someone is already looking at—never fight over one. */
+/* The preview server serves the app under the deployment base path, as Pages
+   does, so a route resolves against that rather than the domain root. A port
+   of its own, so a capture run and an interface run—or the dev server someone
+   is already looking at—never fight over one. */
 const BASE_PATH = process.env.VITE_BASE_PATH ?? "/life-ds/";
 const PORT = Number(process.env.REPORT_SHOTS_PORT ?? 4177);
 const ORIGIN = `http://127.0.0.1:${PORT}`;
@@ -47,7 +55,7 @@ const USAGE = `Take the screenshots the technical report declares.
 
   --manifest <path>   Shots to take (written by generate_report.py --shots).
   --results <path>    Where to write the result record (default: none).
-  --base-url <url>    Serve from here instead of starting a dev server.
+  --base-url <url>    Serve from here instead of building and previewing.
   --timeout <ms>      Per-shot budget (default: 30000).
   --help              Show this message.
 `;
@@ -106,24 +114,66 @@ async function waitForServer(url, timeoutMs) {
   return false;
 }
 
-/* An already-running server is reused when one answers at the same address,
+const VITE = resolve(REPO_ROOT, "node_modules/vite/bin/vite.js");
+
+/* Run Vite to completion, keeping its output for the case it fails. */
+function runVite(args) {
+  return new Promise((done, fail) => {
+    const child = spawn(process.execPath, [VITE, ...args], {
+      cwd: REPO_ROOT,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    const log = [];
+    child.stdout.on("data", (chunk) => log.push(String(chunk)));
+    child.stderr.on("data", (chunk) => log.push(String(chunk)));
+    child.on("error", fail);
+    child.on("exit", (code) => {
+      if (code === 0) done();
+      else {
+        process.stderr.write(log.join(""));
+        fail(new Error(`vite ${args[0]} exited with ${code}.`));
+      }
+    });
+  });
+}
+
+/* The pictures show the application as it is deployed, so they are taken from
+   a production build rather than the dev server. The dev server is a
+   different application for this purpose: it shows the stories marked hidden
+   in the registries and the switch that previews the deployed view, neither
+   of which a reader ever sees. The build goes to a directory of its own so
+   that `dist/` is left as it was.
+
+   An already-running server is reused when one answers at the same address,
    which is what makes a re-capture cheap while working on the interface.
 
-   Vite is started directly rather than through `npm run dev`: npm is a wrapper
-   process, and killing it at the end of the run leaves the server it spawned
-   holding the port—which the next run then mistakes for a server it may
-   reuse, moments before the orphan notices its parent is gone and exits under
-   it. */
+   Vite is started directly rather than through `npm run preview`: npm is a
+   wrapper process, and killing it at the end of the run leaves the server it
+   spawned holding the port—which the next run then mistakes for a server it
+   may reuse, moments before the orphan notices its parent is gone and exits
+   under it. */
 async function startServer(url) {
   if (await reachable(url)) {
     console.log(`Using the server already answering at ${url}`);
     return null;
   }
-  console.log(`Starting the dev server on ${ORIGIN} ...`);
+  const outDir = mkdtempSync(join(tmpdir(), "life-ds-report-shots-"));
+  const cleanUp = () => rmSync(outDir, { recursive: true, force: true });
+  console.log("Building the application for capture ...");
+  try {
+    await runVite(["build", "--outDir", outDir, "--emptyOutDir"]);
+  } catch (error) {
+    cleanUp();
+    throw error;
+  }
+  console.log(`Starting the preview server on ${ORIGIN} ...`);
   const child = spawn(
     process.execPath,
     [
-      resolve(REPO_ROOT, "node_modules/vite/bin/vite.js"),
+      VITE,
+      "preview",
+      "--outDir",
+      outDir,
       "--host",
       "127.0.0.1",
       "--port",
@@ -132,22 +182,22 @@ async function startServer(url) {
     ],
     { cwd: REPO_ROOT, stdio: ["ignore", "ignore", "pipe"] }
   );
-  /* Vite reports the application's own console—every map glyph it could not
-     fetch, on every page the run visits—on stderr. That is the application
-     talking, not the capture, so it is kept until the server either comes up
-     or fails to, and only printed in the second case. */
   const log = [];
   child.stderr.on("data", (chunk) => log.push(String(chunk)));
-  if (!(await waitForServer(url, 120000))) {
+  const stop = () => {
     child.kill();
+    cleanUp();
+  };
+  if (!(await waitForServer(url, 120000))) {
+    stop();
     process.stderr.write(log.join(""));
-    throw new Error(`The dev server did not come up at ${url}.`);
+    throw new Error(`The preview server did not come up at ${url}.`);
   }
   // Up: stop keeping the log, but keep reading the pipe—a full one would block
   // the server mid-run.
   child.stderr.removeAllListeners("data");
   child.stderr.resume();
-  return child;
+  return { stop };
 }
 
 function shotUrl(baseUrl, route) {
@@ -270,7 +320,7 @@ async function main() {
     for (const shot of shots) {
       process.stdout.write(`  ${shot.id} ... `);
       try {
-        // One at a time, deliberately: parallel pages share a dev server and a
+        // One at a time, deliberately: parallel pages share a server and a
         // GPU, and a picture of a page that was starved of both is not the
         // picture the declaration describes.
         // eslint-disable-next-line no-await-in-loop
@@ -301,7 +351,7 @@ async function main() {
     }
   } finally {
     if (browser) await browser.close();
-    if (server) server.kill();
+    if (server) server.stop();
   }
 
   if (options.results) {
