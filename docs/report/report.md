@@ -52,7 +52,7 @@ Both pipelines follow the same pattern: material is derived bottom-up and revise
 
 ### Personal story pipeline
 
-The [[person-pipeline|personal story pipeline]] derives data for one biography, from an [[sources|encyclopedia article]] to the data needed for an illustrated and individually styled story. The chart[[figure:pipeline-person]] bands its steps into seven phases: the sources are gathered; the events are proposed, researched, and geocoded; their pictures are found; the story is given a style and generated pictures; the social network is derived and both datasets are reviewed; a depth layer of background reports is written; and localization closes the run.
+The [[person-pipeline|personal story pipeline]] derives data for one biography, from an [[sources|encyclopedia article]] to the data needed for an illustrated and individually styled story. The chart[[figure:pipeline-person]] bands its steps into seven phases: the sources are gathered; the events are proposed, researched, and geocoded; their pictures are found; the story is then presented, with a style and pictures drawn in it; the social network is derived and both datasets are reviewed; a depth layer of background reports is written; and localization closes the run.
 
 ::: pipeline lane=person
 :::
