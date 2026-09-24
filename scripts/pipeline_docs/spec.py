@@ -41,18 +41,18 @@ application and by the meta pipeline's map branch, never by a later step of
 this pipeline. The same holds for the meta story, whose style and translation
 depend on the composition that finishes it.
 
-`GROUPS` are the phases of each pipeline. Every step belongs to exactly one,
-and a phase names a concern that spans several layers—planning image searches,
+`GROUPS` are the stages of each pipeline. Every step belongs to exactly one,
+and a stage names a concern that spans several layers—planning image searches,
 running them and matching the results are three layers of one job—so the chart
-aligns each phase's steps to read as one strand under a banded label. The chart
-aligns only the parts of a phase that are continuous, so a member separated
-from the rest by layers the phase has no step in is placed on its own.
+aligns each stage's steps to read as one strand under a banded label. The chart
+aligns only the parts of a stage that are continuous, so a member separated
+from the rest by layers the stage has no step in is placed on its own.
 Grouping is presentation only: it never changes a layer, and the layer is
 still the longest dependency path.
 
 Each step names a `script` and a `function`. `validate.py` checks that both
 still exist, that the dependency graph is acyclic, that every step is in one
-phase, and that no AI call site in the codebase is left unclaimed, so a step
+stage, and that no AI call site in the codebase is left unclaimed, so a step
 added to the pipeline without a spec entry fails the docs build instead of
 quietly going undocumented.
 """
@@ -167,14 +167,14 @@ class Step:
 
 @dataclass
 class Group:
-    """One phase of a pipeline: steps of one concern, aligned into one strand.
+    """One stage of a pipeline: steps of one concern, aligned into one strand.
 
-    A phase is a reading aid, not a dependency: its members usually form a
+    A stage is a reading aid, not a dependency: its members usually form a
     chain, but they may also sit in the same layer (two sourcing calls that do
     not see each other), in which case they are simply placed side by side
-    inside the phase. Members separated by layers the phase has no step in are
+    inside the stage. Members separated by layers the stage has no step in are
     aligned and banded separately. Every member must be drawn in the same
-    pipeline column, and every step of a pipeline belongs to exactly one phase.
+    pipeline column, and every step of a pipeline belongs to exactly one stage.
     """
 
     id: str
@@ -1178,7 +1178,7 @@ STEPS: List[Step] = [
 
 
 def group_of(step_id: str) -> Optional[Group]:
-    """The phase a step belongs to."""
+    """The stage a step belongs to."""
     for group in GROUPS:
         if step_id in group.steps:
             return group

@@ -1205,7 +1205,7 @@ def render_pipeline(writer: Writer, mount: Mount) -> str:
     )
     caption = f"{writer.lane_label(lane)} pipeline as a dependency graph."
     if banded:
-        caption += " A shaded band gathers the steps of one phase."
+        caption += " A shaded band gathers the steps of one stage."
     return (
         "\\begin{figure}[tp]\n"
         "\\centering\n"

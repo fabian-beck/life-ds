@@ -597,11 +597,11 @@ class GroupTests(unittest.TestCase):
                 f"group '{group.id}' has no run of consecutive layers to align",
             )
 
-    def test_every_phase_is_one_continuous_run(self) -> None:
-        """The phases were cut so that each is banded whole, pinned to the graph.
+    def test_every_stage_is_one_continuous_run(self) -> None:
+        """The stages were cut so that each is banded whole, pinned to the graph.
 
-        The run-splitting still exists for a phase that a future step breaks
-        apart; the current spec has none, and a phase that silently split would
+        The run-splitting still exists for a stage that a future step breaks
+        apart; the current spec has none, and a stage that silently split would
         show up as two bands where the report describes one.
         """
         for group in spec.GROUPS:
@@ -609,16 +609,16 @@ class GroupTests(unittest.TestCase):
             self.assertEqual(
                 1,
                 len(runs),
-                f"phase '{group.id}' splits into {len(runs)} runs: {runs}",
+                f"stage '{group.id}' splits into {len(runs)} runs: {runs}",
             )
 
-    def test_every_step_belongs_to_a_phase(self) -> None:
-        """The phases are comprehensive: no step is left outside a band."""
+    def test_every_step_belongs_to_a_stage(self) -> None:
+        """The stages are comprehensive: no step is left outside a band."""
         claimed = {step_id for group in spec.GROUPS for step_id in group.steps}
         for step in spec.STEPS:
-            self.assertIn(step.id, claimed, f"step '{step.id}' is in no phase")
+            self.assertIn(step.id, claimed, f"step '{step.id}' is in no stage")
 
-    def test_a_step_in_no_phase_fails_the_build(self) -> None:
+    def test_a_step_in_no_stage_fails_the_build(self) -> None:
         spec.GROUPS[:] = [
             spec.Group(
                 group.id, group.label, [s for s in group.steps if s != "p_geocode"]
@@ -626,9 +626,9 @@ class GroupTests(unittest.TestCase):
             for group in spec.GROUPS
         ]
         messages = [str(problem) for problem in validate._check_groups()]
-        self.assertTrue(any("belongs to no phase" in message for message in messages))
+        self.assertTrue(any("belongs to no stage" in message for message in messages))
 
-    def test_every_phase_stays_within_two_steps_per_layer(self) -> None:
+    def test_every_stage_stays_within_two_steps_per_layer(self) -> None:
         """Several members in one layer is legal but should stay the exception."""
         layers = _layers()
         for group in spec.GROUPS:
@@ -638,7 +638,7 @@ class GroupTests(unittest.TestCase):
             self.assertLessEqual(
                 max(counts.values()),
                 2,
-                f"phase '{group.id}' would be drawn more than two steps wide",
+                f"stage '{group.id}' would be drawn more than two steps wide",
             )
 
 

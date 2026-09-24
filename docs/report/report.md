@@ -43,7 +43,7 @@ A meta story refers to the data of its subjects and adds further perspectives. I
 
 ## Generation
 
-We split the generation of this data into two stages. The first stage, the [[person-pipeline|personal story pipeline]], reads an encyclopedia article and writes the data of an individual biography. The second stage, the [[meta-pipeline|meta story pipeline]], reads the data of several individuals and writes a meta story connecting them. Both pipelines run offline as Python command-line scripts, invoked for one life or one theme at a time. A run stores the data described in the previous section as JSON documents. Each step reads the documents of earlier steps, writes its own, and belongs to one of four kinds.
+We split the generation of this data into two pipelines. The first, the [[person-pipeline|personal story pipeline]], reads an encyclopedia article and writes the data of an individual biography. The second, the [[meta-pipeline|meta story pipeline]], reads the data of several individuals and writes a meta story connecting them. Both pipelines run offline as Python command-line scripts, invoked for one life or one theme at a time. A run stores the data described in the previous section as JSON documents. Each step reads the documents of earlier steps, writes its own, and belongs to one of four kinds.
 
 ::: kindlegend
 :::
@@ -52,7 +52,7 @@ Both pipelines follow the same pattern: material is derived bottom-up and revise
 
 ### Personal story pipeline
 
-The [[person-pipeline|personal story pipeline]] derives data for one biography, from an [[sources|encyclopedia article]] to the data needed for an illustrated and individually styled story. The chart[[figure:pipeline-person]] groups its steps into seven phases. Once the sources are gathered, the events of the life are proposed from them, researched, geocoded, and matched with pictures. The story is then styled individually, and the generated pictures adopt that style. Independently of the style, the social network is derived, and a review pass revises it together with the events. Background reports then add depth to the reviewed events, and localization closes the run.
+The [[person-pipeline|personal story pipeline]] derives data for one biography, from an [[sources|encyclopedia article]] to the data needed for an illustrated and individually styled story. The chart[[figure:pipeline-person]] groups its steps into seven stages. Once the sources are gathered, the events of the life are proposed from them, researched, geocoded, and matched with pictures. The story is then styled individually, and the generated pictures adopt that style. Independently of the style, the social network is derived, and a review pass revises it together with the events. Background reports then add depth to the reviewed events, and localization closes the run.
 
 ::: pipeline lane=person
 :::

@@ -271,7 +271,7 @@ A meta story refers to the data of its subjects and adds further perspectives. I
 
 \section{Generation}\label{sec:generation}
 
-We split the generation of this data into two stages. The first stage, the personal story pipeline, reads an encyclopedia article and writes the data of an individual biography. The second stage, the meta story pipeline, reads the data of several individuals and writes a meta story connecting them. Both pipelines run offline as Python command-line scripts, invoked for one life or one theme at a time. A run stores the data described in the previous section as JSON documents. Each step reads the documents of earlier steps, writes its own, and belongs to one of four kinds.
+We split the generation of this data into two pipelines. The first, the personal story pipeline, reads an encyclopedia article and writes the data of an individual biography. The second, the meta story pipeline, reads the data of several individuals and writes a meta story connecting them. Both pipelines run offline as Python command-line scripts, invoked for one life or one theme at a time. A run stores the data described in the previous section as JSON documents. Each step reads the documents of earlier steps, writes its own, and belongs to one of four kinds.
 
 \begin{legend}
 \swatch{kindexternal} External source & Fetches data from public sources. \\
@@ -284,12 +284,12 @@ Both pipelines follow the same pattern: material is derived bottom-up and revise
 
 \subsection{Personal story pipeline}\label{sec:personal-story-pipeline}
 
-The personal story pipeline derives data for one biography, from an \glyphof{sources}encyclopedia article to the data needed for an illustrated and individually styled story. The chart (Figure~\ref{fig:pipeline-person}) groups its steps into seven phases. Once the sources are gathered, the events of the life are proposed from them, researched, geocoded, and matched with pictures. The story is then styled individually, and the generated pictures adopt that style. Independently of the style, the social network is derived, and a review pass revises it together with the events. Background reports then add depth to the reviewed events, and localization closes the run.
+The personal story pipeline derives data for one biography, from an \glyphof{sources}encyclopedia article to the data needed for an illustrated and individually styled story. The chart (Figure~\ref{fig:pipeline-person}) groups its steps into seven stages. Once the sources are gathered, the events of the life are proposed from them, researched, geocoded, and matched with pictures. The story is then styled individually, and the generated pictures adopt that style. Independently of the style, the social network is derived, and a review pass revises it together with the events. Background reports then add depth to the reviewed events, and localization closes the run.
 
 \begin{figure}[tp]
 \centering
 \pipelinechart{pipeline-person.pdf}
-\caption{Personal story pipeline as a dependency graph. A shaded band gathers the steps of one phase.}\label{fig:pipeline-person}
+\caption{Personal story pipeline as a dependency graph. A shaded band gathers the steps of one stage.}\label{fig:pipeline-person}
 \end{figure}
 
 \emph{Sources}. An \stepref{kindexternal}{acquisition} step loads the subject's Wikipedia article and linked article titles. An AI-based \stepref{kindai}{selection} call chooses the most relevant titles before their full texts are fetched. The fetched articles are cached for reuse by later steps and reruns, together with Commons image metadata.
@@ -313,7 +313,7 @@ The meta story generation (Figure~\ref{fig:pipeline-meta}) concerns a theme that
 \begin{figure}[tp]
 \centering
 \pipelinechart{pipeline-meta.pdf}
-\caption{Meta story pipeline as a dependency graph. A shaded band gathers the steps of one phase.}\label{fig:pipeline-meta}
+\caption{Meta story pipeline as a dependency graph. A shaded band gathers the steps of one stage.}\label{fig:pipeline-meta}
 \end{figure}
 
 \emph{Planning}. An AI \stepref{kindai}{planning} call reads a summary of every available personal story and selects the subjects for the theme. It groups the selected people into two to four subtopics, proposes three to six chapters as named eras with estimated date ranges, and drafts a description and a conclusion. \stepref{kinddeterministic}{Event collection} then gathers every dated event of the selected people in code.

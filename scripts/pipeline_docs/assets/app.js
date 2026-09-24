@@ -23,13 +23,13 @@
    directly are drawn—one a longer chain already implies is left out there, so
    the chart never carries a line beside a strand that says the same thing.
    The files a step reads and writes are not drawn: the step note and the
-   appendix list them, so the chart carries the steps, the flow, and the phases.
+   appendix list them, so the chart carries the steps, the flow, and the stages.
 
    The vertical axis is the dependency graph; the horizontal axis is free, and
-   `spec.GROUPS` spends it on meaning: the phases. Steps of one concern—plan
+   `spec.GROUPS` spends it on meaning: the stages. Steps of one concern—plan
    the image searches, run them, match the results—are aligned and banded, so
    a job that takes three layers reads as one vertical strand instead of
-   drifting across the chart. Every step is in a phase.
+   drifting across the chart. Every step is in a stage.
    Alignment holds only where a group is continuous: a member several
    layers below the rest is placed on its own. Positions are continuous, not
    slots in a grid, and are relaxed to keep the edges short. */
@@ -73,7 +73,7 @@
       MARGIN_CH: 18, // side channels for edges that skip a layer
       PAD: 8,
       BAND_PAD: 7,
-      BAND_HEAD: 19, // room for a phase band's label above its first step
+      BAND_HEAD: 19, // room for a stage band's label above its first step
       BAND_LABEL_CH: 6, // width per character of the label's box
       BAND_LABEL_H: 15,
       BAND_LABEL_DY: 13, // the label's baseline, down from the band's top
@@ -95,7 +95,7 @@
       MARGIN_CH: 12,
       PAD: 6,
       BAND_PAD: 5,
-      BAND_HEAD: 14, // the phase label, set smaller, still names the band
+      BAND_HEAD: 14, // the stage label, set smaller, still names the band
       BAND_LABEL_CH: 4.6,
       BAND_LABEL_H: 11,
       BAND_LABEL_DY: 9.5,
@@ -611,12 +611,12 @@
       return blocks;
     }
 
-    /* Horizontal placement, in two stages. The layer decides how far *down* a
+    /* Horizontal placement, in two passes. The layer decides how far *down* a
        node goes; the graph says nothing about how far across, and that freedom is
        spent on meaning—the steps of one concern are aligned so they read as a
        single vertical strand—and on short edges.
 
-       Stage one places the blocks: group runs and lone nodes alike, each a rigid
+       Pass one places the blocks: group runs and lone nodes alike, each a rigid
        rectangle with one x for every layer it crosses. Positions are continuous,
        not slots in a grid. A leftmost packing gives a feasible start and fixes
        the chart's width, since every block is then as far left as it can go.
@@ -630,7 +630,7 @@
        rest of the chart; otherwise a strand fed from one side would stay
        pressed against the margin because the strand beside it holds it there.
 
-       Stage two places the nodes inside each block, centered on it, which is what
+       Pass two places the nodes inside each block, centered on it, which is what
        makes a group's steps line up: a run with one step per layer puts every
        step at the same x. */
     function arrange(rows, graph) {
@@ -818,7 +818,7 @@
       const origin = M.PAD + M.RAIL_W + M.MARGIN_CH - left;
       blocks.forEach((block) => {
         block.cx += origin;
-        // Stage two: the members of one layer, centered on the block.
+        // Pass two: the members of one layer, centered on the block.
         block.members.forEach((node) => {
           node.px = block.cx + node.offset - node.w / 2;
         });
@@ -1106,9 +1106,9 @@
       });
     }
 
-    /* The phase's name, in the band's head, at both sizes: a compact figure
+    /* The stage's name, in the band's head, at both sizes: a compact figure
        that showed the bands without naming them left the reader to guess what
-       the prose's phases were. Its box is sized from the character count, in
+       the prose's stages were. Its box is sized from the character count, in
        the size's own units, so the label never runs past the band. */
     function drawBandLabels(root, bands) {
       bands.forEach((band) => {
@@ -1419,7 +1419,7 @@
       const marks = [
         compact ? "The color bar gives the step kind." : "",
         geometry.bands.length
-          ? "A shaded band gathers the steps of one phase."
+          ? "A shaded band gathers the steps of one stage."
           : "",
       ];
 

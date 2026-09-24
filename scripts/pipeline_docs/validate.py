@@ -153,12 +153,12 @@ def _check_graph() -> List[Problem]:
 
 
 def _check_groups() -> List[Problem]:
-    """Phases must name real steps, claim each once, cover every step, and
+    """Stages must name real steps, claim each once, cover every step, and
     stay in one column.
 
     A group is drawn as one band across several layers, so a member from the
     other pipeline—or a step claimed twice—would have the layout reserving a
-    column that cannot exist. A step in no phase would be the one node the
+    column that cannot exist. A step in no stage would be the one node the
     chart leaves unexplained, so every step must be claimed.
     """
     problems: List[Problem] = []
@@ -206,7 +206,7 @@ def _check_groups() -> List[Problem]:
     for step in spec.STEPS:
         if step.id not in owner:
             problems.append(
-                Problem("error", f"step '{step.id}'", "belongs to no phase")
+                Problem("error", f"step '{step.id}'", "belongs to no stage")
             )
     return problems
 
