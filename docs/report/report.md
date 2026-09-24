@@ -69,16 +69,16 @@ The [[person-pipeline|personal story pipeline]] derives data for one biography, 
 
 *Depth*. A [[step:p_backgrounds|background report]] of a few paragraphs---explaining details of an event or the background of a key concept relevant to the event (e.g., an invention)---is written after the review for the most important events, roughly one event per chapter, and only where the sources provide enough material on the event. An [[step:p_illustrations|image critic]] call compares the illustrations found for each report with its text and removes images that do not match its topic.
 
-*Localization*. To support multiple languages, a [[step:p_name_evidence|lookup]] collects the target language's names of the subject, the people, and the places from Wikipedia's language links. A [[step:p_glossary|glossary]] call then fixes one translated name per person, so that each person is named the same way throughout the story. The [[step:p_translate|translation]] call translates only the text fields, and all other fields, such as dates, coordinates, URLs, and identifiers, are taken over unchanged from the English version. 
+*Localization*. To support multiple languages, a [[step:p_name_evidence|lookup]] collects the target language's names of the subject, the people, and the places from Wikipedia's language links. A [[step:p_glossary|glossary]] call then fixes one translated name per person, so that each person is named the same way throughout the story. [[step:p_translate|Translation]] calls finally translate all text fields into each target language. 
 
 ### Meta story pipeline
 
-The [[meta-pipeline|meta story generation]][[figure:pipeline-meta]] concerns a theme that connects multiple lives (e.g., an area of science, art, or political development) and builds upon the output of the personal pipelines. The story is planned and its events collected and curated against the theme. Moreover, the social network and the map are derived independently of each other. Then, a composition step joins the branches into one story and gives it a visual identity. Again, localization closes the run.
+The [[meta-pipeline|meta story generation]][[figure:pipeline-meta]] concerns a theme that connects multiple lives (e.g., an area of science, art, or political development) and directly builds upon the output of the personal pipelines. The story is planned and its events collected and curated against the theme. Moreover, the social network and the map are derived. Then, a composition step joins the branches into one story and gives it a visual identity. Again, localization closes the run.
 
 ::: pipeline lane=meta
 :::
 
-*Planning*. An AI [[step:m_p1|planning]] call reads a summary of every available personal story and selects the subjects for the theme. It groups the selected people into two to four subtopics, proposes three to six chapters as named eras with estimated date ranges, and drafts a description and a conclusion. [[step:m_p2|Event collection]] then gathers every dated event of the selected people in code.
+*Planning*. An AI [[step:m_p1|planning]] call reads summaries of available personal stories and selects the subjects for the theme. It groups the selected people into two to four subtopics, proposes three to six chapters as named eras with estimated date ranges, and drafts a description and a conclusion. [[step:m_p2|Event collection]] then takes all dated events of the selected people from their personal stories, without a model call and without filtering.
 
 *Events*. A [[step:m_p3|curation]] call per batch of events judges each event against the theme and records why it belongs. The proposed chapters are then fitted to the surviving events. Each event is assigned to the chapter containing its year or to the nearest one, and each chapter's date range is adjusted to its events. A [[step:m_p4|context]] call adds up to two historical events per chapter that directly affected the story's people.
 

@@ -304,11 +304,11 @@ The personal story pipeline derives data for one biography, from an \glyphof{sou
 
 \emph{Depth}. A \stepref{kindai}{background report} of a few paragraphs---explaining details of an event or the background of a key concept relevant to the event (e.g., an invention)---is written after the review for the most important events, roughly one event per chapter, and only where the sources provide enough material on the event. An \stepref{kindai}{image critic} call compares the illustrations found for each report with its text and removes images that do not match its topic.
 
-\emph{Localization}. To support multiple languages, a \stepref{kindexternal}{lookup} collects the target language's names of the subject, the people, and the places from Wikipedia's language links. A \stepref{kindai}{glossary} call then fixes one translated name per person, so that each person is named the same way throughout the story. The \stepref{kindai}{translation} call translates only the text fields, and all other fields, such as dates, coordinates, URLs, and identifiers, are taken over unchanged from the English version.
+\emph{Localization}. To support multiple languages, a \stepref{kindexternal}{lookup} collects the target language's names of the subject, the people, and the places from Wikipedia's language links. A \stepref{kindai}{glossary} call then fixes one translated name per person, so that each person is named the same way throughout the story. \stepref{kindai}{Translation} calls finally translate all text fields into each target language.
 
 \subsection{Meta story pipeline}\label{sec:meta-story-pipeline}
 
-The meta story generation (Figure~\ref{fig:pipeline-meta}) concerns a theme that connects multiple lives (e.g., an area of science, art, or political development) and builds upon the output of the personal pipelines. The story is planned and its events collected and curated against the theme. Moreover, the social network and the map are derived independently of each other. Then, a composition step joins the branches into one story and gives it a visual identity. Again, localization closes the run.
+The meta story generation (Figure~\ref{fig:pipeline-meta}) concerns a theme that connects multiple lives (e.g., an area of science, art, or political development) and directly builds upon the output of the personal pipelines. The story is planned and its events collected and curated against the theme. Moreover, the social network and the map are derived. Then, a composition step joins the branches into one story and gives it a visual identity. Again, localization closes the run.
 
 \begin{figure}[tp]
 \centering
@@ -316,7 +316,7 @@ The meta story generation (Figure~\ref{fig:pipeline-meta}) concerns a theme that
 \caption{Meta story pipeline as a dependency graph. A shaded band gathers the steps of one stage.}\label{fig:pipeline-meta}
 \end{figure}
 
-\emph{Planning}. An AI \stepref{kindai}{planning} call reads a summary of every available personal story and selects the subjects for the theme. It groups the selected people into two to four subtopics, proposes three to six chapters as named eras with estimated date ranges, and drafts a description and a conclusion. \stepref{kinddeterministic}{Event collection} then gathers every dated event of the selected people in code.
+\emph{Planning}. An AI \stepref{kindai}{planning} call reads summaries of available personal stories and selects the subjects for the theme. It groups the selected people into two to four subtopics, proposes three to six chapters as named eras with estimated date ranges, and drafts a description and a conclusion. \stepref{kinddeterministic}{Event collection} then takes all dated events of the selected people from their personal stories, without a model call and without filtering.
 
 \emph{Events}. A \stepref{kindai}{curation} call per batch of events judges each event against the theme and records why it belongs. The proposed chapters are then fitted to the surviving events. Each event is assigned to the chapter containing its year or to the nearest one, and each chapter's date range is adjusted to its events. A \stepref{kindai}{context} call adds up to two historical events per chapter that directly affected the story's people.
 
