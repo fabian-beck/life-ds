@@ -29,8 +29,8 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 
 # The payload is serialized with sorted keys, so the reading order a legend,
 # a filter row, and the teaser figure share is carried by `order`, not by the
-# order the entries are written in here. It follows the pipeline: material
-# arrives, a model interprets it, code turns the result into artifacts.
+# order the entries are written in here. It lists the sources first, then the
+# two model kinds, and ends with the plain code that connects them.
 KIND_META: Dict[str, Dict[str, Any]] = {
     spec.EXTERNAL: {
         "order": 0,
@@ -43,12 +43,12 @@ KIND_META: Dict[str, Dict[str, Any]] = {
         "description": "Sends a prompt to a language model and parses the structured result.",
     },
     spec.CODE: {
-        "order": 2,
+        "order": 3,
         "label": "Deterministic",
         "description": "Runs plain code to aggregate or check results through heuristics.",
     },
     spec.IMAGE: {
-        "order": 3,
+        "order": 2,
         "label": "Image model",
         "description": "Generates or edits an image.",
     },

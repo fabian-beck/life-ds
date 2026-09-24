@@ -224,7 +224,7 @@ PARTS: Tuple[Part, ...] = (
         "kinds",
         "Four kinds of step",
         "A retrieval from an external source, a language model call, "
-        "deterministic code, or an image model call—the classification "
+        "an image model call, or deterministic code—the classification "
         "partitions both pipelines by cost and by failure mode.",
         (8, 348, 948, 24),
         decor="kinds",

@@ -227,7 +227,7 @@
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/}{\textbf{Leah Mühlöder}}\\{\sffamily\scriptsize\color{muted}University of Bamberg}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0009-0000-3510-1686}{0009-0000-3510-1686}}\end{minipage}\hfill%
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://services.informatik.hs-mannheim.de/~nagel/}{\textbf{Till Nagel}}\\{\sffamily\scriptsize\color{muted}Mannheim University of Applied Sciences}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0000-0001-5400-091X}{0000-0001-5400-091X}}\end{minipage}\hfill%
 \par
-\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 23, 2026\par}
+\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 24, 2026\par}
 \vspace{14pt}{\color{rulestrong}\hrule}\vspace{8pt}
 \eyebrow{Abstract}\par\vspace{4pt}
 Life Data Stories is an approach that transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides that combine narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous scrolling document with similar visual encodings. The system separates two concerns. First, generation is performed offline by staged pipelines that combine large language-model inference with deterministic transformation. Second, the presentation is rendered by an interactive web application without further use of artificial intelligence. This technical report documents the approach and its implementation and provides a basic scientific contextualization. The source code is available at \href{https://github.com/fabian-beck/life-ds}{github.com/fabian-beck/life-ds} and the deployed application at \href{https://fabian-beck.github.io/life-ds/}{fabian-beck.github.io/life-ds}.
@@ -276,8 +276,8 @@ We split the generation of this data into two stages. The first stage, the perso
 \begin{legend}
 \swatch{kindexternal} External source & Fetches data from public sources. \\
 \swatch{kindai} Language model & Sends a prompt to a language model and parses the structured result. \\
-\swatch{kinddeterministic} Deterministic & Runs plain code to aggregate or check results through heuristics. \\
 \swatch{kindimage} Image model & Generates or edits an image. \\
+\swatch{kinddeterministic} Deterministic & Runs plain code to aggregate or check results through heuristics. \\
 \end{legend}
 
 Both pipelines follow the same pattern: material is derived bottom-up and revised top-down. Both end in translation: each English document is translated into every other supported language (currently: German).
