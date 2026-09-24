@@ -258,21 +258,13 @@ GROUPS: List[Group] = [
     ),
     # ------------------------------------------------------------------ meta
     Group(
-        "planning",
-        "Planning",
-        ["m_p1", "m_p2"],
-        note=(
-            "Decide whom the theme is about, then gather every event of those "
-            "people."
-        ),
-    ),
-    Group(
         "event_curation",
-        "Events",
-        ["m_p3", "m_p4"],
+        "Planning and events",
+        ["m_p1", "m_p3", "m_p4"],
         note=(
-            "Judge the events against the theme, refit the chapters to the "
-            "survivors, then give each chapter its period."
+            "Decide whom the theme is about, judge their events against it, "
+            "refit the chapters to the survivors, then give each chapter its "
+            "period."
         ),
     ),
     Group(
@@ -929,18 +921,6 @@ STEPS: List[Step] = [
         inputs=["persons"],
     ),
     Step(
-        "m_p2",
-        "Collect events",
-        META,
-        CODE,
-        "generate_meta_story.py",
-        "phase2_event_collection",
-        byline="Read from the life events",
-        summary="Gathers every dated event of the selected people, unfiltered.",
-        depends_on=[Dep("m_p1", "the selected person ids")],
-        inputs=["life_events"],
-    ),
-    Step(
         "m_p3",
         "Curate events",
         META,
@@ -953,8 +933,9 @@ STEPS: List[Step] = [
             "planned chapter boundaries are then re-fitted in code "
             "(`fit_chapters_to_events`) to the events that actually survived."
         ),
-        depends_on=[Dep("m_p2", "the unfiltered event pool")],
+        depends_on=[Dep("m_p1", "the selected people")],
         prompts=["_filter_event_batch"],
+        inputs=["life_events"],
         calls_per_run="one per batch",
         skip_flag="--skip-ai-filtering",
     ),

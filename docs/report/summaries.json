@@ -27,21 +27,12 @@
         "source": "gpt-5.6-terra"
       }
     },
-    "m_p2": {
-      "fingerprint": "7e6678a061a07c56",
-      "summary": {
-        "description": "Collects every dated life event for the selected people and orders them by year. It leaves relevance and chapter placement to later steps because early chapter ranges can miss events outside their guessed bounds.",
-        "input": "the selected people and life events",
-        "output": "dated events in chronological order",
-        "source": "gpt-5.6-terra"
-      }
-    },
     "m_p3": {
-      "fingerprint": "438ddc3d05bd9d01",
+      "fingerprint": "1b6840151fc24d4c",
       "summary": {
-        "description": "Judges each biographical event against the story’s theme and keeps only landmark contributions with a lasting output. It records a short reason for every decision, leaving the chapter-fitting stage to work from the events that survive.",
-        "input": "the unfiltered event pool",
-        "output": "essential events with relevance reasons",
+        "description": "Filters the selected people’s life events to the landmark contributions that carry the theme. It rejects biography and routine work by default, so the surviving events support a chapter’s claim instead of merely filling its chronology.",
+        "input": "the selected people and life events",
+        "output": "essential events and relevance reasons",
         "source": "gpt-5.6-terra"
       }
     },
