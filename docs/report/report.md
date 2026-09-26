@@ -148,7 +148,7 @@ The meta story ends with a brief summary of the nine lives, followed by a grid o
 
 ### Personal story
 
-Gaudí's personal story begins with the stylized portrait and a short biographical summary. The story is a horizontal sequence of slides, navigated by swiping sideways. Chapter slides, showing a headline and an illustration, structure the [[gaudi-relationship-card.whole|event slides]][[figure:gaudi-relationship-card]] that provide the main information. Beside the details of the event, an image may be shown. For events with supporting material, the slide extends vertically: a chevron reveals a longer background passage about the context of the event. Special events such as birth, death, publication, or migration contain further structuring elements and specialized representations: for instance, a birth slide adds a box with the subject's parents and birth name, and a migration draws an animated path from the old place to the new one on the map.
+Gaudí's personal story begins with the stylized portrait and a short biographical summary. The story is a horizontal sequence of slides, navigated by swiping sideways. Chapter slides, showing a headline and an illustration, structure the [[gaudi-relationship-card.whole|event slides]][[figure:gaudi-relationship-card]] that provide the main information. Beside the details of the event, an image may be shown (and can be enlarged as part of an image gallery). For events with supporting material, the slide extends vertically: a chevron reveals a longer background passage about the context of the event. Special events such as birth, death, publication, or migration contain further structuring elements and specialized representations: for instance, a birth slide adds a box with the subject's parents and birth name, and a migration draws an animated path from the old place to the new one on the map.
 
 ::: screenshot id=gaudi-relationship-card route="#/en/story/antoni_gaud?slide=12" width=390 height=844 wait=".story-view" settle=3500 caption="The standard event slide: text in the middle, a map beneath, and an icon outline at the bottom."
 @whole 0,0,390,844 The event slide
@@ -184,6 +184,8 @@ Parents and siblings above the subject's portrait, the niece below, joined by li
 @boxes 20,635,350,170 The academic category
 A single chip with the role teacher; where a role repeats, the chips are gathered into a box labeled by the role.
 :::
+
+Readers swipe through the story to its end, where a conclusion is presented together with up to five related people whose personal stories are available. Relatedness is indirect: a person qualifies by sharing at least one primary role with the subject, and appearing in the subject's network counts as much as one further shared role.
 
 ## Discussion and conclusion
 
