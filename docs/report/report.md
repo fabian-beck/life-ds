@@ -133,7 +133,7 @@ Flies to a new location as each card scrolls into view.
 Each listed event links to its slide in the personal story.
 :::
 
-*Network.* The third section is a [[meta-network.whole|graph]][[figure:meta-network]] that displays the architects and the documented connections between them. Its force-directed layout is calculated in the background and finalized before it is displayed. A weak force pulls each subject toward a horizontal position given by their birth year, so that the graph reads chronologically from left to right, and every other person toward the mean position of the subjects they are connected to. The precomputed data groups people into clusters. As the reader scrolls, one [[meta-network.card|card]] per cluster moves over the graph and describes it, and the people and connections involved are [[meta-network.cluster|highlighted]], while the rest of the graph darkens.
+*Network.* The third section is a [[meta-network.whole|graph]][[figure:meta-network]] that displays the architects and the documented connections between them. Its force-directed layout is calculated in the background and finalized before it is displayed. A weak force pulls each subject toward a horizontal position given by their birth year, so that the graph tends to read chronologically from left to right. The precomputed data groups people into clusters. As the reader scrolls, one [[meta-network.card|card]] per cluster moves over the graph and describes it, and the people and connections involved are [[meta-network.cluster|highlighted]], while the rest of the graph darkens.
 
 ::: screenshot id=meta-network route="#/en/meta/organic_shapes_in_architecture" width=390 height=844 wait=".network-section" anchor=".network-section" scroll=800 settle=3000 caption="The network: architects as nodes, one card in front naming the cluster currently highlighted."
 @whole 0,0,390,844 The network view
@@ -144,11 +144,11 @@ Outlined while the rest of the graph is dimmed.
 Describes the chain of connections currently highlighted: Gaudí's forms taken up by Hundertwasser and Otto, Otto's acquaintance with Wright, and Wright's praise for Aalto.
 :::
 
-The meta story ends with a brief summary of the nine lives, followed by a grid of tiles linking to the architects' personal stories.
+The meta story ends with a brief summary of the nine lives, followed by a grid of tiles linking to the architects' personal stories, which we use here to switch to Antoni Gaudí.
 
 ### Personal story
 
-Gaudí's personal story begins with the stylized portrait and a short biographical summary. The encodings of time, place, and relation that a meta story shows in separate sections also accompany this sequence. The story is a horizontal sequence of slides, navigated by swiping sideways. Chapter slides, showing a headline and an illustration, structure the [[gaudi-relationship-card.whole|event slides]][[figure:gaudi-relationship-card]] that provide the main information. Beside the details of the event, an image may be shown. For events with supporting material, the slide extends vertically: a chevron reveals a longer background passage about the context of the event. Special events such as birth, death, publication, or migration contain further structuring elements and specialized representations.
+Gaudí's personal story begins with the stylized portrait and a short biographical summary. The story is a horizontal sequence of slides, navigated by swiping sideways. Chapter slides, showing a headline and an illustration, structure the [[gaudi-relationship-card.whole|event slides]][[figure:gaudi-relationship-card]] that provide the main information. Beside the details of the event, an image may be shown. For events with supporting material, the slide extends vertically: a chevron reveals a longer background passage about the context of the event. Special events such as birth, death, publication, or migration contain further structuring elements and specialized representations: for instance, a birth slide adds a box with the subject's parents and birth name, and a migration draws an animated path from the old place to the new one on the map.
 
 ::: screenshot id=gaudi-relationship-card route="#/en/story/antoni_gaud?slide=12" width=390 height=844 wait=".story-view" settle=3500 caption="The standard event slide: text in the middle, a map beneath, and an icon outline at the bottom."
 @whole 0,0,390,844 The event slide
