@@ -227,7 +227,7 @@
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/}{\textbf{Leah Mühlöder}}\\{\sffamily\scriptsize\color{muted}University of Bamberg}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0009-0000-3510-1686}{0009-0000-3510-1686}}\end{minipage}\hfill%
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://services.informatik.hs-mannheim.de/~nagel/}{\textbf{Till Nagel}}\\{\sffamily\scriptsize\color{muted}Mannheim University of Applied Sciences}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0000-0001-5400-091X}{0000-0001-5400-091X}}\end{minipage}\hfill%
 \par
-\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 25, 2026\par}
+\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 26, 2026\par}
 \vspace{14pt}{\color{rulestrong}\hrule}\vspace{8pt}
 \eyebrow{Abstract}\par\vspace{4pt}
 Life Data Stories is an approach that transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides that combine narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous scrolling document with similar visual encodings. The system separates two concerns. First, generation is performed offline by staged pipelines that combine large language-model inference with deterministic transformation. Second, the presentation is rendered by an interactive web application without further use of artificial intelligence. This technical report documents the approach and its implementation and provides a basic scientific contextualization. The source code is available at \href{https://github.com/fabian-beck/life-ds}{github.com/fabian-beck/life-ds} and the deployed application at \href{https://fabian-beck.github.io/life-ds/}{fabian-beck.github.io/life-ds}.
@@ -326,7 +326,7 @@ The meta story generation (Figure~\ref{fig:pipeline-meta}) concerns a theme that
 
 \emph{Composition}. The \stepref{kindai}{composition} call assembles the story from the generated material: it revises and connects the descriptions into a coherent story and decides the order of the sections and the final grouping of the circles. A \stepref{kindai}{style} call derives from the story's framing a color palette, background pattern, fonts, and ornamental elements.
 
-\emph{Localization}. The \stepref{kindai}{translation} proceeds as for personal stories but reuses the subjects' names and the event titles already translated for their personal stories, so that both use identical wording. Its prompt also asks the model to translate the metaphors of the theme consistently across the story.
+\emph{Localization}. The \stepref{kindai}{translation} proceeds as for personal stories but reuses the subjects' names and the event titles already translated for their personal stories, so that both use identical wording.
 
 \subsection{AI models and prompting}\label{sec:ai-models-and-prompting}
 
@@ -334,7 +334,11 @@ The generation uses OpenAI's API models (gpt-5.6-luna, gpt-5.6-sol, gpt-5.6-terr
 
 \section{Interface}\label{sec:interface}
 
-Life Data Stories' frontend is a mobile-first Svelte application that loads and renders the generated data. The layout is designed for the phone and adapts responsively to larger screens; the screenshots in this report are deliberately captured at both phone and desktop width. The landing page offers access to the two story types, which organize the data differently: a personal story follows one life in order, and a meta story follows a theme across several lives. On the landing page (Figure~\ref{fig:shot-landing}), the meta stories are displayed in a carousel at the top. Below them, the personal stories can be reached via their generated portrait, by filtering on role, by search, or by viewing a map that plots the place of every event across the corpus. Clicking a marker there shows the event, and one more tap opens the personal story on its slide. In the following, we walk through both story types in more detail. Throughout, we use the meta story \emph{Architecture as Living Form} and the personal story of \emph{Antoni Gaudí} as running examples.
+Life Data Stories' frontend is a mobile-first Svelte application that loads and renders the generated data. The layout is designed for the phone but adapts responsively to larger screens; the screenshots in this report are deliberately captured as a mix of phone and desktop widths.
+
+The landing page offers access to the two story types, which organize the data differently: a personal story follows one life in order, and a meta story follows a theme across several lives. On the landing page (Figure~\ref{fig:shot-landing}), the meta stories are displayed in a carousel at the top. Below them, the personal stories can be reached and filtered by role or search. Additionally, a map plots the place of every event across the corpus. Nearby events merge into circles that grow with their number of events and take the color of a person who contributes more than half of them, fading to gray as that share approaches half. Clicking a marker there shows the event, and another tap opens the event as part of the respective personal story.
+
+In the following, we walk through both story types in more detail. Throughout, we use the meta story \emph{Architecture as Living Form} and the personal story of \emph{Antoni Gaudí} as running examples.
 
 \begin{figure}[tp]
 \begin{wide}\centering

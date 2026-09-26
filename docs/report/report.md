@@ -88,7 +88,7 @@ The [[meta-pipeline|meta story generation]][[figure:pipeline-meta]] concerns a t
 
 *Composition*. The [[step:m_p8|composition]] call assembles the story from the generated material: it revises and connects the descriptions into a coherent story and decides the order of the sections and the final grouping of the circles. A [[step:m_style|style]] call derives from the story's framing a color palette, background pattern, fonts, and ornamental elements.
 
-*Localization*. The [[step:m_translate|translation]] proceeds as for personal stories but reuses the subjects' names and the event titles already translated for their personal stories, so that both use identical wording. Its prompt also asks the model to translate the metaphors of the theme consistently across the story.
+*Localization*. The [[step:m_translate|translation]] proceeds as for personal stories but reuses the subjects' names and the event titles already translated for their personal stories, so that both use identical wording.
 
 ### AI models and prompting
 
@@ -96,7 +96,11 @@ The generation uses OpenAI's API models ({{ pipeline.models }}). We configure th
 
 ## Interface
 
-Life Data Stories' frontend is a mobile-first Svelte application that loads and renders the generated data. The layout is designed for the phone and adapts responsively to larger screens; the screenshots in this report are deliberately captured at both phone and desktop width. The landing page offers access to the two story types, which organize the data differently: a [[slides|personal story]] follows one life in order, and a [[sections|meta story]] follows a theme across several lives. On the landing page[[figure:landing]], the meta stories are displayed in a [[landing.carousel|carousel]] at the top. Below them, the [[landing.grid|personal stories]] can be reached via their generated portrait, by filtering on role, by search, or by viewing a map that plots the place of every event across the corpus. Clicking a marker there shows the event, and one more tap opens the personal story on its slide. In the following, we walk through both story types in more detail. Throughout, we use the meta story *Architecture as Living Form* and the personal story of *Antoni Gaudí* as running examples.
+Life Data Stories' frontend is a mobile-first Svelte application that loads and renders the generated data. The layout is designed for the phone but adapts responsively to larger screens; the screenshots in this report are deliberately captured as a mix of phone and desktop widths.
+
+The landing page offers access to the two story types, which organize the data differently: a [[slides|personal story]] follows one life in order, and a [[sections|meta story]] follows a theme across several lives. On the landing page[[figure:landing]], the meta stories are displayed in a [[landing.carousel|carousel]] at the top. Below them, the [[landing.grid|personal stories]] can be reached and filtered by role or search. Additionally, a map plots the place of every event across the corpus. Nearby events merge into circles that grow with their number of events and take the color of a person who contributes more than half of them, fading to gray as that share approaches half. Clicking a marker there shows the event, and another tap opens the event as part of the respective personal story.
+
+In the following, we walk through both story types in more detail. Throughout, we use the meta story *Architecture as Living Form* and the personal story of *Antoni Gaudí* as running examples.
 
 ::: screenshot id=landing route="#/en" width=1280 height=1000 settle=2500 caption="The landing page: a carousel of meta stories above, the personal stories in a filterable grid below."
 @carousel 471,101,769,400 Meta story carousel
