@@ -161,20 +161,16 @@ Gains a new marker at each event's main place, here Barcelona.
 One icon per event, shaped by its type, and a plain marker per chapter.
 :::
 
-*Timeline.* As an explicit representation of time, a [[gaudi-relationship-card.icons|row]] along the bottom serves as both a progress marker and an outline. Each event is shown as an icon reflecting its type and each chapter as a plain marker. Tapping the chapter label above the row unfolds it into a full-screen [[gaudi-timeline.whole|outline]] of the life[[figure:gaudi-timeline]], the icons traveling from their places in the row to their entries in the list. The outline runs from the overview to the conclusion, with each chapter as a [[gaudi-timeline.chapter|heading]] that names its main location and each [[gaudi-timeline.event|event]] beneath its chapter with year, the subject's age, and title. Each [[gaudi-timeline.offset|entry]] is set in from the left in proportion to the subject's age at that point, so the pace of the life stays visible where the list is dense. Tapping an entry moves the story to that slide.
+*Timeline.* As an explicit representation of time, a [[gaudi-relationship-card.icons|row]] along the bottom serves as both a progress marker and an outline. Each event is shown as an icon reflecting its type and each chapter as a plain marker. Tapping the chapter label above the row unfolds it into a full-screen [[gaudi-timeline.whole|outline]] of the life[[figure:gaudi-timeline]]. Each [[gaudi-timeline.offset|entry]] is set in from the left in proportion to the subject's age at that point, so the pace of the life stays visible where the list is dense. Tapping an entry moves the story to that slide.
 
 ::: screenshot id=gaudi-timeline route="#/en/story/antoni_gaud?slide=12&timeline=1" width=390 height=844 wait=".expanded-timeline-container" settle=3500 caption="The expanded timeline: the life as a vertical outline of chapters and events, each entry indented in proportion to the subject's age."
 @whole 0,0,390,844 The expanded outline
 The row of icons unfolded into a full-screen list of chapters and events, from the overview to the conclusion.
-@chapter 54,160,300,53 A chapter heading
-Names the chapter and its main location; tapping it moves the story to the chapter slide.
-@event 88,440,220,40 The current event
-Icon, year, the subject's age, and title, highlighted as the slide the reader came from.
 @offset 20,75,120,700 The age offset
 Every entry is set in from the left in proportion to the subject's age, a faint line marking the offset.
 :::
 
-*Map.* The map stays in place across slides and adds a marker at each event's main place, so that by the end of the story it shows everywhere the subject worked and lived. In the example, the event's [[gaudi-relationship-card.map|main marker]] is in Barcelona, while faded smaller markers show the places of earlier events, in Paris and near Barcelona.
+*Map.* The map stays in place across slides and adds a marker at each event's main place, so that by the end of the story it shows everywhere the subject worked and lived. In the example, the event's [[gaudi-relationship-card.map|main marker]] is in Barcelona, while faded smaller markers show the places of earlier events, in Paris and in Reus near Barcelona.
 
 *Network.* When an event slide mentions another person, that person's name appears beside the text with their role, as here for [[gaudi-relationship-card.tag|Eusebi Güell]], tagged as patron. Tapping the tag opens a card describing the relationship. From this card, or the button at the top of the screen, readers can access [[gaudi-network.whole|Gaudí's full network]][[figure:gaudi-network]]. It is organized by relationship category, family first and then the others in alphabetical order, academic, business, professional, and religious in Gaudí's case. Each category shows a count and a short introductory [[gaudi-network.summary|passage]] with the mentioned names and roles highlighted. Its people appear as chips grouped by role: the family as [[gaudi-network.generations|generations]] around the subject, joined by lines, and the other categories as chips labeled by role, gathered into [[gaudi-network.boxes|boxes]] where a role repeats, such as client or collaborator. Tapping a chip opens the description and strength of that relationship.
 
