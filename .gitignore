@@ -18,9 +18,6 @@ worktrees
 # track; the results are one round's data, not repository content.
 evaluation/out/
 .agent-worktrees/
-# Printed from docs/report/index.html by `npm run report:pdf`. Regenerate it
-# rather than tracking a binary that changes on every report build.
-docs/report/*.pdf
 # Compiled from docs/report/latex/report.tex by `npm run report:latex`, with
 # the engine's intermediate files. The vector figures under latex/figures/
 # are tracked, like the screenshots: a browser prints them, and a checkout

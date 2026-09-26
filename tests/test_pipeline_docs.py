@@ -1213,11 +1213,9 @@ class FigureCitationTests(unittest.TestCase):
             document.html,
         )
 
-    def test_the_citation_is_withheld_on_screen_and_printed(self) -> None:
+    def test_the_citation_is_withheld_on_screen(self) -> None:
         css = (ASSETS / "style.css").read_text(encoding="utf-8")
-        screen, print_rules = css.split("@media print {", 1)
-        self.assertRegex(screen, r"\.figcite \{\s*display: none;")
-        self.assertRegex(print_rules, r"\.figcite \{\s*display: inline;")
+        self.assertRegex(css, r"\.figcite \{\s*display: none;")
 
     def test_the_real_report_cites_each_figure_at_most_once(self) -> None:
         """One per figure at its first mention, and no more."""
@@ -2218,120 +2216,15 @@ class LayoutWidthTests(unittest.TestCase):
         self.assertIn("container: report / inline-size", self.css)
 
 
-class PrintTests(unittest.TestCase):
-    """The printed report must be the whole report.
-
-    A scrollbar is the screen's way of saying "there is more"; paper has no way
-    of saying it, so a container that clips on screen and is neither reopened nor
-    hidden for print silently drops whatever it was holding. The same goes for
-    the step details: they reach paper only because the appendix is built from
-    the very function that fills the step note.
-    """
-
-    @classmethod
-    def setUpClass(cls) -> None:
-        css = (ASSETS / "style.css").read_text(encoding="utf-8")
-        marker = "@media print {"
-        index = css.index(marker)
-        cls.screen_css = css[:index]
-        cls.print_css = css[index:]
-        cls.js = (ASSETS / "app.js").read_text(encoding="utf-8")
-
-    @staticmethod
-    def _rules(css: str) -> "list[tuple[str, str]]":
-        """Flat (selector list, body) pairs, one per declaration block.
-
-        Enough of a parser for this stylesheet: it nests only in at-rules, whose
-        opening brace is dropped along with everything before it.
-        """
-        rules = []
-        css = re.sub(r"/\*.*?\*/", " ", css, flags=re.DOTALL)
-        for block in css.split("}"):
-            if "{" not in block:
-                continue
-            head, body = block.rsplit("{", 1)
-            selectors = head.split("{")[-1]
-            rules.append((" ".join(selectors.split()), body))
-        return rules
-
-    def test_every_clipping_container_is_reopened_or_hidden_for_print(self) -> None:
-        hidden = [
-            part.strip()
-            for selector, body in self._rules(self.print_css)
-            if "display: none" in body
-            for part in selector.split(",")
-        ]
-        self.assertIn(".rail", hidden, "the scan found no hidden chrome")
-
-        clipped = [
-            part.strip()
-            for selector, body in self._rules(self.screen_css)
-            if "overflow" in body and ("auto" in body or "hidden" in body)
-            for part in selector.split(",")
-        ]
-        self.assertIn(".chart-scroll", clipped, "the scan found no scroll boxes")
-
-        for selector in clipped:
-            leaf = selector.split()[-1]
-            # Either the print rules speak about it, or it lives inside
-            # something they hide—which this stylesheet names as a prefix.
-            covered = leaf in self.print_css or any(
-                leaf.startswith(name) for name in hidden
-            )
-            self.assertTrue(
-                covered,
-                f"{selector} clips on screen but the print rules neither reopen "
-                f"nor hide it: on paper what it holds is cut off, not scrolled to",
-            )
-
-    def test_a_margin_figure_stands_in_the_text_column_on_paper(self) -> None:
-        """A sheet has no margin column, and a figure positioned beside the
-        text would land on a page break there."""
-        anchors = [
-            body
-            for selector, body in self._rules(self.print_css)
-            if selector.endswith(".widget-margin")
-        ]
-        self.assertTrue(anchors, "the print rules say nothing about a margin figure")
-        self.assertTrue(any("position: static" in body for body in anchors))
-        self.assertTrue(any("height: auto" in body for body in anchors))
-        bands = [
-            body
-            for selector, body in self._rules(self.print_css)
-            if selector.endswith(".margin-band")
-        ]
-        self.assertTrue(bands, "the print rules say nothing about the band")
-        self.assertTrue(any("position: static" in body for body in bands))
-        self.assertTrue(any("height: auto" in body for body in bands))
-
-    def test_a_margin_figure_is_not_held_on_paper(self) -> None:
-        """Sticky and fade are answers to scrolling, which paper does not do."""
-        bodies = [
-            body
-            for selector, body in self._rules(self.print_css)
-            if ".margin-body" in selector
-        ]
-        self.assertTrue(bodies, "the print rules say nothing about a held figure")
-        self.assertTrue(any("position: static" in body for body in bodies))
-        self.assertTrue(any("opacity: 1" in body for body in bodies))
-        self.assertTrue(any("visibility: visible" in body for body in bodies))
-
-    def test_the_appendix_is_the_step_note(self) -> None:
-        """One record, so a new fact in the step note reaches the PDF for free.
-
-        The note lays the record out as a two-column table, the appendix as
-        the columns of a table with a row per step; both read `stepRecord`.
-        """
-        self.assertIn("function stepRecord(", self.js)
-        self.assertEqual(2, self.js.count("stepRecord(step);"))  # both
-        self.assertEqual(2, self.js.count("stepDescription(step) }"))  # both
-        self.assertIn("renderStepAppendix();", self.js)
+class FigureExportTests(unittest.TestCase):
+    """The drawings the LaTeX rendering includes are printed from the built page."""
 
     def test_the_export_script_waits_for_the_page_to_finish(self) -> None:
-        """Printing a half-hydrated page yields a report of empty figures."""
-        script = (SCRIPTS_DIR / "export_report_pdf.mjs").read_text(encoding="utf-8")
+        """Printing a half-hydrated page yields empty figures."""
+        script = (SCRIPTS_DIR / "export_report_figures.mjs").read_text(encoding="utf-8")
+        js = (ASSETS / "app.js").read_text(encoding="utf-8")
         self.assertIn("data-report-ready", script)
-        self.assertIn("data-report-ready", self.js)
+        self.assertIn("data-report-ready", js)
 
 
 class LatexTests(unittest.TestCase):

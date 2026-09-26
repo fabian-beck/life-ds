@@ -38,7 +38,7 @@
      12  chrome—the rail, the toolbar, the strip under a drawing: text about
          the document rather than text in it
      13  tables, captions, controls and code: the smallest size read as prose
-     14  apparatus—notes, references, the printed step details
+     14  apparatus—notes and references
      15  supporting prose—a callout, the step note
      16  running text, the abstract and lede that open it, and `h4`, the one
          heading that takes its rank from weight and number rather than size
@@ -520,8 +520,8 @@ a.author-name:focus-visible {
 
 /* ------------------------------------------------------------- contents */
 
-/* Rendered in Python from the heading tree, so it survives print and a page with
-   no JavaScript—unlike the rail, which is chrome. Hidden while the rail is a
+/* Rendered in Python from the heading tree, so it survives a page with no
+   JavaScript—unlike the rail, which is chrome. Hidden while the rail is a
    column, because showing both is the same list twice. */
 .toc {
   display: none;
@@ -665,7 +665,7 @@ a.author-name:focus-visible {
 /* ------------------------------------------------------------------ notes */
 
 /* An inline note is authored once and read two ways. What Python puts on the
-   page is the printed form: a numbered list closing the section it belongs to,
+   page is the static form: a numbered list closing the section it belongs to,
    which is also where a reader without JavaScript lands when they follow a
    marker. On screen `app.js` takes that list over—it hides it and shows the
    same text in a popover on the marker—so an aside costs a click instead of a
@@ -766,8 +766,7 @@ body.has-note-pop .notes {
 
 /* A citation is a number in brackets, not a link in the sentence's own color:
    the prose has to read past it. The list it points into is rendered in Python
-   like the notes are, so following a citation works on paper and with no
-   JavaScript. */
+   like the notes are, so following a citation works with no JavaScript. */
 .report .refcite {
   font-family: var(--sans);
   font-size: 0.8em;
@@ -917,8 +916,7 @@ body.has-note-pop .notes {
     height: var(--band-height, auto);
   }
 
-  .report > .widget-wide,
-  .report > .appendix {
+  .report > .widget-wide {
     margin-top: calc(32px + var(--clear, 0px));
   }
 
@@ -1241,8 +1239,7 @@ figure.figure {
 
 /* Placement only—the type comes from the shared caption rules. The caption sits
    above the drawing, so the rule that separates the two sits under the words; a
-   table brings a rule of its own and needs none here. Print turns the pair
-   around and moves the rule with it. */
+   table brings a rule of its own and needs none here. */
 figure.figure > .cap {
   margin-bottom: 12px;
   padding-bottom: 10px;
@@ -1901,7 +1898,7 @@ figure.teaser > .cap {
 
 /* A figure cited by number, `[[figure:id]]` in the source. On screen the
    phrase before it already points into the figure and lights it, so the
-   citation is withheld; the print rules show it, where a phrase points
+   citation is withheld. The LaTeX rendering prints it, where a phrase points
    nowhere and a reader has to be told which figure is meant. */
 .figcite {
   display: none;
@@ -2195,17 +2192,6 @@ figure.teaser > .cap {
   }
 }
 
-/* -------------------------------------------------------- print appendix */
-
-/* Built by `app.js` from the same record that fills the step note, and carried
-   on the page for the printer's sake alone. On screen the note answers this
-   question on demand and in place; laying the answer out for every step at once
-   would bury the report it belongs to. The print rules at the foot of this file
-   are what bring it back. */
-.appendix {
-  display: none;
-}
-
 .colophon {
   margin-top: 56px;
   padding-top: 14px;
@@ -2281,425 +2267,5 @@ figure.teaser > .cap {
 
   .figpeek-view {
     padding: 4px 6px;
-  }
-}
-
-/* ------------------------------------------------------------------ print */
-
-/* The printed report is the same document with none of its affordances. Four
-   things have to happen for that to be true rather than merely intended.
-
-   Nothing may be clipped. On screen a wide figure scrolls inside its own box
-   and a wide table scrolls inside its wrapper, which on paper is a silent
-   truncation—the columns past the fold simply do not exist. Every scroll
-   container is therefore opened and every figure is fitted to the page.
-
-   Nothing may be behind an interaction. A `<details>` is opened before
-   printing, the step note's material is laid out as an appendix, and the controls
-   that would ask for a click—search, filters, the contents button—are dropped,
-   since they promise something paper cannot deliver.
-
-   Nothing may straddle a page break that costs the reader the thing it
-   describes. Figures stay with their captions, rows stay whole, headings stay
-   with the text under them.
-
-   Nothing may keep a screen habit paper does not share. A scrolled document is
-   read in one direction, so every caption is written above the block it names;
-   a printed page is taken in whole, and the convention there puts a figure's
-   caption under it. The caption rules below turn the figure captions around
-   and leave the table captions where they are.
-
-   `scripts/export_report_pdf.mjs` prints exactly this stylesheet, so
-   Ctrl+P → Save as PDF and the script produce the same document. */
-
-@page {
-  size: a4 portrait;
-
-  /* Room at the foot for the page number the browser prints into the margin. */
-  margin: 16mm 17mm 18mm;
-}
-
-@media print {
-  html,
-  body {
-    background: #ffffff;
-  }
-
-  /* Backgrounds carry meaning here—the kind swatches, the shaded bands behind a
-     group of steps, the surface of a prompt block—so they have to survive the
-     printer's default of dropping them. */
-  * {
-    print-color-adjust: exact;
-  }
-
-  /* Chrome that offers an interaction paper cannot take. The contents lists
-     are navigation of the same kind—the rail, the button, and the inline list
-     at narrow widths all jump to a section—and a printed document is read from
-     its numbered headings, so none of them goes on paper. */
-  .skip,
-  .rail,
-  .toc,
-  .toc-fab,
-  .toc-pop,
-  .steptip,
-  .figpeek,
-  .note-pop,
-  .teaser-status {
-    display: none !important;
-  }
-
-  .shell {
-    display: block;
-    padding: 0;
-  }
-
-  .page,
-  .report {
-    max-width: none;
-  }
-
-  /* A sheet has no margin column—the text area of an A4 page is narrower than
-     the measure and the gutter and a figure together, so the container query
-     never matches and a margin figure prints in the text column, centered in it,
-     exactly as it reads on a narrow screen. Stated anyway, because the sheet is
-     a setting and a wide one would otherwise position a figure beside the
-     text on paper, where it would land on a page break. */
-  .report > .widget-margin {
-    position: static;
-    height: auto;
-    max-width: var(--measure);
-    margin: 32px 0;
-  }
-
-  .report > .widget-margin > .margin-band {
-    position: static;
-    width: auto;
-    height: auto;
-  }
-
-  .report > .widget-wide,
-  .report > .appendix {
-    margin-top: 32px;
-  }
-
-  /* Nor does a figure stay in place on paper, or fade under the next one: the
-     band that holds it on screen is released with its position. The covered
-     state is named too, so the rule outweighs the one that hides it. */
-  .report > .widget-margin .margin-body,
-  .report > .widget-margin .margin-body.is-covered {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transition: none;
-  }
-
-  .report > .widget-margin .margin-space {
-    height: 0;
-  }
-
-  .report {
-    padding-bottom: 0;
-  }
-
-  .titleblock {
-    margin-bottom: 24px;
-  }
-
-  /* On paper the mark links nowhere, so the iD it stands for is printed. */
-  .orcid::after {
-    content: " " attr(data-orcid);
-    color: var(--muted);
-    font-family: var(--sans);
-    font-size: 11px;
-  }
-
-  /* Keep a heading with what it introduces, and never leave one line of a
-     paragraph alone on a page. */
-  .report h2.sec,
-  .report h3.sec,
-  .report h4.sec {
-    break-after: avoid;
-    break-inside: avoid;
-  }
-
-  .report p,
-  .report li {
-    orphans: 3;
-    widows: 3;
-  }
-
-  /* A figure scrolls on screen; on paper it is fitted to the sheet. The width
-     override undoes the pixel size `app.js` measured the graph at, and the
-     height ceiling keeps a tall pipeline graph on one page—the viewBox scales
-     the drawing to whichever of the two bounds it meets first. */
-  .chart-scroll {
-    overflow: visible;
-  }
-
-  .chart-scroll > svg {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-height: 78vh;
-    height: auto !important;
-  }
-
-  .teaser-frame,
-  .teaser-svg {
-    width: 100%;
-    max-height: 40vh;
-  }
-
-  /* A screenshot is a fixed number of pixels, and a tall one—a phone held
-     upright—is taller than the sheet. The ceiling fits it to the page the way
-     the graphs are fitted, and the width follows so the picture keeps its
-     proportions rather than being squeezed. */
-  .shot-img {
-    max-height: 62vh;
-    width: auto;
-  }
-
-  /* The part overlay and any in-place enlargement are affordances; on paper
-     the screenshot prints whole and unmarked, and the box that exists to clip
-     the enlargement has nothing left to clip. */
-  .shot-parts {
-    display: none !important;
-  }
-
-  .shot-canvas {
-    transform: none !important;
-  }
-
-  .shot-clip {
-    overflow: visible;
-  }
-
-  /* A figure and its caption are one object; a widget is not—several of them
-     are a paragraph of lede followed by a full page of figure, and holding
-     those together would leave a page empty for no gain. */
-  figure.figure,
-  .callout,
-  .kindlist,
-  .empty {
-    break-inside: avoid;
-  }
-
-  /* On screen every caption is read before the block it names, because the
-     reader scrolls onto it from above. Paper has no such direction—the whole
-     page arrives at once—so the print convention applies instead: figure
-     captions under the figure, table captions above the table.
-
-     The turn is done with `order` rather than by moving anything, so the
-     document keeps one reading order for assistive technology and for
-     JavaScript-off readers. The rule under the caption becomes the rule above
-     it, so it still divides the caption from the drawing. */
-  figure.figure {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .cap {
-    break-after: avoid;
-    break-inside: avoid;
-  }
-
-  /* Both spellings of a figure caption, at the weight the screen rule for
-     `figure.figure > .cap` carries, so the margin turns around with it. */
-  .cap-figure,
-  figure.figure > .cap {
-    order: 1;
-    margin: 12px 0 0;
-    break-before: avoid;
-    break-after: auto;
-  }
-
-  /* The teaser is excluded for the reason it is on screen: its frame already
-     rules the drawing off on both sides. */
-  figure.figure:not(.teaser) > .cap {
-    padding: 10px 0 0;
-    border-top: 1px solid var(--rule);
-    border-bottom: 0;
-  }
-
-  /* Wide tables print every column: the screen-only minimum is dropped, and
-     the type comes down a step so the columns have somewhere to go. */
-  table.data {
-    min-width: 0;
-    font-size: 10px;
-  }
-
-  table.data th,
-  table.data td {
-    padding-right: 6px;
-
-    /* Only where a word genuinely does not fit. Breaking anywhere would let the
-       auto layout hand "Deterministic" a column two characters wide. */
-    overflow-wrap: break-word;
-  }
-
-  /* File paths, schema names and environment variables are the long tokens
-     these tables are made of, and the only ones worth breaking mid-word: it is
-     that or a column wide enough for `cache_wikipedia_materials.py`. */
-  table.data code,
-  table.data .mono {
-    overflow-wrap: anywhere;
-  }
-
-  /* Repeated at the top of every page a long table runs onto. */
-  thead {
-    display: table-header-group;
-  }
-
-  tr {
-    break-inside: avoid;
-  }
-
-  /* Disclosures are opened for printing (see `bindPrintDisclosure` in app.js);
-     the marker would otherwise still read "+". */
-  details.block > summary::before {
-    content: "\2212";
-  }
-
-  details.block {
-    break-inside: avoid;
-  }
-
-  /* A code block in the authored prose scrolls sideways on screen. */
-  .report pre {
-    overflow: visible;
-    white-space: pre-wrap;
-  }
-
-  /* On paper a figure reference is only a phrase; the marker and the underline
-     would point nowhere. A step reference keeps its underline, since the color
-     says which kind of step the phrase names, which holds on paper as it does
-     on screen. */
-  .figref:not(.stepref[data-kind]) {
-    border-bottom: 0;
-  }
-
-  .figref .figref-end::after {
-    content: none;
-  }
-
-  /* The figure's number, where the source asked for it on paper. */
-  .figcite {
-    display: inline;
-  }
-
-  /* The appendix the step note stands in for on screen. It opens a page of its
-     own and is one table, a row per step, set a step smaller than the other
-     tables so that six columns fit the sheet and a row stays a few lines
-     tall. The column widths are fixed, since the auto layout would give the
-     description whatever the phrases left over, and a row is never split
-     across sheets. */
-  .appendix {
-    display: block;
-    break-before: page;
-  }
-
-  table.data.steps-table {
-    table-layout: fixed;
-    font-size: 8px;
-    line-height: 1.3;
-  }
-
-  .steps-table th,
-  .steps-table td {
-    padding: 4px 5px 4px 0;
-    vertical-align: top;
-    overflow-wrap: anywhere;
-  }
-
-  .steps-table th:nth-child(1) {
-    width: 14%;
-  }
-
-  .steps-table th:nth-child(2) {
-    width: 36%;
-  }
-
-  .steps-table th:nth-child(3),
-  .steps-table th:nth-child(4) {
-    width: 13%;
-  }
-
-  .steps-table th:nth-child(5) {
-    width: 16%;
-  }
-
-  .steps-table th:nth-child(6) {
-    width: 8%;
-  }
-
-  /* The step's name is underlined in its kind's color, as a reference to
-     the step in the running text is. */
-  .steps-table .step-name {
-    border-bottom: 2px solid var(--kind-color, var(--rule-strong));
-  }
-
-  .steps-table .step-name[data-kind="ai"] {
-    --kind-color: var(--kind-ai);
-  }
-
-  .steps-table .step-name[data-kind="deterministic"] {
-    --kind-color: var(--kind-deterministic);
-  }
-
-  .steps-table .step-name[data-kind="external"] {
-    --kind-color: var(--kind-external);
-  }
-
-  .steps-table .step-name[data-kind="image"] {
-    --kind-color: var(--kind-image);
-  }
-
-  /* A row heading is the step's name, in the weight of a heading, and the
-     pipeline row above its steps is set as a band across the table. */
-  .steps-table tbody th {
-    border-bottom: 1px solid var(--rule-soft);
-    font-weight: 600;
-  }
-
-  .steps-table .lane-row th {
-    padding-top: 7px;
-    border-bottom: 1px solid var(--rule-strong);
-    color: var(--muted);
-    font-size: 8px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .steps-table code {
-    font-size: 7.5px;
-  }
-
-  .colophon {
-    break-inside: avoid;
-  }
-
-  /* On paper there is nothing to pop open, so the notes are printed under the
-     section that raised them—which is what the marker means in this medium. */
-  body.has-note-pop .notes {
-    display: block;
-  }
-
-  .report .noteref sup {
-    border-bottom: 0;
-  }
-
-  .note-back {
-    display: none;
-  }
-
-  /* A DOI is the only part of a reference paper can be acted on, so it stays
-     visible and stays black; the bracketed number loses its rule, which was
-     only ever there to say the citation was clickable. */
-  .report .refcite a {
-    border-bottom: 0;
-  }
-
-  .ref-doi {
-    color: var(--ink);
   }
 }

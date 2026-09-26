@@ -95,8 +95,7 @@ function liftFigure(selector) {
 }
 
 /* A page of exactly the drawing's size, so the PDF is the figure and nothing
-   else. The screen rules apply, not the print ones: the print stylesheet fits
-   a drawing to a sheet of paper, and here the sheet is fitted to the drawing.
+   else: the sheet is fitted to the drawing, not the drawing to a sheet.
    The SVG is pinned to its scene size in CSS pixels, one per viewBox unit, and
    the stylesheet's own sizing of it is overridden with `!important`, since
    `app.js` writes a measured width onto the element. */

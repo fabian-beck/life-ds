@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""Emit the technical report as LaTeX, for a PDF whose figures float.
+"""Emit the technical report as LaTeX, the one route from the report to a PDF.
 
-`render.py` writes the page, and the page prints itself through the `@media
-print` half of `style.css`. That rendering has one limit no stylesheet can
-lift: CSS has no page floats. A figure that does not fit the rest of a sheet
-is pushed whole onto the next one, and the space it leaves behind stays
-empty—measured at two and a half of the printed report's twenty-four pages.
-LaTeX places a figure at the next position where it fits and lets the text run
-on, which is what this second rendering is for.
+`render.py` writes the page, which has no print layout of its own: CSS has no
+page floats, so a browser pushes a figure that does not fit the rest of a
+sheet whole onto the next one and leaves the space behind it empty. LaTeX
+places a figure at the next position where it fits and lets the text run on,
+which is what this second rendering is for.
 
 The rendering reads what the page reads: the body `report.py` compiled and the
 payload `model.py` built. It does not compile the Markdown a second time. The
@@ -846,8 +844,8 @@ class Writer:
             # where their markers stand.
             return ""
         if tag == "nav":
-            # The contents. Dropped for the reason the print stylesheet drops
-            # it: a printed document is read from its numbered headings.
+            # The contents. Dropped: a printed document is read from its
+            # numbered headings.
             return ""
         if tag == "div":
             if node.has_class("widget"):
@@ -1347,9 +1345,8 @@ APPENDIX_COLUMNS = (
     "#Calls",
 )
 
-# The share of the wide measure each column takes—the print stylesheet's
-# widths for the same table, with the description giving the model and the
-# effort what a name such as `gpt-image-2.5-sunburst` needs at this size. The step's
+# The share of the wide measure each column takes, with the description
+# giving the model and the effort what a name such as `gpt-image-2.5-sunburst` needs at this size. The step's
 # name carries the underline in its kind's color, as a reference to it in the
 # text does, so the row is read against the charts without a number.
 APPENDIX_WIDTHS = (0.14, 0.36, 0.13, 0.13, 0.16, 0.08)
@@ -1367,7 +1364,7 @@ def model_effort(step: Dict[str, Any]) -> str:
 
 
 def appendix(writer: Writer) -> str:
-    """Every step's record as one table—see `renderStepAppendix` in app.js."""
+    """Every step's record as one table, from the fields of `stepRecord` in app.js."""
     columns: List[str] = []
     for step in writer.payload.get("steps", []):
         if step.get("column") not in columns:
@@ -1461,8 +1458,7 @@ PREAMBLE = r"""\documentclass[a4paper,11pt]{article}
 \fi
 \usepackage{microtype}
 
-%% ---- Page. The sheet the print stylesheet declares, with the text set to the
-%% page's measure; a drawing or a wide table may reach past it to the sheet's
+%% ---- Page. An A4 sheet, with the text set to the page's measure; a drawing or a wide table may reach past it to the sheet's
 %% own margins, which is what `wide` does.
 \usepackage[a4paper,textwidth=__TEXTWIDTH__,top=__TOP__,bottom=__BOTTOM__,headheight=12pt,headsep=7mm,hcentering]{geometry}
 \newlength{\widewidth}
@@ -1535,8 +1531,8 @@ __COLORS__
 \fancyhead[R]{\sffamily\scriptsize\color{muted}\thepage{} / \pageref*{LastPage}}
 \fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}}
 
-%% ---- Captions: sans-serif, the number bold, and under a figure the rule the
-%% print stylesheet draws between a drawing and its caption. A table's caption
+%% ---- Captions: sans-serif, the number bold, and under a figure a rule
+%% between the drawing and its caption. A table's caption
 %% stands above the table, a figure's below it.
 \DeclareCaptionFormat{ruled}{{\color{rule}\rule{\linewidth}{0.4pt}}\\[3pt]#1#2#3}
 \captionsetup{font={sf,small},labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=false,skip=6pt}
@@ -1670,7 +1666,7 @@ def title_block(document: Document, payload: Dict[str, Any]) -> str:
                 )
             if author.orcid:
                 # On paper the mark links nowhere, so the iD it stands for is
-                # printed, as the print stylesheet prints it.
+                # printed.
                 block.append(
                     "\\\\{\\sffamily\\tiny\\color{muted}ORCID "
                     f"\\href{{{escape_url(author.orcid_url)}}}{{{escape(author.orcid)}}}}}"
@@ -1718,7 +1714,7 @@ def colophon(document: Document) -> str:
     return "\n".join(lines) + "\n\n"
 
 
-# The sheet the print stylesheet declares: A4 with 17mm side margins, and the
+# The sheet: A4 with 17mm side margins, and the
 # text set to the page's measure—36rem at 16px is 576 CSS pixels—while a
 # drawing may reach out to the sheet's own margins.
 PAPER_WIDTH_MM = 210

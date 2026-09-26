@@ -22,8 +22,7 @@
    story really do run without seeing each other. Only edges the spec declares
    directly are drawn—one a longer chain already implies is left out there, so
    the chart never carries a line beside a strand that says the same thing.
-   The files a step reads and writes are not drawn: the step note and the
-   appendix list them, so the chart carries the steps, the flow, and the stages.
+   The files a step reads and writes are not drawn: the step note lists them, so the chart carries the steps, the flow, and the stages.
 
    The vertical axis is the dependency graph; the horizontal axis is free, and
    `spec.GROUPS` spends it on meaning: the stages. Steps of one concern—plan
@@ -1613,9 +1612,8 @@
   }
 
   /* The record an entry prints beside its description, each value as markup.
-     Two readers use it. The step note lays it out as a two-column table for one
-     step at a time, and the print appendix as the columns of one table with a
-     row per step, so both say the same thing about a step.
+     The step note lays it out as a two-column table for one step at a time;
+     the LaTeX rendering builds its appendix from the same fields.
 
      The record is short by design. Input and output are the phrases the
      summarizer wrote from the source, in the vocabulary of the figures; a
@@ -1876,9 +1874,8 @@
      than trusted to every call site.
 
      Every caption is written before the block it names, because a reader
-     scrolling down meets it first and needs to know what is coming. Print
-     moves the figure captions back under their figures—see the caption rules
-     in `style.css`—which is why the kind is on the element as a class.
+     scrolling down meets it first and needs to know what is coming. The kind
+     is on the element as a class.
 
      Every caption on the page is built here, as a `<figcaption>` inside its
      `<figure>`. */
@@ -3602,8 +3599,7 @@
         src: shot.src,
         alt: shot.alt || shot.caption,
         // The intrinsic size in CSS pixels, so the page reserves the
-        // right box before the picture decodes—and so no lazy loading is
-        // needed, which on paper would risk printing an undecoded image.
+        // right box before the picture decodes.
         width: shot.width,
         height: shot.height,
       });
@@ -3758,171 +3754,6 @@
       mount.appendChild(list);
     },
   };
-
-  /* ----------------------------------------------------- print appendix */
-
-  /* On screen, what a step does and the record read out of its source are one
-     click away in the step note. Paper has no click, so a printed report that
-     stopped at the figures would be missing the material the figures are an
-     index to. This builds that material as an appendix: every step, in the
-     order the pipelines run them, with the step note's own content.
-
-     It is print-only. On screen it would double the length of the page to say
-     what the step note already says on demand, so the stylesheet hides it and the
-     print rules bring it back. `?appendix=0` skips building it at all, for a
-     PDF that is meant to stay short. */
-
-  const APPENDIX_LETTER = "A";
-
-  function appendixWanted() {
-    const params = new URLSearchParams(window.location.search);
-    const value = params.get("appendix");
-    return value !== "0" && value !== "off" && value !== "false";
-  }
-
-  function appendixHeading(level, number, slug, title) {
-    return el("h" + (level + 1), {
-      id: slug,
-      class: "sec sec-" + level,
-      html:
-        '<a class="secno" href="#' +
-        slug +
-        '">' +
-        escapeHtml(number) +
-        "</a><span>" +
-        escapeHtml(title) +
-        "</span>",
-    });
-  }
-
-  const APPENDIX_COLUMNS = [
-    "Step",
-    "Description",
-    "Input",
-    "Output",
-    "Model (effort)",
-    "#Calls",
-  ];
-
-  /* The model a step calls and, in parentheses, the reasoning effort it asks
-     of it: one cell, since the effort means nothing without the model. */
-  function modelEffort(step) {
-    if (!step.model) return "";
-    const effort = step.effort ? " (" + bare(step.effort) + ")" : "";
-    return "<code>" + escapeHtml(bare(step.model) + effort) + "</code>";
-  }
-
-  function renderStepAppendix() {
-    const host = document.getElementById("report");
-    if (!host || !appendixWanted()) return;
-
-    /* Pipelines in the order the report draws them, which is the order the
-       spec lists their steps in; the lane table's own key order is not it. */
-    const columns = [];
-    DATA.steps.forEach((step) => {
-      if (!columns.includes(step.column)) columns.push(step.column);
-    });
-    if (!columns.length) return;
-
-    const section = el("section", { class: "appendix" });
-    section.appendChild(
-      appendixHeading(1, APPENDIX_LETTER, "appendix-steps", "Step details")
-    );
-    /* The table is read against the pipeline charts, so the intro names
-       them by number, as the LaTeX rendering does. */
-    const cited = columns.map((laneId) => {
-      const chart = charts.find((entry) => entry.lane === laneId);
-      const label =
-        "the " + DATA.lanes[laneId].label.toLowerCase() + " pipeline";
-      return chart ? label + " (Figure " + chart.figure + ")" : label;
-    });
-    section.appendChild(
-      el("p", {
-        text:
-          "The steps of " +
-          cited.join(" and ") +
-          ", one per row: description, input, output, model with " +
-          "reasoning effort, and calls per run.",
-      })
-    );
-
-    /* One table rather than an entry per step: a row is read across, and
-       forty steps compare down a column, which forty paragraphs never let a
-       reader do. The steps of each pipeline sit under a row naming it. */
-    const table = el("table", { class: "data steps-table" });
-    table.appendChild(
-      el("thead", {}, [
-        el(
-          "tr",
-          {},
-          APPENDIX_COLUMNS.map((title) => el("th", { text: title }))
-        ),
-      ])
-    );
-    const tbody = el("tbody");
-    columns.forEach((laneId) => {
-      tbody.appendChild(
-        el("tr", { class: "lane-row" }, [
-          el("th", {
-            colspan: String(APPENDIX_COLUMNS.length),
-            text: DATA.lanes[laneId].label,
-          }),
-        ])
-      );
-      stepsOf(laneId).forEach((step) => {
-        const record = stepRecord(step);
-        /* The step's name carries the underline in its kind's color, as a
-           reference to it in the text does, so the row is read against the
-           charts without a number. */
-        const name = el("span", {
-          class: "step-name",
-          "data-kind": step.kind || "",
-          text: step.label,
-        });
-        tbody.appendChild(
-          el("tr", { class: "step-row", id: "appendix-" + step.id }, [
-            el("th", { scope: "row" }, [name]),
-            el("td", { text: stepDescription(step) }),
-            el("td", { html: record.input }),
-            el("td", { html: record.output }),
-            el("td", { html: modelEffort(step) }),
-            el("td", { html: record.calls }),
-          ])
-        );
-      });
-    });
-    table.appendChild(tbody);
-    section.appendChild(el("div", { class: "table-scroll" }, [table]));
-
-    host.appendChild(section);
-  }
-
-  /* A `<details>` is a promise that the content is one click away. Paper cannot
-     take the click, so every disclosure on the page is opened before printing
-     and put back afterwards—the reader who printed by accident gets their page
-     back as they left it. `scripts/export_report_pdf.mjs` does the same thing
-     itself, because printing through the DevTools protocol never fires these
-     events. */
-  function bindPrintDisclosure() {
-    let reopened = [];
-    window.addEventListener("beforeprint", () => {
-      reopened = Array.prototype.filter.call(
-        document.querySelectorAll("details"),
-        (node) => {
-          return !node.open;
-        }
-      );
-      reopened.forEach((node) => {
-        node.open = true;
-      });
-    });
-    window.addEventListener("afterprint", () => {
-      reopened.forEach((node) => {
-        node.open = false;
-      });
-      reopened = [];
-    });
-  }
 
   /* --------------------------------------------------------- page chrome */
 
@@ -4231,7 +4062,7 @@
      however far the last figure hangs past its end.
 
      Nothing here applies where the figure is not in the margin: the band is
-     sized only while it is positioned there, and the print rules release it. */
+     sized only while it is positioned there. */
   const PIN_OFFSET = 20; // CSS pixels between the viewport's edge and a pinned figure
   const READING_LINE = 0.28; // of the viewport: where the text being read is, as the rail assumes
   const TAKEOVER_SLACK = 40; // CSS pixels a handover must be undone by before it reverses
@@ -4312,14 +4143,14 @@
       band.body.classList.toggle("is-covered", !shown);
     }
 
-    /* What bounds a band, in document order: a wide block and the appendix,
-       which claim the whole width, and a section heading, which starts a
+    /* What bounds a band, in document order: a wide block, which claims the
+       whole width, and a section heading, which starts a
        stretch of text the figure was not placed beside. A band ends at the
        next of these, and starts no higher than the previous one's bottom. */
     function stops() {
       const scrollY = window.scrollY;
       const nodes = report.querySelectorAll(
-        ":scope > .widget-wide, :scope > .appendix, :scope > h2.sec"
+        ":scope > .widget-wide, :scope > h2.sec"
       );
       return Array.prototype.map.call(nodes, (node) => {
         const box = node.getBoundingClientRect();
@@ -4557,16 +4388,15 @@
 
   renderMetaRow();
   hydrate();
-  renderStepAppendix();
   renderRail();
   renderTocButton();
   renderPopovers();
-  bindPrintDisclosure();
   bindRefKeys();
   bindStepRefs();
   bindMarginFigures();
 
-  // The page is fully built. `scripts/export_report_pdf.mjs` waits for this
-  // before printing, so a PDF can never catch the report half-hydrated.
+  // The page is fully built. `scripts/export_report_figures.mjs` waits for
+  // this before printing a drawing, so a figure can never catch the report
+  // half-hydrated.
   document.documentElement.setAttribute("data-report-ready", "1");
 })();

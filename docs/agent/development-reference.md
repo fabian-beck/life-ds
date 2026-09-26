@@ -348,9 +348,9 @@ Nor does an inventory count. How many steps, layers, edges, schemas, or concepts
 | `::: toc` | The table of contents. |
 | `::: references` | The list of cited works, in citation order. |
 
-**A phrase points on screen, a number points on paper.** A `[[part]]` reference lights its figure when pressed, so the screen prose never says which figure it means. Paper has no press, so the source cites the figure by number with `[[figure:id]]` where a printed reader could not tell—once per figure, at its first mention. The citation is withheld on screen by `.figcite` in `style.css`, shown by the print rules, and written as `Figure~\ref{}` in the LaTeX rendering.
+**A phrase points on screen, a number points on paper.** A `[[part]]` reference lights its figure when pressed, so the screen prose never says which figure it means. Paper has no press, so the source cites the figure by number with `[[figure:id]]` where a printed reader could not tell—once per figure, at its first mention. The citation is withheld on screen by `.figcite` in `style.css` and written as `Figure~\ref{}` in the LaTeX rendering.
 
-**Notes are authored once and read two ways.** The compiler emits the printed form—a numbered list closing the section that raised the note, with every marker a real link into it—and `app.js` then withdraws that list on screen and shows the same text in a popover on the marker. The popover copies the list item it points at rather than carrying its own copy, so the two renderings cannot disagree, and with JavaScript off or on paper the notes are still there. A note belongs to a `##` section, decided from its position in the rendered page rather than from the order the compiler collected it in.
+**Notes are authored once and read two ways.** The compiler emits the static form—a numbered list closing the section that raised the note, with every marker a real link into it—and `app.js` then withdraws that list on screen and shows the same text in a popover on the marker. The popover copies the list item it points at rather than carrying its own copy, so the two renderings cannot disagree, and with JavaScript off the notes are still there. The LaTeX rendering sets them as footnotes. A note belongs to a `##` section, decided from its position in the rendered page rather than from the order the compiler collected it in.
 
 Use a note for something a specialist reader may want and the sentence cannot carry—a mechanism named in passing, a consequence of a decision, the reason a number means what it does. Anything the argument depends on belongs in the prose or in a callout.
 
@@ -435,29 +435,9 @@ There are no breakpoints in that rule. The scene is one coordinate system, a par
 
 Moving a part is a coordinate edit; `--check` rejects a box outside the canvas, two siblings overlapping, a child escaping its parent, an arrow to a part that does not exist, or a metric citing a fact that was removed.
 
-### Printing the Report
-
-The page carries its own print layout, so **Ctrl+P → Save as PDF** in any browser produces the full report. `npm run report:pdf` does the same thing headlessly, through Playwright, and writes `docs/report/life-data-stories-technical-report.pdf` (untracked—regenerate it rather than committing it).
-
-```bash
-npm run report:pdf                     # docs/report/index.html -> PDF
-npm run report:pdf -- --no-appendix    # body only, no step appendix
-npm run report:pdf -- --out some.pdf   # somewhere else
-```
-
-The script prints whatever `generate_report.py` last wrote, so rebuild the page first if the pipeline or the prose has changed.
-
-Both routes render the same `@media print` rules at the foot of `assets/style.css`. They drop the page's navigation—the rail, the contents button, and the inline contents list, which on paper would only duplicate the numbered headings—and otherwise their job is that nothing on paper is missing:
-
-- **Nothing clipped.** The wide figures and tables scroll inside their own boxes on screen, which on paper is a silent truncation. Print opens every scroll container, drops the screen-only table minimum, and fits each pipeline graph to the sheet by overriding the pixel size `app.js` measured it at.
-- **Nothing behind an interaction.** Every `<details>` is opened before printing (`bindPrintDisclosure` in `app.js` for the browser, the export script itself for headless runs, since the DevTools protocol never fires `beforeprint`), and the step note's material is laid out as an appendix.
-- **Nothing straddling a break** that costs the reader what it describes: figures stay with captions, rows stay whole, headings stay with their text.
-
-**Appendix A is the step note on paper.** `renderStepAppendix` in `app.js` builds one table with a row per documented step, set in a small type so eight columns fit the sheet, from `stepRecord` and `stepDescription`—the same functions that fill the step note. It is in the DOM but hidden on screen, where the note already answers the question in place; `?appendix=0` skips building it. Anything added to the record therefore reaches the PDF for free, and anything printed outside it will drift.
-
 ### The LaTeX Rendering
 
-The browser's print has one limit no stylesheet lifts: CSS has no page floats. A figure that does not fit the rest of a sheet is pushed whole onto the next one, and the space it leaves behind stays empty—two and a half of the printed report's pages, measured. LaTeX places a figure at the next position where it fits and lets the text run on, so the report is also written as LaTeX.
+The report's PDF is built from LaTeX only; the page carries no print layout, and `npm run report:latex` is the one route to paper. A browser cannot set the report well: CSS has no page floats, so a figure that does not fit the rest of a sheet is pushed whole onto the next one, and the space it leaves behind stays empty. LaTeX places a figure at the next position where it fits and lets the text run on.
 
 ```bash
 python scripts/generate_report.py            # writes docs/report/latex/report.tex beside the page
@@ -467,7 +447,7 @@ npm run report:latex                         # compiles docs/report/latex/report
 npm run report:latex -- --engine latexmk     # a particular engine
 ```
 
-**One report, rendered twice.** `pipeline_docs/latex.py` reads what the page reads—the body `report.py` compiled and the payload `model.py` built—and walks the compiled body as a tree, writing each element in LaTeX. It does not compile the Markdown again, so a phrase, a fact, a citation, a note, and a reference reach paper exactly as they reach the screen, and a new authoring construct is added once in `report.py` and then given a LaTeX form in the walker. The computed blocks are written by `RENDERERS`, a roster of the same names as `COMPONENTS` in `app.js`; a block with no LaTeX renderer fails the tests, as one with no page renderer does. Appendix A is built from the same step record. A note becomes a footnote, the contents is dropped as it is on paper, and the statement on AI use closes the document.
+**One report, rendered twice.** `pipeline_docs/latex.py` reads what the page reads—the body `report.py` compiled and the payload `model.py` built—and walks the compiled body as a tree, writing each element in LaTeX. It does not compile the Markdown again, so a phrase, a fact, a citation, a note, and a reference reach paper exactly as they reach the screen, and a new authoring construct is added once in `report.py` and then given a LaTeX form in the walker. The computed blocks are written by `RENDERERS`, a roster of the same names as `COMPONENTS` in `app.js`; a block with no LaTeX renderer fails the tests, as one with no page renderer does. Appendix A is built from the same step record. A note becomes a footnote, the contents is dropped, and the statement on AI use closes the document.
 
 **What the browser draws, the browser prints.** The teaser and the pipeline charts are laid out in `app.js`, and a second layout in Python would be a second drawing to keep in step. `scripts/export_report_figures.mjs` opens the built page, waits for it to finish drawing, and prints each chart's SVG to a vector PDF of its own size under `docs/report/latex/figures/`—type kept as type, so the drawing stays sharp and its faces embed like the rest of the document. `latex/figures/index.json` records, per figure, a fingerprint of the payload it was printed from: the steps, edges, groups, and kinds a chart draws, or the teaser scene and the facts it cites. A figure whose data moved is *stale*, reported by `--check` with the command that reprints it, and a missing one is what `npm run report:latex` refuses to compile without. The screenshots are shared with the page rather than copied. Like a screenshot, a printed drawing cannot tell that the drawing code changed under an unchanged payload; reprint with `--figures all` after changing how `app.js` draws.
 
