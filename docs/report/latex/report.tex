@@ -226,7 +226,7 @@
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://www.uni-bamberg.de/en/vis/team/leah-muehloeder/}{\textbf{Leah Mühlöder}}\\{\sffamily\scriptsize\color{muted}University of Bamberg}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0009-0000-3510-1686}{0009-0000-3510-1686}}\end{minipage}\hfill%
 \begin{minipage}[t]{0.32\textwidth}\raggedright\href{https://services.informatik.hs-mannheim.de/~nagel/}{\textbf{Till Nagel}}\\{\sffamily\scriptsize\color{muted}Mannheim University of Applied Sciences}\\{\sffamily\tiny\color{muted}ORCID \href{https://orcid.org/0000-0001-5400-091X}{0000-0001-5400-091X}}\end{minipage}\hfill%
 \par
-\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 26, 2026\par}
+\vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 27, 2026\par}
 \vspace{14pt}{\color{rulestrong}\hrule}\vspace{8pt}
 \eyebrow{Abstract}\par\vspace{4pt}
 Life Data Stories is an approach that transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides that combine narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous scrolling document with similar visual encodings. The system separates two concerns. First, generation is performed offline by staged pipelines that combine large language-model inference with deterministic transformation. Second, the presentation is rendered by an interactive web application without further use of artificial intelligence. This technical report documents the approach and its implementation and provides a basic scientific contextualization. The source code is available at \href{https://github.com/fabian-beck/life-ds}{github.com/fabian-beck/life-ds} and the deployed application at \href{https://fabian-beck.github.io/life-ds/}{fabian-beck.github.io/life-ds}.
@@ -288,7 +288,7 @@ The personal story pipeline derives data for one biography, from an \glyphof{sou
 \begin{figure}[tp]
 \centering
 \pipelinechart{pipeline-person.pdf}
-\caption{Personal story pipeline as a dependency graph. A shaded band gathers the steps of one stage.}\label{fig:pipeline-person}
+\caption{Personal story pipeline as a dependency graph.}\label{fig:pipeline-person}
 \end{figure}
 
 \emph{Sources}. An \stepref{kindexternal}{acquisition} step loads the subject's Wikipedia article and linked article titles. An AI-based \stepref{kindai}{selection} call chooses the most relevant titles before their full texts are fetched. The fetched articles are cached for reuse by later steps and reruns, together with Commons image metadata.
@@ -312,7 +312,7 @@ The meta story generation (Figure~\ref{fig:pipeline-meta}) concerns a theme that
 \begin{figure}[tp]
 \centering
 \pipelinechart{pipeline-meta.pdf}
-\caption{Meta story pipeline as a dependency graph. A shaded band gathers the steps of one stage.}\label{fig:pipeline-meta}
+\caption{Meta story pipeline as a dependency graph.}\label{fig:pipeline-meta}
 \end{figure}
 
 \emph{Planning}. An AI \stepref{kindai}{planning} call reads summaries of available personal stories and selects the subjects for the theme. It groups the selected people into two to four subtopics, proposes three to six chapters as named eras with estimated date ranges, and drafts a description and a conclusion.

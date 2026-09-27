@@ -1415,12 +1415,7 @@
          prints belong to the prose and to the drawing itself, and a caption
          that repeated them argued with both. A mark is named only when it is
          actually drawn. */
-      const marks = [
-        compact ? "The color bar gives the step kind." : "",
-        geometry.bands.length
-          ? "A shaded band gathers the steps of one stage."
-          : "",
-      ];
+      const marks = [compact ? "The color bar gives the step kind." : ""];
 
       fillCaption(
         captionNode,

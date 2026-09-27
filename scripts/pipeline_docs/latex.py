@@ -1196,14 +1196,7 @@ def render_teaser(writer: Writer, mount: Mount) -> str:
 def render_pipeline(writer: Writer, mount: Mount) -> str:
     lane = mount.params["lane"]
     figure = pipeline_figure(lane, writer.payload)
-    drawn = {step["id"] for step in writer.steps_of(lane)}
-    banded = any(
-        any(step_id in drawn for step_id in group.get("steps", []))
-        for group in writer.payload.get("groups", [])
-    )
     caption = f"{writer.lane_label(lane)} pipeline as a dependency graph."
-    if banded:
-        caption += " A shaded band gathers the steps of one stage."
     return (
         "\\begin{figure}[tp]\n"
         "\\centering\n"
