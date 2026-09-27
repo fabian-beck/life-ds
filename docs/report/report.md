@@ -115,9 +115,9 @@ A meta story is structured as an opening scene, up to three sections (a timeline
 
 *Timeline.* After a short textual introduction, the vertical scrolling turns horizontal as the reader reaches the [[meta-timeline-environment.whole|timeline visualization]][[figure:meta-timeline-environment]]. In *Architecture as Living Form*, a timeline of [[meta-timeline-environment.lanes|nine lanes]], one per architect, shows events as dots along each lane. A sequence of guiding [[meta-timeline-environment.card|story cards]], marking chapters in the development, is pinned near the top and leads the reader through the timeline. A second layer above the lanes marks historical events affecting several lives at once, such as World War II. Selecting a dot, or stepping from one to the next with the arrow buttons, opens a brief description of the event. The surrounding card links to that architect's personal story.
 
-::: screenshot id=meta-timeline-environment route="#/en/meta/organic_shapes_in_architecture" width=1280 height=820 wait=".timeline-horizontal-container" anchor=".timeline-horizontal-container" scroll=500 settle=3000 caption="The timeline: one lane per architect, with a guiding story card in front naming the span currently in focus."
+::: screenshot id=meta-timeline-environment route="#/en/meta/organic_shapes_in_architecture" width=1280 height=820 wait=".timeline-horizontal-container" anchor=".timeline-horizontal-container" scroll=500 settle=3000 caption="The timeline: one lane per architect, with a card naming the span currently in focus and a box for a selected event below."
 @whole 0,0,1280,820 Timeline visualization
-The timeline: one lane per architect, with a guiding story card in front naming the span currently in focus.
+The timeline: one lane per architect, with a card naming the span currently in focus and a box for a selected event below.
 @card 170,58,580,90 Guiding story card
 Names the span of years currently in focus and summarizes the events of that period across the lives.
 @lanes 0,230,1280,530 Nine architect lanes
