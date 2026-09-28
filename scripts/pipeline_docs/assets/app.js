@@ -61,10 +61,6 @@
   const METRICS = {
     mid: {
       TITLE_PX: 11, // the step-name type; mirrors style.css
-      RAIL_W: 40,
-      RAIL_GAP: 14, // rule to node: where the layer number is written
-      RAIL_DX: 6,
-      RAIL_DY: 11,
       NODE_W: 176,
       NODE_H: 44,
       COL_GAP: 20,
@@ -83,10 +79,6 @@
     },
     compact: {
       TITLE_PX: 9,
-      RAIL_W: 26,
-      RAIL_GAP: 8,
-      RAIL_DX: 4,
-      RAIL_DY: 9,
       NODE_W: 104,
       NODE_H: 34,
       COL_GAP: 12,
@@ -435,7 +427,7 @@
 
      Everything from here to the end of `createChart` is per-instance: the two
      pipelines are drawn side by side in the document, and a selection in one
-     must not redraw the other. The layout itself is unchanged—the layer rule,
+     must not redraw the other. The layout itself is unchanged—the layering,
      the group blocks and the edge routing are the same code that drew the
      single tabbed chart—it simply closes over an instance `state` and instance
      DOM nodes instead of the page's.
@@ -843,7 +835,7 @@
         left = Math.min(left, block.cx - block.width / 2);
         right = Math.max(right, block.cx + block.width / 2);
       });
-      const origin = M.PAD + M.RAIL_W + M.MARGIN_CH - left;
+      const origin = M.PAD + M.MARGIN_CH - left;
       blocks.forEach((block) => {
         block.cx += origin;
         // Pass two: the members of one layer, centered on the block.
@@ -997,7 +989,6 @@
 
       const nodes = [];
       const byId = {};
-      const rails = [];
       const turnOf = [];
       let y = M.HEAD_H;
       rows.forEach((row, index) => {
@@ -1019,7 +1010,6 @@
         row.sort((a, b) => {
           return a.x - b.x;
         });
-        rails.push({ label: String(index + 1), y0: y, y1: y + rowH });
         y += rowH + M.LAYER_GAP;
       });
 
@@ -1087,10 +1077,9 @@
       return {
         nodes: nodes,
         edges: edges,
-        rails: rails,
         bands: bands,
         layers: rows.length,
-        width: M.PAD * 2 + M.RAIL_W + M.MARGIN_CH * 2 + contentW,
+        width: M.PAD * 2 + M.MARGIN_CH * 2 + contentW,
         height: (rows.length ? y - M.LAYER_GAP : M.HEAD_H) + M.PAD,
       };
     }
@@ -1101,7 +1090,7 @@
        band counts as occupied even where its column is empty: a line running
        down the middle of a band would read as belonging to it. */
     function routeLongEdges(edges, rows, contentW, bands) {
-      const left = M.PAD + M.RAIL_W;
+      const left = M.PAD;
       const right = left + M.MARGIN_CH * 2 + contentW;
       // The side channels hug the very edge: with the relaxation free to push a
       // block flush against the left of the content, anything further in is inside
@@ -1231,26 +1220,6 @@
           y: band.y0 + M.BAND_LABEL_DY,
         });
         label.textContent = bandLabel(band.group);
-        root.appendChild(label);
-      });
-    }
-
-    function drawRails(root, rails) {
-      const x = M.PAD + M.RAIL_W - M.RAIL_GAP;
-      rails.forEach((rail) => {
-        root.appendChild(
-          svg("path", {
-            class: "rail-rule",
-            d: "M" + x + " " + rail.y0 + " L" + x + " " + rail.y1,
-          })
-        );
-        const label = svg("text", {
-          class: "rail-label",
-          x: x - M.RAIL_DX,
-          y: rail.y0 + M.RAIL_DY,
-          "text-anchor": "end",
-        });
-        label.textContent = rail.label;
         root.appendChild(label);
       });
     }
@@ -1536,7 +1505,6 @@
       );
 
       drawBandAreas(host, geometry.bands);
-      drawRails(host, geometry.rails);
       drawEdges(host, geometry.edges);
       geometry.nodes.forEach((node) => {
         drawNode(host, node);

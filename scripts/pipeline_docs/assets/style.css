@@ -1196,7 +1196,6 @@ p.cap {
   font-size: 9px;
 }
 
-.flow-mid .rail-label,
 .flow-mid .band-label {
   font-size: 9px;
 }
@@ -1204,10 +1203,6 @@ p.cap {
 .flow-compact .node text.title {
   font-size: 9px;
   font-weight: 600;
-}
-
-.flow-compact .rail-label {
-  font-size: 8px;
 }
 
 /* The stage label at compact: small, but still a word rather than a smear,
@@ -1267,18 +1262,6 @@ figure.figure > .cap {
   fill: var(--muted);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-.rail-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  fill: var(--muted);
-  letter-spacing: 0.04em;
-}
-
-.rail-rule {
-  stroke: var(--rule-soft);
-  stroke-width: 1;
 }
 
 .edge {
