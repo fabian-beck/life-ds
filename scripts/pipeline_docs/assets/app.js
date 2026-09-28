@@ -2115,11 +2115,13 @@
   /* A label that stays readable where it crosses a rule or a box edge, which in
      a figure this dense it always does—the channels between the columns are
      narrower than the words that describe what crosses them. Labels are
-     collected and drawn last, above the parts, on their own paper. */
+     collected and drawn last, above the parts, with a glow of paper around
+     the letters rather than a box behind them, so an arrowhead beside a
+     label stays visible. */
   function sLabel(labels, x, y, text, cls) {
-    const width = text.length * 6 + 10;
-    labels.appendChild(sRect(x - width / 2, y - 10, width, 14, "tlabel-bg"));
-    labels.appendChild(sText(x, y, text, cls || "tedge-label", "middle"));
+    labels.appendChild(
+      sText(x, y, text, (cls || "tedge-label") + " tlabel", "middle")
+    );
   }
 
   /* The tip sits exactly on (x, y): the parts are painted over the wires, so

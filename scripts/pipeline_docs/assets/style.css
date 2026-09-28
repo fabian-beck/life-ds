@@ -1697,9 +1697,13 @@ figure.teaser > .cap {
   font-style: italic;
 }
 
-.tlabel-bg {
-  fill: var(--paper);
-  stroke: none;
+/* The glow that keeps a label readable over a rule: a stroke of paper,
+   painted under the letters. */
+.tlabel {
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 3px;
+  stroke-linejoin: round;
 }
 
 /* Contents of the parts. */
