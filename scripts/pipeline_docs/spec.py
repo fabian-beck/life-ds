@@ -163,6 +163,11 @@ class Step:
     delegate the actual API call to a helper: the call site knows only the
     `model` its caller handed it, so the value has to come from the entry point.
     """
+    call_site: Optional[str] = None
+    """`script:function` of the API call a step delegates to, for a step whose
+    own function makes none. The model and the reasoning effort are then read
+    from that call site, so a step that reuses another script's helper reports
+    the effort the helper actually sends."""
 
 
 @dataclass
@@ -415,6 +420,7 @@ STEPS: List[Step] = [
             "image metadata, and caches them so later steps and reruns are free."
         ),
         outputs=["wiki_cache"],
+        calls_per_run="one request per article and image",
     ),
     Step(
         "p_wiki_select",
@@ -458,6 +464,7 @@ STEPS: List[Step] = [
             "description_contract_prompt",
         ],
         inputs=["wiki_cache"],
+        calls_per_run="1–2",
         skip_flag="--skip-events",
         model_from="generate_person_events.py",
     ),
@@ -534,6 +541,7 @@ STEPS: List[Step] = [
             Dep("p_img_search", "the planned search strings"),
             Dep("p_events_p2", "the searches each event asked for"),
         ],
+        calls_per_run="one request per search",
     ),
     Step(
         "p_img_filter",
@@ -610,7 +618,7 @@ STEPS: List[Step] = [
         ),
         depends_on=[Dep("p_img_match", "the portrait pick")],
         prompts=["verify_portrait_depicts_person"],
-        calls_per_run="0-1",
+        calls_per_run="0–1",
         outputs=["life_events", "persons"],
         skip_flag="--skip-events",
     ),
@@ -631,6 +639,7 @@ STEPS: List[Step] = [
         ),
         depends_on=[Dep("p_events_p2", "historic and modern place names")],
         outputs=["life_events"],
+        calls_per_run="one lookup per place not yet cached",
     ),
     Step(
         "p_style",
@@ -645,13 +654,15 @@ STEPS: List[Step] = [
             "the captions of the pictures the story carries, and must return "
             "the sentence naming what the palette was read off. It rejects a "
             "palette whose text colors fall under a computed contrast floor, "
-            "or that arrives without that derivation, asking the model once "
-            "more with the reason."
+            "or that arrives without that derivation or with a font outside "
+            "the allowed set, and asks the model again with the reason, up to "
+            "three attempts in all."
         ),
         depends_on=[Dep("p_img_verify", "the finished life events")],
         prompts=["build_prompt", "build_retry_prompt", "call_openai"],
         inputs=["life_events"],
         outputs=["person_styles"],
+        calls_per_run="1–3",
         skip_flag="--skip-style",
     ),
     Step(
@@ -681,14 +692,16 @@ STEPS: List[Step] = [
         summary=(
             "Style-transfers a licensed reference portrait toward a shared master "
             "style so every person in the collection looks like one illustration "
-            "set. The reference is the licensed image the matching picked, read "
-            "from the person's entry in the person registry, and the entry "
-            "is updated with the finished portrait."
+            "set. The reference is the one licensed image the matching picked, "
+            "read from the person's entry in the person registry, and the entry "
+            "is updated with the finished portrait. An existing portrait is "
+            "kept unless the story's palette changed."
         ),
         depends_on=[Dep("p_style", "primary and secondary color")],
         prompts=["generate_portrait"],
         inputs=["persons", "person_styles"],
         outputs=["portrait", "persons", "life_events"],
+        calls_per_run="0–1",
         skip_flag="--skip-portrait",
         model_note="Image model; only allowlisted models keep facial likeness.",
     ),
@@ -708,6 +721,7 @@ STEPS: List[Step] = [
         depends_on=[Dep("p_img_verify", "the finished life events")],
         prompts=["CONCEPT_SYSTEM_PROMPT", "build_concept_prompt"],
         inputs=["life_events"],
+        calls_per_run="0–1",
         skip_flag="--skip-chapter-art",
     ),
     Step(
@@ -733,7 +747,7 @@ STEPS: List[Step] = [
         prompts=["IMAGE_PROMPT", "request_illustration"],
         inputs=["life_events", "person_styles"],
         outputs=["chapter_art", "life_events"],
-        calls_per_run="one per chapter",
+        calls_per_run="one per chapter without art",
         skip_flag="--skip-chapter-art",
         model_note="Image model, prompted without a content reference image.",
     ),
@@ -776,6 +790,7 @@ STEPS: List[Step] = [
         depends_on=[Dep("p_review", "every name the reviewed documents carry")],
         inputs=["life_events", "ego_network"],
         outputs=["wiki_cache"],
+        calls_per_run="several requests per target language",
     ),
     Step(
         "p_glossary",
@@ -799,6 +814,7 @@ STEPS: List[Step] = [
             "format_reference_for_prompt",
         ],
         inputs=["life_events", "ego_network", "persons"],
+        calls_per_run="one per target language",
     ),
     Step(
         "p_translate",
@@ -821,6 +837,7 @@ STEPS: List[Step] = [
         prompts=["_call_translation_model", "format_reference_for_prompt"],
         inputs=["life_events", "ego_network", "persons"],
         outputs=["person_de"],
+        calls_per_run="3 per target language (events, network, registry entry)",
         skip_flag="--skip-translate",
     ),
     Step(
@@ -848,8 +865,10 @@ STEPS: List[Step] = [
             "sentence used to draw a report about the life around it instead — "
             "a 1951 wedding whose layer opened on a 1948 degree and closed on "
             "a company founded in 1956. An event without a report offers no "
-            "way down, and a rewrite that refuses takes the stale report with "
-            "it. It re-decides the event's citations in "
+            "way down. An event that already has a report is skipped unless the "
+            "run overwrites, and an overwrite that refuses takes the stale "
+            "report with it. For each event it writes for, it re-decides the "
+            "event's citations in "
             "the same call, report or none, accepting only URLs it was shown, "
             "and syncs them to the translated copies since a URL is not prose."
         ),
@@ -866,7 +885,7 @@ STEPS: List[Step] = [
         ],
         inputs=["life_events", "ego_network", "wiki_cache"],
         outputs=["life_events", "person_de"],
-        calls_per_run="one per deep event — roughly one per chapter",
+        calls_per_run="one per deep event without a report — roughly one per chapter",
         skip_flag="--skip-backgrounds",
         model_from="generate_event_backgrounds.py",
     ),
@@ -901,7 +920,7 @@ STEPS: List[Step] = [
         prompts=["STAND_IN_REJECTION_INSTRUCTIONS", "fetch_background_images"],
         inputs=["life_events"],
         outputs=["life_events"],
-        calls_per_run="1 per report illustrated",
+        calls_per_run="0–1 per report",
         model_from="generate_event_backgrounds.py",
     ),
     # ------------------------------------------------------------------ meta
@@ -998,9 +1017,11 @@ STEPS: List[Step] = [
         byline="Greedy modularity clustering",
         summary=(
             "Community detection over the reviewed graph produces the story's "
-            "circles. Called from the narration step, which stores each "
-            "circle's members with its text, so the story carries its circles as "
-            "data and the detection runs once."
+            "circles, each with its main members, related people, and ties. "
+            "The step writes nothing itself: it is called from the narration "
+            "step, which stores only each circle's main members with its text, "
+            "so the story carries its circles as data and the detection runs "
+            "once."
         ),
         depends_on=[Dep("m_p5b", "the reviewed graph")],
     ),
@@ -1033,6 +1054,7 @@ STEPS: List[Step] = [
         depends_on=[Dep("m_p4", "the chapters, whose events carry the coordinates")],
         prompts=["rate_map_events"],
         inputs=["life_events"],
+        calls_per_run="one per batch of located events",
         skip_flag="--skip-map",
     ),
     Step(
@@ -1076,7 +1098,7 @@ STEPS: List[Step] = [
             "Reads the assembled story top-down, the way a reader meets it, and "
             "rewrites every text in one voice: the prose between components, the "
             "captions on them, the circle organization and the map stops. It may "
-            "also drop people that do not earn their place. The composed story "
+            "also drop map stops that do not carry the story. The composed story "
             "is then written, and the meta story registry updated with it; "
             "the style and the translation read the written document."
         ),
@@ -1126,6 +1148,7 @@ STEPS: List[Step] = [
         ),
         depends_on=[Dep("m_p8", "every name the composed story carries")],
         inputs=["meta_story", "person_de"],
+        calls_per_run="several requests per target language",
     ),
     Step(
         "m_translate",
@@ -1150,9 +1173,11 @@ STEPS: List[Step] = [
         ],
         inputs=["meta_story", "person_de"],
         outputs=["meta_de"],
+        calls_per_run="one per target language",
         skip_flag="--skip-translate",
         prompts=["_call_translation_model", "format_reference_for_prompt"],
         model_from="translate_meta_story.py",
+        call_site="translate_person.py:_call_translation_model",
         model_note="Delegates the API call to translate_person.py's extract–translate–merge helper.",
     ),
 ]

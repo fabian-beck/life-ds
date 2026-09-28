@@ -928,7 +928,7 @@ def run_composition(
     image_candidates: Dict[str, Dict[str, Any]],
     client: OpenAI,
     model: str,
-    reasoning_effort: str,
+    reasoning_effort: str = DEFAULT_REASONING_EFFORT,
     verbose: bool = False,
 ) -> Optional[CompositionResult]:
     """Compose the whole story in one call."""

@@ -178,7 +178,7 @@ def review_combined(
     wikipedia_page: Dict[str, Any],
     related_articles: List[Dict[str, str]],
     model: str,
-    reasoning_effort: str,
+    reasoning_effort: str = DEFAULT_REASONING_EFFORT,
 ) -> CombinedReviewOutput:
     """
     Review both life events and ego network together with AI.

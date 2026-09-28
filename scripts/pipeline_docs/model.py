@@ -86,16 +86,23 @@ def _cli_model_default(codebase: Codebase, script: str) -> Optional[str]:
     return DEFAULT_MODEL
 
 
-def _step_ai_calls(codebase: Codebase, step: spec.Step) -> List[Dict[str, Any]]:
-    script_name = step.script.rsplit("/", 1)[-1]
-    facts = codebase.scripts.get(script_name)
+def _calls_in(codebase: Codebase, script: str, function: str) -> List[Dict[str, Any]]:
+    facts = codebase.scripts.get(script.rsplit("/", 1)[-1])
     if facts is None:
         return []
     return [
         call.to_json()
         for call in facts.ai_calls
-        if call.function.split(".")[-1] == step.function
+        if call.function.split(".")[-1] == function
     ]
+
+
+def _step_ai_calls(codebase: Codebase, step: spec.Step) -> List[Dict[str, Any]]:
+    calls = _calls_in(codebase, step.script, step.function)
+    if not calls and step.call_site:
+        script, function = step.call_site.split(":", 1)
+        calls = _calls_in(codebase, script, function)
+    return calls
 
 
 def _step_line(codebase: Codebase, step: spec.Step) -> Optional[int]:
