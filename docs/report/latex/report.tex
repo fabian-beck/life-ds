@@ -229,7 +229,7 @@
 \vspace{8pt}{\sffamily\scriptsize\color{muted}Version September 28, 2026\par}
 \vspace{14pt}{\color{rulestrong}\hrule}\vspace{8pt}
 \eyebrow{Abstract}\par\vspace{4pt}
-Life Data Stories is an approach that transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides that combine narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous scrolling document with similar visual encodings. The system separates two concerns. First, generation is performed offline by staged pipelines that combine large language-model inference with deterministic transformation. Second, the presentation is rendered by an interactive web application without further use of artificial intelligence. This technical report documents the approach and its implementation and provides a basic scientific contextualization. The code is available at \href{https://github.com/fabian-beck/life-ds}{github.com/fabian-beck/life-ds} and the deployed application at \href{https://fabian-beck.github.io/life-ds/}{fabian-beck.github.io/life-ds}.
+Life Data Stories is an approach that transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides that combine narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous scrolling document with similar visual encodings. The system separates two concerns. First, generation is performed offline by staged pipelines that combine large language-model inference with deterministic transformation. Second, the presentation is rendered by an interactive web application without further use of artificial intelligence. This technical report documents the approach and its implementation and provides a basic scientific contextualization. The code is available at \href{https://github.com/fabian-beck/life-ds}{github.com/fabian-beck/life-ds} and the live application at \href{https://fabian-beck.github.io/life-ds/}{fabian-beck.github.io/life-ds}.
 
 \vspace{4pt}{\color{rulestrong}\hrule}\vspace{12pt}
 \suppressfloats[t]
@@ -270,7 +270,7 @@ A meta story refers to the data of its subjects and adds further perspectives. I
 
 \section{Generation}\label{sec:generation}
 
-We split the generation of this data into two pipelines. The first, the personal story pipeline, reads an encyclopedia article and writes the data of an individual biography. The second, the meta story pipeline, reads the data of several individuals and writes a meta story connecting them. Both pipelines run offline as Python command-line scripts, invoked for one life or one theme at a time. A run stores the data described in the previous section as JSON documents. Each step reads the documents of earlier steps, writes its own, and belongs to one of four kinds.
+We split the generation of this data into two pipelines. The first, the personal story pipeline, reads an encyclopedia article and writes the data of an individual biography. The second, the meta story pipeline, reads the data of several individuals and writes a meta story connecting them. Both pipelines run offline as Python command-line scripts, invoked for one life or one theme at a time. A run stores the data described in the previous section as JSON documents. Each step reads the documents of earlier steps, writes its own, and is one of four kinds.
 
 \begin{legend}
 \swatch{kindexternal} External source & Fetches data from public sources. \\
@@ -307,7 +307,7 @@ The personal story pipeline derives data for one biography, from an \glyphof{sou
 
 \subsection{Meta story pipeline}\label{sec:meta-story-pipeline}
 
-The meta story generation (Figure~\ref{fig:pipeline-meta}) concerns a theme that connects multiple lives (e.g., an area of science, art, or political development) and directly builds upon the output of the personal pipelines. The story is planned and its events collected and curated against the theme. Moreover, the social network and the map are derived. Then, a composition step joins the branches into one story and gives it a visual identity. Again, localization closes the run.
+The meta story generation (Figure~\ref{fig:pipeline-meta}) concerns a theme that connects multiple lives (e.g., an area of science, art, or political development) and directly builds upon the output of the personal pipelines. The story is planned and its events collected and curated against the theme. Moreover, the social network and the map are derived. Then, a composition step joins the branches into one story and gives it a visual identity. Localization again comes last.
 
 \begin{figure}[tp]
 \centering
@@ -325,7 +325,7 @@ The meta story generation (Figure~\ref{fig:pipeline-meta}) concerns a theme that
 
 \emph{Composition}. The \stepref{kindai}{composition} call assembles the story from the generated material: it revises and connects the descriptions into a coherent story and decides the order of the sections and the final grouping of the circles. A \stepref{kindai}{style} call derives from the story's framing a color palette, background pattern, fonts, and ornamental elements.
 
-\emph{Localization}. The \stepref{kindai}{translation} proceeds as for personal stories but reuses the subjects' names and the event titles already translated for their personal stories, so that both use identical wording.
+\emph{Localization}. The \stepref{kindai}{translation} proceeds as for personal stories but reuses the subjects' names and event titles already translated for their personal stories, so that both agree in wording.
 
 \subsection{AI models and prompting}\label{sec:ai-models-and-prompting}
 
@@ -337,7 +337,7 @@ Life Data Stories' frontend is a mobile-first Svelte application that loads and 
 
 The landing page offers access to the two story types, which organize the data differently: a personal story follows one life in order, and a meta story follows a theme across several lives. On the landing page (Figure~\ref{fig:shot-landing}), the meta stories are displayed in a carousel at the top. Below them, the personal stories can be reached and filtered by role or search. Additionally, a map plots the place of every event across the corpus. Nearby events merge into circles that grow with their number of events and take the color of a person who contributes more than half of them, fading to gray as the share approaches half. Clicking a marker there shows the event, and another tap opens the event as part of the respective personal story.
 
-In the following, we walk through both story types in more detail. Throughout, we use the meta story \emph{Architecture as Living Form} and the personal story of \emph{Antoni Gaudí} as running examples.
+In the following, we walk through both story types in detail. Throughout, we use the meta story \emph{Architecture as Living Form} and \emph{Antoni Gaudí}'s personal story as running examples.
 
 \begin{figure}[tp]
 \begin{wide}\centering
@@ -369,7 +369,7 @@ A meta story is structured as an opening scene, up to three sections (a timeline
 \end{minipage}\hfill
 \begin{minipage}[t]{0.47\linewidth}\centering
 \shotframe{\includegraphics[width=\dimexpr\linewidth-0.8pt\relax,height=0.4\textheight,keepaspectratio]{../screenshots/meta-network.jpg}}
-\caption{The network: architects as nodes, one card in front naming the cluster currently highlighted.}\label{fig:shot-meta-network}
+\caption{The network: architects as nodes, one card in front naming the highlighted cluster.}\label{fig:shot-meta-network}
 \end{minipage}
 \end{figure}
 
@@ -509,7 +509,7 @@ The steps of the personal story pipeline (Figure~\ref{fig:pipeline-person}) and 
 \vspace{24pt}{\color{rulestrong}\hrule}\vspace{6pt}
 \begin{minipage}{\textwidth}\sffamily\footnotesize\color{muted}
 \eyebrow{Statement on AI use}\par\vspace{3pt}
-This report was co-written with AI. Its text and figures were drafted and revised with language models under the authors' direction, alongside manual edits. The system the report describes was implemented through AI using agentic engineering.\par
+This report was co-written with AI. Its text and figures were drafted and revised with language models under the authors' direction, alongside manual edits. The system it describes was implemented using agentic engineering.\par
 \end{minipage}
 
 \end{document}

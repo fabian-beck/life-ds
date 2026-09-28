@@ -9,9 +9,9 @@ description:
   Technical report on the Life Data Stories system: its data model, its two
   generation pipelines, and its interface.
 disclaimer:
-  This report was co-written with AI. Its text and figures were drafted and revised with language models under the authors' direction, alongside manual edits. The system the report describes was implemented through AI using agentic engineering.
+  This report was co-written with AI. Its text and figures were drafted and revised with language models under the authors' direction, alongside manual edits. The system it describes was implemented using agentic engineering.
 abstract:
-  Life Data Stories is an approach that transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides that combine narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous scrolling document with similar visual encodings. The system separates two concerns. First, generation is performed offline by staged pipelines that combine large language-model inference with deterministic transformation. Second, the presentation is rendered by an interactive web application without further use of artificial intelligence. This technical report documents the approach and its implementation and provides a basic scientific contextualization. The code is available at [github.com/fabian-beck/life-ds](https://github.com/fabian-beck/life-ds) and the deployed application at [fabian-beck.github.io/life-ds](https://fabian-beck.github.io/life-ds/).
+  Life Data Stories is an approach that transforms encyclopedic biographical prose into structured data stories. The stories are shown as sequences of slides that combine narrative text, timelines, maps, and social networks. A second story type, the meta story, traces a theme across several lives and presents it as one continuous scrolling document with similar visual encodings. The system separates two concerns. First, generation is performed offline by staged pipelines that combine large language-model inference with deterministic transformation. Second, the presentation is rendered by an interactive web application without further use of artificial intelligence. This technical report documents the approach and its implementation and provides a basic scientific contextualization. The code is available at [github.com/fabian-beck/life-ds](https://github.com/fabian-beck/life-ds) and the live application at [fabian-beck.github.io/life-ds](https://fabian-beck.github.io/life-ds/).
 ---
 
 ::: teaser
@@ -43,7 +43,7 @@ A meta story refers to the data of its subjects and adds further perspectives. I
 
 ## Generation
 
-We split the generation of this data into two pipelines. The first, the [[person-pipeline|personal story pipeline]], reads an encyclopedia article and writes the data of an individual biography. The second, the [[meta-pipeline|meta story pipeline]], reads the data of several individuals and writes a meta story connecting them. Both pipelines run offline as Python command-line scripts, invoked for one life or one theme at a time. A run stores the data described in the previous section as JSON documents. Each step reads the documents of earlier steps, writes its own, and belongs to one of four kinds.
+We split the generation of this data into two pipelines. The first, the [[person-pipeline|personal story pipeline]], reads an encyclopedia article and writes the data of an individual biography. The second, the [[meta-pipeline|meta story pipeline]], reads the data of several individuals and writes a meta story connecting them. Both pipelines run offline as Python command-line scripts, invoked for one life or one theme at a time. A run stores the data described in the previous section as JSON documents. Each step reads the documents of earlier steps, writes its own, and is one of four kinds.
 
 ::: kindlegend
 :::
@@ -73,7 +73,7 @@ The [[person-pipeline|personal story pipeline]] derives data for one biography, 
 
 ### Meta story pipeline
 
-The [[meta-pipeline|meta story generation]][[figure:pipeline-meta]] concerns a theme that connects multiple lives (e.g., an area of science, art, or political development) and directly builds upon the output of the personal pipelines. The story is planned and its events collected and curated against the theme. Moreover, the social network and the map are derived. Then, a composition step joins the branches into one story and gives it a visual identity. Again, localization closes the run.
+The [[meta-pipeline|meta story generation]][[figure:pipeline-meta]] concerns a theme that connects multiple lives (e.g., an area of science, art, or political development) and directly builds upon the output of the personal pipelines. The story is planned and its events collected and curated against the theme. Moreover, the social network and the map are derived. Then, a composition step joins the branches into one story and gives it a visual identity. Localization again comes last.
 
 ::: pipeline lane=meta
 :::
@@ -88,7 +88,7 @@ The [[meta-pipeline|meta story generation]][[figure:pipeline-meta]] concerns a t
 
 *Composition*. The [[step:m_p8|composition]] call assembles the story from the generated material: it revises and connects the descriptions into a coherent story and decides the order of the sections and the final grouping of the circles. A [[step:m_style|style]] call derives from the story's framing a color palette, background pattern, fonts, and ornamental elements.
 
-*Localization*. The [[step:m_translate|translation]] proceeds as for personal stories but reuses the subjects' names and the event titles already translated for their personal stories, so that both use identical wording.
+*Localization*. The [[step:m_translate|translation]] proceeds as for personal stories but reuses the subjects' names and event titles already translated for their personal stories, so that both agree in wording.
 
 ### AI models and prompting
 
@@ -100,7 +100,7 @@ Life Data Stories' frontend is a mobile-first Svelte application that loads and 
 
 The landing page offers access to the two story types, which organize the data differently: a [[slides|personal story]] follows one life in order, and a [[sections|meta story]] follows a theme across several lives. On the landing page[[figure:landing]], the meta stories are displayed in a [[landing.carousel|carousel]] at the top. Below them, the [[landing.grid|personal stories]] can be reached and filtered by role or search. Additionally, a map plots the place of every event across the corpus. Nearby events merge into circles that grow with their number of events and take the color of a person who contributes more than half of them, fading to gray as the share approaches half. Clicking a marker there shows the event, and another tap opens the event as part of the respective personal story.
 
-In the following, we walk through both story types in more detail. Throughout, we use the meta story *Architecture as Living Form* and the personal story of *Antoni Gaudí* as running examples.
+In the following, we walk through both story types in detail. Throughout, we use the meta story *Architecture as Living Form* and *Antoni Gaudí*'s personal story as running examples.
 
 ::: screenshot id=landing route="#/en" width=1280 height=1000 settle=2500 caption="The landing page: a carousel of meta stories above, the personal stories in a filterable grid below."
 @carousel 471,101,769,400 Meta story carousel
@@ -135,7 +135,7 @@ Each listed event links to its slide in the personal story.
 
 *Network.* The third section is a [[meta-network.whole|graph]][[figure:meta-network]] that displays the architects and the documented connections between them. Its force-directed layout is calculated in the background and finalized before it is displayed. A weak force pulls each subject toward a horizontal position given by their birth year, so that the graph tends to read chronologically from left to right. The precomputed data groups people into clusters. As the reader scrolls, one [[meta-network.card|card]] per cluster moves over the graph and describes it, and the people and connections involved are [[meta-network.cluster|highlighted]], while the rest of the graph darkens.
 
-::: screenshot id=meta-network route="#/en/meta/organic_shapes_in_architecture" width=390 height=844 wait=".network-section" anchor=".network-section" scroll=800 settle=3000 caption="The network: architects as nodes, one card in front naming the cluster currently highlighted."
+::: screenshot id=meta-network route="#/en/meta/organic_shapes_in_architecture" width=390 height=844 wait=".network-section" anchor=".network-section" scroll=800 settle=3000 caption="The network: architects as nodes, one card in front naming the highlighted cluster."
 @whole 0,0,390,844 The network view
 The full graph of architects, with one card in front naming the cluster currently highlighted.
 @cluster 15,285,275,300 Gaudí, Hundertwasser, Aalto, Wright, and Otto, highlighted
