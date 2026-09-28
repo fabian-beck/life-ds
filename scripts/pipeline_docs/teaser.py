@@ -341,10 +341,10 @@ LINKS: Tuple[Link, ...] = (
 
 
 CAPTION = (
-    "The system end to end: encyclopedic sources and model inference feed the "
-    "two generation pipelines, whose data the interface reads for presentation in "
-    "its two story representations. Figures {figure:pipeline-person} and "
-    "{figure:pipeline-meta} detail the steps of the two pipelines."
+    "The system end to end: two generation pipelines turn encyclopedic sources "
+    "into story data with AI models, and the interface presents that data as two "
+    "kinds of story. Figures {figure:pipeline-person} and "
+    "{figure:pipeline-meta} detail the color-coded steps of the two pipelines."
 )
 
 # A figure the caption refers to, by the id a `[[figure:id]]` citation uses.
