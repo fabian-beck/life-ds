@@ -58,7 +58,11 @@ from pipeline_docs import facts as facts_module  # noqa: E402
 from pipeline_docs import latex, render, report, screenshots, validate  # noqa: E402
 from pipeline_docs.introspect import scan_codebase  # noqa: E402
 from pipeline_docs.model import build_payload  # noqa: E402
-from pipeline_docs.summarize import cached_summaries, summarize_steps  # noqa: E402
+from pipeline_docs.summarize import (  # noqa: E402
+    accept_summaries,
+    cached_summaries,
+    summarize_steps,
+)
 
 OUT_DIR = REPO_ROOT / "docs" / "report"
 DEFAULT_OUT = OUT_DIR / "index.html"
@@ -94,9 +98,14 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         help="Do not call the API; use cached summaries, then the spec.py text.",
     )
     parser.add_argument(
-        "--force-summaries",
-        action="store_true",
-        help="Re-summarize every step even when the cache is current.",
+        "--accept-summary",
+        action="append",
+        default=[],
+        metavar="STEP",
+        help=(
+            "Mark a step's entry in summaries.json, revised by hand, as written "
+            "from the current source. Repeat for several steps."
+        ),
     )
     parser.add_argument("--model", help="Override the summarizer model.")
     parser.add_argument(
@@ -211,8 +220,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             subject="Summaries",
         ):
             print(
-                "\nRe-summarize the affected steps: "
-                "python scripts/generate_report.py"
+                "\nRevise the affected entries in docs/report/summaries.json by "
+                "hand and accept them with --accept-summary STEP, or rebuild "
+                "to have the model revise them: python scripts/generate_report.py"
             )
             return 1
 
@@ -283,12 +293,17 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     print("Collecting step summaries ...")
+    if args.accept_summary:
+        try:
+            accept_summaries(codebase, SUMMARY_CACHE, args.accept_summary)
+        except ValueError as error:
+            print(f"  ERROR: {error}")
+            return 1
     summaries = summarize_steps(
         codebase,
         cache_path=SUMMARY_CACHE,
         model=args.model,
         skip_ai=args.skip_ai,
-        force=args.force_summaries,
         verbose=args.verbose,
     )
     if validate.report(

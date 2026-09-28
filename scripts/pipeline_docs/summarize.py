@@ -31,7 +31,7 @@ from pydantic import BaseModel, Field
 from . import spec
 from .introspect import Codebase
 
-CACHE_VERSION = 6
+CACHE_VERSION = 5
 MAX_SOURCE_CHARS = 9000
 MAX_PROMPT_CHARS = 6000
 
@@ -289,15 +289,57 @@ def _fallback(step: spec.Step) -> Dict[str, Any]:
     }
 
 
+def _previous_block(cached: Optional[Dict[str, Any]]) -> str:
+    """The entry a stale step already has, to be revised rather than replaced."""
+    previous = (cached or {}).get("summary")
+    if not isinstance(previous, dict):
+        return ""
+    fields = "\n".join(
+        f"  {key}: {previous.get(key, '')}" for key in ("description", "input", "output")
+    )
+    return (
+        "\n\nPREVIOUS ENTRY, written from an earlier version of this source:\n"
+        f"{fields}\n"
+        "Revise this entry rather than writing a new one. Keep every sentence "
+        "and phrase the current source leaves true word for word, and change "
+        "only what the source no longer supports or now requires."
+    )
+
+
+def accept_summaries(codebase: Codebase, path: Path, step_ids: List[str]) -> None:
+    """Mark hand-revised entries as written from the current source.
+
+    An entry edited by hand in the cache still carries the fingerprint of the
+    source it was first written from, and a build would replace it. Accepting
+    it stamps the current fingerprint, which is the maintainer's statement
+    that the entry now describes this source.
+    """
+    cache = load_cache(path)
+    entries: Dict[str, Any] = dict(cache.get("steps") or {})
+    known = {step.id: step for step in spec.STEPS}
+    for step_id in step_ids:
+        step = known.get(step_id)
+        if step is None or not isinstance(entries.get(step_id), dict):
+            raise ValueError(f"no cached summary for step '{step_id}'")
+        entries[step_id]["fingerprint"] = _fingerprint(build_context(codebase, step))
+        print(f"  Accepted the entry for '{step_id}' as written from its source.")
+    save_cache(path, {"version": CACHE_VERSION, "steps": entries})
+
+
 def summarize_steps(
     codebase: Codebase,
     cache_path: Path,
     model: Optional[str] = None,
     skip_ai: bool = False,
-    force: bool = False,
     verbose: bool = False,
 ) -> Dict[str, Dict[str, Any]]:
-    """Return {step_id: summary}, refreshing only steps whose source changed."""
+    """Return {step_id: summary}, refreshing only steps whose source changed.
+
+    A refreshed step is revised, not rewritten: the model is shown the entry it
+    replaces and keeps every sentence the changed source leaves true, so the
+    report's text stays as stable across versions as its prose does. There is
+    deliberately no switch to re-summarize every step at once.
+    """
     cache = load_cache(cache_path)
     entries: Dict[str, Any] = dict(cache.get("steps") or {})
     results: Dict[str, Dict[str, Any]] = {}
@@ -326,7 +368,7 @@ def summarize_steps(
         context = build_context(codebase, step)
         fingerprint = _fingerprint(context)
         cached = entries.get(step.id)
-        if not force and cached and cached.get("fingerprint") == fingerprint:
+        if cached and cached.get("fingerprint") == fingerprint:
             results[step.id] = cached["summary"]
             fresh += 1
             continue
@@ -350,7 +392,7 @@ def summarize_steps(
             reasoning_effort=BULK_REASONING_EFFORT,
             input=[
                 {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": context},
+                {"role": "user", "content": context + _previous_block(cached)},
             ],
             text_format=StepSummary,
             label=f"Step summary ({step.id})",

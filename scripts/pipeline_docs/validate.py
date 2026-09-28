@@ -352,8 +352,8 @@ def check_freshness(codebase: Codebase, cache_path: Path) -> List[Problem]:
         Problem(
             "error",
             f"summary '{step_id}'",
-            "was written from source that has since changed—re-summarize it: "
-            "python scripts/generate_report.py",
+            "was written from source that has since changed—revise it by hand "
+            f"and accept it with --accept-summary {step_id}, or rebuild",
         )
         for step_id in summarize.stale_steps(codebase, cache_path)
     ]
