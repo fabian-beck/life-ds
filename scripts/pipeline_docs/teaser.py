@@ -343,8 +343,23 @@ LINKS: Tuple[Link, ...] = (
 CAPTION = (
     "The system end to end: encyclopedic sources and model inference feed the "
     "two generation pipelines, whose data the interface reads for presentation in "
-    "its two story representations."
+    "its two story representations. Figures {figure:pipeline-person} and "
+    "{figure:pipeline-meta} detail the steps of the two pipelines."
 )
+
+# A figure the caption refers to, by the id a `[[figure:id]]` citation uses.
+CAPTION_FIGURE = re.compile(r"\{figure:([a-z][a-z0-9-]*)\}")
+
+
+def caption(numbers: Dict[str, int]) -> str:
+    """The caption with each referenced figure's number written in.
+
+    The numbers are the report's own, so the caption cannot drift from the
+    figures it points to; a figure the report does not draw leaves its id.
+    """
+    return CAPTION_FIGURE.sub(
+        lambda match: str(numbers.get(match.group(1), match.group(1))), CAPTION
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -376,12 +391,12 @@ def fact_keys() -> List[str]:
     return sorted(dict.fromkeys(keys))
 
 
-def scene() -> Dict[str, Any]:
+def scene(numbers: Optional[Dict[str, int]] = None) -> Dict[str, Any]:
     """The whole figure, as the payload carries it."""
     return {
         "width": SCENE_W,
         "height": SCENE_H,
-        "caption": CAPTION,
+        "caption": caption(numbers or {}),
         "stages": [stage.to_json() for stage in STAGES],
         "parts": [part.to_json() for part in PARTS],
         "links": [link.to_json() for link in LINKS],

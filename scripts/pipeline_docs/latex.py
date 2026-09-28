@@ -1182,13 +1182,19 @@ class Writer:
 
 def render_teaser(writer: Writer, mount: Mount) -> str:
     figure = teaser_figure(writer.payload)
-    caption = str((writer.payload.get("teaser") or {}).get("caption") or teaser.CAPTION)
+    # The figures the caption points to are cited by label, so LaTeX numbers
+    # them itself, as it does every other cross-reference.
+    parts = teaser.CAPTION_FIGURE.split(sentence(teaser.CAPTION))
+    caption = "".join(
+        f"\\ref{{fig:{part}}}" if index % 2 else escape(part)
+        for index, part in enumerate(parts)
+    )
     return (
         "\\begin{figure}[tp]\n"
         "\\begin{wide}\\centering\n"
         f"\\includegraphics[width=\\widewidth]{{{figure.file}}}\n"
         "\\end{wide}\n"
-        f"\\caption{{{escape(sentence(caption))}}}\\label{{fig:{figure.id}}}\n"
+        f"\\caption{{{caption}}}\\label{{fig:{figure.id}}}\n"
         "\\end{figure}\n\n"
     )
 

@@ -112,6 +112,10 @@
   // Largest first: the sizes, in the order they are offered a column.
   const SIZES = ["mid", "compact"];
 
+  // Opened as `index.html?print`, the page draws its charts for paper: the
+  // figure export prints them from there (see `fitPrintNodes`).
+  const PRINT = new URLSearchParams(window.location.search).has("print");
+
   // A reduced node wraps the step's name to `LABEL_LINES`; `fitLines` measures
   // the rest. The character count is only the fallback for a chart drawn where
   // nothing can be measured.
@@ -215,20 +219,43 @@
      than fifteen of "Save story and", which is the difference between a label
      with a margin and one touching the border of its box. The browser can
      measure the exact string it is about to draw, so it is asked. */
-  function fitLines(root, text, width, lines, className) {
-    // The probe has to sit inside a `.node`, and carry the class of the line it
-    // stands in for—a title and a fact line are set at different sizes, and a
-    // fact line measured as a title would be cut short of its own box. Parked
-    // off-canvas, and removed before anything is drawn.
+  /* A measuring probe for the text a node prints. It has to sit inside a
+     `.node`, and carry the class of the line it stands in for—a title and a
+     fact line are set at different sizes, and a fact line measured as a title
+     would be cut short of its own box. Parked off-canvas; the caller removes
+     it before anything is drawn. */
+  function textProbe(root, className) {
     const scratch = svg("g", { class: "node" });
     const probe = svg("text", { class: className || "title", x: 0, y: -999 });
     scratch.appendChild(probe);
     root.appendChild(scratch);
+    return {
+      measure(value) {
+        probe.textContent = value;
+        return probe.getComputedTextLength();
+      },
+      remove() {
+        root.removeChild(scratch);
+      },
+    };
+  }
 
-    function measure(value) {
-      probe.textContent = value;
-      return probe.getComputedTextLength();
-    }
+  /* The line under a step's name: what kind of step it is and which model it
+     calls. The kind alone names nothing for a step that calls no model, so
+     such a step prints its byline instead: the service it asks, the rule it
+     applies. The color bar still carries the kind. */
+  function factText(step) {
+    const facts = [step.byline || DATA.kinds[step.kind].label];
+    // The model before the per-run marker, so that a line the node has to cut
+    // loses the marker rather than the model.
+    if (step.model) facts.push(step.model.split(" (")[0]);
+    if (step.calls_per_run && step.calls_per_run !== "1") facts.push("×N");
+    return facts.join(" · ");
+  }
+
+  function fitLines(root, text, width, lines, className) {
+    const probe = textProbe(root, className);
+    const measure = probe.measure;
     // A chart drawn while detached or hidden measures every string as zero.
     // Counting characters is the poorer rule, but it is a rule.
     const measurable = measure("Mm") > 0;
@@ -278,7 +305,7 @@
       kept[index] = value.replace(/[\s—–-]+$/, "") + "…";
     });
 
-    root.removeChild(scratch);
+    probe.remove();
     return kept;
   }
 
@@ -421,7 +448,9 @@
   function createChart(host, laneId, figureNumber, options) {
     const settings = options || {};
     const size = settings.size || "mid";
-    const M = METRICS[size];
+    // A printed chart widens its nodes in `fitPrintNodes`, so it works on a
+    // copy of its size's metrics.
+    const M = settings.print ? Object.assign({}, METRICS[size]) : METRICS[size];
     // Asked of the size often enough to name: whether the node carries only
     // the step's name.
     const compact = size === "compact";
@@ -839,16 +868,49 @@
           y0 = Math.min(y0, node.y);
           y1 = Math.max(y1, node.y + node.h);
         });
+        const x0 = block.cx - block.width / 2 - M.BAND_PAD;
         bands.push({
           group: block.group,
           count: block.members.length,
-          x0: block.cx - block.width / 2 - M.BAND_PAD,
+          x0: x0,
           x1: block.cx + block.width / 2 + M.BAND_PAD,
           y0: y0 - M.BAND_HEAD,
           y1: y1 + M.BAND_PAD,
+          labelX: x0 + 7,
+          labelW: bandLabelWidth(block.group),
+          // The steps whose edges come down through the band's head.
+          opening: block.members.filter((node) => {
+            return node.y === y0;
+          }),
         });
       });
       return bands;
+    }
+
+    function bandLabel(group) {
+      return truncateLabel(group.label, 30);
+    }
+
+    /* A stage label's box, measured in `draw` where there is a page to measure
+       on. Its letters are spaced capitals, which a count of characters puts
+       too narrow; the count stands in only where nothing can be measured. */
+    const bandLabelWidths = {};
+    function measureBandLabels() {
+      if (Object.keys(bandLabelWidths).length) return;
+      const probe = svg("text", { class: "band-label", x: 0, y: -999 });
+      flow.appendChild(probe);
+      (DATA.groups || []).forEach((group) => {
+        probe.textContent = bandLabel(group);
+        const width = probe.getComputedTextLength();
+        if (width > 0) bandLabelWidths[group.id] = Math.ceil(width) + 12;
+      });
+      flow.removeChild(probe);
+    }
+    function bandLabelWidth(group) {
+      return (
+        bandLabelWidths[group.id] ||
+        bandLabel(group).length * M.BAND_LABEL_CH + 12
+      );
     }
 
     function layout() {
@@ -911,11 +973,36 @@
       const placement = arrange(rows, graph);
       const contentW = placement.width;
 
+      /* A row that opens a band gets the band's head as room of its own above
+         the usual gap, rather than inside it, so an edge into the row turns
+         above the head (see `edgeCurves`). The first row has the chart's head
+         margin for it. */
+      const rowOfNode = {};
+      rows.forEach((row, index) => {
+        row.forEach((node) => {
+          rowOfNode[node.id] = index;
+        });
+      });
+      const opensBand = {};
+      placement.blocks.forEach((block) => {
+        if (!block.group) return;
+        const first = Math.min.apply(
+          null,
+          block.members.map((node) => {
+            return rowOfNode[node.id];
+          })
+        );
+        if (first > 0) opensBand[first] = true;
+      });
+
       const nodes = [];
       const byId = {};
       const rails = [];
+      const turnOf = [];
       let y = M.HEAD_H;
       rows.forEach((row, index) => {
+        if (opensBand[index]) y += M.BAND_HEAD;
+        turnOf.push(opensBand[index] ? y - M.BAND_HEAD : y);
         const rowH = row.reduce((best, node) => {
           return Math.max(best, node.h);
         }, 0);
@@ -968,13 +1055,30 @@
           edge.y1 = edge.from.y + edge.from.h;
         });
       });
+      // An edge into a band's first steps comes down through the head, so it
+      // enters the node right of where the band's label stands.
+      const labelEnd = {};
+      bands.forEach((band) => {
+        band.opening.forEach((node) => {
+          labelEnd[node.id] = band.labelX + band.labelW + 4;
+        });
+      });
       Object.values(incoming).forEach((list) => {
         list.sort((a, b) => {
           return a.from.x - b.from.x;
         });
+        const to = list[0].to;
+        let left = to.x;
+        const right = to.x + to.w;
+        // Where the label leaves the node too little room, the edges crowd
+        // into its right end, which is as far from the label as they can get.
+        if (labelEnd[to.id] !== undefined) {
+          left = Math.max(left, Math.min(labelEnd[to.id], right - 16));
+        }
         list.forEach((edge, index) => {
-          edge.x2 = edge.to.x + (edge.to.w * (index + 1)) / (list.length + 1);
-          edge.y2 = edge.to.y;
+          edge.x2 = left + ((right - left) * (index + 1)) / (list.length + 1);
+          edge.y2 = to.y;
+          edge.turn = turnOf[to.layer];
         });
       });
 
@@ -1107,27 +1211,26 @@
 
     /* The stage's name, in the band's head, at both sizes: a compact figure
        that showed the bands without naming them left the reader to guess what
-       the prose's stages were. Its box is sized from the character count, in
-       the size's own units, so the label never runs past the band. */
+       the prose's stages were. It stands at the head's left, where `layout`
+       keeps the edges into the band's first steps from entering. */
     function drawBandLabels(root, bands) {
       bands.forEach((band) => {
-        const text = truncateLabel(band.group.label, 30);
         root.appendChild(
           svg("rect", {
             class: "band-label-bg",
-            x: band.x0 + 7,
+            x: band.labelX,
             y: band.y0 + 2,
-            width: text.length * M.BAND_LABEL_CH + 12,
+            width: band.labelW,
             height: M.BAND_LABEL_H,
             rx: 3,
           })
         );
         const label = svg("text", {
           class: "band-label",
-          x: band.x0 + 13,
+          x: band.labelX + 6,
           y: band.y0 + M.BAND_LABEL_DY,
         });
-        label.textContent = text;
+        label.textContent = bandLabel(band.group);
         root.appendChild(label);
       });
     }
@@ -1157,65 +1260,81 @@
       return edge.from.id === state.selected || edge.to.id === state.selected;
     }
 
-    function edgePath(edge) {
-      const end = edge.y2 - 7;
+    /* An edge as the cubic pieces it is drawn with, each four points; a
+       straight run is a piece whose controls lie on it.
+
+       An edge into a row that opens a band finishes its turn above the band,
+       at `edge.turn`, and runs straight down through the band's head, so the
+       head is crossed only by vertical lines and its label can stand clear of
+       them. */
+    function edgeCurves(edge) {
+      const arrow = edge.y2 - 7;
+      const end = Math.min(edge.turn, arrow);
+      const run =
+        end < arrow
+          ? [
+              [
+                [edge.x2, end],
+                [edge.x2, end],
+                [edge.x2, arrow],
+                [edge.x2, arrow],
+              ],
+            ]
+          : [];
       if (edge.channel === undefined) {
         const bend = Math.max(14, (end - edge.y1) * 0.45);
-        return (
-          "M" +
-          edge.x1 +
-          " " +
-          edge.y1 +
-          " C" +
-          edge.x1 +
-          " " +
-          (edge.y1 + bend) +
-          ", " +
-          edge.x2 +
-          " " +
-          (end - bend) +
-          ", " +
-          edge.x2 +
-          " " +
-          end
-        );
+        return [
+          [
+            [edge.x1, edge.y1],
+            [edge.x1, edge.y1 + bend],
+            [edge.x2, end - bend],
+            [edge.x2, end],
+          ],
+        ].concat(run);
       }
       const knee = 22;
       const enter = edge.y1 + knee * 2;
       const leave = end - knee * 2;
+      return [
+        [
+          [edge.x1, edge.y1],
+          [edge.x1, edge.y1 + knee],
+          [edge.channel, enter - knee],
+          [edge.channel, enter],
+        ],
+        [
+          [edge.channel, enter],
+          [edge.channel, enter],
+          [edge.channel, leave],
+          [edge.channel, leave],
+        ],
+        [
+          [edge.channel, leave],
+          [edge.channel, leave + knee],
+          [edge.x2, end - knee],
+          [edge.x2, end],
+        ],
+      ].concat(run);
+    }
+
+    function edgePath(edge) {
+      const curves = edgeCurves(edge);
       return (
         "M" +
-        edge.x1 +
-        " " +
-        edge.y1 +
-        " C" +
-        edge.x1 +
-        " " +
-        (edge.y1 + knee) +
-        ", " +
-        edge.channel +
-        " " +
-        (enter - knee) +
-        ", " +
-        edge.channel +
-        " " +
-        enter +
-        " L" +
-        edge.channel +
-        " " +
-        leave +
-        " C" +
-        edge.channel +
-        " " +
-        (leave + knee) +
-        ", " +
-        edge.x2 +
-        " " +
-        (end - knee) +
-        ", " +
-        edge.x2 +
-        " " +
-        end
+        curves[0][0].join(" ") +
+        curves
+          .map((curve) => {
+            return (
+              " C" +
+              curve
+                .slice(1)
+                .map((point) => {
+                  return point.join(" ");
+                })
+                .join(", ")
+            );
+          })
+          .join("")
       );
     }
 
@@ -1314,15 +1433,6 @@
         });
 
         if (M.FACT_UP) {
-          // The kind alone names nothing for a step that calls no model, so
-          // such a step prints its byline instead: the service it asks, the
-          // rule it applies. The color bar still carries the kind.
-          const facts = [step.byline || DATA.kinds[step.kind].label];
-          // The model before the per-run marker, so that a line the node has
-          // to cut loses the marker rather than the model.
-          if (step.model) facts.push(step.model.split(" (")[0]);
-          if (step.calls_per_run && step.calls_per_run !== "1")
-            facts.push("×N");
           const factLine = svg("text", {
             class: "metric",
             x: M.LABEL_PAD,
@@ -1330,7 +1440,7 @@
           });
           factLine.textContent = fitLines(
             root,
-            facts.join(" · "),
+            factText(step),
             node.w - M.LABEL_PAD * 2,
             1,
             "metric"
@@ -1382,10 +1492,33 @@
       flow.style.width = Math.round(naturalSize.width * scale) + "px";
     }
 
+    /* A printed chart has no tooltip and no step note to hold what a node
+       leaves out, so its nodes are made wide enough to print every name and
+       every fact line in full. The width is taken over the steps of all lanes,
+       so the printed pipelines keep one node size and stay comparable. Paper
+       has the room: the figures are fitted to the page by height. */
+    function fitPrintNodes() {
+      if (!settings.print || M.printFitted) return;
+      M.printFitted = true;
+      const titles = textProbe(flow, "title");
+      const metrics = textProbe(flow, "metric");
+      let widest = 0;
+      DATA.steps.forEach((step) => {
+        widest = Math.max(widest, titles.measure(step.label));
+        if (M.FACT_UP)
+          widest = Math.max(widest, metrics.measure(factText(step)));
+      });
+      titles.remove();
+      metrics.remove();
+      M.NODE_W = Math.max(M.NODE_W, Math.ceil(widest + M.LABEL_PAD * 2 + 2));
+    }
+
     function draw() {
       const host = flow;
       clear(host);
 
+      fitPrintNodes();
+      measureBandLabels();
       const geometry = layout();
       host.setAttribute(
         "viewBox",
@@ -3665,6 +3798,7 @@
       let showing = null;
 
       function sizeFor() {
+        if (PRINT) return "mid";
         const available = mount.clientWidth;
         // Before layout there is no width to measure; nothing is decided on a
         // zero, and the resize pass below settles it once there is a page.
@@ -3703,6 +3837,7 @@
         showing = wanted;
         chart = createChart(mount, params.lane, numbers.figure, {
           size: wanted,
+          print: PRINT,
         });
       }
 

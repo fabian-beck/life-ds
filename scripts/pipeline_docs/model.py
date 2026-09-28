@@ -23,7 +23,7 @@ from . import concepts as concepts_module
 from . import facts as facts_module
 from . import spec, teaser
 from .introspect import Codebase
-from .report import Document
+from .report import Document, figure_id
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -176,7 +176,7 @@ def build_payload(
         "facts": facts_module.to_json(facts or {}),
         "lanes": spec.LANES,
         "kinds": KIND_META,
-        "teaser": teaser.scene(),
+        "teaser": teaser.scene(_figure_numbers(document)),
         "screenshots": shots or {},
         "steps": steps,
         "groups": [group.__dict__ for group in spec.GROUPS],
@@ -194,3 +194,13 @@ def build_payload(
             for artifact in spec.ARTIFACTS
         ],
     }
+
+
+def _figure_numbers(document: Optional[Document]) -> Dict[str, int]:
+    """Each figure's number, by the id a `[[figure:id]]` citation names it by."""
+    numbers: Dict[str, int] = {}
+    for mount in document.mounts if document else []:
+        cited_as = figure_id(mount)
+        if cited_as:
+            numbers[cited_as] = mount.figure_start
+    return numbers

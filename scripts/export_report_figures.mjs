@@ -158,7 +158,11 @@ async function main() {
       viewport: { width: 1280, height: 1600 },
     });
     console.log(`Loading ${input} ...`);
-    await page.goto(pathToFileURL(input).href, { waitUntil: "load" });
+    // `?print` asks the page to draw its figures for paper rather than for
+    // the window it happens to be opened in.
+    await page.goto(pathToFileURL(input).href + "?print", {
+      waitUntil: "load",
+    });
     // `app.js` sets this once every computed block is mounted; before that a
     // chart is an empty mount point.
     await page.waitForFunction(
