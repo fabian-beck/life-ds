@@ -464,7 +464,6 @@ STEPS: List[Step] = [
             "description_contract_prompt",
         ],
         inputs=["wiki_cache"],
-        calls_per_run="1–2",
         skip_flag="--skip-events",
         model_from="generate_person_events.py",
     ),
@@ -618,7 +617,6 @@ STEPS: List[Step] = [
         ),
         depends_on=[Dep("p_img_match", "the portrait pick")],
         prompts=["verify_portrait_depicts_person"],
-        calls_per_run="0–1",
         outputs=["life_events", "persons"],
         skip_flag="--skip-events",
     ),
@@ -662,7 +660,6 @@ STEPS: List[Step] = [
         prompts=["build_prompt", "build_retry_prompt", "call_openai"],
         inputs=["life_events"],
         outputs=["person_styles"],
-        calls_per_run="1–3",
         skip_flag="--skip-style",
     ),
     Step(
@@ -701,7 +698,6 @@ STEPS: List[Step] = [
         prompts=["generate_portrait"],
         inputs=["persons", "person_styles"],
         outputs=["portrait", "persons", "life_events"],
-        calls_per_run="0–1",
         skip_flag="--skip-portrait",
         model_note="Image model; only allowlisted models keep facial likeness.",
     ),
@@ -919,7 +915,7 @@ STEPS: List[Step] = [
         prompts=["STAND_IN_REJECTION_INSTRUCTIONS", "fetch_background_images"],
         inputs=["life_events"],
         outputs=["life_events"],
-        calls_per_run="0–1 per report",
+        calls_per_run="one per report",
         model_from="generate_event_backgrounds.py",
     ),
     # ------------------------------------------------------------------ meta
@@ -1032,9 +1028,8 @@ STEPS: List[Step] = [
         "generate_meta_story.py",
         "phase6_network_narration",
         summary=(
-            "Writes a title and a short text for each circle. The composition rewrites "
-            "these later; keeping this step means the story still reads when "
-            "composition is skipped."
+            "Writes a title and a short text for each circle, drafts the "
+            "composition later rewrites in the story's shared voice."
         ),
         depends_on=[Dep("m_clusters", "the circles to narrate")],
         prompts=["phase6_network_narration"],

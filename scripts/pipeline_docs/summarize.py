@@ -7,9 +7,9 @@ rebuild only pays for the steps that actually changed—the same
 staleness-by-fingerprint idea the translation pipeline uses for person data.
 
 The summarizer reads the source but does not paraphrase it. What it writes is
-a report entry: two or three plain sentences on what the step contributes and,
-where one stands out, why it is built that way, plus a phrase each for what it
-reads and what it leaves behind. Character budgets, field inventories, and the
+a report entry on the plain path of a fresh run: two or three plain sentences
+on what the step contributes and, where one stands out, why it is built that
+way, plus a phrase each for what it reads and what it leaves behind. Character budgets, field inventories, and the
 counts a prompt happens to state are below that level, and the record printed
 beside the text carries the model, its reasoning effort, and the number of
 calls anyway.
@@ -31,7 +31,7 @@ from pydantic import BaseModel, Field
 from . import spec
 from .introspect import Codebase
 
-CACHE_VERSION = 5
+CACHE_VERSION = 6
 MAX_SOURCE_CHARS = 9000
 MAX_PROMPT_CHARS = 6000
 
@@ -61,6 +61,10 @@ SYSTEM_PROMPT = (
     "('..., ensuring that ...'); no 'rather than' or 'not X but Y' unless "
     "someone would have assumed the alternative; no list of three for its "
     "own sake; no sentence that announces what the next one says. "
+    "Describe the plain path of a fresh run over a new person or story, "
+    "which is also the path the call count beside your text counts: leave "
+    "out retries, failed calls and what survives them, fallbacks, work a "
+    "rerun skips or overwrites, and the cleanup of an earlier run's output. "
     "Never name a model, an API version or a vendor product: the record "
     "printed beside your text carries the model this step resolves, measured "
     "from the code, and a name repeated from a comment is how that record goes "
