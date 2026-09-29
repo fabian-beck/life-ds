@@ -15,8 +15,10 @@
 # subdirectory that is this repository's default, so the build has to be told:
 # without `VITE_BASE_PATH=/` every asset URL in `index.html` points into
 # `/life-ds/` and answers 404 here.
+# The technical report is not committed, so each build writes it first; Netlify
+# installs requirements.txt, which carries what the report build imports.
 [build]
-  command = "VITE_BASE_PATH=/ npm run build"
+  command = "python scripts/generate_report.py && VITE_BASE_PATH=/ npm run build"
   publish = "dist"
 
 [build.environment]
@@ -24,6 +26,7 @@
   # its own release schedule, and a build that publishes should not be the one
   # place the toolchain differs.
   NODE_VERSION = "22"
+  PYTHON_VERSION = "3.11"
 
 # Netlify Functions. The one function, netlify/functions/evaluation.mjs, is the
 # log endpoint of the user-evaluation deployment; it answers 404 on every other
@@ -41,7 +44,7 @@
 # shares and which no other deploy reads or writes. See
 # docs/agent/user-evaluation.md, including for running it as a site of its own.
 [context.deploy-evaluation]
-  command = "VITE_BASE_PATH=/ npm run build:evaluation"
+  command = "python scripts/generate_report.py && VITE_BASE_PATH=/ npm run build:evaluation"
 
 [context.deploy-evaluation.environment]
   # Read by the function at runtime: the switch that lets it store and serve

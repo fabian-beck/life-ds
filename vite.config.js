@@ -103,6 +103,10 @@ function notFoundFallbackPlugin() {
  * publishing it is one copy. It is served in dev as well: the dev server's SPA
  * fallback would otherwise answer `/life-ds/report/` with the application, and
  * a link that only resolves in production is a link nothing ever exercises.
+ *
+ * The page is not committed; `python scripts/generate_report.py` writes it, and
+ * every deployment runs that before the build. A build without it fails rather
+ * than publishing a site whose report link leads nowhere.
  */
 function technicalReportPlugin() {
   const reportPath = resolve("docs/report/index.html");
@@ -120,10 +124,23 @@ function technicalReportPlugin() {
         const path = req.url.split("?")[0];
         if (path !== reportRoute && path !== `${reportRoute}/`) return next();
         res.setHeader("Content-Type", "text/html; charset=utf-8");
+        if (!existsSync(reportPath)) {
+          res.statusCode = 404;
+          res.end(
+            "The report is not built. Run: python scripts/generate_report.py"
+          );
+          return;
+        }
         res.end(readFileSync(reportPath));
       });
     },
     closeBundle() {
+      if (!existsSync(reportPath)) {
+        throw new Error(
+          "docs/report/index.html is missing. Build the report first: " +
+            "python scripts/generate_report.py"
+        );
+      }
       const reportDir = resolve(outDir, "report");
       mkdirSync(reportDir, { recursive: true });
       copyFileSync(reportPath, resolve(reportDir, "index.html"));

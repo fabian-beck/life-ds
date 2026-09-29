@@ -34,7 +34,7 @@ A production build leaves out every person and collection whose registry entry c
 
 The workflow builds with a plain `npm run build` and is read from the branch being built, so a change to it takes effect once it reaches `deploy`. Nothing configures the address: `vite.config.js` defaults to `base: "/life-ds/"`, the path Pages serves this repository from and the one the dev server and the interface tests use, and derives `VITE_SITE_URL`'s default from it. `VITE_BASE_PATH=/` is for a host that serves from a domain root, which is why `netlify.toml` sets it. The build writes a `404.html` copy of `index.html` (`notFoundFallbackPlugin`) so path-style entry URLs survive on a host without rewrite rules.
 
-`technicalReportPlugin` publishes the generated technical report alongside the app: the build copies `docs/report/index.html` to `dist/report/index.html`, and the dev server answers `/life-ds/report/` with the same file ahead of the SPA fallback. The landing page and the AI-generated modal link there through `assetUrl("/report/")`.
+`technicalReportPlugin` publishes the generated technical report alongside the app: the build copies `docs/report/index.html` to `dist/report/index.html`, and the dev server answers `/life-ds/report/` with the same file ahead of the SPA fallback. The page is not committed, so `deploy-pages.yml`, `netlify.toml`, and `checks.yml` run `python scripts/generate_report.py` before `npm run build`, and the build fails when the page is missing. The landing page and the AI-generated modal link there through `assetUrl("/report/")`.
 
 **Consequence for application code**: every site-absolute path that becomes a URL—portrait paths from the generated data, assets in `public/`—must go through `assetUrl()` in `src/utils/assetUrl.js`. A raw `"/portraits/…"` string in markup 404s wherever the site is served from `/life-ds/`, which is Pages, the dev server, and the interface tests alike. The data files and the Python generators keep writing site-absolute paths; the prefixing happens at render time only.
 
@@ -321,7 +321,7 @@ It also fails when a **written step explanation names a model the step does not 
 
 It also fails when the authored report no longer resolves: an unknown `{{ fact }}` citation, an unknown `[[part]]` reference into the teaser figure or `[[shot.part]]` reference into a screenshot, an unknown `[@key]` reference or one split across two lines, a bibliography entry with no DOI, a figure whose geometry is inconsistent—a screenshot part outside its capture included—an unknown or misconfigured `::: component`, a lane or script that no longer exists, a pipeline that no chart draws, or a declared screenshot with no picture on disk. A fact that is measured but never cited, a reference declared but never cited, a figure part no phrase references, and a screenshot whose declaration moved since it was taken are warnings rather than errors.
 
-The check needs no API key, so it is safe to run anywhere. It is deliberately **not** part of `npm run validate`; run it after changing any generation script or the report source.
+The check calls nothing, so it is safe to run anywhere. It is deliberately **not** part of `npm run validate`; run it after changing any generation script or the report source.
 
 ### Authoring the Report
 
@@ -453,7 +453,7 @@ npm run report:pdf                           # report:figures, then report:latex
 
 **The styling is the page's.** The colors—the four kind colors, the rules, the inks—are read from the tokens under `:root` in `style.css` at build time, so the two renderings cannot drift apart in color. The running text is set in Charter, the second face of the page's serif stack; captions, legends, tables, and labels in a sans-serif; code in a typewriter face; black on white, hairline rules, square corners, and color for the step kind alone. A step reference keeps the page's underline in its kind's color, a concept reference its glyph, drawn by TikZ from the same Material Design path data the page inlines. The text is set to the page's measure, and a drawing or a wide table reaches out to the sheet's margins the way the page lets a figure past the column. Faces are declared per engine, so pdfTeX and XeTeX (Tectonic) produce the same document.
 
-**`report.tex` is committed and checked.** It is derived, like `index.html`, and never edited by hand: `--check` rebuilds it in memory and compares it with the committed file, and reports the printed drawings' status after it. The compiled PDF and the engine's intermediate files are untracked; the figures under `latex/figures/` are tracked, as the screenshots are, so a checkout without a browser still compiles.
+**`report.tex` is built, not committed.** It is derived, like `index.html`, and never edited by hand: every build writes both, and `--check` renders both in memory, so a source they cannot be built from fails the check, and reports the printed drawings' status after it. The compiled PDF and the engine's intermediate files are untracked; the figures under `latex/figures/` are tracked, as the screenshots are, so a checkout without a browser still compiles.
 
 `scripts/compile_report_latex.py` runs whichever engine is installed—[Tectonic](https://tectonic-typesetting.github.io), one binary that fetches the packages it needs on first use, then `latexmk`, then `pdflatex` twice—after checking the drawn figures.
 
@@ -461,7 +461,7 @@ npm run report:pdf                           # report:figures, then report:latex
 
 1. Add or update the step in `scripts/pipeline_docs/spec.py`, including the `depends_on` edges into it *and* any existing step that now reads its output, and put it in one of the stages in `GROUPS`. An edge is a real data dependency, not "runs after"; a step that reads the assembled document depends on the last step of the run that writes it.
 2. Run `python scripts/generate_report.py --figures`—it names every step whose explanation was written from source that has since changed, and reprints the pipeline chart the step belongs to for the LaTeX rendering. Revise each named entry in `summaries.json` by hand, keeping every sentence the changed source leaves true, and accept it with `--accept-summary STEP`; a new step gets its entry the same way. Never rewrite every entry at once.
-3. Commit the regenerated `docs/report/index.html`, `summaries.json`, `docs/report/latex/report.tex`, and the reprinted figures under `docs/report/latex/figures/`.
+3. Commit `summaries.json` and the reprinted figures under `docs/report/latex/figures/`. The page and `report.tex` are not committed; the deployment builds them.
 
 Everything except `spec.py`, `report.md`, and the page's own styling is derived, so never hand-edit `docs/report/index.html` or `docs/report/latex/report.tex`.
 

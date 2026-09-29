@@ -103,6 +103,10 @@ jobs:
           path: .mypy_cache
           key: mypy-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'pyproject.toml') }}-${{ github.sha }}
 
+      # The site build publishes the report, which is not committed.
+      - name: Build the technical report
+        run: python scripts/generate_report.py
+
       - name: Build
         run: npm run build
 
@@ -110,7 +114,7 @@ jobs:
         run: python -m pytest
 
       # The report is computed from the generation scripts, so a script change
-      # not rebuilt into it leaves the report describing old code.
+      # its spec or its step explanations no longer describe fails here.
       - name: The technical report matches its source
         run: python scripts/generate_report.py --check
 

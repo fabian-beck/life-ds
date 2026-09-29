@@ -18,6 +18,10 @@ worktrees
 # track; the results are one round's data, not repository content.
 evaluation/out/
 .agent-worktrees/
+# Written by `python scripts/generate_report.py` from its source; every
+# deployment builds them before the site build, which publishes the page.
+docs/report/index.html
+docs/report/latex/report.tex
 # Compiled from docs/report/latex/report.tex by `npm run report:latex`, with
 # the engine's intermediate files. The vector figures under latex/figures/
 # are tracked, like the screenshots: a browser prints them, and a checkout

@@ -30,14 +30,16 @@ The report is half written and half measured, and the two halves never mix.
    from the built page to vector PDFs the LaTeX rendering includes, each
    fingerprinted against the data it draws so a chart that moved is reported.
 
+Neither output is committed: the deployment runs this script before the site
+build, which publishes the page at `/report/`.
+
 `--check` runs only the drift checks: it fails when a documented step no longer
 exists, when a model call site is not claimed by any step in `spec.py`, when the
 report cites a fact or mounts a component that no longer resolves, when a
 cached step explanation names a model that step does not resolve, or when one
-was written from source that has since changed. Finally it rebuilds the page
-and the LaTeX source in memory and compares them, build stamp aside, with the
-committed `docs/report/index.html` and `docs/report/latex/report.tex`, so a
-document describing source that has moved fails the check instead of shipping.
+was written from source that has since changed. Finally it renders the page and
+the LaTeX source in memory, so a source they cannot be built from fails the
+check instead of the deployment.
 A stale explanation is revised by hand and accepted with `--accept-summary`.
 """
 
@@ -218,67 +220,20 @@ def main(argv: Sequence[str] | None = None) -> int:
             )
             return 1
 
-        # The question a caller asks after editing a generation script is
-        # whether the committed page still matches the source, so the check
-        # rebuilds the page in memory and compares. Only the build stamp is
-        # taken from the stored page: it changes on every run and says nothing
-        # about drift.
-        print(f"Checking {args.out.name} against a rebuild ...")
-        try:
-            stored_text = args.out.read_text(encoding="utf-8")
-        except OSError:
-            print(f"  ERROR: cannot read {args.out}.")
-            print("\nRebuild the page: python scripts/generate_report.py")
-            return 1
-        stored = render.stored_payload(stored_text)
-        if stored is None:
-            print(f"  ERROR: no payload parses in {args.out}.")
-            print("\nRebuild the page: python scripts/generate_report.py")
-            return 1
+        # The page and the LaTeX source are not committed: every deployment
+        # builds them from this source. The check therefore renders both in
+        # memory, so a source they can no longer be built from fails here
+        # rather than in the deployment.
+        print("Rendering the page and the LaTeX source ...")
         shots = screenshots.payload(screenshots.collect(document))
         fresh = build_payload(codebase, cached, document, measurements, shots)
-        for key in ("version", "generated_at", "commit"):
-            if key in stored:
-                fresh[key] = stored[key]
-        if render.render(fresh, document) != stored_text:
-            drifted = sorted(
-                key
-                for key in set(stored) | set(fresh)
-                if stored.get(key) != fresh.get(key)
-            )
-            if drifted:
-                print(f"  Stale payload fields: {', '.join(drifted)}.")
-            else:
-                print("  The page shell changed since the page was built.")
-            print(
-                "\nThe committed page no longer matches the source. "
-                "Rebuild it: python scripts/generate_report.py"
-            )
-            return 1
-        print("  The committed page matches a rebuild: no drift.")
-
-        # The LaTeX source is the same report again, so it is held to the
-        # same standard: a committed source the payload has moved away from
-        # fails the check.
-        print(f"Checking {args.latex_out.name} against a rebuild ...")
+        render.render(fresh, document)
         try:
-            stored_latex = args.latex_out.read_text(encoding="utf-8")
-        except OSError:
-            print(f"  ERROR: cannot read {args.latex_out}.")
-            print("\nWrite it: python scripts/generate_report.py")
-            return 1
-        try:
-            fresh_latex = latex.render(fresh, document)
+            latex.render(fresh, document)
         except latex.LatexError as error:
             print(f"  ERROR in the LaTeX rendering: {error}")
             return 1
-        if fresh_latex != stored_latex:
-            print(
-                "  The committed LaTeX source no longer matches the page. "
-                "Rebuild it: python scripts/generate_report.py"
-            )
-            return 1
-        print("  The committed LaTeX source matches a rebuild: no drift.")
+        print("  Both render.")
         validate.report(
             validate.check_figures(document, fresh), subject="Drawn figures"
         )

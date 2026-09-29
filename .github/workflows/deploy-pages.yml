@@ -41,16 +41,28 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+
       - name: Install Node dependencies
         run: npm ci
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      # The technical report is not committed. It is built here from its
+      # source, and the site build copies it to `report/`; a build that finds
+      # no page fails rather than publishing a broken report link.
+      - name: Build the technical report
+        run: python scripts/generate_report.py
 
       # A plain build, deliberately: `vite.config.js` defaults `base` to
       # `/life-ds/`, which is the path Pages serves this repository from, and
       # derives the link-preview address from it. A host that serves from a
       # domain root is the one that has to set `VITE_BASE_PATH=/`.
-      #
-      # No Python step: the build reads scripts/icon_categories.py and the
-      # generated life_events.json files as text, it does not run them.
       - name: Build
         run: npm run build
 

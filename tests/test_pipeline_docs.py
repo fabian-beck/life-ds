@@ -738,9 +738,8 @@ class PayloadAndRenderTests(unittest.TestCase):
     def test_the_page_is_a_function_of_the_payloads_values(self) -> None:
         """Two equal payloads render the same bytes, however they were built.
 
-        `--check` compares the committed page with a rebuild character by
-        character, and two payloads with equal values can still differ in their
-        key order.
+        Two builds from the same source have to write the same page, and two
+        payloads with equal values can still differ in their key order.
         """
         shuffled = {key: self.payload[key] for key in reversed(list(self.payload))}
         shuffled["steps"] = [
@@ -778,20 +777,6 @@ class PayloadAndRenderTests(unittest.TestCase):
         end = html.index("</script>", start)
         data = json.loads(html[start:end].replace("<\\/", "</"))
         self.assertEqual(len(data["steps"]), len(spec.STEPS))
-
-    def test_stored_payload_reads_back_what_render_wrote(self) -> None:
-        """`--check` compares the committed page against a rebuild, which only
-        works if the payload survives the round trip through the page — the
-        `</` escaping included, or a summary quoting a script tag would read
-        back as drift on a page that has none."""
-        payload = dict(self.payload, probe="a summary quoting </script> verbatim")
-        self.assertEqual(render.stored_payload(render.render(payload)), payload)
-        self.assertIsNone(render.stored_payload("<html>no payload here</html>"))
-        self.assertIsNone(
-            render.stored_payload(
-                '<script id="payload" type="application/json">not json</script>'
-            )
-        )
 
     def test_payload_carries_the_report_structure_the_sidebar_needs(self) -> None:
         codebase = _codebase()
