@@ -1345,11 +1345,13 @@ APPENDIX_COLUMNS = (
 )
 
 # The share of the wide measure each column takes, in the order input,
-# processing, output, so a row reads as the step's flow, with the processing
-# text giving the model and the effort what a name such as `gpt-image-2.5-sunburst` needs at this size. The step's
-# name carries the underline in its kind's color, as a reference to it in the
-# text does, so the row is read against the charts without a number.
-APPENDIX_WIDTHS = (0.14, 0.13, 0.36, 0.13, 0.16, 0.08)
+# processing, output, so a row reads as the step's flow. The widths are set so
+# the input, processing, and output cells of a typical row wrap to about the
+# same number of lines, and a call count such as "1 per article and image"
+# takes two. The step's name carries the underline in its kind's color, as a
+# reference to it in the text does, so the row is read against the charts
+# without a number.
+APPENDIX_WIDTHS = (0.14, 0.17, 0.28, 0.17, 0.13, 0.11)
 
 
 def model_effort(step: Dict[str, Any]) -> str:
