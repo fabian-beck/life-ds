@@ -1761,7 +1761,7 @@
       factRow("Output", record.output),
       factRow("Model", record.model),
       factRow("Reasoning effort", record.effort),
-      factRow("Calls per run", record.calls),
+      factRow("#Calls (API)", record.calls),
     ].forEach((row) => {
       if (row) table.appendChild(row);
     });

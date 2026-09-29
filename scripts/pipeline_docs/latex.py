@@ -1381,7 +1381,7 @@ def appendix(writer: Writer) -> str:
     subject = " and ".join(charts) if charts else "each pipeline"
     intro = (
         f"The steps of {subject}, one per row: input, processing, output, "
-        "model with reasoning effort, and calls per run. A call is a request "
+        "model with reasoning effort, and number of API calls. A call is a request "
         "to an external API (language or image model, Wikipedia, Wikimedia "
         "Commons, Openverse, or geocoder)."
     )
