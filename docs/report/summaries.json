@@ -192,7 +192,7 @@
     "p_illustrations": {
       "fingerprint": "bd02bec644bcdd1b",
       "summary": {
-        "description": "Searches Commons for each report and keeps only pictures that directly depict things the report names.",
+        "description": "Searches Commons for each report and keeps only pictures that directly depict something mentioned in the report.",
         "input": "the report, its searches, and life events",
         "output": "report illustrations",
         "source": "gpt-5.6-terra"
@@ -228,7 +228,7 @@
     "p_img_search": {
       "fingerprint": "289933274e42d535",
       "summary": {
-        "description": "Plans searches for the portrait and for things the events name, excluding commemorative objects.",
+        "description": "Plans searches for the portrait and for buildings, machines, documents, and works mentioned in the events, excluding commemorative objects.",
         "input": "the event skeletons",
         "output": "Commons search strings",
         "source": "gpt-5.6-terra"
