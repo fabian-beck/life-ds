@@ -3,7 +3,7 @@
     "m_clusters": {
       "fingerprint": "e3e1a284891d9ff6",
       "summary": {
-        "description": "Finds communities in the reviewed graph and keeps those that contain main people. Orders them by the main members’ birth years and keys each circle by its main members.",
+        "description": "Finds communities in the reviewed graph and keeps those that contain main people. Orders them by the main members’ birth years and identifies each circle by its main members.",
         "input": "the reviewed graph",
         "output": "ordered circles with members and ties",
         "source": "gpt-5.6-terra"
@@ -21,18 +21,18 @@
     "m_p1": {
       "fingerprint": "df5ccba85a768bb2",
       "summary": {
-        "description": "Selects the people who belong in the theme from their roles, summaries, places, and events. Writes the story’s title, introduction, subtopics, chapters, and conclusion, and names people missing from the registry.",
+        "description": "Selects the people who fit the theme from their roles, summaries, places, and events. Writes the story’s title, introduction, subtopics, chapters, and conclusion, and names people missing from the registry.",
         "input": "the person registry and life events",
-        "output": "a themed story plan and selected people",
+        "output": "a story plan and selected people",
         "source": "gpt-5.6-terra"
       }
     },
     "m_p3": {
       "fingerprint": "1b6840151fc24d4c",
       "summary": {
-        "description": "Filters the selected people’s life events to the landmark contributions that carry the theme and records why each kept event belongs. Biography and routine work are rejected by default.",
+        "description": "Filters the selected people’s life events to major contributions relevant to the theme and records why each kept event is relevant. Biographical and routine events are removed by default.",
         "input": "the selected people and life events",
-        "output": "kept events with the reasons they belong",
+        "output": "relevant events with reasons",
         "source": "gpt-5.6-terra"
       }
     },
@@ -59,7 +59,7 @@
       "summary": {
         "description": "Reviews the merged network against the article evidence, adding missed direct ties and removing vague or indirect ones. Graph density sets how readily it proposes new ties.",
         "input": "the merged network",
-        "output": "a reviewed network of biographical ties",
+        "output": "a reviewed network",
         "source": "gpt-5.6-terra"
       }
     },
@@ -84,7 +84,7 @@
     "m_p7b": {
       "fingerprint": "ffd4471949bfc88b",
       "summary": {
-        "description": "Rates each located event by how strongly its place bears on the story’s theme. The ratings are the weights of the place clustering.",
+        "description": "Rates each located event by how relevant its place is to the story’s theme. The ratings weight the place clustering.",
         "input": "the chapters and life events",
         "output": "geographic weights for map events",
         "source": "gpt-5.6-terra"
@@ -93,25 +93,25 @@
     "m_p7c": {
       "fingerprint": "5d728085b48add1b",
       "summary": {
-        "description": "Writes a short factual title and text for each geographic cluster and discards the clusters that do not carry the story’s arc.",
+        "description": "Writes a short factual title and text for each geographic cluster and discards the clusters that are not relevant to the story.",
         "input": "the qualifying geographic clusters",
-        "output": "curated map stops with place narratives",
+        "output": "map stops with titles and texts",
         "source": "gpt-5.6-terra"
       }
     },
     "m_p8": {
       "fingerprint": "a3cd7e360891a8cb",
       "summary": {
-        "description": "Rewrites the circle, timeline, and map texts as one story in a shared voice, sets its reading order, and removes map stops that do not support it.",
+        "description": "Rewrites the circle, timeline, and map texts as one story in a consistent style, sets their order, and removes map stops that do not fit the story.",
         "input": "circle narration, map stops, and background material",
-        "output": "a composed meta story and curated map stops",
+        "output": "a composed meta story",
         "source": "gpt-5.6-terra"
       }
     },
     "m_style": {
       "fingerprint": "2f90e02b65f34c37",
       "summary": {
-        "description": "Derives the story’s dark color, type, pattern, and ornament system from its framing and opening, using abstract geometry for the theme.",
+        "description": "Derives a dark color, type, pattern, and ornament system for the story from its framing and opening. The patterns are abstract geometry.",
         "input": "the story’s framing and opening",
         "output": "the story’s visual style",
         "source": "gpt-5.6-terra"
@@ -120,7 +120,7 @@
     "m_translate": {
       "fingerprint": "c6490ce91dc6b984",
       "summary": {
-        "description": "Translates the meta story, carrying over the settled name forms and event titles from the localized person data. Each recurring metaphor is translated one way throughout.",
+        "description": "Translates the meta story, taking person names and event titles from the localized person data. Each recurring metaphor is translated the same way throughout.",
         "input": "the meta story and localized person data",
         "output": "a localized meta story",
         "source": "gpt-5.6-terra"
@@ -156,7 +156,7 @@
     "p_events_p1": {
       "fingerprint": "dd45b217838f4666",
       "summary": {
-        "description": "Selects the events that carry a life, weighs them against each other, and orders them into chapters. Leaves dated event skeletons and a conclusion about the work that persists.",
+        "description": "Selects the most significant events of the life, weighs them against each other, and groups them into chapters. Leaves dated event skeletons and a conclusion about the person’s lasting work.",
         "input": "the article and selected related articles",
         "output": "a chaptered life timeline and conclusion",
         "source": "gpt-5.6-terra"
@@ -282,7 +282,7 @@
     "p_style": {
       "fingerprint": "b1f93ef5262124eb",
       "summary": {
-        "description": "Derives a dark color, type, and pattern system from the person’s work, places, and pictured objects, and names the evidence the palette draws on. Rejects a style that loses legibility or names no source.",
+        "description": "Derives a dark color, type, and pattern system from the person’s work, places, and pictured objects, and names the sources of the palette. Rejects styles with insufficient contrast or without a named source.",
         "input": "the finished life events and image captions",
         "output": "a palette, type system, and pattern",
         "source": "gpt-5.6-terra"
@@ -309,7 +309,7 @@
     "p_wiki_select": {
       "fingerprint": "7fa20ef4af2da4e8",
       "summary": {
-        "description": "Ranks the linked articles by their value for the life story and keeps those about people, personal events, and individual works.",
+        "description": "Ranks the linked articles by relevance to the life story and keeps those about people, personal events, and individual works.",
         "input": "the article and outgoing link candidates",
         "output": "ranked related articles",
         "source": "gpt-5.6-terra"
