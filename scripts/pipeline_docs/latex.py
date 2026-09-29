@@ -1341,7 +1341,7 @@ APPENDIX_COLUMNS = (
     "Input",
     "Output",
     "Model (effort)",
-    "#Calls",
+    "#Calls (API)",
 )
 
 # The share of the wide measure each column takes, with the description
