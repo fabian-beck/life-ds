@@ -150,7 +150,7 @@ body {
   margin: 0 0 10px;
   padding-bottom: 6px;
   border-bottom: 1px solid var(--rule-strong);
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 11px;
   font-weight: 600;
@@ -215,7 +215,7 @@ body {
 
 .kicker {
   margin: 0 0 12px;
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 11px;
   font-weight: 600;
@@ -301,7 +301,7 @@ a.author-name:focus-visible {
 
 .abstract-label {
   margin: 0 0 8px;
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 11px;
   font-weight: 600;
@@ -431,7 +431,7 @@ a.author-name:focus-visible {
 .secno {
   flex: none;
   min-width: 2.6ch;
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 0.62em;
   font-variant-numeric: tabular-nums;
@@ -636,7 +636,7 @@ a.author-name:focus-visible {
 
 .callout-label {
   margin: 0 0 6px;
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 11px;
   font-weight: 600;
@@ -705,7 +705,7 @@ a.author-name:focus-visible {
 
 .notes-label {
   margin: 0 0 6px;
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 11px;
   font-weight: 600;
@@ -1259,7 +1259,7 @@ figure.figure > .cap {
 .band-label {
   font-size: 10px;
   font-weight: 600;
-  fill: var(--muted);
+  fill: var(--ink);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -1577,7 +1577,7 @@ figure.teaser > .cap {
 }
 
 .tstage {
-  fill: var(--muted);
+  fill: var(--ink);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.09em;
@@ -1993,7 +1993,7 @@ figure.teaser > .cap {
 }
 
 .figpeek-kicker {
-  color: var(--muted);
+  color: var(--ink);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;

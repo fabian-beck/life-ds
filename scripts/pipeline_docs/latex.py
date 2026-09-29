@@ -1529,8 +1529,8 @@ __COLORS__
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
-\fancyhead[L]{\sffamily\scriptsize\color{muted}__TITLE__}
-\fancyhead[R]{\sffamily\scriptsize\color{muted}\thepage{} / \pageref*{LastPage}}
+\fancyhead[L]{\sffamily\scriptsize\color{ink}__TITLE__}
+\fancyhead[R]{\sffamily\scriptsize\color{ink}\thepage{} / \pageref*{LastPage}}
 \fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}}
 
 %% ---- Captions: sans-serif, the number bold, and under a figure a rule
@@ -1542,7 +1542,7 @@ __COLORS__
 \captionsetup[table]{position=above,skip=4pt}
 
 %% ---- Small type: the eyebrow over a block.
-\newcommand{\eyebrow}[1]{{\sffamily\scriptsize\bfseries\color{muted}\MakeUppercase{#1}}}
+\newcommand{\eyebrow}[1]{{\sffamily\scriptsize\bfseries\color{ink}\MakeUppercase{#1}}}
 \newcommand{\capstyle}{\sffamily\small}
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\refdoi}[1]{\textcolor{muted}{#1}}
