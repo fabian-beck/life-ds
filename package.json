@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "preview:card": "node scripts/capture_social_preview.mjs",
     "report:shots": "python scripts/generate_report.py --shots",
-    "report:figures": "python scripts/generate_report.py --figures",
+    "report:figures": "python scripts/generate_report.py --figures --skip-ai",
     "report:latex": "python scripts/compile_report_latex.py",
     "report:pdf": "npm run report:figures && npm run report:latex",
     "basemap:assets": "node scripts/vendor_basemap_assets.mjs",

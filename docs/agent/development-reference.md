@@ -441,7 +441,7 @@ The report's PDF is built from LaTeX only; the page carries no print layout, and
 
 ```bash
 python scripts/generate_report.py            # writes docs/report/latex/report.tex beside the page
-npm run report:figures                       # prints the drawn figures it includes (stale and missing)
+npm run report:figures                       # prints the drawn figures it includes (stale and missing); never calls the API
 python scripts/generate_report.py --figures all
 npm run report:latex                         # compiles docs/report/latex/report.pdf (untracked)
 npm run report:latex -- --engine latexmk     # a particular engine
