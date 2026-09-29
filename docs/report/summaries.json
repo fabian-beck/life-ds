@@ -21,7 +21,7 @@
     "m_p1": {
       "fingerprint": "df5ccba85a768bb2",
       "summary": {
-        "description": "Selects the people who fit the theme and writes the story’s title, introduction, subtopics, chapters, and conclusion. Names people missing from the registry.",
+        "description": "Selects the people who fit the theme and writes the story’s title, introduction, subtopics, chapters, and conclusion. Lists people missing from the registry.",
         "input": "the person registry and life events",
         "output": "a story plan and selected people",
         "source": "gpt-5.6-terra"
@@ -84,7 +84,7 @@
     "m_p7b": {
       "fingerprint": "ffd4471949bfc88b",
       "summary": {
-        "description": "Rates each located event by how relevant its place is to the story’s theme. The ratings weight the place clustering.",
+        "description": "Rates each located event by how relevant its place is to the story’s theme. The ratings serve as weights for clustering the places.",
         "input": "the chapters and life events",
         "output": "geographic weights for map events",
         "source": "gpt-5.6-terra"
@@ -111,7 +111,7 @@
     "m_style": {
       "fingerprint": "2f90e02b65f34c37",
       "summary": {
-        "description": "Derives a dark color, type, pattern, and ornament system for the story from its framing and opening.",
+        "description": "Designs a dark color scheme, typography, patterns, and ornaments for the story based on its framing and opening.",
         "input": "the story’s framing and opening",
         "output": "the story’s visual style",
         "source": "gpt-5.6-terra"
@@ -129,7 +129,7 @@
     "p_backgrounds": {
       "fingerprint": "10919528cb92a1bb",
       "summary": {
-        "description": "Writes a background report for each deep event whose sources hold material about the event itself, and sets its citations.",
+        "description": "Writes a background report for each deep event whose sources contain material about the event itself, and sets its citations.",
         "input": "the reviewed events and source articles",
         "output": "event-specific reports and citations",
         "source": "gpt-5.6-terra"
@@ -147,7 +147,7 @@
     "p_chapter_concepts": {
       "fingerprint": "c98019861832af1a",
       "summary": {
-        "description": "Develops an abstract visual concept for each chapter from the life events.",
+        "description": "Writes an abstract visual concept for each chapter based on the life events.",
         "input": "the finished life events",
         "output": "an abstract visual concept per chapter",
         "source": "gpt-5.6-terra"
@@ -156,7 +156,7 @@
     "p_events_p1": {
       "fingerprint": "dd45b217838f4666",
       "summary": {
-        "description": "Selects the most significant events of the life, weighs them against each other, and groups them into chapters. Leaves dated event skeletons and a conclusion.",
+        "description": "Selects the most significant events of the life, groups them into chapters, and writes a conclusion.",
         "input": "the article and selected related articles",
         "output": "a chaptered life timeline and conclusion",
         "source": "gpt-5.6-terra"
@@ -201,7 +201,7 @@
     "p_img_fetch": {
       "fingerprint": "7227e2d7ba930d29",
       "summary": {
-        "description": "Runs the planned searches and each event’s own searches against Commons and Openverse and keeps one candidate per picture.",
+        "description": "Searches Commons and Openverse with the planned searches and each event’s own searches and keeps one candidate per picture.",
         "input": "the planned and event image searches",
         "output": "image candidates linked to events",
         "source": "gpt-5.6-terra"
@@ -219,7 +219,7 @@
     "p_img_match": {
       "fingerprint": "f0f82bc6220d49b0",
       "summary": {
-        "description": "Picks a reference portrait and assigns images to the life events they directly depict.",
+        "description": "Selects a reference portrait and assigns images to the life events they directly depict.",
         "input": "the ranked image candidates",
         "output": "a portrait and event images",
         "source": "gpt-5.6-terra"
@@ -282,7 +282,7 @@
     "p_style": {
       "fingerprint": "b1f93ef5262124eb",
       "summary": {
-        "description": "Derives a dark color, type, and pattern system from the person’s work, places, and pictured objects.",
+        "description": "Designs a dark color scheme, typography, and background pattern based on the person’s work, places, and pictured objects.",
         "input": "the finished life events and image captions",
         "output": "a palette, type system, and pattern",
         "source": "gpt-5.6-terra"
