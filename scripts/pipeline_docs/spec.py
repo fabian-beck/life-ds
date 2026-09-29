@@ -150,7 +150,7 @@ class Step:
     calls_per_run: str = "1"
     """Requests a plain fresh run sends to external APIs: the language and
     image models, Wikipedia, Commons, Openverse, and the geocoder. A step that
-    calls none of them counts 0."""
+    calls none of them leaves the count empty."""
     skip_flag: Optional[str] = None
     model_note: Optional[str] = None
     byline: Optional[str] = None
@@ -566,7 +566,7 @@ STEPS: List[Step] = [
             "once for the whole pool, and the pool serves every event at once."
         ),
         depends_on=[Dep("p_img_fetch", "every hit the queries returned")],
-        calls_per_run="0",
+        calls_per_run="",
     ),
     Step(
         "p_img_match",
@@ -987,7 +987,7 @@ STEPS: List[Step] = [
         ),
         depends_on=[Dep("m_p1", "the selected person ids")],
         inputs=["ego_network"],
-        calls_per_run="0",
+        calls_per_run="",
     ),
     Step(
         "m_p5b",
@@ -1024,7 +1024,7 @@ STEPS: List[Step] = [
             "once."
         ),
         depends_on=[Dep("m_p5b", "the reviewed graph")],
-        calls_per_run="0",
+        calls_per_run="",
     ),
     Step(
         "m_p6",
@@ -1070,7 +1070,7 @@ STEPS: List[Step] = [
             "stops, weighted by the ratings, and keeps only the clusters that qualify."
         ),
         depends_on=[Dep("m_p7b", "per-event weights")],
-        calls_per_run="0",
+        calls_per_run="",
         skip_flag="--skip-map",
     ),
     Step(

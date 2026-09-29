@@ -241,9 +241,7 @@
     // The model before the per-run marker, so that a line the node has to cut
     // loses the marker rather than the model.
     if (step.model) facts.push(step.model.split(" (")[0]);
-    // "0" and "1" are single fixed counts; anything else repeats per item.
-    if (step.calls_per_run && !["0", "1"].includes(step.calls_per_run))
-      facts.push("×N");
+    if (step.calls_per_run && step.calls_per_run !== "1") facts.push("×N");
     return facts.join(" · ");
   }
 
