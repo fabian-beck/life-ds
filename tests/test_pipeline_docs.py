@@ -739,10 +739,8 @@ class PayloadAndRenderTests(unittest.TestCase):
         """Two equal payloads render the same bytes, however they were built.
 
         `--check` compares the committed page with a rebuild character by
-        character, and a step summary reaches the build either straight from
-        the summarizer or read back out of the sorted cache. The two dicts are
-        equal and their key order is not, so a build that re-summarized a step
-        once wrote a page the next check reported as drift.
+        character, and two payloads with equal values can still differ in their
+        key order.
         """
         shuffled = {key: self.payload[key] for key in reversed(list(self.payload))}
         shuffled["steps"] = [

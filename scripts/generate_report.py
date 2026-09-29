@@ -3,7 +3,6 @@
 
     python scripts/generate_report.py              # rebuild the page
     python scripts/generate_report.py --check      # drift check only
-    python scripts/generate_report.py --skip-ai    # no API calls
     python scripts/generate_report.py --shots      # retake stale screenshots
     python scripts/generate_report.py --figures    # reprint stale drawings for LaTeX
 
@@ -21,8 +20,9 @@ The report is half written and half measured, and the two halves never mix.
    schemas, prompt templates and CLI flags. Always fresh, never guessed.
 3. `facts.py` measures the repository—corpus size, component counts, test
    counts—so a sentence about scale cannot go stale.
-4. AI-written step explanations, cached in `docs/report/summaries.json` against a
-   fingerprint of each step's source, so a rebuild only pays for what changed.
+4. Step explanations, revised by hand in `docs/report/summaries.json` and kept
+   against a fingerprint of each step's source, so an entry the source has
+   outgrown is named. The build never calls a model.
 5. Screenshots of the running application, declared in the markdown as a
    position to photograph and taken from it by a browser, so a figure of the
    interface can be retaken instead of being pasted in.
@@ -37,9 +37,8 @@ cached step explanation names a model that step does not resolve, or when one
 was written from source that has since changed. Finally it rebuilds the page
 and the LaTeX source in memory and compares them, build stamp aside, with the
 committed `docs/report/index.html` and `docs/report/latex/report.tex`, so a
-document describing source that has moved fails the check instead of shipping. It reads the summary cache rather than writing it,
-so it needs no API key to run—but a stale explanation is fixed by a rebuild
-that does, because the explanation it names has to be written again.
+document describing source that has moved fails the check instead of shipping.
+A stale explanation is revised by hand and accepted with `--accept-summary`.
 """
 
 from __future__ import annotations
@@ -61,7 +60,7 @@ from pipeline_docs.model import build_payload  # noqa: E402
 from pipeline_docs.summarize import (  # noqa: E402
     accept_summaries,
     cached_summaries,
-    summarize_steps,
+    step_summaries,
 )
 
 OUT_DIR = REPO_ROOT / "docs" / "report"
@@ -93,11 +92,6 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         help="Only verify that the spec and the report still resolve; write nothing.",
     )
     parser.add_argument(
-        "--skip-ai",
-        action="store_true",
-        help="Do not call the API; use cached summaries, then the spec.py text.",
-    )
-    parser.add_argument(
         "--accept-summary",
         action="append",
         default=[],
@@ -107,7 +101,6 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
             "from the current source. Repeat for several steps."
         ),
     )
-    parser.add_argument("--model", help="Override the summarizer model.")
     parser.add_argument(
         "--shots",
         nargs="?",
@@ -143,7 +136,7 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         ),
     )
     parser.add_argument(
-        "--verbose", action="store_true", help="Log each step summarized."
+        "--verbose", action="store_true", help="Log each screenshot and figure."
     )
     return parser.parse_args(list(argv))
 
@@ -221,8 +214,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         ):
             print(
                 "\nRevise the affected entries in docs/report/summaries.json by "
-                "hand and accept them with --accept-summary STEP, or rebuild "
-                "to have the model revise them: python scripts/generate_report.py"
+                "hand and accept them with --accept-summary STEP."
             )
             return 1
 
@@ -299,13 +291,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         except ValueError as error:
             print(f"  ERROR: {error}")
             return 1
-    summaries = summarize_steps(
-        codebase,
-        cache_path=SUMMARY_CACHE,
-        model=args.model,
-        skip_ai=args.skip_ai,
-        verbose=args.verbose,
-    )
+    summaries = step_summaries(codebase, SUMMARY_CACHE)
     if validate.report(
         validate.check_summaries(codebase, summaries), subject="Summaries"
     ):

@@ -340,9 +340,8 @@ def check(codebase: Codebase) -> List[Problem]:
 def check_freshness(codebase: Codebase, cache_path: Path) -> List[Problem]:
     """Cached explanations against the source they claim to have been written from.
 
-    The report states that a step's explanation is rewritten whenever its
-    source, prompt or schema changes, and prints it under that attribution.
-    Nothing enforced it. The coverage check above notices a step that stopped
+    A step's explanation is published as describing its current source, prompt,
+    and schema, and is revised by hand when they change. Nothing enforced it. The coverage check above notices a step that stopped
     calling the model and a function that was renamed away, but never a step
     whose body was rewritten under an explanation that stayed behind—so a
     refactor that rerouted twelve call sites left twelve explanations
@@ -353,7 +352,7 @@ def check_freshness(codebase: Codebase, cache_path: Path) -> List[Problem]:
             "error",
             f"summary '{step_id}'",
             "was written from source that has since changed—revise it by hand "
-            f"and accept it with --accept-summary {step_id}, or rebuild",
+            f"and accept it with --accept-summary {step_id}",
         )
         for step_id in summarize.stale_steps(codebase, cache_path)
     ]
@@ -397,8 +396,7 @@ def check_summaries(
                     "error",
                     f"summary '{step.id}'",
                     f"names the model '{name}', which is not what this step "
-                    "resolves—re-summarize the step, and keep model names out "
-                    "of the source comments the summarizer reads",
+                    "resolves—revise the entry by hand",
                 )
             )
     return problems

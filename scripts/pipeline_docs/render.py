@@ -201,11 +201,8 @@ def render(payload: Dict[str, Any], document: Optional[Document] = None) -> str:
     # slash keeps the JSON valid while making that impossible.
     #
     # Sorted, because `--check` compares the rendered page byte for byte: the
-    # text has to be a function of the payload's values and nothing else. A
-    # step summary reaches the build either straight from the summarizer or
-    # read back out of the sorted cache, and the two dicts are equal while
-    # their insertion order is not—so without this a build that re-summarized
-    # anything wrote a page the very next check called drift.
+    # text has to be a function of the payload's values and nothing else, and
+    # two payloads with equal values can still differ in their key order.
     data = json.dumps(payload, ensure_ascii=False, sort_keys=True).replace("</", "<\\/")
 
     title = document.title if document else "Life Data Stories—technical report"

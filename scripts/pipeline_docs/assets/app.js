@@ -1714,7 +1714,7 @@
      the LaTeX rendering builds its appendix from the same fields.
 
      The record is short by design. Input and output are the phrases the
-     summarizer wrote from the source, in the vocabulary of the figures; a
+     step's explanation gives, in the vocabulary of the figures; a
      hand-written fallback entry has none, so the declared dependencies and
      artifacts stand in. Model, reasoning effort, and calls per run are
      measured from the code. Everything else about a step—its file and line,

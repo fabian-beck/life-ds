@@ -1,32 +1,25 @@
 #!/usr/bin/env python3
-"""AI-written explanations of each pipeline step, cached against the source.
+"""Per-step explanations of the pipeline, kept against the source they describe.
 
-Each step is summarized once from its own source, prompt template and output
-schema. The summary is stored with a fingerprint of exactly those inputs, so a
-rebuild only pays for the steps that actually changed—the same
-staleness-by-fingerprint idea the translation pipeline uses for person data.
+Each entry in `docs/report/summaries.json` explains one step: two or three
+plain sentences on what the step contributes and, where one stands out, why it
+is built that way, plus a phrase each for what it reads and what it leaves
+behind. An entry is stored with a fingerprint of the step's source, prompt
+template, and output schema, so a build can tell which entries describe source
+that has since moved.
 
-The summarizer reads the source but does not paraphrase it. What it writes is
-a report entry on the plain path of a fresh run: two or three plain sentences
-on what the step contributes and, where one stands out, why it is built that
-way, plus a phrase each for what it reads and what it leaves behind. Character budgets, field inventories, and the
-counts a prompt happens to state are below that level, and the record printed
-beside the text carries the model, its reasoning effort, and the number of
-calls anyway.
-
-Without an API key (or with `--skip-ai`) the build falls back to the
-hand-written one-liners in `spec.py`, so the chart always renders.
+The entries are revised by hand. A build only reads them and never calls a
+model: a stale entry is named and fails the check until it is revised and
+accepted with `--accept-summary`, and a step without an entry shows the
+one-liner from `spec.py`.
 """
 
 from __future__ import annotations
 
 import hashlib
 import json
-import os
 from pathlib import Path
-from typing import Any, Dict, List, Optional
-
-from pydantic import BaseModel, Field
+from typing import Any, Dict, List
 
 from . import spec
 from .introspect import Codebase
@@ -34,81 +27,6 @@ from .introspect import Codebase
 CACHE_VERSION = 5
 MAX_SOURCE_CHARS = 9000
 MAX_PROMPT_CHARS = 6000
-
-SYSTEM_PROMPT = (
-    "You write the step entries of a technical report on a data-journalism "
-    "pipeline, for the developer who wrote it and for researchers reading it "
-    "later. You are given one processing step: its source, the prompt template "
-    "it sends, the structured output it asks for, and what it reads from other "
-    "steps. Say what the step contributes to the story the pipeline is building "
-    "and, only where one stands out, why it is built that way. Write at the "
-    "level of the report around you, which argues about the design rather than "
-    "restating it: no character budgets, no field-by-field inventory of the "
-    "output, no counts or formatting rules quoted from the prompt, no file "
-    "names, function names, or type names. The report prints the step's model, "
-    "reasoning effort, and number of calls beside your text, so leave those to "
-    "it. Its register is plain and concrete. Name the thing that acts, prefer "
-    "the active verb and the plain word over the impressive one, and call a "
-    "thing what it is: a step reads an article and returns a place name, it "
-    "does not ingest a source and emit a geographically resolvable location "
-    "layer. Never stack abstract nouns where one concrete noun would do, and "
-    "cut any adjective that only praises the design. Every clause carries part "
-    "of the claim, so a sentence that merely restates its predecessor is "
-    "dropped rather than rewritten. Keep every sentence short, in "
-    "subject-verb order, and free of the habits of machine-written prose: "
-    "no 'ensures', 'leverages', 'seamlessly', 'robust', or 'comprehensive'; "
-    "no trailing participle clause that tacks a purpose onto a sentence "
-    "('..., ensuring that ...'); no 'rather than' or 'not X but Y' unless "
-    "someone would have assumed the alternative; no list of three for its "
-    "own sake; no sentence that announces what the next one says. "
-    "Describe the plain path of a fresh run over a new person or story, "
-    "which is also the path the call count beside your text counts: leave "
-    "out retries, failed calls and what survives them, fallbacks, work a "
-    "rerun skips or overwrites, and the cleanup of an earlier run's output. "
-    "Never name a model, an API version or a vendor product: the record "
-    "printed beside your text carries the model this step resolves, measured "
-    "from the code, and a name repeated from a comment is how that record goes "
-    "stale. The pipeline writes data; the application that shows it is "
-    "described elsewhere in the report. Say what a step writes into the "
-    "story, a title and a text per circle or a stop the map keeps, never how "
-    "that is shown: no cards, screens, scrolling, tapping, clients, or 'the "
-    "interface', except in a name the step carries, such as the interface "
-    "style. Never address the reader, never use second person, and do not "
-    "restate the step's name as a sentence. Open with the verb: the entry is "
-    "printed under the step's name, so 'This step gathers the article' spends "
-    "the opening on a subject the heading already gave, where 'Gathers the "
-    "article' does not. Write in American English, and set "
-    "em dashes closed up against the words they join, with no surrounding "
-    "spaces, as the rest of the report does."
-)
-
-
-class StepSummary(BaseModel):
-    """AI-written documentation for a single pipeline step."""
-
-    description: str = Field(
-        description=(
-            "Two or three short sentences, at most fifty words in all, on what "
-            "this step contributes to the story the pipeline is building: what "
-            "it decides and what it leaves behind, and only where one stands "
-            "out, the design decision it turns on."
-        )
-    )
-    input: str = Field(
-        description=(
-            "What the step reads, as one short phrase of at most eight words "
-            "in the pipeline's own vocabulary, such as 'the event skeletons and "
-            "the article'. No file names, no type names, no sentence."
-        )
-    )
-    output: str = Field(
-        description=(
-            "What the step leaves behind, as one short phrase of at most eight "
-            "words in the pipeline's own vocabulary, such as 'a picture and "
-            "caption per matched event'. No file names, no type names, no "
-            "sentence."
-        )
-    )
 
 
 def _function_source(codebase: Codebase, step: spec.Step) -> str:
@@ -179,7 +97,7 @@ def _flow_block(step: spec.Step) -> str:
     """What the spec says the step reads and writes, for the input and output.
 
     The dependency labels and the artifact names are the pipeline's own
-    vocabulary for the data, so the phrases the summarizer writes for input
+    vocabulary for the data, so the phrases an explanation gives for input
     and output stay in the words the figures use.
     """
     labels = {item.id: item.label for item in spec.STEPS}
@@ -195,7 +113,7 @@ def _flow_block(step: spec.Step) -> str:
 
 
 def build_context(codebase: Codebase, step: spec.Step) -> str:
-    """Assemble everything the summarizer is allowed to see for one step."""
+    """Everything an explanation describes for one step, as fingerprinted."""
     parts = [
         f"STEP: {step.label}",
         f"PIPELINE: {spec.LANES[step.lane]['label']}",
@@ -261,8 +179,8 @@ def stale_steps(codebase: Codebase, path: Path) -> List[str]:
     The explanation is published as written from the step's current source,
     prompt and schema, so an entry whose fingerprint no longer matches is a
     claim the page can no longer support. A step the cache has never described
-    is not stale: the build writes it, and without a key it falls back to the
-    `spec.py` text, which is attributed to the maintainer rather than a model.
+    is not stale: the build shows the `spec.py` text, which is attributed to the
+    maintainer.
     """
     entries = load_cache(path).get("steps") or {}
     stale: List[str] = []
@@ -289,23 +207,6 @@ def _fallback(step: spec.Step) -> Dict[str, Any]:
     }
 
 
-def _previous_block(cached: Optional[Dict[str, Any]]) -> str:
-    """The entry a stale step already has, to be revised rather than replaced."""
-    previous = (cached or {}).get("summary")
-    if not isinstance(previous, dict):
-        return ""
-    fields = "\n".join(
-        f"  {key}: {previous.get(key, '')}" for key in ("description", "input", "output")
-    )
-    return (
-        "\n\nPREVIOUS ENTRY, written from an earlier version of this source:\n"
-        f"{fields}\n"
-        "Revise this entry rather than writing a new one. Keep every sentence "
-        "and phrase the current source leaves true word for word, and change "
-        "only what the source no longer supports or now requires."
-    )
-
-
 def accept_summaries(codebase: Codebase, path: Path, step_ids: List[str]) -> None:
     """Mark hand-revised entries as written from the current source.
 
@@ -326,95 +227,30 @@ def accept_summaries(codebase: Codebase, path: Path, step_ids: List[str]) -> Non
     save_cache(path, {"version": CACHE_VERSION, "steps": entries})
 
 
-def summarize_steps(
-    codebase: Codebase,
-    cache_path: Path,
-    model: Optional[str] = None,
-    skip_ai: bool = False,
-    verbose: bool = False,
-) -> Dict[str, Dict[str, Any]]:
-    """Return {step_id: summary}, refreshing only steps whose source changed.
+def step_summaries(codebase: Codebase, cache_path: Path) -> Dict[str, Dict[str, Any]]:
+    """Return {step_id: summary} from the cache, without calling anything.
 
-    A refreshed step is revised, not rewritten: the model is shown the entry it
-    replaces and keeps every sentence the changed source leaves true, so the
-    report's text stays as stable across versions as its prose does. There is
-    deliberately no switch to re-summarize every step at once.
+    The explanations are revised by hand: a build never asks a model to write
+    one. A step whose cached entry was written from source that has since
+    changed keeps that entry and is named here, and the check fails on it until
+    the entry is revised and accepted with `--accept-summary`. A step the cache
+    has never described gets the `spec.py` text.
     """
-    cache = load_cache(cache_path)
-    entries: Dict[str, Any] = dict(cache.get("steps") or {})
+    entries: Dict[str, Any] = dict(load_cache(cache_path).get("steps") or {})
     results: Dict[str, Dict[str, Any]] = {}
-
-    client = None
-    if not skip_ai:
-        if not os.getenv("OPENAI_API_KEY"):
-            print("  No OPENAI_API_KEY set—using the hand-written spec summaries.")
-            skip_ai = True
-        else:
-            from openai import OpenAI
-
-            client = OpenAI()
-
-    if model is None:
-        from config import DEFAULT_MODEL
-
-        model = DEFAULT_MODEL
-
-    from config import BULK_REASONING_EFFORT
-    from utils.model_calls import parse_structured
-
     fresh = 0
-    written = 0
     for step in spec.STEPS:
-        context = build_context(codebase, step)
-        fingerprint = _fingerprint(context)
         cached = entries.get(step.id)
-        if cached and cached.get("fingerprint") == fingerprint:
-            results[step.id] = cached["summary"]
+        if not isinstance(cached, dict) or not isinstance(cached.get("summary"), dict):
+            results[step.id] = _fallback(step)
+            continue
+        results[step.id] = cached["summary"]
+        if cached.get("fingerprint") == _fingerprint(build_context(codebase, step)):
             fresh += 1
-            continue
-        if skip_ai or client is None:
-            # Reached only when the fingerprint missed, so a cached entry here
-            # describes source that has since changed. Rendering it silently is
-            # how a refactor across twelve call sites reached the published page
-            # under twelve explanations of the code it replaced.
-            if cached:
-                print(
-                    f"  '{step.id}' keeps an explanation written from source "
-                    "that has since changed."
-                )
-            results[step.id] = (cached or {}).get("summary") or _fallback(step)
-            continue
-        if verbose:
-            print(f"  Summarizing {step.id} ({step.label})...")
-        parsed = parse_structured(
-            client,
-            model=model,
-            reasoning_effort=BULK_REASONING_EFFORT,
-            input=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": context + _previous_block(cached)},
-            ],
-            text_format=StepSummary,
-            label=f"Step summary ({step.id})",
-        )
-        if parsed is None:
-            print(f"  Falling back to the spec text for '{step.id}'.")
-            results[step.id] = (cached or {}).get("summary") or _fallback(step)
-            continue
-        summary = parsed.model_dump()
-        summary["source"] = model
-        entries[step.id] = {"fingerprint": fingerprint, "summary": summary}
-        results[step.id] = summary
-        written += 1
-
-    # Drop entries for steps that no longer exist, so a renamed or removed step
-    # does not keep paying for cache space and reading as current.
-    live = {step.id for step in spec.STEPS}
-    stale = [step_id for step_id in entries if step_id not in live]
-    for step_id in stale:
-        del entries[step_id]
-
-    if written or stale:
-        save_cache(cache_path, {"version": CACHE_VERSION, "steps": entries})
-    print(f"  Summaries: {fresh} cached, {written} regenerated.")
+        else:
+            print(
+                f"  '{step.id}' keeps an explanation written from source "
+                "that has since changed."
+            )
+    print(f"  Summaries: {fresh} of {len(spec.STEPS)} current.")
     return results
