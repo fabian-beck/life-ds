@@ -1379,9 +1379,8 @@ def appendix(writer: Writer) -> str:
     intro = (
         f"The steps of {subject}, one per row: description, input, output, "
         "model with reasoning effort, and calls per run. A call is a request "
-        "to an external API: a language or image model, Wikipedia, Wikimedia "
-        "Commons, Openverse, or the geocoder. The count is that of a plain "
-        "fresh run."
+        "to an external API (language or image model, Wikipedia, Wikimedia "
+        "Commons, Openverse, or geocoder)."
     )
     spec = "@{}" + "".join(f"S{{{width:.2f}}}" for width in APPENDIX_WIDTHS) + "@{}"
     head = " & ".join(f"\\textbf{{{escape(title)}}}" for title in APPENDIX_COLUMNS)
