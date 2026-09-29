@@ -445,6 +445,7 @@ npm run report:figures                       # prints the drawn figures it inclu
 python scripts/generate_report.py --figures all
 npm run report:latex                         # compiles docs/report/latex/report.pdf (untracked)
 npm run report:latex -- --engine latexmk     # a particular engine
+npm run report:pdf                           # report:figures, then report:latex
 ```
 
 **One report, rendered twice.** `pipeline_docs/latex.py` reads what the page reads—the body `report.py` compiled and the payload `model.py` built—and walks the compiled body as a tree, writing each element in LaTeX. It does not compile the Markdown again, so a phrase, a fact, a citation, a note, and a reference reach paper exactly as they reach the screen, and a new authoring construct is added once in `report.py` and then given a LaTeX form in the walker. The computed blocks are written by `RENDERERS`, a roster of the same names as `COMPONENTS` in `app.js`; a block with no LaTeX renderer fails the tests, as one with no page renderer does. Appendix A is built from the same step record. A note becomes a footnote, the contents is dropped, and the statement on AI use closes the document.

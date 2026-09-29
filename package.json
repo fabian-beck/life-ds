@@ -13,6 +13,7 @@
     "report:shots": "python scripts/generate_report.py --shots",
     "report:figures": "python scripts/generate_report.py --figures",
     "report:latex": "python scripts/compile_report_latex.py",
+    "report:pdf": "npm run report:figures && npm run report:latex",
     "basemap:assets": "node scripts/vendor_basemap_assets.mjs",
     "test:interface": "playwright test",
     "test:core": "npm run test:interface && python -m pytest",
