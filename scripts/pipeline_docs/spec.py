@@ -148,6 +148,9 @@ class Step:
     inputs: List[str] = field(default_factory=list)
     outputs: List[str] = field(default_factory=list)
     calls_per_run: str = "1"
+    """Requests a plain fresh run sends to external APIs: the language and
+    image models, Wikipedia, Commons, Openverse, and the geocoder. A step that
+    calls none of them counts 0."""
     skip_flag: Optional[str] = None
     model_note: Optional[str] = None
     byline: Optional[str] = None
@@ -420,7 +423,7 @@ STEPS: List[Step] = [
             "image metadata, and caches them so later steps and reruns are free."
         ),
         outputs=["wiki_cache"],
-        calls_per_run="one request per article and image",
+        calls_per_run="1 per article and image",
     ),
     Step(
         "p_wiki_select",
@@ -496,7 +499,7 @@ STEPS: List[Step] = [
             "research_event_details",
             "format_icon_categories_for_prompt",
         ],
-        calls_per_run="12–16 (one per event)",
+        calls_per_run="1 per event",
         inputs=["wiki_cache"],
         skip_flag="--skip-events",
     ),
@@ -540,7 +543,7 @@ STEPS: List[Step] = [
             Dep("p_img_search", "the planned search strings"),
             Dep("p_events_p2", "the searches each event asked for"),
         ],
-        calls_per_run="one request per search",
+        calls_per_run="1 per search",
     ),
     Step(
         "p_img_filter",
@@ -563,6 +566,7 @@ STEPS: List[Step] = [
             "once for the whole pool, and the pool serves every event at once."
         ),
         depends_on=[Dep("p_img_fetch", "every hit the queries returned")],
+        calls_per_run="0",
     ),
     Step(
         "p_img_match",
@@ -637,7 +641,7 @@ STEPS: List[Step] = [
         ),
         depends_on=[Dep("p_events_p2", "historic and modern place names")],
         outputs=["life_events"],
-        calls_per_run="one lookup per place",
+        calls_per_run="1 per place",
     ),
     Step(
         "p_style",
@@ -742,7 +746,7 @@ STEPS: List[Step] = [
         prompts=["IMAGE_PROMPT", "request_illustration"],
         inputs=["life_events", "person_styles"],
         outputs=["chapter_art", "life_events"],
-        calls_per_run="one per chapter",
+        calls_per_run="1 per chapter",
         skip_flag="--skip-chapter-art",
         model_note="Image model, prompted without a content reference image.",
     ),
@@ -785,7 +789,7 @@ STEPS: List[Step] = [
         depends_on=[Dep("p_review", "every name the reviewed documents carry")],
         inputs=["life_events", "ego_network"],
         outputs=["wiki_cache"],
-        calls_per_run="several requests per target language",
+        calls_per_run="several per language",
     ),
     Step(
         "p_glossary",
@@ -809,7 +813,7 @@ STEPS: List[Step] = [
             "format_reference_for_prompt",
         ],
         inputs=["life_events", "ego_network", "persons"],
-        calls_per_run="one per target language",
+        calls_per_run="1 per language",
     ),
     Step(
         "p_translate",
@@ -832,7 +836,7 @@ STEPS: List[Step] = [
         prompts=["_call_translation_model", "format_reference_for_prompt"],
         inputs=["life_events", "ego_network", "persons"],
         outputs=["person_de"],
-        calls_per_run="3 per target language (events, network, registry entry)",
+        calls_per_run="3 per language",
         skip_flag="--skip-translate",
     ),
     Step(
@@ -880,7 +884,7 @@ STEPS: List[Step] = [
         ],
         inputs=["life_events", "ego_network", "wiki_cache"],
         outputs=["life_events", "person_de"],
-        calls_per_run="one per deep event — roughly one per chapter",
+        calls_per_run="1 per deep event",
         skip_flag="--skip-backgrounds",
         model_from="generate_event_backgrounds.py",
     ),
@@ -915,7 +919,7 @@ STEPS: List[Step] = [
         prompts=["STAND_IN_REJECTION_INSTRUCTIONS", "fetch_background_images"],
         inputs=["life_events"],
         outputs=["life_events"],
-        calls_per_run="one per report",
+        calls_per_run="1 per report",
         model_from="generate_event_backgrounds.py",
     ),
     # ------------------------------------------------------------------ meta
@@ -950,7 +954,7 @@ STEPS: List[Step] = [
         depends_on=[Dep("m_p1", "the selected people")],
         prompts=["_filter_event_batch"],
         inputs=["life_events"],
-        calls_per_run="one per batch",
+        calls_per_run="1 per batch",
         skip_flag="--skip-ai-filtering",
     ),
     Step(
@@ -983,6 +987,7 @@ STEPS: List[Step] = [
         ),
         depends_on=[Dep("m_p1", "the selected person ids")],
         inputs=["ego_network"],
+        calls_per_run="0",
     ),
     Step(
         "m_p5b",
@@ -1019,6 +1024,7 @@ STEPS: List[Step] = [
             "once."
         ),
         depends_on=[Dep("m_p5b", "the reviewed graph")],
+        calls_per_run="0",
     ),
     Step(
         "m_p6",
@@ -1048,7 +1054,7 @@ STEPS: List[Step] = [
         depends_on=[Dep("m_p4", "the chapters, whose events carry the coordinates")],
         prompts=["rate_map_events"],
         inputs=["life_events"],
-        calls_per_run="one per batch of located events",
+        calls_per_run="1 per batch",
         skip_flag="--skip-map",
     ),
     Step(
@@ -1064,6 +1070,7 @@ STEPS: List[Step] = [
             "stops, weighted by the ratings, and keeps only the clusters that qualify."
         ),
         depends_on=[Dep("m_p7b", "per-event weights")],
+        calls_per_run="0",
         skip_flag="--skip-map",
     ),
     Step(
@@ -1142,7 +1149,7 @@ STEPS: List[Step] = [
         ),
         depends_on=[Dep("m_p8", "every name the composed story carries")],
         inputs=["meta_story", "person_de"],
-        calls_per_run="several requests per target language",
+        calls_per_run="several per language",
     ),
     Step(
         "m_translate",
@@ -1167,7 +1174,7 @@ STEPS: List[Step] = [
         ],
         inputs=["meta_story", "person_de"],
         outputs=["meta_de"],
-        calls_per_run="one per target language",
+        calls_per_run="1 per language",
         skip_flag="--skip-translate",
         prompts=["_call_translation_model", "format_reference_for_prompt"],
         model_from="translate_meta_story.py",
