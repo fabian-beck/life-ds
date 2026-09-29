@@ -1337,18 +1337,19 @@ RENDERERS: Dict[str, Callable[[Writer, Mount], str]] = {
 
 APPENDIX_COLUMNS = (
     "Step",
-    "Description",
     "Input",
+    "Processing",
     "Output",
     "Model (effort)",
     "#Calls (API)",
 )
 
-# The share of the wide measure each column takes, with the description
-# giving the model and the effort what a name such as `gpt-image-2.5-sunburst` needs at this size. The step's
+# The share of the wide measure each column takes, in the order input,
+# processing, output, so a row reads as the step's flow, with the processing
+# text giving the model and the effort what a name such as `gpt-image-2.5-sunburst` needs at this size. The step's
 # name carries the underline in its kind's color, as a reference to it in the
 # text does, so the row is read against the charts without a number.
-APPENDIX_WIDTHS = (0.14, 0.36, 0.13, 0.13, 0.16, 0.08)
+APPENDIX_WIDTHS = (0.14, 0.13, 0.36, 0.13, 0.16, 0.08)
 
 
 def model_effort(step: Dict[str, Any]) -> str:
@@ -1377,7 +1378,7 @@ def appendix(writer: Writer) -> str:
     ]
     subject = " and ".join(charts) if charts else "each pipeline"
     intro = (
-        f"The steps of {subject}, one per row: description, input, output, "
+        f"The steps of {subject}, one per row: input, processing, output, "
         "model with reasoning effort, and calls per run. A call is a request "
         "to an external API (language or image model, Wikipedia, Wikimedia "
         "Commons, Openverse, or geocoder)."
@@ -1417,8 +1418,8 @@ def appendix(writer: Writer) -> str:
             color = KIND_COLORS.get(str(step.get("kind", "")), "ink")
             cells = [
                 f"\\stepref{{{color}}}{{\\textbf{{{escape(step['label'])}}}}}",
-                escape(writer.step_description(step)),
                 record["input"],
+                escape(writer.step_description(step)),
                 record["output"],
                 model_effort(step),
                 record["calls"],

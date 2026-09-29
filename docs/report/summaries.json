@@ -3,7 +3,7 @@
     "m_clusters": {
       "fingerprint": "e3e1a284891d9ff6",
       "summary": {
-        "description": "Finds communities in the reviewed graph and keeps those that contain main people.",
+        "description": "Detects communities and keeps those that contain main people.",
         "input": "the reviewed graph",
         "output": "ordered circles with members and ties",
         "source": "gpt-5.6-terra"
@@ -12,16 +12,16 @@
     "m_name_evidence": {
       "fingerprint": "1843d1f90ed6772d",
       "summary": {
-        "description": "Collects the localized names of the story’s people from their translated person data and looks up map places in Wikipedia language links.",
+        "description": "Takes the people’s names from their translated person data and looks up map places in Wikipedia language links.",
         "input": "the composed meta story and localized person data",
-        "output": "name evidence for people and places",
+        "output": "names for people and places",
         "source": "gpt-5.6-terra"
       }
     },
     "m_p1": {
       "fingerprint": "df5ccba85a768bb2",
       "summary": {
-        "description": "Selects the people who fit the theme and writes the story’s title, introduction, subtopics, chapters, and conclusion. Lists people missing from the registry.",
+        "description": "Selects the people who fit the theme and plans the story’s title, introduction, subtopics, chapters, and conclusion. Lists people missing from the registry.",
         "input": "the person registry and life events",
         "output": "a story plan and selected people",
         "source": "gpt-5.6-terra"
@@ -30,7 +30,7 @@
     "m_p3": {
       "fingerprint": "1b6840151fc24d4c",
       "summary": {
-        "description": "Filters the selected people’s life events to major contributions relevant to the theme and records why each is relevant.",
+        "description": "Keeps the events that are major contributions to the theme and records why.",
         "input": "the selected people and life events",
         "output": "relevant events with reasons",
         "source": "gpt-5.6-terra"
@@ -39,7 +39,7 @@
     "m_p4": {
       "fingerprint": "901acc2bae65dfe2",
       "summary": {
-        "description": "Adds to each chapter a few dated historical events that directly affected its people.",
+        "description": "Finds dated historical events that directly affected the people in each chapter.",
         "input": "the chapters and their events",
         "output": "historical events for each chapter",
         "source": "gpt-5.6-terra"
@@ -57,7 +57,7 @@
     "m_p5b": {
       "fingerprint": "535e8d066ce9fc84",
       "summary": {
-        "description": "Reviews the merged network against the article evidence, adding missed direct ties and removing vague or indirect ones.",
+        "description": "Checks the network against the article evidence, adding missed direct ties and removing vague or indirect ones.",
         "input": "the merged network",
         "output": "a reviewed network",
         "source": "gpt-5.6-terra"
@@ -66,7 +66,7 @@
     "m_p6": {
       "fingerprint": "644c19f1abcd8553",
       "summary": {
-        "description": "Writes a factual title and short text about the ties of each circle.",
+        "description": "Describes the ties within each circle.",
         "input": "the circles to narrate",
         "output": "a title and text per circle",
         "source": "gpt-5.6-terra"
@@ -93,7 +93,7 @@
     "m_p7c": {
       "fingerprint": "5d728085b48add1b",
       "summary": {
-        "description": "Writes a short factual title and text for each geographic cluster and discards the clusters that are not relevant to the story.",
+        "description": "Describes each cluster in a short factual text and discards the clusters that are not relevant to the story.",
         "input": "the geographic clusters",
         "output": "map stops with titles and texts",
         "source": "gpt-5.6-terra"
@@ -111,9 +111,9 @@
     "m_style": {
       "fingerprint": "2f90e02b65f34c37",
       "summary": {
-        "description": "Designs a dark color scheme, typography, patterns, and ornaments for the story based on its framing and opening.",
+        "description": "Designs the story’s dark visual style based on its theme.",
         "input": "the story’s framing and opening",
-        "output": "the story’s visual style",
+        "output": "a palette, type system, patterns, and ornaments",
         "source": "gpt-5.6-terra"
       }
     },
@@ -129,17 +129,17 @@
     "p_backgrounds": {
       "fingerprint": "10919528cb92a1bb",
       "summary": {
-        "description": "Writes a background report for each deep event whose sources contain material about the event itself, and sets its citations.",
+        "description": "Writes a report for each deep event whose sources contain material about the event itself.",
         "input": "the reviewed events and source articles",
-        "output": "event-specific reports and citations",
+        "output": "background reports and citations",
         "source": "gpt-5.6-terra"
       }
     },
     "p_chapter_art": {
       "fingerprint": "c2a3cc333bd93b60",
       "summary": {
-        "description": "Draws one abstract image for each chapter from its concept, in the portrait style and the story’s colors.",
-        "input": "chapter concepts, story colors, and style",
+        "description": "Draws each concept as an abstract image in the portrait style.",
+        "input": "chapter concepts and the interface style",
         "output": "an illustration per chapter",
         "source": "gpt-5.6-terra"
       }
@@ -147,34 +147,34 @@
     "p_chapter_concepts": {
       "fingerprint": "c98019861832af1a",
       "summary": {
-        "description": "Writes an abstract visual concept for each chapter based on the life events.",
+        "description": "Finds an abstract visual metaphor for each chapter, all chapters in one call.",
         "input": "the finished life events",
-        "output": "an abstract visual concept per chapter",
+        "output": "chapter concepts",
         "source": "gpt-5.6-terra"
       }
     },
     "p_events_p1": {
       "fingerprint": "dd45b217838f4666",
       "summary": {
-        "description": "Selects the most significant events of the life, groups them into chapters, and writes a conclusion.",
+        "description": "Selects the most significant events of the life and groups them into chapters.",
         "input": "the article and selected related articles",
-        "output": "a chaptered life timeline and conclusion",
+        "output": "dated event skeletons, chapters, and a conclusion",
         "source": "gpt-5.6-terra"
       }
     },
     "p_events_p2": {
       "fingerprint": "720561b17d9a2d6d",
       "summary": {
-        "description": "Researches each proposed event in the subject’s article and related articles and writes its description, places, people, sources, and image searches.",
+        "description": "Researches each proposed event in the subject’s article and the related articles relevant to it.",
         "input": "an event skeleton and Wikipedia material",
-        "output": "researched details for each event",
+        "output": "description, places, people, sources, and image searches per event",
         "source": "gpt-5.6-terra"
       }
     },
     "p_geocode": {
       "fingerprint": "9c5563b94ef02a00",
       "summary": {
-        "description": "Adds map coordinates to the places in the life events.",
+        "description": "Looks up the coordinates of each place by its modern name.",
         "input": "historic and modern place names",
         "output": "coordinates on life events",
         "source": "gpt-5.6-terra"
@@ -183,25 +183,25 @@
     "p_glossary": {
       "fingerprint": "52105ec0acbb8986",
       "summary": {
-        "description": "Decides the target-language form of each person name and writes one glossary shared by the life events, network, and registry.",
+        "description": "Decides the target-language form of each person name.",
         "input": "name evidence and person names",
-        "output": "a shared localized name glossary",
+        "output": "a name glossary shared by life events, network, and registry",
         "source": "gpt-5.6-terra"
       }
     },
     "p_illustrations": {
       "fingerprint": "bd02bec644bcdd1b",
       "summary": {
-        "description": "Checks Commons results against each report and keeps only pictures that directly depict things the report names.",
+        "description": "Searches Commons for each report and keeps only pictures that directly depict things the report names.",
         "input": "the report, its searches, and life events",
-        "output": "report illustrations for each event",
+        "output": "report illustrations",
         "source": "gpt-5.6-terra"
       }
     },
     "p_img_fetch": {
       "fingerprint": "7227e2d7ba930d29",
       "summary": {
-        "description": "Searches Commons and Openverse with the planned searches and each event’s own searches and keeps one candidate per picture.",
+        "description": "Searches Commons and Openverse and keeps one candidate per picture.",
         "input": "the planned and event image searches",
         "output": "image candidates linked to events",
         "source": "gpt-5.6-terra"
@@ -210,7 +210,7 @@
     "p_img_filter": {
       "fingerprint": "4a9c17c1ddfd4f29",
       "summary": {
-        "description": "Scores and ranks the image hits and drops those below a threshold. Commemorative images such as plaques and graves are penalized.",
+        "description": "Scores the hits, drops those below a threshold, and ranks the rest. Commemorative images such as plaques and graves are penalized.",
         "input": "the image hits",
         "output": "ranked image candidates",
         "source": "gpt-5.6-terra"
@@ -228,16 +228,16 @@
     "p_img_search": {
       "fingerprint": "289933274e42d535",
       "summary": {
-        "description": "Plans Commons searches for the portrait and for things the events name, excluding commemorative objects.",
+        "description": "Plans searches for the portrait and for things the events name, excluding commemorative objects.",
         "input": "the event skeletons",
-        "output": "search strings for life images",
+        "output": "Commons search strings",
         "source": "gpt-5.6-terra"
       }
     },
     "p_img_verify": {
       "fingerprint": "79df65da65609cd1",
       "summary": {
-        "description": "Checks the chosen portrait against the person by inspecting the image and removes it if rejected.",
+        "description": "Inspects the image to check that it depicts the person and removes it if not.",
         "input": "the portrait pick",
         "output": "a verified portrait",
         "source": "gpt-5.6-terra"
@@ -246,16 +246,16 @@
     "p_name_evidence": {
       "fingerprint": "9ae3c61b310633a8",
       "summary": {
-        "description": "Fetches the person’s article in the target language and the target-language names of the people and places in the data.",
+        "description": "Queries Wikipedia in the target language for the person’s article and the names of the people and places.",
         "input": "reviewed names, life events, and ego network",
-        "output": "target-language article and name evidence",
+        "output": "target-language article and names",
         "source": "gpt-5.6-terra"
       }
     },
     "p_network": {
       "fingerprint": "ca358bf5ee2e4863",
       "summary": {
-        "description": "Builds the subject’s network of direct ties to named people from the life events and Wikipedia material.",
+        "description": "Extracts the documented direct ties between the subject and named people.",
         "input": "finished life events and Wikipedia material",
         "output": "a network of personal ties",
         "source": "gpt-5.6-terra"
@@ -264,7 +264,7 @@
     "p_portrait": {
       "fingerprint": "aed6162bd6d037d9",
       "summary": {
-        "description": "Redraws the person’s reference portrait in the shared drawing style and the story’s colors.",
+        "description": "Redraws the reference portrait in the shared drawing style and the story’s colors.",
         "input": "the person registry and interface style",
         "output": "a portrait and updated person registry",
         "source": "gpt-5.6-terra"
@@ -273,7 +273,7 @@
     "p_review": {
       "fingerprint": "d262623bac94683d",
       "summary": {
-        "description": "Reviews the life events and ego network together against the source articles and proposes corrections and prose revisions. Only changes the critic rates with high confidence are applied.",
+        "description": "Checks the life events and network together against the sources and applies the corrections and revisions it rates with high confidence.",
         "input": "the life events, network, and source articles",
         "output": "reviewed life events and ego network",
         "source": "gpt-5.6-terra"
@@ -282,7 +282,7 @@
     "p_style": {
       "fingerprint": "b1f93ef5262124eb",
       "summary": {
-        "description": "Designs a dark color scheme, typography, and background pattern based on the person’s work, places, and pictured objects.",
+        "description": "Designs the story’s dark visual style based on the person’s work, places, and pictured objects.",
         "input": "the finished life events and image captions",
         "output": "a palette, type system, and pattern",
         "source": "gpt-5.6-terra"
@@ -291,8 +291,8 @@
     "p_translate": {
       "fingerprint": "24c35fd5edcfd14d",
       "summary": {
-        "description": "Translates the person’s events, network, registry entry, and reports, applying the name glossary. Dates, coordinates, links, and identifiers are kept from the English record.",
-        "input": "the person record, reports, and name mapping",
+        "description": "Translates the narrative text and keeps dates, coordinates, links, and identifiers from the English record.",
+        "input": "the person record, reports, and name glossary",
         "output": "localized person data",
         "source": "gpt-5.6-terra"
       }
