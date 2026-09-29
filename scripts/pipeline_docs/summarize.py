@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Per-step explanations of the pipeline, kept against the source they describe.
 
-Each entry in `docs/report/summaries.json` explains one step: two or three
-plain sentences on what the step contributes and, where one stands out, why it
-is built that way, plus a phrase each for what it reads and what it leaves
-behind. An entry is stored with a fingerprint of the step's source, prompt
+Each entry in `docs/report/summaries.json` explains one step: one to three
+plain sentences on what the step does on a fresh run, without its motivation,
+plus a phrase each for what it reads and what it leaves behind. An entry is stored with a fingerprint of the step's source, prompt
 template, and output schema, so a build can tell which entries describe source
 that has since moved.
 
