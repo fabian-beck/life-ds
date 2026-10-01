@@ -297,12 +297,13 @@ class WrittenExplanationTests(unittest.TestCase):
             }
         }
 
-    def test_a_model_the_step_does_not_resolve_fails_the_build(self) -> None:
+    def test_a_model_the_step_does_not_resolve_is_reported(self) -> None:
+        """A drift warning: the report is updated on request, not by the change."""
         problems = validate.check_summaries(
             self.codebase, self._summaries("Asks a GPT-5.1 Responses API call.")
         )
         self.assertEqual(1, len(problems))
-        self.assertEqual("error", problems[0].severity)
+        self.assertEqual("warning", problems[0].severity)
         self.assertIn("GPT-5.1", problems[0].message)
 
     def test_the_model_the_step_actually_resolves_is_allowed(self) -> None:
@@ -385,10 +386,11 @@ class ExplanationFreshnessTests(unittest.TestCase):
         )
         self.assertEqual([], problems)
 
-    def test_source_that_moved_under_the_explanation_fails_the_build(self) -> None:
+    def test_source_that_moved_under_the_explanation_is_reported(self) -> None:
+        """A drift warning: the report is updated on request, not by the change."""
         problems = validate.check_freshness(self.codebase, self._cache("0" * 16))
         self.assertEqual(1, len(problems))
-        self.assertEqual("error", problems[0].severity)
+        self.assertEqual("warning", problems[0].severity)
         self.assertIn(self.step.id, problems[0].where)
 
     def test_a_step_the_cache_never_described_is_not_stale(self) -> None:

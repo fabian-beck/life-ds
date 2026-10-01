@@ -3,8 +3,12 @@
 
 The chart is only worth reading if it cannot quietly fall behind the code, so
 every spec entry is resolved against the source and every AI call site in the
-codebase has to be claimed by some step. A new phase that nobody documented is
-an error, not a silent omission.
+codebase has to be claimed by some step. The report is updated only when its
+owner asks for it, so the code is allowed to move ahead of it: a new phase that
+nobody documented, a renamed function, and an explanation written from source
+that has since changed are warnings that name the gap, and the session that
+opened it notes it in `docs/report/outdated.md`. What `spec.py` gets wrong on
+its own terms—an unknown artifact, a duplicate id, a cycle—stays an error.
 
 The dependency graph is checked too: an edge to an unknown step, or a cycle,
 would make the layered layout meaningless rather than merely wrong, so both are
@@ -211,6 +215,12 @@ def _check_groups() -> List[Problem]:
     return problems
 
 
+# The severity of a gap the code opened ahead of the report. The report is
+# updated on request, not with every change, so such a gap is reported and
+# noted in docs/report/outdated.md rather than refused.
+DRIFT = "warning"
+
+
 # The width of a node's fact line, in characters, at the size that prints it.
 BYLINE_MAX = 32
 
@@ -226,12 +236,12 @@ def check(codebase: Codebase) -> List[Problem]:
         where = f"step '{step.id}'"
         script_name = step.script.rsplit("/", 1)[-1]
         if script_name not in known_scripts:
-            problems.append(Problem("error", where, f"unknown script {step.script}"))
+            problems.append(Problem(DRIFT, where, f"unknown script {step.script}"))
             continue
         if not _function_exists(codebase, script_name, step.function):
             problems.append(
                 Problem(
-                    "error",
+                    DRIFT,
                     where,
                     f"{step.script} has no function '{step.function}'—it was "
                     "renamed or removed",
@@ -246,7 +256,7 @@ def check(codebase: Codebase) -> List[Problem]:
             if not found:
                 problems.append(
                     Problem(
-                        "error",
+                        DRIFT,
                         where,
                         f"prompt source '{prompt_symbol}' no longer exists",
                     )
@@ -290,7 +300,7 @@ def check(codebase: Codebase) -> List[Problem]:
         script, function = key.split(":", 1)
         problems.append(
             Problem(
-                "error",
+                DRIFT,
                 "coverage",
                 f"{script}:{function} calls the model ({calls[0].method}, "
                 f"line {calls[0].lineno}) but no step in spec.py claims it",
@@ -341,7 +351,7 @@ def check_freshness(codebase: Codebase, cache_path: Path) -> List[Problem]:
     """Cached explanations against the source they claim to have been written from.
 
     A step's explanation is published as describing its current source, prompt,
-    and schema, and is revised by hand when they change. Nothing enforced it. The coverage check above notices a step that stopped
+    and schema, and is revised by hand when the report is next updated. The coverage check above notices a step that stopped
     calling the model and a function that was renamed away, but never a step
     whose body was rewritten under an explanation that stayed behind—so a
     refactor that rerouted twelve call sites left twelve explanations
@@ -349,10 +359,11 @@ def check_freshness(codebase: Codebase, cache_path: Path) -> List[Problem]:
     """
     return [
         Problem(
-            "error",
+            DRIFT,
             f"summary '{step_id}'",
-            "was written from source that has since changed—revise it by hand "
-            f"and accept it with --accept-summary {step_id}",
+            "was written from source that has since changed—note it in "
+            "docs/report/outdated.md, or, when the report is being updated, "
+            f"revise it by hand and accept it with --accept-summary {step_id}",
         )
         for step_id in summarize.stale_steps(codebase, cache_path)
     ]
@@ -367,7 +378,7 @@ def check_summaries(
     model reads as fact—one of them said `GPT-5.1` long after the call resolved
     to something else, and the report printed both on one panel. The resolved
     model is measured beside the text, so the text naming a *different* one is
-    drift of the kind this build refuses everywhere else. Reworded prose is
+    drift of the kind this build reports everywhere else. Reworded prose is
     cheap; a wrong model in a report about which models a pipeline calls is not.
     """
     problems: List[Problem] = []
@@ -393,7 +404,7 @@ def check_summaries(
                 continue
             problems.append(
                 Problem(
-                    "error",
+                    DRIFT,
                     f"summary '{step.id}'",
                     f"names the model '{name}', which is not what this step "
                     "resolves—revise the entry by hand",

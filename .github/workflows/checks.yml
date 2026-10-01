@@ -113,8 +113,9 @@ jobs:
       - name: Python tests
         run: python -m pytest
 
-      # The report is computed from the generation scripts, so a script change
-      # its spec or its step explanations no longer describe fails here.
+      # The report is computed from the generation scripts. It is updated on
+      # request, so a script change its spec or its step explanations no longer
+      # describe is a warning here; a report source that cannot be built fails.
       - name: The technical report matches its source
         run: python scripts/generate_report.py --check
 

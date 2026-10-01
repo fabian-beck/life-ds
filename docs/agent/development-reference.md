@@ -459,6 +459,8 @@ npm run report:pdf                           # report:figures, then report:latex
 
 ### When the Pipeline Changes
 
+A change to the pipeline does not update the report by itself: the session that makes it notes the change in `docs/report/outdated.md`, and `--check` reports the drift as warnings until the user asks for the report to be updated (see AGENTS.md). The steps below are that update, and each entry they resolve is removed from `docs/report/outdated.md`.
+
 1. Add or update the step in `scripts/pipeline_docs/spec.py`, including the `depends_on` edges into it *and* any existing step that now reads its output, and put it in one of the stages in `GROUPS`. An edge is a real data dependency, not "runs after"; a step that reads the assembled document depends on the last step of the run that writes it.
 2. Run `python scripts/generate_report.py --figures`—it names every step whose explanation was written from source that has since changed, and reprints the pipeline chart the step belongs to for the LaTeX rendering. Revise each named entry in `summaries.json` by hand, keeping every sentence the changed source leaves true, and accept it with `--accept-summary STEP`; a new step gets its entry the same way. Never rewrite every entry at once.
 3. Commit `summaries.json` and the reprinted figures under `docs/report/latex/figures/`. The page and `report.tex` are not committed; the deployment builds them.

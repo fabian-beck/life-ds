@@ -163,8 +163,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     errors = validate.report(validate.check(codebase))
     if errors:
         print(
-            "\nThe pipeline changed without spec.py being updated. Fix "
-            "scripts/pipeline_docs/spec.py, then rebuild."
+            "\nspec.py contradicts itself. Fix scripts/pipeline_docs/spec.py, "
+            "then rebuild."
         )
         return 1
 
