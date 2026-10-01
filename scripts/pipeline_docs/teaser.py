@@ -304,7 +304,7 @@ PARTS: Tuple[Part, ...] = (
     ),
     Part(
         "slides",
-        "Person story",
+        "Personal story",
         "Full-screen slides swiped sideways one at a time—an overview, the "
         "chapters, the events, a closing slide—every position a citable "
         "address.",
