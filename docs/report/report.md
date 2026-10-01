@@ -8,6 +8,7 @@ authors:
 description:
   Technical report on the Life Data Stories system: its data model, its two
   generation pipelines, and its interface.
+doi: 10.5281/zenodo.22690950
 disclaimer:
   This report was co-written with AI. Its text and figures were drafted and revised with language models under the authors' direction, alongside manual edits. The system it describes was implemented using agentic engineering.
 abstract:

@@ -3870,6 +3870,17 @@
         }),
       ])
     );
+    // The page moves on with the code; the DOI names the archived copy a
+    // reader can cite, which stays as it was the day it was deposited.
+    const doi = DATA.report && DATA.report.doi;
+    if (doi) {
+      host.appendChild(
+        el("span", { class: "chip" }, [
+          el("span", { text: "Citable version:" }),
+          el("a", { href: "https://doi.org/" + doi, text: "doi:" + doi }),
+        ])
+      );
+    }
   }
 
   /* The rail mirrors the heading tree the Markdown produced, so it cannot list

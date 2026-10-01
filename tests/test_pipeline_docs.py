@@ -874,6 +874,16 @@ class PayloadAndRenderTests(unittest.TestCase):
         self.assertIn('<a href="https://example.org/a">the page</a>', head)
         self.assertNotIn("[the page](", head)
 
+    def test_the_payload_carries_the_doi_of_the_citable_version(self) -> None:
+        """The meta row links the DOI that the front matter names."""
+        document = _compile(
+            "---\ntitle: T\ndoi: 10.5281/zenodo.1\n---\n\n## S\n\nBody.\n"
+        )
+        payload = build_payload(_codebase(), {}, document, _facts())
+        self.assertEqual(payload["report"]["doi"], "10.5281/zenodo.1")
+        undated = _compile("---\ntitle: T\n---\n\n## S\n\nBody.\n")
+        self.assertEqual(undated.to_json()["doi"], "")
+
     def test_the_statement_on_ai_use_follows_the_references(self) -> None:
         """The disclaimer is authored in the front matter and served as HTML."""
         codebase = _codebase()

@@ -328,6 +328,7 @@ class Document:
             "subtitle": self.front.get("subtitle", ""),
             "authors": [author.to_json() for author in self.authors],
             "abstract": self.front.get("abstract", ""),
+            "doi": self.front.get("doi", "").strip(),
             "source": self.source_path,
             "sections": [section.to_json() for section in self.sections],
             "components": {
